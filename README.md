@@ -7,17 +7,17 @@ for creators building their own site.
 
 Almost monochrome, so that one colour can mean something.
 
-[![CI](https://github.com/imswarnil/Creator-Design-System/actions/workflows/ci.yml/badge.svg)](https://github.com/imswarnil/Creator-Design-System/actions/workflows/ci.yml)
-[![Deploy docs](https://github.com/imswarnil/Creator-Design-System/actions/workflows/pages.yml/badge.svg)](https://github.com/imswarnil/Creator-Design-System/actions/workflows/pages.yml)
+[![CI](https://github.com/imswarnil/Swarnil-Design-System/actions/workflows/ci.yml/badge.svg)](https://github.com/imswarnil/Swarnil-Design-System/actions/workflows/ci.yml)
+[![Deploy docs](https://github.com/imswarnil/Swarnil-Design-System/actions/workflows/pages.yml/badge.svg)](https://github.com/imswarnil/Swarnil-Design-System/actions/workflows/pages.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/imswarnil/Creator-Design-System?style=flat&label=stars)](https://github.com/imswarnil/Creator-Design-System/stargazers)
+[![GitHub stars](https://img.shields.io/github/stars/imswarnil/Swarnil-Design-System?style=flat&label=stars)](https://github.com/imswarnil/Swarnil-Design-System/stargazers)
 
 <img src="media/hero.svg" alt="The creator wordmark inside a viewfinder frame, beside the ink and signal colour ramps, a Subscribe button and a LIVE badge" width="100%">
 
-[Documentation](https://creator.imswarnil.com) ·
-[Components](https://creator.imswarnil.com/components.html) ·
-[Showcase](https://creator.imswarnil.com/showcase.html) ·
-[Templates](https://creator.imswarnil.com/templates.html) ·
+[Documentation](https://design.imswarnil.com) ·
+[Components](https://design.imswarnil.com/components.html) ·
+[Showcase](https://design.imswarnil.com/showcase.html) ·
+[Templates](https://design.imswarnil.com/templates.html) ·
 [Sponsor](https://github.com/sponsors/imswarnil)
 
 If this saved you a rebuild, a ⭐ on the repo is the easiest way to say so.
@@ -68,7 +68,7 @@ post, an episode or a day of a trip.
 ```html
 <!-- works today, straight from the repo -->
 <link rel="stylesheet"
-      href="https://cdn.jsdelivr.net/gh/imswarnil/Creator-Design-System@main/dist/creator.min.css">
+      href="https://cdn.jsdelivr.net/gh/imswarnil/Swarnil-Design-System@main/dist/creator.min.css">
 ```
 
 ```bash
@@ -92,7 +92,7 @@ Or take one layer at a time:
 
 ### Download
 
-Grab `dist/creator.css` from a [release](https://github.com/imswarnil/Creator-Design-System/releases)
+Grab `dist/creator.css` from a [release](https://github.com/imswarnil/Swarnil-Design-System/releases)
 and link it. That is the whole installation.
 
 ## Make it yours
@@ -181,7 +181,7 @@ island and click-only dropdowns — nothing breaks.
 The island's hairline doubles as the read-through bar (`.nav-progress` +
 `--progress`), the burger runs record → play rather than bars → X
 (`.nav-burger-rec`), and the docs page ends in a
-[builder](https://creator.imswarnil.com/navbar.html) that writes the markup for
+[builder](https://design.imswarnil.com/navbar.html) that writes the markup for
 whatever combination you land on.
 
 ## Collections
@@ -252,8 +252,8 @@ markup looks right and renders as unstyled HTML.
 
 | File | For |
 | --- | --- |
-| [`creator.imswarnil.com/llms.txt`](https://creator.imswarnil.com/llms.txt) | the index: what the system is, how to install and customise it |
-| [`creator.imswarnil.com/llms-full.txt`](https://creator.imswarnil.com/llms-full.txt) | every token and every class the system defines, plus the rules |
+| [`design.imswarnil.com/llms.txt`](https://design.imswarnil.com/llms.txt) | the index: what the system is, how to install and customise it |
+| [`design.imswarnil.com/llms-full.txt`](https://design.imswarnil.com/llms-full.txt) | every token and every class the system defines, plus the rules |
 | [`AGENTS.md`](AGENTS.md) | working *on* this repo — commands, generated files, house rules |
 
 Both `llms` files are generated from the stylesheets on every build, so they

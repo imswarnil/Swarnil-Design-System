@@ -334,5 +334,5 @@ First public skeleton.
 - Generated documentation site with search, a components explorer,
   showcase and templates pages.
 
-[Unreleased]: https://github.com/imswarnil/Creator-Design-System/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/imswarnil/Creator-Design-System/releases/tag/v0.1.0
+[Unreleased]: https://github.com/imswarnil/Swarnil-Design-System/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/imswarnil/Swarnil-Design-System/releases/tag/v0.1.0

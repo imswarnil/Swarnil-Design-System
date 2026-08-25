@@ -30,7 +30,7 @@ PROJECTS = [
      'sections and twelve collections built on top of them.',
      'CSS', '#563d7c', 128, 14, '2d ago',
      ['css', 'design-system', 'design-tokens', 'ui-kit'],
-     'creator.imswarnil.com', 'MIT'),
+     'design.imswarnil.com', 'MIT'),
     ('fieldnote', 'Fieldnote',
      'A marketing site rebuilt on a token-first stylesheet with no framework, '
      'shipping two thirds less CSS than the version it replaced.',
@@ -328,7 +328,7 @@ def route_index():
                     paper=True, border=False, inline=True)}
       </div>
       <div class="hero-split__stage">
-        {win_browser('creator.imswarnil.com',
+        {win_browser('design.imswarnil.com',
                      f'<div class="pattern pattern-topo pattern-media">{ph("tokens", tall=True)}</div>')}
         <p class="hero-split__caption"><span>The flagship, deployed</span>
           <span class="timecode">v0.1.0</span></p>

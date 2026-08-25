@@ -494,7 +494,7 @@ PAGES['install'] = ('Installation',
     '''
 		<h2 class="t-h3" style="margin:0 0 var(--space-4)">1 · Get the files</h2>
 		<p class="u-fg-subtle u-mb-4" style="max-width:var(--measure-lead)">
-			Link it straight from jsDelivr — <code class="t-code">cdn.jsdelivr.net/gh/imswarnil/Creator-Design-System@main/dist/creator.min.css</code>
+			Link it straight from jsDelivr — <code class="t-code">cdn.jsdelivr.net/gh/imswarnil/Swarnil-Design-System@main/dist/creator.min.css</code>
 			— or copy <code class="t-code">dist/creator.css</code> out of the repository.
 			<code class="t-code">npm i creator-design-system</code> lands with the first
 			tagged release. The full walkthrough is on <a href="/usage.html">Usage</a>.
