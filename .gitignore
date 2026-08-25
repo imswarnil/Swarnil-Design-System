@@ -14,3 +14,6 @@ docs/dist/
 __pycache__/
 *.pyc
 docs/collection/
+
+# Local editor launch config — machine-specific paths.
+.claude/
