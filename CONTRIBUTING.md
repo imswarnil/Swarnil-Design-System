@@ -23,8 +23,8 @@ to merge than a clever one that doesn't.
 ## Getting set up
 
 ```bash
-git clone https://github.com/imswarnil/Creator-Design-System
-cd Creator-Design-System
+git clone https://github.com/imswarnil/Swarnil-Design-System
+cd Swarnil-Design-System
 npm install
 npm run dev          # docs at http://localhost:8080
 ```

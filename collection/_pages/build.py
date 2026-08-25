@@ -394,7 +394,7 @@ def route_home():
         </div>
       </div>
       <div class="hero-split__stage">
-        {win_browser('creator.imswarnil.com',
+        {win_browser('design.imswarnil.com',
                      f'<div class="pattern pattern-topo pattern-media">{ph("css", tall=True)}</div>')}
         <p class="hero-split__caption"><span>The docs, in a browser</span>
           <span class="timecode">0.1.0</span></p>

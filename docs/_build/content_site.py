@@ -261,7 +261,7 @@ def build_home():
 		</p>
 		<div class="cta__actions">
 			<a class="btn btn-primary btn-lg" href="https://github.com/sponsors/imswarnil" rel="noopener" target="_blank">Sponsor the project</a>
-			<a class="btn btn-secondary btn-lg" href="https://github.com/imswarnil/Creator-Design-System" rel="noopener" target="_blank">Star on GitHub</a>
+			<a class="btn btn-secondary btn-lg" href="https://github.com/imswarnil/Swarnil-Design-System" rel="noopener" target="_blank">Star on GitHub</a>
 		</div>
 		<p class="cta__fine">Or contribute — issues and pull requests are genuinely welcome.</p>
 	</div>
@@ -284,8 +284,8 @@ def _showcase():
         '<code class="t-code">/showcase/*.json</code>, so a merged PR is a '
         'published entry.</p>'
         '<div class="cluster u-mb-8">'
-        '<a class="btn btn-primary" href="https://github.com/imswarnil/Creator-Design-System/tree/main/showcase" rel="noopener">Add your site</a>'
-        '<a class="btn btn-quiet" href="https://github.com/imswarnil/Creator-Design-System/blob/main/showcase/README.md" rel="noopener">How it works</a>'
+        '<a class="btn btn-primary" href="https://github.com/imswarnil/Swarnil-Design-System/tree/main/showcase" rel="noopener">Add your site</a>'
+        '<a class="btn btn-quiet" href="https://github.com/imswarnil/Swarnil-Design-System/blob/main/showcase/README.md" rel="noopener">How it works</a>'
         '</div>')
     if not items:
         body += ('<div class="empty"><span class="eyebrow">Empty</span>'
@@ -348,7 +348,7 @@ def _templates():
         '<p class="u-fg-subtle u-mb-4" style="max-width:var(--measure-lead)">'
         'Built something on the system? Free or paid, add a JSON file to '
         '<code class="t-code">/templates</code> and open a pull request.</p>'
-        '<a class="btn btn-secondary" href="https://github.com/imswarnil/Creator-Design-System/blob/main/templates/README.md" rel="noopener">How to list</a>')
+        '<a class="btn btn-secondary" href="https://github.com/imswarnil/Swarnil-Design-System/blob/main/templates/README.md" rel="noopener">How to list</a>')
     return body
 
 
@@ -377,7 +377,7 @@ PAGES['sponsor'] = ('Sponsor',
       '<div class="surface u-p-5"><span class="eyebrow">Free</span>'
       '<h3 class="t-h4 u-mt-2">Contribute instead</h3>'
       '<p class="t-small u-fg-subtle u-mt-2">Time is worth more than money here. Fix a bug, document a gap, add your site.</p>'
-      '<a class="btn btn-secondary btn-sm u-mt-4" href="https://github.com/imswarnil/Creator-Design-System/blob/main/CONTRIBUTING.md" rel="noopener">Contributing guide</a></div>'
+      '<a class="btn btn-secondary btn-sm u-mt-4" href="https://github.com/imswarnil/Swarnil-Design-System/blob/main/CONTRIBUTING.md" rel="noopener">Contributing guide</a></div>'
       '</div>'
     + ct([
         ('Where it goes', 'maintenance time: issues, browser bugs, new components, documentation'),

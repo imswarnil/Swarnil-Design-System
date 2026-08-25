@@ -6,11 +6,11 @@
     "css", "design-system", "ui-kit", "creator", "tokens",
     "design-tokens", "component-library", "ghost-theme", "dark-mode"
   ],
-  "homepage": "https://creator.imswarnil.com",
-  "bugs": "https://github.com/imswarnil/Creator-Design-System/issues",
+  "homepage": "https://design.imswarnil.com",
+  "bugs": "https://github.com/imswarnil/Swarnil-Design-System/issues",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/imswarnil/Creator-Design-System.git"
+    "url": "git+https://github.com/imswarnil/Swarnil-Design-System.git"
   },
   "author": {
     "name": "Swarnil Singhai",

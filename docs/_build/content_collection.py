@@ -949,7 +949,7 @@ hc += sec('win-h', 'Window chrome',
     '<code class="t-code">12-frame.css</code> and used by nothing — a design system that '
     'ships a browser mockup and never shows a page in one is leaving the obvious demo on '
     'the table. The editor\'s gutter is drawn from the line count, so nothing numbers itself.')
-hc += live(resume.win_browser('creator.imswarnil.com',
+hc += live(resume.win_browser('design.imswarnil.com',
     '<div class="pattern pattern-topo pattern-media">' + resume.ph('css', tall=True) + '</div>'),
     '<b>.win.win-browser</b> · <b>.win__dots-color</b> · <b>.win-browser__url</b>')
 hc += live('<div class="grid-2">' + resume.win_term([

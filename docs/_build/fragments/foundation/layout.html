@@ -61,3 +61,49 @@
 					<p class="spec"><b>.frame-4</b> over <b>.pattern-blueprint</b> — the end-card lockup</p>
 				</div>
 			</div>
+
+			<header class="sec-head" style="margin-top:var(--space-8)">
+				<span class="sec-num">07b</span>
+				<h2 class="t-h1">The frame as an interaction</h2>
+				<p class="t-lead" style="margin-top:var(--space-3)">
+					<b>.frame-hover</b> holds the brackets back until you point at the
+					thing, then closes them in on it — the camera finding focus. It
+					composes onto <b>.frame</b> and <b>.frame-4</b> with no extra markup,
+					and onto anything that can take a frame at all.
+				</p>
+			</header>
+
+			<div class="surface" style="overflow:hidden">
+				<div class="demo">
+
+					<div class="surface demo-tile">
+						<div class="frame frame-4 frame-hover frame-signal u-rounded-lg u-border u-p-5"
+						     style="background:var(--bg-surface);cursor:pointer">
+							<span class="frame__tr"></span><span class="frame__bl"></span>
+							<p class="t-slate">Foundation</p>
+							<p class="t-h4" style="margin-top:var(--space-2)">Point at this card</p>
+							<p class="t-small u-fg-muted" style="margin-top:var(--space-2)">
+								Four corners ease in from the outside. Tab to it and they do the same.
+							</p>
+						</div>
+						<p class="spec"><b>.frame-4.frame-hover.frame-signal</b> — the record light, on approach</p>
+					</div>
+
+					<div class="surface demo-tile">
+						<div class="u-flex u-gap-3 u-wrap u-items-center" style="min-height:8rem">
+							<button class="btn btn-primary frame frame-sm frame-hover" type="button">Record</button>
+							<button class="btn btn-quiet frame frame-sm frame-hover frame-ink" type="button">Preview</button>
+							<button class="btn btn-soft frame frame-sm frame-hover" type="button">Export</button>
+						</div>
+						<p class="spec"><b>.frame-sm.frame-hover</b> on <b>.btn</b> — brackets sized down so they bracket the label instead of swallowing it</p>
+					</div>
+
+					<div class="surface demo-tile">
+						<div class="frame frame-hover frame-lg u-rounded-lg u-border"
+						     style="aspect-ratio:16/9;cursor:pointer;background:var(--bg-sunken)"></div>
+						<p class="spec"><b>.frame-lg.frame-hover</b> — two corners, media scale. Default colour is the craft amber.
+						   Note: not composable with <b>.pattern</b> — both paint on <b>::before</b></p>
+					</div>
+
+				</div>
+			</div>

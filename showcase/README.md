@@ -13,7 +13,7 @@ the link works and the entry is filled in honestly.
 4. Open a pull request titled `showcase: your-site-name`.
 
 The docs site reads every JSON file in this folder at build time, so your
-entry appears on the [Showcase page](https://swarnil.github.io/Creator-Design-System/showcase.html)
+entry appears on the [Showcase page](https://imswarnil.github.io/Swarnil-Design-System/showcase.html)
 as soon as the PR is merged.
 
 ## The fields

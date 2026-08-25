@@ -37,12 +37,12 @@ u += sec('getting-it', 'Getting it',
          'same CSS.')
 u += code('html',
           '<link rel="stylesheet"\n'
-          '      href="https://cdn.jsdelivr.net/gh/imswarnil/Creator-Design-System@main'
+          '      href="https://cdn.jsdelivr.net/gh/imswarnil/Swarnil-Design-System@main'
           '/dist/creator.min.css">',
           'the CDN — no install, no build, nothing to configure. Pin '
           '<code class="t-code">@main</code> to a tag for production')
 u += p('Or download <code class="t-code">dist/creator.css</code> from the '
-       '<a href="https://github.com/imswarnil/Creator-Design-System" rel="noopener">'
+       '<a href="https://github.com/imswarnil/Swarnil-Design-System" rel="noopener">'
        'repository</a> and link it. That is the whole installation — no init step, no config '
        'file, no runtime.')
 u += code('bash', 'npm install creator-design-system',

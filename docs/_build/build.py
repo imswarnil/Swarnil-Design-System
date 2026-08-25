@@ -18,7 +18,7 @@ OUT = HERE.parent
 REPO = HERE.parent.parent
 FRAG = HERE / 'fragments'
 V = '?v=cds25'
-SITE = 'https://creator.imswarnil.com'
+SITE = 'https://design.imswarnil.com'
 
 import content_start, content_usage, content_collection, content_layout, content_forms, content_components, content_misc, content_extra, content_navbar, content_site, content_explorer, content_all
 
@@ -442,7 +442,7 @@ TEMPLATE = '''<!DOCTYPE html>
 				<span class="nav-burger__box"><span class="nav-burger__bars"></span></span>
 				<span class="u-sr-only">Menu</span>
 			</button>
-			<a class="cds-gh" href="https://github.com/imswarnil/Creator-Design-System" rel="noopener" target="_blank">
+			<a class="cds-gh" href="https://github.com/imswarnil/Swarnil-Design-System" rel="noopener" target="_blank">
 				<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7C6.73 19.91 6.14 18 6.14 18a2.7 2.7 0 0 0-1.13-1.49c-.92-.63.07-.62.07-.62a2.14 2.14 0 0 1 1.56 1.05 2.17 2.17 0 0 0 2.96.85 2.18 2.18 0 0 1 .65-1.37c-2.23-.25-4.57-1.11-4.57-4.95a3.88 3.88 0 0 1 1.03-2.69 3.6 3.6 0 0 1 .1-2.65s.84-.27 2.75 1.03a9.47 9.47 0 0 1 5 0c1.91-1.3 2.75-1.03 2.75-1.03a3.6 3.6 0 0 1 .1 2.65 3.87 3.87 0 0 1 1.03 2.69c0 3.85-2.34 4.7-4.57 4.95a2.43 2.43 0 0 1 .69 1.88v2.79c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg><span>GitHub</span><span class="cds-gh__stars" data-gh-stars>★</span>
 			</a>{guides_btn}
 		</div>
@@ -464,7 +464,7 @@ TEMPLATE = '''<!DOCTYPE html>
 		</nav>
 		<div class="nav-sheet__foot">
 			<span class="t-slate-sm" style="color:var(--fg-faint)"><span class="dot dot-sm dot-live"></span> still rolling</span>
-			<a class="btn btn-primary btn-sm btn-pill" href="https://github.com/imswarnil/Creator-Design-System" rel="noopener">GitHub</a>
+			<a class="btn btn-primary btn-sm btn-pill" href="https://github.com/imswarnil/Swarnil-Design-System" rel="noopener">GitHub</a>
 		</div>
 	</div>
 </dialog>
@@ -529,7 +529,7 @@ TEMPLATE = '''<!DOCTYPE html>
 
 	var stars = document.querySelector('[data-gh-stars]');
 	if (stars) {{
-		fetch('https://api.github.com/repos/imswarnil/Creator-Design-System')
+		fetch('https://api.github.com/repos/imswarnil/Swarnil-Design-System')
 			.then(function (r) {{ return r.ok ? r.json() : null; }})
 			.then(function (d) {{ if (d && typeof d.stargazers_count === 'number') stars.textContent = d.stargazers_count.toLocaleString(); }})
 			.catch(function () {{}});
@@ -794,7 +794,7 @@ def write_llms(index):
          'runtime, no build step required to use it. Almost monochrome, so that one '
          'colour can carry meaning.', '',
          'Install: link '
-         '`https://cdn.jsdelivr.net/gh/imswarnil/Creator-Design-System@main/dist/creator.min.css`, '
+         '`https://cdn.jsdelivr.net/gh/imswarnil/Swarnil-Design-System@main/dist/creator.min.css`, '
          'or copy dist/creator.css out of the repository. The npm package '
          '(`creator-design-system`) is not published yet; the import paths below are the ones '
          'its exports map declares.', '',
