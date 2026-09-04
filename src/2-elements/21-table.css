@@ -43,7 +43,7 @@
 
 	/* Numbers are data. Tabular figures so the columns align. */
 	.table__num {
-		font-family: var(--font-slate);
+		font-family: var(--font-data);
 		font-variant-numeric: tabular-nums;
 		text-align: end;
 	}

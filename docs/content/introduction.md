@@ -46,7 +46,7 @@ The type system is two faces you read and one you do not.
   <p class="spec-display spec-2xl u-m-0">Space Grotesk sets the headlines</p>
   <p class="t-muted u-m-0">Inter sets everything you actually read, including labels — the same face worn small, uppercase and tracked.</p>
   <p class="t-label u-m-0 u-mt-4">A label, in Inter</p>
-  <p class="t-slate u-m-0">TAKE 47 · 00:12:47</p>
+  <p class="t-data u-m-0">TAKE 47 · 00:12:47</p>
 </div>
 :::
 

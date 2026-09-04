@@ -109,7 +109,7 @@ lead: A token-first, dependency-free CSS design system. Almost monochrome, so on
       <p class="t-small u-m-0">Uppercase and tracked is what makes a label read as a label. The monospace was never doing that work.</p>
     </article>
     <article class="feat">
-      <p class="t-slate u-m-0 u-mb-2">TAKE 47 · 00:12:47</p>
+      <p class="t-data u-m-0 u-mb-2">TAKE 47 · 00:12:47</p>
       <p class="t-small u-m-0">A timecode is data, so it takes the mono voice. This is the only kind of thing that does.</p>
     </article>
     <article class="feat">

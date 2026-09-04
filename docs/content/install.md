@@ -49,7 +49,7 @@ three family tokens anywhere you like and drop the `<link>`.
 :root {
   --font-display: "Your Display Face", sans-serif;
   --font-body:    "Your Body Face", sans-serif;
-  --font-slate:   "Your Mono", monospace;
+  --font-mono:    "Your Mono", monospace;
 }
 ```
 

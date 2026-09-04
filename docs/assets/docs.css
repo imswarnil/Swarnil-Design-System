@@ -156,7 +156,8 @@ body {
 .search__key {
 	position: absolute;
 	right: var(--space-2);
-	font-family: var(--font-slate);
+	font-family: var(--font-data);
+	font-variant-numeric: tabular-nums;
 	font-size: var(--text-2xs);
 	color: var(--fg-faint);
 	border: 1px solid var(--line-subtle);
@@ -440,7 +441,7 @@ body {
 
 /* Inline code. Mono here is correct — it is code. */
 .code {
-	font-family: var(--font-slate);
+	font-family: var(--font-mono);
 	font-size: 0.875em;
 	background: var(--bg-sunken);
 	border: 1px solid var(--line-subtle);
@@ -500,9 +501,9 @@ body {
 }
 
 .cb__lang {
-	font-family: var(--font-slate);
+	font-family: var(--font-mono);
 	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 	color: var(--fg-faint);
 }
@@ -511,7 +512,7 @@ body {
 	margin: 0;
 	padding: var(--space-4);
 	overflow-x: auto;
-	font-family: var(--font-slate);
+	font-family: var(--font-mono);
 	font-size: var(--text-sm);
 	line-height: 1.7;
 	tab-size: 2;
@@ -845,7 +846,7 @@ body {
 	justify-content: center;
 	padding-block-end: var(--space-1);
 	border-radius: var(--radius-sm);
-	font-family: var(--font-slate);
+	font-family: var(--font-data);
 	font-size: 0.625rem;
 	font-variant-numeric: tabular-nums;
 	color: var(--ink-900);

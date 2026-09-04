@@ -76,7 +76,8 @@
 	/* A shortcut hint is DATA, so it takes the mono voice. */
 	.menu__kbd {
 		margin-inline-start: auto;
-		font-family: var(--font-slate);
+		font-family: var(--font-data);
+		font-variant-numeric: tabular-nums;
 		font-size: var(--text-2xs);
 		color: var(--fg-faint);
 	}
@@ -286,7 +287,8 @@
 
 	.sheet__count {
 		margin-inline-start: auto;
-		font-family: var(--font-slate);
+		font-family: var(--font-data);
+		font-variant-numeric: tabular-nums;
 		font-size: var(--text-2xs);
 		color: var(--fg-faint);
 	}

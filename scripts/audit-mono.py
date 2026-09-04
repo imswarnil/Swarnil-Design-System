@@ -1,24 +1,23 @@
 #!/usr/bin/env python3
-"""audit-mono.py — keep the mono voice rare.
+"""audit-mono.py — keep monospace to code, and nothing else.
 
-PRINCIPLES #9: the mono voice is DATA only. Timecodes, counts, dimensions,
-coordinates, versions, code. The moment mono carries a sentence it stops
-meaning "this is data" and starts meaning "this is a terminal" — and a signal
-used everywhere is not a signal.
+The system has FOUR small voices and only one of them is monospace:
 
-The system has two small-uppercase voices and they are easy to confuse:
+    var(--font-label)   Inter, uppercase, tracked, semibold   GETTING STARTED
+    var(--font-data)    Inter, light, tracked, tabular        00:12:47
+    var(--font-mono)    IBM Plex Mono                         const x = 1
+    var(--font-body)    Inter                                 a sentence
 
-    var(--font-label)   Inter    a LABEL  — eyebrow, kicker, section header
-    var(--font-slate)   mono     DATA     — 00:12:47, 1280×720, v2.1.0
+Data used to be monospace here, on the usual argument that fixed-width glyphs
+make a column of numbers line up. That argument is true about the 1970s and
+false about Inter, which ships real TABULAR FIGURES — so alignment was never
+the reason. The reason was that mono LOOKS technical, and once everything
+technical is mono, mono stops meaning anything.
 
-This script fails the build when a new `font-family: var(--font-slate)` shows
-up outside the allowlist below. Adding to the allowlist is deliberate: you are
-asserting the thing being styled is data, not prose.
-
-It also catches the subtler bug — a rule that sets the mono TRACKING
-(--tracking-slate, 0.14em) while rendering in Inter. That value is tuned for
-monospace glyphs, which are already far apart; on a proportional face it
-spaces the text to shreds.
+So this script now enforces a much narrower rule than it used to: monospace is
+for code. It fails the build on any `font-family: var(--font-mono)` outside the
+allowlist below, and on any rule setting the DATA tracking while rendering in a
+face that is not the data voice.
 
     python3 scripts/audit-mono.py            report only
     python3 scripts/audit-mono.py --strict   exit 1 on any violation (CI)
@@ -33,53 +32,28 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 # Selectors whose content is genuinely data. Each one is an assertion that what
 # renders here could not be read aloud as a sentence.
 ALLOW = {
-    # Every entry is an assertion: what renders here is DATA, and could not be
-    # read aloud as a sentence.
+    # Monospace is allowed ONLY where it does real work: `l` `1` `I` and `O`
+    # `0` must be distinguishable, indentation must align, and a character
+    # count must mean something. That is code, and nothing else.
+    #
+    # Timecodes, counts and dimensions are NOT on this list any more. They are
+    # set in Inter with tabular figures, which aligns just as well — see the
+    # note at the top of 02-typography.css.
     'src/1-foundation/02-typography.css': {
-        '.t-slate, .t-slate-sm',   # the data voice itself
-    },
-    'src/1-foundation/10-frame.css': {
-        # Window and viewfinder chrome. Mono here means "this is a machine",
-        # which is the whole argument of the frame layer.
-        '.vf__tc, .vf__rec',                     # timecode + record readout
-        '.vf__dims',                             # 1280 x 720
-        '.win-term .win__body, .win-term__body', # literal terminal output
-        '.win-browser__url',                     # a URL
-    },
-    'src/3-components/31-card.css': {
-        '.card__stamp',        # a duration on the media, e.g. 12:04
-        '.card__author-meta',  # a date
-        '.card__price',        # a number that lines up across cards
-    },
-    'src/3-components/36-menu.css': {
-        '.menu__kbd',      # a keyboard shortcut, e.g. Cmd+,
-        '.sheet__count',   # an item count
-    },
-    'src/2-elements/20-badge.css': {
-        '.chip__count',   # a number
-        '.timecode',      # 00:14:22
-        '.kbd',           # a key
-    },
-    'src/2-elements/21-table.css': {
-        '.table__num',    # a numeric column, tabular figures
+        '.t-mono',   # the code helper itself
     },
     'src/2-elements/22-code.css': {
-        '.code',              # inline code
-        '.codeblock__lang',   # the language name
-        '.codeblock__pre',    # code
+        '.code',            # inline code
+        '.codeblock__lang', # a language name, e.g. "css"
+        '.codeblock__pre',  # a code block
     },
-    # ── docs site chrome ───────────────────────────────────────────────────
+    'src/1-foundation/10-frame.css': {
+        '.win-term .win__body, .win-term__body',   # literal terminal output
+    },
     'docs/assets/docs.css': {
-        '.ramp__step',   # the step number on a swatch, e.g. 500
-        '.code',         # inline code in prose
-        '.cb__lang',     # the language name on a code block
-        '.cb__pre',      # code
-        '.search__key',  # the "/" shortcut hint
-    },
-    'docs/assets/home.css': {
-        '.hero__tc',    # TAKE 47 . 00:12:47
-        '.hero__rec',   # REC
-        '.hero__dims',  # 1280 x 720
+        '.code',      # inline code in prose
+        '.cb__lang',  # a language name
+        '.cb__pre',   # a code block
     },
 }
 
@@ -135,19 +109,34 @@ def scan(path):
                 sel = ', '.join([*pending, head]) if head else ', '.join(pending)
             pending = []
 
-        if 'font-family' in s and 'var(--font-slate)' in s:
+        if 'font-family' in s and 'var(--font-mono)' in s:
             yield i + 1, sel or '(unknown)', 'mono'
-        elif 'var(--tracking-slate)' in s:
-            depth, mono = 0, False
-            for j in range(i, -1, -1):
-                depth += lines[j].count('}') - lines[j].count('{')
-                if 'font-family' in lines[j]:
-                    mono = 'var(--font-slate)' in lines[j]
+
+        elif 'font-family' in s and 'var(--font-data)' in s:
+            # TABULAR FIGURES ARE THE WHOLE ARGUMENT.
+            # Dropping monospace for data is only defensible because Inter's
+            # tabular numerals align just as well. A data-voice rule that
+            # forgets font-variant-numeric gives up the one property that
+            # justified the change, and a column of numbers goes ragged.
+            depth, tabular = 1, False
+            for j in range(i + 1, len(lines)):
+                depth += lines[j].count('{') - lines[j].count('}')
+                if depth <= 0:
                     break
-                if depth > 0:
-                    break
-            if not mono:
-                yield i + 1, sel or '(unknown)', 'tracking'
+                if 'tabular-nums' in lines[j]:
+                    tabular = True
+            # look backwards inside the same block too
+            if not tabular:
+                depth = 0
+                for j in range(i - 1, -1, -1):
+                    depth += lines[j].count('}') - lines[j].count('{')
+                    if depth > 0:
+                        break
+                    if 'tabular-nums' in lines[j]:
+                        tabular = True
+                        break
+            if not tabular:
+                yield i + 1, sel or '(unknown)', 'tabular'
 
 
 def main():
@@ -176,8 +165,10 @@ def main():
             print( '    If this is data, add it to ALLOW in scripts/audit-mono.py.')
             print( '    If it is a label, use var(--font-label).\n')
         else:
-            print(f'  {rel}:{line}\n    {sel}  uses --tracking-slate (0.14em) but does not render in mono.')
-            print( '    That value is tuned for monospace. Use --tracking-label (0.08em).\n')
+            print(f'  {rel}:{line}\n    {sel}  sets the data voice but not tabular figures.')
+            print( '    Tabular numerals are the whole reason data can leave monospace —')
+            print( '    without them a column of numbers goes ragged. Add:')
+            print( '        font-variant-numeric: tabular-nums;\n')
     return 1 if strict else 0
 
 
