@@ -1,0 +1,31 @@
+node_modules/
+.DS_Store
+*.log
+
+# Python bytecode
+__pycache__/
+*.pyc
+
+# Local editor launch config — machine-specific paths.
+.claude/
+
+# Local rebuild plan — working document, never committed.
+re-work.md
+
+# ── Nothing generated is committed (PRINCIPLES #10) ─────────────────────────
+# dist/ is built by `npm run build:css` and published from CI on a tag.
+dist/
+
+# docs/ currently holds BOTH the generator (docs/_build/) and its output.
+# Everything under docs/ is generated except the five paths re-included below;
+# `npm run docs` rebuilds the rest. Phase 5 splits this properly into
+# docs/ = source and site/ = output.
+docs/*
+!docs/_build/
+!docs/preview.css
+!docs/preview.js
+!docs/favicon.svg
+!docs/og.png
+
+# Built docs output, once Phase 5 lands.
+site/

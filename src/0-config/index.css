@@ -1,0 +1,14 @@
+/* =============================================================================
+   0 · CONFIG — must be imported before anything else
+
+   Nothing here paints. This layer exists so that the cascade order and any
+   typed custom-property registrations are established before the first rule
+   is parsed.
+
+   properties.css (@property registrations for animatable custom properties)
+   joins this folder in the phase that needs it — a registration for a token
+   that does not exist yet would be a lie in a file, so it is written when the
+   token is.
+   ========================================================================== */
+
+@import url('./layers.css');

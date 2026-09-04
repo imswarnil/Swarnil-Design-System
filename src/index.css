@@ -1,0 +1,30 @@
+/* =============================================================================
+   SWARNIL DESIGN SYSTEM
+   A token-first, dependency-free CSS design system. Almost monochrome, so one
+   colour can mean something.
+
+   This is the whole system. Import it and you get the cascade contract,
+   tokens, elements, components, sections and utilities. To take less, import
+   a layer directly:
+
+       @import "@imswarnil/swarnil-design/foundation";   tokens only
+       @import "@imswarnil/swarnil-design/components";   + the components
+
+   The creator layer is NOT included here: it exports to YouTube, Instagram and
+   print, not to a website. Import it explicitly if you make channel art:
+
+       @import "@imswarnil/swarnil-design/creator";
+
+   0-config MUST come first — it declares the @layer order, and that
+   declaration only binds the cascade if the browser reads it before any
+   layered rule. See src/0-config/layers.css and approach.md §2.
+
+   Docs: https://design.imswarnil.com
+   ========================================================================== */
+
+@import url('./0-config/index.css');
+@import url('./1-foundation/index.css');
+@import url('./2-elements/index.css');
+@import url('./3-components/index.css');
+@import url('./5-sections/index.css');
+@import url('./6-utilities/index.css');
