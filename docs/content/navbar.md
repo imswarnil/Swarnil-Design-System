@@ -46,12 +46,12 @@ and a nav without are the same component — not two.
 <header class="navbar navbar-bordered u-border u-rounded-lg">
   <a class="navbar__brand" href="#i"><span class="dot dot-accent"></span> Swarnil</a>
   <nav class="navbar__nav" aria-label="Main">
-    <a class="navbar__link" href="#i" aria-current="page"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M9 5v14l11-7z"/></svg>Watch</a>
-    <a class="navbar__link" href="#i"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M6 4h8l5 5v11H6zM14 4v5h5"/></svg>Docs</a>
-    <a class="navbar__link" href="#i"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M9 8l-4 4 4 4M15 8l4 4-4 4M13 5l-2 14"/></svg>Build</a>
+    <a class="navbar__link" href="#i" aria-current="page"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-play"/></svg>Watch</a>
+    <a class="navbar__link" href="#i"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-file"/></svg>Docs</a>
+    <a class="navbar__link" href="#i"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-code"/></svg>Build</a>
   </nav>
   <div class="navbar__actions">
-    <button class="btn btn-outline btn-sm btn-icon" type="button" aria-label="Search"><svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="10" cy="10" r="6"/><path d="M17 17l3 3"/></svg></button>
+    <button class="btn btn-outline btn-sm btn-icon" type="button" aria-label="Search"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-search"/></svg></button>
     <span class="avatar avatar-sm">S</span>
   </div>
 </header>
@@ -76,8 +76,8 @@ Every one of those is a bug in most hand-rolled dropdowns. **No JavaScript.**
     <button class="btn btn-outline btn-sm" type="button" popovertarget="demo-menu">Account</button>
     <div class="menu" id="demo-menu" popover>
       <p class="menu__label">Signed in as swarnil</p>
-      <a class="menu__item" href="#i"><svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>Profile</a>
-      <a class="menu__item" href="#i"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M4 8h8M16 8h4M4 16h4M12 16h8"/><circle cx="14" cy="8" r="2"/><circle cx="8" cy="16" r="2"/></svg>Settings<span class="menu__kbd">⌘,</span></a>
+      <a class="menu__item" href="#i"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-user"/></svg>Profile</a>
+      <a class="menu__item" href="#i"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-settings"/></svg>Settings<span class="menu__kbd">⌘,</span></a>
       <hr class="menu__sep" />
       <a class="menu__item" href="#i">Sign out</a>
     </div>
@@ -102,29 +102,29 @@ it is a directory nobody reads.
       <div class="menu-mega__col">
         <p class="menu__label">Watch</p>
         <a class="menu-mega__item" href="#i">
-          <span class="menu-mega__ico"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M9 5v14l11-7z"/></svg></span>
+          <span class="menu-mega__ico"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-play"/></svg></span>
           <span><span class="menu-mega__title">Episodes</span><span class="menu-mega__desc">Every build log, newest first.</span></span>
         </a>
         <a class="menu-mega__item" href="#i">
-          <span class="menu-mega__ico"><svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/></svg></span>
+          <span class="menu-mega__ico"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-record"/></svg></span>
           <span><span class="menu-mega__title">Live</span><span class="menu-mega__desc">What is on air right now.</span></span>
         </a>
       </div>
       <div class="menu-mega__col">
         <p class="menu__label">Learn</p>
         <a class="menu-mega__item" href="#i">
-          <span class="menu-mega__ico"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M6 4h8l5 5v11H6zM14 4v5h5"/></svg></span>
+          <span class="menu-mega__ico"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-file"/></svg></span>
           <span><span class="menu-mega__title">Courses</span><span class="menu-mega__desc">Long-form, start to finish.</span></span>
         </a>
         <a class="menu-mega__item" href="#i">
-          <span class="menu-mega__ico"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M9 8l-4 4 4 4M15 8l4 4-4 4M13 5l-2 14"/></svg></span>
+          <span class="menu-mega__ico"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-code"/></svg></span>
           <span><span class="menu-mega__title">Snippets</span><span class="menu-mega__desc">Small things worth stealing.</span></span>
         </a>
       </div>
       <div class="menu-mega__col">
         <p class="menu__label">Make</p>
         <a class="menu-mega__item" href="#i">
-          <span class="menu-mega__ico"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M4 9V6a2 2 0 0 1 2-2h3M15 4h3a2 2 0 0 1 2 2v3M20 15v3a2 2 0 0 1-2 2h-3M9 20H6a2 2 0 0 1-2-2v-3"/><circle cx="12" cy="12" r="3"/></svg></span>
+          <span class="menu-mega__ico"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-capture"/></svg></span>
           <span><span class="menu-mega__title">Thumbnails</span><span class="menu-mega__desc">Export at every safe size.</span></span>
         </a>
       </div>
@@ -154,20 +154,20 @@ class the JavaScript has to add and remove.
   <div class="sheet" id="demo-sheet" popover>
     <div class="sheet__head">
       <button class="btn btn-quiet btn-sm btn-icon" type="button" popovertarget="demo-sheet" popovertargetaction="hide" aria-label="Close">
-        <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        <svg class="icon icon-sm"><use href="/icons/sprite.svg#i-x"/></svg>
       </button>
       <span class="navbar__brand"><span class="dot dot-accent"></span> Swarnil</span>
     </div>
     <div class="sheet__body">
       <div class="sheet__group">
-        <a class="sheet__link" href="#i" aria-current="page"><svg class="icon" viewBox="0 0 24 24"><path d="M9 5v14l11-7z"/></svg>Watch<span class="sheet__count">128</span></a>
-        <a class="sheet__link" href="#i"><svg class="icon" viewBox="0 0 24 24"><path d="M6 4h8l5 5v11H6zM14 4v5h5"/></svg>Learn<span class="sheet__count">14</span></a>
-        <a class="sheet__link" href="#i"><svg class="icon" viewBox="0 0 24 24"><path d="M9 8l-4 4 4 4M15 8l4 4-4 4M13 5l-2 14"/></svg>Build<span class="sheet__count">31</span></a>
+        <a class="sheet__link" href="#i" aria-current="page"><svg class="icon"><use href="/icons/sprite.svg#i-play"/></svg>Watch<span class="sheet__count">128</span></a>
+        <a class="sheet__link" href="#i"><svg class="icon"><use href="/icons/sprite.svg#i-file"/></svg>Learn<span class="sheet__count">14</span></a>
+        <a class="sheet__link" href="#i"><svg class="icon"><use href="/icons/sprite.svg#i-code"/></svg>Build<span class="sheet__count">31</span></a>
       </div>
       <div class="sheet__group">
         <p class="sheet__label">Library</p>
-        <a class="sheet__link" href="#i"><svg class="icon" viewBox="0 0 24 24"><path d="M6 4h12v16l-6-4-6 4z"/></svg>Saved</a>
-        <a class="sheet__link" href="#i"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/></svg>History</a>
+        <a class="sheet__link" href="#i"><svg class="icon"><use href="/icons/sprite.svg#i-bookmark"/></svg>Saved</a>
+        <a class="sheet__link" href="#i"><svg class="icon"><use href="/icons/sprite.svg#i-clock"/></svg>History</a>
       </div>
     </div>
     <p class="sheet__foot">MIT &middot; built in the open</p>

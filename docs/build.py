@@ -378,6 +378,13 @@ def build_page(page, pages, shell):
         'lead_meta': html.escape(page.get('lead', '')),
         'canonical': f'{SITE}/{page["slug"]}.html',
         'group': html.escape(page.get('group', '')),
+        'crumbs': (
+            '<a class="crumbs__link" href="/">Home</a>'
+            f'<span class="crumbs__sep" aria-hidden="true">/</span>'
+            f'<span class="crumbs__link">{html.escape(page.get("group", ""))}</span>'
+            f'<span class="crumbs__sep" aria-hidden="true">/</span>'
+            f'<span class="crumbs__here" aria-current="page">{html.escape(page["title"])}</span>'
+        ),
         'v': V,
         'nav': nav_html(pages, page['slug']),
         'toc': toc_html(toc),
@@ -434,7 +441,7 @@ def main():
 
     # Assets the browser needs: the docs' own css/js, and the system itself.
     shutil.copytree(ASSETS, OUT / 'assets')
-    for name in ('src', 'icons'):
+    for name in ('src',):
         if (ROOT / name).is_dir():
             shutil.copytree(ROOT / name, OUT / name)
 
@@ -451,6 +458,18 @@ def main():
             css.write_text(stamped)
     if (ROOT / 'dist').is_dir():
         shutil.copytree(ROOT / 'dist', OUT / 'dist')
+
+    # The icon set is a separate package and a separate repo. Copying its
+    # built sprite in means the docs reference the REAL icons — if one is
+    # redrawn there, it changes here, and neither repo has to know how the
+    # other is built.
+    sprite = ROOT.parent / 'icons.imswarnil.com' / 'dist' / 'sprite.svg'
+    if sprite.exists():
+        (OUT / 'icons').mkdir(exist_ok=True)
+        shutil.copy(sprite, OUT / 'icons' / 'sprite.svg')
+    else:
+        print('  note: icon sprite not found — run `npm run build` in '
+              'icons.imswarnil.com to refresh it')
 
     (OUT / '.nojekyll').write_text('')
     (OUT / 'CNAME').write_text(SITE.split('//')[1] + '\n')

@@ -39,13 +39,11 @@
     "./components": "./src/3-components/index.css",
     "./utilities": "./src/6-utilities/index.css",
     "./src/*": "./src/*",
-    "./icons/*": "./icons/*",
     "./package.json": "./package.json"
   },
   "files": [
     "src",
     "dist",
-    "icons",
     "README.md",
     "LICENSE"
   ],
@@ -78,5 +76,8 @@
       "type": "github",
       "url": "https://github.com/sponsors/imswarnil"
     }
-  ]
+  ],
+  "dependencies": {
+    "@imswarnil/swarnil-icons": "file:../icons.imswarnil.com"
+  }
 }

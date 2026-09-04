@@ -22,7 +22,7 @@ lead: A token-first, dependency-free CSS design system. Almost monochrome, so on
     <span class="hero__rec">REC</span>
     <span class="hero__dims">1280 × 720 · 16:9</span>
     <span class="hero__play">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5-11-6.5Z"/></svg>
+      <svg class="icon icon-solid"><use href="/icons/sprite.svg#i-play"/></svg>
     </span>
   </div>
 </section>
@@ -35,42 +35,42 @@ lead: A token-first, dependency-free CSS design system. Almost monochrome, so on
   <div class="feats">
     <article class="feat frame frame-4 frame-hover">
       <span class="frame__tr"></span><span class="frame__bl"></span>
-      <span class="feat__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 20 7.5v9L12 21 4 16.5v-9L12 3Z"/><path d="M12 12v9M12 12 4 7.5M12 12l8-4.5"/></svg></span>
+      <span class="feat__ico"><svg class="icon"><use href="/icons/sprite.svg#i-box"/></svg></span>
       <h3>Token-first</h3>
       <p>Every value is a variable off a ladder. Nothing invents a number, so nothing drifts.</p>
     </article>
 
     <article class="feat frame frame-4 frame-hover">
       <span class="frame__tr"></span><span class="frame__bl"></span>
-      <span class="feat__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="8" stroke-dasharray="3 4"/></svg></span>
+      <span class="feat__ico"><svg class="icon"><use href="/icons/sprite.svg#i-aperture"/></svg></span>
       <h3>One rationed accent</h3>
       <p>Near-monochrome ink, so a single colour can mean <em>live</em>. Attention is budgeted, not sprayed.</p>
     </article>
 
     <article class="feat frame frame-4 frame-hover">
       <span class="frame__tr"></span><span class="frame__bl"></span>
-      <span class="feat__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4.5" width="17" height="13" rx="2"/><path d="M3.5 8.5h17M12 17.5V20M8 20h8"/></svg></span>
+      <span class="feat__ico"><svg class="icon"><use href="/icons/sprite.svg#i-browser"/></svg></span>
       <h3>The platform first</h3>
       <p>Native <code class="code">&lt;dialog&gt;</code>, <code class="code">&lt;details&gt;</code> and the Popover API. Keyboard and focus come free.</p>
     </article>
 
     <article class="feat frame frame-4 frame-hover">
       <span class="frame__tr"></span><span class="frame__bl"></span>
-      <span class="feat__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h4l2-5 3 10 2-5h5"/></svg></span>
+      <span class="feat__ico"><svg class="icon"><use href="/icons/sprite.svg#i-activity"/></svg></span>
       <h3>Honest motion</h3>
       <p>Under 200ms for feedback, one property at a time, and every animation off under reduced motion.</p>
     </article>
 
     <article class="feat frame frame-4 frame-hover">
       <span class="frame__tr"></span><span class="frame__bl"></span>
-      <span class="feat__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg></span>
+      <span class="feat__ico"><svg class="icon"><use href="/icons/sprite.svg#i-moon"/></svg></span>
       <h3>Dark is not an inversion</h3>
       <p>Surfaces lift with light, hairlines go translucent, shadow becomes elevation. One block of tokens.</p>
     </article>
 
     <article class="feat frame frame-4 frame-hover">
       <span class="frame__tr"></span><span class="frame__bl"></span>
-      <span class="feat__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h10M4 17h13"/></svg></span>
+      <span class="feat__ico"><svg class="icon"><use href="/icons/sprite.svg#i-type"/></svg></span>
       <h3>Mono means data</h3>
       <p>Timecodes, counts, dimensions, code. Never a sentence — and CI fails the build if that slips.</p>
     </article>

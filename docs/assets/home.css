@@ -24,7 +24,18 @@
 	margin-inline: auto;
 }
 
-.band + .band { margin-top: var(--space-24); }
+/* Each band is a section, and the rule above it is the divider — the same
+   idea as the docs pages, so the two halves of the site read as one thing.
+   The rule is inset to the band's own width rather than bleeding full-width,
+   which keeps it aligned with the content it separates. */
+.band + .band {
+	/* More space ABOVE the rule than below it. The divider opens the section
+	   that follows, so it belongs to that section — sitting exactly halfway
+	   between two blocks would make it belong to neither. */
+	margin-top: var(--space-16);
+	padding-top: var(--space-12);
+	border-top: 1px solid var(--line-subtle);
+}
 
 /* ── Hero ─────────────────────────────────────────────────────────────────── */
 
@@ -33,7 +44,7 @@
 	grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
 	gap: var(--space-12);
 	align-items: center;
-	padding-block: var(--space-16) var(--space-8);
+	padding-block: var(--space-16) var(--space-4);
 }
 
 .hero__eyebrow {
@@ -210,6 +221,7 @@
 	border: 1px solid var(--line-default);
 	border-radius: var(--radius-card);
 	background: var(--bg-surface);
+	min-block-size: 100%;
 	/* The camcorder brackets, from 12-frame.css. Brackets are the only hover
 	   feedback here, so nothing lifts — one hover answer, not two. */
 	--frame-size: 14px;
@@ -289,12 +301,34 @@
 
 .close-band .hero__cta { justify-content: center; }
 
+/* A ghost button takes its colour from --fg-muted, which is tuned for the page
+   background — on the inverse band it lands at roughly 2:1 against near-black
+   and effectively disappears. Buttons on an inverse surface have to be told
+   what "quiet" means there. */
+.close-band .btn-ghost {
+	--btn-fg: oklch(100% 0 0 / 0.85);
+	--btn-line: oklch(100% 0 0 / 0.25);
+	border-color: var(--btn-line);
+}
+
+.close-band .btn-ghost:hover {
+	--btn-fg: var(--ink-0);
+	--btn-bg: oklch(100% 0 0 / 0.08);
+	--btn-line: oklch(100% 0 0 / 0.45);
+}
+
 /* ── Footer ───────────────────────────────────────────────────────────────── */
 
+/* ── Footer ───────────────────────────────────────────────────────────────
+   Three strips: the brand and its line, a set of link columns, and a fine
+   print row. The columns are what stop a footer being a dead end — a reader
+   who scrolled all the way down is looking for somewhere to go next. */
+
 .home-foot {
-	margin-top: var(--space-24);
+	margin-top: var(--space-20);
 	border-top: 1px solid var(--line-subtle);
-	padding-block: var(--space-10);
+	background: var(--bg-sunken);
+	padding-block: var(--space-12) var(--space-8);
 }
 
 .home-foot__in {
@@ -303,21 +337,84 @@
 	padding-inline: var(--gutter);
 }
 
+.home-foot__top {
+	display: grid;
+	grid-template-columns: minmax(0, 1.4fr) repeat(auto-fit, minmax(8rem, 1fr));
+	gap: var(--space-10);
+	padding-bottom: var(--space-10);
+	border-bottom: 1px solid var(--line-subtle);
+}
+
 .home-foot__brand {
 	display: flex;
 	align-items: center;
 	gap: var(--space-2);
 	font-family: var(--font-display);
-	font-weight: var(--weight-semibold);
+	font-size: var(--text-lg);
+	font-weight: var(--weight-bold);
+	letter-spacing: var(--tracking-tight);
 	margin: 0;
 }
 
-.home-foot__note { color: var(--fg-muted); margin: var(--space-2) 0 0; }
+.home-foot__note {
+	color: var(--fg-muted);
+	margin: var(--space-3) 0 0;
+	max-width: 26rem;
+	font-size: var(--text-sm);
+}
+
+.foot-col { display: flex; flex-direction: column; gap: var(--space-2); }
+
+.foot-col__head {
+	font-family: var(--font-label);
+	font-size: var(--text-2xs);
+	font-weight: var(--weight-semibold);
+	letter-spacing: var(--tracking-label);
+	text-transform: uppercase;
+	color: var(--fg-faint);
+	margin: 0 0 var(--space-1);
+}
+
+.foot-col a {
+	font-size: var(--text-sm);
+	color: var(--fg-muted);
+	text-decoration: none;
+	transition: color var(--dur-1) var(--ease-out);
+}
+
+.foot-col a:hover { color: var(--fg-default); }
+
+.home-foot__bottom {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--space-3);
+	padding-top: var(--space-6);
+}
 
 .home-foot__fine {
 	font-size: var(--text-sm);
 	color: var(--fg-faint);
-	margin: var(--space-4) 0 0;
+	margin: 0;
+}
+
+/* "Still rolling" — the record dot ends the page the way the bar opened it. */
+.home-foot__rec {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-2);
+	font-family: var(--font-data);
+	font-size: var(--text-2xs);
+	font-weight: var(--weight-light);
+	letter-spacing: var(--tracking-label);
+	font-variant-numeric: tabular-nums;
+	text-transform: uppercase;
+	color: var(--fg-faint);
+}
+
+@media (max-width: 48rem) {
+	.home-foot__top { grid-template-columns: minmax(0, 1fr); gap: var(--space-8); }
 }
 
 /* ── Responsive ───────────────────────────────────────────────────────────── */
@@ -325,7 +422,7 @@
 @media (max-width: 60rem) {
 	.hero,
 	.install { grid-template-columns: minmax(0, 1fr); }
-	.hero { padding-block: var(--space-10) var(--space-6); }
+	.hero { padding-block: var(--space-10) var(--space-4); }
 	.hero__title { font-size: var(--text-4xl); }
 	.barlink { display: none; }
 	.install { padding: var(--space-6); }
