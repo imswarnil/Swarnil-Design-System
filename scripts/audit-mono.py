@@ -46,6 +46,10 @@ ALLOW = {
         '.win-term .win__body, .win-term__body', # literal terminal output
         '.win-browser__url',                     # a URL
     },
+    'src/3-components/36-menu.css': {
+        '.menu__kbd',      # a keyboard shortcut, e.g. Cmd+,
+        '.sheet__count',   # an item count
+    },
     'src/2-elements/20-badge.css': {
         '.chip__count',   # a number
         '.timecode',      # 00:14:22

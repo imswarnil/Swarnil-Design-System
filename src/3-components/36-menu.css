@@ -1,0 +1,316 @@
+/* =============================================================================
+   36 · MENU — dropdown, mega panel, and the mobile drawer
+
+   Everything that opens OUT of the navbar. Split from the bar itself because
+   they are different problems: the bar is layout, these are overlays.
+
+   BUILT ON THE PLATFORM (PRINCIPLES #4)
+   All three use the Popover API. That is not a stylistic preference — it buys
+   four behaviours that are genuinely hard to rebuild and easy to get wrong:
+
+     · Escape closes it
+     · clicking outside closes it ("light dismiss")
+     · it renders in the top layer, so it cannot be clipped by an ancestor's
+       overflow:hidden or trapped under a stacking context
+     · focus returns to the trigger on close
+
+   Every one of those is a bug in most hand-rolled dropdowns. The fallback for
+   a browser without popover is a plain <details>, which is still keyboard
+   operable — worse, but never broken.
+
+   Layer: components.
+   ========================================================================== */
+
+@layer components {
+
+	/* ── Shared panel shell ────────────────────────────────────────────────── */
+
+	.menu {
+		--menu-w: 15rem;
+		--menu-pad: var(--space-2);
+
+		inline-size: var(--menu-w);
+		padding: var(--menu-pad);
+		border: var(--border-hair) solid var(--line-default);
+		border-radius: var(--radius-lg);
+		background: var(--bg-raised);
+		box-shadow: var(--elevation-3);
+		color: var(--fg-default);
+		position: absolute;
+		margin: 0;
+		inset: auto;
+	}
+
+	/* :popover-open is the state selector the platform gives us — no class to
+	   keep in sync, and it cannot disagree with whether the popover is open. */
+	.menu:popover-open {
+		animation: fx-rise var(--dur-3) var(--ease-out);
+	}
+
+	.menu::backdrop { background: transparent; }
+
+	/* ── Items ─────────────────────────────────────────────────────────────── */
+
+	.menu__item {
+		display: flex;
+		align-items: center;
+		gap: var(--space-3);
+		inline-size: 100%;
+		padding: var(--space-2) var(--space-3);
+		border-radius: var(--radius-control);
+		font-size: var(--text-sm);
+		color: var(--fg-muted);
+		text-decoration: none;
+		text-align: start;
+		white-space: nowrap;
+		transition: color var(--dur-1) var(--ease-out), background-color var(--dur-1) var(--ease-out);
+	}
+
+	.menu__item:hover,
+	.menu__item:focus-visible { background: var(--hover-wash); color: var(--fg-default); }
+	.menu__item .icon { --icon-size: 1rem; color: var(--fg-faint); }
+	.menu__item:hover .icon { color: var(--accent); }
+
+	.menu__item[aria-current='true'] { color: var(--fg-default); font-weight: var(--weight-semibold); }
+
+	/* A shortcut hint is DATA, so it takes the mono voice. */
+	.menu__kbd {
+		margin-inline-start: auto;
+		font-family: var(--font-slate);
+		font-size: var(--text-2xs);
+		color: var(--fg-faint);
+	}
+
+	.menu__label {
+		padding: var(--space-2) var(--space-3) var(--space-1);
+		font-family: var(--font-label);
+		font-size: var(--text-2xs);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: var(--fg-faint);
+	}
+
+	.menu__sep {
+		block-size: var(--border-hair);
+		background: var(--line-subtle);
+		margin-block: var(--space-2);
+		border: 0;
+	}
+
+	.menu-end { --menu-w: 13rem; }
+
+	/* ── Mega panel — the large dropdown ───────────────────────────────────
+	   A full-width sheet of grouped links with room for a description under
+	   each. Use it when a flat list would be twenty items long: twenty items
+	   is not a menu, it is a directory nobody reads. */
+
+	.menu-mega {
+		--menu-w: min(56rem, calc(100vw - var(--space-8)));
+		--mega-col: 15rem;
+		padding: var(--space-6);
+	}
+
+	.menu-mega__grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(var(--mega-col), 100%), 1fr));
+		gap: var(--space-6);
+	}
+
+	.menu-mega__col { display: flex; flex-direction: column; gap: var(--space-1); }
+
+	.menu-mega__item {
+		display: flex;
+		gap: var(--space-3);
+		padding: var(--space-3);
+		border-radius: var(--radius-lg);
+		text-decoration: none;
+		color: inherit;
+		transition: background-color var(--dur-1) var(--ease-out);
+	}
+
+	.menu-mega__item:hover { background: var(--hover-wash); }
+
+	.menu-mega__ico {
+		display: grid;
+		place-items: center;
+		inline-size: 2.25rem;
+		block-size: 2.25rem;
+		flex: none;
+		border-radius: var(--radius-md);
+		background: var(--accent-soft);
+		color: var(--accent-soft-fg);
+	}
+
+	.menu-mega__title { font-weight: var(--weight-semibold); font-size: var(--text-sm); }
+	.menu-mega__desc { font-size: var(--text-xs); color: var(--fg-muted); line-height: var(--leading-normal); }
+
+	/* A closing strip across the bottom of the panel. */
+	.menu-mega__foot {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-3);
+		margin-block-start: var(--space-5);
+		padding-block-start: var(--space-4);
+		border-block-start: var(--border-hair) solid var(--line-subtle);
+	}
+
+	/* ── The drawer — the hamburger's panel ────────────────────────────────
+	   A full-height sheet that slides in from the inline start, the way a
+	   video site's navigation does: sections separated by rules, generous
+	   44px rows, and the active row marked with a dot rather than a fill.
+
+	   It is a popover too, so Escape and click-outside are free. */
+
+	.sheet {
+		--sheet-w: 17.5rem;
+
+		position: fixed;
+		inset-block: 0;
+		inset-inline-start: 0;
+		inline-size: var(--sheet-w);
+		max-inline-size: 86vw;
+		margin: 0;
+		padding: 0;
+		border: 0;
+		border-inline-end: var(--border-hair) solid var(--line-default);
+		background: var(--bg-canvas);
+		color: var(--fg-default);
+		overflow-y: auto;
+		overscroll-behavior: contain;
+		translate: -100% 0;
+		transition:
+			translate var(--dur-4) var(--ease-out),
+			display var(--dur-4) allow-discrete,
+			overlay var(--dur-4) allow-discrete;
+	}
+
+	.sheet:popover-open { translate: 0 0; }
+
+	/* The entry animation needs a starting style, or the panel simply appears
+	   at its final position — `display` cannot be interpolated without it. */
+	@starting-style {
+		.sheet:popover-open { translate: -100% 0; }
+	}
+
+	.sheet::backdrop {
+		background: var(--bg-scrim);
+		opacity: 0;
+		transition: opacity var(--dur-4) var(--ease-out), display var(--dur-4) allow-discrete;
+	}
+
+	.sheet:popover-open::backdrop { opacity: 1; }
+
+	@starting-style {
+		.sheet:popover-open::backdrop { opacity: 0; }
+	}
+
+	.sheet-end {
+		inset-inline-start: auto;
+		inset-inline-end: 0;
+		border-inline: var(--border-hair) solid var(--line-default) 0;
+		translate: 100% 0;
+	}
+
+	.sheet-end:popover-open { translate: 0 0; }
+
+	@starting-style {
+		.sheet-end:popover-open { translate: 100% 0; }
+	}
+
+	.sheet__head {
+		display: flex;
+		align-items: center;
+		gap: var(--space-3);
+		block-size: 3.5rem;
+		padding-inline: var(--space-4);
+		border-block-end: var(--border-hair) solid var(--line-subtle);
+		position: sticky;
+		inset-block-start: 0;
+		background: var(--bg-canvas);
+		z-index: var(--z-raised);
+	}
+
+	.sheet__body { padding: var(--space-3) var(--space-2); }
+
+	.sheet__group + .sheet__group {
+		margin-block-start: var(--space-3);
+		padding-block-start: var(--space-3);
+		border-block-start: var(--border-hair) solid var(--line-subtle);
+	}
+
+	.sheet__label {
+		padding: var(--space-2) var(--space-4);
+		font-family: var(--font-label);
+		font-size: var(--text-2xs);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: var(--fg-faint);
+	}
+
+	/* 44px rows — a drawer is a touch target by definition. */
+	.sheet__link {
+		display: flex;
+		align-items: center;
+		gap: var(--space-4);
+		min-block-size: 2.75rem;
+		padding-inline: var(--space-4);
+		border-radius: var(--radius-control);
+		font-size: var(--text-sm);
+		color: var(--fg-muted);
+		text-decoration: none;
+		position: relative;
+		transition: color var(--dur-1) var(--ease-out), background-color var(--dur-1) var(--ease-out);
+	}
+
+	.sheet__link:hover { background: var(--hover-wash); color: var(--fg-default); }
+	.sheet__link .icon { --icon-size: 1.25rem; flex: none; }
+
+	.sheet__link[aria-current='page'] {
+		color: var(--fg-default);
+		font-weight: var(--weight-semibold);
+	}
+
+	.sheet__link[aria-current='page']::before {
+		content: '';
+		position: absolute;
+		inset-inline-start: 0;
+		inline-size: var(--dot-sm);
+		block-size: var(--dot-sm);
+		border-radius: var(--radius-full);
+		background: var(--accent);
+	}
+
+	.sheet__count {
+		margin-inline-start: auto;
+		font-family: var(--font-slate);
+		font-size: var(--text-2xs);
+		color: var(--fg-faint);
+	}
+
+	.sheet__foot {
+		padding: var(--space-5) var(--space-4);
+		border-block-start: var(--border-hair) solid var(--line-subtle);
+		font-size: var(--text-xs);
+		color: var(--fg-faint);
+	}
+
+	/* Reduced motion: the panel still opens, it just stops travelling. The
+	   durations already collapse to 1ms globally. */
+	@media (prefers-reduced-motion: reduce) {
+		.sheet,
+		.sheet-end { translate: 0 0; }
+
+		.menu:popover-open { animation: fx-fade var(--dur-2) var(--ease-out); }
+	}
+
+	/* ── Fallback: <details> where popover is unsupported ──────────────────
+	   Worse — no light dismiss, no top layer — but never broken. */
+
+	.menu-fallback > summary { list-style: none; cursor: pointer; }
+	.menu-fallback > summary::-webkit-details-marker { display: none; }
+	.menu-fallback[open] > .menu { display: block; position: absolute; }
+}

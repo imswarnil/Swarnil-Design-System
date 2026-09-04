@@ -410,8 +410,17 @@ body {
 	text-wrap: pretty;
 }
 
-.doc a { color: var(--fg-link); text-underline-offset: 0.2em; }
-.doc a:hover { color: var(--fg-link-hover); }
+/* Prose links only. Scoped to the elements prose actually lives in, because
+   an unscoped `.doc a` also repaints every link INSIDE a demo — which made the
+   navbar example render its whole nav in link colour and quietly contradicted
+   the component it was documenting. A demo has to show the component, not the
+   page it happens to sit on. */
+.doc :is(p, li, td, th, blockquote) a {
+	color: var(--fg-link);
+	text-underline-offset: 0.2em;
+}
+
+.doc :is(p, li, td, th, blockquote) a:hover { color: var(--fg-link-hover); }
 .doc strong { color: var(--fg-default); font-weight: var(--weight-semibold); }
 
 .list { margin: var(--space-4) 0; padding-left: var(--space-5); color: var(--fg-muted); }
