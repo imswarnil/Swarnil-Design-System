@@ -229,6 +229,9 @@ body {
 .themebtn:hover,
 .ghbtn:hover { border-color: var(--line-strong); background: var(--bg-sunken); }
 
+.ghbtn .icon { --icon-size: 0.875rem; }
+.ghbtn:hover .icon { fill: var(--craft); stroke: var(--craft); }
+
 .themebtn__label { font-variant-numeric: tabular-nums; }
 
 .themebtn__dot {
@@ -341,6 +344,33 @@ body {
 	background: var(--accent);
 	translate: -50% -50%;
 }
+
+/* The sidebar's own footer: the two things a reader who lives in these docs
+   actually reaches for. The edit link goes straight to THIS page's markdown
+   on GitHub — a docs site whose fix is one click away collects fixes. */
+.side__foot {
+	margin-block-start: var(--space-6);
+	padding-block-start: var(--space-4);
+	border-block-start: 1px solid var(--line-subtle);
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-1);
+}
+
+.side__foot-link {
+	display: flex;
+	align-items: center;
+	gap: var(--space-2);
+	padding: var(--space-2) var(--space-3);
+	border-radius: var(--radius-md);
+	font-size: var(--text-xs);
+	color: var(--fg-faint);
+	text-decoration: none;
+	transition: color var(--dur-1) var(--ease-out);
+}
+
+.side__foot-link:hover { color: var(--fg-default); }
+.side__foot-link .icon { --icon-size: 0.875rem; }
 
 /* ── Main column ──────────────────────────────────────────────────────────── */
 
@@ -1160,6 +1190,25 @@ body {
    Replaces the bare group kicker. A kicker tells you which group you are in;
    a breadcrumb tells you that AND gets you back out, which is the part a
    reader three levels deep actually wants. */
+
+/* The slate above the title — production metadata, like the top of a camera
+   report. Crumbs on the left, the take counter on the right. */
+.doc__slate {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: var(--space-4);
+}
+
+.doc__take {
+	font-family: var(--font-data);
+	font-weight: var(--weight-light);
+	font-size: var(--text-2xs);
+	letter-spacing: var(--tracking-data);
+	font-variant-numeric: tabular-nums;
+	color: var(--fg-faint);
+	white-space: nowrap;
+}
 
 .crumbs {
 	display: flex;

@@ -8,6 +8,27 @@ lead: The house rules. They are public because they are the reason to choose thi
 A design system is not a collection of assets. It is a collection of decisions. These
 are the decisions, and the reason each one exists.
 
+## 0 · The tone: everything comes from the camera
+
+The system's visual language is **recording equipment** — the camcorder, the
+VHS deck, the edit bay, the photographer's contact sheet. Not as decoration; as
+the source every metaphor must be drawn from.
+
+| Device | Where it lives |
+| --- | --- |
+| The viewfinder | corner brackets, `.frame`, the hover that finds focus |
+| The record light | the accent, the live dot, every active state |
+| The timecode | the data voice — a VCR's on-screen display was the original |
+| The slate | breadcrumbs + take counter above every doc title |
+| The tape | scanlines, the `SP` mode badge, "TAKE 01" chapter kickers |
+| The timeline | the table of contents, with a playhead and chapters |
+
+The rule that keeps it coherent: **if the device does not exist on a camera, a
+tape deck or an edit bay, it does not belong in this system.** A metaphor pool
+with one source stays a language; a metaphor pool with three sources is a mood
+board. This is also why the corner brackets never decorate a blog card —
+nothing was recorded there, so the viewfinder has no business framing it.
+
 ## 1 · One accent, rationed
 
 The system is almost monochrome so that a single colour can mean something. Adding a

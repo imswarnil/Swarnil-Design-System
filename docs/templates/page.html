@@ -62,7 +62,7 @@ try {
       <span class="themebtn__dot" aria-hidden="true"></span>
       <span class="themebtn__label" data-theme-label>Light</span>
     </button>
-    <a class="ghbtn" href="https://github.com/imswarnil/swarnil-design" rel="noopener">GitHub</a>
+    <a class="ghbtn" href="https://github.com/imswarnil/swarnil-design" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-star"/></svg>Star</a>
   </div>
 </header>
 
@@ -71,11 +71,18 @@ try {
     <nav class="nav" aria-label="Documentation">
       {nav}
     </nav>
+    <div class="side__foot">
+      <a class="side__foot-link" href="{editurl}" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-edit"/></svg>Edit this page</a>
+      <a class="side__foot-link" href="https://github.com/imswarnil/swarnil-design/blob/main/CONTRIBUTING.md" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-heart"/></svg>Contribute</a>
+    </div>
   </aside>
 
   <main class="main" id="main">
     <article class="doc">
-      <nav class="crumbs" aria-label="Breadcrumb">{crumbs}</nav>
+      <div class="doc__slate">
+        <nav class="crumbs" aria-label="Breadcrumb">{crumbs}</nav>
+        <span class="doc__take" aria-hidden="true">{take}</span>
+      </div>
       <h1 class="doc__title">{title}</h1>
       {lead}
       {body}

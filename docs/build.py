@@ -393,12 +393,15 @@ def build_page(page, pages, shell):
 
     # Plain token replacement, not str.format: the shell contains real
     # JavaScript, and every brace in it would otherwise need doubling.
+    take = f'TAKE {idx + 1:02d} / {len(pages):02d}' if idx >= 0 else ''
     fields = {
         'title': html.escape(page['title']),
         'name': NAME,
         'lead_meta': html.escape(page.get('lead', '')),
         'canonical': f'{SITE}/{page["slug"]}.html',
         'group': html.escape(page.get('group', '')),
+        'take': take,
+        'editurl': f'https://github.com/imswarnil/swarnil-design/edit/main/docs/content/{page["slug"]}.md',
         'crumbs': (
             '<a class="crumbs__link" href="/">Home</a>'
             f'<span class="crumbs__sep" aria-hidden="true">/</span>'

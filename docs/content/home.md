@@ -21,6 +21,8 @@ lead: A token-first, dependency-free CSS design system. Almost monochrome, so on
     <span class="hero__tc">TAKE 47 · 00:12:47</span>
     <span class="hero__rec">REC</span>
     <span class="hero__dims">1280 × 720 · 16:9</span>
+    <span class="hero__mode">SP</span>
+    <span class="hero__scan"></span>
     <span class="hero__play">
       <svg class="icon icon-solid"><use href="/icons/sprite.svg#i-play"/></svg>
     </span>
@@ -28,7 +30,7 @@ lead: A token-first, dependency-free CSS design system. Almost monochrome, so on
 </section>
 
 <section class="band">
-  <p class="sec__kicker">Why it exists</p>
+  <p class="sec__kicker"><span class="sec__take">TAKE 01</span>Why it exists</p>
   <h2 class="sec__title">Opinions, so you can stop having them</h2>
   <p class="sec__lead">Six decisions, made once and written down, so you are not standing at 2am asking whether this should be 16px or 20px.</p>
 
@@ -80,7 +82,7 @@ lead: A token-first, dependency-free CSS design system. Almost monochrome, so on
 <section class="band">
   <div class="install">
     <div>
-      <p class="sec__kicker">Install</p>
+      <p class="sec__kicker"><span class="sec__take">TAKE 02</span>Install</p>
       <h2 class="sec__title">Three lines, any stack</h2>
       <p class="sec__lead">It is CSS. Link it, or import it. There is no configuration file and nothing to compile.</p>
     </div>
@@ -99,7 +101,7 @@ lead: A token-first, dependency-free CSS design system. Almost monochrome, so on
 </section>
 
 <section class="band">
-  <p class="sec__kicker">The two voices</p>
+  <p class="sec__kicker"><span class="sec__take">TAKE 03</span>The two voices</p>
   <h2 class="sec__title">Type that knows what it is saying</h2>
   <p class="sec__lead">Space Grotesk for display, Inter for everything you read — including labels, which are the same face worn small and tracked. Monospace appears only where the content is data.</p>
 
@@ -120,7 +122,7 @@ lead: A token-first, dependency-free CSS design system. Almost monochrome, so on
 </section>
 
 <section class="band">
-  <p class="sec__kicker">The numbers</p>
+  <p class="sec__kicker"><span class="sec__take">TAKE 04</span>The numbers</p>
   <h2 class="sec__title">Small enough to read in an afternoon</h2>
   <p class="sec__lead">Every figure below is measured by the build, not claimed. When one drifts, CI knows before the page does.</p>
 
@@ -146,7 +148,7 @@ lead: A token-first, dependency-free CSS design system. Almost monochrome, so on
 
 <section class="band">
   <div class="close-band">
-    <p class="sec__kicker">Open source</p>
+    <p class="sec__kicker"><span class="sec__take">TAKE 05</span>Open source</p>
     <h2 class="sec__title">Free forever. MIT.</h2>
     <p>Built in the open, for a site that actually ships. If it saves you a weekend, a star is plenty.</p>
     <div class="hero__cta">
