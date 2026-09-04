@@ -2,10 +2,10 @@
 title: Overlay
 group: Components
 order: 40
-lead: Dialog, tooltip, accordion, toast — everything that floats, built on the platform.
+lead: Dialog, tooltip, toast — the things that float, built on the platform.
 ---
 
-Four components, one principle: the platform already ships the hard part.
+Three components, one principle: the platform already ships the hard part.
 
 ## Dialog
 
@@ -52,32 +52,6 @@ mouse user's copy of it, not the accessible name.
 CSS only — a hover label does not deserve JavaScript. On touch it hides
 entirely: long-press means something else there, and `aria-label` is the real
 name.
-
-## Accordion
-
-`<details>`/`<summary>`. Keyboard toggling and state come free, and browsers
-search **closed** panels and auto-open the one with the match — behaviour
-nobody reimplements correctly. Same-`name` panels are exclusive without
-JavaScript.
-
-:::demo One open at a time — the platform's name attribute
-<div>
-  <details class="acc" name="faq">
-    <summary>Does it work without JavaScript?</summary>
-    <div class="acc__body">Yes. Every overlay here is a platform element; script only adds polish.</div>
-  </details>
-  <details class="acc" name="faq">
-    <summary>Why does opening one close the other?</summary>
-    <div class="acc__body">They share a <code class="code">name</code>. That is the whole exclusive-accordion implementation.</div>
-  </details>
-  <details class="acc" name="faq">
-    <summary>Does the height animate?</summary>
-    <div class="acc__body">Where <code class="code">interpolate-size</code> ships, yes — the modern answer to animating to <code class="code">height: auto</code>. Elsewhere it snaps, which downgrades polish, not function.</div>
-  </details>
-</div>
-:::
-
-Variants: `acc-boxed`, `acc-flush`, `acc-quiet`.
 
 ## Toast
 

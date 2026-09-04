@@ -30,8 +30,7 @@
 	/* ── Parts ─────────────────────────────────────────────────────────────── */
 
 	.card__media {
-		--ratio: 16 / 9;
-		aspect-ratio: var(--ratio);
+		aspect-ratio: var(--card-ratio, 16 / 9);
 		background: var(--bg-media);
 		overflow: hidden;
 	}
@@ -117,6 +116,25 @@
 		font-size: var(--text-2xs);
 		font-variant-numeric: tabular-nums;
 	}
+
+	/* A play control over the media — the record light's sibling. Decorative
+	   when the whole card is the link (the stretched link is the control). */
+	.card__play {
+		position: absolute;
+		inset: 0;
+		margin: auto;
+		inline-size: 3rem;
+		block-size: 3rem;
+		display: grid;
+		place-items: center;
+		border-radius: var(--radius-full);
+		background: color-mix(in oklab, var(--ink-1000) 55%, transparent);
+		color: var(--ink-0);
+		backdrop-filter: blur(4px);
+		transition: scale var(--dur-2) var(--ease-out), background-color var(--dur-2) var(--ease-out);
+	}
+
+	.card:hover .card__play { scale: 1.08; background: var(--accent); }
 
 	/* ── Body extras ───────────────────────────────────────────────────────── */
 
@@ -282,6 +300,23 @@
 	.card-inverse .card__title { color: var(--fg-on-inverse); }
 	.card-inverse .card__excerpt,
 	.card-inverse .card__meta { color: oklch(100% 0 0 / 0.65); }
+
+	/* ── Content types ─────────────────────────────────────────────────────
+	   One variable does the shape work: --card-ratio feeds the media's
+	   aspect-ratio, so a content type is mostly a named ratio plus which parts
+	   the recipe uses. The docs card page shows each full recipe.
+
+	     video    16:9  (the default)   __stamp for duration, __play
+	     reel      9:16                 vertical short — cap the width
+	     movie     2:3                  the poster wall
+	     square    1:1                  covers, gallery tiles
+	     post     16:9 + __author       editorial
+	     project  __tags + __footer     repo/status shape                    */
+
+	.card-video  { --card-ratio: 16 / 9; }
+	.card-reel   { --card-ratio: 9 / 16; max-inline-size: 15rem; }
+	.card-movie  { --card-ratio: 2 / 3; }
+	.card-square { --card-ratio: 1; }
 
 	/* ── Responsive ────────────────────────────────────────────────────────
 	   A container query, not a media query: a card in a 300px sidebar and a

@@ -69,3 +69,64 @@
 		}
 	}
 }
+
+/* ── Micro-interactions — the applied layer ──────────────────────────────
+   The keyframes above are vocabulary; these are the sentences. All honest
+   (PRINCIPLES #5): one property at a time, feedback under 200ms, the resting
+   state reachable if an animation never runs, and everything quiet under
+   reduced motion because the duration tokens collapse to 1ms. */
+
+@layer elements {
+
+	/* Entrances. `both` keeps the first frame, so nothing flashes unstyled. */
+	.fx-rise { animation: fx-rise var(--dur-4) var(--ease-out) both; }
+	.fx-fade { animation: fx-fade var(--dur-3) var(--ease-out) both; }
+
+	/* Stagger a group: each child waits one beat longer than the last. */
+	.fx-stagger > * { animation: fx-rise var(--dur-4) var(--ease-out) both; }
+	.fx-stagger > :nth-child(2) { animation-delay: 60ms; }
+	.fx-stagger > :nth-child(3) { animation-delay: 120ms; }
+	.fx-stagger > :nth-child(4) { animation-delay: 180ms; }
+	.fx-stagger > :nth-child(5) { animation-delay: 240ms; }
+	.fx-stagger > :nth-child(n+6) { animation-delay: 300ms; }
+
+	/* States. */
+	.fx-pulse { animation: fx-pulse 2s var(--ease-inout) infinite; }
+	.fx-spin  { animation: fx-spin 0.7s linear infinite; }
+
+	/* Hover lift — guarded, because touch has no hover to un-lift. */
+	@media (hover: hover) and (pointer: fine) {
+		.fx-lift { transition: translate var(--dur-2) var(--ease-out), box-shadow var(--dur-3) var(--ease-out); }
+		.fx-lift:hover { translate: 0 -2px; box-shadow: var(--elevation-2); }
+	}
+
+	/* Press: the click acknowledged in the finger. */
+	.fx-press { transition: scale var(--dur-1) var(--ease-out); }
+	.fx-press:active { scale: 0.97; }
+
+	@media (prefers-reduced-motion: reduce) {
+		.fx-rise, .fx-fade, .fx-stagger > * { animation: fx-fade 1ms linear both; }
+		.fx-pulse, .fx-spin { animation: none; }
+		.fx-lift, .fx-lift:hover { translate: 0 0; box-shadow: none; }
+	}
+}
+
+/* ── Page transitions ─────────────────────────────────────────────────────
+   Cross-document view transitions: one rule opts a same-origin site into
+   animated navigation, and the browser snapshots old and new for us. The
+   default here is a fast cross-fade — the honest one, because a fade never
+   claims spatial relationships the pages do not have. Browsers without
+   support (or users with reduced motion) get an instant navigation, which is
+   the correct fallback rather than a missing feature. */
+
+@view-transition {
+	navigation: auto;
+}
+
+::view-transition-old(root) { animation: fx-fade var(--dur-2) var(--ease-out) reverse both; }
+::view-transition-new(root) { animation: fx-fade var(--dur-3) var(--ease-out) both; }
+
+@media (prefers-reduced-motion: reduce) {
+	::view-transition-old(root),
+	::view-transition-new(root) { animation: none; }
+}
