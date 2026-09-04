@@ -38,10 +38,16 @@ EXPECT_UNUSED_PREFIX = ('kg-',)      # Ghost editor output classes
 
 
 def css_sources():
+    """The system, plus the docs site's own chrome.
+
+    The chrome is included so a class used only by the docs is not reported as
+    undefined — but it is still held to the same rule, because the docs are the
+    system's loudest example of itself.
+    """
     for f in sorted(glob.glob(str(REPO / 'src/**/*.css'), recursive=True)):
         if not any(s in f for s in SKIP_LAYERS):
             yield f
-    yield from sorted(glob.glob(str(REPO / 'collection/**/*.css'), recursive=True))
+    yield from sorted(glob.glob(str(REPO / 'docs/assets/*.css'), recursive=True))
 
 
 def defined_classes():
@@ -54,11 +60,25 @@ def defined_classes():
 
 
 def used_classes():
-    """class -> set of collections it appears in."""
+    """class -> set of pages it appears in.
+
+    Reads the BUILT site, because that is the only place the markup actually
+    exists — the content is markdown and the chrome is a template, so neither
+    alone is the truth.
+
+    This used to scan collection/**/*.html, which stopped existing when the
+    theme was split out. It therefore found zero used classes and the --strict
+    gate passed trivially: every class was 'unused' and none was 'undefined'.
+    A gate that cannot fail is not a gate. Run `npm run docs` first.
+    """
     out = collections.defaultdict(set)
-    for f in sorted(glob.glob(str(REPO / 'collection/**/*.html'), recursive=True)):
+    pages = sorted(glob.glob(str(REPO / 'site/**/*.html'), recursive=True))
+    if not pages:
+        print('audit-classes: site/ is empty — run `npm run docs` first.')
+        raise SystemExit(1)
+    for f in pages:
         rel = pathlib.Path(f).relative_to(REPO)
-        where = rel.parts[1] if len(rel.parts) > 1 else str(rel)
+        where = rel.name
         for attr in re.findall(r'class="([^"]*)"', pathlib.Path(f).read_text()):
             for c in attr.split():
                 # `{...}` survives in a template that was never formatted — a

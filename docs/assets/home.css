@@ -1,0 +1,326 @@
+/* =============================================================================
+   THE LANDING PAGE
+
+   Its own layout — no sidebar, no TOC, full-bleed bands. Everything below is
+   built from the system's own components and tokens, because a landing page
+   that cannot be built out of the system is an argument against the system.
+   ========================================================================== */
+
+.is-home .bar { border-bottom: 0; }
+
+.barlink {
+	font-size: var(--text-sm);
+	font-weight: var(--weight-medium);
+	color: var(--fg-muted);
+	text-decoration: none;
+	padding-inline: var(--space-2);
+}
+
+.barlink:hover { color: var(--fg-default); }
+
+.band {
+	padding-inline: var(--gutter);
+	max-width: 74rem;
+	margin-inline: auto;
+}
+
+.band + .band { margin-top: var(--space-24); }
+
+/* ── Hero ─────────────────────────────────────────────────────────────────── */
+
+.hero {
+	display: grid;
+	grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+	gap: var(--space-12);
+	align-items: center;
+	padding-block: var(--space-16) var(--space-8);
+}
+
+.hero__eyebrow {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-2);
+	font-family: var(--font-label);
+	font-size: var(--text-2xs);
+	font-weight: var(--weight-semibold);
+	letter-spacing: var(--tracking-label);
+	text-transform: uppercase;
+	color: var(--fg-faint);
+	margin: 0 0 var(--space-5);
+}
+
+.hero__title {
+	font-family: var(--font-display);
+	font-size: var(--text-5xl);
+	font-weight: var(--weight-bold);
+	line-height: 1.04;
+	letter-spacing: var(--tracking-tighter);
+	margin: 0;
+	text-wrap: balance;
+}
+
+.hero__title em { font-style: normal; color: var(--accent); }
+
+.hero__lead {
+	font-size: var(--text-lg);
+	line-height: var(--leading-relaxed);
+	color: var(--fg-muted);
+	max-width: 34rem;
+	margin: var(--space-5) 0 0;
+	text-wrap: pretty;
+}
+
+.hero__cta {
+	display: flex;
+	gap: var(--space-3);
+	flex-wrap: wrap;
+	margin-top: var(--space-8);
+}
+
+.hero__fine {
+	font-family: var(--font-label);
+	font-size: var(--text-2xs);
+	font-weight: var(--weight-semibold);
+	letter-spacing: var(--tracking-label);
+	text-transform: uppercase;
+	color: var(--fg-faint);
+	margin: var(--space-6) 0 0;
+}
+
+/* The viewfinder. The system's signature device, doing its actual job:
+   saying "this is footage" before you read a word. */
+.hero__vf {
+	aspect-ratio: 4 / 3;
+	border-radius: var(--radius-lg);
+	background:
+		linear-gradient(var(--line-subtle) 1px, transparent 1px) 0 0 / 100% 2rem,
+		linear-gradient(90deg, var(--line-subtle) 1px, transparent 1px) 0 0 / 2rem 100%;
+	background-color: var(--bg-surface);
+	border: 1px solid var(--line-default);
+	display: grid;
+	place-items: center;
+	position: relative;
+}
+
+.hero__tc {
+	position: absolute;
+	top: var(--space-5);
+	left: var(--space-6);
+	font-family: var(--font-slate);
+	font-size: var(--text-2xs);
+	letter-spacing: var(--tracking-slate);
+	color: var(--fg-faint);
+}
+
+.hero__rec {
+	position: absolute;
+	top: var(--space-5);
+	right: var(--space-6);
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-2);
+	font-family: var(--font-slate);
+	font-size: var(--text-2xs);
+	letter-spacing: var(--tracking-slate);
+	color: var(--accent);
+}
+
+.hero__rec::before {
+	content: '';
+	width: 0.5rem;
+	height: 0.5rem;
+	border-radius: var(--radius-full);
+	background: var(--accent);
+	animation: fx-pulse 2s var(--ease-inout) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.hero__rec::before { animation: none; }
+}
+
+.hero__dims {
+	position: absolute;
+	bottom: var(--space-5);
+	left: var(--space-6);
+	font-family: var(--font-slate);
+	font-size: var(--text-2xs);
+	letter-spacing: var(--tracking-slate);
+	color: var(--fg-faint);
+}
+
+.hero__play {
+	width: 4rem;
+	height: 4rem;
+	border-radius: var(--radius-full);
+	background: var(--accent);
+	display: grid;
+	place-items: center;
+	color: var(--fg-on-accent);
+	box-shadow: var(--shadow-3);
+}
+
+.hero__play svg { width: 1.5rem; height: 1.5rem; }
+
+/* ── Section heads ────────────────────────────────────────────────────────── */
+
+.sec__kicker {
+	font-family: var(--font-label);
+	font-size: var(--text-2xs);
+	font-weight: var(--weight-semibold);
+	letter-spacing: var(--tracking-label);
+	text-transform: uppercase;
+	color: var(--fg-faint);
+	margin: 0 0 var(--space-3);
+}
+
+.sec__title {
+	font-family: var(--font-display);
+	font-size: var(--text-3xl);
+	font-weight: var(--weight-bold);
+	letter-spacing: var(--tracking-tighter);
+	line-height: var(--leading-tight);
+	margin: 0;
+	text-wrap: balance;
+}
+
+.sec__lead {
+	font-size: var(--text-lg);
+	color: var(--fg-muted);
+	max-width: var(--measure-lead);
+	margin: var(--space-4) 0 0;
+}
+
+/* ── Feature grid ─────────────────────────────────────────────────────────── */
+
+.feats {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(17rem, 100%), 1fr));
+	gap: var(--space-5);
+	margin-top: var(--space-8);
+}
+
+.feat {
+	padding: var(--space-6);
+	border: 1px solid var(--line-default);
+	border-radius: var(--radius-card);
+	background: var(--bg-surface);
+	/* The camcorder brackets, from 12-frame.css. Brackets are the only hover
+	   feedback here, so nothing lifts — one hover answer, not two. */
+	--frame-size: 14px;
+	--frame-inset: 7px;
+	--frame-weight: 2px;
+	--frame-color: var(--accent);
+	transition: border-color var(--dur-2) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.feat:hover { border-color: var(--line-strong); }
+}
+
+.feat__ico {
+	display: inline-grid;
+	place-items: center;
+	width: 2.25rem;
+	height: 2.25rem;
+	border-radius: var(--radius-md);
+	background: var(--accent-soft);
+	color: var(--accent-soft-fg);
+	margin-bottom: var(--space-4);
+}
+
+.feat__ico svg { width: 1.15rem; height: 1.15rem; }
+
+.feat h3 {
+	font-family: var(--font-display);
+	font-size: var(--text-lg);
+	font-weight: var(--weight-semibold);
+	letter-spacing: var(--tracking-tight);
+	margin: 0 0 var(--space-2);
+}
+
+.feat p {
+	margin: 0;
+	font-size: var(--text-sm);
+	line-height: var(--leading-relaxed);
+	color: var(--fg-muted);
+}
+
+/* ── Install band ─────────────────────────────────────────────────────────── */
+
+.install {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+	gap: var(--space-10);
+	align-items: center;
+	padding: var(--space-10);
+	border: 1px solid var(--line-default);
+	border-radius: var(--radius-xl);
+	background: var(--bg-surface);
+}
+
+.install .cb { margin: 0; }
+.install .cb + .cb { margin-top: var(--space-3); }
+
+/* ── Closing band ─────────────────────────────────────────────────────────── */
+
+.close-band {
+	text-align: center;
+	padding: var(--space-16) var(--space-6);
+	border-radius: var(--radius-xl);
+	background: var(--bg-inverse);
+	color: var(--fg-on-inverse);
+}
+
+.close-band .sec__kicker { color: currentcolor; opacity: 0.6; }
+.close-band .sec__title { color: currentcolor; }
+
+.close-band p {
+	color: currentcolor;
+	opacity: 0.75;
+	max-width: 38rem;
+	margin: var(--space-4) auto 0;
+}
+
+.close-band .hero__cta { justify-content: center; }
+
+/* ── Footer ───────────────────────────────────────────────────────────────── */
+
+.home-foot {
+	margin-top: var(--space-24);
+	border-top: 1px solid var(--line-subtle);
+	padding-block: var(--space-10);
+}
+
+.home-foot__in {
+	max-width: 74rem;
+	margin-inline: auto;
+	padding-inline: var(--gutter);
+}
+
+.home-foot__brand {
+	display: flex;
+	align-items: center;
+	gap: var(--space-2);
+	font-family: var(--font-display);
+	font-weight: var(--weight-semibold);
+	margin: 0;
+}
+
+.home-foot__note { color: var(--fg-muted); margin: var(--space-2) 0 0; }
+
+.home-foot__fine {
+	font-size: var(--text-sm);
+	color: var(--fg-faint);
+	margin: var(--space-4) 0 0;
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────────── */
+
+@media (max-width: 60rem) {
+	.hero,
+	.install { grid-template-columns: minmax(0, 1fr); }
+	.hero { padding-block: var(--space-10) var(--space-6); }
+	.hero__title { font-size: var(--text-4xl); }
+	.barlink { display: none; }
+	.install { padding: var(--space-6); }
+}

@@ -1,0 +1,166 @@
+/* =============================================================================
+   30 · BUTTON
+
+   One shape, six emphases, three sizes. Only ONE button on a screen should be
+   primary — if two things are equally important then neither is, which is the
+   accent-rationing principle applied to a component.
+
+   COMPOSITION WARNING
+   .btn-live spends ::before on its record dot, so it cannot also take .frame
+   (which needs both pseudo-elements). Use .frame-4 with real corner spans, or
+   pick one.
+
+   Layer: components.
+   ========================================================================== */
+
+@layer components {
+
+	.btn {
+		--btn-h: 2.5rem;
+		--btn-pad: var(--space-4);
+		--btn-radius: var(--radius-control);
+		--btn-bg: transparent;
+		--btn-fg: var(--fg-default);
+		--btn-line: transparent;
+		--btn-gap: var(--space-2);
+
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: var(--btn-gap);
+		height: var(--btn-h);
+		padding-inline: var(--btn-pad);
+		border: var(--border-hair) solid var(--btn-line);
+		border-radius: var(--btn-radius);
+		background: var(--btn-bg);
+		color: var(--btn-fg);
+		font-family: var(--font-body);
+		font-size: var(--text-sm);
+		font-weight: var(--weight-medium);
+		line-height: 1;
+		text-decoration: none;
+		white-space: nowrap;
+		cursor: pointer;
+		position: relative;
+		transition: var(--t-colors), var(--t-transform);
+	}
+
+	/* A coarse pointer needs 44px however small the design says. */
+	@media (pointer: coarse) {
+		.btn { min-height: 44px; }
+	}
+
+	.btn:active { scale: 0.98; }
+
+	.btn[disabled],
+	.btn[aria-disabled='true'] {
+		opacity: 0.5;
+		cursor: not-allowed;
+		pointer-events: none;
+	}
+
+	/* ── Emphasis ──────────────────────────────────────────────────────────── */
+
+	.btn-primary {
+		--btn-bg: var(--accent);
+		--btn-fg: var(--fg-on-accent);
+	}
+
+	.btn-primary:hover { --btn-bg: var(--accent-hover); }
+	.btn-primary:active { --btn-bg: var(--accent-press); }
+
+	.btn-secondary {
+		--btn-bg: var(--bg-inverse);
+		--btn-fg: var(--fg-on-inverse);
+	}
+
+	.btn-outline {
+		--btn-line: var(--line-default);
+		--btn-fg: var(--fg-default);
+	}
+
+	.btn-outline:hover { --btn-line: var(--line-strong); --btn-bg: var(--hover-wash); }
+
+	.btn-soft {
+		--btn-bg: var(--accent-soft);
+		--btn-fg: var(--accent-soft-fg);
+	}
+
+	.btn-ghost { --btn-fg: var(--fg-muted); }
+	.btn-ghost:hover { --btn-bg: var(--hover-wash); --btn-fg: var(--fg-default); }
+
+	.btn-quiet {
+		--btn-fg: var(--fg-subtle);
+		--btn-pad: var(--space-2);
+	}
+
+	.btn-quiet:hover { --btn-fg: var(--fg-default); }
+
+	.btn-danger {
+		--btn-bg: var(--danger-fg);
+		--btn-fg: var(--ink-0);
+	}
+
+	.btn-link {
+		--btn-h: auto;
+		--btn-pad: 0;
+		--btn-fg: var(--fg-link);
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
+	}
+
+	/* ── Size ──────────────────────────────────────────────────────────────── */
+
+	.btn-sm { --btn-h: 2rem; --btn-pad: var(--space-3); font-size: var(--text-xs); }
+	.btn-lg { --btn-h: 3rem; --btn-pad: var(--space-6); font-size: var(--text-base); }
+
+	.btn-icon { --btn-pad: 0; width: var(--btn-h); }
+	.btn-block { display: flex; width: 100%; }
+	.btn-pill { --btn-radius: var(--radius-full); }
+
+	/* ── Live — the record button ──────────────────────────────────────────── */
+
+	.btn-live {
+		--btn-bg: var(--accent-soft);
+		--btn-fg: var(--accent-soft-fg);
+	}
+
+	.btn-live::before {
+		content: '';
+		width: var(--dot-sm);
+		height: var(--dot-sm);
+		border-radius: var(--radius-full);
+		background: var(--accent);
+		animation: fx-pulse 2s var(--ease-inout) infinite;
+	}
+
+	/* ── Loading ───────────────────────────────────────────────────────────── */
+
+	/* The label stays in the box, so the button keeps its width and the layout
+	   does not jump under the pointer mid-click. */
+	.btn[aria-busy='true'] { color: transparent; pointer-events: none; }
+
+	.btn[aria-busy='true']::after {
+		content: '';
+		position: absolute;
+		width: 1em;
+		height: 1em;
+		border: 2px solid currentcolor;
+		border-block-start-color: transparent;
+		border-radius: var(--radius-full);
+		color: var(--btn-fg);
+		animation: fx-spin 0.6s linear infinite;
+	}
+
+	/* ── Group ─────────────────────────────────────────────────────────────── */
+
+	.btn-group {
+		display: inline-flex;
+	}
+
+	.btn-group > .btn { --btn-radius: 0; --btn-line: var(--line-default); }
+	.btn-group > .btn:first-child { border-start-start-radius: var(--radius-control); border-end-start-radius: var(--radius-control); }
+	.btn-group > .btn:last-child  { border-start-end-radius: var(--radius-control); border-end-end-radius: var(--radius-control); }
+	.btn-group > .btn + .btn { margin-inline-start: calc(var(--border-hair) * -1); }
+	.btn-group > .btn[aria-pressed='true'] { --btn-bg: var(--accent-soft); --btn-fg: var(--accent-soft-fg); z-index: var(--z-raised); }
+}

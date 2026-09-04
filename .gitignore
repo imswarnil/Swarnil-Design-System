@@ -16,16 +16,9 @@ re-work.md
 # dist/ is built by `npm run build:css` and published from CI on a tag.
 dist/
 
-# docs/ currently holds BOTH the generator (docs/_build/) and its output.
-# Everything under docs/ is generated except the five paths re-included below;
-# `npm run docs` rebuilds the rest. Phase 5 splits this properly into
-# docs/ = source and site/ = output.
-docs/*
-!docs/_build/
-!docs/preview.css
-!docs/preview.js
-!docs/favicon.svg
-!docs/og.png
-
-# Built docs output, once Phase 5 lands.
+# docs/ is SOURCE and is committed. site/ is the built output.
 site/
+
+# The previous system, frozen at f84ccf7 for reference only. Runnable on :8081,
+# never imported, never committed. See old-design/README-OLD.md.
+old-design/

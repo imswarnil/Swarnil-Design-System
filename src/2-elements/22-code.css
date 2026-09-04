@@ -1,0 +1,71 @@
+/* =============================================================================
+   22 · CODE
+
+   Mono here is not a style choice — it is the one place the monospace voice is
+   unambiguously correct, because the content genuinely is machine text.
+
+   Layer: elements.
+   ========================================================================== */
+
+@layer elements {
+
+	.code {
+		font-family: var(--font-slate);
+		font-size: 0.875em;
+		background: var(--bg-sunken);
+		border: var(--border-hair) solid var(--line-subtle);
+		border-radius: var(--radius-sm);
+		padding: 0.1em 0.35em;
+		overflow-wrap: break-word;
+	}
+
+	.code-accent { color: var(--fg-accent); border-color: var(--line-accent); }
+
+	.codeblock {
+		--code-pad: var(--space-4);
+		border: var(--border-hair) solid var(--line-default);
+		border-radius: var(--radius-lg);
+		background: var(--bg-sunken);
+		overflow: hidden;
+	}
+
+	.codeblock__head {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-3);
+		padding: var(--space-2) var(--space-3);
+		border-block-end: var(--border-hair) solid var(--line-subtle);
+	}
+
+	.codeblock__lang {
+		font-family: var(--font-slate);
+		font-size: var(--text-2xs);
+		letter-spacing: var(--tracking-slate);
+		text-transform: uppercase;
+		color: var(--fg-faint);
+	}
+
+	.codeblock__pre {
+		margin: 0;
+		padding: var(--code-pad);
+		overflow-x: auto;
+		font-family: var(--font-slate);
+		font-size: var(--text-sm);
+		line-height: 1.7;
+		tab-size: 2;
+	}
+
+	.codeblock-wrap .codeblock__pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+
+	/* Syntax tokens. Deliberately few — the accent marks structure, everything
+	   else is a step on the ink ramp. A rainbow is not comprehension. */
+	.tok-tag  { color: var(--fg-accent); }
+	.tok-attr { color: var(--fg-default); }
+	.tok-str  { color: var(--fg-muted); }
+	.tok-com  { color: var(--fg-faint); font-style: italic; }
+	.tok-key  { color: var(--fg-accent); }
+	.tok-num  { color: var(--craft); }
+	.tok-var  { color: var(--fg-accent); }
+	.tok-sel  { color: var(--fg-default); }
+}

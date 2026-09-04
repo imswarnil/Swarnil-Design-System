@@ -1,10 +1,16 @@
 {
   "name": "@imswarnil/swarnil-design",
   "version": "0.1.0",
-  "description": "Swarnil Design System — a token-first, dependency-free CSS design system. Almost monochrome, so one colour can mean something.",
+  "description": "Swarnil Design System \u2014 a token-first, dependency-free CSS design system. Almost monochrome, so one colour can mean something.",
   "keywords": [
-    "css", "design-system", "ui-kit", "tokens",
-    "design-tokens", "component-library", "oklch", "dark-mode"
+    "css",
+    "design-system",
+    "ui-kit",
+    "tokens",
+    "design-tokens",
+    "component-library",
+    "oklch",
+    "dark-mode"
   ],
   "homepage": "https://design.imswarnil.com",
   "bugs": "https://github.com/imswarnil/swarnil-design/issues",
@@ -18,7 +24,9 @@
   },
   "license": "MIT",
   "type": "module",
-  "sideEffects": ["*.css"],
+  "sideEffects": [
+    "*.css"
+  ],
   "style": "dist/swarnil-design.css",
   "main": "dist/swarnil-design.css",
   "exports": {
@@ -29,22 +37,24 @@
     "./foundation": "./src/1-foundation/index.css",
     "./elements": "./src/2-elements/index.css",
     "./components": "./src/3-components/index.css",
-    "./broadcast": "./src/4-broadcast/index.css",
-    "./sections": "./src/5-sections/index.css",
     "./utilities": "./src/6-utilities/index.css",
-    "./highlight": "./src/highlight.js",
-    "./nav": "./src/nav.js",
     "./src/*": "./src/*",
     "./icons/*": "./icons/*",
     "./package.json": "./package.json"
   },
-  "files": ["src", "dist", "icons", "README.md", "LICENSE"],
+  "files": [
+    "src",
+    "dist",
+    "icons",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "npm run build:css && npm run build:min && npm run docs",
     "build:css": "postcss src/index.css -o dist/swarnil-design.css",
     "build:min": "postcss src/index.css -o dist/swarnil-design.min.css --env production",
-    "docs": "python3 docs/_build/build.py",
-    "dev": "npm run docs && python3 -m http.server 8080 --directory docs",
+    "docs": "python3 docs/build.py",
+    "dev": "npm run docs && python3 -m http.server 8080 --directory site",
     "lint": "stylelint \"src/**/*.css\"",
     "audit": "npm run audit:mono && npm run audit:classes",
     "audit:mono": "python3 scripts/audit-mono.py --strict",
@@ -60,8 +70,13 @@
     "stylelint": "^16.0.0",
     "stylelint-config-standard": "^36.0.0"
   },
-  "engines": { "node": ">=18" },
+  "engines": {
+    "node": ">=18"
+  },
   "funding": [
-    { "type": "github", "url": "https://github.com/sponsors/imswarnil" }
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/imswarnil"
+    }
   ]
 }

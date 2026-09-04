@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{title} — {name}</title>
+<meta name="description" content="{lead_meta}" />
+<link rel="canonical" href="{canonical}" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="{name}" />
+<meta property="og:title" content="{title}" />
+<meta property="og:description" content="{lead_meta}" />
+<meta property="og:image" content="/assets/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+
+<!-- Theme before paint. An inline blocking script is the one correct place
+     for this: any later and the page flashes the wrong theme first. -->
+<script>
+try {
+  var t = localStorage.getItem('sds-theme');
+  if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  document.documentElement.dataset.theme = t;
+} catch (e) { document.documentElement.dataset.theme = 'light'; }
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<!-- The system itself. The docs are built out of it, not beside it. -->
+<link rel="stylesheet" href="/src/index.css{v}" />
+<!-- The docs site's own chrome — nav, demo frames, layout. Nothing here is
+     part of the design system. -->
+<link rel="stylesheet" href="/assets/docs.css{v}" />
+<script src="/assets/docs.js{v}" defer></script>
+</head>
+
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="bar">
+  <a class="brand" href="/index.html">
+    <span class="brand__mark" aria-hidden="true"></span>
+    <span class="brand__name">Swarnil</span>
+    <span class="brand__sub">Design System</span>
+  </a>
+
+  <button class="bar__burger" type="button" aria-expanded="false" aria-controls="sidenav" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="bar__end">
+    <label class="search">
+      <span class="u-sr-only">Search the docs</span>
+      <input class="search__input" type="search" placeholder="Search" autocomplete="off" data-search />
+      <kbd class="search__key">/</kbd>
+      <div class="search__out" data-search-out hidden></div>
+    </label>
+    <button class="themebtn" type="button" data-theme-toggle aria-label="Switch theme">
+      <span class="themebtn__dot" aria-hidden="true"></span>
+      <span class="themebtn__label" data-theme-label>Light</span>
+    </button>
+    <a class="ghbtn" href="https://github.com/imswarnil/swarnil-design" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="side" id="sidenav">
+    <nav class="nav" aria-label="Documentation">
+      {nav}
+    </nav>
+  </aside>
+
+  <main class="main" id="main">
+    <article class="doc">
+      <p class="doc__kicker">{group}</p>
+      <h1 class="doc__title">{title}</h1>
+      {lead}
+      {body}
+      <nav class="pager" aria-label="Pagination">{pager}</nav>
+    </article>
+    <footer class="foot">
+      <p>Swarnil Design System · MIT · &copy; {year} Swarnil Singhai</p>
+      <p class="foot__note">Almost monochrome, so one colour can mean something.</p>
+    </footer>
+  </main>
+
+  <div class="rail">{toc}</div>
+</div>
+</body>
+</html>

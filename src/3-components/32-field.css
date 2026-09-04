@@ -1,0 +1,108 @@
+/* =============================================================================
+   32 · FIELD — input, label, hint, error
+
+   Native controls only. The browser already knows how to be a checkbox; the
+   job here is to make it look like it belongs, not to rebuild it.
+
+   Layer: components.
+   ========================================================================== */
+
+@layer components {
+
+	.field {
+		--field-gap: var(--space-2);
+		display: flex;
+		flex-direction: column;
+		gap: var(--field-gap);
+	}
+
+	.field__label {
+		font-size: var(--text-sm);
+		font-weight: var(--weight-medium);
+		color: var(--fg-default);
+	}
+
+	.field__label[data-optional]::after {
+		content: ' optional';
+		font-weight: var(--weight-regular);
+		color: var(--fg-faint);
+	}
+
+	.field__hint { font-size: var(--text-xs); color: var(--fg-subtle); }
+
+	/* role="alert" on the element itself; this only styles it. */
+	.field__error { font-size: var(--text-xs); color: var(--danger-fg); }
+
+	.input {
+		--input-h: 2.5rem;
+		--input-bg: var(--bg-surface);
+		--input-line: var(--line-default);
+		--input-pad: var(--space-3);
+		width: 100%;
+		height: var(--input-h);
+		padding-inline: var(--input-pad);
+		background: var(--input-bg);
+		border: var(--border-hair) solid var(--input-line);
+		border-radius: var(--radius-control);
+		color: var(--fg-default);
+		font-size: var(--text-sm);
+		transition: var(--t-colors);
+	}
+
+	.input::placeholder { color: var(--fg-faint); }
+	.input:hover { --input-line: var(--line-strong); }
+	.input[readonly] { --input-bg: var(--bg-sunken); }
+	.input[disabled] { opacity: 0.5; cursor: not-allowed; }
+
+	/* Style the ARIA, not a class — the attribute is the same fact the screen
+	   reader is reading, so they cannot disagree. */
+	.input[aria-invalid='true'] { --input-line: var(--danger-fg); }
+
+	.input-sm { --input-h: 2rem; font-size: var(--text-xs); }
+	.input-lg { --input-h: 3rem; font-size: var(--text-base); }
+
+	textarea.input { height: auto; min-height: 6rem; padding-block: var(--space-3); resize: vertical; }
+
+	.input-group {
+		display: flex;
+		align-items: stretch;
+	}
+
+	.input-group > .input { border-start-end-radius: 0; border-end-end-radius: 0; }
+	.input-group > .btn { border-start-start-radius: 0; border-end-start-radius: 0; }
+
+	/* Native checkbox and radio, tinted to the accent. accent-color is the
+	   whole implementation — no custom sprite, no pseudo-element, and the
+	   keyboard behaviour stays exactly as the platform ships it. */
+	.check,
+	.radio {
+		width: 1.05rem;
+		height: 1.05rem;
+		accent-color: var(--accent);
+		flex: none;
+	}
+
+	.choice {
+		display: flex;
+		align-items: center;
+		gap: var(--space-3);
+		font-size: var(--text-sm);
+		color: var(--fg-muted);
+		cursor: pointer;
+	}
+
+	/* The whole tile is the control. The input stays real and visible to a
+	   screen reader; only its box is hidden. */
+	.choice-card {
+		padding: var(--space-4);
+		border: var(--border-hair) solid var(--line-default);
+		border-radius: var(--radius-control);
+		transition: var(--t-colors);
+	}
+
+	.choice-card:has(:checked) {
+		border-color: var(--accent);
+		background: var(--accent-soft);
+		color: var(--accent-soft-fg);
+	}
+}

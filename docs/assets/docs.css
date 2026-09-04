@@ -1,0 +1,800 @@
+/* =============================================================================
+   THE DOCS SITE'S OWN CHROME
+
+   Nothing in this file is part of the design system. It is the bar, the nav,
+   the demo frames and the page grid — the furniture the documentation needs
+   and a consumer never does.
+
+   Every value comes from a system token. That is the point: if the docs need
+   a number the system does not have, the system is missing a token, and the
+   right fix is upstream in src/, not a magic number down here.
+
+   The type follows the rule the system states (PRINCIPLES #9): Space Grotesk
+   for display, Inter for everything read — including labels, which are Inter
+   worn small, uppercase and tracked. Mono appears only on code and data.
+   ========================================================================== */
+
+:root {
+	--bar-h: 3.75rem;
+	--side-w: 16rem;
+	--rail-w: 14rem;
+	--doc-measure: 46rem;
+	--gutter: var(--space-6);
+}
+
+/* ── Reset-ish for the docs shell ─────────────────────────────────────────── */
+
+body {
+	background: var(--bg-canvas);
+	color: var(--fg-default);
+	margin: 0;
+	overflow-wrap: break-word;
+}
+
+.skip {
+	position: absolute;
+	left: -9999px;
+	top: var(--space-2);
+	z-index: var(--z-max);
+	background: var(--bg-surface);
+	border: var(--border-hair, 1px) solid var(--line-strong);
+	border-radius: var(--radius-md);
+	padding: var(--space-2) var(--space-4);
+}
+
+.skip:focus { left: var(--space-4); }
+
+/* ── The bar ──────────────────────────────────────────────────────────────── */
+
+.bar {
+	position: sticky;
+	top: 0;
+	z-index: var(--z-nav);
+	height: var(--bar-h);
+	display: flex;
+	align-items: center;
+	gap: var(--space-5);
+	padding-inline: var(--gutter);
+	background: color-mix(in oklab, var(--bg-canvas) 88%, transparent);
+	backdrop-filter: blur(12px);
+	border-bottom: 1px solid var(--line-subtle);
+}
+
+.brand {
+	display: flex;
+	align-items: baseline;
+	gap: var(--space-2);
+	text-decoration: none;
+	color: inherit;
+	flex: none;
+}
+
+/* The mark: a record dot. The system's one accent, used once, at the top. */
+.brand__mark {
+	width: 0.5rem;
+	height: 0.5rem;
+	border-radius: var(--radius-full);
+	background: var(--accent);
+	align-self: center;
+}
+
+.brand__name {
+	font-family: var(--font-display);
+	font-weight: var(--weight-bold);
+	font-size: var(--text-lg);
+	letter-spacing: var(--tracking-tight);
+}
+
+.brand__sub {
+	font-family: var(--font-label);
+	font-size: var(--text-2xs);
+	font-weight: var(--weight-semibold);
+	letter-spacing: var(--tracking-label);
+	text-transform: uppercase;
+	color: var(--fg-faint);
+}
+
+.bar__end {
+	margin-left: auto;
+	display: flex;
+	align-items: center;
+	gap: var(--space-3);
+}
+
+.bar__burger {
+	display: none;
+	flex-direction: column;
+	justify-content: center;
+	gap: 4px;
+	width: 2.25rem;
+	height: 2.25rem;
+	padding: 0 0.5rem;
+	background: none;
+	border: 1px solid var(--line-default);
+	border-radius: var(--radius-md);
+	cursor: pointer;
+}
+
+.bar__burger > span {
+	display: block;
+	height: 1.5px;
+	background: var(--fg-default);
+	transition: translate var(--dur-2) var(--ease-out), opacity var(--dur-1) linear;
+}
+
+.bar__burger[aria-expanded='true'] > span:nth-child(1) { translate: 0 5.5px; }
+.bar__burger[aria-expanded='true'] > span:nth-child(2) { opacity: 0; }
+.bar__burger[aria-expanded='true'] > span:nth-child(3) { translate: 0 -5.5px; }
+
+/* ── Search ───────────────────────────────────────────────────────────────── */
+
+.search {
+	position: relative;
+	display: flex;
+	align-items: center;
+}
+
+.search__input {
+	width: 14rem;
+	height: 2.25rem;
+	padding-inline: var(--space-3) var(--space-8);
+	font: inherit;
+	font-size: var(--text-sm);
+	color: inherit;
+	background: var(--bg-sunken);
+	border: 1px solid var(--line-subtle);
+	border-radius: var(--radius-md);
+	transition: border-color var(--dur-2) var(--ease-out);
+}
+
+.search__input:focus-visible {
+	outline: 2px solid var(--accent-ring);
+	outline-offset: 1px;
+	border-color: var(--line-strong);
+}
+
+.search__key {
+	position: absolute;
+	right: var(--space-2);
+	font-family: var(--font-slate);
+	font-size: var(--text-2xs);
+	color: var(--fg-faint);
+	border: 1px solid var(--line-subtle);
+	border-radius: var(--radius-sm);
+	padding: 1px 5px;
+	pointer-events: none;
+}
+
+.search__out {
+	position: absolute;
+	top: calc(100% + 6px);
+	right: 0;
+	width: min(24rem, 80vw);
+	max-height: 60vh;
+	overflow-y: auto;
+	background: var(--bg-surface);
+	border: 1px solid var(--line-default);
+	border-radius: var(--radius-lg);
+	box-shadow: var(--shadow-3);
+	padding: var(--space-2);
+	z-index: var(--z-dropdown);
+}
+
+.search__hit {
+	display: block;
+	padding: var(--space-2) var(--space-3);
+	border-radius: var(--radius-md);
+	text-decoration: none;
+	color: inherit;
+}
+
+.search__hit:hover,
+.search__hit:focus-visible { background: var(--bg-sunken); }
+.search__hit b { font-weight: var(--weight-semibold); }
+
+.search__hit span {
+	display: block;
+	font-size: var(--text-xs);
+	color: var(--fg-faint);
+}
+
+.search__empty {
+	padding: var(--space-3);
+	font-size: var(--text-sm);
+	color: var(--fg-faint);
+}
+
+/* ── Theme + GitHub buttons ───────────────────────────────────────────────── */
+
+.themebtn,
+.ghbtn {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-2);
+	height: 2.25rem;
+	padding-inline: var(--space-3);
+	font-size: var(--text-sm);
+	font-weight: var(--weight-medium);
+	color: inherit;
+	text-decoration: none;
+	background: none;
+	border: 1px solid var(--line-default);
+	border-radius: var(--radius-md);
+	cursor: pointer;
+	transition: border-color var(--dur-2) var(--ease-out),
+		background-color var(--dur-2) var(--ease-out);
+}
+
+.themebtn:hover,
+.ghbtn:hover { border-color: var(--line-strong); background: var(--bg-sunken); }
+
+.themebtn__label { font-variant-numeric: tabular-nums; }
+
+.themebtn__dot {
+	width: 0.5rem;
+	height: 0.5rem;
+	border-radius: var(--radius-full);
+	background: var(--fg-default);
+}
+
+:root[data-theme='dark'] .themebtn__label { font-variant-numeric: tabular-nums; }
+
+.themebtn__dot { background: var(--bg-canvas); box-shadow: inset 0 0 0 1.5px var(--fg-default); }
+
+/* ── The shell grid ───────────────────────────────────────────────────────── */
+
+.shell {
+	display: grid;
+	grid-template-columns: var(--side-w) minmax(0, 1fr) var(--rail-w);
+	align-items: start;
+	gap: var(--space-8);
+	max-width: 96rem;
+	margin-inline: auto;
+	padding-inline: var(--gutter);
+}
+
+/* ── Side nav ─────────────────────────────────────────────────────────────── */
+
+.side {
+	position: sticky;
+	top: var(--bar-h);
+	max-height: calc(100dvh - var(--bar-h));
+	overflow-y: auto;
+	padding-block: var(--space-8) var(--space-10);
+	scrollbar-width: thin;
+}
+
+.nav { display: block; }
+.nav__group { border: 0; }
+.nav__group + .nav__group { margin-top: var(--space-1); }
+
+.nav__title {
+	display: flex;
+	align-items: center;
+	gap: var(--space-2);
+	list-style: none;
+	cursor: pointer;
+	padding: var(--space-2) var(--space-2);
+	border-radius: var(--radius-md);
+	font-family: var(--font-label);
+	font-size: var(--text-2xs);
+	font-weight: var(--weight-semibold);
+	letter-spacing: var(--tracking-label);
+	text-transform: uppercase;
+	color: var(--fg-subtle);
+}
+
+.nav__title::-webkit-details-marker { display: none; }
+
+.nav__title::before {
+	content: '';
+	width: 0.3rem;
+	height: 0.3rem;
+	border-right: 1.5px solid currentcolor;
+	border-bottom: 1.5px solid currentcolor;
+	rotate: -45deg;
+	transition: rotate var(--dur-2) var(--ease-out);
+	flex: none;
+	margin-left: 2px;
+}
+
+.nav__group[open] > .nav__title::before { rotate: 45deg; }
+.nav__title:hover { color: var(--fg-default); background: var(--bg-sunken); }
+
+.nav__links {
+	display: flex;
+	flex-direction: column;
+	padding-left: var(--space-3);
+	margin-left: var(--space-2);
+	border-left: 1px solid var(--line-subtle);
+}
+
+.nav__link {
+	position: relative;
+	padding: var(--space-2) var(--space-3);
+	font-size: var(--text-sm);
+	color: var(--fg-muted);
+	text-decoration: none;
+	transition: color var(--dur-1) var(--ease-out);
+}
+
+.nav__link:hover { color: var(--fg-default); }
+
+/* House rule: the active state is a DOT. No fill, no pill, no rounded bar —
+   the record light sitting on the rail, which is the same mark the brand uses.
+   It is the smallest thing that can carry the accent, which is the point:
+   the accent is rationed. */
+.nav__link[aria-current='page'] {
+	color: var(--fg-default);
+	font-weight: var(--weight-semibold);
+}
+
+.nav__link[aria-current='page']::before {
+	content: '';
+	position: absolute;
+	left: calc(var(--space-3) * -1);
+	top: 50%;
+	width: 0.375rem;
+	height: 0.375rem;
+	border-radius: var(--radius-full);
+	background: var(--accent);
+	translate: -50% -50%;
+}
+
+/* ── Main column ──────────────────────────────────────────────────────────── */
+
+.main { min-width: 0; padding-block: var(--space-10) var(--space-16); }
+.doc { max-width: var(--doc-measure); }
+
+.doc__kicker {
+	font-family: var(--font-label);
+	font-size: var(--text-2xs);
+	font-weight: var(--weight-semibold);
+	letter-spacing: var(--tracking-label);
+	text-transform: uppercase;
+	color: var(--fg-faint);
+	margin: 0 0 var(--space-3);
+}
+
+.doc__title {
+	font-family: var(--font-display);
+	font-size: var(--text-4xl);
+	font-weight: var(--weight-bold);
+	line-height: var(--leading-tight);
+	letter-spacing: var(--tracking-tighter);
+	margin: 0;
+	text-wrap: balance;
+}
+
+.lead {
+	font-size: var(--text-lg);
+	line-height: var(--leading-relaxed);
+	color: var(--fg-muted);
+	max-width: var(--measure-lead);
+	margin: var(--space-4) 0 0;
+	text-wrap: pretty;
+}
+
+/* ── Long-form body ───────────────────────────────────────────────────────── */
+
+.doc h2 {
+	font-family: var(--font-display);
+	font-size: var(--text-2xl);
+	font-weight: var(--weight-semibold);
+	letter-spacing: var(--tracking-tight);
+	line-height: var(--leading-snug);
+	margin: var(--space-12) 0 var(--space-3);
+	padding-top: var(--space-4);
+	border-top: 1px solid var(--line-subtle);
+	scroll-margin-top: calc(var(--bar-h) + var(--space-4));
+}
+
+.doc h3 {
+	font-family: var(--font-display);
+	font-size: var(--text-xl);
+	font-weight: var(--weight-semibold);
+	margin: var(--space-8) 0 var(--space-2);
+	scroll-margin-top: calc(var(--bar-h) + var(--space-4));
+}
+
+.doc h4 {
+	font-size: var(--text-base);
+	font-weight: var(--weight-semibold);
+	margin: var(--space-6) 0 var(--space-2);
+}
+
+.doc p {
+	margin: var(--space-4) 0;
+	line-height: var(--leading-relaxed);
+	color: var(--fg-muted);
+	text-wrap: pretty;
+}
+
+.doc a { color: var(--fg-link); text-underline-offset: 0.2em; }
+.doc a:hover { color: var(--fg-link-hover); }
+.doc strong { color: var(--fg-default); font-weight: var(--weight-semibold); }
+
+.list { margin: var(--space-4) 0; padding-left: var(--space-5); color: var(--fg-muted); }
+.list li { margin-block: var(--space-2); line-height: var(--leading-relaxed); }
+.list li::marker { color: var(--fg-faint); }
+
+.rule { border: 0; border-top: 1px solid var(--line-subtle); margin: var(--space-10) 0; }
+
+.quote {
+	margin: var(--space-6) 0;
+	padding-left: var(--space-5);
+	border-left: 2px solid var(--accent);
+	color: var(--fg-default);
+	font-size: var(--text-lg);
+	line-height: var(--leading-relaxed);
+}
+
+/* Inline code. Mono here is correct — it is code. */
+.code {
+	font-family: var(--font-slate);
+	font-size: 0.875em;
+	background: var(--bg-sunken);
+	border: 1px solid var(--line-subtle);
+	border-radius: var(--radius-sm);
+	padding: 0.1em 0.35em;
+}
+
+/* ── Tables ───────────────────────────────────────────────────────────────── */
+
+.table-wrap { overflow-x: auto; margin: var(--space-6) 0; }
+
+.table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: var(--text-sm);
+}
+
+.table th {
+	text-align: left;
+	font-family: var(--font-label);
+	font-size: var(--text-2xs);
+	font-weight: var(--weight-semibold);
+	letter-spacing: var(--tracking-label);
+	text-transform: uppercase;
+	color: var(--fg-subtle);
+	padding: var(--space-2) var(--space-3);
+	border-bottom: 1px solid var(--line-default);
+	white-space: nowrap;
+}
+
+.table td {
+	padding: var(--space-3);
+	border-bottom: 1px solid var(--line-subtle);
+	color: var(--fg-muted);
+	vertical-align: top;
+}
+
+.table tr:last-child td { border-bottom: 0; }
+
+/* ── Code blocks ──────────────────────────────────────────────────────────── */
+
+.cb {
+	margin: var(--space-6) 0;
+	border: 1px solid var(--line-default);
+	border-radius: var(--radius-lg);
+	overflow: hidden;
+	background: var(--bg-sunken);
+}
+
+.cb__head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--space-3);
+	padding: var(--space-2) var(--space-3);
+	border-bottom: 1px solid var(--line-subtle);
+}
+
+.cb__lang {
+	font-family: var(--font-slate);
+	font-size: var(--text-2xs);
+	letter-spacing: var(--tracking-slate);
+	text-transform: uppercase;
+	color: var(--fg-faint);
+}
+
+.cb__pre {
+	margin: 0;
+	padding: var(--space-4);
+	overflow-x: auto;
+	font-family: var(--font-slate);
+	font-size: var(--text-sm);
+	line-height: 1.7;
+	tab-size: 2;
+}
+
+.cb__copy,
+.demo__tool {
+	font-family: var(--font-label);
+	font-size: var(--text-2xs);
+	font-weight: var(--weight-semibold);
+	letter-spacing: var(--tracking-label);
+	text-transform: uppercase;
+	color: var(--fg-subtle);
+	background: none;
+	border: 1px solid var(--line-subtle);
+	border-radius: var(--radius-sm);
+	padding: 3px 8px;
+	cursor: pointer;
+	transition: color var(--dur-1) var(--ease-out), border-color var(--dur-1) var(--ease-out);
+}
+
+.cb__copy:hover,
+.demo__tool:hover { color: var(--fg-default); border-color: var(--line-strong); }
+.cb__copy[data-copied],
+.demo__tool[data-copied] { color: var(--accent); border-color: var(--accent); }
+.demo__tool[aria-pressed='true'] { color: var(--accent); border-color: var(--accent); }
+
+/* Syntax tokens */
+.tok-tag  { color: var(--fg-accent); }
+.tok-attr { color: var(--fg-default); }
+.tok-str  { color: var(--fg-muted); }
+.tok-com  { color: var(--fg-faint); font-style: italic; }
+.tok-var  { color: var(--fg-accent); }
+.tok-sel  { color: var(--fg-default); }
+
+/* ── The demo block — the whole reason for the rebuild ────────────────────── */
+
+.demo {
+	margin: var(--space-6) 0;
+	border: 1px solid var(--line-default);
+	border-radius: var(--radius-lg);
+	overflow: hidden;
+	background: var(--bg-surface);
+}
+
+.demo__cap {
+	padding: var(--space-3) var(--space-4);
+	font-size: var(--text-sm);
+	color: var(--fg-muted);
+	border-bottom: 1px solid var(--line-subtle);
+}
+
+.demo__bar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--space-3);
+	padding: var(--space-2) var(--space-3);
+	border-bottom: 1px solid var(--line-subtle);
+	background: var(--bg-sunken);
+}
+
+.demo__tabs { display: flex; gap: var(--space-1); }
+
+.demo__tab {
+	font-size: var(--text-xs);
+	font-weight: var(--weight-medium);
+	color: var(--fg-subtle);
+	background: none;
+	border: 0;
+	border-radius: var(--radius-sm);
+	padding: 4px 10px;
+	cursor: pointer;
+}
+
+.demo__tab:hover { color: var(--fg-default); }
+
+/* Active tab is a 2px rule, not a filled pill — the house rule again. */
+.demo__tab[aria-selected='true'] {
+	color: var(--fg-default);
+	box-shadow: inset 0 -2px 0 var(--accent);
+}
+
+.demo__tools { display: flex; gap: var(--space-2); }
+
+.demo__stage {
+	padding: var(--space-6);
+	background:
+		linear-gradient(var(--line-subtle) 1px, transparent 1px) 0 0 / 100% 1.5rem,
+		linear-gradient(90deg, var(--line-subtle) 1px, transparent 1px) 0 0 / 1.5rem 100%;
+	background-color: var(--bg-surface);
+}
+
+.demo__inner { margin-inline: auto; transition: max-width var(--dur-3) var(--ease-out); }
+
+/* The 320px toggle. Every component in this system has to survive the floor. */
+.demo__stage[data-narrow] .demo__inner {
+	max-width: 320px;
+	outline: 1px dashed var(--accent);
+	outline-offset: var(--space-4);
+}
+
+.demo__code .cb__pre { background: var(--bg-sunken); }
+
+/* ── TOC rail ─────────────────────────────────────────────────────────────── */
+
+.rail { padding-block: var(--space-10); }
+
+.toc {
+	position: sticky;
+	top: calc(var(--bar-h) + var(--space-8));
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	max-height: calc(100dvh - var(--bar-h) - var(--space-12));
+	overflow-y: auto;
+}
+
+.toc__head {
+	font-family: var(--font-label);
+	font-size: var(--text-2xs);
+	font-weight: var(--weight-semibold);
+	letter-spacing: var(--tracking-label);
+	text-transform: uppercase;
+	color: var(--fg-faint);
+	margin: 0 0 var(--space-2);
+}
+
+.toc__link {
+	position: relative;
+	font-size: var(--text-sm);
+	line-height: var(--leading-snug);
+	color: var(--fg-subtle);
+	text-decoration: none;
+	padding: var(--space-1) var(--space-3);
+	transition: color var(--dur-1) var(--ease-out);
+}
+
+.toc__link--h2 { font-weight: var(--weight-medium); }
+.toc__link--h3 { padding-left: var(--space-5); font-size: var(--text-xs); }
+.toc__link:hover { color: var(--fg-default); }
+
+/* Same mark as the side nav — one idea for "you are here", used twice. */
+.toc__link[aria-current='true'] { color: var(--fg-default); font-weight: var(--weight-medium); }
+
+.toc__link[aria-current='true']::before {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 0.7em;
+	width: 0.375rem;
+	height: 0.375rem;
+	border-radius: var(--radius-full);
+	background: var(--accent);
+}
+
+/* ── Pager + footer ───────────────────────────────────────────────────────── */
+
+.pager {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: var(--space-4);
+	margin-top: var(--space-16);
+}
+
+.pager__item {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-1);
+	padding: var(--space-4);
+	border: 1px solid var(--line-default);
+	border-radius: var(--radius-lg);
+	text-decoration: none;
+	color: inherit;
+	transition: border-color var(--dur-2) var(--ease-out);
+}
+
+.pager__item:hover { border-color: var(--line-strong); }
+.pager__item--prev { text-align: left; }
+.pager__item--next { text-align: right; grid-column: 2; }
+
+.pager__dir {
+	font-family: var(--font-label);
+	font-size: var(--text-2xs);
+	font-weight: var(--weight-semibold);
+	letter-spacing: var(--tracking-label);
+	text-transform: uppercase;
+	color: var(--fg-faint);
+}
+
+.pager__title { font-weight: var(--weight-semibold); }
+
+.foot {
+	max-width: var(--doc-measure);
+	margin-top: var(--space-16);
+	padding-top: var(--space-6);
+	border-top: 1px solid var(--line-subtle);
+	font-size: var(--text-sm);
+	color: var(--fg-faint);
+}
+
+.foot p { margin: 0; }
+.foot__note { margin-top: var(--space-1); }
+
+/* ── Responsive ───────────────────────────────────────────────────────────── */
+
+@media (max-width: 80rem) {
+	.shell { grid-template-columns: var(--side-w) minmax(0, 1fr); }
+	.rail { display: none; }
+}
+
+@media (max-width: 60rem) {
+	.shell { grid-template-columns: minmax(0, 1fr); }
+	.bar__burger { display: flex; }
+	.search__input { width: 9rem; }
+	.brand__sub { display: none; }
+
+	.side {
+		position: fixed;
+		inset: var(--bar-h) 0 auto 0;
+		max-height: calc(100dvh - var(--bar-h));
+		background: var(--bg-canvas);
+		border-bottom: 1px solid var(--line-default);
+		padding-inline: var(--gutter);
+		z-index: var(--z-dropdown);
+		display: none;
+	}
+
+	.side[data-open] { display: block; }
+}
+
+@media (max-width: 40rem) {
+	.pager { grid-template-columns: 1fr; }
+	.pager__item--next { grid-column: 1; }
+	.doc__title { font-size: var(--text-3xl); }
+	.demo__stage { padding: var(--space-4); }
+}
+
+/* =============================================================================
+   DEMO HELPERS
+
+   Classes the EXAMPLES need — a width to constrain a card, a box to hang
+   brackets on, a swatch grid. They live here rather than in src/ because they
+   document the system without being part of it.
+
+   They exist so no demo needs an inline style. A `style=""` in an example is
+   a value nobody can reuse and nobody can theme, and every reader who copies
+   the snippet inherits it.
+   ========================================================================== */
+
+.w-xs { max-width: 15rem; }
+.w-sm { max-width: 20rem; }
+.w-md { max-width: 24rem; }
+.w-lg { max-width: 32rem; }
+
+/* A blank box to demonstrate something that wraps content. */
+.box {
+	inline-size: 11rem;
+	aspect-ratio: 16 / 9;
+	border: 1px solid var(--line-subtle);
+	border-radius: var(--radius-lg);
+}
+
+.box-lg { inline-size: 13rem; }
+
+.box-label {
+	display: grid;
+	place-items: center;
+	color: var(--fg-faint);
+	font-size: var(--text-sm);
+}
+
+/* Colour swatches. */
+.swatches { display: flex; flex-wrap: wrap; gap: var(--space-1); }
+
+.swatch {
+	inline-size: 3rem;
+	block-size: 3rem;
+	border-radius: var(--radius-md);
+	border: 1px solid var(--line-default);
+}
+
+.swatch-canvas  { background: var(--bg-canvas); }
+.swatch-surface { background: var(--bg-surface); }
+.swatch-sunken  { background: var(--bg-sunken); }
+.swatch-muted   { background: var(--bg-muted); }
+.swatch-inverse { background: var(--bg-inverse); }
+.swatch-accent  { background: var(--accent); }
+.swatch-craft   { background: var(--craft); }
+
+/* Type specimens. */
+.spec-display { font-family: var(--font-display); font-weight: var(--weight-bold); letter-spacing: var(--tracking-tighter); line-height: 1.1; }
+.spec-4xl { font-size: var(--text-4xl); }
+.spec-2xl { font-size: var(--text-2xl); font-weight: var(--weight-semibold); letter-spacing: var(--tracking-tight); }
+.spec-xl  { font-size: var(--text-xl); font-weight: var(--weight-semibold); letter-spacing: var(--tracking-tight); }

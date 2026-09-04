@@ -1,0 +1,35 @@
+/* =============================================================================
+   11 · ICON — a 24px grid, 1.5px stroke, currentColor
+
+   Icons inherit their colour from the text they sit beside, which is why none
+   of them carries a fill. One stroke weight across the whole set, because a
+   set with two weights reads as two sets.
+
+   Layer: elements.
+   ========================================================================== */
+
+@layer elements {
+	.icon {
+		--icon-size: 1.25rem;
+		width: var(--icon-size);
+		height: var(--icon-size);
+		flex: none;
+		fill: none;
+		stroke: currentcolor;
+		stroke-width: 1.5;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	.icon-xs { --icon-size: 0.875rem; }
+	.icon-sm { --icon-size: 1rem; }
+	.icon-lg { --icon-size: 1.5rem; }
+	.icon-xl { --icon-size: 2rem; }
+
+	/* Filled icons (a play triangle) opt in — they are the exception. */
+	.icon-solid { fill: currentcolor; stroke: none; }
+
+	/* Optical alignment: an icon beside text sits a hair high because the cap
+	   height is shorter than the icon box. */
+	.icon-inline { vertical-align: -0.125em; display: inline-block; }
+}

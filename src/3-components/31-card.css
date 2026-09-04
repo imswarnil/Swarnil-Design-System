@@ -1,0 +1,172 @@
+/* =============================================================================
+   31 · CARD — one card, no twin
+
+   Parts stay the same across every variant; only the shape and the hover
+   answer change. A card gets exactly ONE hover answer — a card that both lifts
+   and brackets is a card that cannot decide what it is.
+
+   Layer: components.
+   ========================================================================== */
+
+@layer components {
+
+	.card {
+		--card-pad: var(--space-5);
+		--card-radius: var(--radius-card);
+		--card-bg: var(--bg-surface);
+		--card-line: var(--line-default);
+		--card-gap: var(--space-2);
+
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		background: var(--card-bg);
+		border: var(--border-hair) solid var(--card-line);
+		border-radius: var(--card-radius);
+		overflow: hidden;
+		transition: var(--t-colors), var(--t-transform), var(--t-shadow);
+	}
+
+	/* ── Parts ─────────────────────────────────────────────────────────────── */
+
+	.card__media {
+		--ratio: 16 / 9;
+		aspect-ratio: var(--ratio);
+		background: var(--bg-media);
+		overflow: hidden;
+	}
+
+	.card__media > img { width: 100%; height: 100%; object-fit: cover; transition: scale var(--dur-4) var(--ease-out); }
+
+	.card__body {
+		display: flex;
+		flex-direction: column;
+		gap: var(--card-gap);
+		padding: var(--card-pad);
+	}
+
+	.card__kicker,
+	.card__meta {
+		font-family: var(--font-label);
+		font-size: var(--text-2xs);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: var(--fg-faint);
+	}
+
+	.card__title {
+		font-family: var(--font-display);
+		font-size: var(--text-lg);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-tight);
+		line-height: var(--leading-snug);
+		color: var(--fg-default);
+		margin: 0;
+	}
+
+	.card__excerpt {
+		font-size: var(--text-sm);
+		line-height: var(--leading-relaxed);
+		color: var(--fg-muted);
+		margin: 0;
+	}
+
+	.card__foot {
+		margin-block-start: auto;
+		padding: var(--card-pad);
+		padding-block-start: 0;
+	}
+
+	/* The whole card is clickable, but the <a> stays on the TITLE so the
+	   accessible name and the tab stop are right. Its ::after covers the card.
+	   One stretched link per card — a second is unreachable by keyboard. */
+	.card__link { color: inherit; text-decoration: none; }
+
+	.card__link::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: var(--z-raised);
+	}
+
+	/* ── Hover answers ─────────────────────────────────────────────────────── */
+
+	@media (hover: hover) and (pointer: fine) {
+		.card-hover-lift:hover {
+			translate: 0 -3px;
+			box-shadow: var(--elevation-2);
+			border-color: var(--line-strong);
+		}
+
+		.card-hover-lift:hover .card__media > img { scale: 1.03; }
+
+		/* The brackets ARE the feedback, so nothing lifts. Compose with the
+		   foundation: class="card card-hover-frame frame frame-4 frame-hover" */
+		.card-hover-frame:hover { translate: none; box-shadow: none; }
+	}
+
+	.card-hover-frame {
+		--frame-size: 16px;
+		--frame-inset: 8px;
+		--frame-color: var(--accent);
+	}
+
+	/* Focus-within, so a keyboard user gets the same affordance as a mouse. */
+	.card:focus-within { border-color: var(--line-strong); }
+
+	/* ── Shape variants ────────────────────────────────────────────────────── */
+
+	.card-row { flex-direction: row; }
+	.card-row > .card__media { flex: 0 0 12rem; aspect-ratio: 1; }
+	.card-row > .card__body { flex: 1; }
+
+	.card-bare {
+		--card-bg: transparent;
+		--card-line: transparent;
+		--card-radius: 0;
+	}
+
+	.card-bare .card__body { padding-inline: 0; }
+
+	.card-flush .card__body { padding: 0; }
+	.card-compact { --card-pad: var(--space-4); --card-gap: var(--space-1); }
+	.card-roomy   { --card-pad: var(--space-8); }
+
+	/* Media full-bleed behind the text. */
+	.card-tile { display: grid; }
+	.card-tile > .card__media { grid-area: 1 / 1; aspect-ratio: 3 / 4; }
+
+	.card-tile > .card__body {
+		grid-area: 1 / 1;
+		justify-content: flex-end;
+		background: linear-gradient(transparent 30%, oklch(12.5% 0.012 275 / 0.85));
+	}
+
+	.card-tile .card__title { color: var(--ink-0); }
+	.card-tile .card__meta { color: oklch(100% 0 0 / 0.7); }
+
+	/* ── Emphasis variants ─────────────────────────────────────────────────── */
+
+	.card-accent  { --card-line: var(--accent); }
+	.card-quiet   { --card-bg: transparent; --card-line: var(--line-subtle); }
+	.card-raised  { box-shadow: var(--elevation-2); --card-line: transparent; }
+
+	.card-inverse {
+		--card-bg: var(--bg-inverse);
+		--card-line: transparent;
+	}
+
+	.card-inverse .card__title { color: var(--fg-on-inverse); }
+	.card-inverse .card__excerpt,
+	.card-inverse .card__meta { color: oklch(100% 0 0 / 0.65); }
+
+	/* ── Responsive ────────────────────────────────────────────────────────
+	   A container query, not a media query: a card in a 300px sidebar and a
+	   card in a 300px grid slot are the same card. Requires .cq-card on an
+	   ancestor. */
+	@container card (max-width: 26rem) {
+		.card-row { flex-direction: column; }
+		.card-row > .card__media { flex: none; aspect-ratio: 16 / 9; }
+	}
+}

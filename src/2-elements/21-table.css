@@ -1,0 +1,71 @@
+/* =============================================================================
+   21 · TABLE
+
+   Headers are LABELS, so they take the label voice — Inter, small, uppercase,
+   tracked. They are not data. A numeric column IS data, so .table__num takes
+   the mono voice and tabular figures, which is the only way a column of
+   numbers lines up.
+
+   Layer: elements.
+   ========================================================================== */
+
+@layer elements {
+
+	.table {
+		--table-pad: var(--space-3);
+		--table-line: var(--line-subtle);
+		width: 100%;
+		border-collapse: collapse;
+		font-size: var(--text-sm);
+	}
+
+	.table th {
+		text-align: start;
+		padding: var(--space-2) var(--table-pad);
+		border-block-end: var(--border-hair) solid var(--line-default);
+		font-family: var(--font-label);
+		font-size: var(--text-2xs);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: var(--fg-subtle);
+		white-space: nowrap;
+	}
+
+	.table td {
+		padding: var(--table-pad);
+		border-block-end: var(--border-hair) solid var(--table-line);
+		color: var(--fg-muted);
+		vertical-align: top;
+	}
+
+	.table tbody tr:last-child td { border-block-end: 0; }
+
+	/* Numbers are data. Tabular figures so the columns align. */
+	.table__num {
+		font-family: var(--font-slate);
+		font-variant-numeric: tabular-nums;
+		text-align: end;
+	}
+
+	.table-zebra tbody tr:nth-child(odd) { background: var(--bg-sunken); }
+	.table-compact { --table-pad: var(--space-2); }
+	.table-roomy   { --table-pad: var(--space-4); }
+
+	.table-bordered th,
+	.table-bordered td { border: var(--border-hair) solid var(--table-line); }
+
+	.table-hover tbody tr { transition: background-color var(--dur-1) var(--ease-out); }
+	.table-hover tbody tr:hover { background: var(--hover-wash); }
+
+	/* A table that cannot fit must SCROLL, not squash. The wrapper is
+	   focusable so a keyboard user can scroll it too. */
+	.table-scroll {
+		overflow-x: auto;
+		max-width: 100%;
+	}
+
+	.table th[aria-sort] { cursor: pointer; color: var(--fg-default); }
+	.table th[aria-sort='ascending']::after  { content: ' ↑'; color: var(--accent); }
+	.table th[aria-sort='descending']::after { content: ' ↓'; color: var(--accent); }
+}

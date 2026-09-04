@@ -1,0 +1,51 @@
+/* =============================================================================
+   34 · ALERT & EMPTY STATE
+
+   PRINCIPLES #12: copy is design. An error says what happened, then what to do.
+   An empty state is an invitation with a verb, never "Nothing here yet".
+   The CSS below cannot enforce that, but the docs page for it says so.
+
+   Layer: components.
+   ========================================================================== */
+
+@layer components {
+
+	.alert {
+		--alert-bg: var(--bg-sunken);
+		--alert-fg: var(--fg-default);
+		--alert-line: var(--line-default);
+		display: flex;
+		gap: var(--space-3);
+		padding: var(--space-4);
+		background: var(--alert-bg);
+		border: var(--border-hair) solid var(--alert-line);
+		border-inline-start-width: var(--border-3);
+		border-radius: var(--radius-lg);
+		color: var(--alert-fg);
+		font-size: var(--text-sm);
+	}
+
+	.alert__title { font-weight: var(--weight-semibold); }
+	.alert__body { color: var(--fg-muted); }
+
+	.alert-success { --alert-bg: var(--success-bg); --alert-line: var(--success-fg); --alert-fg: var(--success-fg); }
+	.alert-info    { --alert-bg: var(--info-bg);    --alert-line: var(--info-fg);    --alert-fg: var(--info-fg); }
+	.alert-warning { --alert-bg: var(--warning-bg); --alert-line: var(--warning-fg); --alert-fg: var(--warning-fg); }
+	.alert-danger  { --alert-bg: var(--danger-bg);  --alert-line: var(--danger-fg);  --alert-fg: var(--danger-fg); }
+
+	.alert-quiet { --alert-bg: transparent; border-inline-start-width: var(--border-hair); }
+
+	.empty {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--space-3);
+		padding: var(--space-12) var(--space-6);
+		text-align: center;
+		border: var(--border-hair) dashed var(--line-default);
+		border-radius: var(--radius-lg);
+	}
+
+	.empty__title { font-family: var(--font-display); font-size: var(--text-xl); font-weight: var(--weight-semibold); }
+	.empty__body { color: var(--fg-muted); max-width: var(--measure-ui); }
+}

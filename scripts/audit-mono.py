@@ -23,92 +23,111 @@ spaces the text to shreds.
     python3 scripts/audit-mono.py            report only
     python3 scripts/audit-mono.py --strict   exit 1 on any violation (CI)
 
-src/4-broadcast/ is exempt: it exports to YouTube and Instagram rather than to
-a website, and mono-as-camera-language is deliberate there. It becomes
-creator/ in Phase 7 and gets its own rules then.
+Scope: everything in src/, plus the docs site's own chrome — the docs are the
+system's loudest example, so they are held to the same rule.
 """
 import pathlib, re, sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-EXEMPT_DIR = '4-broadcast'
 
 # Selectors whose content is genuinely data. Each one is an assertion that what
 # renders here could not be read aloud as a sentence.
 ALLOW = {
-    'docs/preview.css': {
-        '.cds-gh__stars',      # a star count
-        '.cds-mark__sub',      # the wordmark lockup, not a label
-        '.np__out-val',        # a computed value readout
-        '.pattern-tile code',  # code
-        '.sec-num',            # a section number
-        '.spec',               # a spec strip: CSS values under a demo
-        '.sw__name',           # a token name, e.g. --accent
-        '.sw__val',            # its value, e.g. oklch(63% .19 34)
+    # Every entry is an assertion: what renders here is DATA, and could not be
+    # read aloud as a sentence.
+    'src/1-foundation/02-typography.css': {
+        '.t-slate, .t-slate-sm',   # the data voice itself
     },
-    'src/1-foundation/02-typography.css': {'.t-code', '.t-numeric', '.t-slate', '.t-slate-sm'},
-    'src/1-foundation/08-a11y.css': {"a[href^='http']::after"},   # prints the URL
-    'src/1-foundation/09-logo.css': {'.logo-stack .logo__tag'},   # brand mark
-    'src/1-foundation/10-icon.css': {'.icon-badged__n'},
-    'src/1-foundation/12-frame.css': {
-        # Window/terminal chrome. Mono here means "this is a machine", which is
-        # the whole argument of the frame layer.
-        '.vf__rec', '.win-browser__url', '.win-code__body', '.win-code__tabs',
-        '.win-term', '.win__bar',
+    'src/1-foundation/10-frame.css': {
+        # Window and viewfinder chrome. Mono here means "this is a machine",
+        # which is the whole argument of the frame layer.
+        '.vf__tc, .vf__rec',                     # timecode + record readout
+        '.vf__dims',                             # 1280 x 720
+        '.win-term .win__body, .win-term__body', # literal terminal output
+        '.win-browser__url',                     # a URL
     },
-    'src/2-elements/10-text.css': {'.code-block > pre', '.code-block__head', '.fn-ref'},
-    'src/2-elements/11-badge.css': {'.chip__count', '.kbd', '.timecode'},
-    'src/2-elements/12-table.css': {'.steps > li::before', '.table .num'},
-    'src/2-elements/15-syntax.css': {'.codebox__head', '.codebox__pre', '.copy-line'},
-    'src/3-components/23-collection.css': {
-        '.c-changelog__v', '.c-lesson__no', '.c-product .c__price', '.c-prompt .c__model',
-        '.c-snippet .c__code', '.c-snippet .c__lang', '.c-tag .c__count',
-        '.c-timeline__year', '.c-travel .c__day', '.c-trip .c__coords',
-        '.c-video .c__media::after',
+    'src/2-elements/20-badge.css': {
+        '.chip__count',   # a number
+        '.timecode',      # 00:14:22
+        '.kbd',           # a key
     },
-    'src/3-components/26-media.css': {'.player__time'},
-    'src/3-components/27-composite.css': {
-        '.buildlog__date', '.buildlog__node', '.curriculum__count', '.curriculum__no',
-        '.ep-panel__count', '.lesson-row__len',
+    'src/2-elements/21-table.css': {
+        '.table__num',    # a numeric column, tabular figures
     },
-    'src/3-components/31-content.css': {'.content code', '.content pre'},
-    'src/3-components/32-editorial.css': {'.release__date', '.release__ver'},
-    'src/3-components/33-navbar.css': {'.nav-gh__stars'},
-    'src/3-components/34-ad.css': {'.ad__dims'},
-    'src/3-components/35-timeline.css': {'.tl__node', '.tl__time'},
-    'src/3-components/36-comment.css': {'.comment__time', '.comments__count span'},
-    'src/5-sections/30-header.css': {'.page-head__count'},
+    'src/2-elements/22-code.css': {
+        '.code',              # inline code
+        '.codeblock__lang',   # the language name
+        '.codeblock__pre',    # code
+    },
+    # ── docs site chrome ───────────────────────────────────────────────────
+    'docs/assets/docs.css': {
+        '.code',         # inline code in prose
+        '.cb__lang',     # the language name on a code block
+        '.cb__pre',      # code
+        '.search__key',  # the "/" shortcut hint
+    },
+    'docs/assets/home.css': {
+        '.hero__tc',    # TAKE 47 . 00:12:47
+        '.hero__rec',   # REC
+        '.hero__dims',  # 1280 x 720
+    },
 }
 
 BLOCK_COMMENT = re.compile(r'/\*.*?\*/', re.S)
 
+# A DECLARATION starts with a property name: lowercase, dashes, then a colon.
+# A SELECTOR may also contain a colon (.btn:hover) but never in that shape, so
+# this is what tells `background: a,` apart from `.btn:hover,`.
+DECL = re.compile(r'^[a-z-]+\s*:')
+
 
 def targets():
-    for p in sorted(ROOT.joinpath('src').rglob('*.css')):
-        if EXEMPT_DIR not in p.parts[len(ROOT.parts):][0:3]:
-            yield p
-    yield ROOT / 'docs' / 'preview.css'
+    yield from sorted(ROOT.joinpath('src').rglob('*.css'))
+    yield ROOT / 'docs' / 'assets' / 'docs.css'
+    yield ROOT / 'docs' / 'assets' / 'home.css'
 
 
 def scan(path):
     """Yield (line_no, selector, kind) for every mono application and every
-    orphaned mono tracking in one file. Comments are stripped first so the
-    documentation in a file header never trips its own rule."""
+    orphaned mono tracking in one file.
+
+    Comments are stripped first so a file's own documentation never trips its
+    own rule. Selector GROUPS are joined across lines — `.t-slate,\n.t-slate-sm {`
+    is one rule with one declaration, and reporting only the last line of it
+    would make the allowlist a list of half-truths.
+    """
     raw = path.read_text()
-    # Blank out comments but keep line numbering intact.
     text = BLOCK_COMMENT.sub(lambda m: re.sub(r'[^\n]', ' ', m.group()), raw)
     lines = text.split('\n')
-    sel = ''
+
+    sel, pending, in_decl = '', [], False
     for i, line in enumerate(lines):
         s = line.strip()
-        if s.endswith('{') and not s.startswith('@'):
-            sel = s[:-1].strip()
-        own = (s.split('{')[0].strip()
-               if '{' in s and not s.startswith(('font-family', 'letter-spacing'))
-               else sel)
+
+        # A multi-line VALUE (background: a,\n b;) also ends lines with a
+        # comma, and mistaking one for a selector is how this script reported
+        # a gradient as a font declaration. Track whether a declaration is
+        # still open and never collect selectors while it is.
+        if in_decl:
+            if s.endswith(';') or s.endswith('}'):
+                in_decl = False
+        elif DECL.match(s) and '{' not in s and not s.endswith(';'):
+            in_decl = True
+
+        if (not in_decl and s and not s.startswith('@')
+                and '{' not in s and s.endswith(',')):
+            pending.append(s.rstrip(','))          # mid-group selector line
+            continue
+
+        if '{' in s and not s.startswith('@'):
+            head = s.split('{')[0].strip().rstrip(',')
+            if head or pending:
+                sel = ', '.join([*pending, head]) if head else ', '.join(pending)
+            pending = []
+
         if 'font-family' in s and 'var(--font-slate)' in s:
-            yield i + 1, own or '(unknown)', 'mono'
+            yield i + 1, sel or '(unknown)', 'mono'
         elif 'var(--tracking-slate)' in s:
-            # Is the enclosing block actually mono?
             depth, mono = 0, False
             for j in range(i, -1, -1):
                 depth += lines[j].count('}') - lines[j].count('{')
@@ -118,7 +137,7 @@ def scan(path):
                 if depth > 0:
                     break
             if not mono:
-                yield i + 1, own or '(unknown)', 'tracking'
+                yield i + 1, sel or '(unknown)', 'tracking'
 
 
 def main():
