@@ -7,7 +7,7 @@ PAGES = {}
 intro = '''
 		<div class="surface demo-tile u-mb-8" style="overflow:hidden">
 			<div class="demo pattern pattern-grid pattern-lg fade-corners" style="padding:var(--space-10) var(--space-8)">
-				<span class="t-slate" style="display:flex;align-items:center;gap:8px"><span class="dot dot-sm dot-live"></span> Creator Design System · v0.1 · proposal</span>
+				<span class="t-label" style="display:flex;align-items:center;gap:8px"><span class="dot dot-sm dot-live"></span> Creator Design System · v0.1 · proposal</span>
 				<h2 class="t-display-1" style="margin-top:var(--space-4)">Frame &amp; Signal.</h2>
 				<p class="t-lead" style="margin-top:var(--space-5);max-width:var(--measure-lead)">
 					A token-first design system for creators building their site.

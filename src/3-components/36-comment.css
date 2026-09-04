@@ -91,7 +91,7 @@
 }
 
 .comment-box__note {
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
 	color: var(--fg-faint);
 }
@@ -132,7 +132,7 @@
 	background: var(--bg-sunken);
 	display: grid;
 	place-items: center;
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
 	color: var(--fg-subtle);
 }
@@ -179,9 +179,9 @@
 	background: none;
 	border: 0;
 	padding: 0;
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 	color: var(--fg-faint);
 	cursor: pointer;
@@ -203,9 +203,9 @@
 	border-radius: var(--radius-pill);
 	background: var(--accent-soft);
 	color: var(--accent-soft-fg);
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 	vertical-align: 1px;
 }

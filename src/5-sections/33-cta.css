@@ -20,9 +20,9 @@
 	display: inline-flex;
 	align-items: center;
 	gap: var(--space-2);
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 	opacity: 0.65;
 }
@@ -58,7 +58,7 @@
 /* Fine print under the actions — the honest line. */
 .cta__fine {
 	margin-top: var(--space-4);
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
 	letter-spacing: 0.05em;
 	opacity: 0.5;

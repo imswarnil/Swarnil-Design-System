@@ -45,9 +45,9 @@
 }
 
 .stat__label {
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 	color: var(--fg-subtle);
 	order: -1;

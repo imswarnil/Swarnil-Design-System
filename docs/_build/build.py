@@ -17,7 +17,23 @@ HERE = pathlib.Path(__file__).resolve().parent
 OUT = HERE.parent
 REPO = HERE.parent.parent
 FRAG = HERE / 'fragments'
-V = '?v=cds25'
+# Cache-buster. This used to be the frozen literal '?v=cds25', which meant a
+# rebuild changed the CSS but not its URL, so the browser kept serving the old
+# copy until someone thought to hard-reload. Derive it from the newest source
+# mtime instead: it changes exactly when the CSS does, and not otherwise.
+def _stamp():
+    roots = [HERE.parent.parent / 'src', HERE.parent / 'preview.css',
+             HERE.parent / 'preview.js']
+    newest = 0
+    for r in roots:
+        if r.is_dir():
+            newest = max([newest] + [f.stat().st_mtime for f in r.rglob('*') if f.is_file()])
+        elif r.exists():
+            newest = max(newest, r.stat().st_mtime)
+    return f'?v={int(newest):x}'
+
+
+V = _stamp()
 SITE = 'https://design.imswarnil.com'
 
 import content_start, content_usage, content_layout, content_forms, content_components, content_misc, content_extra, content_navbar, content_site, content_explorer, content_all
@@ -456,14 +472,14 @@ TEMPLATE = '''<!DOCTYPE html>
 			<a class="nav-sheet__link" style="--i:4" href="/sponsor.html"><svg class="icon" aria-hidden="true"><use href="#i-heart"/></svg>Sponsor</a>
 		</nav>
 		<div class="nav-sheet__foot">
-			<span class="t-slate-sm" style="color:var(--fg-faint)"><span class="dot dot-sm dot-live"></span> still rolling</span>
+			<span class="t-label-sm" style="color:var(--fg-faint)"><span class="dot dot-sm dot-live"></span> still rolling</span>
 			<a class="btn btn-primary btn-sm btn-pill" href="https://github.com/imswarnil/Swarnil-Design-System" rel="noopener">GitHub</a>
 		</div>
 	</div>
 </dialog>
 <aside class="doc-side">
 	<div class="doc-side__head">
-		<span class="t-slate-sm" style="color:var(--fg-faint)">Contents</span>
+		<span class="t-label-sm" style="color:var(--fg-faint)">Contents</span>
 		<button class="doc-btn doc-side__hide" type="button" data-side-toggle aria-label="Hide menu" title="Hide menu">«</button>
 	</div>
 
@@ -475,7 +491,7 @@ TEMPLATE = '''<!DOCTYPE html>
 <button class="doc-btn doc-reopen" type="button" data-side-toggle aria-label="Show menu">☰</button>
 <header class="doc-top">
 	<button class="doc-btn" type="button" data-nav-toggle aria-label="Open navigation">☰ Contents</button>
-	<span class="t-slate-sm" style="color:var(--fg-faint)">{title}</span>
+	<span class="t-label-sm" style="color:var(--fg-faint)">{title}</span>
 </header>
 <main id="main">
 	<div class="container-wide section">
@@ -496,8 +512,8 @@ TEMPLATE = '''<!DOCTYPE html>
 		<footer class="section-sm" style="padding-bottom:0">
 			<hr class="rule" style="margin-bottom:var(--space-6)" />
 			<div class="row-between">
-				<p class="t-slate" style="display:flex;align-items:center;gap:8px">Creator Design System <span class="dot dot-sm"></span></p>
-				<p class="t-slate-sm">Frame &amp; Signal · for creators building their site.</p>
+				<p class="t-label" style="display:flex;align-items:center;gap:8px">Creator Design System <span class="dot dot-sm"></span></p>
+				<p class="t-small" style="color:var(--fg-faint)">Frame &amp; Signal · for creators building their site.</p>
 			</div>
 		</footer>
 	</div>
@@ -558,7 +574,7 @@ def render(slug, title, group, lead, body, opts, return_toc=False):
                  f'max-width:var(--measure-lead)">{lead}</p>') if lead else ''
     esc_title = html.escape(title)
     head_html = ('\t\t<header class="docs-head">\n'
-                 f'\t\t\t<span class="t-slate" style="color:var(--fg-faint)">{group} · Creator Design System</span>\n'
+                 f'\t\t\t<span class="t-label" style="color:var(--fg-faint)">{group} · Creator Design System</span>\n'
                  f'\t\t\t<h1 class="t-display-2" style="margin-top:var(--space-3)">{esc_title}</h1>{lead_html}\n'
                  '\t\t</header>')
     pg = pager(slug)

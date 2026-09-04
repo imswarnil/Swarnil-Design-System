@@ -15,7 +15,7 @@
 .figure > img { border-radius: var(--radius-media); width: 100%; }
 
 .figure__caption {
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
 	letter-spacing: var(--tracking-wide);
 	color: var(--fg-subtle);
@@ -52,9 +52,9 @@
 }
 
 .pullquote__cite {
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 	color: var(--fg-subtle);
 	font-style: normal;
@@ -145,9 +145,9 @@
 
 /* Keyboard-driven list of definitions, for docs and the changelog. */
 .term {
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 	color: var(--fg-subtle);
 }

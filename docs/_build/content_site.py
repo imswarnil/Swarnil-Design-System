@@ -170,7 +170,9 @@ def build_home():
     tpl = _load('templates')[:2]
 
     cards = ''.join(
-        f'<div class="lp-feat"><span class="lp-feat__ico">{ICON(p)}</span>'
+        f'<div class="lp-feat frame frame-4 frame-hover">'
+        f'<span class="frame__tr"></span><span class="frame__bl"></span>'
+        f'<span class="lp-feat__ico">{ICON(p)}</span>'
         f'<h3 class="t-h4" data-no-toc>{t}</h3><p class="t-small u-fg-subtle u-mt-2">{d}</p></div>'
         for p, t, d in FEATURES)
 
@@ -203,7 +205,7 @@ def build_home():
 				<a class="btn btn-primary btn-lg" href="/introduction.html">Read the docs</a>
 				<a class="btn btn-secondary btn-lg" href="/components.html">Browse components</a>
 			</div>
-			<p class="t-slate-sm u-mt-5" style="color:var(--fg-faint)">
+			<p class="t-label-sm u-mt-5" style="color:var(--fg-faint)">
 				No framework · no runtime · no build step required
 			</p>
 		</div>

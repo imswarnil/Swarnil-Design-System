@@ -338,7 +338,7 @@ b.append(tile('<div class="nav-shell" style="position:relative;padding-inline:0;
     '<a class="nav-mega__link" href="#i"><svg class="icon" aria-hidden="true"><use href="#i-book"/></svg><span><b>Courses</b><span>A syllabus you can finish</span></span></a>'
     '<a class="nav-mega__link" href="#i"><svg class="icon" aria-hidden="true"><use href="#i-pen"/></svg><span><b>Guides</b><span>Step by step</span></span></a></div>'
     '<a class="nav-mega__feature" href="#i"><span class="pattern pattern-grid pattern-media"></span>'
-    '<span class="t-slate-sm" style="color:var(--fg-faint)">FEATURED</span>'
+    '<span class="t-label-sm" style="color:var(--fg-faint)">FEATURED</span>'
     '<b>Rebuilding my theme from tokens</b></a>'
     '</div></details></div></nav></div><div style="height:13rem"></div>',
     '<b>.nav-mega__panel</b> — shown open. Columns auto-fit; the feature cell is a link, not a card.'))
@@ -366,7 +366,7 @@ b.append(p(
     'same attribute a screen reader announces. <b>Click them.</b>'))
 b.append(tile('<div class="u-flex u-gap-6 u-items-center u-wrap">'
     + ''.join(f'<span class="u-text-center"><span class="u-block u-mb-2">{bt}</span>'
-              f'<span class="t-slate-sm" style="color:var(--fg-faint)">{n}</span></span>'
+              f'<span class="t-label-sm" style="color:var(--fg-faint)">{n}</span></span>'
               for bt, n in [(burger(), 'default'), (burger('nav-burger-squeeze'), 'squeeze'),
                             (burger('nav-burger-aperture'), 'aperture'),
                             (burger('nav-burger-bare'), 'bare'),
@@ -410,7 +410,7 @@ b.append(tile('<button class="btn btn-secondary" type="button" data-dialog="nav-
               for i, (lbl, ic) in enumerate([('Blog', 'pen'), ('Videos', 'camera'), ('Courses', 'book'),
                                              ('Projects', 'code'), ('Travel', 'plane'), ('Topics', 'tag')]))
     + '</nav>'
-    '<div class="nav-sheet__foot"><span class="t-slate-sm" style="color:var(--fg-faint)">'
+    '<div class="nav-sheet__foot"><span class="t-label-sm" style="color:var(--fg-faint)">'
     '<span class="dot dot-sm dot-live"></span> still rolling</span>'
     '<button class="btn btn-primary btn-sm btn-pill">Subscribe</button></div>'
     '</div></dialog>',
@@ -562,7 +562,7 @@ b.append(tile(
       '<a class="nav-link" href="#i">Learn</a><a class="nav-link" href="#i">Build</a></div>'
       '<div class="nav-actions"><button class="btn btn-primary btn-sm btn-pill">Subscribe</button></div>'
       '</nav></div>'
-    '<div class="np__filler"><p class="t-slate-sm">scroll this panel ↓</p></div>'
+    '<div class="np__filler"><p class="t-label-sm">scroll this panel ↓</p></div>'
     '</div></div>',
     '<b>.nav-shell-morph</b> — full width at the top, an island once you move; scroll inside the box'))
 b.append(code('html', [

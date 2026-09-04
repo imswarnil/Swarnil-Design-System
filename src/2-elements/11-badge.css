@@ -16,10 +16,10 @@
 	border-radius: var(--radius-pill);
 	background: var(--bg-surface);
 	color: var(--fg-muted);
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
 	font-weight: var(--weight-medium);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 	white-space: nowrap;
 }
@@ -55,10 +55,10 @@
 	display: inline-flex;
 	align-items: center;
 	gap: var(--space-2);
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-xs);
 	font-weight: var(--weight-medium);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 	color: var(--fg-subtle);
 }
@@ -264,9 +264,9 @@
 }
 
 .cert__issuer {
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 	color: var(--fg-faint);
 }

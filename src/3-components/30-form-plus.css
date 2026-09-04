@@ -73,9 +73,9 @@
 	position: absolute;
 	left: var(--space-3);
 	top: 0.4rem;
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 	color: var(--fg-faint);
 	pointer-events: none;
@@ -105,7 +105,7 @@
 	border: var(--border-hair) solid var(--line-default);
 	background: var(--bg-sunken);
 	color: var(--fg-subtle);
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-xs);
 	white-space: nowrap;
 }

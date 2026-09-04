@@ -42,9 +42,9 @@
 }
 
 .curriculum__meta {
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 	color: var(--fg-faint);
 }
@@ -166,9 +166,9 @@
 
 /* Free-preview lessons advertise it. */
 .lesson-row__free {
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 	color: var(--fg-accent);
 }
@@ -334,9 +334,9 @@
 }
 
 .itinerary__chip span {
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: 0.55rem;
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 	color: var(--fg-faint);
 }

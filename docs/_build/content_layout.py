@@ -25,9 +25,9 @@ PAGES['containers'] = ('Containers',
         ('.container-wide', 'var(--w-wide) — poster walls, big decks'),
         ('.container-full', 'edge to edge, gutters only')])
     + tile('<div class="stack-sm">'
-           '<div class="u-bg-accent-soft u-border u-border-accent u-rounded u-p-2 u-text-center t-slate-sm">container</div>'
-           '<div class="u-bg-accent-soft u-border u-border-accent u-rounded u-p-2 u-text-center t-slate-sm" style="max-width:75%">container-prose</div>'
-           '<div class="u-bg-accent-soft u-border u-border-accent u-rounded u-p-2 u-text-center t-slate-sm" style="max-width:55%">container-narrow</div>'
+           '<div class="u-bg-accent-soft u-border u-border-accent u-rounded u-p-2 u-text-center t-label-sm">container</div>'
+           '<div class="u-bg-accent-soft u-border u-border-accent u-rounded u-p-2 u-text-center t-label-sm" style="max-width:75%">container-prose</div>'
+           '<div class="u-bg-accent-soft u-border u-border-accent u-rounded u-p-2 u-text-center t-label-sm" style="max-width:55%">container-narrow</div>'
            '</div>', 'relative widths, to scale'))
 
 PAGES['grid'] = ('Grid',
@@ -80,7 +80,7 @@ lp += sec('blog-lp', 'Blog, with a sidebar',
 lp += tile('''<div class="grid-rail">
   <article class="stack">
     <h3 class="t-h4">Why I stopped using a CSS framework</h3>
-    <p class="t-slate-sm" style="color:var(--fg-faint)">11 min read · CSS &amp; layout</p>
+    <p class="t-label-sm" style="color:var(--fg-faint)">11 min read · CSS &amp; layout</p>
     <p>Every framework is a set of answers to questions someone else was asking. That is
       fine until your questions differ, and then every line you write is an argument
       with the defaults.</p>
@@ -89,7 +89,7 @@ lp += tile('''<div class="grid-rail">
       replaced.</p>
   </article>
   <aside class="surface u-p-4">
-    <p class="t-slate-sm u-mb-3" style="color:var(--fg-faint)">Recent posts</p>
+    <p class="t-label-sm u-mb-3" style="color:var(--fg-faint)">Recent posts</p>
     <div class="list-group list-group-flush">
       <a class="list-group__item" href="#i">Tokens are a contract, not a theme</a>
       <a class="list-group__item" href="#i">Writing components you can delete</a>
@@ -104,7 +104,7 @@ lp += sec('doc-lp', 'Three-column docs',
           'primitives nested rather than a third one invented for the third column.')
 lp += tile('''<div class="grid-rail-left">
   <nav class="stack-xs">
-    <p class="t-slate-sm u-mb-2" style="color:var(--fg-faint)">Docs</p>
+    <p class="t-label-sm u-mb-2" style="color:var(--fg-faint)">Docs</p>
     <div class="list-group list-group-flush">
       <a class="list-group__item" href="#i" aria-current="page">Grid</a>
       <a class="list-group__item" href="#i">Columns &amp; gutters</a>
@@ -118,7 +118,7 @@ lp += tile('''<div class="grid-rail-left">
         cluster, or a named grid.</p>
     </article>
     <aside>
-      <p class="t-slate-sm u-mb-3" style="color:var(--fg-faint)">On this page</p>
+      <p class="t-label-sm u-mb-3" style="color:var(--fg-faint)">On this page</p>
       <nav class="stack-xs">
         <a href="#i">Overview</a>
         <a href="#i">The grid</a>
@@ -167,7 +167,7 @@ lp += tile('''<div class="split-phi">
   <div class="canvas canvas-thumb canvas__scrim pattern pattern-grid pattern-media pattern-lg"
        style="border-radius:var(--radius-card)">
     <div class="canvas__safe">
-      <span class="t-slate" style="color:#fff;display:flex;align-items:center;gap:6px">
+      <span class="t-label" style="color:#fff;display:flex;align-items:center;gap:6px">
         <span class="dot dot-sm dot-live"></span> ep.07 · 14:22</span>
       <span style="font-family:var(--font-display);font-weight:700;font-size:var(--text-xl);
                    color:#fff;line-height:1.1">Rebuilding my Ghost theme
@@ -175,7 +175,7 @@ lp += tile('''<div class="split-phi">
     </div>
   </div>
   <aside class="surface u-p-4">
-    <p class="t-slate-sm u-mb-3" style="color:var(--fg-faint)">Up next</p>
+    <p class="t-label-sm u-mb-3" style="color:var(--fg-faint)">Up next</p>
     <div class="list-group list-group-flush">
       <a class="list-group__item" href="#i">Grid, in four rules</a>
       <a class="list-group__item" href="#i">The record light</a>
@@ -201,7 +201,7 @@ PAGES['reboot'] = ('Reboot',
         ('body', 'bg-canvas · fg-default · font-body · antialiased'),
         (':focus-visible', 'the one focus ring, accent, 2px offset')],
        head=('Selector', 'Rule'))
-    + tile('<figure class="u-m-0"><div class="u-bg-sunken u-rounded u-p-4 t-slate-sm">Anything inside a fresh element starts unstyled and inherits ink.</div></figure>',
+    + tile('<figure class="u-m-0"><div class="u-bg-sunken u-rounded u-p-4 t-label-sm">Anything inside a fresh element starts unstyled and inherits ink.</div></figure>',
            '00-reboot.css — runs before every layer'))
 
 PAGES['typography'] = ('Typography',
@@ -217,14 +217,14 @@ PAGES['typography'] = ('Typography',
     + tile('<p class="t-slate">SLATE · TAKE 47 · 00:12:47</p>'
            '<p class="t-quote u-mt-4">“The quote voice gets the serif treatment and a hanging quote.”</p>'
            '<p class="u-mt-4">Inline: <a class="t-link" href="#type">a link</a>, <code class="t-code">code</code>, <mark class="mark">marked</mark>, <kbd class="kbd">⌘K</kbd>, <span class="t-accent">the accent word</span>.</p>',
-           '<b>.t-slate · .t-quote · .t-link · .t-code · .mark · .kbd</b>'))
+           '<b>.t-label · .t-slate · .t-quote · .t-link · .t-code · .mark · .kbd</b>'))
 
 PAGES['images'] = ('Images & figures',
     'Media is always framed, always ratio\'d, never allowed to reflow the page.',
     tile('<div class="grid-2">'
          '<figure class="figure u-m-0"><div class="pattern pattern-grid pattern-media u-rounded-lg u-border" style="aspect-ratio:16/9"></div>'
          '<figcaption class="figure__caption">.figure — media + slate caption</figcaption></figure>'
-         '<figure class="figure u-m-0"><div class="frame frame-4 pattern pattern-hatch" style="aspect-ratio:16/9"></div>'
+         '<figure class="figure u-m-0"><div class="frame frame-4" style="aspect-ratio:16/9;position:relative"><div class="pattern pattern-hatch" style="position:absolute;inset:0"></div><span class="frame__tr"></span><span class="frame__bl"></span></div>'
          '<figcaption class="figure__caption">.frame — the viewfinder device</figcaption></figure>'
          '</div>',
          '<b>.figure · .figure__caption · .frame</b>')

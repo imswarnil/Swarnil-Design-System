@@ -130,7 +130,7 @@ PAGES['card'] = ('Card',
            '<div class="card__body"><p class="card__meta">Row layout</p>'
            '<h3 class="card__title"><a class="card__link" href="#i">Horizontal card for lists</a></h3>'
            '<p class="card__excerpt">Media left, copy right; stacks on phones.</p></div></article>',
-           '<b>.card-row</b> · also: <b>.card-compact · .card-poster · .card-bare</b>')
+           '<b>.card-row</b> · also: <b>.card-compact · .card-poster · .card-bare · .card-hover-frame</b>')
     + tile('<div class="deck deck-sm" style="grid-template-columns:repeat(auto-fill,minmax(11rem,1fr))">'
            '<article class="card card-poster"><div class="card__media card__media-poster pattern pattern-scanline pattern-media"></div>'
            '<div class="card__body"><h3 class="card__title"><a class="card__link" href="#i">Poster 2:3</a></h3></div></article>'
@@ -138,6 +138,11 @@ PAGES['card'] = ('Card',
            '<h3 class="card__title"><a class="card__link" href="#i">Dense rails</a></h3></div></article>'
            '<article class="card card-bare"><div class="card__media pattern pattern-grid pattern-media"></div>'
            '<div class="card__body" style="padding-inline:0"><h3 class="card__title"><a class="card__link" href="#i">Bare — no chrome</a></h3></div></article>'
+           '<article class="card card-hover-frame frame frame-4 frame-hover">'
+           '<span class="frame__tr"></span><span class="frame__bl"></span>'
+           '<div class="card__body"><p class="card__meta">Hover, or tab to it</p>'
+           '<h3 class="card__title"><a class="card__link" href="#i">The viewfinder finds it</a></h3>'
+           '<p class="card__excerpt">Brackets close in instead of the card lifting — one hover answer, not two.</p></div></article>'
            '</div>',
            'the whole-card link stays on the title; its ::after covers the card'))
 
@@ -215,13 +220,13 @@ PAGES['marquee'] = ('Marquee',
     'The looping strip, done honestly: duplicate the run, hide the twin from assistive tech, '
     'pause on hover, fall back to a scrollable row under reduced motion.',
     tile('<div class="marquee"><div class="marquee__run">'
-         '<span class="t-slate">#salesforce</span><span class="t-slate">#ghost-theme</span>'
-         '<span class="t-slate">#budapest</span><span class="t-slate">#build-log</span>'
-         '<span class="t-slate">#travel</span><span class="t-slate">#courses</span>'
+         '<span class="t-label">#salesforce</span><span class="t-label">#ghost-theme</span>'
+         '<span class="t-label">#budapest</span><span class="t-label">#build-log</span>'
+         '<span class="t-label">#travel</span><span class="t-label">#courses</span>'
          '</div><div class="marquee__run" aria-hidden="true">'
-         '<span class="t-slate">#salesforce</span><span class="t-slate">#ghost-theme</span>'
-         '<span class="t-slate">#budapest</span><span class="t-slate">#build-log</span>'
-         '<span class="t-slate">#travel</span><span class="t-slate">#courses</span>'
+         '<span class="t-label">#salesforce</span><span class="t-label">#ghost-theme</span>'
+         '<span class="t-label">#budapest</span><span class="t-label">#build-log</span>'
+         '<span class="t-label">#travel</span><span class="t-label">#courses</span>'
          '</div></div>',
          '<b>.marquee &gt; .marquee__run ×2</b> — the twin is aria-hidden')
     + tile('<div class="marquee marquee-fast marquee-reverse"><div class="marquee__run">'
@@ -279,7 +284,7 @@ PAGES['navbar'] = ('Navbar',
            'collection context — <b>[aria-current="page"]</b> gets the dot, not a fill', pad=False)
     + tile('<nav class="nav-bar nav-course" aria-label="Demo course" style="border:var(--border-hair) solid var(--line-default);border-radius:var(--radius-pill)">'
            '<button class="btn-close" type="button" aria-label="Close course"></button>'
-           '<span class="t-slate-sm u-grow u-text-center">HANDLEBARS WITHOUT TEARS · LESSON 3 OF 14</span>'
+           '<span class="t-label-sm u-grow u-text-center">HANDLEBARS WITHOUT TEARS · LESSON 3 OF 14</span>'
            '<div class="cluster-sm">'
            '<button class="btn btn-quiet btn-sm">← Prev</button><button class="btn btn-primary btn-sm">Next →</button>'
            '</div>'

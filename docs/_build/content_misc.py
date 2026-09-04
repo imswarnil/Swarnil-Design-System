@@ -329,11 +329,11 @@ upage('u-background', 'Background', 'Semantic surfaces only — markup never nam
        ('.u-bg-accent / .u-bg-accent-soft', 'the rationed loud pair'),
        ('.u-bg-transparent', 'strip an inherited surface')],
       tile('<div class="u-flex u-gap-3 u-wrap">'
-           '<span class="u-bg-surface u-border u-rounded u-p-3 t-slate-sm">surface</span>'
-           '<span class="u-bg-sunken u-border u-rounded u-p-3 t-slate-sm">sunken</span>'
-           '<span class="u-bg-inverse u-rounded u-p-3 t-slate-sm">inverse</span>'
-           '<span class="u-bg-accent u-rounded u-p-3 t-slate-sm">accent</span>'
-           '<span class="u-bg-accent-soft u-rounded u-p-3 t-slate-sm">accent-soft</span></div>',
+           '<span class="u-bg-surface u-border u-rounded u-p-3 t-label-sm">surface</span>'
+           '<span class="u-bg-sunken u-border u-rounded u-p-3 t-label-sm">sunken</span>'
+           '<span class="u-bg-inverse u-rounded u-p-3 t-label-sm">inverse</span>'
+           '<span class="u-bg-accent u-rounded u-p-3 t-label-sm">accent</span>'
+           '<span class="u-bg-accent-soft u-rounded u-p-3 t-label-sm">accent-soft</span></div>',
            'the surface family'))
 
 upage('u-borders', 'Borders', 'Hairlines and the radius ladder.',
@@ -342,12 +342,12 @@ upage('u-borders', 'Borders', 'Hairlines and the radius ladder.',
        ('.u-border-subtle / -strong / -accent', 'line weight by color'),
        ('.u-rounded-sm/-/-lg/-card/-pill/-full', 'the radius ladder')],
       tile('<div class="u-flex u-gap-3 u-wrap u-items-center">'
-           '<span class="u-border u-rounded-sm u-p-3 t-slate-sm">sm</span>'
-           '<span class="u-border u-rounded u-p-3 t-slate-sm">md</span>'
-           '<span class="u-border u-rounded-lg u-p-3 t-slate-sm">lg</span>'
-           '<span class="u-border u-rounded-card u-p-3 t-slate-sm">card</span>'
-           '<span class="u-border u-rounded-pill u-px-4 u-py-2 t-slate-sm">pill</span>'
-           '<span class="u-border u-border-accent u-rounded u-p-3 t-slate-sm">accent</span></div>',
+           '<span class="u-border u-rounded-sm u-p-3 t-label-sm">sm</span>'
+           '<span class="u-border u-rounded u-p-3 t-label-sm">md</span>'
+           '<span class="u-border u-rounded-lg u-p-3 t-label-sm">lg</span>'
+           '<span class="u-border u-rounded-card u-p-3 t-label-sm">card</span>'
+           '<span class="u-border u-rounded-pill u-px-4 u-py-2 t-label-sm">pill</span>'
+           '<span class="u-border u-border-accent u-rounded u-p-3 t-label-sm">accent</span></div>',
            'radii, to scale'))
 
 upage('u-colors', 'Colors', 'Foreground utilities — semantic, both themes, verified contrast.',
@@ -381,7 +381,7 @@ upage('u-float', 'Float', 'For prose intrusions only — layout belongs to flex 
       [('.u-float-start / .u-float-end', 'logical floats'),
        ('.u-float-none', 'cancel'), ('.u-clearfix', 'contain floats')],
       tile('<div class="u-clearfix u-border u-rounded u-p-4" style="max-width:30rem">'
-           '<span class="u-float-end u-bg-accent-soft u-rounded u-p-2 t-slate-sm" style="margin-left:var(--space-3)">floats end</span>'
+           '<span class="u-float-end u-bg-accent-soft u-rounded u-p-2 t-label-sm" style="margin-left:var(--space-3)">floats end</span>'
            '<p class="t-small u-fg-subtle">The paragraph wraps around the floated chip the way a pullquote intrudes into an article — the one legitimate float.</p></div>',
            '.u-float-end inside .u-clearfix'))
 
@@ -418,7 +418,7 @@ upage('u-shadows', 'Shadows', 'The elevation ladder — in dark themes it swaps 
       [('.u-shadow-0 … .u-shadow-5', 'ascending elevation'),
        ('.u-shadow-none', 'flat')],
       tile('<div class="u-flex u-gap-4 u-wrap">'
-           + ''.join(f'<span class="u-bg-surface u-rounded u-p-3 u-shadow-{i} t-slate-sm">{i}</span>' for i in range(6))
+           + ''.join(f'<span class="u-bg-surface u-rounded u-p-3 u-shadow-{i} t-label-sm">{i}</span>' for i in range(6))
            + '</div>',
            'shadow-0 through shadow-5 — flip the theme to see the dark-mode treatment'))
 
@@ -437,7 +437,7 @@ upage('u-spacing', 'Spacing', 'Margin, padding and gap off the 4px ladder — ne
        ('.u-p-0…8 / .u-px-* / .u-py-*', 'padding'),
        ('.u-gap-1…8', 'flex/grid gaps')],
       tile('<div class="u-flex u-gap-2 u-items-end">'
-           + ''.join(f'<span class="u-bg-accent-soft u-rounded u-p-{i} t-slate-sm">p-{i}</span>' for i in (1, 2, 3, 4, 6, 8))
+           + ''.join(f'<span class="u-bg-accent-soft u-rounded u-p-{i} t-label-sm">p-{i}</span>' for i in (1, 2, 3, 4, 6, 8))
            + '</div>',
            'the padding ladder, felt'))
 

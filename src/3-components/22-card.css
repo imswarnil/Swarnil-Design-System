@@ -91,9 +91,9 @@ a.card:hover { text-decoration: none; color: inherit; }
 }
 
 .card__meta {
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 	color: var(--fg-subtle);
 	display: flex;
@@ -189,6 +189,37 @@ a.card:hover { text-decoration: none; color: inherit; }
 
 .card-bare:hover { transform: none; box-shadow: none; }
 
+/* Hover-frame: the card is a viewfinder, so pointing at it is the camera
+   finding focus. The brackets ARE the feedback, so the lift and the shadow
+   come off — two hover answers to one question is a card that cannot decide
+   what it is.
+
+   The brackets themselves come from the foundation, not from here. Compose:
+
+       <article class="card card-hover-frame frame frame-4 frame-hover">
+
+   That is the house idiom (see 12-frame.css, and the .btn frame demos), and
+   it means this variant stays four declarations instead of duplicating forty.
+   .frame-4 needs its two extra corners as real spans — without them you get
+   the two-corner .frame, which is a legitimate look, not a bug.
+
+   The accent, not the craft amber: a card is an interactive target, and the
+   accent is the colour this system reserves for "this responds to you". */
+
+.card-hover-frame {
+	--frame-size: 16px;
+	--frame-inset: 8px;
+	--frame-color: var(--accent);
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.card-hover-frame:hover {
+		transform: none;
+		box-shadow: none;
+		border-color: var(--line-default);
+	}
+}
+
 /* Poster: the Netflix-style tile. Title lives on the image. */
 .card-poster {
 	border: 0;
@@ -282,16 +313,16 @@ a.card:hover { text-decoration: none; color: inherit; }
 	border-radius: var(--radius-pill);
 	background: var(--accent);
 	color: var(--fg-on-accent);
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 }
 
 .plan__name {
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 	color: var(--fg-subtle);
 }

@@ -158,9 +158,9 @@
 .nav-mega__col { display: flex; flex-direction: column; gap: var(--space-1); }
 
 .nav-mega__title {
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 	color: var(--fg-faint);
 	margin-bottom: var(--space-2);
@@ -398,9 +398,9 @@
 	border-radius: var(--radius-pill);
 	padding-inline: var(--space-3);
 	gap: var(--space-2);
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 }
 
@@ -1184,9 +1184,9 @@
 }
 
 .nav-panel__label {
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 	color: var(--fg-faint);
 }

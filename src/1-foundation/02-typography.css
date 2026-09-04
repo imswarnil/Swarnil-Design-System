@@ -1,15 +1,40 @@
 /* =============================================================================
    02 · TYPOGRAPHY
-   Three faces, three jobs. A fluid scale so no component ever needs a
-   breakpoint-specific font size.
+   Two faces you read, one you don't. A fluid scale so no component ever needs
+   a breakpoint-specific font size.
+
      display → Space Grotesk   headlines, numbers, anything ≥ 20px
      body    → Inter           everything you actually read
-     slate   → IBM Plex Mono   metadata voice: labels, timecodes, code
+     label   → Inter           the same face, worn small / tracked / uppercase:
+                               eyebrows, kickers, section labels, table headers
+     slate   → IBM Plex Mono   DATA ONLY. Timecodes, counts, dimensions,
+                               coordinates, versions, code.
+
+   THE MONO RULE (PRINCIPLES #9)
+   The moment mono carries a sentence, it stops meaning "this is data" and
+   starts meaning "this is a terminal". It is a signal, and a signal used
+   everywhere is not a signal.
+
+   So the label voice is Inter, not mono. Uppercase + wide tracking is what
+   makes a label read as a label — the monospace was never doing that work, it
+   was only making everything look like a build log.
+
+   Reading a call site tells you which it is:
+     font-family: var(--font-label)   this is a label
+     font-family: var(--font-slate)   this is data
+
+   scripts/audit-mono.py enforces the split and fails CI on a new mono use
+   outside the allowlist.
    ========================================================================== */
 
 :root {
 	--font-display: 'Space Grotesk', 'Inter', ui-sans-serif, system-ui, sans-serif;
 	--font-body: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+	/* The label voice is the body face. Deliberately not its own family — a
+	   label differs from body copy in size, tracking and case, not in face. */
+	--font-label: var(--font-body);
+
 	--font-slate: 'IBM Plex Mono', ui-monospace, 'SF Mono', 'Cascadia Mono', monospace;
 
 	/* Ghost Admin → Brand → fonts wins if the publisher sets one. */
@@ -22,11 +47,16 @@
 	   headlines get dramatic without the body text drifting. */
 	--text-2xs:     0.6875rem;                              /* 11px · slate only */
 	--text-xs:      0.75rem;                                /* 12px */
-	--text-sm:      0.8125rem;                              /* 13px */
+	--text-sm:      0.875rem;                               /* 14px */
 	--text-base:    1rem;                                   /* 16px */
 	--text-md:      1.0625rem;                              /* 17px · long-form body */
-	--text-lg:      clamp(1.125rem, 1.05rem + 0.32vw, 1.3125rem);
-	--text-xl:      clamp(1.3125rem, 1.19rem + 0.55vw, 1.625rem);
+
+	/* lg and xl are fixed, not fluid. approach.md §6: "fluid via clamp() from
+	   2xl up" — below that, a size that drifts with the viewport buys nothing
+	   and costs predictability, because these two are what UI copy is set in
+	   and UI copy has to fit in a component, not in a page. */
+	--text-lg:      1.125rem;                               /* 18px */
+	--text-xl:      1.25rem;                                /* 20px */
 	--text-2xl:     clamp(1.5rem,  1.31rem + 0.83vw,  2rem);
 	--text-3xl:     clamp(1.875rem, 1.55rem + 1.42vw, 2.75rem);
 	--text-4xl:     clamp(2.25rem,  1.72rem + 2.36vw, 3.75rem);
@@ -48,7 +78,8 @@
 	--tracking-tight:   -0.02em;
 	--tracking-normal:  0;
 	--tracking-wide:    0.04em;
-	--tracking-slate:   0.14em;   /* mono uppercase labels */
+	--tracking-label:   0.08em;   /* Inter uppercase labels — see .t-label */
+	--tracking-slate:   0.14em;   /* mono uppercase data — monospace is already wide */
 
 	/* ── Weight ────────────────────────────────────────────────────────────────
 	   Four only. 500 does not exist in this system — it muddies 400 vs 600. */
@@ -167,23 +198,56 @@ h1, h2, h3, h4, h5, h6 {
 	color: var(--fg-muted);
 }
 
-/* The slate voice — every piece of metadata on the site speaks like this. */
+/* ── The label voice ───────────────────────────────────────────────────────
+   Eyebrows, kickers, section labels, table headers, "on this page". The body
+   face worn small: uppercase and tracked is what makes it read as a label.
+
+   Semibold, not medium — at 12px uppercase, Inter at 500 goes muddy against
+   body copy, and the whole point of a label is that it is not body copy.
+   Tracking is 0.08em, not the mono voice's 0.14em: monospace glyphs are
+   already wide apart, proportional ones are not, and reusing that value here
+   would space it to the point of unreadability. */
+.t-label {
+	font-family: var(--font-label);
+	font-size: var(--text-xs);
+	font-weight: var(--weight-semibold);
+	line-height: var(--leading-normal);
+	letter-spacing: var(--tracking-label);
+	text-transform: uppercase;
+	color: var(--fg-subtle);
+}
+
+.t-label-sm {
+	font-family: var(--font-label);
+	font-size: var(--text-2xs);
+	font-weight: var(--weight-semibold);
+	letter-spacing: var(--tracking-label);
+	text-transform: uppercase;
+	color: var(--fg-subtle);
+}
+
+/* ── The slate voice — DATA ONLY ───────────────────────────────────────────
+   Timecodes, counts, dimensions, coordinates, versions, code. If what you are
+   setting could be read aloud as a sentence, it is a label: use .t-label.
+   See the mono rule in this file's header and PRINCIPLES #9. */
 .t-slate {
 	font-family: var(--font-slate);
 	font-size: var(--text-xs);
 	font-weight: var(--weight-medium);
 	line-height: var(--leading-normal);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 	color: var(--fg-subtle);
+	font-variant-numeric: tabular-nums;
 }
 
 .t-slate-sm {
 	font-family: var(--font-slate);
 	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 	color: var(--fg-subtle);
+	font-variant-numeric: tabular-nums;
 }
 
 /* Timecodes, runtimes, counts — tabular so columns of numbers line up. */
@@ -284,7 +348,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .face-display { font-family: var(--font-display); }
 .face-body    { font-family: var(--font-body); }
-.face-slate   { font-family: var(--font-slate); }
+.face-slate   { font-family: var(--font-label); }
 
 /* Numeric styles — pick deliberately, they are not interchangeable. */
 .num-tabular    { font-variant-numeric: tabular-nums; }     /* columns, timecodes */
@@ -302,7 +366,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Optical corrections. Big display type needs negative tracking; small
    letterspaced caps need positive. These are the only two allowed. */
 .optical-display { letter-spacing: var(--tracking-tighter); }
-.optical-caps    { letter-spacing: var(--tracking-slate); text-transform: uppercase; }
+.optical-caps    { letter-spacing: var(--tracking-label); text-transform: uppercase; }
 
 /* Truncation — one job each, never invented ad hoc in components. */
 .truncate {

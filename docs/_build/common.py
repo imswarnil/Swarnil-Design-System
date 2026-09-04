@@ -17,9 +17,15 @@ def sec(sid, title, note=''):
 END = '</section>'
 
 
-def ct(rows, head=('Class', 'Does')):
-    """A class-reference table."""
+def ct(rows, head=('Class', 'Does'), code=True):
+    """A class-reference table.
+
+    code=True wraps the first column in <code>, which is correct when it holds
+    class names or tokens. Pass code=False when that column is prose — a
+    sentence set in mono reads as a terminal, not as data (PRINCIPLES #9).
+    """
+    cell = ('<code class="t-code">{}</code>' if code else '<b>{}</b>')
     tr = '\n'.join(
-        f'\t\t\t<tr><td><code class="t-code">{c}</code></td><td>{d}</td></tr>' for c, d in rows)
+        f'\t\t\t<tr><td>{cell.format(c)}</td><td>{d}</td></tr>' for c, d in rows)
     return (f'\t\t<div class="surface demo-tile u-mb-6" style="overflow-x:auto"><table class="spec-table" style="width:100%">'
             f'<thead><tr><th>{head[0]}</th><th>{head[1]}</th></tr></thead><tbody>\n{tr}\n\t\t</tbody></table></div>')

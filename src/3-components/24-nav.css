@@ -173,9 +173,9 @@
 	align-items: center;
 	flex-wrap: wrap;
 	gap: var(--space-2);
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 	color: var(--fg-subtle);
 }
@@ -206,7 +206,7 @@
 	display: flex;
 	align-items: center;
 	gap: var(--space-1);
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-xs);
 	font-variant-numeric: tabular-nums;
 	color: var(--fg-subtle);
@@ -254,9 +254,9 @@
 .pager__item-next { text-align: right; }
 
 .pager__dir {
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 	color: var(--fg-faint);
 }
@@ -285,9 +285,9 @@
 }
 
 .toc__title {
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 	color: var(--fg-faint);
 	margin-bottom: var(--space-2);

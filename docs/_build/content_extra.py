@@ -99,7 +99,7 @@ PAGES['why'] = ('Why this system',
         ('The site and the channel are one system', 'the same tokens export to YouTube thumbnails, banners and IG posts — layer 4 is not a separate brand'),
         ('The platform is the framework', 'details, dialog, popover, native inputs — the browser ships the behaviour; CSS ships the taste'),
         ('Honest by default', 'real states in ARIA, honest loading, honest motion, honest empty states — the UI never lies to a reader'),
-    ], head=('Belief', 'What it means'))
+    ], head=('Belief', 'What it means'), code=False)
     + '''
 		<h2 class="t-h3" style="margin:var(--space-10) 0 var(--space-4)">What you get out of it</h2>
 		<p class="u-fg-subtle" style="max-width:var(--measure-lead)">
@@ -220,7 +220,7 @@ color = (
     + tile('<div class="u-flex u-gap-3 u-wrap">'
            '<button class="btn btn-primary">Primary</button>'
            '<span class="badge badge-craft">Craft</span>'
-           '<span class="u-bg-inverse u-rounded u-p-3 t-slate-sm">inverse</span>'
+           '<span class="u-bg-inverse u-rounded u-p-3 t-label-sm">inverse</span>'
            '<span class="dot dot-sm dot-live"></span></div>',
            'the whole palette in use — primary, secondary, ink, and the dot')
 )
@@ -252,7 +252,7 @@ for g, names in _GROUPS.items():
     tiles = ''.join(
         f'<div class="u-border u-rounded-lg u-p-4 u-text-center" style="display:grid;gap:var(--space-2);place-items:center">'
         f'<img src="/icons/{g}/{n}.svg" alt="" style="width:1.5rem;height:1.5rem" class="cds-ico" />'
-        f'<span class="t-slate-sm" style="color:var(--fg-faint)">{n}</span></div>' for n in names)
+        f'<span class="t-label-sm" style="color:var(--fg-faint)">{n}</span></div>' for n in names)
     iconset += (f'<h2 class="t-h3" style="margin:var(--space-8) 0 var(--space-3)">{g}/</h2>'
                 f'<div class="grid-auto-sm" style="display:grid;gap:var(--space-3);'
                 f'grid-template-columns:repeat(auto-fill,minmax(6.5rem,1fr))">{tiles}</div>')
@@ -373,7 +373,7 @@ pt = ('<p class="u-fg-subtle u-mb-6" style="max-width:var(--measure-lead)">'
         'transition for free.</p>'
       + '<div class="grid-3">' + ''.join(
           f'<div class="surface demo-tile" style="padding:var(--space-5)">'
-          f'<span class="t-slate-sm" style="color:var(--fg-faint)">{name}</span>'
+          f'<span class="t-label-sm" style="color:var(--fg-faint)">{name}</span>'
           f'<h3 class="t-h4 u-mt-2">{flavour or "cross-fade"}</h3>'
           f'<p class="t-small u-fg-subtle u-mt-2">{desc}</p></div>'
           for flavour, name, _href, desc in _PT_CARDS) + '</div>'
@@ -580,9 +580,9 @@ color2 = (
     'Ink &amp; paper flip; the record-red is the ONE hue that stays. Flip the '
     'toggle in the sidebar — every swatch above re-resolves live.</p>'
     + tile('<div class="grid-2">'
-           '<div class="u-border u-rounded-lg u-p-5 u-bg-canvas"><span class="t-slate-sm" style="color:var(--fg-faint)">THIS THEME</span>'
+           '<div class="u-border u-rounded-lg u-p-5 u-bg-canvas"><span class="t-label-sm" style="color:var(--fg-faint)">THIS THEME</span>'
            '<p class="u-mt-2">Ink on paper <span class="dot dot-sm dot-live"></span></p></div>'
-           '<div class="u-rounded-lg u-p-5 u-bg-inverse"><span class="t-slate-sm" style="opacity:.6">FLIPPED</span>'
+           '<div class="u-rounded-lg u-p-5 u-bg-inverse"><span class="t-label-sm" style="opacity:.6">FLIPPED</span>'
            '<p class="u-mt-2">Paper on ink <span class="dot dot-sm dot-live"></span></p></div>'
            '</div>',
            'both sides, one red — the dot never changes')
@@ -601,7 +601,7 @@ PAGES['f-color'] = ('Color',
 def _spec(label, cls, text, style=''):
     return (f'<div style="display:grid;grid-template-columns:9rem 1fr;gap:var(--space-4);'
             f'align-items:baseline;padding:var(--space-3) 0;border-bottom:var(--border-hair) solid var(--line-subtle)">'
-            f'<span class="t-slate-sm" style="color:var(--fg-faint)">{label}</span>'
+            f'<span class="t-label-sm" style="color:var(--fg-faint)">{label}</span>'
             f'<span class="{cls}" style="{style}">{text}</span></div>')
 
 TYPE_INTRO = (
@@ -620,7 +620,7 @@ TYPE_INTRO = (
     + _spec('Caption · 400', 't-small u-fg-faint', 'Muted captions, footnotes and helper text.')
     + _spec('Kicker · mono', 'eyebrow', 'Field notes')
     + _spec('Timecode · mono', 't-slate', 'EP.07 · 00:14:22 · 6 min read')
-    + '</div><p class="spec"><b>.t-h1…h4 · .t-lead · .t-body · .t-small · .eyebrow · .t-slate</b> — the whole voice</p></div>\n')
+    + '</div><p class="spec"><b>.t-h1…h4 · .t-lead · .t-body · .t-small · .eyebrow · .t-label · .t-slate</b> — the whole voice</p></div>\n')
 
 # ── Long-form content (.content) ────────────────────────────────────────────
 

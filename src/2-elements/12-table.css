@@ -25,10 +25,10 @@
 	z-index: var(--z-raised);
 	background: var(--bg-sunken);
 	text-align: left;
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
 	font-weight: var(--weight-medium);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 	color: var(--fg-subtle);
 	padding: var(--space-3) var(--space-4);
@@ -77,9 +77,9 @@
 }
 
 .dl dt {
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 	color: var(--fg-subtle);
 	padding-top: 2px;
@@ -124,9 +124,9 @@
 }
 
 .rule-list__meta {
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 	color: var(--fg-subtle);
 }

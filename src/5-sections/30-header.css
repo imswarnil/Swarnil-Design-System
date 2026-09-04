@@ -17,9 +17,9 @@
 	display: inline-flex;
 	align-items: center;
 	gap: var(--space-2);
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 	color: var(--accent);
 	margin-bottom: var(--space-4);
@@ -123,9 +123,9 @@
 }
 
 .page-head__fact dt {
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 	color: var(--fg-faint);
 }
@@ -160,9 +160,9 @@
 	display: inline-flex;
 	align-items: center;
 	gap: var(--space-2);
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 	color: var(--fg-faint);
 	margin-bottom: var(--space-2);
@@ -173,7 +173,7 @@
 	display: inline-flex;
 	align-items: center;
 	gap: var(--space-2);
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-xs);
 	letter-spacing: var(--tracking-wide);
 	text-transform: uppercase;

@@ -64,9 +64,9 @@
 .c__body { display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-5); flex: 1; }
 
 .c__meta {
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 	color: var(--fg-subtle);
 	display: flex;
@@ -214,9 +214,9 @@
 
 .c-projectlog { box-shadow: inset var(--border-3) 0 0 0 var(--line-default); }
 .c-projectlog .c__step {
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	color: var(--fg-accent);
 }
 
@@ -568,9 +568,9 @@
 /* ── guides · #guide ─────────────────────────────────────────────────────── */
 
 .c-guide .c__steps {
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 	color: var(--fg-subtle);
 	display: flex;

@@ -104,9 +104,9 @@ button.cut-sticker:hover {
 	border: var(--cut-bw) solid var(--fg-default);
 	border-bottom: 0;
 	border-radius: var(--radius-md) var(--radius-md) 0 0;
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 }
 

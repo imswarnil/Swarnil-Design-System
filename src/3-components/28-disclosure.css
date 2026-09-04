@@ -165,9 +165,9 @@
 .dropdown__divider { height: var(--border-hair); background: var(--line-subtle); margin: var(--space-1) 0; border: 0; }
 
 .dropdown__head {
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 	color: var(--fg-faint);
 	padding: var(--space-2) var(--space-3) var(--space-1);

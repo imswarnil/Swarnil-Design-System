@@ -19,9 +19,9 @@
 }
 
 .label-optional {
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 	color: var(--fg-faint);
 	font-weight: var(--weight-regular);
@@ -52,7 +52,7 @@
 	border-radius: var(--radius-full);
 	background: var(--danger-line);
 	color: var(--pure-white);
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: 10px;
 	line-height: 1;
 }
@@ -277,9 +277,9 @@
 }
 
 .fieldset > legend {
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 	color: var(--fg-subtle);
 	padding: 0;

@@ -39,9 +39,9 @@
 	color: var(--fg-on-inverse);
 	padding: var(--space-3) var(--space-4);
 	border-radius: var(--radius-control);
-	font-family: var(--font-slate);
+	font-family: var(--font-label);
 	font-size: var(--text-xs);
-	letter-spacing: var(--tracking-slate);
+	letter-spacing: var(--tracking-label);
 	text-transform: uppercase;
 	text-decoration: none;
 	transition: transform var(--dur-2) var(--ease-out);
