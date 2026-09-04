@@ -197,7 +197,7 @@
 				var travel = Math.max(1, article.offsetHeight - window.innerHeight);
 				var prog = Math.min(1, Math.max(0, (window.scrollY - article.offsetTop) / travel));
 				if (prog >= 0.995) {
-					time.textContent = 'PLAYED · ' + mmss(totalSec);
+					time.textContent = mmss(totalSec) + ' / ' + mmss(totalSec);
 					time.dataset.done = '';
 				} else {
 					time.textContent = mmss(prog * totalSec) + ' / ' + mmss(totalSec);

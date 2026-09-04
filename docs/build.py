@@ -58,6 +58,9 @@ GROUPS = [
     'Layout',
     'Elements',
     'Components',
+    'Patterns',
+    'Sections',
+    'Utilities',
 ]
 
 
@@ -155,6 +158,11 @@ def colour_css(escaped):
     s = re.sub(r'(/\*.*?\*/)', r'<span class="tok-com">\1</span>', escaped, flags=re.S)
     s = re.sub(r'(--[\w-]+)', r'<span class="tok-var">\1</span>', s)
     s = re.sub(r'^([^\n{};]+)(\s*\{)', r'<span class="tok-sel">\1</span>\2', s, flags=re.M)
+    # property names — start of a declaration, lowercase-dash, before a colon
+    s = re.sub(r'(?m)^(\s*)([a-z-]{2,})(\s*:)', r'\1<span class="tok-key">\2</span>\3', s)
+    # numbers with their units
+    s = re.sub(r'(?<![\w-])(\d+(?:\.\d+)?(?:px|rem|em|ch|vw|vh|s|ms|deg|%)?)(?![\w-])',
+               r'<span class="tok-num">\1</span>', s)
     return s
 
 
@@ -171,6 +179,7 @@ def codeblock(code, lang, copy=True):
     btn = ('<button class="cb__copy" type="button" data-copy>Copy</button>'
            if copy else '')
     return (f'<figure class="cb"><figcaption class="cb__head">'
+            f'<span class="cb__dots" aria-hidden="true"><span></span><span></span><span></span></span>'
             f'<span class="cb__lang">{html.escape(lang or "text")}</span>{btn}'
             f'</figcaption><pre class="cb__pre"><code>{colour(code, lang)}</code></pre></figure>')
 
@@ -362,9 +371,10 @@ def toc_html(toc):
         for lvl, sid, txt in toc)
     return (
         '<nav class="toc" aria-label="On this page">'
+        # The bar is the clock and nothing else — a tape counter needs no
+        # caption. The nav's accessible name still says what this is.
         '<div class="toc__bar">'
-        '<p class="toc__head">On this page</p>'
-        f'<span class="toc__time" data-toc-time>00 / {len(toc):02d}</span>'
+        '<span class="toc__time" data-toc-time aria-hidden="true"></span>'
         '</div>'
         '<div class="toc__list">'
         '<span class="toc__track" aria-hidden="true"></span>'
@@ -385,8 +395,12 @@ def build_page(page, pages, shell):
     def pager(p, dir_):
         if not p:
             return ''
+        arrow = ('<svg class="icon icon-sm" aria-hidden="true">'
+                 f'<use href="/icons/sprite.svg#i-arrow-{"left" if dir_ == "prev" else "right"}"/></svg>')
+        label = 'Previous' if dir_ == 'prev' else 'Next'
+        dir_html = (f'{arrow}{label}' if dir_ == 'prev' else f'{label}{arrow}')
         return (f'<a class="pager__item pager__item--{dir_}" href="/{p["slug"]}.html">'
-                f'<span class="pager__dir">{"Previous" if dir_ == "prev" else "Next"}</span>'
+                f'<span class="pager__dir">{dir_html}</span>'
                 f'<span class="pager__title">{html.escape(p["title"])}</span></a>')
 
     # Plain token replacement, not str.format: the shell contains real

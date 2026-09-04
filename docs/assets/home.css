@@ -324,31 +324,6 @@
 .install .cb { margin: 0; }
 .install .cb + .cb { margin-top: var(--space-3); }
 
-/* ── Stats band ───────────────────────────────────────────────────────────
-   Display numerals over label captions. The numbers are the system's own
-   measurements, so the band doubles as a promise CI keeps. */
-
-.stats {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(min(11rem, 100%), 1fr));
-	gap: var(--space-8);
-	margin-top: var(--space-10);
-}
-
-.stats__item {
-	display: flex;
-	flex-direction: column;
-	gap: var(--space-2);
-	padding-inline-start: var(--space-4);
-	border-inline-start: var(--border-2) solid var(--accent);
-}
-
-.stats__label {
-	font-size: var(--text-sm);
-	color: var(--fg-muted);
-	max-width: 14rem;
-}
-
 /* ── Closing band ─────────────────────────────────────────────────────────── */
 
 .close-band {

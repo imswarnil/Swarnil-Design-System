@@ -1,0 +1,88 @@
+/* =============================================================================
+   60 · HERO — the opening band
+
+   One claim, one supporting line, at most two actions. A hero with three
+   messages is a section pretending to be a page.
+
+   Layer: sections — full-width page bands.
+   ========================================================================== */
+
+@layer sections {
+
+	.hero {
+		--hero-gap: var(--space-12);
+		display: grid;
+		grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+		gap: var(--hero-gap);
+		align-items: center;
+	}
+
+	.hero__eyebrow {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-2);
+		font-family: var(--font-label);
+		font-size: var(--text-2xs);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: var(--fg-faint);
+		margin-block-end: var(--space-5);
+	}
+
+	.hero__title {
+		font-family: var(--font-display);
+		font-size: var(--text-5xl);
+		font-weight: var(--weight-bold);
+		line-height: 1.04;
+		letter-spacing: var(--tracking-tighter);
+		text-wrap: balance;
+		margin: 0;
+	}
+
+	.hero__title em { font-style: normal; color: var(--accent); }
+
+	.hero__lead {
+		font-size: var(--text-lg);
+		line-height: var(--leading-relaxed);
+		color: var(--fg-muted);
+		max-inline-size: var(--measure-lead);
+		margin: var(--space-5) 0 0;
+		text-wrap: pretty;
+	}
+
+	.hero__actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-3);
+		margin-block-start: var(--space-8);
+	}
+
+	.hero__note {
+		font-family: var(--font-label);
+		font-size: var(--text-2xs);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: var(--fg-faint);
+		margin: var(--space-6) 0 0;
+	}
+
+	.hero__media { min-inline-size: 0; }
+
+	/* ── Variants ──────────────────────────────────────────────────────────── */
+
+	.hero-centre {
+		grid-template-columns: minmax(0, 1fr);
+		text-align: center;
+		justify-items: center;
+	}
+
+	.hero-centre .hero__actions { justify-content: center; }
+	.hero-centre .hero__lead { margin-inline: auto; }
+
+	@media (width < 60rem) {
+		.hero { grid-template-columns: minmax(0, 1fr); }
+		.hero__title { font-size: var(--text-4xl); }
+	}
+}

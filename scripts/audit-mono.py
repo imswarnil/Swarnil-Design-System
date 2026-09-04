@@ -47,6 +47,10 @@ ALLOW = {
         '.codeblock__lang', # a language name, e.g. "css"
         '.codeblock__pre',  # a code block
     },
+    'src/4-patterns/56-chat.css': {
+        '.chat__tool',   # a tool call — literally machine output, the one
+                         # place mono carries more than a code literal
+    },
     'src/1-foundation/10-frame.css': {
         '.win-term .win__body, .win-term__body',   # literal terminal output
     },

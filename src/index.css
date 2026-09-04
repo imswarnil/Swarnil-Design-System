@@ -20,4 +20,6 @@
 @import url('./1-foundation/index.css');
 @import url('./2-elements/index.css');
 @import url('./3-components/index.css');
+@import url('./4-patterns/index.css');
+@import url('./5-sections/index.css');
 @import url('./6-utilities/index.css');

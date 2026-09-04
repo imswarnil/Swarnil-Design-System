@@ -1,0 +1,47 @@
+/* =============================================================================
+   62 · STATS — numbers with receipts
+
+   Display numerals over label captions, each item marked with the accent rule.
+   The house rule for the content: never print a number the build (or the
+   business) cannot back — a stats band is a list of promises.
+
+   Layer: sections.
+   ========================================================================== */
+
+@layer sections {
+
+	.stats {
+		--stats-col: 11rem;
+		--stats-gap: var(--space-8);
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(var(--stats-col), 100%), 1fr));
+		gap: var(--stats-gap);
+	}
+
+	.stats__item {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2);
+		padding-inline-start: var(--space-4);
+		border-inline-start: var(--border-2) solid var(--accent);
+	}
+
+	.stats__label {
+		font-size: var(--text-sm);
+		color: var(--fg-muted);
+		max-inline-size: 14rem;
+	}
+
+	/* Quiet: the rule steps back to a hairline in the line colour. */
+	.stats-quiet .stats__item { border-inline-start: var(--border-hair) solid var(--line-strong); }
+
+	/* Row: a slim horizontal strip for a header band. */
+	.stats-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-8);
+	}
+
+	.stats-row .stats__item { padding-inline-start: var(--space-3); }
+	.stats-row .t-stat { font-size: var(--text-2xl); }
+}

@@ -1,0 +1,89 @@
+/* =============================================================================
+   68 · CTA — the closing band
+
+   The page has made its argument; this band asks for the action. One primary,
+   at most one quiet alternative, and no new information — a CTA that
+   introduces facts is a section that arrived too late.
+
+   Layer: sections.
+   ========================================================================== */
+
+@layer sections {
+
+	.cta {
+		--cta-pad: var(--space-16);
+		text-align: center;
+		padding: var(--cta-pad) var(--space-6);
+	}
+
+	.cta__kicker {
+		font-family: var(--font-label);
+		font-size: var(--text-2xs);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: var(--fg-faint);
+		margin: 0 0 var(--space-3);
+	}
+
+	.cta__title {
+		font-family: var(--font-display);
+		font-size: var(--text-3xl);
+		font-weight: var(--weight-bold);
+		letter-spacing: var(--tracking-tighter);
+		line-height: var(--leading-tight);
+		text-wrap: balance;
+		margin: 0;
+	}
+
+	.cta__body {
+		color: var(--fg-muted);
+		max-inline-size: 38rem;
+		margin: var(--space-4) auto 0;
+		text-wrap: pretty;
+	}
+
+	.cta__actions {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: var(--space-3);
+		margin-block-start: var(--space-8);
+	}
+
+	.cta__fine {
+		font-size: var(--text-xs);
+		color: var(--fg-faint);
+		margin: var(--space-5) 0 0;
+	}
+
+	/* ── Variants ──────────────────────────────────────────────────────────── */
+
+	.cta-boxed {
+		border: var(--border-hair) solid var(--line-default);
+		border-radius: var(--radius-xl);
+		background: var(--bg-surface);
+	}
+
+	.cta-inverse {
+		border-radius: var(--radius-xl);
+		background: var(--bg-inverse);
+		color: var(--fg-on-inverse);
+	}
+
+	.cta-inverse .cta__kicker { color: currentcolor; opacity: 0.6; }
+	.cta-inverse .cta__body { color: currentcolor; opacity: 0.75; }
+	.cta-inverse .cta__fine { color: currentcolor; opacity: 0.55; }
+
+	/* Ghost buttons on the inverse band need told what quiet means there. */
+	.cta-inverse .btn-ghost {
+		--btn-fg: oklch(100% 0 0 / 0.85);
+		--btn-line: oklch(100% 0 0 / 0.25);
+		border-color: var(--btn-line);
+	}
+
+	.cta-inverse .btn-ghost:hover {
+		--btn-fg: var(--ink-0);
+		--btn-bg: oklch(100% 0 0 / 0.08);
+	}
+}

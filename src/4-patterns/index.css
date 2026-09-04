@@ -1,0 +1,7 @@
+/* =============================================================================
+   4 · PATTERNS — recurring arrangements of components.
+   These are what make a SITE rather than a kit.
+   ========================================================================== */
+
+@import url('./50-deck.css');   /* a grid that knows its children are cards */
+@import url('./56-chat.css');   /* the transcript — human and machine       */

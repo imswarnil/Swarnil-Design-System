@@ -1,0 +1,8 @@
+/* =============================================================================
+   5 · SECTIONS — full-width page bands. A page is a sequence of these.
+   ========================================================================== */
+
+@import url('./60-hero.css');
+@import url('./62-stats.css');
+@import url('./68-cta.css');
+@import url('./70-footer.css');

@@ -554,14 +554,31 @@ body {
 	background: var(--bg-sunken);
 }
 
+/* The monitor bar — the code block wears the window chrome, because in this
+   system a terminal says "command" and an editor says "source". The dots are
+   line-ladder greys, not traffic lights: this is OUR monitor, not macOS's. */
 .cb__head {
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
 	gap: var(--space-3);
 	padding: var(--space-2) var(--space-3);
 	border-bottom: 1px solid var(--line-subtle);
+	background: var(--bg-muted);
 }
+
+.cb__dots { display: inline-flex; gap: 5px; }
+
+.cb__dots > span {
+	inline-size: 0.5rem;
+	block-size: 0.5rem;
+	border-radius: var(--radius-full);
+	background: var(--line-strong);
+}
+
+.cb__dots > span:first-child { background: var(--accent); }
+
+.cb__head .cb__copy,
+.cb__head [data-copy] { margin-inline-start: auto; }
 
 .cb__lang {
 	font-family: var(--font-mono);
@@ -736,20 +753,8 @@ body {
 
 .toc__bar {
 	display: flex;
-	align-items: baseline;
-	justify-content: space-between;
-	gap: var(--space-3);
+	justify-content: flex-end;
 	margin-block-end: var(--space-4);
-}
-
-.toc__head {
-	font-family: var(--font-label);
-	font-size: var(--text-2xs);
-	font-weight: var(--weight-semibold);
-	letter-spacing: var(--tracking-label);
-	text-transform: uppercase;
-	color: var(--fg-faint);
-	margin: 0;
 }
 
 /* The position readout. A chapter count IS data, so it takes the data voice —
@@ -908,8 +913,14 @@ body {
 .pager__item:hover { border-color: var(--line-strong); }
 .pager__item--prev { text-align: left; }
 .pager__item--next { text-align: right; grid-column: 2; }
+.pager__item--next .pager__dir { justify-content: flex-end; }
+.pager__dir .icon { --icon-size: 0.8rem; color: var(--fg-faint); }
+.pager__item:hover .pager__dir .icon { color: var(--accent); }
 
 .pager__dir {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-2);
 	font-family: var(--font-label);
 	font-size: var(--text-2xs);
 	font-weight: var(--weight-semibold);
@@ -1299,3 +1310,14 @@ a.crumbs__link:hover { color: var(--fg-default); }
 }
 
 .rad-tile-pill { aspect-ratio: auto; block-size: 2.5rem; inline-size: 7rem; }
+
+/* Elevation specimens. */
+.elev-tile {
+	inline-size: 5.5rem;
+	aspect-ratio: 1;
+	display: grid;
+	place-items: center;
+	background: var(--bg-raised);
+	border-radius: var(--radius-lg);
+	box-shadow: var(--e);
+}

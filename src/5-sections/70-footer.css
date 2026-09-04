@@ -1,0 +1,106 @@
+/* =============================================================================
+   70 · FOOTER — the last section, not an afterthought
+
+   Three strips: identity, columns of somewhere-to-go-next, and the fine print.
+   A reader who scrolled this far is LOOKING for a next step; a footer without
+   links is a dead end wearing a copyright line.
+
+   Layer: sections.
+   ========================================================================== */
+
+@layer sections {
+
+	.footer {
+		--footer-pad: var(--space-12);
+		border-block-start: var(--border-hair) solid var(--line-subtle);
+		background: var(--bg-sunken);
+		padding-block: var(--footer-pad) var(--space-8);
+	}
+
+	.footer__top {
+		display: grid;
+		grid-template-columns: minmax(0, 1.4fr) repeat(auto-fit, minmax(8rem, 1fr));
+		gap: var(--space-10);
+		padding-block-end: var(--space-10);
+		border-block-end: var(--border-hair) solid var(--line-subtle);
+	}
+
+	.footer__brand {
+		display: flex;
+		align-items: center;
+		gap: var(--space-2);
+		font-family: var(--font-display);
+		font-size: var(--text-lg);
+		font-weight: var(--weight-bold);
+		letter-spacing: var(--tracking-tight);
+		margin: 0;
+	}
+
+	.footer__note {
+		color: var(--fg-muted);
+		font-size: var(--text-sm);
+		max-inline-size: 26rem;
+		margin: var(--space-3) 0 0;
+	}
+
+	.footer__col {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2);
+	}
+
+	.footer__head {
+		font-family: var(--font-label);
+		font-size: var(--text-2xs);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: var(--fg-faint);
+		margin: 0 0 var(--space-1);
+	}
+
+	.footer__col a {
+		font-size: var(--text-sm);
+		color: var(--fg-muted);
+		text-decoration: none;
+		transition: color var(--dur-1) var(--ease-out);
+	}
+
+	.footer__col a:hover { color: var(--fg-default); }
+
+	.footer__bottom {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-3);
+		padding-block-start: var(--space-6);
+	}
+
+	.footer__fine {
+		font-size: var(--text-sm);
+		color: var(--fg-faint);
+		margin: 0;
+	}
+
+	/* The sign-off: the record dot, still rolling. */
+	.footer__rec {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-2);
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-2xs);
+		letter-spacing: var(--tracking-label);
+		font-variant-numeric: tabular-nums;
+		text-transform: uppercase;
+		color: var(--fg-faint);
+	}
+
+	.footer-minimal { background: transparent; }
+	.footer-minimal .footer__top { display: none; }
+
+	@media (width < 48rem) {
+		.footer__top { grid-template-columns: minmax(0, 1fr); gap: var(--space-8); }
+	}
+}

@@ -39,7 +39,9 @@
     "./components": "./src/3-components/index.css",
     "./utilities": "./src/6-utilities/index.css",
     "./src/*": "./src/*",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./patterns": "./src/4-patterns/index.css",
+    "./sections": "./src/5-sections/index.css"
   },
   "files": [
     "src",
