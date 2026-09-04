@@ -70,6 +70,15 @@
 		}
 	});
 
+	/* A [data-dialog-open] button opens the dialog that follows it. Three
+	   lines of delegation, so no demo carries an inline handler. */
+	document.addEventListener('click', function (e) {
+		var b = e.target.closest('[data-dialog-open]');
+		if (!b) return;
+		var d = b.nextElementSibling;
+		if (d && d.tagName === 'DIALOG') d.showModal();
+	});
+
 	/* ── Copy ────────────────────────────────────────────────────────────── */
 
 	document.addEventListener('click', function (e) {

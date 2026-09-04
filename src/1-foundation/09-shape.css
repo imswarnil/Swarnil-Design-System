@@ -81,6 +81,31 @@
 	}
 
 	.rule-strong { border-block-start-color: var(--line-default); }
+
+	/* A rule with a word on it — "or", a date, a section marker. The label is
+	   a LABEL, so it takes the label voice; the two lines are drawn by flex so
+	   the text needs no background hack to knock out the rule. */
+	.rule-label {
+		display: flex;
+		align-items: center;
+		gap: var(--space-4);
+		border: 0;
+		margin-block: var(--space-8);
+		font-family: var(--font-label);
+		font-size: var(--text-2xs);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: var(--fg-faint);
+	}
+
+	.rule-label::before,
+	.rule-label::after {
+		content: '';
+		flex: 1;
+		block-size: var(--border-hair);
+		background: var(--line-subtle);
+	}
 	.rule-accent { border-block-start: var(--border-2) solid var(--accent); }
 	.rule-dashed { border-block-start-style: dashed; }
 }

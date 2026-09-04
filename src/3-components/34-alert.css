@@ -48,4 +48,45 @@
 
 	.empty__title { font-family: var(--font-display); font-size: var(--text-xl); font-weight: var(--weight-semibold); }
 	.empty__body { color: var(--fg-muted); max-width: var(--measure-ui); }
+
+	/* ── Toast — an alert that arrives ─────────────────────────────────────
+	   The container is position-fixed and owns the stacking; each toast is an
+	   .alert wearing .toast. The container carries aria-live="polite" in the
+	   markup so arrivals are announced — polite, because a toast is by
+	   definition not urgent enough to interrupt (an interruption would be a
+	   dialog).
+
+	   Entry animates via @starting-style; exit is the consumer's job (remove
+	   the node, or set [data-leaving] and listen for transitionend). */
+
+	.toaster {
+		position: fixed;
+		inset-block-end: var(--space-5);
+		inset-inline-end: var(--space-5);
+		z-index: var(--z-toast);
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2);
+		inline-size: min(24rem, calc(100vw - var(--space-8)));
+	}
+
+	.toast {
+		background: var(--bg-raised);
+		box-shadow: var(--elevation-3);
+		opacity: 1;
+		translate: 0 0;
+		transition:
+			opacity var(--dur-3) var(--ease-out),
+			translate var(--dur-3) var(--ease-out);
+	}
+
+	@starting-style {
+		.toast { opacity: 0; translate: 0 8px; }
+	}
+
+	.toast[data-leaving] { opacity: 0; translate: 8px 0; }
+
+	@media (prefers-reduced-motion: reduce) {
+		.toast, .toast[data-leaving] { translate: 0 0; }
+	}
 }

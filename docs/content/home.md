@@ -120,6 +120,31 @@ lead: A token-first, dependency-free CSS design system. Almost monochrome, so on
 </section>
 
 <section class="band">
+  <p class="sec__kicker">The numbers</p>
+  <h2 class="sec__title">Small enough to read in an afternoon</h2>
+  <p class="sec__lead">Every figure below is measured by the build, not claimed. When one drifts, CI knows before the page does.</p>
+
+  <div class="stats">
+    <div class="stats__item">
+      <span class="t-stat">14.7</span>
+      <span class="stats__label">KB gzipped — the whole system</span>
+    </div>
+    <div class="stats__item">
+      <span class="t-stat">97</span>
+      <span class="stats__label">Tones across 8 oklch ramps</span>
+    </div>
+    <div class="stats__item">
+      <span class="t-stat">61</span>
+      <span class="stats__label">Icons, drawn from scratch</span>
+    </div>
+    <div class="stats__item">
+      <span class="t-stat">0</span>
+      <span class="stats__label">Dependencies, runtimes, build steps</span>
+    </div>
+  </div>
+</section>
+
+<section class="band">
   <div class="close-band">
     <p class="sec__kicker">Open source</p>
     <h2 class="sec__title">Free forever. MIT.</h2>

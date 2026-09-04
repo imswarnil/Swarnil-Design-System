@@ -1,0 +1,187 @@
+/* =============================================================================
+   23 · INDICATORS — spinner, skeleton, progress, meter
+
+   The waiting states. Every system needs them and most add them last, which is
+   how a product ends up with four ad-hoc spinners. These are the backbone
+   pieces: one of each, honest about what they can promise.
+
+   THE HONESTY RULE (PRINCIPLES #5 applied to waiting)
+   A spinner promises "soon". A progress bar promises a NUMBER. Never show a
+   progress bar you cannot back with a real value — a bar that crawls to 90%
+   and stalls is a spinner wearing a lie. If you have no number, use the
+   spinner or the indeterminate bar, which promise only that work continues.
+
+   Layer: elements.
+   ========================================================================== */
+
+@layer elements {
+
+	/* ── Spinner ───────────────────────────────────────────────────────────
+	   A ring with a gap, rotating. currentColor, so it inherits the text it
+	   replaces. Under reduced motion it stops spinning and pulses instead —
+	   the user asked not to be moved, not to be uninformed. */
+
+	.spinner {
+		--spinner-size: 1.25rem;
+		--spinner-stroke: 2px;
+
+		display: inline-block;
+		inline-size: var(--spinner-size);
+		block-size: var(--spinner-size);
+		border: var(--spinner-stroke) solid color-mix(in oklab, currentcolor 25%, transparent);
+		border-block-start-color: currentcolor;
+		border-radius: var(--radius-full);
+		animation: fx-spin 0.7s linear infinite;
+		flex: none;
+	}
+
+	.spinner-sm { --spinner-size: 0.875rem; --spinner-stroke: 1.5px; }
+	.spinner-lg { --spinner-size: 2rem; --spinner-stroke: 3px; }
+	.spinner-accent { color: var(--accent); }
+
+	@media (prefers-reduced-motion: reduce) {
+		.spinner {
+			animation: fx-pulse 1.6s var(--ease-inout) infinite;
+			border-color: currentcolor;
+		}
+	}
+
+	/* ── Skeleton ──────────────────────────────────────────────────────────
+	   A placeholder shaped like the content it stands in for. The shimmer is a
+	   background-position sweep — one compositable property, honest motion.
+
+	   Size the skeleton with the layout, not with the skeleton: a text
+	   skeleton is 1em tall because it stands where a line of text will be. */
+
+	.skeleton {
+		--skel-base: var(--bg-muted);
+		display: block;
+		border-radius: var(--radius-sm);
+		background:
+			linear-gradient(90deg,
+				var(--skel-base) 25%,
+				color-mix(in oklab, var(--skel-base) 55%, var(--bg-canvas)) 42%,
+				var(--skel-base) 60%)
+			0 0 / 240% 100%;
+		animation: skeleton-sweep 1.4s var(--ease-inout) infinite;
+		color: transparent;
+		user-select: none;
+		pointer-events: none;
+	}
+
+	@keyframes skeleton-sweep {
+		from { background-position: 120% 0; }
+		to   { background-position: -120% 0; }
+	}
+
+	.skeleton-text   { block-size: 1em; inline-size: 100%; }
+	.skeleton-text-short { block-size: 1em; inline-size: 60%; }
+	.skeleton-title  { block-size: 1.4em; inline-size: 45%; }
+	.skeleton-circle { border-radius: var(--radius-full); aspect-ratio: 1; }
+	.skeleton-media  { aspect-ratio: 16 / 9; border-radius: var(--radius-media); }
+
+	@media (prefers-reduced-motion: reduce) {
+		.skeleton { animation: none; background-size: 100% 100%; }
+	}
+
+	/* ── Progress — a promise with a number behind it ──────────────────────
+	   Styles the NATIVE <progress>, platform first. With a value it fills;
+	   without one the browser's indeterminate treatment is replaced by our
+	   sweep, which promises only that work continues. */
+
+	.progress {
+		--progress-h: 0.375rem;
+		appearance: none;
+		inline-size: 100%;
+		block-size: var(--progress-h);
+		border: 0;
+		border-radius: var(--radius-full);
+		background: var(--bg-muted);
+		overflow: hidden;
+	}
+
+	.progress::-webkit-progress-bar { background: var(--bg-muted); border-radius: var(--radius-full); }
+
+	.progress::-webkit-progress-value {
+		background: var(--accent);
+		border-radius: var(--radius-full);
+		transition: inline-size var(--dur-3) var(--ease-out);
+	}
+
+	.progress::-moz-progress-bar {
+		background: var(--accent);
+		border-radius: var(--radius-full);
+	}
+
+	.progress-thin  { --progress-h: 2px; }
+	.progress-thick { --progress-h: 0.625rem; }
+
+	/* Indeterminate: no value attribute. The sweep replaces the fill. */
+	.progress:indeterminate {
+		background:
+			linear-gradient(90deg, transparent 30%, var(--accent) 50%, transparent 70%)
+			0 0 / 45% 100% no-repeat, var(--bg-muted);
+		animation: progress-sweep 1.2s var(--ease-inout) infinite;
+	}
+
+	.progress:indeterminate::-webkit-progress-bar { background: transparent; }
+	.progress:indeterminate::-moz-progress-bar { background: transparent; }
+
+	@keyframes progress-sweep {
+		from { background-position: -60% 0, 0 0; }
+		to   { background-position: 160% 0, 0 0; }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.progress:indeterminate { animation: none; background: var(--bg-muted); }
+	}
+
+	/* ── Meter — a measurement, not a promise ──────────────────────────────
+	   Progress moves toward done; a meter reports where a value SITS in a
+	   range — disk used, password strength. Different element, different
+	   meaning, and the platform ships both, so both get styled. */
+
+	.meter {
+		--meter-h: 0.375rem;
+		appearance: none;
+		inline-size: 100%;
+		block-size: var(--meter-h);
+		border: 0;
+		border-radius: var(--radius-full);
+		background: var(--bg-muted);
+		overflow: hidden;
+	}
+
+	.meter::-webkit-meter-bar { background: var(--bg-muted); border: 0; border-radius: var(--radius-full); }
+	.meter::-webkit-meter-optimum-value      { background: var(--success-solid); }
+	.meter::-webkit-meter-suboptimum-value   { background: var(--warning-solid); }
+	.meter::-webkit-meter-even-less-good-value { background: var(--danger-solid); }
+	.meter::-moz-meter-bar { background: var(--success-solid); border-radius: var(--radius-full); }
+	.meter:-moz-meter-sub-optimum::-moz-meter-bar { background: var(--warning-solid); }
+	.meter:-moz-meter-sub-sub-optimum::-moz-meter-bar { background: var(--danger-solid); }
+
+	/* ── Progress with a label row ─────────────────────────────────────────── */
+
+	.progress-row {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2);
+	}
+
+	.progress-row__head {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: var(--space-3);
+	}
+
+	/* The percentage is data, so it takes the data voice. */
+	.progress-row__value {
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-xs);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-subtle);
+	}
+}

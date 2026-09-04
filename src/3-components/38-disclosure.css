@@ -1,0 +1,106 @@
+/* =============================================================================
+   38 · DISCLOSURE — accordion, collapse, FAQ
+
+   Built on <details>/<summary>, the platform's disclosure (PRINCIPLES #4):
+   keyboard toggling, state exposure and find-in-page auto-expansion come free.
+   Chrome even searches CLOSED details and opens the one with the match —
+   behaviour nobody reimplements correctly.
+
+   The height animation uses interpolate-size / calc-size, the modern answer to
+   "you cannot animate to height:auto". Where unsupported the panel snaps open,
+   which is a downgrade in polish and not in function.
+
+   Exclusive accordions use the platform too: <details name="group"> — opening
+   one closes its siblings, no JavaScript.
+
+   Layer: components.
+   ========================================================================== */
+
+@layer components {
+
+	.acc {
+		--acc-pad: var(--space-4);
+		border-block-end: var(--border-hair) solid var(--line-subtle);
+	}
+
+	.acc > summary {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-4);
+		padding-block: var(--acc-pad);
+		list-style: none;
+		cursor: pointer;
+		font-weight: var(--weight-medium);
+		color: var(--fg-default);
+		transition: color var(--dur-2) var(--ease-out);
+	}
+
+	.acc > summary::-webkit-details-marker { display: none; }
+	.acc > summary:hover { color: var(--fg-accent); }
+
+	/* The marker: a chevron drawn with two borders, rotating to point down.
+	   `rotate`, not transform, so it composes with anything else. */
+	.acc > summary::after {
+		content: '';
+		inline-size: 0.45rem;
+		block-size: 0.45rem;
+		border-inline-end: var(--border-2) solid currentcolor;
+		border-block-end: var(--border-2) solid currentcolor;
+		rotate: 45deg;
+		translate: 0 -2px;
+		flex: none;
+		transition: rotate var(--dur-3) var(--ease-out), translate var(--dur-3) var(--ease-out);
+	}
+
+	.acc[open] > summary::after { rotate: 225deg; translate: 0 2px; }
+
+	/* Open state is the house active state: the summary takes the accent. */
+	.acc[open] > summary { color: var(--fg-accent); }
+
+	.acc__body {
+		padding-block-end: var(--acc-pad);
+		color: var(--fg-muted);
+		font-size: var(--text-sm);
+		line-height: var(--leading-relaxed);
+	}
+
+	/* Height-to-auto animation, where the platform has learned to do it. */
+	@supports (interpolate-size: allow-keywords) {
+		.acc::details-content {
+			block-size: 0;
+			overflow-y: clip;
+			transition:
+				block-size var(--dur-3) var(--ease-out),
+				content-visibility var(--dur-3) allow-discrete;
+		}
+
+		.acc[open]::details-content { block-size: auto; }
+	}
+
+	/* ── Variants ──────────────────────────────────────────────────────────── */
+
+	/* Boxed: each item is a bordered card of its own. */
+	.acc-boxed {
+		border: var(--border-hair) solid var(--line-default);
+		border-radius: var(--radius-lg);
+		padding-inline: var(--acc-pad);
+		background: var(--bg-surface);
+	}
+
+	.acc-boxed + .acc-boxed { margin-block-start: var(--space-3); }
+
+	/* Flush: no rules at all — for a sidebar or a dense list. */
+	.acc-flush { border-block-end: 0; }
+	.acc-flush > summary { padding-block: var(--space-2); }
+
+	/* Quiet summary for nav-like groups (the docs sidebar shape). */
+	.acc-quiet > summary {
+		font-family: var(--font-label);
+		font-size: var(--text-2xs);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: var(--fg-subtle);
+	}
+}

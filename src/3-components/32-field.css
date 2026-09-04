@@ -105,4 +105,35 @@
 		background: var(--accent-soft);
 		color: var(--accent-soft-fg);
 	}
+
+	/* ── Select ────────────────────────────────────────────────────────────
+	   The native <select>, restyled only on the outside — the popup list stays
+	   the platform\'s, which is what makes it work on every OS and with every
+	   assistive tech. The chevron is a data-URI so it costs no request and
+	   inherits nothing it should not. */
+
+	.select {
+		--input-h: 2.5rem;
+		appearance: none;
+		inline-size: 100%;
+		block-size: var(--input-h);
+		padding-inline: var(--space-3) var(--space-8);
+		background:
+			url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23808291' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")
+			no-repeat right var(--space-3) center / 1rem,
+			var(--bg-surface);
+		border: var(--border-hair) solid var(--line-default);
+		border-radius: var(--radius-control);
+		color: var(--fg-default);
+		font-size: var(--text-sm);
+		cursor: pointer;
+		transition: var(--t-colors);
+	}
+
+	.select:hover { border-color: var(--line-strong); }
+	.select[disabled] { opacity: 0.5; cursor: not-allowed; }
+	.select[aria-invalid='true'] { border-color: var(--danger-fg); }
+
+	.select-sm { --input-h: 2rem; font-size: var(--text-xs); }
+	.select-lg { --input-h: 3rem; font-size: var(--text-base); }
 }

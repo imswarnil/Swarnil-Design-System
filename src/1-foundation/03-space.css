@@ -32,6 +32,19 @@
 		/* Page gutters grow with the viewport; content width does not. */
 		--gutter: clamp(1rem, 0.6rem + 1.8vw, 2.5rem);
 
+		/* ── Breakpoints — PAGE layout only ────────────────────────────────
+		   Five, and the contract matters more than the numbers: a media query
+		   may only decide PAGE topology — a sidebar appearing, a nav
+		   collapsing. A component asks its CONTAINER how wide it is, never the
+		   window (see 06-layout's .cq-*). Custom properties cannot be used
+		   inside @media, so these are documentation-as-tokens: the canonical
+		   values, written once, referenced by comment at every use site. */
+		--bp-sm:  30rem;    /* 480px  · phone landscape */
+		--bp-md:  48rem;    /* 768px  · tablet — navs collapse below this */
+		--bp-lg:  64rem;    /* 1024px · laptop — sidebars appear */
+		--bp-xl:  80rem;    /* 1280px · desktop — content max reached */
+		--bp-2xl: 96rem;    /* 1536px · wide — gutters grow, content does not */
+
 		--width-xs:   20rem;
 		--width-sm:   30rem;
 		--width-md:   45rem;
