@@ -1,7 +1,7 @@
 ---
 title: Frames
 group: Foundation
-order: 40
+order: 38
 lead: Containers that say what a thing is before you read it.
 ---
 
@@ -57,6 +57,22 @@ Four decisions are inside that:
 - **`:focus-visible` and `:focus-within`** — the first covers a button being tabbed to, the second a card whose real tab stop is the link inside it. Both are required, because the brackets are the *only* feedback.
 - **A touch fallback** — `@media (hover: none)` shows them outright. On a phone a hover-only affordance is invisible, then sticks after a tap.
 - **Reduced motion keeps the reveal, drops the travel** — the user asked not to be moved, not to be uninformed.
+
+## Frame types
+
+:::demo Blink — the REC brackets. Dashed — the crop proposal.
+<div class="cluster cluster-lg">
+  <div class="box frame frame-4 frame-signal frame-blink"><span class="frame__tr"></span><span class="frame__bl"></span></div>
+  <div class="box frame frame-4 frame-dashed"><span class="frame__tr"></span><span class="frame__bl"></span></div>
+  <div class="box frame frame-4 frame-ink"><span class="frame__tr"></span><span class="frame__bl"></span></div>
+</div>
+:::
+
+`.frame-blink` pulses like a record indicator: something is being captured
+**right now**. Reserve it for genuinely live things — a blinking frame on
+static content is a false alarm, and false alarms train readers to ignore true
+ones. `.frame-dashed` reads as *proposed, not committed* — a marquee before the
+crop lands. Under reduced motion the blink stops; the geometry stays.
 
 ## Composition warning
 

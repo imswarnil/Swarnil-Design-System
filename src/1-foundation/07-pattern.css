@@ -83,6 +83,48 @@
 				calc(var(--pattern-size) / 2) calc(var(--pattern-size) / 2) / var(--pattern-size) var(--pattern-size);
 	}
 
+	/* A plus-sign lattice — the technical drawing's registration marks. */
+	.pattern-cross::before {
+		background:
+			linear-gradient(var(--pattern-ink) 1px, transparent 1px)
+				calc(var(--pattern-size) / 2 - 3px) 0 / var(--pattern-size) var(--pattern-size),
+			linear-gradient(90deg, var(--pattern-ink) 1px, transparent 1px)
+				0 calc(var(--pattern-size) / 2 - 3px) / var(--pattern-size) var(--pattern-size);
+		mask-image:
+			radial-gradient(circle at center, black 3px, transparent 3.5px);
+		mask-size: var(--pattern-size) var(--pattern-size);
+	}
+
+	/* The checkerboard — transparency's own pattern, and the export-canvas
+	   ground. Built from one conic gradient. */
+	.pattern-checker::before {
+		background: conic-gradient(
+			var(--pattern-ink) 90deg, transparent 90deg 180deg,
+			var(--pattern-ink) 180deg 270deg, transparent 270deg)
+			0 0 / var(--pattern-size) var(--pattern-size);
+	}
+
+	/* The blueprint: a fine grid with a heavier line every fifth cell — graph
+	   paper with authority. Two grids, one derived size. */
+	.pattern-blueprint::before {
+		background:
+			linear-gradient(var(--pattern-ink) 1px, transparent 1px) 0 0 / 100% var(--pattern-size),
+			linear-gradient(90deg, var(--pattern-ink) 1px, transparent 1px) 0 0 / var(--pattern-size) 100%,
+			linear-gradient(var(--pattern-ink-2) 1px, transparent 1px) 0 0 / 100% calc(var(--pattern-size) * 5),
+			linear-gradient(90deg, var(--pattern-ink-2) 1px, transparent 1px) 0 0 / calc(var(--pattern-size) * 5) 100%;
+	}
+
+	/* ── Control modifiers ─────────────────────────────────────────────────
+	   Density and strength as named steps, so a variant is a class rather
+	   than a recalculation. Any finer control is the two knobs directly:
+	   --pattern-size and --pattern-angle on the instance. */
+	.pattern-fine   { --pattern-size: 0.75rem; }
+	.pattern-coarse { --pattern-size: 3rem; }
+	/* Strong swaps to the heavier ink token — opacity above 1 clamps and does
+	   nothing, which is exactly the kind of silent no-op a reviewer misses. */
+	.pattern-strong { --pattern-ink: var(--pattern-ink-2); }
+	.pattern-faint::before { opacity: 0.5; }
+
 	/* Fades the texture out toward the middle so content stays legible on it. */
 	.pattern-fade::before {
 		mask-image: radial-gradient(ellipse at center, transparent 25%, black 85%);

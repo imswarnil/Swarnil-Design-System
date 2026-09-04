@@ -55,11 +55,9 @@ NAME = 'Swarnil Design System'
 GROUPS = [
     'Start',
     'Foundation',
+    'Layout',
     'Elements',
     'Components',
-    'Patterns',
-    'Sections',
-    'Utilities',
 ]
 
 

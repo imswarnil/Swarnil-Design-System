@@ -101,6 +101,44 @@
 
 	.menu-end { --menu-w: 13rem; }
 
+	/* ── Hover-open menus ──────────────────────────────────────────────────
+	   A wrapper that opens its .menu on hover or keyboard focus, CSS only.
+	   Use it for BROWSING menus — a nav section where hovering is exploring.
+	   Anything with consequences (account, destructive actions) stays
+	   click-to-open on a popover: a menu that appears under a passing cursor
+	   is fine to look at and wrong to act from.
+
+	   The .menu inside is position:absolute (not a popover), so it needs no
+	   trigger wiring — but it also forfeits the top layer, so keep it out of
+	   overflow-hidden ancestors. */
+	.menu-hover { position: relative; display: inline-block; }
+
+	.menu-hover > .menu {
+		position: absolute;
+		inset-block-start: calc(100% + var(--space-1));
+		inset-inline-start: 0;
+		opacity: 0;
+		translate: 0 4px;
+		pointer-events: none;
+		transition:
+			opacity var(--dur-2) var(--ease-out),
+			translate var(--dur-2) var(--ease-out);
+	}
+
+	.menu-hover:hover > .menu,
+	.menu-hover:focus-within > .menu {
+		opacity: 1;
+		translate: 0 0;
+		pointer-events: auto;
+	}
+
+	.menu-hover > .menu.menu-end-aligned { inset-inline-start: auto; inset-inline-end: 0; }
+
+	@media (hover: none) {
+		/* On touch the wrapper's focus-within still opens it on tap. */
+		.menu-hover > .menu { transition: none; }
+	}
+
 	/* ── Mega panel — the large dropdown ───────────────────────────────────
 	   A full-width sheet of grouped links with room for a description under
 	   each. Use it when a flat list would be twenty items long: twenty items

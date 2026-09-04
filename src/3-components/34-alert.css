@@ -70,6 +70,13 @@
 		inline-size: min(24rem, calc(100vw - var(--space-8)));
 	}
 
+	/* Placements. End-bottom is the default: it is the only corner that never
+	   covers navigation or a page title. Top placements are for toasts that
+	   answer an action performed at the top of the screen. */
+	.toaster-start  { inset-inline-end: auto; inset-inline-start: var(--space-5); }
+	.toaster-top    { inset-block-end: auto; inset-block-start: calc(var(--space-5) + 3.5rem); }
+	.toaster-center { inset-inline: 0; margin-inline: auto; align-items: center; }
+
 	.toast {
 		background: var(--bg-raised);
 		box-shadow: var(--elevation-3);
@@ -81,7 +88,14 @@
 	}
 
 	@starting-style {
-		.toast { opacity: 0; translate: 0 8px; }
+		/* Placements. End-bottom is the default: it is the only corner that never
+	   covers navigation or a page title. Top placements are for toasts that
+	   answer an action performed at the top of the screen. */
+	.toaster-start  { inset-inline-end: auto; inset-inline-start: var(--space-5); }
+	.toaster-top    { inset-block-end: auto; inset-block-start: calc(var(--space-5) + 3.5rem); }
+	.toaster-center { inset-inline: 0; margin-inline: auto; align-items: center; }
+
+	.toast { opacity: 0; translate: 0 8px; }
 	}
 
 	.toast[data-leaving] { opacity: 0; translate: 8px 0; }

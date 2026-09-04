@@ -191,6 +191,70 @@
 	[data-tip-below]:hover::after,
 	[data-tip-below]:focus-visible::after { translate: -50% 0; }
 
+	/* Side placements, for triggers against a screen edge. */
+	[data-tip-start]::after {
+		inset-block-end: auto;
+		inset-block-start: 50%;
+		inset-inline-start: auto;
+		inset-inline-end: calc(100% + var(--space-2));
+		translate: 4px -50%;
+	}
+
+	[data-tip-start]:hover::after,
+	[data-tip-start]:focus-visible::after { translate: 0 -50%; }
+
+	[data-tip-end]::after {
+		inset-block-end: auto;
+		inset-block-start: 50%;
+		inset-inline-start: calc(100% + var(--space-2));
+		translate: -4px -50%;
+	}
+
+	[data-tip-end]:hover::after,
+	[data-tip-end]:focus-visible::after { translate: 0 -50%; }
+
+	/* ── The rich tooltip — a hover card with real content ─────────────────
+	   When a label is not enough: a definition, a person, a preview. It is a
+	   real element (child .tipcard), not an attribute string, so it can hold
+	   markup — and :focus-within keeps it open while a keyboard user reads.
+	   It must still be a COPY of information available elsewhere: hover-only
+	   content excludes touch entirely. */
+	.tip-anchor { position: relative; display: inline-block; }
+
+	.tip-anchor > .tipcard {
+		position: absolute;
+		inset-block-end: calc(100% + var(--space-2));
+		inset-inline-start: 50%;
+		translate: -50% 4px;
+		z-index: var(--z-tooltip, 600);
+		inline-size: max-content;
+		max-inline-size: 18rem;
+		padding: var(--space-3) var(--space-4);
+		border: var(--border-hair) solid var(--line-default);
+		border-radius: var(--radius-lg);
+		background: var(--bg-raised);
+		color: var(--fg-default);
+		font-size: var(--text-xs);
+		line-height: var(--leading-relaxed);
+		box-shadow: var(--elevation-3);
+		opacity: 0;
+		pointer-events: none;
+		transition:
+			opacity var(--dur-2) var(--ease-out),
+			translate var(--dur-2) var(--ease-out);
+	}
+
+	.tip-anchor:hover > .tipcard,
+	.tip-anchor:focus-within > .tipcard {
+		opacity: 1;
+		pointer-events: auto;
+		translate: -50% 0;
+	}
+
+	@media (hover: none) {
+		.tip-anchor > .tipcard { display: none; }
+	}
+
 	/* Touch has no hover and a long-press means something else. The trigger's
 	   aria-label is the real name; hiding the ghost copy loses nothing. */
 	@media (hover: none) {

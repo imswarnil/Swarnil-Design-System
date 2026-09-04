@@ -176,6 +176,35 @@
 		.frame-hover > .frame__bl { opacity: 1; translate: 0 0; }
 	}
 
+	/* ── .frame-blink — the REC brackets ───────────────────────────────────
+	   The corners pulse like a record indicator: something is being captured
+	   RIGHT NOW. Reserve it for genuinely live things — a blinking frame on
+	   static content is a false alarm, and false alarms train readers to
+	   ignore the true ones. Off under reduced motion (the geometry stays). */
+	.frame-blink::before,
+	.frame-blink::after,
+	.frame-blink > .frame__tr,
+	.frame-blink > .frame__bl {
+		animation: fx-pulse 1.6s var(--ease-inout) infinite;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.frame-blink::before,
+		.frame-blink::after,
+		.frame-blink > .frame__tr,
+		.frame-blink > .frame__bl { animation: none; }
+	}
+
+	/* ── .frame-dashed — the crop-proposal ─────────────────────────────────
+	   Dashed corners read as "proposed, not committed" — a marquee before the
+	   crop is applied. */
+	.frame-dashed::before,
+	.frame-dashed::after,
+	.frame-dashed > .frame__tr,
+	.frame-dashed > .frame__bl {
+		border-style: dashed;
+	}
+
 	/* ── .vf — the full viewfinder ─────────────────────────────────────────── */
 
 	.vf {

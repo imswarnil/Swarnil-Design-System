@@ -1,7 +1,7 @@
 ---
 title: Motion
 group: Foundation
-order: 40
+order: 45
 lead: Five durations, four curves, honest by contract — and off entirely when the reader asks.
 ---
 
@@ -61,6 +61,20 @@ animation starts.
 `.fx-lift` is guarded behind `(hover: hover)` — touch has no hover to un-lift,
 and a stuck lift reads as a broken button. `.fx-press` acknowledges the click
 in the finger: scale 0.97, 60ms, done.
+
+## Text animations
+
+:::demo Reload to catch the tracking-in
+<div class="stack">
+  <p class="t-h3 fx-tracking-in u-m-0">The title card settles</p>
+  <p class="t-mono u-m-0 fx-caret">$ npm run build</p>
+</div>
+:::
+
+`.fx-tracking-in` is the title-card move — letters settle from too-wide into
+place, once, on entry. `.fx-caret` appends the terminal cursor for a line that
+"was just typed". Both are rationed like the accent: one animated line per
+view, or neither reads as special.
 
 ## Page transitions
 

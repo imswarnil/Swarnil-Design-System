@@ -20,9 +20,37 @@ them. Toggle the theme on this page and watch them re-ink themselves.
   <div class="ratio ratio-photo u-rounded-lg u-border pattern pattern-hatch"></div>
   <div class="ratio ratio-photo u-rounded-lg u-border pattern pattern-halftone"></div>
   <div class="ratio ratio-photo u-rounded-lg u-border pattern pattern-timecode"></div>
+  <div class="ratio ratio-photo u-rounded-lg u-border pattern pattern-cross"></div>
+  <div class="ratio ratio-photo u-rounded-lg u-border pattern pattern-checker pattern-faint"></div>
+  <div class="ratio ratio-photo u-rounded-lg u-border pattern pattern-blueprint"></div>
   <div class="ratio ratio-photo u-rounded-lg u-border pattern pattern-grid pattern-fade"></div>
 </div>
 :::
+
+## Controlling a pattern
+
+Two knobs and four named steps make every variant, so a new look is a class or
+a token — never a new pattern:
+
+:::demo One texture, four controls
+<div class="grid-auto grid-auto-sm">
+  <div class="ratio ratio-photo u-rounded-lg u-border pattern pattern-grid pattern-fine"></div>
+  <div class="ratio ratio-photo u-rounded-lg u-border pattern pattern-grid"></div>
+  <div class="ratio ratio-photo u-rounded-lg u-border pattern pattern-grid pattern-coarse"></div>
+  <div class="ratio ratio-photo u-rounded-lg u-border pattern pattern-grid pattern-strong"></div>
+</div>
+:::
+
+```html
+<div class="pattern pattern-line" style="--pattern-angle: 30deg; --pattern-size: 2rem">
+```
+
+| Control | Does |
+| --- | --- |
+| `--pattern-size` | cell / stripe pitch |
+| `--pattern-angle` | stripe direction (line, hatch) |
+| `pattern-fine` / `pattern-coarse` | named density steps |
+| `pattern-strong` / `pattern-faint` | ink weight — strong swaps to the heavier ink token |
 
 | Class | Reads as |
 | --- | --- |
@@ -33,6 +61,9 @@ them. Toggle the theme on this page and watch them re-ink themselves.
 | `pattern-hatch` | crosshatch, heavier |
 | `pattern-halftone` | print dots |
 | `pattern-timecode` | the film edge — a taller tick every fifth |
+| `pattern-cross` | registration marks — the technical drawing |
+| `pattern-checker` | transparency's own ground; export canvases |
+| `pattern-blueprint` | fine grid, heavier line every fifth — graph paper with authority |
 | `pattern-fade` | modifier: fades any texture out toward the centre |
 
 Knobs: `--pattern-size`, `--pattern-angle`.

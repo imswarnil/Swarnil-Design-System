@@ -57,7 +57,7 @@ body {
 	padding-inline: var(--gutter);
 	background: color-mix(in oklab, var(--bg-canvas) 88%, transparent);
 	backdrop-filter: blur(12px);
-	border-bottom: 1px solid var(--line-subtle);
+	border-bottom: 1px solid var(--line-default);
 }
 
 .brand {
@@ -262,6 +262,8 @@ body {
 .side {
 	position: sticky;
 	top: var(--bar-h);
+	border-inline-end: 1px solid var(--line-subtle);
+	padding-inline-end: var(--space-5);
 	max-height: calc(100dvh - var(--bar-h));
 	overflow-y: auto;
 	padding-block: var(--space-8) var(--space-10);
@@ -701,6 +703,8 @@ body {
 .rail {
 	align-self: stretch;
 	padding-block: var(--space-10);
+	border-inline-start: 1px solid var(--line-subtle);
+	padding-inline-start: var(--space-5);
 }
 
 /* ── The TOC, as a video timeline ─────────────────────────────────────────
@@ -751,6 +755,8 @@ body {
 /* The position readout. A chapter count IS data, so it takes the data voice —
    light, tracked, tabular — which is why "03 / 09" does not jump about as the
    first digit changes. */
+.toc__time[data-done] { color: var(--fg-accent); font-weight: var(--weight-regular); }
+
 .toc__time {
 	font-family: var(--font-data);
 	font-size: var(--text-2xs);
@@ -918,13 +924,46 @@ body {
 	max-width: var(--doc-measure);
 	margin-top: var(--space-16);
 	padding-top: var(--space-6);
-	border-top: 1px solid var(--line-subtle);
+	border-top: 1px solid var(--line-default);
 	font-size: var(--text-sm);
 	color: var(--fg-faint);
 }
 
 .foot p { margin: 0; }
 .foot__note { margin-top: var(--space-1); }
+
+.foot__row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--space-3);
+	margin-top: var(--space-4);
+}
+
+.foot__links { display: flex; flex-wrap: wrap; gap: var(--space-4); }
+
+.foot__links a {
+	color: var(--fg-subtle);
+	text-decoration: none;
+	font-size: var(--text-xs);
+	transition: color var(--dur-1) var(--ease-out);
+}
+
+.foot__links a:hover { color: var(--fg-default); }
+
+.foot__rec {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-2);
+	font-family: var(--font-data);
+	font-weight: var(--weight-light);
+	font-size: var(--text-2xs);
+	letter-spacing: var(--tracking-label);
+	font-variant-numeric: tabular-nums;
+	text-transform: uppercase;
+	color: var(--fg-faint);
+}
 
 /* ── Responsive ───────────────────────────────────────────────────────────── */
 
@@ -1239,3 +1278,24 @@ body {
 a.crumbs__link:hover { color: var(--fg-default); }
 .crumbs__sep { color: var(--line-strong); }
 .crumbs__here { color: var(--fg-accent); }
+
+/* Spacing-ladder bars and radius tiles — the foundation pages' specimens. */
+.sp-bar {
+	display: inline-block;
+	inline-size: var(--sp);
+	block-size: 0.875rem;
+	background: var(--accent);
+	border-radius: var(--radius-xs);
+}
+
+.rad-tile {
+	inline-size: 5.5rem;
+	aspect-ratio: 4 / 3;
+	display: grid;
+	place-items: center;
+	background: var(--bg-sunken);
+	border: var(--border-2) solid var(--line-strong);
+	border-radius: var(--rad);
+}
+
+.rad-tile-pill { aspect-ratio: auto; block-size: 2.5rem; inline-size: 7rem; }

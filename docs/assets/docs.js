@@ -126,8 +126,20 @@
 			return document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1)));
 		});
 
-		var pad = function (n) { return (n < 10 ? '0' : '') + n; };
 		var ticking = false;
+
+		// The page as a tape: total running time is the read estimate
+		// (200 wpm — the standard figure), elapsed is progress through the
+		// article. mm:ss both sides, tabular figures in the CSS so the digits
+		// do not jitter. At the end the readout says what a deck would say.
+		var words = (article.textContent.match(/\S+/g) || []).length;
+		var totalSec = Math.max(60, Math.round(words / 200 * 60));
+
+		var mmss = function (s) {
+			s = Math.max(0, Math.round(s));
+			var m = Math.floor(s / 60), r = s % 60;
+			return (m < 10 ? '0' : '') + m + ':' + (r < 10 ? '0' : '') + r;
+		};
 
 		// Where each chapter's DOT sits inside the list, in pixels. This is what
 		// the fill interpolates between, so the playhead is always in the
@@ -180,7 +192,18 @@
 			}
 
 			toc.style.setProperty('--toc-fill', Math.round(fill) + 'px');
-			if (time) time.textContent = pad(current + 1) + ' / ' + pad(links.length);
+
+			if (time) {
+				var travel = Math.max(1, article.offsetHeight - window.innerHeight);
+				var prog = Math.min(1, Math.max(0, (window.scrollY - article.offsetTop) / travel));
+				if (prog >= 0.995) {
+					time.textContent = 'PLAYED · ' + mmss(totalSec);
+					time.dataset.done = '';
+				} else {
+					time.textContent = mmss(prog * totalSec) + ' / ' + mmss(totalSec);
+					delete time.dataset.done;
+				}
+			}
 			ticking = false;
 		}
 

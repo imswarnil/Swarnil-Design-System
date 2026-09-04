@@ -60,82 +60,10 @@ and a nav without are the same component — not two.
 Those are [Swarnil Icons](https://icons.imswarnil.com) — the same 24 grid and
 1.5 stroke, so they sit at the same weight as the text beside them.
 
-## Dropdown
+## Menus
 
-Built on the **Popover API**, which is not a stylistic preference. It buys four
-behaviours that are hard to rebuild and easy to get wrong: Escape closes it,
-clicking outside closes it, it renders in the top layer so no ancestor's
-`overflow: hidden` can clip it, and focus returns to the trigger.
-
-Every one of those is a bug in most hand-rolled dropdowns. **No JavaScript.**
-
-:::demo Open it, then press Escape
-<header class="navbar navbar-bordered u-border u-rounded-lg">
-  <a class="navbar__brand" href="#i"><span class="dot dot-accent"></span> Swarnil</a>
-  <div class="navbar__actions">
-    <button class="btn btn-outline btn-sm" type="button" popovertarget="demo-menu">Account</button>
-    <div class="menu" id="demo-menu" popover>
-      <p class="menu__label">Signed in as swarnil</p>
-      <a class="menu__item" href="#i"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-user"/></svg>Profile</a>
-      <a class="menu__item" href="#i"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-settings"/></svg>Settings<span class="menu__kbd">⌘,</span></a>
-      <hr class="menu__sep" />
-      <a class="menu__item" href="#i">Sign out</a>
-    </div>
-  </div>
-</header>
-:::
-
-## Mega panel
-
-Use it when a flat list would be twenty items long. Twenty items is not a menu,
-it is a directory nobody reads.
-
-:::demo
-<header class="navbar navbar-bordered u-border u-rounded-lg">
-  <a class="navbar__brand" href="#i"><span class="dot dot-accent"></span> Swarnil</a>
-  <nav class="navbar__nav" aria-label="Main">
-    <button class="navbar__link" type="button" popovertarget="demo-mega">Explore</button>
-    <a class="navbar__link" href="#i">Pricing</a>
-  </nav>
-  <div class="menu menu-mega" id="demo-mega" popover>
-    <div class="menu-mega__grid">
-      <div class="menu-mega__col">
-        <p class="menu__label">Watch</p>
-        <a class="menu-mega__item" href="#i">
-          <span class="menu-mega__ico"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-play"/></svg></span>
-          <span><span class="menu-mega__title">Episodes</span><span class="menu-mega__desc">Every build log, newest first.</span></span>
-        </a>
-        <a class="menu-mega__item" href="#i">
-          <span class="menu-mega__ico"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-record"/></svg></span>
-          <span><span class="menu-mega__title">Live</span><span class="menu-mega__desc">What is on air right now.</span></span>
-        </a>
-      </div>
-      <div class="menu-mega__col">
-        <p class="menu__label">Learn</p>
-        <a class="menu-mega__item" href="#i">
-          <span class="menu-mega__ico"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-file"/></svg></span>
-          <span><span class="menu-mega__title">Courses</span><span class="menu-mega__desc">Long-form, start to finish.</span></span>
-        </a>
-        <a class="menu-mega__item" href="#i">
-          <span class="menu-mega__ico"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-code"/></svg></span>
-          <span><span class="menu-mega__title">Snippets</span><span class="menu-mega__desc">Small things worth stealing.</span></span>
-        </a>
-      </div>
-      <div class="menu-mega__col">
-        <p class="menu__label">Make</p>
-        <a class="menu-mega__item" href="#i">
-          <span class="menu-mega__ico"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-capture"/></svg></span>
-          <span><span class="menu-mega__title">Thumbnails</span><span class="menu-mega__desc">Export at every safe size.</span></span>
-        </a>
-      </div>
-    </div>
-    <div class="menu-mega__foot">
-      <span class="t-small t-muted">Everything is MIT and open in the repo.</span>
-      <a class="btn btn-outline btn-sm" href="#i">Browse all</a>
-    </div>
-  </div>
-</header>
-:::
+Dropdowns, the hover menu, the account menu and the mega panel have [their own
+page](/dropdown.html) — this page stays about the bar itself.
 
 ## The drawer
 
