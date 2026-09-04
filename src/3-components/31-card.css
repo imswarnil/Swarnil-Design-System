@@ -72,10 +72,121 @@
 		margin: 0;
 	}
 
-	.card__foot {
+	/* ── Media extras ──────────────────────────────────────────────────────── */
+
+	/* Anything laid over the image: a badge, a duration, a play button. The
+	   scrim is a hard-edged gradient rather than a blur, because a blur costs
+	   a compositor layer per card and a deck has twenty of them. */
+	.card__overlay {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-between;
+		gap: var(--space-2);
+		padding: var(--space-3);
+		background: linear-gradient(transparent 55%, oklch(12.5% 0.012 275 / 0.72));
+		pointer-events: none;
+	}
+
+	.card__media { position: relative; }
+
+	/* Corner-pinned marker on the media — a category, a state, a duration. */
+	.card__badge {
+		position: absolute;
+		inset-block-start: var(--space-3);
+		inset-inline-start: var(--space-3);
+		z-index: var(--z-raised);
+	}
+
+	.card__badge-end {
+		inset-inline-start: auto;
+		inset-inline-end: var(--space-3);
+	}
+
+	/* A duration or timecode sitting on the image. Data, so it is mono. */
+	.card__stamp {
+		position: absolute;
+		inset-block-end: var(--space-3);
+		inset-inline-end: var(--space-3);
+		padding: 2px 6px;
+		border-radius: var(--radius-sm);
+		background: oklch(12.5% 0.012 275 / 0.8);
+		color: var(--ink-0);
+		font-family: var(--font-slate);
+		font-size: var(--text-2xs);
+		font-variant-numeric: tabular-nums;
+	}
+
+	/* ── Body extras ───────────────────────────────────────────────────────── */
+
+	/* A wrapping row of badges or chips. Uses the layout primitive's variable
+	   rather than inventing a gap. */
+	.card__tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-2);
+	}
+
+	/* Avatar + name + date. The name is a person, the date is data — which is
+	   why only one half of this is mono. */
+	.card__author {
+		display: flex;
+		align-items: center;
+		gap: var(--space-3);
+	}
+
+	.card__author-name {
+		font-size: var(--text-sm);
+		font-weight: var(--weight-medium);
+		color: var(--fg-default);
+	}
+
+	.card__author-meta {
+		font-family: var(--font-slate);
+		font-size: var(--text-2xs);
+		color: var(--fg-faint);
+		font-variant-numeric: tabular-nums;
+	}
+
+	/* ── Footer ────────────────────────────────────────────────────────────
+	   margin-block-start:auto pins it to the bottom, so cards of different
+	   text lengths in one grid still line their footers up. That is most of
+	   what makes a deck look tidy. */
+
+	.card__footer {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-3);
 		margin-block-start: auto;
-		padding: var(--card-pad);
+		padding: var(--space-3) var(--card-pad);
+		border-block-start: var(--border-hair) solid var(--line-subtle);
+		font-size: var(--text-sm);
+		color: var(--fg-muted);
+	}
+
+	.card__footer-plain {
+		border-block-start: 0;
 		padding-block-start: 0;
+	}
+
+	.card__actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-2);
+		padding: 0 var(--card-pad) var(--card-pad);
+		margin-block-start: auto;
+	}
+
+	/* A number that has to line up with other cards' numbers. */
+	.card__price {
+		font-family: var(--font-display);
+		font-size: var(--text-xl);
+		font-weight: var(--weight-bold);
+		font-variant-numeric: tabular-nums lining-nums;
+		letter-spacing: var(--tracking-tight);
+		color: var(--fg-default);
 	}
 
 	/* The whole card is clickable, but the <a> stays on the TITLE so the
@@ -101,10 +212,21 @@
 
 		.card-hover-lift:hover .card__media > img { scale: 1.03; }
 
-		/* The brackets ARE the feedback, so nothing lifts. Compose with the
-		   foundation: class="card card-hover-frame frame frame-4 frame-hover" */
+		/* The brackets ARE the feedback, so nothing lifts. */
 		.card-hover-frame:hover { translate: none; box-shadow: none; }
 	}
+
+	/* ── Turning the brackets on and off ───────────────────────────────────
+	   .card-hover-frame only SIZES the brackets for a card — the default 22px
+	   arms are drawn for media and swallow a card's padding.
+
+	   `frame-hover` is the switch:
+
+	       <article class="card card-hover-frame frame-hover">   on
+	       <article class="card card-hover-frame">               off
+
+	   One class added or removed, nothing else to change, and the card keeps
+	   its sizing either way so toggling it cannot shift the layout. */
 
 	.card-hover-frame {
 		--frame-size: 16px;

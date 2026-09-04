@@ -46,6 +46,11 @@ ALLOW = {
         '.win-term .win__body, .win-term__body', # literal terminal output
         '.win-browser__url',                     # a URL
     },
+    'src/3-components/31-card.css': {
+        '.card__stamp',        # a duration on the media, e.g. 12:04
+        '.card__author-meta',  # a date
+        '.card__price',        # a number that lines up across cards
+    },
     'src/3-components/36-menu.css': {
         '.menu__kbd',      # a keyboard shortcut, e.g. Cmd+,
         '.sheet__count',   # an item count
@@ -65,6 +70,7 @@ ALLOW = {
     },
     # ── docs site chrome ───────────────────────────────────────────────────
     'docs/assets/docs.css': {
+        '.ramp__step',   # the step number on a swatch, e.g. 500
         '.code',         # inline code in prose
         '.cb__lang',     # the language name on a code block
         '.cb__pre',      # code

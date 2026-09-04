@@ -31,7 +31,21 @@
 
 	/* ── Corner brackets ───────────────────────────────────────────────────── */
 
-	.frame {
+	/* .frame-hover is listed alongside .frame everywhere the GEOMETRY is
+	   defined, so it works on its own — one class, not two.
+
+	   That matters more than it looks: the difference between
+
+	       class="card card-hover-frame frame frame-4 frame-hover"
+	   and class="card card-hover-frame frame-hover"
+
+	   is whether a reader can turn the effect on and off by adding or removing
+	   ONE thing. An option you have to assemble from four classes is not really
+	   an option. Add .frame-4 and its two spans only when you want four
+	   corners instead of two. */
+
+	.frame,
+	.frame-hover {
 		--frame-size: 22px;
 		--frame-inset: 10px;
 		--frame-weight: var(--border-2);
@@ -42,7 +56,11 @@
 	.frame::before,
 	.frame::after,
 	.frame > .frame__tr,
-	.frame > .frame__bl {
+	.frame > .frame__bl,
+	.frame-hover::before,
+	.frame-hover::after,
+	.frame-hover > .frame__tr,
+	.frame-hover > .frame__bl {
 		content: '';
 		position: absolute;
 		width: var(--frame-size);
@@ -50,14 +68,16 @@
 		pointer-events: none;
 	}
 
-	.frame::before {
+	.frame::before,
+	.frame-hover::before {
 		inset-block-start: var(--frame-inset);
 		inset-inline-start: var(--frame-inset);
 		border-block-start: var(--frame-weight) solid var(--frame-color);
 		border-inline-start: var(--frame-weight) solid var(--frame-color);
 	}
 
-	.frame::after {
+	.frame::after,
+	.frame-hover::after {
 		inset-block-end: var(--frame-inset);
 		inset-inline-end: var(--frame-inset);
 		border-block-end: var(--frame-weight) solid var(--frame-color);
@@ -65,14 +85,16 @@
 	}
 
 	/* The other two corners need real elements — there is no third pseudo. */
-	.frame > .frame__tr {
+	.frame > .frame__tr,
+	.frame-hover > .frame__tr {
 		inset-block-start: var(--frame-inset);
 		inset-inline-end: var(--frame-inset);
 		border-block-start: var(--frame-weight) solid var(--frame-color);
 		border-inline-end: var(--frame-weight) solid var(--frame-color);
 	}
 
-	.frame > .frame__bl {
+	.frame > .frame__bl,
+	.frame-hover > .frame__bl {
 		inset-block-end: var(--frame-inset);
 		inset-inline-start: var(--frame-inset);
 		border-block-end: var(--frame-weight) solid var(--frame-color);

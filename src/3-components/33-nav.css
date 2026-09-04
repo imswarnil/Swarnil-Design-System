@@ -1,9 +1,17 @@
 /* =============================================================================
    33 · NAV — tabs, breadcrumb, pager
 
-   HOUSE RULE: the active state is a DOT or a 2px rule. Never a filled pill.
-   A filled pill is loud, and it competes with the accent for the one job the
-   accent has.
+   ── THE HOUSE ACTIVE STATE ────────────────────────────────────────────────
+   Everything in this system marks "you are here" the same three ways:
+
+       a dot   ·   semibold   ·   the accent colour
+
+   Never an underline, never a bottom rule, never a filled pill. A reader
+   learns the idea once and then recognises it in the tabs, the side nav, the
+   navbar, the drawer and the table of contents without being taught again.
+
+   A filled pill is also loud, and it competes with the accent for the one job
+   the accent has.
 
    State is expressed with [aria-current] and [aria-selected] — the same facts
    the accessibility tree reads, so the visual state and the announced state
@@ -21,6 +29,9 @@
 	}
 
 	.tab {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-2);
 		padding: var(--space-2) var(--space-4);
 		font-size: var(--text-sm);
 		font-weight: var(--weight-medium);
@@ -33,16 +44,33 @@
 
 	.tab:hover { color: var(--fg-default); }
 
+	/* THE HOUSE ACTIVE STATE — see the note at the top of this file.
+	   A dot, semibold, in the accent. Not an underline, not a rule, not a
+	   filled pill. The same three properties everywhere in the system, so
+	   "you are here" is one visual idea a reader learns once. */
 	.tab[aria-selected='true'] {
-		color: var(--fg-default);
-		box-shadow: inset 0 -2px 0 var(--accent);
+		color: var(--fg-accent);
+		font-weight: var(--weight-semibold);
 	}
 
-	.tabs-pill { border-block-end: 0; }
-	.tabs-pill .tab[aria-selected='true'] { box-shadow: none; background: var(--bg-muted); border-radius: var(--radius-control); }
+	.tab[aria-selected='true']::before {
+		content: '';
+		inline-size: var(--dot-sm);
+		block-size: var(--dot-sm);
+		border-radius: var(--radius-full);
+		background: var(--accent);
+		flex: none;
+	}
 
-	.tabs-vertical { flex-direction: column; border-block-end: 0; border-inline-start: var(--border-hair) solid var(--line-subtle); }
-	.tabs-vertical .tab[aria-selected='true'] { box-shadow: inset 2px 0 0 var(--accent); }
+	.tabs-flush { border-block-end: 0; }
+
+	.tabs-vertical {
+		flex-direction: column;
+		align-items: stretch;
+		border-block-end: 0;
+	}
+
+	.tabs-vertical .tab { justify-content: flex-start; }
 
 	.breadcrumb {
 		display: flex;

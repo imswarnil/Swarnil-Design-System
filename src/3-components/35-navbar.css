@@ -91,23 +91,36 @@
 	.navbar__link:hover { color: var(--fg-default); }
 	.navbar__link .icon { --icon-size: 1rem; }
 
-	/* HOUSE RULE: active is a dot, never a filled pill. */
+	/* ── The house active state ────────────────────────────────────────────
+	   Dot, semibold, accent — the same three properties as the tabs, the side
+	   nav, the TOC and the drawer.
+
+	   WHERE the dot sits depends on whether the link has an icon, and :has()
+	   lets the CSS work that out instead of the author having to:
+
+	     no icon   →  ● Watch      the dot takes the leading slot
+	     icon      →  ▷ Watch ●    the icon already has it, so the dot follows
+
+	   Without this the dot and the icon fight over the same position, and a
+	   nav with mixed items lines up wrong. */
+
 	.navbar__link[aria-current='page'] {
-		color: var(--fg-default);
+		color: var(--fg-accent);
 		font-weight: var(--weight-semibold);
 	}
 
-	.navbar__link[aria-current='page']::after {
+	.navbar__link[aria-current='page']::before,
+	.navbar__link:has(.icon)[aria-current='page']::after {
 		content: '';
-		position: absolute;
-		inset-block-end: -2px;
-		inset-inline-start: 50%;
 		inline-size: var(--dot-sm);
 		block-size: var(--dot-sm);
 		border-radius: var(--radius-full);
 		background: var(--accent);
-		translate: -50% 0;
+		flex: none;
 	}
+
+	/* An icon already occupies the leading slot, so the dot moves to the end. */
+	.navbar__link:has(.icon)[aria-current='page']::before { content: none; }
 
 	/* ── Variants ──────────────────────────────────────────────────────────── */
 
@@ -214,4 +227,10 @@
 		.navbar__search { display: none; }
 		.navbar-centered { display: flex; }
 	}
+
+	/* Keeps the burger at every width. Two real uses: a drawer that holds
+	   secondary navigation the bar never shows, and documenting the thing —
+	   an example of a burger that is invisible on the machine you are reading
+	   the docs on is not an example. */
+	.navbar-burger .navbar__burger { display: flex; }
 }
