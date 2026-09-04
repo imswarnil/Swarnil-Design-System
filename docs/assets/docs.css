@@ -809,7 +809,14 @@ body {
 		scale var(--dur-2) var(--ease-out);
 }
 
+/* h2 is the default depth; h3 indents and shrinks. --h2 exists as a rule so
+   the class in the markup resolves to something — a class with no definition
+   anywhere is exactly what the class audit is for. */
+.toc__link--h2 { font-weight: var(--weight-regular); }
 .toc__link--h3 { font-size: var(--text-xs); padding-inline-start: var(--space-3); }
+
+/* The label itself, so the node can be positioned independently of it. */
+.toc__text { display: block; min-inline-size: 0; }
 .toc__link:hover { color: var(--fg-default); }
 .toc__link:hover .toc__node { background: var(--fg-muted); }
 
