@@ -89,24 +89,101 @@
 		}
 	});
 
-	/* ── TOC scrollspy ───────────────────────────────────────────────────── */
+	/* ── The TOC timeline ────────────────────────────────────────────────
+	   Three jobs, one scroll listener:
 
-	var links = $$('.toc__link');
-	if (links.length) {
-		var byId = {};
-		links.forEach(function (a) { byId[a.getAttribute('href').slice(1)] = a; });
-		var heads = Object.keys(byId).map(function (id) { return document.getElementById(id); }).filter(Boolean);
+	     progress   how far through the page you are        (the fill)
+	     current    which chapter you are in                (the active dot)
+	     played     which chapters you have already passed  (the dim dots)
 
-		var spy = new IntersectionObserver(function (entries) {
-			entries.forEach(function (en) {
-				if (!en.isIntersecting) return;
-				links.forEach(function (a) { a.removeAttribute('aria-current'); });
-				var a = byId[en.target.id];
-				if (a) a.setAttribute('aria-current', 'true');
+	   Progress is measured against the ARTICLE, not the document. A long
+	   footer would otherwise mean the bar never fills — you would finish
+	   reading with the playhead at 80% and it would look broken rather than
+	   accurate.
+
+	   Where the browser supports scroll-driven animations the fill is animated
+	   off the main thread and this listener only handles the counter and the
+	   dots, so a slow frame can never make the bar lag the page.
+	*/
+
+	var toc = $('.toc');
+	if (toc) {
+		var links = $$('[data-toc-link]', toc);
+		var time = $('[data-toc-time]', toc);
+		var list = $('.toc__list', toc);
+		var article = $('.doc') || document.body;
+
+		var heads = links.map(function (a) {
+			return document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1)));
+		});
+
+		var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+		var ticking = false;
+
+		// Where each chapter's DOT sits inside the list, in pixels. This is what
+		// the fill interpolates between, so the playhead is always in the
+		// chapter the list says you are in.
+		//
+		// Measured with getBoundingClientRect, NOT offsetTop. offsetTop is
+		// relative to the nearest POSITIONED ancestor, and .toc__link is
+		// position:relative — so `node.offsetTop - list.offsetTop` measured the
+		// node against its own row and came out negative. Rects are absolute
+		// and account for the TOC's own scroll, which offsetTop does not.
+		function nodeOffset(i) {
+			var node = $('.toc__node', links[i]);
+			if (!node) return 0;
+			var n = node.getBoundingClientRect();
+			var l = list.getBoundingClientRect();
+			return (n.top - l.top) + n.height / 2;
+		}
+
+		function update() {
+			// The chapter you are in is the LAST heading above the fold line.
+			// A line rather than a box is what stops two chapters being current
+			// at once on a page of short sections.
+			var line = window.scrollY + window.innerHeight * 0.25;
+			var current = -1;
+			heads.forEach(function (h, i) {
+				if (h && h.offsetTop <= line) current = i;
 			});
-		}, { rootMargin: '-72px 0px -70% 0px', threshold: 0 });
 
-		heads.forEach(function (h) { spy.observe(h); });
+			links.forEach(function (a, i) {
+				if (i < current) { a.dataset.played = ''; } else { delete a.dataset.played; }
+				if (i === current) { a.setAttribute('aria-current', 'true'); }
+				else { a.removeAttribute('aria-current'); }
+			});
+
+			var fill = 0;
+			if (current >= 0) {
+				var here = nodeOffset(current);
+				var next = current + 1 < links.length ? nodeOffset(current + 1) : list.offsetHeight;
+
+				// How far through THIS chapter we are, 0…1.
+				var hTop = heads[current] ? heads[current].offsetTop : 0;
+				var hEnd = heads[current + 1]
+					? heads[current + 1].offsetTop
+					: article.offsetTop + article.offsetHeight;
+				var span = hEnd - hTop;
+				var frac = span > 0 ? (line - hTop) / span : 1;
+				frac = Math.min(1, Math.max(0, frac));
+
+				fill = here + (next - here) * frac;
+			}
+
+			toc.style.setProperty('--toc-fill', Math.round(fill) + 'px');
+			if (time) time.textContent = pad(current + 1) + ' / ' + pad(links.length);
+			ticking = false;
+		}
+
+		update();
+
+		window.addEventListener('scroll', function () {
+			if (ticking) return;
+			ticking = true;
+			requestAnimationFrame(update);
+		}, { passive: true });
+
+		window.addEventListener('resize', update, { passive: true });
 	}
 
 	/* ── Burger ──────────────────────────────────────────────────────────── */

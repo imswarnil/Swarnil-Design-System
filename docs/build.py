@@ -345,13 +345,34 @@ def nav_html(pages, current):
 
 
 def toc_html(toc):
+    """The table of contents as a video timeline.
+
+    A page and a video are the same shape — a thing you move through at your
+    own pace, with named parts you might want to jump to. So the TOC is a
+    scrubber: a track, a progress fill, a playhead, and a chapter marker per
+    heading. It is the system's own language (viewfinder, record light,
+    timecode) applied to the one piece of chrome that was still a plain list.
+
+    It also answers a question a nested list cannot: HOW FAR THROUGH AM I.
+    """
     if len(toc) < 2:
         return ''
     li = ''.join(
-        f'<a class="toc__link toc__link--h{lvl}" href="#{sid}">{html.escape(txt)}</a>'
+        f'<a class="toc__link toc__link--h{lvl}" href="#{sid}" data-toc-link>'
+        f'<span class="toc__node" aria-hidden="true"></span>'
+        f'<span class="toc__text">{html.escape(txt)}</span></a>'
         for lvl, sid, txt in toc)
-    return (f'<nav class="toc" aria-label="On this page">'
-            f'<p class="toc__head">On this page</p>{li}</nav>')
+    return (
+        '<nav class="toc" aria-label="On this page">'
+        '<div class="toc__bar">'
+        '<p class="toc__head">On this page</p>'
+        f'<span class="toc__time" data-toc-time>00 / {len(toc):02d}</span>'
+        '</div>'
+        '<div class="toc__list">'
+        '<span class="toc__track" aria-hidden="true"></span>'
+        '<span class="toc__fill" data-toc-fill aria-hidden="true"></span>'
+        f'{li}'
+        '</div></nav>')
 
 
 def build_page(page, pages, shell):
