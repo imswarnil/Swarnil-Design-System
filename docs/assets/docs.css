@@ -409,12 +409,19 @@ body {
 /* ── Long-form body ───────────────────────────────────────────────────────── */
 
 /* ── Section breaks ────────────────────────────────────────────────────────
+   Every prose selector below uses the CHILD combinator on purpose: the
+   markdown renderer emits blocks as direct children of .doc, so `.doc > h2`
+   styles exactly the prose — while a descendant selector also restyled every
+   h2 INSIDE a demo, which is how the dialog example's title grew a section
+   divider. A demo has to show the component, not the page it sits on.
+
+   (Original comment: ────────────────────────────────────────────────────────
    Each h2 opens a section, and the rule ABOVE it is the divider. Drawn as a
    pseudo-element rather than a border so the space above the rule and below it
    can differ — a divider sitting exactly halfway between two sections belongs
    to neither of them. */
 
-.doc h2 {
+.doc > h2 {
 	position: relative;
 	font-family: var(--font-display);
 	font-size: var(--text-2xl);
@@ -426,7 +433,7 @@ body {
 	scroll-margin-top: calc(var(--bar-h) + var(--space-6));
 }
 
-.doc h2::before {
+.doc > h2::before {
 	content: '';
 	position: absolute;
 	inset-block-start: 0;
@@ -438,7 +445,7 @@ body {
 /* The first heading has nothing above it to divide from. */
 .doc > h2:first-of-type { margin-block-start: var(--space-12); }
 
-.doc h3 {
+.doc > h3 {
 	font-family: var(--font-display);
 	font-size: var(--text-xl);
 	font-weight: var(--weight-semibold);
@@ -447,7 +454,7 @@ body {
 	scroll-margin-top: calc(var(--bar-h) + var(--space-6));
 }
 
-.doc h4 {
+.doc > h4 {
 	font-size: var(--text-base);
 	font-weight: var(--weight-semibold);
 	margin-block: var(--space-6) var(--space-2);
@@ -456,9 +463,9 @@ body {
 /* A heading belongs to what FOLLOWS it, so the gap under it is smaller than
    the gap above it. That asymmetry is most of what separates typeset text
    from stacked text. */
-.doc :is(h2, h3, h4) + * { margin-block-start: 0; }
+.doc > :is(h2, h3, h4) + * { margin-block-start: 0; }
 
-.doc p {
+.doc > p {
 	margin-block: var(--space-5);
 	line-height: var(--leading-relaxed);
 	color: var(--fg-muted);

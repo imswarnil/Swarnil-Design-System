@@ -24,6 +24,11 @@
 		--dialog-w: 28rem;
 		--dialog-pad: var(--space-6);
 
+		/* The UA centres a dialog with `margin: auto` — and the reset's
+		   `* { margin: 0 }` beats UA styles regardless of layer, so without
+		   this line every dialog pins to the top-left corner. */
+		margin: auto;
+
 		inline-size: min(var(--dialog-w), calc(100vw - var(--space-8)));
 		max-block-size: min(85dvh, 40rem);
 		padding: 0;
@@ -113,8 +118,8 @@
 	/* A bottom sheet on small screens — same element, different geometry. */
 	@media (width < 40rem) {
 		.dialog-sheet {
+			margin: auto;
 			margin-block-end: 0;
-			margin-block-start: auto;
 			inline-size: 100vw;
 			max-inline-size: 100vw;
 			border-end-start-radius: 0;
