@@ -114,6 +114,33 @@ feedback durations.
 </div>
 :::
 
+:::demo Logos — grey until touched
+<div class="marquee marquee-logos marquee-slow">
+  <div class="marquee__run"><span class="t-h3">YouTube</span><span class="t-h3">Ghost</span><span class="t-h3">Cloudflare</span><span class="t-h3">Salesforce</span><span class="t-h3">DaVinci</span><span class="t-h3">OBS</span></div>
+  <div class="marquee__run" aria-hidden="true"><span class="t-h3">YouTube</span><span class="t-h3">Ghost</span><span class="t-h3">Cloudflare</span><span class="t-h3">Salesforce</span><span class="t-h3">DaVinci</span><span class="t-h3">OBS</span></div>
+</div>
+:::
+
+:::demo Band — the one place a marquee may wear the accent; inverse, on ink
+<div class="stack stack-sm">
+  <div class="marquee marquee-band marquee-fast">
+    <div class="marquee__run"><span>New episode every Thursday</span><span class="marquee__sep">◆</span><span>Course 3 is live</span><span class="marquee__sep">◆</span><span>Ladakh, on film</span><span class="marquee__sep">◆</span></div>
+    <div class="marquee__run" aria-hidden="true"><span>New episode every Thursday</span><span class="marquee__sep">◆</span><span>Course 3 is live</span><span class="marquee__sep">◆</span><span>Ladakh, on film</span><span class="marquee__sep">◆</span></div>
+  </div>
+  <div class="marquee marquee-band marquee-inverse marquee-flush">
+    <div class="marquee__run"><span>Videos</span><span class="marquee__sep">·</span><span>Code</span><span class="marquee__sep">·</span><span>Courses</span><span class="marquee__sep">·</span><span>Travel</span><span class="marquee__sep">·</span><span>Film</span><span class="marquee__sep">·</span></div>
+    <div class="marquee__run" aria-hidden="true"><span>Videos</span><span class="marquee__sep">·</span><span>Code</span><span class="marquee__sep">·</span><span>Courses</span><span class="marquee__sep">·</span><span>Travel</span><span class="marquee__sep">·</span><span>Film</span><span class="marquee__sep">·</span></div>
+  </div>
+</div>
+:::
+
+:::demo Large — display type running, one word per item
+<div class="marquee marquee-lg marquee-slow">
+  <div class="marquee__run"><span>Make</span><span class="t-accent">·</span><span>Film</span><span class="t-accent">·</span><span>Write</span><span class="t-accent">·</span><span>Teach</span><span class="t-accent">·</span><span>Ship</span><span class="t-accent">·</span></div>
+  <div class="marquee__run" aria-hidden="true"><span>Make</span><span class="t-accent">·</span><span>Film</span><span class="t-accent">·</span><span>Write</span><span class="t-accent">·</span><span>Teach</span><span class="t-accent">·</span><span>Ship</span><span class="t-accent">·</span></div>
+</div>
+:::
+
 ## Properties
 
 | Variable | Does |

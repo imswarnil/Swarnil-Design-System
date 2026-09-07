@@ -145,6 +145,25 @@
 		background-blend-mode: soft-light, normal;
 	}
 
+	.bg-aurora.bg-noise {
+		background-image:
+			var(--bg-noise),
+			radial-gradient(ellipse 60% 55% at 18% 20%, color-mix(in oklab, var(--accent) 22%, transparent), transparent 70%),
+			radial-gradient(ellipse 55% 60% at 82% 75%, color-mix(in oklab, var(--craft) 20%, transparent), transparent 70%);
+		background-size: 160px 160px, auto, auto;
+		background-blend-mode: soft-light, normal, normal;
+	}
+
+	.bg-mesh.bg-noise {
+		background-image:
+			var(--bg-noise),
+			radial-gradient(at 15% 25%, color-mix(in oklab, var(--accent) 18%, transparent) 0, transparent 50%),
+			radial-gradient(at 85% 20%, color-mix(in oklab, var(--craft) 16%, transparent) 0, transparent 50%),
+			radial-gradient(at 50% 95%, color-mix(in oklab, var(--accent) 12%, transparent) 0, transparent 55%);
+		background-size: 160px 160px, auto, auto, auto;
+		background-blend-mode: soft-light, normal, normal, normal;
+	}
+
 	/* ── Strength ──────────────────────────────────────────────────────────
 	   Named steps, like the pattern modifiers, so a variant is a class. */
 	.bg-faint  { --bg-glow-alpha: 0.14; --bg-noise-alpha: 0.03; }

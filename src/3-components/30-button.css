@@ -266,4 +266,94 @@
 		margin-inline: var(--space-1);
 		background: var(--line-subtle);
 	}
+
+	/* ── More sizes ────────────────────────────────────────────────────────── */
+	.btn-xs { --btn-h: 1.625rem; --btn-pad: var(--space-2); --btn-gap: var(--space-1); font-size: var(--text-2xs); }
+	.btn-xl { --btn-h: 3.5rem; --btn-pad: var(--space-8); font-size: var(--text-lg); }
+
+	/* ── Inverse — the button on ink ──────────────────────────────────────── */
+	.btn-inverse { --btn-bg: var(--bg-inverse); --btn-fg: var(--fg-on-inverse); --btn-line: transparent; }
+	.btn-inverse:hover { --btn-bg: color-mix(in oklab, var(--bg-inverse) 85%, var(--fg-on-inverse)); }
+
+	/* ── Glow — the primary, lit ──────────────────────────────────────────
+	   One ring of accent light that brightens on hover. For the single call
+	   to action a hero is allowed; two glowing buttons cancel each other. */
+	.btn-glow { box-shadow: 0 0 0 0 var(--accent-ring), 0 8px 24px -8px var(--accent-ring); transition: var(--t-colors), var(--t-shadow); }
+	.btn-glow:hover { box-shadow: 0 0 0 var(--border-2) var(--accent-ring), 0 12px 32px -8px var(--accent-ring); }
+
+	/* ── Arrow — the icon travels toward where the link goes ─────────────── */
+	.btn-arrow > .icon:last-child { transition: translate var(--dur-2) var(--ease-out); }
+	.btn-arrow:hover > .icon:last-child { translate: var(--space-1) 0; }
+
+	/* ── Count and shortcut — small data inside the button ────────────────
+	   Both in the data voice: a count is a number, a shortcut is a key. */
+	.btn__count {
+		padding: 0 var(--space-1);
+		min-width: 1.4em;
+		border-radius: var(--radius-sm);
+		background: color-mix(in oklab, currentcolor 14%, transparent);
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: 0.8em;
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		text-align: center;
+	}
+	.btn__kbd {
+		margin-inline-start: var(--space-1);
+		padding: 0 var(--space-1);
+		border: var(--border-hair) solid color-mix(in oklab, currentcolor 30%, transparent);
+		border-radius: var(--radius-xs);
+		font-family: var(--font-data);
+		font-size: 0.7em;
+		letter-spacing: var(--tracking-data);
+		opacity: 0.8;
+	}
+
+	/* ── Social — the platform, monochrome ───────────────────────────────
+	   An outline button holding the platform's icon; the platform's colour
+	   is not this page's accent. On hover the icon takes the accent, which
+	   is as loud as a share row gets. */
+	.btn-social { --btn-fg: var(--fg-muted); --btn-line: var(--line-default); }
+	.btn-social:hover { --btn-fg: var(--fg-default); --btn-line: var(--line-strong); }
+	.btn-social:hover > .icon { color: var(--fg-accent); }
+
+	/* ── Play — the record light's sibling ───────────────────────────────
+	   A pill with a solid disc holding the triangle, for "watch". */
+	.btn-play { --btn-radius: var(--radius-full); --btn-gap: var(--space-3); padding-inline: var(--space-2) var(--space-5); }
+	.btn-play > .btn__disc {
+		display: grid;
+		place-items: center;
+		width: calc(var(--btn-h) - var(--space-4));
+		height: calc(var(--btn-h) - var(--space-4));
+		border-radius: var(--radius-full);
+		background: var(--accent);
+		color: var(--fg-on-accent);
+		flex: none;
+	}
+	.btn-play > .btn__disc > .icon { --icon-size: 0.9em; }
+	.btn-play:hover > .btn__disc { scale: 1.08; }
+
+	/* ── Floating action — pinned to the corner ──────────────────────────── */
+	.btn-fab {
+		position: fixed;
+		inset-block-end: var(--space-6);
+		inset-inline-end: var(--space-6);
+		z-index: var(--z-sticky);
+		--btn-h: 3.25rem;
+		--btn-radius: var(--radius-full);
+		box-shadow: var(--elevation-3);
+	}
+
+	/* ── Underline — a text button that draws its own rule ───────────────── */
+	.btn-underline {
+		--btn-pad: 0;
+		--btn-h: auto;
+		--btn-bg: transparent;
+		--btn-line: transparent;
+		--btn-radius: 0;
+		background: linear-gradient(currentcolor, currentcolor) no-repeat 0 100% / 0 var(--border-hair);
+		transition: background-size var(--dur-3) var(--ease-out), var(--t-colors);
+	}
+	.btn-underline:hover { background-size: 100% var(--border-hair); }
 }

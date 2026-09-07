@@ -439,6 +439,61 @@ display title, one lead, then the meta slate in the data voice and the actions.
 </header>
 :::
 
+## Chapters, continued
+
+:::demo Numbered, and boxed with a reading-progress fill on the rail
+<div class="grid-2">
+  <nav class="chapters chapters-numbered" aria-label="On this page">
+    <span class="chapters__title">On this page</span>
+    <ol class="chapters__list">
+      <li><a class="chapters__link" href="#i">Framing</a></li>
+      <li><a class="chapters__link" href="#i" aria-current="true">Lighting</a></li>
+      <li><a class="chapters__link" href="#i">Audio</a></li>
+      <li><a class="chapters__link" href="#i">Export</a></li>
+    </ol>
+  </nav>
+  <nav class="chapters chapters-boxed chapters-progress" aria-label="On this page" style="--progress: 45%">
+    <span class="chapters__title">Reading <span class="chapters__count">45%</span></span>
+    <ol class="chapters__list">
+      <li><a class="chapters__link" href="#i">Framing</a></li>
+      <li><a class="chapters__link" href="#i" aria-current="location">Lighting</a></li>
+      <li><a class="chapters__link" href="#i">Audio</a></li>
+      <li><a class="chapters__link" href="#i">Export</a></li>
+    </ol>
+  </nav>
+</div>
+:::
+
+`--progress` is set by the host from scroll position; the fill is the rail's
+own accent, growing downward.
+
+:::demo Horizontal — a scrolling row of pills for a phone or a page with no rail
+<nav class="chapters chapters-h" aria-label="On this page">
+  <ol class="chapters__list">
+    <li><a class="chapters__link" href="#i">Framing</a></li>
+    <li><a class="chapters__link" href="#i" aria-current="true">Lighting</a></li>
+    <li><a class="chapters__link" href="#i">Audio</a></li>
+    <li><a class="chapters__link" href="#i">Export settings</a></li>
+    <li><a class="chapters__link" href="#i">Thumbnails</a></li>
+    <li><a class="chapters__link" href="#i">Publishing</a></li>
+  </ol>
+</nav>
+:::
+
+:::demo Timed — a video's chapters, timecode and title in two aligned columns
+<nav class="chapters chapters-timed" aria-label="Chapters" style="max-width: 20rem">
+  <span class="chapters__title">Chapters <span class="chapters__count">6</span></span>
+  <ol class="chapters__list">
+    <li><a class="chapters__link" href="#t=0"><span class="chapters__time">00:00</span>Intro</a></li>
+    <li><a class="chapters__link" href="#t=134" aria-current="true"><span class="chapters__time">02:14</span>The key light</a></li>
+    <li><a class="chapters__link" href="#t=587"><span class="chapters__time">09:47</span>Fill and rim</a></li>
+    <li><a class="chapters__link" href="#t=901"><span class="chapters__time">15:01</span>Bouncing off a wall</a></li>
+    <li><a class="chapters__link" href="#t=1208"><span class="chapters__time">20:08</span>Grading two cameras to match</a></li>
+    <li><a class="chapters__link" href="#t=1390"><span class="chapters__time">23:10</span>Outro</a></li>
+  </ol>
+</nav>
+:::
+
 ## Properties
 
 | Variable | Does |

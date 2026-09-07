@@ -255,4 +255,144 @@
 		gap: var(--space-px);
 		scrollbar-width: thin;
 	}
+
+	/* ── Lesson kinds ─────────────────────────────────────────────────────
+	   Video, reading, quiz, download: an icon after the tick says which. The
+	   number is data. Both are optional and the row lines up without them. */
+	.lesson__kind { flex: none; color: var(--fg-faint); --icon-size: 1rem; }
+	.lesson__no {
+		flex: none;
+		min-width: 1.5rem;
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-2xs);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-faint);
+	}
+	.lesson__desc { flex: 1 1 100%; font-size: var(--text-xs); color: var(--fg-subtle); padding-inline-start: calc(var(--lesson-tick) + var(--space-3)); }
+	.lesson-tall { flex-wrap: wrap; }
+
+	/* ── Outline — no box, a rail ─────────────────────────────────────────
+	   The syllabus as a printed contents page: modules are headings, lessons
+	   hang off a hairline rail. For a course landing page. */
+	.curriculum-outline { border: 0; border-radius: 0; background: transparent; --curriculum-pad: 0; }
+	.curriculum-outline .curriculum__head { padding-inline: 0; border-block-end: 0; }
+	.curriculum-outline .curriculum__module { border-block-end: 0; }
+	.curriculum-outline .curriculum__module > summary { padding-inline: 0; }
+	.curriculum-outline .curriculum__lessons { margin-inline-start: var(--space-3); padding-inline-start: var(--space-4); border-inline-start: var(--border-hair) solid var(--line-default); }
+	.curriculum-outline .lesson { padding-inline: var(--space-2); border-radius: var(--radius-sm); }
+
+	/* ── Cards — modules side by side ─────────────────────────────────────
+	   Each module is its own surface in a grid; the summary is its head. A
+	   course of six short modules reads better across than down. */
+	.curriculum-cards { border: 0; border-radius: 0; background: transparent; overflow: visible; }
+	.curriculum-cards .curriculum__head { padding-inline: 0; border-block-end: 0; }
+	.curriculum-cards .curriculum__modules {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
+		gap: var(--space-4);
+	}
+	.curriculum-cards .curriculum__module {
+		border: var(--border-hair) solid var(--line-default);
+		border-radius: var(--radius-card);
+		background: var(--bg-surface);
+		overflow: hidden;
+	}
+	.curriculum-cards .curriculum__module > summary { padding: var(--space-4) var(--space-5); }
+	.curriculum-cards .curriculum__lessons { border-block-start: var(--border-hair) solid var(--line-subtle); }
+
+	/* ── Track — the course as a path ─────────────────────────────────────
+	   Modules as stations on a horizontal rail, with counts. For a hero or
+	   a sales page: this is the shape of the whole thing at a glance. */
+	.track {
+		--track-node: 2rem;
+		display: flex;
+		align-items: flex-start;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		overflow-x: auto;
+		scrollbar-width: none;
+		counter-reset: track;
+	}
+	.track::-webkit-scrollbar { display: none; }
+	.track__stop {
+		position: relative;
+		flex: 1 0 9rem;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2);
+		padding-inline-end: var(--space-4);
+		counter-increment: track;
+	}
+	.track__stop::before {
+		content: '';
+		position: absolute;
+		inset-block-start: calc(var(--track-node) / 2);
+		inset-inline: calc(var(--track-node) / 2) 0;
+		height: var(--border-hair);
+		background: var(--line-default);
+	}
+	.track__stop:last-child::before { content: none; }
+	.track__stop[data-done]::before { background: var(--fg-default); }
+	.track__node {
+		position: relative;
+		z-index: var(--z-raised);
+		width: var(--track-node);
+		height: var(--track-node);
+		display: grid;
+		place-items: center;
+		border-radius: var(--radius-full);
+		border: var(--border-2) solid var(--line-strong);
+		background: var(--bg-canvas);
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-xs);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-subtle);
+	}
+	.track__node:empty::before { content: counter(track, decimal-leading-zero); }
+	.track__stop[data-done] .track__node { background: var(--fg-default); border-color: var(--fg-default); color: var(--bg-canvas); }
+	.track__stop[aria-current] .track__node { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 0 3px var(--accent-ring); }
+	.track__title { font-size: var(--text-sm); font-weight: var(--weight-semibold); line-height: var(--leading-snug); color: var(--fg-default); }
+	.track__meta {
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-2xs);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-faint);
+	}
+
+	/* ── Classroom — the player and the syllabus, side by side ─────────────
+	   The page a lesson is watched on. The stage holds the player and the
+	   lesson's words; the side holds the curriculum, scrolling on its own.
+	   Below 60rem the side drops under the stage — a page decision, so a
+	   media query. */
+	.classroom {
+		--classroom-side: 22rem;
+		--classroom-gap: var(--space-8);
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) var(--classroom-side);
+		gap: var(--classroom-gap);
+		align-items: start;
+	}
+	.classroom__stage { min-width: 0; display: flex; flex-direction: column; gap: var(--space-6); }
+	.classroom__side { position: sticky; inset-block-start: var(--space-6); min-width: 0; }
+	.classroom__head {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: var(--space-3) var(--space-6);
+	}
+	.classroom__title { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: var(--weight-semibold); letter-spacing: var(--tracking-tight); line-height: var(--leading-snug); margin: 0; }
+	.classroom__nav { display: flex; gap: var(--space-2); flex: none; }
+
+	@media (width < 60rem) {
+		.classroom { grid-template-columns: minmax(0, 1fr); }
+		.classroom__side { position: static; }
+	}
 }

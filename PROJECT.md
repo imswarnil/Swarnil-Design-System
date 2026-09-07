@@ -92,6 +92,41 @@ Open threads worth remembering:
 Newest first. One line each: what changed, and anything that would surprise the
 next session.
 
+### 2026-09-07 (later) — variants pass: stepper, avatars, stats, buttons, cards, curriculum, chapters, media
+- **Timeline** gains `-avatar` (faces as nodes), `-cards` (bodies as surfaces)
+  and the **`.stepper`** — the sequence as a control: counter-numbered nodes,
+  ink/accent connectors, `-vertical`, `-sm`, `-lg`, buttons as steps,
+  labels hidden under 34rem.
+- **Stats**: `__value` / `__unit` / `__delta[data-trend]` / `__icon` /
+  `__note`; dresses `-cards`, `-center`, `-divided`, `-inverse`, `-lg`, `-sm`.
+  The count-up is `fx-count` inside `__value`.
+- **Avatar**: `-2xl`, `-ring-craft`, `-live` (beacon), `-status[data-status]`
+  (one `::after`, so not with -live), `.avatar-group` (+`-tight`, `__more`).
+  **Timecode**: `-sm`, `-link` (a seeking control, `aria-current` when playing).
+- **Marquee**: `-logos`, `-band` (+`__sep`), `-inverse`, `-flush`, `-lg`.
+- **Button**: `-xs`, `-xl`, `-inverse`, `-glow`, `-arrow`, `-play` (+`__disc`),
+  `-social`, `-fab`, `-underline`, `__count`, `__kbd`.
+- **Card**: `-ghost` (+`-accent`), `-glass` (+`-dark`), `-glow`, `-gradient`,
+  `-hover-glow`, `-hover-zoom`; parts `__icon`, `__facts`, `__level`,
+  `__progress` (`--value`). The course card is a recipe of these.
+- **Curriculum**: `lesson__kind` / `__no` / `__desc` / `lesson-tall`;
+  `-outline`, `-cards`; the **`.track`** (course as a path) and the
+  **`.classroom`** layout (player + syllabus, stacks under 60rem).
+- **Chapters**: `-numbered`, `-progress` (`--progress`), `-boxed`, `-h`
+  (scrolling pills), `-timed` (+`__time`, `__count`) — the video chapter list.
+- **Media**: `player__frame` / `__rec` / `__tc` (the viewfinder dress),
+  `__marker` (`--at`), `__caption`, `__corner`, `-theatre`, `-mini`; the
+  **`.filmstrip`** (+`__frame`, `__tc`, `-sm`) — sprocket holes are two
+  repeating gradients on the strip's own background.
+- `bg-noise` now composes with `bg-aurora` and `bg-mesh`, not only `bg-glow`.
+- Personal template hero rebuilt on these: avatar-live byline, glow play
+  button, social row, subscriber avatar group, the player in its frame with
+  chapter markers, and a marquee band under the band. Course section gets the
+  track; the post's chapters are numbered with a progress rail.
+- Unused families down to 8 (`pop`, `codeblock`, `cert`, `loading`,
+  `collapse`, `steps`, `buffer`, `dl`, `codeline`, `term` minus the ones now
+  demoed). `cert-*` and `collapse-*` still ship nowhere — next easy wins.
+
 ### 2026-09-07 — backgrounds, effects, veils, the broadcast layer, templates
 - **Four new modules in the web bundle**: `12-background.css` (`bg-*` grounds:
   solids, glow + drift, aurora, mesh, spot, vignette, fades, ink, SVG grain —

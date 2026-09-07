@@ -278,6 +278,61 @@ affordance as the mouse.
 `::after` on the spinner, so neither can also take `.frame`. Use `.frame-4`
 with real corner spans, or pick one.
 
+## More sizes, and the inverse
+
+:::demo
+<div class="cluster">
+  <button class="btn btn-primary btn-xs" type="button">Extra small</button>
+  <button class="btn btn-primary btn-xl" type="button">Extra large</button>
+  <button class="btn btn-inverse" type="button">Inverse</button>
+</div>
+:::
+
+## Glow, arrow, play
+
+`btn-glow` is the single lit call to action a hero is allowed — two glowing
+buttons cancel each other. `btn-arrow` sends the trailing icon toward where
+the link goes. `btn-play` is the record light's sibling: a pill with a solid
+disc holding the triangle.
+
+:::demo
+<div class="cluster">
+  <a class="btn btn-primary btn-lg btn-glow" href="#i">Start the course</a>
+  <a class="btn btn-outline btn-arrow" href="#i">Read the post <svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-right"/></svg></a>
+  <a class="btn btn-secondary btn-lg btn-play" href="#i"><span class="btn__disc"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span>Watch the trailer</a>
+</div>
+:::
+
+## Count and shortcut
+
+Small data inside the button, in the data voice.
+
+:::demo
+<div class="cluster">
+  <button class="btn btn-outline" type="button"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-heart"/></svg> Like <span class="btn__count">1,204</span></button>
+  <button class="btn btn-quiet" type="button">Comments <span class="btn__count">14</span></button>
+  <button class="btn btn-secondary" type="button">Search <span class="btn__kbd">/</span></button>
+  <button class="btn btn-primary" type="button">Save <span class="btn__kbd">⌘S</span></button>
+</div>
+:::
+
+## Social, underline, floating
+
+`btn-social` holds a platform's icon in monochrome — the platform's colour is
+not this page's accent; the icon takes the accent on hover. `btn-underline`
+is a text button that draws its own rule. `btn-fab` pins to the corner of the
+viewport (shown static here).
+
+:::demo
+<div class="cluster">
+  <a class="btn btn-social" href="#i"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-video"/></svg> YouTube</a>
+  <a class="btn btn-social" href="#i"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg> GitHub</a>
+  <a class="btn btn-social btn-icon" href="#i" aria-label="Mail"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-mail"/></svg></a>
+  <button class="btn btn-underline" type="button">See all episodes</button>
+  <button class="btn btn-primary btn-icon btn-fab" type="button" aria-label="Subscribe" style="position: static"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-bell"/></svg></button>
+</div>
+:::
+
 ## Properties
 
 | Variable | Does |

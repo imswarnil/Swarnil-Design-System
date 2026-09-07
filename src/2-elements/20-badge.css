@@ -289,4 +289,77 @@
 	.cert-lg .cert__seal { font-size: var(--text-xs); }
 
 	.cert-list { display: grid; gap: var(--space-4); }
+
+	/* ── Avatar, continued ───────────────────────────────────────────────── */
+	.avatar-2xl { --avatar-size: 7rem; font-size: var(--text-2xl); }
+	.avatar-ring-craft { box-shadow: 0 0 0 2px var(--bg-canvas), 0 0 0 4px var(--craft); }
+
+	/* Live: the accent ring, breathing. For the face that is on air. */
+	.avatar-live { position: relative; box-shadow: 0 0 0 2px var(--bg-canvas), 0 0 0 4px var(--accent); }
+	.avatar-live::after {
+		content: '';
+		position: absolute;
+		inset: -4px;
+		border-radius: inherit;
+		box-shadow: 0 0 0 0 var(--accent-ring);
+		animation: fx-beacon 1.8s var(--ease-out) infinite;
+		pointer-events: none;
+	}
+
+	/* Status: a dot on the shoulder, coloured by the attribute. It is a
+	   ::after, so an avatar cannot be both -live and carry a status — one
+	   thing at a time on a face. */
+	.avatar-status { position: relative; }
+	.avatar-status::after {
+		content: '';
+		position: absolute;
+		inset-block-end: 0;
+		inset-inline-end: 0;
+		width: 28%;
+		height: 28%;
+		border-radius: var(--radius-full);
+		background: var(--fg-faint);
+		box-shadow: 0 0 0 2px var(--bg-canvas);
+	}
+	.avatar-status[data-status='online'] ::after,
+	.avatar-status[data-status='online']::after { background: var(--success-fg); }
+	.avatar-status[data-status='busy']::after   { background: var(--danger-fg); }
+	.avatar-status[data-status='away']::after   { background: var(--warning-fg); }
+	.avatar-status[data-status='live']::after   { background: var(--accent); }
+
+	/* Group: faces overlap, each ringed in canvas so the edge reads. The
+	   last child may be a count. */
+	.avatar-group { display: inline-flex; align-items: center; }
+	.avatar-group > .avatar { box-shadow: 0 0 0 2px var(--bg-canvas); }
+	.avatar-group > .avatar + .avatar { margin-inline-start: calc(var(--avatar-size) * -0.3); }
+	.avatar-group > .avatar:hover { z-index: var(--z-raised); }
+	.avatar-group__more {
+		margin-inline-start: var(--space-2);
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-xs);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-subtle);
+	}
+	.avatar-group-tight > .avatar + .avatar { margin-inline-start: calc(var(--avatar-size) * -0.45); }
+
+	/* ── Timecode, continued ─────────────────────────────────────────────
+	   A timecode that seeks: a button or a link wearing the data voice, with
+	   the accent on hover. For the chapter list under a video. */
+	.timecode-sm { font-size: var(--text-2xs); }
+	.timecode-link {
+		display: inline-block;
+		padding: 0 var(--space-1);
+		margin-inline: calc(var(--space-1) * -1);
+		border: 0;
+		border-radius: var(--radius-xs);
+		background: none;
+		color: var(--fg-accent);
+		text-decoration: none;
+		cursor: pointer;
+		transition: var(--t-colors);
+	}
+	.timecode-link:hover { background: var(--accent-soft); color: var(--accent-soft-fg); }
+	.timecode-link[aria-current='true'] { background: var(--accent); color: var(--fg-on-accent); }
 }

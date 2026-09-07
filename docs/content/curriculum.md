@@ -123,6 +123,120 @@ work too.
 </section>
 :::
 
+## Lesson kinds, numbers, descriptions
+
+An icon after the tick says video, reading, quiz or download; a number is
+data. A lesson with a description wraps (`lesson-tall`).
+
+:::demo
+<section class="curriculum" style="max-width: 34rem">
+  <div class="curriculum__modules">
+    <details class="curriculum__module" open>
+      <summary><span class="curriculum__no">03</span><span class="curriculum__module-title">Publishing</span><span class="curriculum__count">4 lessons</span></summary>
+      <ol class="curriculum__lessons">
+        <li><a class="lesson" href="#i" data-done><span class="lesson__tick"></span><span class="lesson__no">3.1</span><svg class="icon lesson__kind" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg><span class="lesson__title">Export settings for every platform</span><span class="lesson__len">11:02</span></a></li>
+        <li><a class="lesson lesson-tall" href="#i" aria-current="page"><span class="lesson__tick"></span><span class="lesson__no">3.2</span><svg class="icon lesson__kind" aria-hidden="true"><use href="/icons/sprite.svg#i-file"/></svg><span class="lesson__title">The thumbnail checklist</span><span class="lesson__len">Reading</span><span class="lesson__desc">Four words, one subject, one accent, and the three-second test — a page to keep open while you build one.</span></a></li>
+        <li><a class="lesson" href="#i"><span class="lesson__tick"></span><span class="lesson__no">3.3</span><svg class="icon lesson__kind" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-check"/></svg><span class="lesson__title">Quiz: what ships?</span><span class="lesson__len">8 q</span></a></li>
+        <li><a class="lesson" href="#i" data-locked><span class="lesson__tick"></span><span class="lesson__no">3.4</span><svg class="icon lesson__kind" aria-hidden="true"><use href="/icons/sprite.svg#i-download"/></svg><span class="lesson__title">The LUTs and the OBS scene collection</span><span class="lesson__len">ZIP</span></a></li>
+      </ol>
+    </details>
+  </div>
+</section>
+:::
+
+## Outline, cards, track
+
+Three more shapes of the same syllabus. The outline is a printed contents
+page for a landing page; cards put modules side by side; the track is the
+whole course as a path, at a glance.
+
+:::demo Outline — no box, a rail
+<section class="curriculum curriculum-outline" style="max-width: 34rem">
+  <header class="curriculum__head"><h3 class="curriculum__title">Lighting a talking head</h3><span class="curriculum__meta">6 lessons · 1h 12m</span></header>
+  <div class="curriculum__modules">
+    <details class="curriculum__module" open>
+      <summary><span class="curriculum__no">01</span><span class="curriculum__module-title">The key</span><span class="curriculum__count">3 lessons</span></summary>
+      <ol class="curriculum__lessons">
+        <li><a class="lesson" href="#i"><span class="lesson__tick"></span><span class="lesson__title">One light, forty-five degrees</span><span class="lesson__len">09:20</span></a></li>
+        <li><a class="lesson" href="#i"><span class="lesson__tick"></span><span class="lesson__title">Bouncing off a wall</span><span class="lesson__len">07:48</span></a></li>
+      </ol>
+    </details>
+    <details class="curriculum__module">
+      <summary><span class="curriculum__no">02</span><span class="curriculum__module-title">Fill and rim</span><span class="curriculum__count">3 lessons</span></summary>
+      <ol class="curriculum__lessons"><li><a class="lesson" href="#i"><span class="lesson__tick"></span><span class="lesson__title">Half the power</span><span class="lesson__len">08:02</span></a></li></ol>
+    </details>
+  </div>
+</section>
+:::
+
+:::demo Cards — modules in a grid
+<section class="curriculum curriculum-cards">
+  <div class="curriculum__modules">
+    <details class="curriculum__module" open>
+      <summary><span class="curriculum__no">01</span><span class="curriculum__module-title">The data model</span><span class="curriculum__count">4</span></summary>
+      <ol class="curriculum__lessons"><li><a class="lesson" href="#i" data-done><span class="lesson__tick"></span><span class="lesson__title">What a dataset is</span><span class="lesson__len">08:12</span></a></li><li><a class="lesson" href="#i"><span class="lesson__tick"></span><span class="lesson__title">Recipes</span><span class="lesson__len">14:30</span></a></li></ol>
+    </details>
+    <details class="curriculum__module" open>
+      <summary><span class="curriculum__no">02</span><span class="curriculum__module-title">The dashboard</span><span class="curriculum__count">5</span></summary>
+      <ol class="curriculum__lessons"><li><a class="lesson" href="#i"><span class="lesson__tick"></span><span class="lesson__title">The first widget</span><span class="lesson__len">09:20</span></a></li><li><a class="lesson" href="#i" data-locked><span class="lesson__tick"></span><span class="lesson__title">Bindings</span><span class="lesson__len">22:15</span></a></li></ol>
+    </details>
+  </div>
+</section>
+:::
+
+:::demo Track — the course as a path; scrolls sideways when it must
+<ol class="track">
+  <li class="track__stop" data-done><span class="track__node"></span><span class="track__title">Setup</span><span class="track__meta">3 lessons · 24m</span></li>
+  <li class="track__stop" data-done><span class="track__node"></span><span class="track__title">The data model</span><span class="track__meta">4 lessons · 52m</span></li>
+  <li class="track__stop" aria-current="step"><span class="track__node"></span><span class="track__title">The dashboard</span><span class="track__meta">5 lessons · 1h 10m</span></li>
+  <li class="track__stop"><span class="track__node"></span><span class="track__title">Security</span><span class="track__meta">2 lessons · 30m</span></li>
+  <li class="track__stop"><span class="track__node"></span><span class="track__title">Ship it</span><span class="track__meta">1 lesson · 18m</span></li>
+</ol>
+:::
+
+## The classroom
+
+The page a lesson is watched on: the player and the lesson's words on the
+stage, the syllabus beside them, scrolling on its own. Below 60rem the side
+drops under the stage.
+
+:::demo
+<div class="classroom" style="--classroom-side: 18rem">
+  <div class="classroom__stage">
+    <div class="player player-bar-open">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%233f5f7c'/%3E%3Cstop offset='1' stop-color='%2312202a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" />
+      <span class="player__frame" aria-hidden="true"></span>
+      <div class="player__bar"><button class="player__btn" type="button" aria-label="Play"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></button><span class="player__time">04:12</span><div class="player__rail" role="slider" aria-label="Seek" aria-valuemin="0" aria-valuemax="1144" aria-valuenow="252" tabindex="0"><div class="player__buffered" style="--value: 61%"></div><div class="player__played" style="--value: 22%"></div></div><span class="player__time">19:04</span></div>
+    </div>
+    <div class="classroom__head">
+      <div><p class="eyebrow u-mb-2">Module 1 · Lesson 3</p><h3 class="classroom__title">Joins, and where they go wrong</h3></div>
+      <div class="classroom__nav"><button class="btn btn-outline btn-sm" type="button">Previous</button><button class="btn btn-primary btn-sm" type="button">Mark done, next</button></div>
+    </div>
+    <p class="t-body u-m-0">A join is a promise about cardinality. Most broken dashboards are a promise nobody checked.</p>
+  </div>
+  <aside class="classroom__side">
+    <section class="curriculum curriculum-scroll" style="--curriculum-max: 22rem">
+      <header class="curriculum__head"><h3 class="curriculum__title">CRM Analytics</h3><span class="curriculum__meta">4 / 12</span><progress class="progress progress-thin" value="4" max="12" aria-label="4 of 12 lessons"></progress></header>
+      <div class="curriculum__modules">
+        <details class="curriculum__module" open>
+          <summary><span class="curriculum__no">01</span><span class="curriculum__module-title">The data model</span><span class="curriculum__count">4</span></summary>
+          <ol class="curriculum__lessons">
+            <li><a class="lesson" href="#i" data-done><span class="lesson__tick"></span><span class="lesson__title">What a dataset is</span><span class="lesson__len">08:12</span></a></li>
+            <li><a class="lesson" href="#i" data-done><span class="lesson__tick"></span><span class="lesson__title">Recipes and dataflows</span><span class="lesson__len">14:30</span></a></li>
+            <li><a class="lesson" href="#i" aria-current="page"><span class="lesson__tick"></span><span class="lesson__title">Joins, and where they go wrong</span><span class="lesson__len">19:04</span></a></li>
+            <li><a class="lesson" href="#i"><span class="lesson__tick"></span><span class="lesson__title">Security predicates</span><span class="lesson__len">11:48</span></a></li>
+          </ol>
+        </details>
+        <details class="curriculum__module">
+          <summary><span class="curriculum__no">02</span><span class="curriculum__module-title">The dashboard</span><span class="curriculum__count">5</span></summary>
+          <ol class="curriculum__lessons"><li><a class="lesson" href="#i" data-locked><span class="lesson__tick"></span><span class="lesson__title">The first widget</span><span class="lesson__len">09:20</span></a></li></ol>
+        </details>
+      </div>
+    </section>
+  </aside>
+</div>
+:::
+
 ## Properties
 
 | Variable | Does |

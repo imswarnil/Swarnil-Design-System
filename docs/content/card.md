@@ -404,6 +404,59 @@ it is.
 `card-flush` removes the body padding so a chart, a map or a table can meet the
 card's edge.
 
+## Ghost, glass, glow, gradient
+
+Four more dresses, each still one hover answer. The ghost has no surface
+until you point at it — a dashed hairline says "add one" as much as "card".
+Glass sits on footage or a glow. Glow carries the accent's light and answers
+with more of it. Gradient is the featured slot.
+
+:::demo
+<div class="grid-2">
+  <article class="card card-ghost"><div class="card__body"><span class="card__icon"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-plus"/></svg></span><h3 class="card__title">Add a lesson</h3><p class="card__excerpt">Drop a video here, or paste a link.</p></div></article>
+  <article class="card card-ghost card-ghost-accent"><div class="card__body"><h3 class="card__title">Ghost, accent</h3><p class="card__excerpt">The hairline takes the accent.</p></div></article>
+  <div class="bg-aurora pattern pattern-grid u-rounded-lg u-p-4"><article class="card card-glass"><div class="card__body"><p class="card__kicker">Glass</p><h3 class="card__title">On a glow</h3><p class="card__excerpt">Follows the theme.</p></div></article></div>
+  <div class="bg-ink u-rounded-lg u-p-4"><article class="card card-glass card-glass-dark"><div class="card__body"><p class="card__kicker">Glass, dark</p><h3 class="card__title">On footage</h3><p class="card__excerpt">Always dark.</p></div></article></div>
+  <article class="card card-glow"><div class="card__body"><p class="card__kicker">Glow</p><h3 class="card__title">The lit card</h3><p class="card__excerpt">Hover for more light.</p></div></article>
+  <article class="card card-gradient"><div class="card__body"><p class="card__kicker">Gradient</p><h3 class="card__title">The featured slot</h3><p class="card__excerpt">The accent's soft wash as the ground.</p></div></article>
+</div>
+:::
+
+:::demo Two more hover answers — glow on hover, and zoom of the media only
+<div class="grid-2">
+  <article class="card card-hover-glow"><div class="card__body"><p class="card__kicker">card-hover-glow</p><h3 class="card__title">Lights up on hover</h3></div></article>
+  <article class="card card-hover-zoom"><div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234e6f5c'/%3E%3Cstop offset='1' stop-color='%23172a20'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /></div><div class="card__body"><p class="card__kicker">card-hover-zoom</p><h3 class="card__title">The picture moves, the box does not</h3></div></article>
+</div>
+:::
+
+## Icon, facts, level, progress
+
+Four more parts: an icon at the head of the body, a row of facts in the data
+voice, a level label, and a progress bar along the bottom edge whose value is
+a custom property the host sets.
+
+:::demo The course card, assembled from them
+<article class="card card-hover-lift w-sm">
+  <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236a5a7e'/%3E%3Cstop offset='1' stop-color='%23221a2e'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="card__stamp">3h 40m</span></div>
+  <div class="card__body">
+    <span class="card__level">Beginner</span>
+    <h3 class="card__title"><a class="card__link" href="#i">CRM Analytics, from zero</a></h3>
+    <p class="card__excerpt">Twelve lessons, three modules, one dashboard you can ship.</p>
+    <div class="card__facts"><span><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg> 12 lessons</span><span><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-clock"/></svg> 3h 40m</span><span>4 of 12 done</span></div>
+  </div>
+  <div class="card__footer"><span class="card__price">$49</span><span class="t-data">4.9 ★ · 812</span></div>
+  <span class="card__progress" style="--value: 33%" role="progressbar" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100" aria-label="33% complete"></span>
+</article>
+:::
+
+:::demo The feature tile — icon, title, words
+<div class="grid-3">
+  <article class="card card-quiet"><div class="card__body"><span class="card__icon"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-video"/></svg></span><h3 class="card__title">Video</h3><p class="card__excerpt">Tutorials and build vlogs.</p></div></article>
+  <article class="card card-quiet"><div class="card__body"><span class="card__icon"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg></span><h3 class="card__title">Code</h3><p class="card__excerpt">Open source, every week.</p></div></article>
+  <article class="card card-quiet"><div class="card__body"><span class="card__icon"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-folder"/></svg></span><h3 class="card__title">Courses</h3><p class="card__excerpt">In the order the skills are needed.</p></div></article>
+</div>
+:::
+
 ## Properties
 
 | Variable | Does |

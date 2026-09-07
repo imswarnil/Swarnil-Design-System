@@ -292,4 +292,160 @@
 		.timeline-alt::before { inset-inline-start: calc(var(--timeline-node) / 2); translate: none; }
 		.timeline-alt .timeline__node { position: relative; inset: auto; }
 	}
+
+	/* ── Avatars on the rail ──────────────────────────────────────────────────
+	   Who did it, not what happened: the node is a face. The node grows to fit
+	   and drops its border and glyph — the face is the mark. */
+	.timeline-avatar { --timeline-node: 2.25rem; }
+	.timeline__node > .avatar { --avatar-size: 100%; width: 100%; height: 100%; }
+	.timeline__node:has(> .avatar) { border: 0; background: transparent; }
+	.timeline__item .timeline__node:has(> .avatar)::before { content: none; }
+	.timeline__item[aria-current] .timeline__node:has(> .avatar) { box-shadow: 0 0 0 2px var(--bg-canvas), 0 0 0 4px var(--accent); }
+
+	/* ── Cards on the rail ────────────────────────────────────────────────────
+	   The body becomes a surface. For a changelog where each entry has a
+	   paragraph and a tag row, not one line. */
+	.timeline-cards .timeline__body {
+		flex: 1;
+		padding: var(--space-4) var(--space-5);
+		border: var(--border-hair) solid var(--line-default);
+		border-radius: var(--radius-card);
+		background: var(--bg-surface);
+		gap: var(--space-1);
+	}
+	.timeline-cards .timeline__item[aria-current] .timeline__body { border-color: var(--line-accent); }
+
+	/* ── Stepper — the sequence as a control ──────────────────────────────────
+	   A checkout, an onboarding, an upload flow: the steps run across, each
+	   node numbered by a counter so the markup carries no digits, and the
+	   connector between two done steps fills with ink. Same states as the
+	   timeline, same attributes. Steps may be <button>s or <a>s when the user
+	   is allowed to go back; a step ahead is aria-disabled, never hidden. */
+	.stepper {
+		--stepper-node: 2rem;
+		--stepper-gap: var(--space-2);
+		display: flex;
+		align-items: flex-start;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		counter-reset: step;
+	}
+
+	.stepper__step {
+		position: relative;
+		flex: 1 1 0;
+		min-width: 0;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--stepper-gap);
+		text-align: center;
+		counter-increment: step;
+		color: var(--fg-muted);
+	}
+
+	/* The connector: from this node's centre to the next. Drawn on the step
+	   AFTER, so the first step has none. */
+	.stepper__step + .stepper__step::before {
+		content: '';
+		position: absolute;
+		inset-block-start: calc(var(--stepper-node) / 2);
+		inset-inline-end: 50%;
+		width: 100%;
+		height: var(--border-hair);
+		background: var(--line-default);
+		translate: 0 -50%;
+	}
+
+	.stepper__step[data-done] + .stepper__step::before,
+	.stepper__step[data-done] + .stepper__step[data-done]::before { background: var(--fg-default); }
+	.stepper__step[data-done] + .stepper__step[aria-current]::before { background: var(--accent); }
+
+	.stepper__node {
+		position: relative;
+		z-index: var(--z-raised);
+		width: var(--stepper-node);
+		height: var(--stepper-node);
+		display: grid;
+		place-items: center;
+		border-radius: var(--radius-full);
+		border: var(--border-2) solid var(--line-strong);
+		background: var(--bg-canvas);
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-xs);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-subtle);
+		transition: var(--t-colors), var(--t-shadow);
+	}
+
+	.stepper__node:empty::before { content: counter(step); }
+	.stepper__node > .icon { --icon-size: 1rem; }
+	.stepper__node > .avatar { --avatar-size: 100%; width: 100%; height: 100%; }
+	.stepper__node:has(> .avatar) { border: 0; }
+
+	.stepper__label {
+		font-size: var(--text-sm);
+		font-weight: var(--weight-medium);
+		line-height: var(--leading-snug);
+		color: inherit;
+	}
+
+	.stepper__hint {
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-2xs);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-faint);
+	}
+
+	/* A step that is a control — the whole column is the target. */
+	button.stepper__step,
+	a.stepper__step { background: none; border: 0; padding: 0; font: inherit; cursor: pointer; text-decoration: none; }
+	button.stepper__step:hover .stepper__node,
+	a.stepper__step:hover .stepper__node { border-color: var(--fg-default); }
+	.stepper__step[aria-disabled='true'] { cursor: not-allowed; color: var(--fg-faint); }
+
+	.stepper__step[data-done] { color: var(--fg-default); }
+	.stepper__step[data-done] .stepper__node { background: var(--fg-default); border-color: var(--fg-default); color: var(--bg-canvas); }
+	.stepper__step[data-done] .stepper__node:empty::before { content: '✓'; }
+	.stepper__step[aria-current='step'] { color: var(--fg-default); }
+	.stepper__step[aria-current='step'] .stepper__label { font-weight: var(--weight-semibold); }
+	.stepper__step[aria-current='step'] .stepper__node { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 0 3px var(--accent-ring); }
+	.stepper__step[aria-current='step'] ~ .stepper__step .stepper__node { border-style: dashed; }
+
+	/* Vertical: the connector runs down the node column, labels sit beside. */
+	.stepper-vertical { flex-direction: column; align-items: stretch; gap: var(--space-5); }
+	.stepper-vertical .stepper__step {
+		flex-direction: row;
+		align-items: flex-start;
+		text-align: start;
+		gap: var(--space-4);
+	}
+	.stepper-vertical .stepper__body { display: flex; flex-direction: column; gap: var(--space-px); padding-block-start: calc((var(--stepper-node) - 1.25rem) / 2); }
+	.stepper-vertical .stepper__step + .stepper__step::before {
+		inset-block-start: auto;
+		inset-block-end: calc(100% + var(--space-5) - var(--stepper-node) / 2);
+		inset-inline-start: calc(var(--stepper-node) / 2);
+		inset-inline-end: auto;
+		width: var(--border-hair);
+		height: calc(var(--space-5) + var(--stepper-node) / 2);
+		translate: -50% 0;
+	}
+
+	.stepper-sm { --stepper-node: 1.5rem; }
+	.stepper-sm .stepper__label { font-size: var(--text-xs); }
+	.stepper-lg { --stepper-node: 2.75rem; }
+	.stepper-lg .stepper__node { font-size: var(--text-sm); }
+	.stepper-lg .stepper__label { font-size: var(--text-base); }
+
+	/* Below a phone width a horizontal stepper hides its labels rather than
+	   wrapping five of them into a ransom note; the numbers still count. */
+	@media (width < 34rem) {
+		.stepper:not(.stepper-vertical) .stepper__label,
+		.stepper:not(.stepper-vertical) .stepper__hint { display: none; }
+	}
 }

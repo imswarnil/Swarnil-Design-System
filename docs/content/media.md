@@ -167,6 +167,88 @@ says so in its meta and steps back.
 </div>
 :::
 
+## The frame
+
+The player wearing the viewfinder: brackets in the corners, REC top-right,
+the timecode top-left. All decorative, all one child element, so nothing
+fights the bar for a pseudo.
+
+:::demo
+<div class="player player-bar-open">
+  <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%235b6b7a'/%3E%3Cstop offset='1' stop-color='%231d232b'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" />
+  <span class="player__frame" aria-hidden="true"></span>
+  <span class="player__tc" aria-hidden="true">TAKE 48 · 00:12:47</span>
+  <span class="player__rec" aria-hidden="true">Rec</span>
+  <div class="player__bar"><button class="player__btn" type="button" aria-label="Pause"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-pause"/></svg></button><span class="player__time">12:47</span><div class="player__rail" role="slider" aria-label="Seek" aria-valuemin="0" aria-valuemax="1447" aria-valuenow="767" tabindex="0"><div class="player__buffered" style="--value: 80%"></div><div class="player__played" style="--value: 53%"></div></div><span class="player__time">24:07</span></div>
+</div>
+:::
+
+## Chapter markers, captions, a corner
+
+Markers are real elements in the rail at `--at` percent, so each can be a
+button with a label. The caption is a subtitle line with a clone-broken
+background so a wrapped line keeps its box. The corner holds a badge.
+
+:::demo
+<div class="player player-bar-open">
+  <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237a5b4e'/%3E%3Cstop offset='1' stop-color='%232a1d17'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" />
+  <span class="player__corner"><span class="badge badge-live">Live</span></span>
+  <p class="player__caption"><span>Bounce the key off a wall if the softbox is too big for the room.</span></p>
+  <div class="player__bar">
+    <button class="player__btn" type="button" aria-label="Pause"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-pause"/></svg></button>
+    <span class="player__time">09:47</span>
+    <div class="player__rail" role="slider" aria-label="Seek" aria-valuemin="0" aria-valuemax="1447" aria-valuenow="587" tabindex="0">
+      <div class="player__buffered" style="--value: 70%"></div>
+      <div class="player__played" style="--value: 40%"></div>
+      <button class="player__marker" type="button" style="--at: 9%" aria-label="The key light, 02:14"></button>
+      <button class="player__marker" type="button" style="--at: 40%" aria-label="Fill and rim, 09:47"></button>
+      <button class="player__marker" type="button" style="--at: 62%" aria-label="Bouncing off a wall, 15:01"></button>
+      <button class="player__marker" type="button" style="--at: 83%" aria-label="Grading, 20:08"></button>
+    </div>
+    <span class="player__time">24:07</span>
+  </div>
+</div>
+:::
+
+## Theatre, and mini
+
+`player-theatre` is the 21:9 letterbox for a page-wide band. `player-mini`
+is picture-in-picture: fixed to the corner, above the page (shown static
+here).
+
+:::demo
+<div class="stack">
+  <div class="player player-theatre player-bar-open"><div class="player__bar"><span class="player__time">21:9</span></div></div>
+  <div class="player player-mini player-bar-open" style="position: static; width: 16rem"><div class="player__bar"><span class="player__time">mini</span></div></div>
+</div>
+:::
+
+## The filmstrip
+
+Frames on a strip with sprocket holes — a gallery that says footage. The
+frames scroll and snap; the current one takes the accent ring; a timecode
+sits in each corner.
+
+:::demo
+<div class="filmstrip">
+  <a class="filmstrip__frame" href="#i"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%235b6b7a'/%3E%3Cstop offset='1' stop-color='%231d232b'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="filmstrip__tc">00:00</span></a>
+  <a class="filmstrip__frame" href="#i" aria-current="true"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237a5b4e'/%3E%3Cstop offset='1' stop-color='%232a1d17'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="filmstrip__tc">02:14</span></a>
+  <a class="filmstrip__frame" href="#i"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234e6f5c'/%3E%3Cstop offset='1' stop-color='%23172a20'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="filmstrip__tc">09:47</span></a>
+  <a class="filmstrip__frame" href="#i"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236a5a7e'/%3E%3Cstop offset='1' stop-color='%23221a2e'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="filmstrip__tc">15:01</span></a>
+  <a class="filmstrip__frame" href="#i"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237c6f3f'/%3E%3Cstop offset='1' stop-color='%232a2412'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="filmstrip__tc">20:08</span></a>
+  <a class="filmstrip__frame" href="#i"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%233f5f7c'/%3E%3Cstop offset='1' stop-color='%2312202a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="filmstrip__tc">23:10</span></a>
+</div>
+:::
+
+:::demo Small — a contact sheet in a sidebar
+<div class="filmstrip filmstrip-sm w-lg">
+  <a class="filmstrip__frame" href="#i"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236b4a4a'/%3E%3Cstop offset='1' stop-color='%232a1717'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /></a>
+  <a class="filmstrip__frame" href="#i"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234a6b6b'/%3E%3Cstop offset='1' stop-color='%23172a2a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /></a>
+  <a class="filmstrip__frame" href="#i"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%235b6b7a'/%3E%3Cstop offset='1' stop-color='%231d232b'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /></a>
+  <a class="filmstrip__frame" href="#i"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237a5b4e'/%3E%3Cstop offset='1' stop-color='%232a1d17'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /></a>
+</div>
+:::
+
 ## Properties
 
 | Variable | Does |

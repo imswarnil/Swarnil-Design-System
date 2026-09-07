@@ -36,6 +36,16 @@ archived locally, is not imported, and its history is not carried forward.
   home, and a post — whole responsive pages built out of the system, copied
   into the site and audited like the docs. Nine new docs pages; a **Broadcast**
   and a **Templates** group in the sidebar.
+- **Variants pass**: the `.stepper` (horizontal, vertical, buttons as steps,
+  avatars in nodes), timeline avatars and cards; stats values, units, deltas,
+  cards, centred, divided and inverse dresses; avatar groups, status dots, the
+  live ring, seeking timecodes; marquee logos, bands and display sizes;
+  buttons in xs/xl, inverse, glow, arrow, play, social, floating, underline,
+  with counts and shortcuts; ghost, glass, glow and gradient cards with icon,
+  facts, level and progress parts; curriculum outline, cards, the `.track` and
+  the `.classroom` layout; numbered, progress, boxed, horizontal and timed
+  chapters; the player's viewfinder frame, chapter markers, captions, theatre
+  and mini cuts, and the `.filmstrip`.
 - `0-config/properties.css` registers the animated custom properties.
 - `.tabs` scroll sideways on a narrow screen instead of pushing the page wide.
 - `.card-tile` reads `--card-ratio`; its excerpt is legible on the scrim.

@@ -699,4 +699,91 @@
 	}
 
 	.page-head__fact dd { margin: 0; color: var(--fg-default); }
+
+	/* ── Chapters, continued ─────────────────────────────────────────────── */
+
+	/* Numbered: the counter is data, so the data voice, hung in the gutter. */
+	.chapters-numbered .chapters__list { counter-reset: chapter; }
+	.chapters-numbered .chapters__list > li { counter-increment: chapter; }
+	.chapters-numbered .chapters__list > li > .chapters__link { display: flex; gap: var(--space-2); }
+	.chapters-numbered .chapters__list > li > .chapters__link::before {
+		content: counter(chapter, decimal-leading-zero);
+		flex: none;
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-2xs);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-faint);
+		padding-block-start: 0.2em;
+	}
+
+	/* Progress: how far down the article you are, as a fill along the rail.
+	   The host sets --progress from scroll; the rail does the rest. */
+	.chapters-progress { --progress: 0%; position: relative; }
+	.chapters-progress .chapters__list { position: relative; }
+	.chapters-progress > .chapters__list::after {
+		content: '';
+		position: absolute;
+		inset-block-start: 0;
+		inset-inline-start: calc(var(--border-hair) * -1);
+		width: var(--border-2);
+		height: var(--progress);
+		background: var(--accent);
+		transition: height var(--dur-3) var(--ease-out);
+	}
+
+	/* Boxed: a surface, for a rail that is not inside a card already. */
+	.chapters-boxed {
+		padding: var(--space-4) var(--space-5);
+		border: var(--border-hair) solid var(--line-default);
+		border-radius: var(--radius-card);
+		background: var(--bg-surface);
+	}
+
+	/* Horizontal: the contents as a scrolling row of pills, for a phone or
+	   a page that has no rail. The current one takes the 2px rule below. */
+	.chapters-h .chapters__list {
+		display: flex;
+		gap: var(--space-1);
+		border-inline-start: 0;
+		overflow-x: auto;
+		scrollbar-width: none;
+		padding-block-end: var(--space-1);
+		border-block-end: var(--border-hair) solid var(--line-subtle);
+	}
+	.chapters-h .chapters__list::-webkit-scrollbar { display: none; }
+	.chapters-h .chapters__list > li { flex: none; }
+	.chapters-h .chapters__link { padding: var(--space-2) var(--space-3); white-space: nowrap; border-radius: var(--radius-sm); }
+	.chapters-h .chapters__link[aria-current='true'],
+	.chapters-h .chapters__link[aria-current='location'] { box-shadow: inset 0 calc(var(--border-2) * -1) 0 0 var(--accent); }
+
+	/* Timed: a video's chapters. Each link is a timecode and a title in two
+	   aligned columns; the timecode is data, tabular, so the column is
+	   straight; the playing chapter carries the rule and the accent. */
+	.chapters-timed .chapters__link {
+		display: grid;
+		grid-template-columns: auto minmax(0, 1fr);
+		gap: var(--space-3);
+		align-items: baseline;
+	}
+	.chapters__time {
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-2xs);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-faint);
+		min-width: 3.5em;
+	}
+	.chapters-timed .chapters__link[aria-current='true'] .chapters__time { color: var(--accent); }
+	.chapters__count {
+		margin-inline-start: auto;
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-2xs);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-faint);
+	}
 }

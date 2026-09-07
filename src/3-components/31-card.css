@@ -452,4 +452,104 @@
 		.card-row > .card__media,
 		.card-row-reverse > .card__media { flex: none; aspect-ratio: 16 / 9; }
 	}
+
+	/* ── Ghost, glass, glow, gradient ─────────────────────────────────────
+	   Four more dresses. Each is still one hover answer: the ghost fills,
+	   the glow brightens, the others keep whatever hover class they carry. */
+
+	/* Ghost: no surface until you point at it. A dashed hairline says
+	   "placeholder, add one" as much as "card". */
+	.card-ghost {
+		--card-bg: transparent;
+		--card-line: var(--line-default);
+		border-style: dashed;
+	}
+	.card-ghost:hover { --card-bg: var(--bg-surface); border-style: solid; --card-line: var(--line-strong); }
+	.card-ghost-accent { --card-line: var(--line-accent); }
+	.card-ghost-accent:hover { --card-line: var(--accent); }
+
+	/* Glass: the card on footage or on a glow. */
+	.card-glass {
+		--card-bg: var(--glass-bg);
+		--card-line: color-mix(in oklab, var(--pure-white) 25%, transparent);
+		-webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
+		backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
+		box-shadow: inset 0 1px 0 color-mix(in oklab, var(--pure-white) 35%, transparent);
+	}
+	.card-glass-dark { --card-bg: oklch(15% 0.012 275 / 0.6); color: var(--ink-50); color-scheme: dark; }
+	.card-glass-dark .card__title { color: var(--ink-50); }
+	.card-glass-dark :is(.card__excerpt, .card__kicker, .card__meta, .card__footer) { color: color-mix(in oklab, var(--ink-50) 70%, transparent); }
+
+	/* Glow: the accent ring's light behind the card. The hover answer is
+	   more light, so it must not also lift. */
+	.card-glow { --card-line: var(--line-accent); box-shadow: 0 0 0 0 var(--accent-ring), 0 12px 40px -16px var(--accent-ring); }
+
+	@media (hover: hover) and (pointer: fine) {
+		.card-glow:hover { --card-line: var(--accent); box-shadow: 0 0 0 var(--border-2) var(--accent-ring), 0 16px 48px -12px var(--accent-ring); }
+		.card-hover-glow:hover { box-shadow: 0 0 0 var(--border-2) var(--accent-ring), 0 16px 48px -12px var(--accent-ring); border-color: var(--line-accent); }
+		/* Zoom: only the media moves; the box stays put. */
+		.card-hover-zoom:hover .card__media > img { scale: 1.05; }
+	}
+
+	/* Gradient: the accent's soft wash as the ground. A featured slot. */
+	.card-gradient { --card-bg: linear-gradient(160deg, var(--accent-soft), var(--bg-surface) 70%); --card-line: var(--line-accent); }
+
+	/* ── More parts ───────────────────────────────────────────────────────── */
+
+	/* An icon at the head of the body — the feature card, the service tile. */
+	.card__icon {
+		display: inline-grid;
+		place-items: center;
+		width: 2.5rem;
+		height: 2.5rem;
+		border-radius: var(--radius-md);
+		background: var(--accent-soft);
+		color: var(--accent-soft-fg);
+		margin-block-end: var(--space-2);
+	}
+	.card__icon > .icon { --icon-size: 1.25rem; }
+
+	/* A row of facts in the data voice — lessons · 3h 40m · beginner. */
+	.card__facts {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-1) var(--space-3);
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-2xs);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-faint);
+	}
+	.card__facts > * { display: inline-flex; align-items: center; gap: var(--space-1); }
+	.card__facts .icon { --icon-size: 0.875rem; }
+
+	/* Progress along the bottom edge — the course card, the series card.
+	   The value is a custom property the host sets; the bar is the card's
+	   own edge, so it costs no height. */
+	.card__progress {
+		position: absolute;
+		inset: auto 0 0;
+		height: var(--border-3);
+		background: var(--line-subtle);
+	}
+	.card__progress::after {
+		content: '';
+		position: absolute;
+		inset: 0 auto 0 0;
+		width: var(--value, 0%);
+		background: var(--accent);
+		transition: width var(--dur-5) var(--ease-out);
+	}
+
+	/* A level or a state, top-left of the body rather than on the media. */
+	.card__level {
+		align-self: flex-start;
+		font-family: var(--font-label);
+		font-size: var(--text-2xs);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: var(--fg-accent);
+	}
 }
