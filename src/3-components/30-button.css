@@ -1,14 +1,19 @@
 /* =============================================================================
    30 · BUTTON
 
-   One shape, six emphases, three sizes. Only ONE button on a screen should be
-   primary — if two things are equally important then neither is, which is the
-   accent-rationing principle applied to a component.
+   One shape, eight emphases, three sizes. Only ONE button on a screen should
+   be primary — if two things are equally important then neither is, which is
+   the accent-rationing principle applied to a component.
+
+   Everything else here is the same button in a different arrangement: an
+   icon in the label slot, two buttons sharing an edge, a row of them on a
+   track. None of those is a second component, which is why a token change to
+   .btn restyles the split button and the toolbar for free.
 
    COMPOSITION WARNING
-   .btn-live spends ::before on its record dot, so it cannot also take .frame
-   (which needs both pseudo-elements). Use .frame-4 with real corner spans, or
-   pick one.
+   .btn-live spends ::before on its record dot and [aria-busy] spends ::after
+   on the spinner, so neither can also take .frame (which needs both). Use
+   .frame-4 with real corner spans, or pick one.
 
    Layer: components.
    ========================================================================== */
@@ -59,6 +64,10 @@
 		pointer-events: none;
 	}
 
+	/* An icon inside the label is sized by the button, so the same sprite
+	   symbol works at every size without a class per size. */
+	.btn > .icon { --icon-size: 1.15em; }
+
 	/* ── Emphasis ──────────────────────────────────────────────────────────── */
 
 	.btn-primary {
@@ -96,10 +105,29 @@
 
 	.btn-quiet:hover { --btn-fg: var(--fg-default); }
 
+	/* Danger is the one emphasis with its own outline and soft weights: a
+	   destructive action inside a menu or a card footer should not have to
+	   shout to be recognised, only to be unmistakable. */
 	.btn-danger {
-		--btn-bg: var(--danger-fg);
-		--btn-fg: var(--ink-0);
+		--btn-bg: var(--danger-solid);
+		--btn-fg: var(--pure-white);
 	}
+
+	.btn-danger:hover { --btn-bg: var(--danger-fg); }
+
+	.btn-danger-outline {
+		--btn-line: var(--danger-line);
+		--btn-fg: var(--danger-fg);
+	}
+
+	.btn-danger-outline:hover { --btn-bg: var(--danger-bg); --btn-line: var(--danger-fg); }
+
+	.btn-danger-soft {
+		--btn-bg: var(--danger-bg);
+		--btn-fg: var(--danger-fg);
+	}
+
+	.btn-danger-soft:hover { --btn-line: var(--danger-line); }
 
 	.btn-link {
 		--btn-h: auto;
@@ -109,11 +137,16 @@
 		text-underline-offset: 0.2em;
 	}
 
+	.btn-link:hover { --btn-fg: var(--fg-link-hover); }
+
 	/* ── Size ──────────────────────────────────────────────────────────────── */
 
-	.btn-sm { --btn-h: 2rem; --btn-pad: var(--space-3); font-size: var(--text-xs); }
+	.btn-sm { --btn-h: 2rem; --btn-pad: var(--space-3); --btn-gap: var(--space-1); font-size: var(--text-xs); }
 	.btn-lg { --btn-h: 3rem; --btn-pad: var(--space-6); font-size: var(--text-base); }
 
+	/* Square: the width follows the height, so .btn-sm and .btn-lg size an
+	   icon button with no extra class. Needs an aria-label — there is no
+	   visible text. */
 	.btn-icon { --btn-pad: 0; width: var(--btn-h); }
 	.btn-block { display: flex; width: 100%; }
 	.btn-pill { --btn-radius: var(--radius-full); }
@@ -152,7 +185,7 @@
 		animation: fx-spin 0.6s linear infinite;
 	}
 
-	/* ── Group ─────────────────────────────────────────────────────────────── */
+	/* ── Group — buttons sharing edges ─────────────────────────────────────── */
 
 	.btn-group {
 		display: inline-flex;
@@ -163,4 +196,74 @@
 	.btn-group > .btn:last-child  { border-start-end-radius: var(--radius-control); border-end-end-radius: var(--radius-control); }
 	.btn-group > .btn + .btn { margin-inline-start: calc(var(--border-hair) * -1); }
 	.btn-group > .btn[aria-pressed='true'] { --btn-bg: var(--accent-soft); --btn-fg: var(--accent-soft-fg); z-index: var(--z-raised); }
+
+	/* ── Segmented — buttons on a sunken track ─────────────────────────────
+	   The group above joins buttons; this one sets them in a track. The
+	   pressed one rises to the surface with a breath of elevation and NO
+	   accent, so a view switcher never competes with the page's primary. */
+	.btn-group-segmented {
+		gap: var(--space-1);
+		padding: var(--space-1);
+		border: var(--border-hair) solid var(--line-default);
+		border-radius: var(--radius-control);
+		background: var(--bg-sunken);
+	}
+
+	.btn-group-segmented > .btn {
+		--btn-h: 2rem;
+		--btn-pad: var(--space-3);
+		--btn-line: transparent;
+		--btn-fg: var(--fg-muted);
+		font-size: var(--text-xs);
+	}
+
+	.btn-group-segmented > .btn:first-child,
+	.btn-group-segmented > .btn:last-child { border-radius: var(--radius-sm); }
+	.btn-group-segmented > .btn + .btn { margin-inline-start: 0; }
+	.btn-group-segmented > .btn:hover { --btn-fg: var(--fg-default); }
+
+	.btn-group-segmented > .btn[aria-pressed='true'] {
+		--btn-bg: var(--bg-surface);
+		--btn-fg: var(--fg-default);
+		box-shadow: var(--elevation-1);
+	}
+
+	/* ── Split — one action, plus its alternatives ─────────────────────────
+	   Two buttons of the SAME emphasis sharing an edge: the label acts, the
+	   narrow trigger opens a menu of the other ways to act. The divider is
+	   the label colour at low alpha, so it reads on any fill. */
+	.btn-split { display: inline-flex; }
+
+	.btn-split > .btn:first-child {
+		border-start-end-radius: 0;
+		border-end-end-radius: 0;
+	}
+
+	.btn-split > .btn:last-child {
+		--btn-pad: var(--space-2);
+		border-start-start-radius: 0;
+		border-end-start-radius: 0;
+		margin-inline-start: calc(var(--border-hair) * -1);
+		border-inline-start-color: color-mix(in oklab, var(--btn-fg) 30%, transparent);
+	}
+
+	/* ── Toolbar — a strip of small controls ───────────────────────────────
+	   Icon buttons and groups on one surface. The separator is a hairline
+	   the height of a small button, so it divides without boxing. */
+	.btn-toolbar {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-1);
+		padding: var(--space-1);
+		border: var(--border-hair) solid var(--line-default);
+		border-radius: var(--radius-control);
+		background: var(--bg-surface);
+	}
+
+	.btn-toolbar__sep {
+		inline-size: var(--border-hair);
+		block-size: 1.25rem;
+		margin-inline: var(--space-1);
+		background: var(--line-subtle);
+	}
 }

@@ -5,6 +5,10 @@
    answer change. A card gets exactly ONE hover answer — a card that both lifts
    and brackets is a card that cannot decide what it is.
 
+   State is an attribute, never a class: [aria-current] marks the card you
+   are on, [aria-selected] the one you picked, [data-done] the one you have
+   finished. A class can lie to the accessibility tree; an attribute is it.
+
    Layer: components.
    ========================================================================== */
 
@@ -30,12 +34,15 @@
 	/* ── Parts ─────────────────────────────────────────────────────────────── */
 
 	.card__media {
+		position: relative;
 		aspect-ratio: var(--card-ratio, 16 / 9);
 		background: var(--bg-media);
 		overflow: hidden;
+		flex: none;
 	}
 
-	.card__media > img { width: 100%; height: 100%; object-fit: cover; transition: scale var(--dur-4) var(--ease-out); }
+	.card__media > img,
+	.card__media > video { width: 100%; height: 100%; object-fit: cover; transition: scale var(--dur-4) var(--ease-out); }
 
 	.card__body {
 		display: flex;
@@ -84,13 +91,13 @@
 		justify-content: space-between;
 		gap: var(--space-2);
 		padding: var(--space-3);
-		background: linear-gradient(transparent 55%, oklch(12.5% 0.012 275 / 0.72));
+		background: linear-gradient(transparent 55%, var(--bg-scrim));
+		color: var(--pure-white);
 		pointer-events: none;
 	}
 
-	.card__media { position: relative; }
-
-	/* Corner-pinned marker on the media — a category, a state, a duration. */
+	/* Corner-pinned marker on the media — a category, a state, a duration.
+	   Start is the default; -end and -bottom move it. */
 	.card__badge {
 		position: absolute;
 		inset-block-start: var(--space-3);
@@ -103,17 +110,24 @@
 		inset-inline-end: var(--space-3);
 	}
 
-	/* A duration or timecode sitting on the image. Data, so it is mono. */
+	.card__badge-bottom {
+		inset-block-start: auto;
+		inset-block-end: var(--space-3);
+	}
+
+	/* A duration or timecode sitting on the image — data, so the data voice. */
 	.card__stamp {
 		position: absolute;
 		inset-block-end: var(--space-3);
 		inset-inline-end: var(--space-3);
-		padding: 2px 6px;
+		padding: var(--space-px) var(--space-2);
 		border-radius: var(--radius-sm);
-		background: oklch(12.5% 0.012 275 / 0.8);
-		color: var(--ink-0);
+		background: var(--bg-scrim);
+		color: var(--pure-white);
 		font-family: var(--font-data);
+		font-weight: var(--weight-light);
 		font-size: var(--text-2xs);
+		letter-spacing: var(--tracking-data);
 		font-variant-numeric: tabular-nums;
 	}
 
@@ -128,8 +142,8 @@
 		display: grid;
 		place-items: center;
 		border-radius: var(--radius-full);
-		background: color-mix(in oklab, var(--ink-1000) 55%, transparent);
-		color: var(--ink-0);
+		background: color-mix(in oklab, var(--pure-black) 55%, transparent);
+		color: var(--pure-white);
 		backdrop-filter: blur(4px);
 		transition: scale var(--dur-2) var(--ease-out), background-color var(--dur-2) var(--ease-out);
 	}
@@ -147,7 +161,7 @@
 	}
 
 	/* Avatar + name + date. The name is a person, the date is data — which is
-	   why only one half of this is mono. */
+	   why only one half of this is in the data voice. */
 	.card__author {
 		display: flex;
 		align-items: center;
@@ -162,10 +176,66 @@
 
 	.card__author-meta {
 		font-family: var(--font-data);
+		font-weight: var(--weight-light);
 		font-size: var(--text-2xs);
+		letter-spacing: var(--tracking-data);
 		color: var(--fg-faint);
 		font-variant-numeric: tabular-nums;
 	}
+
+	/* The stat card's number: display face, tabular, so a row of them aligns. */
+	.card__stat {
+		font-family: var(--font-display);
+		font-size: var(--text-3xl);
+		font-weight: var(--weight-bold);
+		letter-spacing: var(--tracking-tighter);
+		line-height: 1;
+		font-variant-numeric: tabular-nums lining-nums;
+		color: var(--fg-default);
+	}
+
+	/* The change since last time. The direction is data, not decoration, so
+	   it lives in an attribute the markup states. */
+	.card__delta {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-1);
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-xs);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-faint);
+	}
+
+	.card__delta[data-trend='up'] { color: var(--success-fg); }
+	.card__delta[data-trend='down'] { color: var(--danger-fg); }
+	.card__delta .icon { --icon-size: 0.875rem; }
+
+	/* The link card's arrow: parked at the end, it travels on hover. */
+	.card__arrow {
+		margin-inline-start: auto;
+		flex: none;
+		color: var(--fg-faint);
+		transition: translate var(--dur-2) var(--ease-out), color var(--dur-2) var(--ease-out);
+	}
+
+	.card:hover .card__arrow { translate: var(--space-1) 0; color: var(--fg-accent); }
+
+	/* A completion mark for a lesson or a step. Empty ring until [data-done]. */
+	.card__tick {
+		display: grid;
+		place-items: center;
+		inline-size: 1.25rem;
+		block-size: 1.25rem;
+		flex: none;
+		border: var(--border-hair) solid var(--line-strong);
+		border-radius: var(--radius-full);
+		color: transparent;
+		transition: var(--t-colors);
+	}
+
+	.card__tick .icon { --icon-size: 0.75rem; }
 
 	/* ── Footer ────────────────────────────────────────────────────────────
 	   margin-block-start:auto pins it to the bottom, so cards of different
@@ -219,6 +289,10 @@
 		z-index: var(--z-raised);
 	}
 
+	/* Anything that must stay clickable ABOVE the stretched link — a tag, a
+	   play button, a save toggle. It sits one step over the cover. */
+	.card__above { position: relative; z-index: calc(var(--z-raised) + 1); }
+
 	/* ── Hover answers ─────────────────────────────────────────────────────── */
 
 	@media (hover: hover) and (pointer: fine) {
@@ -255,11 +329,40 @@
 	/* Focus-within, so a keyboard user gets the same affordance as a mouse. */
 	.card:focus-within { border-color: var(--line-strong); }
 
+	/* ── States — attributes, never classes ────────────────────────────────
+	   Current is a 2px rule at the start edge; selected is the accent line
+	   plus the focus ring's geometry; done fills the tick. None of them is a
+	   filled pill. */
+
+	.card[aria-current='true'] {
+		--card-line: var(--line-accent);
+		box-shadow: inset var(--border-2) 0 0 0 var(--accent);
+	}
+
+	.card[aria-selected='true'] {
+		--card-line: var(--accent);
+		box-shadow: var(--accent-ring);
+	}
+
+	.card[data-done] .card__tick {
+		background: var(--accent);
+		border-color: var(--accent);
+		color: var(--fg-on-accent);
+	}
+
+	.card[data-done] .card__title { color: var(--fg-muted); }
+
 	/* ── Shape variants ────────────────────────────────────────────────────── */
 
 	.card-row { flex-direction: row; }
 	.card-row > .card__media { flex: 0 0 12rem; aspect-ratio: 1; }
 	.card-row > .card__body { flex: 1; }
+
+	/* Media on the end edge — for alternating rows in an editorial list. */
+	.card-row-reverse { flex-direction: row-reverse; }
+
+	/* Media below the words — a caption-first card. */
+	.card-media-end > .card__media { order: 1; }
 
 	.card-bare {
 		--card-bg: transparent;
@@ -271,26 +374,30 @@
 
 	.card-flush .card__body { padding: 0; }
 	.card-compact { --card-pad: var(--space-4); --card-gap: var(--space-1); }
+	.card-compact .card__title { font-size: var(--text-base); }
 	.card-roomy   { --card-pad: var(--space-8); }
 
 	/* Media full-bleed behind the text. */
 	.card-tile { display: grid; }
-	.card-tile > .card__media { grid-area: 1 / 1; aspect-ratio: 3 / 4; }
+	.card-tile > .card__media { grid-area: 1 / 1; aspect-ratio: var(--card-ratio, 3 / 4); }
 
 	.card-tile > .card__body {
 		grid-area: 1 / 1;
 		justify-content: flex-end;
-		background: linear-gradient(transparent 30%, oklch(12.5% 0.012 275 / 0.85));
+		background: linear-gradient(transparent 30%, var(--bg-scrim));
 	}
 
-	.card-tile .card__title { color: var(--ink-0); }
-	.card-tile .card__meta { color: oklch(100% 0 0 / 0.7); }
+	.card-tile .card__title { color: var(--pure-white); }
+	.card-tile .card__excerpt { color: color-mix(in oklab, var(--pure-white) 80%, transparent); }
+	.card-tile .card__kicker,
+	.card-tile .card__meta { color: color-mix(in oklab, var(--pure-white) 70%, transparent); }
 
 	/* ── Emphasis variants ─────────────────────────────────────────────────── */
 
 	.card-accent  { --card-line: var(--accent); }
 	.card-quiet   { --card-bg: transparent; --card-line: var(--line-subtle); }
 	.card-raised  { box-shadow: var(--elevation-2); --card-line: transparent; }
+	.card-sunken  { --card-bg: var(--bg-sunken); --card-line: transparent; }
 
 	.card-inverse {
 		--card-bg: var(--bg-inverse);
@@ -299,7 +406,10 @@
 
 	.card-inverse .card__title { color: var(--fg-on-inverse); }
 	.card-inverse .card__excerpt,
-	.card-inverse .card__meta { color: oklch(100% 0 0 / 0.65); }
+	.card-inverse .card__kicker,
+	.card-inverse .card__footer,
+	.card-inverse .card__meta { color: color-mix(in oklab, var(--fg-on-inverse) 65%, transparent); }
+	.card-inverse .card__footer { border-block-start-color: var(--line-inverse); }
 
 	/* ── Content types ─────────────────────────────────────────────────────
 	   One variable does the shape work: --card-ratio feeds the media's
@@ -311,19 +421,35 @@
 	     movie     2:3                  the poster wall
 	     square    1:1                  covers, gallery tiles
 	     post     16:9 + __author       editorial
-	     project  __tags + __footer     repo/status shape                    */
+	     project  __tags + __footer     repo/status shape
+	     stat     __stat + __delta      the dashboard tile
+	     link     __arrow               a row that goes somewhere                 */
 
 	.card-video  { --card-ratio: 16 / 9; }
 	.card-reel   { --card-ratio: 9 / 16; max-inline-size: 15rem; }
 	.card-movie  { --card-ratio: 2 / 3; }
 	.card-square { --card-ratio: 1; }
 
+	.card-stat > .card__body { gap: var(--space-3); }
+
+	/* The link card is a row: icon, words, arrow — a doc index entry. */
+	.card-link > .card__body {
+		flex-direction: row;
+		align-items: center;
+		gap: var(--space-4);
+	}
+
+	.card-link .card__title { font-size: var(--text-base); }
+	.card-link > .card__body > .icon { color: var(--fg-faint); }
+
 	/* ── Responsive ────────────────────────────────────────────────────────
 	   A container query, not a media query: a card in a 300px sidebar and a
 	   card in a 300px grid slot are the same card. Requires .cq-card on an
 	   ancestor. */
 	@container card (max-width: 26rem) {
-		.card-row { flex-direction: column; }
-		.card-row > .card__media { flex: none; aspect-ratio: 16 / 9; }
+		.card-row,
+		.card-row-reverse { flex-direction: column; }
+		.card-row > .card__media,
+		.card-row-reverse > .card__media { flex: none; aspect-ratio: 16 / 9; }
 	}
 }

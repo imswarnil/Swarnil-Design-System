@@ -11,3 +11,5 @@
 @import url('./36-menu.css');     /* dropdown, mega panel, drawer      */
 @import url('./37-overlay.css');  /* dialog, tooltip                   */
 @import url('./38-disclosure.css'); /* accordion, collapse             */
+@import url('./39-media.css');    /* player, play, poster, episode     */
+@import url('./40-codeplayer.css'); /* code as a screen: TV, flat, light */

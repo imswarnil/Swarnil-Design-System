@@ -18,6 +18,7 @@
 		--radius-xl:   16px;
 		--radius-2xl:  24px;
 		--radius-full: 9999px;
+		--radius-pill: var(--radius-full);   /* the name the theme reads */
 
 		/* Named for a job, so the shape of every card changes in one edit. */
 		--radius-card:    var(--radius-lg);

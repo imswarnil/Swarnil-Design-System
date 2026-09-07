@@ -1,0 +1,348 @@
+/* =============================================================================
+   83 · STREAM — the widgets of a live layout
+
+   The small furniture around a stream, each a browser source of its own or a
+   piece of a `.scene-live`:
+
+     .cam         the camera frame — a hole with brackets and a name tag
+     .streambug   LIVE, the viewer count, the running time
+     .alertbox    the follow / sub / raid toast
+     .chatbox     the chat replay, styled to the palette
+     .goal        progress toward a number
+     .nowplaying  the track, the artist, the moving bars
+     .countdown   days · hours · minutes · seconds
+     .ticker      the strip of running text along an edge
+
+   All of it dark, all of it `cqi`. The one accent is spent on what is live:
+   the bug's dot, the alert's kicker, the goal's fill, the playing bars.
+
+   Layer: sections.
+   ========================================================================== */
+
+@layer sections {
+
+	/* ── The camera frame ─────────────────────────────────────────────────── */
+	.cam {
+		--cam-ratio: 16 / 9;
+		--cam-radius: 1cqi;
+		position: relative;
+		aspect-ratio: var(--cam-ratio);
+		border-radius: var(--cam-radius);
+		background: var(--ink-950);
+		overflow: hidden;
+		color: var(--ink-50);
+		color-scheme: dark;
+	}
+
+	.cam > :is(img, video) { inline-size: 100%; block-size: 100%; object-fit: cover; }
+
+	.cam-square { --cam-ratio: 1; }
+	.cam-circle { --cam-ratio: 1; --cam-radius: var(--radius-full); }
+	.cam-portrait { --cam-ratio: 3 / 4; }
+	/* A visible border in the accent — the "on air" frame. */
+	.cam-ring { box-shadow: inset 0 0 0 0.3cqi var(--accent); }
+
+	.cam__tag {
+		position: absolute;
+		inset: auto auto 1.2cqi 1.2cqi;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.8cqi;
+		padding: 0.5cqi 1.2cqi;
+		border-radius: var(--radius-full);
+		background: color-mix(in oklab, var(--pure-black) 60%, transparent);
+		font-size: 1.4cqi;
+		font-weight: var(--weight-medium);
+	}
+
+	.cam__tag .dot { inline-size: 0.7cqi; block-size: 0.7cqi; }
+
+	/* ── The bug ──────────────────────────────────────────────────────────── */
+	.streambug {
+		display: inline-flex;
+		align-items: stretch;
+		border-radius: var(--radius-full);
+		overflow: hidden;
+		background: color-mix(in oklab, var(--ink-1000) 80%, transparent);
+		color: var(--ink-50);
+		color-scheme: dark;
+		font-size: 1.5cqi;
+		line-height: 1;
+	}
+
+	.streambug__live {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.8cqi;
+		padding: 0.8cqi 1.4cqi;
+		background: var(--accent);
+		color: var(--fg-on-accent);
+		font-family: var(--font-label);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+	}
+
+	.streambug__live .dot { inline-size: 0.8cqi; block-size: 0.8cqi; background: currentcolor; animation: fx-pulse 2s var(--ease-inout) infinite; }
+
+	.streambug__stat {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.6cqi;
+		padding: 0.8cqi 1.4cqi;
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+	}
+
+	.streambug__stat + .streambug__stat { border-inline-start: 1px solid color-mix(in oklab, var(--pure-white) 15%, transparent); }
+	.streambug__stat .icon { --icon-size: 1.6cqi; }
+
+	/* ── The alert ─────────────────────────────────────────────────────────── */
+	.alertbox {
+		--alert-fg: var(--ink-50);
+		display: grid;
+		grid-template-columns: auto 1fr;
+		align-items: center;
+		gap: 2cqi;
+		padding: 2cqi 2.8cqi;
+		border-radius: 1.2cqi;
+		background: var(--ink-950);
+		color: var(--alert-fg);
+		color-scheme: dark;
+		box-shadow: var(--elevation-3);
+		border-inline-start: 0.5cqi solid var(--accent);
+		min-inline-size: 42%;
+		max-inline-size: 60%;
+	}
+
+	.alertbox__face {
+		inline-size: 7cqi;
+		block-size: 7cqi;
+		border-radius: var(--radius-full);
+		background: var(--ink-800);
+		object-fit: cover;
+		display: grid;
+		place-items: center;
+		font-size: 3cqi;
+		font-weight: var(--weight-semibold);
+	}
+
+	.alertbox__kicker {
+		font-family: var(--font-label);
+		font-size: 1.4cqi;
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: var(--accent);
+		margin: 0;
+	}
+
+	.alertbox__who {
+		font-size: 3cqi;
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-tight);
+		margin: 0;
+		overflow-wrap: anywhere;
+	}
+
+	.alertbox__what {
+		font-size: 1.8cqi;
+		color: color-mix(in oklab, var(--alert-fg) 70%, transparent);
+		margin: 0;
+	}
+
+	.alertbox-sub    { border-inline-start-color: var(--accent); }
+	.alertbox-follow { border-inline-start-color: var(--craft); }
+	.alertbox-follow .alertbox__kicker { color: var(--craft); }
+	.alertbox-raid   { background: var(--accent); color: var(--fg-on-accent); border-inline-start-color: var(--fg-on-accent); }
+	.alertbox-raid .alertbox__kicker,
+	.alertbox-raid .alertbox__what { color: color-mix(in oklab, var(--fg-on-accent) 80%, transparent); }
+
+	/* It pops in and settles: the one overshoot the system allows, because a
+	   gift deserves one. */
+	.alertbox[data-state='in'] { animation: fx-scale-in var(--dur-5) var(--ease-overshoot) both; }
+
+	/* ── Chat ──────────────────────────────────────────────────────────────── */
+	.chatbox {
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+		gap: 1cqi;
+		padding: 1.6cqi;
+		border-radius: 1cqi;
+		background: color-mix(in oklab, var(--ink-1000) 75%, transparent);
+		color: var(--ink-50);
+		color-scheme: dark;
+		font-size: 1.6cqi;
+		line-height: var(--leading-snug);
+		overflow: hidden;
+		min-block-size: 0;
+		mask-image: linear-gradient(to bottom, transparent, var(--pure-black) 20%);
+	}
+
+	.chatbox__msg { display: flex; gap: 0.8cqi; align-items: baseline; animation: fx-rise var(--dur-4) var(--ease-out) both; }
+	.chatbox__who { font-weight: var(--weight-semibold); color: var(--accent); white-space: nowrap; }
+	.chatbox__who-mod { color: var(--craft); }
+	.chatbox__text { color: color-mix(in oklab, var(--ink-50) 85%, transparent); min-inline-size: 0; overflow-wrap: anywhere; }
+	.chatbox__badge { inline-size: 1.4cqi; block-size: 1.4cqi; border-radius: 0.3cqi; background: var(--accent); flex: none; align-self: center; }
+
+	.chatbox-flat { mask-image: none; background: var(--ink-950); }
+
+	/* ── The goal ───────────────────────────────────────────────────────────── */
+	.goal {
+		--goal-value: 62%;
+		display: grid;
+		gap: 0.8cqi;
+		padding: 1.4cqi 2cqi;
+		border-radius: 1cqi;
+		background: color-mix(in oklab, var(--ink-1000) 80%, transparent);
+		color: var(--ink-50);
+		color-scheme: dark;
+	}
+
+	.goal__head { display: flex; justify-content: space-between; align-items: baseline; gap: 2cqi; }
+
+	.goal__label {
+		font-family: var(--font-label);
+		font-size: 1.4cqi;
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: color-mix(in oklab, var(--ink-50) 70%, transparent);
+	}
+
+	.goal__value {
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: 1.6cqi;
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+	}
+
+	.goal__bar {
+		block-size: 0.8cqi;
+		border-radius: var(--radius-full);
+		background: color-mix(in oklab, var(--pure-white) 12%, transparent);
+		overflow: hidden;
+	}
+
+	.goal__fill {
+		block-size: 100%;
+		inline-size: var(--goal-value);
+		border-radius: inherit;
+		background: var(--accent);
+		transition: inline-size var(--dur-5) var(--ease-out);
+	}
+
+	/* ── Now playing ────────────────────────────────────────────────────────── */
+	.nowplaying {
+		display: grid;
+		grid-template-columns: auto 1fr auto;
+		align-items: center;
+		gap: 1.4cqi;
+		padding: 1cqi 1.6cqi 1cqi 1cqi;
+		border-radius: var(--radius-full);
+		background: color-mix(in oklab, var(--ink-1000) 80%, transparent);
+		color: var(--ink-50);
+		color-scheme: dark;
+		max-inline-size: 45%;
+	}
+
+	.nowplaying__art {
+		inline-size: 4.5cqi;
+		block-size: 4.5cqi;
+		border-radius: var(--radius-full);
+		background: var(--ink-800);
+		object-fit: cover;
+		animation: fx-spin 6s linear infinite;
+	}
+
+	.nowplaying__body { display: grid; gap: 0.2cqi; min-inline-size: 0; }
+	.nowplaying__title { font-size: 1.7cqi; font-weight: var(--weight-semibold); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+	.nowplaying__artist { font-size: 1.4cqi; color: color-mix(in oklab, var(--ink-50) 65%, transparent); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+	/* Four bars breathing at different tempos. */
+	.nowplaying__bars { display: flex; align-items: flex-end; gap: 0.3cqi; block-size: 2.4cqi; }
+	.nowplaying__bars > span { inline-size: 0.4cqi; block-size: 40%; background: var(--accent); border-radius: var(--radius-full); animation: np-bar 0.9s var(--ease-inout) infinite alternate; }
+	.nowplaying__bars > :nth-child(2) { animation-duration: 0.7s; }
+	.nowplaying__bars > :nth-child(3) { animation-duration: 1.1s; }
+	.nowplaying__bars > :nth-child(4) { animation-duration: 0.8s; }
+
+	@keyframes np-bar { from { block-size: 25%; } to { block-size: 100%; } }
+
+	/* ── Countdown ─────────────────────────────────────────────────────────── */
+	.countdown {
+		display: inline-flex;
+		gap: 2.5cqi;
+		color: inherit;
+	}
+
+	.countdown__unit { display: grid; justify-items: center; gap: 0.6cqi; }
+
+	.countdown__n {
+		font-size: 8cqi;
+		font-weight: var(--weight-light);
+		letter-spacing: var(--tracking-tight);
+		line-height: 1;
+		font-variant-numeric: tabular-nums lining-nums;
+	}
+
+	.countdown__l {
+		font-family: var(--font-label);
+		font-size: 1.3cqi;
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		opacity: 0.6;
+	}
+
+	.countdown__unit + .countdown__unit { position: relative; }
+	.countdown__unit + .countdown__unit::before {
+		content: ':';
+		position: absolute;
+		inset-inline-start: -1.6cqi;
+		inset-block-start: 0;
+		font-size: 6cqi;
+		font-weight: var(--weight-light);
+		line-height: 1.15;
+		opacity: 0.4;
+	}
+
+	/* ── Ticker ───────────────────────────────────────────────────────────── */
+	.ticker {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		align-items: stretch;
+		background: var(--ink-950);
+		color: var(--ink-50);
+		color-scheme: dark;
+		font-size: 1.7cqi;
+		border-radius: 0.8cqi;
+		overflow: hidden;
+	}
+
+	.ticker__label {
+		display: inline-flex;
+		align-items: center;
+		padding: 1cqi 2cqi;
+		background: var(--accent);
+		color: var(--fg-on-accent);
+		font-family: var(--font-label);
+		font-size: 1.4cqi;
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		white-space: nowrap;
+	}
+
+	.ticker .marquee { --marquee-gap: 4cqi; align-items: center; padding-inline: 2cqi; }
+	.ticker .marquee__run > * { white-space: nowrap; }
+	.ticker__sep { color: var(--accent); }
+
+	@media (prefers-reduced-motion: reduce) {
+		.streambug__live .dot, .nowplaying__art, .nowplaying__bars > span, .chatbox__msg { animation: none; }
+		.alertbox[data-state='in'] { animation: fx-fade 1ms linear both; }
+	}
+}

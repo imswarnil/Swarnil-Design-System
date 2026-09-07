@@ -1,0 +1,329 @@
+/* =============================================================================
+   25 · EFFECT — interactions, entrances, ambient motion
+
+   05-motion.css owns the vocabulary: the durations, the curves, the five base
+   keyframes and the first handful of `.fx-*` sentences. This file is the rest
+   of the language, in three registers that must not be confused:
+
+     .tr-*   TRANSITIONS  a named bundle of properties that may change. Adds
+                          nothing visible on its own — it says how a change
+                          will feel when a state changes.
+     .ix-*   INTERACTIONS the hover/focus answers. One property each, under
+                          200ms, guarded by (hover: hover) so touch is never
+                          left holding a state it cannot release.
+     .fx-*   EFFECTS      entrances, scroll-driven reveals, and the few ambient
+                          moves a creator's page is allowed (float, shimmer,
+                          scan, Ken Burns). Ambient motion is slow, one
+                          property, and OFF under reduced motion — not merely
+                          faster.
+
+   PRINCIPLES #5 still governs: the finished state is the resting state. Every
+   entrance uses `both`, so if the animation never runs the element is simply
+   there. Every reveal keeps its content in the DOM. Nothing here is required
+   for the page to be usable.
+
+   Layer: elements.
+   ========================================================================== */
+
+@layer elements {
+
+	/* ── Transitions — how a change feels ──────────────────────────────────
+	   Named bundles from the motion tokens, so a component states WHICH
+	   properties may move rather than reaching for `all`. */
+	.tr-colors    { transition: var(--t-colors); }
+	.tr-transform { transition: var(--t-transform); }
+	.tr-shadow    { transition: var(--t-shadow); }
+	.tr-opacity   { transition: opacity var(--dur-2) var(--ease-out); }
+	.tr-size      { transition: inline-size var(--dur-3) var(--ease-out), block-size var(--dur-3) var(--ease-out); }
+	.tr-all       { transition: var(--t-colors), var(--t-transform), var(--t-shadow), opacity var(--dur-2) var(--ease-out); }
+
+	/* Tempo. These override the bundle's duration wholesale. */
+	.tr-fast { transition-duration: var(--dur-1); }
+	.tr-slow { transition-duration: var(--dur-4); }
+
+	/* ── Interactions — the hover answers ──────────────────────────────────
+	   Each is one property. Guarded: a touch screen has no hover and no way
+	   to un-hover, so it gets the resting state and nothing else. */
+	@media (hover: hover) and (pointer: fine) {
+
+		/* The underline that draws itself in from the start edge. A background
+		   sized 0→100% rather than text-decoration, because that cannot move. */
+		.ix-underline {
+			text-decoration: none;
+			background: linear-gradient(currentcolor, currentcolor) no-repeat 0 100% / 0 var(--border-hair);
+			transition: background-size var(--dur-3) var(--ease-out);
+		}
+		.ix-underline:hover,
+		.ix-underline:focus-visible { background-size: 100% var(--border-hair); }
+
+		/* The media inside grows; the box does not. For a card, a poster. */
+		.ix-zoom { overflow: hidden; }
+		.ix-zoom :is(img, video) { transition: scale var(--dur-4) var(--ease-out); }
+		.ix-zoom:hover :is(img, video) { scale: 1.04; }
+
+		/* The whole thing steps toward you. Shadow follows the lift. */
+		.ix-raise { transition: translate var(--dur-2) var(--ease-out), box-shadow var(--dur-3) var(--ease-out); }
+		.ix-raise:hover { translate: 0 -4px; box-shadow: var(--elevation-3); }
+
+		/* The accent ring lights up around the edge. */
+		.ix-glow { transition: box-shadow var(--dur-3) var(--ease-out); }
+		.ix-glow:hover { box-shadow: 0 0 0 var(--border-2) var(--accent-ring), 0 0 32px -8px var(--accent-ring); }
+
+		/* The label's icon travels. An arrow that points where the link goes. */
+		.ix-arrow .icon { transition: translate var(--dur-2) var(--ease-out); }
+		.ix-arrow:hover .icon { translate: var(--space-1) 0; }
+
+		/* A degree of tilt — a poster picked up off the table. */
+		.ix-tilt { transition: rotate var(--dur-3) var(--ease-out), translate var(--dur-3) var(--ease-out); }
+		.ix-tilt:hover { rotate: -1.5deg; translate: 0 -2px; }
+
+		/* Siblings step back when one is chosen. The group gets the class. */
+		.ix-dim > * { transition: opacity var(--dur-3) var(--ease-out); }
+		.ix-dim:hover > :not(:hover) { opacity: 0.45; }
+
+		/* Something hidden in the box slides up when the box is hovered — an
+		   action row on a thumbnail, a caption on a tile. */
+		.ix-reveal { position: relative; overflow: hidden; }
+		.ix-reveal__hidden {
+			position: absolute;
+			inset: auto 0 0;
+			translate: 0 100%;
+			opacity: 0;
+			transition: translate var(--dur-3) var(--ease-out), opacity var(--dur-2) var(--ease-out);
+		}
+		.ix-reveal:hover .ix-reveal__hidden,
+		.ix-reveal:focus-within .ix-reveal__hidden { translate: 0 0; opacity: 1; }
+
+		/* Grey until touched. A logo wall, a poster grid. */
+		.ix-color { filter: grayscale(1); opacity: 0.7; transition: filter var(--dur-3) var(--ease-out), opacity var(--dur-3) var(--ease-out); }
+		.ix-color:hover { filter: none; opacity: 1; }
+
+		/* A light passes across on hover. Uses ::after, so it cannot share an
+		   element with .frame or [data-loading] — put it on the media child. */
+		.ix-shine { position: relative; overflow: hidden; }
+		.ix-shine::after {
+			content: '';
+			position: absolute;
+			inset: 0;
+			translate: -120% 0;
+			background: linear-gradient(105deg, transparent 40%, color-mix(in oklab, var(--pure-white) 22%, transparent) 50%, transparent 60%);
+			pointer-events: none;
+		}
+		.ix-shine:hover::after { transition: translate var(--dur-5) var(--ease-out); translate: 120% 0; }
+	}
+
+	/* Keyboard parity for the reveal: focus inside shows it even on touch. */
+	.ix-reveal:focus-within .ix-reveal__hidden { translate: 0 0; opacity: 1; }
+
+	/* ── Entrances — arriving on the page ──────────────────────────────────
+	   `both`: the first keyframe is held before the delay and the last after,
+	   so nothing is unstyled for a frame and nothing snaps back. */
+	.fx-blur-in     { animation: fx-blur-in var(--dur-5) var(--ease-out) both; }
+	.fx-scale-in    { animation: fx-scale-in var(--dur-4) var(--ease-out) both; }
+	.fx-pop         { animation: fx-scale-in var(--dur-4) var(--ease-overshoot) both; }
+	.fx-slide-start { animation: fx-slide-start var(--dur-4) var(--ease-out) both; }
+	.fx-slide-end   { animation: fx-slide-end var(--dur-4) var(--ease-out) both; }
+	.fx-drop        { animation: fx-drop var(--dur-4) var(--ease-out) both; }
+	.fx-wipe        { animation: fx-wipe var(--dur-5) var(--ease-snap) both; }
+
+	@keyframes fx-blur-in     { from { opacity: 0; filter: blur(12px); } to { opacity: 1; filter: blur(0); } }
+
+	@keyframes fx-scale-in    { from { opacity: 0; scale: 0.92; } to { opacity: 1; scale: 1; } }
+
+	@keyframes fx-slide-start { from { opacity: 0; translate: -24px 0; } to { opacity: 1; translate: 0 0; } }
+
+	@keyframes fx-slide-end   { from { opacity: 0; translate: 24px 0; } to { opacity: 1; translate: 0 0; } }
+
+	@keyframes fx-drop        { from { opacity: 0; translate: 0 -16px; } to { opacity: 1; translate: 0 0; } }
+
+	@keyframes fx-wipe        { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+
+	/* Delays — a beat each, for choreographing a hero by hand. */
+	.fx-delay-1 { animation-delay: 80ms; }
+	.fx-delay-2 { animation-delay: 160ms; }
+	.fx-delay-3 { animation-delay: 240ms; }
+	.fx-delay-4 { animation-delay: 320ms; }
+	.fx-delay-5 { animation-delay: 400ms; }
+
+	/* Slower staggers for a long list — twice the beat of .fx-stagger. */
+	.fx-stagger-slow > * { animation: fx-rise var(--dur-5) var(--ease-out) both; }
+	.fx-stagger-slow > :nth-child(2) { animation-delay: 120ms; }
+	.fx-stagger-slow > :nth-child(3) { animation-delay: 240ms; }
+	.fx-stagger-slow > :nth-child(4) { animation-delay: 360ms; }
+	.fx-stagger-slow > :nth-child(5) { animation-delay: 480ms; }
+	.fx-stagger-slow > :nth-child(n+6) { animation-delay: 600ms; }
+
+	/* ── Typed text — the title card ───────────────────────────────────────
+	   Reveals `--chars` characters with a stepped width, so the caret sits at
+	   the last letter typed. Set the count on the instance:
+	       <span class="fx-type" style="--chars: 18">Rolling in five…</span>
+	   Single line by construction; a wrapped line has no "end" to type to. */
+	.fx-type {
+		--chars: 20;
+		--type-dur: 1.6s;
+		display: inline-block;
+		overflow: hidden;
+		white-space: nowrap;
+		max-inline-size: fit-content;
+		border-inline-end: var(--border-2) solid var(--accent);
+		animation:
+			fx-type var(--type-dur) steps(var(--chars)) both,
+			fx-blink 1s steps(1) infinite;
+	}
+
+	@keyframes fx-type { from { inline-size: 0; } to { inline-size: calc(var(--chars) * 1ch + 0.5ch); } }
+
+	/* ── Scroll-driven — the page reveals itself as you arrive ─────────────
+	   `animation-timeline: view()` ties progress to the element's own
+	   position in the scrollport, so the reveal runs as it enters and NEVER
+	   needs an IntersectionObserver. Browsers without it fall through
+	   @supports and get the resting state — the honest fallback. */
+	@supports (animation-timeline: view()) {
+		.fx-scroll-rise,
+		.fx-scroll-fade,
+		.fx-scroll-scale,
+		.fx-scroll-wipe {
+			animation-timeline: view();
+			animation-range: entry 10% entry 60%;
+			animation-fill-mode: both;
+			animation-timing-function: var(--ease-out);
+		}
+
+		.fx-scroll-rise  { animation-name: fx-rise; }
+		.fx-scroll-fade  { animation-name: fx-fade; }
+		.fx-scroll-scale { animation-name: fx-scale-in; }
+		.fx-scroll-wipe  { animation-name: fx-wipe; }
+
+		/* Parallax: the child drifts more slowly than the page. Amount is a
+		   token so the design decides how much, not the markup. */
+		.fx-parallax { --parallax: 12%; }
+		.fx-parallax > :first-child {
+			animation: fx-parallax linear both;
+			animation-timeline: view();
+			animation-range: cover 0% cover 100%;
+		}
+
+		@keyframes fx-parallax {
+			from { translate: 0 calc(var(--parallax) * -1); }
+			to   { translate: 0 var(--parallax); }
+		}
+
+		/* A progress bar for the page. Pin it; its width is the scroll. */
+		.fx-scroll-progress {
+			position: fixed;
+			inset: 0 auto auto 0;
+			block-size: var(--border-2);
+			inline-size: 100%;
+			background: var(--accent);
+			transform-origin: 0 50%;
+			z-index: var(--z-max);
+			animation: fx-grow-x linear both;
+			animation-timeline: scroll(root);
+		}
+
+		@keyframes fx-grow-x { from { scale: 0 1; } to { scale: 1 1; } }
+	}
+
+	/* ── Ambient — things that move while nobody is touching them ──────────
+	   The allowance is narrow: slow, one property, and gone under reduced
+	   motion. These are for a hero, a poster, a scene — never a control. */
+
+	/* A slow vertical bob — a device mockup floating. */
+	.fx-float { animation: fx-float 6s var(--ease-inout) infinite; }
+
+	@keyframes fx-float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -10px; } }
+
+	/* A light sweeping through display type. Text becomes the mask. */
+	.fx-shimmer {
+		background: linear-gradient(100deg, currentcolor 40%, color-mix(in oklab, currentcolor 35%, transparent) 50%, currentcolor 60%) 0 0 / 250% 100%;
+		-webkit-background-clip: text;
+		background-clip: text;
+		-webkit-text-fill-color: transparent;
+		animation: fx-shimmer 3.2s var(--ease-inout) infinite;
+	}
+
+	@keyframes fx-shimmer { from { background-position: 100% 0; } to { background-position: -50% 0; } }
+
+	/* The slow push-in that gives a still its air of footage. Two percent. */
+	.fx-kenburns { overflow: hidden; }
+	.fx-kenburns > :is(img, video, picture) { animation: fx-kenburns 14s var(--ease-inout) infinite alternate; transform-origin: 50% 40%; }
+
+	@keyframes fx-kenburns { from { scale: 1; } to { scale: 1.08; } }
+
+	/* A scan line falling through the box. ::after — see the .ix-shine note. */
+	.fx-scan { position: relative; overflow: hidden; }
+	.fx-scan::after {
+		content: '';
+		position: absolute;
+		inset: 0 0 auto;
+		block-size: 2px;
+		background: var(--accent);
+		box-shadow: 0 0 12px var(--accent-ring);
+		opacity: 0.8;
+		animation: fx-scan 3.6s var(--ease-inout) infinite;
+		pointer-events: none;
+	}
+
+	@keyframes fx-scan { from { translate: 0 -2px; } to { translate: 0 calc(100cqb + 2px); } }
+	.fx-scan { container-type: size; }
+
+	/* Glitch — two clipped copies of the text jitter off register. Needs the
+	   text repeated in data-text, because a pseudo cannot read its parent. */
+	.fx-glitch { position: relative; display: inline-block; }
+	.fx-glitch::before,
+	.fx-glitch::after {
+		content: attr(data-text);
+		position: absolute;
+		inset: 0;
+		opacity: 0.85;
+		pointer-events: none;
+	}
+	.fx-glitch::before { color: var(--accent); clip-path: inset(0 0 55% 0); animation: fx-glitch-a 2.4s steps(2) infinite; }
+	.fx-glitch::after  { color: var(--craft);  clip-path: inset(55% 0 0 0); animation: fx-glitch-b 2.4s steps(2) infinite; }
+
+	@keyframes fx-glitch-a { 0%, 88%, 100% { translate: 0 0; } 90% { translate: -3px 0; } 94% { translate: 2px 0; } }
+
+	@keyframes fx-glitch-b { 0%, 88%, 100% { translate: 0 0; } 91% { translate: 3px 0; } 95% { translate: -2px 0; } }
+
+	/* The record light's breath, for anything that is live. */
+	.fx-beacon { position: relative; }
+	.fx-beacon::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+		box-shadow: 0 0 0 0 var(--accent-ring);
+		animation: fx-beacon 1.8s var(--ease-out) infinite;
+		pointer-events: none;
+	}
+
+	@keyframes fx-beacon { to { box-shadow: 0 0 0 10px transparent; } }
+
+	/* ── Counting up — a stat that arrives ─────────────────────────────────
+	   The registered integer --fx-n is animated and printed with a counter,
+	   so a number counts from zero without a script. Set the target on the
+	   instance. Screen readers get the real number from the markup: put it
+	   in the element and this ::after is aria-hidden by construction. */
+	.fx-count {
+		--fx-target: 100;
+		animation: fx-count var(--dur-5) var(--ease-out) both;
+		counter-reset: fx var(--fx-n);
+		font-variant-numeric: tabular-nums;
+	}
+	.fx-count::after { content: counter(fx); }
+
+	@keyframes fx-count { from { --fx-n: 0; } to { --fx-n: var(--fx-target); } }
+
+	/* ── Off, when asked ───────────────────────────────────────────────────
+	   Entrances collapse to the 1ms token; the ambient ones must be told. */
+	@media (prefers-reduced-motion: reduce) {
+		.fx-blur-in, .fx-scale-in, .fx-pop, .fx-slide-start, .fx-slide-end, .fx-drop, .fx-wipe,
+		.fx-stagger-slow > * { animation: fx-fade 1ms linear both; }
+		.fx-type { animation: none; inline-size: auto; border-inline-end: 0; }
+		.fx-float, .fx-shimmer, .fx-kenburns > *, .fx-beacon::after, .fx-glitch::before, .fx-glitch::after, .fx-scan::after { animation: none; }
+		.fx-shimmer { -webkit-text-fill-color: currentcolor; background: none; }
+		.fx-glitch::before, .fx-glitch::after { display: none; }
+		.fx-scroll-rise, .fx-scroll-fade, .fx-scroll-scale, .fx-scroll-wipe, .fx-parallax > :first-child { animation: none; }
+		.fx-count { animation: none; counter-reset: fx var(--fx-target); }
+	}
+}

@@ -45,7 +45,19 @@ ALLOW = {
     'src/2-elements/22-code.css': {
         '.code',            # inline code
         '.codeblock__lang', # a language name, e.g. "css"
+        '.codeblock__file', # a filename, e.g. "src/index.css" — a path literal
         '.codeblock__pre',  # a code block
+        '.codeline',        # a one-line command with its copy button
+    },
+    'src/3-components/40-codeplayer.css': {
+        '.codeplayer__pre',  # a code block, worn as a screen
+    },
+    'src/7-broadcast/84-thumb.css': {
+        '.thumb__win',       # the code thumbnail's subject is an editor window — code
+    },
+    'src/4-patterns/51-prose.css': {
+        '.prose code:not(pre *)',   # inline code an editor emits
+        '.prose pre:not([class])',    # a code block an editor emits
     },
     'src/4-patterns/56-chat.css': {
         '.chat__tool',   # a tool call — literally machine output, the one

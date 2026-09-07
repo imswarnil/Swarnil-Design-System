@@ -5,10 +5,10 @@
    typed custom-property registrations are established before the first rule
    is parsed.
 
-   properties.css (@property registrations for animatable custom properties)
-   joins this folder in the phase that needs it — a registration for a token
-   that does not exist yet would be a lie in a file, so it is written when the
-   token is.
+   properties.css registers the few custom properties that animate — the glow
+   position, the counter — so the browser can interpolate them. A token nobody
+   moves is not registered.
    ========================================================================== */
 
 @import url('./layers.css');
+@import url('./properties.css');

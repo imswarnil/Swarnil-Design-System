@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The blog — Swarnil</title>
+<meta name="description" content="Long-form notes on making videos, code, courses and trips. Two levels: the front, and everything." />
+<script>
+try {
+  var t = localStorage.getItem('sds-theme');
+  if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  document.documentElement.dataset.theme = t;
+} catch (e) { document.documentElement.dataset.theme = 'light'; }
+</script>
+<link rel="preload" href="/assets/fonts/inter-100-900-latin.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/fonts.css" />
+<!-- The system. To take this template, replace the next line with the CDN link:
+     https://cdn.jsdelivr.net/npm/@imswarnil/swarnil-design/dist/swarnil-design.min.css -->
+<link rel="stylesheet" href="/src/index.css" />
+<!-- Page composition only — see templates/templates.css. -->
+<link rel="stylesheet" href="/templates/templates.css" />
+<script src="/src/js/nav.js" defer></script>
+</head>
+<body class="tpl">
+<a class="skip" href="#main">Skip to content</a>
+<header class="navbar navbar-sticky navbar-blur navbar-bordered">
+  <button class="navbar__burger" type="button" popovertarget="drawer" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
+  <a class="navbar__brand" href="/templates/personal/index.html"><span class="dot dot-accent"></span> Swarnil</a>
+  <nav class="navbar__nav" aria-label="Main">
+    <a class="navbar__link" href="/templates/personal/index.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-user"/></svg>Home</a><a class="navbar__link" href="/templates/blog/index.html#watch"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg>Watch</a><a class="navbar__link" href="/templates/blog/index.html" aria-current="page"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-file"/></svg>Blog</a><a class="navbar__link" href="/templates/personal/index.html#learn"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-folder"/></svg>Courses</a><a class="navbar__link" href="/templates/personal/index.html#travel"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-camera"/></svg>Travel</a>
+  </nav>
+  <div class="navbar__actions">
+    <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Search"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-search"/></svg></button>
+    <a class="btn btn-primary btn-sm" href="#newsletter">Subscribe</a>
+  </div>
+  <div class="sheet" id="drawer" popover>
+    <div class="sheet__head">
+      <button class="btn btn-quiet btn-sm btn-icon" type="button" popovertarget="drawer" popovertargetaction="hide" aria-label="Close"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-x"/></svg></button>
+      <span class="navbar__brand"><span class="dot dot-accent"></span> Swarnil</span>
+    </div>
+    <div class="sheet__body">
+      <div class="sheet__group">
+        <a class="sheet__link" href="/templates/personal/index.html"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-user"/></svg>Home</a><a class="sheet__link" href="/templates/blog/index.html#watch"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg>Watch</a><a class="sheet__link" href="/templates/blog/index.html" aria-current="page"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-file"/></svg>Blog</a><a class="sheet__link" href="/templates/personal/index.html#learn"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-folder"/></svg>Courses</a><a class="sheet__link" href="/templates/personal/index.html#travel"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-camera"/></svg>Travel</a>
+      </div>
+      <div class="sheet__group">
+        <p class="sheet__label">Elsewhere</p>
+        <a class="sheet__link" href="https://youtube.com/@imswarnil" rel="noopener"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-video"/></svg>YouTube</a>
+        <a class="sheet__link" href="https://github.com/imswarnil" rel="noopener"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>GitHub</a>
+      </div>
+    </div>
+    <p class="sheet__foot">Built on the Swarnil Design System</p>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ── Level one: the front ─────────────────────────────────────────── -->
+  <section class="section bg-fade-down">
+    <div class="center stack stack-lg">
+      <header class="page-head" style="padding-block-start: 0">
+        <span class="page-head__eyebrow"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-file"/></svg> The blog</span>
+        <h1 class="page-head__title">Notes from the making of things.</h1>
+        <p class="page-head__lead">Long-form, when a video would be the wrong shape. Design systems, code, courses, trips, and the occasional film.</p>
+      </header>
+
+      <div class="tpl-feature">
+        <article class="card card-tile card-hover-lift fx-rise" style="--card-ratio: 16 / 10">
+          <div class="card__media veil-mono"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%235b6b7a'/%3E%3Cstop offset='1' stop-color='%231d232b'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-grade"></span><span class="veil veil-scrim veil-heavy"></span><span class="card__badge"><span class="badge badge-solid">Featured</span></span></div>
+          <div class="card__body">
+            <p class="card__kicker">Design systems · 8 min</p>
+            <h2 class="card__title t-h2"><a class="card__link" href="/templates/blog/post.html">Decide once. Then stop deciding.</a></h2>
+            <p class="card__excerpt">Why a token-first system is the only kind that survives a rebrand — and how three variables carry a whole site.</p>
+          </div>
+        </article>
+        <div class="stack stack-sm fx-stagger">
+          <p class="eyebrow u-mb-2">Latest</p>
+          <article class="card card-row card-compact card-quiet card-hover-lift"><div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237a5b4e'/%3E%3Cstop offset='1' stop-color='%232a1d17'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /></div><div class="card__body"><p class="card__kicker">AI · Sep 03</p><h3 class="card__title"><a class="card__link" href="/templates/blog/post.html">A prompt is a spec you have not written yet</a></h3></div></article>
+          <article class="card card-row card-compact card-quiet card-hover-lift"><div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234e6f5c'/%3E%3Cstop offset='1' stop-color='%23172a20'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /></div><div class="card__body"><p class="card__kicker">Travel · Aug 28</p><h3 class="card__title"><a class="card__link" href="/templates/blog/post.html">Ladakh, on film</a></h3></div></article>
+          <article class="card card-row card-compact card-quiet card-hover-lift"><div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236a5a7e'/%3E%3Cstop offset='1' stop-color='%23221a2e'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /></div><div class="card__body"><p class="card__kicker">Craft · Aug 21</p><h3 class="card__title"><a class="card__link" href="/templates/blog/post.html">Why the thumbnail is the product</a></h3></div></article>
+          <a class="btn btn-ghost btn-sm ix-arrow" href="#all">Everything <svg class="icon icon-xs" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-right"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Watch strip ──────────────────────────────────────────────────── -->
+  <section class="section section-tight section-line section-sunken" id="watch">
+    <div class="center stack">
+      <header class="sec">
+        <div class="sec__text"><span class="sec__eyebrow"><span class="dot dot-sm dot-live"></span> Watch</span><h2 class="sec__title">The episodes behind the posts</h2></div>
+        <div class="sec__actions"><a class="sec__more ix-arrow" href="https://youtube.com/@imswarnil" rel="noopener">YouTube <svg class="icon icon-xs" aria-hidden="true"><use href="/icons/sprite.svg#i-external-link"/></svg></a></div>
+      </header>
+      <div class="episodes">
+        <a class="episode" href="/templates/blog/post.html" aria-current="true"><span class="episode__thumb"><span class="episode__dur">24:07</span></span><span class="episode__body"><span class="episode__title">Colour, in one block of tokens</span><span class="episode__meta">Episode 48 · Craft</span></span></a>
+        <a class="episode" href="/templates/blog/post.html"><span class="episode__thumb"><span class="episode__dur">18:30</span></span><span class="episode__body"><span class="episode__title">The frame layer, explained</span><span class="episode__meta">Episode 47 · Craft</span></span></a>
+        <a class="episode" href="/templates/blog/post.html" data-done><span class="episode__thumb"><span class="episode__dur">31:12</span></span><span class="episode__body"><span class="episode__title">Why the thumbnail is the product</span><span class="episode__meta">Episode 46 · Business</span></span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Level two: everything ────────────────────────────────────────── -->
+  <section class="section section-line" id="all">
+    <div class="center stack stack-lg">
+      <header class="sec sec-rule">
+        <div class="sec__text"><span class="sec__eyebrow">Everything</span><h2 class="sec__title">All 214 posts</h2></div>
+        <div class="sec__actions">
+          <label><span class="u-sr-only">Search posts</span><input class="input input-sm" type="search" placeholder="Search posts" /></label>
+        </div>
+      </header>
+      <div class="tabs tabs-underline" role="tablist" aria-label="Series">
+        <button class="tab" type="button" role="tab" aria-selected="true">All <span class="tab__count">214</span></button>
+        <button class="tab" type="button" role="tab" aria-selected="false">Design systems <span class="tab__count">31</span></button>
+        <button class="tab" type="button" role="tab" aria-selected="false">Code <span class="tab__count">58</span></button>
+        <button class="tab" type="button" role="tab" aria-selected="false">AI <span class="tab__count">22</span></button>
+        <button class="tab" type="button" role="tab" aria-selected="false">Courses <span class="tab__count">17</span></button>
+        <button class="tab" type="button" role="tab" aria-selected="false">Travel <span class="tab__count">64</span></button>
+        <button class="tab" type="button" role="tab" aria-selected="false">Film <span class="tab__count">22</span></button>
+      </div>
+
+      <div class="sidebar sidebar-end tpl-rail" style="--side-width: 18rem">
+        <div class="stack stack-lg">
+          <div class="deck cq-card fx-scroll-rise">
+            <article class="card card-hover-lift ">
+        <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%235b6b7a'/%3E%3Cstop offset='1' stop-color='%231d232b'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-grain"></span></div>
+        <div class="card__body">
+          <p class="card__kicker">Design systems</p>
+          <h3 class="card__title"><a class="card__link" href="/templates/blog/post.html">Decide once. Then stop deciding.</a></h3>
+          <p class="card__excerpt">Why a token-first system is the only kind that survives a rebrand — and how three variables carry a whole site.</p>
+        </div>
+        <div class="card__footer"><span>Sep 07</span><span class="t-data">8 min</span></div>
+      </article><article class="card card-hover-lift ">
+        <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237a5b4e'/%3E%3Cstop offset='1' stop-color='%232a1d17'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-grain"></span></div>
+        <div class="card__body">
+          <p class="card__kicker">AI</p>
+          <h3 class="card__title"><a class="card__link" href="/templates/blog/post.html">A prompt is a spec you have not written yet</a></h3>
+          <p class="card__excerpt">What building agents taught me about writing requirements, and the template I now start every one from.</p>
+        </div>
+        <div class="card__footer"><span>Sep 03</span><span class="t-data">11 min</span></div>
+      </article><article class="card card-hover-lift ">
+        <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234e6f5c'/%3E%3Cstop offset='1' stop-color='%23172a20'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-grain"></span></div>
+        <div class="card__body">
+          <p class="card__kicker">Travel</p>
+          <h3 class="card__title"><a class="card__link" href="/templates/blog/post.html">Ladakh, on film</a></h3>
+          <p class="card__excerpt">Fourteen photographs and the one that did not come out. Notes on shooting at altitude with one lens.</p>
+        </div>
+        <div class="card__footer"><span>Aug 28</span><span class="t-data">6 min</span></div>
+      </article><article class="card card-hover-lift ">
+        <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236a5a7e'/%3E%3Cstop offset='1' stop-color='%23221a2e'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-grain"></span></div>
+        <div class="card__body">
+          <p class="card__kicker">Craft</p>
+          <h3 class="card__title"><a class="card__link" href="/templates/blog/post.html">Why the thumbnail is the product</a></h3>
+          <p class="card__excerpt">Seen ten thousand times for every click. Seven compositions, one anatomy, and the three-second test.</p>
+        </div>
+        <div class="card__footer"><span>Aug 21</span><span class="t-data">9 min</span></div>
+      </article><article class="card card-hover-lift ">
+        <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237c6f3f'/%3E%3Cstop offset='1' stop-color='%232a2412'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-grain"></span></div>
+        <div class="card__body">
+          <p class="card__kicker">Build log</p>
+          <h3 class="card__title"><a class="card__link" href="/templates/blog/post.html">The frame layer, explained</a></h3>
+          <p class="card__excerpt">Corner brackets belong on footage, not on a blog post. On using a device to mean, not to decorate.</p>
+        </div>
+        <div class="card__footer"><span>Aug 14</span><span class="t-data">7 min</span></div>
+      </article><article class="card card-hover-lift ">
+        <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%233f5f7c'/%3E%3Cstop offset='1' stop-color='%2312202a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-grain"></span></div>
+        <div class="card__body">
+          <p class="card__kicker">Courses</p>
+          <h3 class="card__title"><a class="card__link" href="/templates/blog/post.html">How I structure a course so people finish it</a></h3>
+          <p class="card__excerpt">Twelve lessons, three modules, and the one thing that doubled completion: the order.</p>
+        </div>
+        <div class="card__footer"><span>Aug 07</span><span class="t-data">12 min</span></div>
+      </article><article class="card card-hover-lift ">
+        <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236b4a4a'/%3E%3Cstop offset='1' stop-color='%232a1717'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-grain"></span></div>
+        <div class="card__body">
+          <p class="card__kicker">Web series</p>
+          <h3 class="card__title"><a class="card__link" href="/templates/blog/post.html">Out of hand, season two: the edit</a></h3>
+          <p class="card__excerpt">What changed when the travel blog turned into a series with a crew of one and a half.</p>
+        </div>
+        <div class="card__footer"><span>Jul 31</span><span class="t-data">10 min</span></div>
+      </article><article class="card card-hover-lift ">
+        <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234a6b6b'/%3E%3Cstop offset='1' stop-color='%23172a2a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-grain"></span></div>
+        <div class="card__body">
+          <p class="card__kicker">Code</p>
+          <h3 class="card__title"><a class="card__link" href="/templates/blog/post.html">Shipping a Ghost theme from a design system</a></h3>
+          <p class="card__excerpt">The `file:` dependency, the PostCSS step, and why the theme owns none of its tokens.</p>
+        </div>
+        <div class="card__footer"><span>Jul 24</span><span class="t-data">14 min</span></div>
+      </article>
+          </div>
+          <nav class="pagination pagination-between" aria-label="Pages">
+            <span class="pagination__link" aria-disabled="true"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-left"/></svg> Newer</span>
+            <div class="pagination__pages">
+              <a class="pagination__link" href="#p1" aria-current="page">1</a>
+              <a class="pagination__link" href="#p2">2</a>
+              <a class="pagination__link" href="#p3">3</a>
+              <span class="pagination__gap" aria-hidden="true">…</span>
+              <a class="pagination__link" href="#p27">27</a>
+            </div>
+            <a class="pagination__link" href="#p2">Older <svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-right"/></svg></a>
+          </nav>
+        </div>
+
+        <aside class="rail">
+          <div class="rail__block">
+            <div class="rail__title"><svg class="icon icon-xs" aria-hidden="true"><use href="/icons/sprite.svg#i-user"/></svg> About</div>
+            <div class="card__author u-mt-2"><span class="avatar">S</span><span><span class="card__author-name">Swarnil Singhai</span><br /><span class="card__author-meta">Engineer · Creator</span></span></div>
+            <p class="t-small u-mt-3">I make things, then I make a video about making them. This is where the longer thoughts go.</p>
+          </div>
+          <div class="rail__block rail__block-accent">
+            <div class="rail__title"><svg class="icon icon-xs" aria-hidden="true"><use href="/icons/sprite.svg#i-mail"/></svg> Every Friday</div>
+            <p class="t-small">One episode, one thing I learned, no sponsor reads.</p>
+            <form class="stack stack-sm" action="#i" onsubmit="return false" style="margin-block-start: var(--space-3)">
+              <input class="input input-sm" type="email" placeholder="you@studio.tv" aria-label="Email" />
+              <button class="btn btn-primary btn-sm btn-block" type="submit">Subscribe</button>
+            </form>
+          </div>
+          <div class="rail__block">
+            <div class="rail__title">Series</div>
+            <nav class="stack stack-sm" aria-label="Series">
+              <a class="t-small ix-underline" href="#i">Build log — the design system</a>
+              <a class="t-small ix-underline" href="#i">Out of hand — the web series</a>
+              <a class="t-small ix-underline" href="#i">Prompt systems</a>
+              <a class="t-small ix-underline" href="#i">One lens, twenty-three countries</a>
+            </nav>
+          </div>
+          <div class="rail__block rail__block-flush">
+            <div class="rail__title">Tags</div>
+            <div class="cluster cluster-sm u-mt-2">
+              <a class="chip" href="#i">css <span class="chip__count">31</span></a><a class="chip" href="#i">ghost <span class="chip__count">12</span></a><a class="chip" href="#i">obs <span class="chip__count">8</span></a><a class="chip" href="#i">film <span class="chip__count">22</span></a><a class="chip" href="#i">agents <span class="chip__count">9</span></a><a class="chip" href="#i">ladakh <span class="chip__count">4</span></a>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-line" id="newsletter">
+    <div class="center center-md">
+      <div class="cta cta-inverse">
+        <p class="cta__kicker">Every Friday</p>
+        <h2 class="cta__title u-m-0">Read it before it is a video.</h2>
+        <p class="cta__body">Most posts here start as a newsletter issue. Get them first.</p>
+        <form class="cta__actions form form-inline" action="#i" onsubmit="return false">
+          <input class="input" type="email" placeholder="you@studio.tv" aria-label="Email" autocomplete="email" />
+          <button class="btn btn-primary" type="submit">Subscribe</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+<footer class="footer">
+  <div class="center">
+    <div class="footer__top">
+      <div>
+        <p class="footer__brand"><span class="dot dot-accent"></span> Swarnil</p>
+        <p class="footer__note">Engineer, creator, occasional traveller. Everything here is made in the open.</p>
+      </div>
+      <nav class="footer__col" aria-label="Make"><p class="footer__head">Make</p><a href="/templates/blog/index.html#watch">Watch</a><a href="/templates/blog/index.html">Read</a><a href="/templates/personal/index.html#learn">Learn</a></nav>
+      <nav class="footer__col" aria-label="Elsewhere"><p class="footer__head">Elsewhere</p><a href="https://youtube.com/@imswarnil" rel="noopener">YouTube</a><a href="https://github.com/imswarnil" rel="noopener">GitHub</a><a href="https://design.imswarnil.com">Design system</a></nav>
+      <nav class="footer__col" aria-label="Site"><p class="footer__head">Site</p><a href="#newsletter">Newsletter</a><a href="#i">RSS</a><a href="#i">Colophon</a></nav>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__fine">© 2026 Swarnil Singhai · Built on the <a href="https://design.imswarnil.com">Swarnil Design System</a></p>
+      <span class="footer__rec"><span class="dot dot-sm dot-live"></span> Still rolling</span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

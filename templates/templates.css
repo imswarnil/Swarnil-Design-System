@@ -1,0 +1,49 @@
+/* =============================================================================
+   templates.css — page composition glue for the templates
+
+   Everything a page is MADE of comes from the system. This file only says how
+   the pieces sit on these particular pages — a named grid, a sticky offset,
+   a band's minimum height. It declares no layer, so it beats every layer and
+   there is never a specificity fight; and it styles no component, because a
+   component that needs restyling is a component missing a variant.
+
+   Prefix: tpl-. Audited like every other stylesheet in the repo.
+   ========================================================================== */
+
+/* The page column, the sticky bar's height for anything that pins below it. */
+.tpl { --tpl-bar: 4rem; }
+
+/* The opening band on the personal page: the hero sits on a lit ground and
+   fills most of the first screen, but never so much the next band is hidden. */
+.tpl-hero {
+	min-block-size: min(88svh, 56rem);
+	display: grid;
+	align-items: center;
+	padding-block: var(--space-16);
+}
+
+/* The blog's first level: featured post left, the three latest right. Flips
+   to one column when either would be narrower than reading needs. */
+.tpl-feature {
+	display: grid;
+	grid-template-columns: minmax(0, 1.4fr) minmax(18rem, 1fr);
+	gap: var(--space-8);
+	align-items: start;
+}
+
+@media (width < 60rem) {
+	.tpl-feature { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* A rail that pins below the sticky bar. */
+.tpl-rail { --rail-top: calc(var(--tpl-bar) + var(--space-6)); }
+.tpl-rail .chapters-sticky { --chapters-top: calc(var(--tpl-bar) + var(--space-6)); }
+
+/* The reading layout on the post: article measure and the rail beside it. */
+.tpl-read { --side-width: 17rem; --side-min: 60%; --cluster-gap: var(--space-12); }
+
+/* The travel strip's tiles keep a fixed width so the reel snaps to them. */
+.tpl-reel { --reel-item: 15rem; }
+
+/* Hero media: the viewfinder holds the poster and the play control. */
+.tpl-hero__vf { --frame-color: var(--accent); }

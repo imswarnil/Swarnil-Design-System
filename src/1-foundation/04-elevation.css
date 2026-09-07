@@ -39,5 +39,12 @@
 		--shadow-media: 0 24px 64px -24px oklch(63% 0.19 34 / 0.28);
 
 		--focus-ring: 0 0 0 2px var(--bg-canvas), 0 0 0 4px var(--accent);
+
+		/* The names theme.imswarnil.com reads. Aliases, not a second ladder. */
+		--shadow-1: var(--elevation-1);
+		--shadow-2: var(--elevation-2);
+		--shadow-3: var(--elevation-3);
+		--shadow-4: var(--elevation-4);
+		--ring-focus: var(--focus-ring);
 	}
 }

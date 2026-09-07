@@ -27,9 +27,9 @@ import sys
 
 REPO = pathlib.Path(__file__).resolve().parent.parent
 
-# The broadcast layer draws export canvases for YouTube and Instagram, not web
-# pages, so its classes are legitimately absent from every HTML file here.
-SKIP_LAYERS = ('4-broadcast',)
+# Nothing is skipped: the broadcast layer (thumbnails, scenes, stream widgets)
+# is demoed in the docs like every other layer, so it is audited like one.
+SKIP_LAYERS = ()
 
 # Classes that appear in CSS as part of a selector we generate dynamically, or
 # that only ever come from JS. Kept explicit so the report stays honest rather
@@ -48,6 +48,9 @@ def css_sources():
         if not any(s in f for s in SKIP_LAYERS):
             yield f
     yield from sorted(glob.glob(str(REPO / 'docs/assets/*.css'), recursive=True))
+    # The page templates' own glue — page composition the system deliberately
+    # does not own. Held to the same rule: a template class must be defined.
+    yield from sorted(glob.glob(str(REPO / 'templates/**/*.css'), recursive=True))
 
 
 def defined_classes():

@@ -34,8 +34,10 @@ becomes a live preview, an HTML pane with the same markup escaped, a copy
 button and a 320px width toggle. One source of truth per example: the thing
 you see and the code you copy cannot drift, because they are the same string.
 """
+import gzip
 import html
 import json
+import os
 import pathlib
 import re
 import shutil
@@ -45,7 +47,8 @@ DOCS = ROOT / 'docs'
 CONTENT = DOCS / 'content'
 TEMPLATES = DOCS / 'templates'
 ASSETS = DOCS / 'assets'
-OUT = ROOT / 'site'
+# SDS_OUT lets a parallel build (CI, an agent, a preview) write somewhere else.
+OUT = pathlib.Path(os.environ.get('SDS_OUT') or ROOT / 'site')
 
 SITE = 'https://design.imswarnil.com'
 NAME = 'Swarnil Design System'
@@ -60,8 +63,26 @@ GROUPS = [
     'Components',
     'Patterns',
     'Sections',
+    'Broadcast',
     'Utilities',
+    'Templates',
 ]
+
+# One icon per group, from the system's own sprite (Swarnil Icons). The old
+# docs had these and the eye uses them: a glyph is found faster than a word
+# when scanning a column of eight uppercase labels.
+GROUP_ICONS = {
+    'Start': 'play',
+    'Foundation': 'aperture',
+    'Layout': 'crop',
+    'Elements': 'type',
+    'Components': 'box',
+    'Patterns': 'scan',
+    'Sections': 'browser',
+    'Broadcast': 'live',
+    'Utilities': 'settings',
+    'Templates': 'folder',
+}
 
 
 # ─────────────────────────────────────────────────────────────── cache-buster
@@ -344,43 +365,38 @@ def nav_html(pages, current):
             f'<a class="nav__link" href="/{p["slug"]}.html"'
             f'{" aria-current=\"page\"" if p["slug"] == current else ""}>{html.escape(p["title"])}</a>'
             for p in items)
+        icon = GROUP_ICONS.get(g)
+        glyph = (f'<svg class="icon nav__icon" aria-hidden="true">'
+                 f'<use href="/icons/sprite.svg#i-{icon}"/></svg>' if icon else '')
         parts.append(
             f'<details class="nav__group"{" open" if open_ else ""}>'
-            f'<summary class="nav__title">{html.escape(g)}</summary>'
+            f'<summary class="nav__title">{glyph}<span class="nav__label">{html.escape(g)}</span></summary>'
             f'<div class="nav__links">{li}</div></details>')
     return ''.join(parts)
 
 
 def toc_html(toc):
-    """The table of contents as a video timeline.
+    """The table of contents: a heading and a list of links.
 
-    A page and a video are the same shape — a thing you move through at your
-    own pace, with named parts you might want to jump to. So the TOC is a
-    scrubber: a track, a progress fill, a playhead, and a chapter marker per
-    heading. It is the system's own language (viewfinder, record light,
-    timecode) applied to the one piece of chrome that was still a plain list.
-
-    It also answers a question a nested list cannot: HOW FAR THROUGH AM I.
+    Deliberately plain. The scrubber that used to live here needed a scroll
+    listener, a read-time estimate and per-node measurement; this needs none of
+    it and renders identically with JavaScript off.
     """
     if len(toc) < 2:
         return ''
     li = ''.join(
-        f'<a class="toc__link toc__link--h{lvl}" href="#{sid}" data-toc-link>'
-        f'<span class="toc__node" aria-hidden="true"></span>'
-        f'<span class="toc__text">{html.escape(txt)}</span></a>'
+        f'<a class="toc__link toc__link--h{lvl}" href="#{sid}">{html.escape(txt)}</a>'
         for lvl, sid, txt in toc)
-    return (
-        '<nav class="toc" aria-label="On this page">'
-        # The bar is the clock and nothing else — a tape counter needs no
-        # caption. The nav's accessible name still says what this is.
-        '<div class="toc__bar">'
-        '<span class="toc__time" data-toc-time aria-hidden="true"></span>'
-        '</div>'
-        '<div class="toc__list">'
-        '<span class="toc__track" aria-hidden="true"></span>'
-        '<span class="toc__fill" data-toc-fill aria-hidden="true"></span>'
-        f'{li}'
-        '</div></nav>')
+    return ('<nav class="toc" aria-label="On this page">'
+            '<p class="toc__head">On this page</p>'
+            f'{li}</nav>')
+
+
+def bundle_size():
+    f = ROOT / 'dist' / 'swarnil-design.min.css'
+    if not f.exists():
+        return '—'
+    return f'{len(gzip.compress(f.read_bytes())) / 1024:.1f}'
 
 
 def build_page(page, pages, shell):
@@ -413,7 +429,7 @@ def build_page(page, pages, shell):
         'canonical': f'{SITE}/{page["slug"]}.html',
         'group': html.escape(page.get('group', '')),
         'take': take,
-        'editurl': f'https://github.com/imswarnil/swarnil-design/edit/main/docs/content/{page["slug"]}.md',
+        'editurl': f'https://github.com/imswarnil/Swarnil-Design-System/edit/main/docs/content/{page["slug"]}.md',
         'crumbs': (
             '<a class="crumbs__link" href="/">Home</a>'
             f'<span class="crumbs__sep" aria-hidden="true">/</span>'
@@ -428,6 +444,9 @@ def build_page(page, pages, shell):
         'body': body,
         'pager': pager(prev_, 'prev') + pager(next_, 'next'),
         'year': '2026',
+        # Measured, not claimed: the gzipped size of the minified web bundle,
+        # so the home page's number cannot drift from the build.
+        'size': bundle_size(),
     }
     out = shell
     for k, val in fields.items():
@@ -495,17 +514,32 @@ def main():
     if (ROOT / 'dist').is_dir():
         shutil.copytree(ROOT / 'dist', OUT / 'dist')
 
-    # The icon set is a separate package and a separate repo. Copying its
-    # built sprite in means the docs reference the REAL icons — if one is
-    # redrawn there, it changes here, and neither repo has to know how the
-    # other is built.
-    sprite = ROOT.parent / 'icons.imswarnil.com' / 'dist' / 'sprite.svg'
-    if sprite.exists():
-        (OUT / 'icons').mkdir(exist_ok=True)
-        shutil.copy(sprite, OUT / 'icons' / 'sprite.svg')
+    # The page templates are whole pages built out of the system — a personal
+    # homepage, a blog. They are copied as-is so they can be opened, viewed at
+    # any width and saved from the site; the docs' Templates page frames them.
+    # They link /src/index.css like the docs do, so a rebuild is visible in
+    # them too. The class audit reads them from here, so a template can only
+    # use a class the system (or templates/templates.css) defines.
+    if (ROOT / 'templates').is_dir():
+        shutil.copytree(ROOT / 'templates', OUT / 'templates',
+                        ignore=shutil.ignore_patterns('README.md'))
+
+    # The icon set is a separate repo (icons.imswarnil.com). Its built sprite
+    # is vendored at docs/icons/sprite.svg so CI and a fresh clone can build
+    # the site; when the source repo is checked out beside this one, a build
+    # refreshes the vendored copy from it, so a redrawn icon lands here on
+    # the next build without either repo knowing how the other is built.
+    source = ROOT.parent / 'icons.imswarnil.com' / 'dist' / 'sprite.svg'
+    vendored = DOCS / 'icons' / 'sprite.svg'
+    if source.exists() and (not vendored.exists()
+                            or source.read_bytes() != vendored.read_bytes()):
+        vendored.parent.mkdir(exist_ok=True)
+        shutil.copy(source, vendored)
+        print('  refreshed docs/icons/sprite.svg from icons.imswarnil.com')
+    if vendored.exists():
+        shutil.copytree(vendored.parent, OUT / 'icons')
     else:
-        print('  note: icon sprite not found — run `npm run build` in '
-              'icons.imswarnil.com to refresh it')
+        print('  warning: docs/icons/sprite.svg missing — icons will not render')
 
     (OUT / '.nojekyll').write_text('')
     (OUT / 'CNAME').write_text(SITE.split('//')[1] + '\n')

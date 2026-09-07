@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Decide once. Then stop deciding. — Swarnil</title>
+<meta name="description" content="Why a token-first design system is the only kind that survives a rebrand." />
+<script>
+try {
+  var t = localStorage.getItem('sds-theme');
+  if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  document.documentElement.dataset.theme = t;
+} catch (e) { document.documentElement.dataset.theme = 'light'; }
+</script>
+<link rel="preload" href="/assets/fonts/inter-100-900-latin.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/fonts.css" />
+<!-- The system. To take this template, replace the next line with the CDN link:
+     https://cdn.jsdelivr.net/npm/@imswarnil/swarnil-design/dist/swarnil-design.min.css -->
+<link rel="stylesheet" href="/src/index.css" />
+<!-- Page composition only — see templates/templates.css. -->
+<link rel="stylesheet" href="/templates/templates.css" />
+<script src="/src/js/nav.js" defer></script>
+</head>
+<body class="tpl">
+<a class="skip" href="#main">Skip to content</a>
+<div class="fx-scroll-progress" aria-hidden="true"></div>
+<header class="navbar navbar-sticky navbar-blur navbar-bordered">
+  <button class="navbar__burger" type="button" popovertarget="drawer" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
+  <a class="navbar__brand" href="/templates/personal/index.html"><span class="dot dot-accent"></span> Swarnil</a>
+  <nav class="navbar__nav" aria-label="Main">
+    <a class="navbar__link" href="/templates/personal/index.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-user"/></svg>Home</a><a class="navbar__link" href="/templates/blog/index.html#watch"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg>Watch</a><a class="navbar__link" href="/templates/blog/index.html" aria-current="page"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-file"/></svg>Blog</a><a class="navbar__link" href="/templates/personal/index.html#learn"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-folder"/></svg>Courses</a><a class="navbar__link" href="/templates/personal/index.html#travel"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-camera"/></svg>Travel</a>
+  </nav>
+  <div class="navbar__actions">
+    <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Search"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-search"/></svg></button>
+    <a class="btn btn-primary btn-sm" href="#newsletter">Subscribe</a>
+  </div>
+  <div class="sheet" id="drawer" popover>
+    <div class="sheet__head">
+      <button class="btn btn-quiet btn-sm btn-icon" type="button" popovertarget="drawer" popovertargetaction="hide" aria-label="Close"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-x"/></svg></button>
+      <span class="navbar__brand"><span class="dot dot-accent"></span> Swarnil</span>
+    </div>
+    <div class="sheet__body">
+      <div class="sheet__group">
+        <a class="sheet__link" href="/templates/personal/index.html"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-user"/></svg>Home</a><a class="sheet__link" href="/templates/blog/index.html#watch"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg>Watch</a><a class="sheet__link" href="/templates/blog/index.html" aria-current="page"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-file"/></svg>Blog</a><a class="sheet__link" href="/templates/personal/index.html#learn"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-folder"/></svg>Courses</a><a class="sheet__link" href="/templates/personal/index.html#travel"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-camera"/></svg>Travel</a>
+      </div>
+      <div class="sheet__group">
+        <p class="sheet__label">Elsewhere</p>
+        <a class="sheet__link" href="https://youtube.com/@imswarnil" rel="noopener"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-video"/></svg>YouTube</a>
+        <a class="sheet__link" href="https://github.com/imswarnil" rel="noopener"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>GitHub</a>
+      </div>
+    </div>
+    <p class="sheet__foot">Built on the Swarnil Design System</p>
+  </div>
+</header>
+
+<main id="main">
+
+  <article>
+    <header class="section section-tight">
+      <div class="center center-md">
+        <div class="page-head" style="padding-block-start: 0">
+          <span class="page-head__eyebrow"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-bookmark"/></svg> Design systems · Part 3 of 6</span>
+          <h1 class="page-head__title">Decide once. Then stop deciding.</h1>
+          <p class="page-head__lead">Why a token-first design system is the only kind that survives a rebrand — and how three variables carry a whole site.</p>
+          <div class="page-head__meta">
+            <span class="card__author"><span class="avatar avatar-sm">S</span><span><span class="card__author-name">Swarnil Singhai</span><br /><span class="card__author-meta">2026-09-07 · 8 min read</span></span></span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="center">
+      <figure class="figure u-mb-8">
+        <div class="poster veil-mono ratio ratio-wide fx-kenburns" style="aspect-ratio: 21 / 9">
+          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%235b6b7a'/%3E%3Cstop offset='1' stop-color='%231d232b'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="A wall of colour swatches, graded to one palette" />
+          <span class="veil veil-grade"></span><span class="veil veil-vignette"></span><span class="veil veil-grain"></span>
+        </div>
+        <figcaption class="figure__caption">Ninety-seven tones, one lightness ladder. The accent is the only thing that is allowed to be a colour.</figcaption>
+      </figure>
+    </div>
+
+    <div class="center sidebar sidebar-end tpl-read tpl-rail">
+      <div class="prose">
+        <p class="lead">I kept rebuilding the same buttons. Not because the old ones were wrong, but because every new project asked me to decide again — sixteen or twenty, grey or greyer, round or rounder — and every time I decided slightly differently.</p>
+
+        <h2 id="the-cost">The cost of deciding twice</h2>
+        <p>A design decision is cheap to make and expensive to keep. The first time you pick a corner radius it costs nothing. The fortieth time, in a different file, on a different Tuesday, it costs consistency — and consistency is the only thing a solo creator has that a team can't buy.<a class="fn-ref" href="#fn-1" id="ref-1">1</a></p>
+        <p>So the rule became: <span class="mark">every value is a variable off a ladder</span>. Nothing invents a number. If a component needs a size that is not on the ladder, the ladder is wrong or the component is.</p>
+
+        <figure class="pullquote">
+          <blockquote class="pullquote__text">A rule that is not executable is a wish.</blockquote>
+          <figcaption class="pullquote__cite">approach.md, section 0</figcaption>
+        </figure>
+
+        <h2 id="three-variables">Three variables</h2>
+        <p>Here is the entire rebrand. Everything else on this page follows from it — the buttons, the badges, the graded photographs, the record dot in the footer.</p>
+
+        <figure class="codeplayer codeplayer-ln">
+          <figcaption class="codeplayer__bar"><span class="codeplayer__lang">CSS</span><button class="codeplayer__copy" type="button" data-copy>Copy</button></figcaption>
+          <div class="codeplayer__screen">
+            <pre class="codeplayer__pre"><code><span class="codeplayer__ln"><span class="tok-com">/* the whole rebrand */</span></span><span class="codeplayer__ln"><span class="tok-sel">:root</span> <span class="tok-punc">{</span></span><span class="codeplayer__ln">  <span class="tok-prop">--accent</span><span class="tok-punc">:</span> <span class="tok-str">oklch(63% 0.19 34)</span><span class="tok-punc">;</span></span><span class="codeplayer__ln">  <span class="tok-prop">--radius-md</span><span class="tok-punc">:</span> <span class="tok-num">8px</span><span class="tok-punc">;</span></span><span class="codeplayer__ln">  <span class="tok-prop">--font-body</span><span class="tok-punc">:</span> <span class="tok-str">'Inter'</span><span class="tok-punc">;</span></span><span class="codeplayer__ln"><span class="tok-punc">}</span></span></code></pre>
+          </div>
+        </figure>
+
+        <p>The trick is not the variables. Everybody has variables. The trick is that <strong>components read only the second tier</strong> — <code>--accent</code>, never <code>--signal-500</code> — so the primitive can change under them and nothing has to know.</p>
+
+        <div class="callout callout-accent">
+          <span class="callout__icon"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-info"/></svg></span>
+          <div class="callout__body"><p class="callout__title">Try it on this page</p><p>Open the inspector, set <code>--accent</code> on <code>:root</code> to any colour, and watch the graded photograph, the tags and the footer dot follow.</p></div>
+        </div>
+
+        <h2 id="what-it-buys">What it buys you</h2>
+        <ul>
+          <li>A new project starts at the finish line. The first commit is content.</li>
+          <li>A rebrand is an afternoon, and it is one commit.</li>
+          <li>Dark mode is one block of tokens, not a second stylesheet that drifts.<a class="fn-ref" href="#fn-2" id="ref-2">2</a></li>
+        </ul>
+        <p class="note note-craft">The one thing it does not buy you is taste. A ladder makes the wrong decision consistent too.</p>
+
+        <h2 id="the-catch">The catch</h2>
+        <p>You have to actually stop deciding. That is harder than it sounds, because deciding is fun and the ladder is boring. The discipline is to treat a one-off as a bug report against the system, fix it there, and let the fix land everywhere at once.</p>
+        <p>That is the whole idea. Decide once. Then stop.</p>
+
+        <section class="footnotes">
+          <ol class="fn">
+            <li id="fn-1">Two people with a shared Figma file will drift less than one person across two years. The system is how one person becomes two. <a class="fn__back" href="#ref-1" aria-label="Back to reference 1">↩</a></li>
+            <li id="fn-2">The previous version of this site kept a hand-maintained dark block and a <code>prefers-color-scheme</code> copy. The copy had already drifted by three tokens when I found it. <a class="fn__back" href="#ref-2" aria-label="Back to reference 2">↩</a></li>
+          </ol>
+        </section>
+      </div>
+
+      <aside class="rail">
+        <div class="rail__block rail__block-flush">
+          <nav class="chapters chapters-sticky" aria-label="On this page">
+            <span class="chapters__title">On this page</span>
+            <ol class="chapters__list">
+              <li><a class="chapters__link" href="#the-cost" aria-current="location">The cost of deciding twice</a></li>
+              <li><a class="chapters__link" href="#three-variables">Three variables</a></li>
+              <li><a class="chapters__link" href="#what-it-buys">What it buys you</a></li>
+              <li><a class="chapters__link" href="#the-catch">The catch</a></li>
+            </ol>
+            <div class="share share-flush u-mt-6">
+              <span class="share__label">Share</span>
+              <button class="btn btn-icon btn-ghost btn-sm" type="button" aria-label="Copy link"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-link"/></svg></button>
+              <button class="btn btn-icon btn-ghost btn-sm" type="button" aria-label="Email"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-mail"/></svg></button>
+              <button class="btn btn-icon btn-ghost btn-sm" type="button" aria-label="Share"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-share"/></svg></button>
+            </div>
+          </nav>
+        </div>
+      </aside>
+    </div>
+
+    <div class="center center-md stack stack-lg u-mt-8">
+      <div class="share">
+        <span class="share__label">Share</span>
+        <button class="btn btn-outline btn-sm" type="button"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-link"/></svg> Copy link</button>
+        <button class="btn btn-ghost btn-sm" type="button"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-mail"/></svg> Email</button>
+        <button class="btn btn-ghost btn-sm" type="button"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-bookmark"/></svg> Save</button>
+        <span class="share__count">128 shares</span>
+      </div>
+
+      <article class="card card-row card-sunken cq-card">
+        <div class="card__body">
+          <div class="card__author"><span class="avatar avatar-lg">S</span><span><span class="card__author-name">Swarnil Singhai</span><br /><span class="card__author-meta">Engineer · Creator · 128 episodes</span></span></div>
+          <p class="card__excerpt">I make things, then I make a video about making them. Software by trade, YouTube by habit, a travel blog and a web series on the side.</p>
+          <div class="card__tags"><a class="btn btn-sm btn-outline card__above" href="/templates/personal/index.html">About</a><a class="btn btn-sm btn-ghost card__above" href="https://youtube.com/@imswarnil" rel="noopener">YouTube</a></div>
+        </div>
+      </article>
+
+      <nav class="pager" aria-label="Series">
+        <a class="pager__item" href="#prev">
+          <span class="pager__dir"><svg class="icon icon-xs" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-left"/></svg> Previous</span>
+          <span class="pager__title">Mono is a signal</span>
+          <span class="pager__meta">Part 2 · 6 min</span>
+        </a>
+        <a class="pager__item pager__item-next" href="#next">
+          <span class="pager__dir">Next <svg class="icon icon-xs" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-right"/></svg></span>
+          <span class="pager__title">The frame layer, explained</span>
+          <span class="pager__meta">Part 4 · 7 min</span>
+        </a>
+      </nav>
+
+      <section class="thread">
+        <header class="thread__head">
+          <h2 class="thread__count">14 <span>comments</span></h2>
+          <button class="btn btn-quiet btn-sm" type="button">Newest first</button>
+        </header>
+        <form class="thread__form" action="#i" onsubmit="return false">
+          <label class="field__label" for="th-1">Add to the thread</label>
+          <textarea class="input" id="th-1" placeholder="What did you think?"></textarea>
+          <div class="thread__form-row"><span class="thread__note">Markdown works. Be kind.</span><button class="btn btn-primary btn-sm" type="submit">Post</button></div>
+        </form>
+        <ol class="thread__list">
+          <li class="comment">
+            <span class="comment__face"><span class="avatar">PR</span></span>
+            <div class="comment__body">
+              <div class="comment__head"><a class="comment__author" href="#i">Priya R.</a><span class="comment__time">2h ago</span></div>
+              <div class="comment__text"><p>The bit about components reading only the second tier is the thing I have been failing to explain to my team for a year. Sending this.</p></div>
+              <div class="comment__actions"><button class="comment__action" type="button" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-heart"/></svg> 12</button><button class="comment__action" type="button">Reply</button></div>
+              <ol class="comment__replies">
+                <li class="comment comment-author">
+                  <span class="comment__face"><span class="avatar">S</span></span>
+                  <div class="comment__body">
+                    <div class="comment__head"><a class="comment__author" href="#i">Swarnil</a><span class="badge badge-accent">Author</span><span class="comment__time">1h ago</span></div>
+                    <div class="comment__text"><p>Part 4 is the frame layer — the same rule, applied to a device instead of a colour.</p></div>
+                    <div class="comment__actions"><button class="comment__action" type="button" aria-pressed="true"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-heart"/></svg> 4</button><button class="comment__action" type="button">Reply</button></div>
+                  </div>
+                </li>
+              </ol>
+            </div>
+          </li>
+        </ol>
+      </section>
+    </div>
+  </article>
+
+  <section class="section section-line u-mt-8" id="newsletter">
+    <div class="center center-md">
+      <div class="cta cta-boxed">
+        <p class="cta__kicker">Every Friday</p>
+        <h2 class="cta__title u-m-0">Get the next part first.</h2>
+        <form class="cta__actions form form-inline" action="#i" onsubmit="return false">
+          <input class="input" type="email" placeholder="you@studio.tv" aria-label="Email" autocomplete="email" />
+          <button class="btn btn-primary" type="submit">Subscribe</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+<footer class="footer">
+  <div class="center">
+    <div class="footer__top">
+      <div>
+        <p class="footer__brand"><span class="dot dot-accent"></span> Swarnil</p>
+        <p class="footer__note">Engineer, creator, occasional traveller. Everything here is made in the open.</p>
+      </div>
+      <nav class="footer__col" aria-label="Make"><p class="footer__head">Make</p><a href="/templates/blog/index.html#watch">Watch</a><a href="/templates/blog/index.html">Read</a><a href="/templates/personal/index.html#learn">Learn</a></nav>
+      <nav class="footer__col" aria-label="Elsewhere"><p class="footer__head">Elsewhere</p><a href="https://youtube.com/@imswarnil" rel="noopener">YouTube</a><a href="https://github.com/imswarnil" rel="noopener">GitHub</a><a href="https://design.imswarnil.com">Design system</a></nav>
+      <nav class="footer__col" aria-label="Site"><p class="footer__head">Site</p><a href="#newsletter">Newsletter</a><a href="#i">RSS</a><a href="#i">Colophon</a></nav>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__fine">© 2026 Swarnil Singhai · Built on the <a href="https://design.imswarnil.com">Swarnil Design System</a></p>
+      <span class="footer__rec"><span class="dot dot-sm dot-live"></span> Still rolling</span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

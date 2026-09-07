@@ -1,0 +1,258 @@
+/* =============================================================================
+   52 · CURRICULUM — the course syllabus, and the episode list beside a player
+
+   A syllabus is a list that knows where you are. Each module is a <details>,
+   so collapsing is the platform's job and find-in-page opens the module that
+   holds the match; each lesson is a row with a tick that says watched, and
+   the current lesson gets the accent ring rather than a filled pill.
+
+   .episodes is the same container wearing series clothes: a header, a count,
+   and a list that scrolls itself so it can sit beside a player without
+   pushing the page. The rows inside it are the Media layer's .episode — this
+   file arranges rows, it does not draw them.
+
+   COMPOSITION WARNING
+   .curriculum__module > summary spends ::after on its chevron and
+   .lesson__tick spends ::before on the tick. Neither can take .frame.
+
+   Layer: patterns.
+   ========================================================================== */
+
+@layer patterns {
+
+	/* ── The syllabus ──────────────────────────────────────────────────────── */
+
+	.curriculum {
+		--curriculum-pad: var(--space-6);
+		--curriculum-radius: var(--radius-card);
+		border: var(--border-hair) solid var(--line-default);
+		border-radius: var(--curriculum-radius);
+		background: var(--bg-surface);
+		overflow: hidden;
+	}
+
+	/* Inside a card or a rail the box already has an edge. */
+	.curriculum-flush { --curriculum-pad: 0; border: 0; border-radius: 0; background: transparent; }
+
+	/* Beside a player: the modules scroll, the head stays. */
+	.curriculum-scroll { --curriculum-max: 28rem; display: flex; flex-direction: column; max-height: var(--curriculum-max); }
+	.curriculum-scroll .curriculum__head { flex: none; }
+	.curriculum-scroll .curriculum__modules { overflow-y: auto; scrollbar-width: thin; overscroll-behavior: contain; }
+
+	.curriculum__head {
+		padding: var(--space-5) var(--curriculum-pad);
+		border-block-end: var(--border-hair) solid var(--line-default);
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: var(--space-3) var(--space-5);
+	}
+
+	.curriculum__title {
+		font-family: var(--font-display);
+		font-size: var(--text-lg);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-tight);
+	}
+
+	/* "12 lessons · 3h 40m" is data, not a label. */
+	.curriculum__meta {
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		letter-spacing: var(--tracking-data);
+		font-size: var(--text-2xs);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-faint);
+	}
+
+	/* The progress bar takes the whole head width, under the title row. */
+	.curriculum__head .progress { flex: 1 1 100%; }
+
+	.curriculum__modules { margin: 0; padding: 0; list-style: none; }
+
+	/* A module is one <details>; its summary is the module row. */
+	.curriculum__module { border-block-end: var(--border-hair) solid var(--line-subtle); }
+	.curriculum__module:last-child { border-block-end: 0; }
+
+	.curriculum__module > summary {
+		list-style: none;
+		cursor: pointer;
+		display: flex;
+		align-items: baseline;
+		gap: var(--space-3);
+		padding: var(--space-4) var(--curriculum-pad);
+		transition: var(--t-colors);
+	}
+
+	.curriculum__module > summary::-webkit-details-marker { display: none; }
+	.curriculum__module > summary:hover { background: var(--hover-wash); }
+
+	/* The module number and the lesson count are data. */
+	.curriculum__no,
+	.curriculum__count {
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		letter-spacing: var(--tracking-data);
+		font-size: var(--text-2xs);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-faint);
+		white-space: nowrap;
+	}
+
+	.curriculum__no { font-size: var(--text-xs); }
+
+	.curriculum__module-title {
+		font-weight: var(--weight-semibold);
+		font-size: var(--text-sm);
+		flex: 1;
+	}
+
+	/* The chevron is drawn, not shipped: two strokes that fold. */
+	.curriculum__module > summary::after {
+		content: '';
+		align-self: center;
+		width: 0.5rem;
+		height: 0.5rem;
+		border-inline-end: var(--border-2) solid var(--fg-faint);
+		border-block-end: var(--border-2) solid var(--fg-faint);
+		rotate: 45deg;
+		translate: 0 -0.15rem;
+		transition: rotate var(--dur-2) var(--ease-out);
+		flex: none;
+	}
+
+	.curriculum__module[open] > summary::after { rotate: 225deg; translate: 0 0.15rem; }
+
+	.curriculum__lessons {
+		list-style: none;
+		margin: 0;
+		padding: 0 0 var(--space-3);
+	}
+
+	/* ── One lesson row ────────────────────────────────────────────────────────
+	   aria-current = you are here; [data-done] = watched. */
+
+	.lesson {
+		--lesson-tick: 1.1rem;
+		display: flex;
+		align-items: center;
+		gap: var(--space-3);
+		padding: var(--space-2) var(--curriculum-pad, var(--space-6)) var(--space-2) calc(var(--curriculum-pad, var(--space-6)) + var(--space-2));
+		font-size: var(--text-sm);
+		color: var(--fg-subtle);
+		text-decoration: none;
+		transition: var(--t-colors);
+	}
+
+	.lesson:hover { color: var(--fg-default); background: var(--hover-wash); }
+
+	/* The tick: empty ring → filled on done → accent ring when current. */
+	.lesson__tick {
+		width: var(--lesson-tick);
+		height: var(--lesson-tick);
+		flex: none;
+		border: var(--border-2) solid var(--line-strong);
+		border-radius: var(--radius-full);
+		display: grid;
+		place-items: center;
+		font-size: var(--text-3xs);
+		line-height: 1;
+		transition: var(--t-colors), var(--t-shadow);
+	}
+
+	.lesson[data-done] .lesson__tick {
+		background: var(--fg-default);
+		border-color: var(--fg-default);
+		color: var(--bg-canvas);
+	}
+
+	.lesson[data-done] .lesson__tick::before { content: '✓'; }
+
+	.lesson[aria-current] { color: var(--fg-default); font-weight: var(--weight-semibold); }
+
+	.lesson[aria-current] .lesson__tick {
+		border-color: var(--accent);
+		box-shadow: 0 0 0 3px var(--accent-ring);
+	}
+
+	/* Locked: the row stays readable and says why with a lock, not a fade. */
+	.lesson[data-locked] { color: var(--fg-faint); }
+	.lesson[data-locked] .lesson__tick { border-style: dashed; }
+
+	.lesson__title { flex: 1; min-width: 0; }
+
+	/* Length is a timecode: data. */
+	.lesson__len {
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		letter-spacing: var(--tracking-data);
+		font-size: var(--text-2xs);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-faint);
+	}
+
+	/* FREE is a label: it names a state in a word. */
+	.lesson__free {
+		font-family: var(--font-label);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		font-size: var(--text-2xs);
+		color: var(--fg-accent);
+	}
+
+	/* ── The episode list beside a player ──────────────────────────────────────
+	   Arranges the Media layer's .episode rows. The head stays, the list
+	   scrolls, and the box never grows past the player it sits beside. */
+
+	.episodes {
+		--episodes-max: 28rem;
+		--episodes-pad: var(--space-2);
+		border: var(--border-hair) solid var(--line-default);
+		border-radius: var(--radius-card);
+		background: var(--bg-surface);
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+		max-height: var(--episodes-max);
+	}
+
+	.episodes-flush { border: 0; border-radius: 0; background: transparent; }
+
+	.episodes__head {
+		padding: var(--space-4) var(--space-5);
+		border-block-end: var(--border-hair) solid var(--line-default);
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-3);
+		flex: none;
+	}
+
+	.episodes-flush .episodes__head { padding-inline: 0; }
+
+	.episodes__title { font-weight: var(--weight-semibold); font-size: var(--text-sm); }
+
+	/* "12 of 24" is data. */
+	.episodes__count {
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		letter-spacing: var(--tracking-data);
+		font-size: var(--text-2xs);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-faint);
+	}
+
+	.episodes__list {
+		list-style: none;
+		margin: 0;
+		overflow-y: auto;
+		overscroll-behavior: contain;
+		padding: var(--episodes-pad);
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-px);
+		scrollbar-width: thin;
+	}
+}

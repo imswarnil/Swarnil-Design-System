@@ -22,17 +22,21 @@ try {
 } catch (e) { document.documentElement.dataset.theme = 'light'; }
 </script>
 
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<!-- Self-hosted, variable, latin-only preload: the one face every page paints
+     with. Mono and latin-ext load on demand from fonts.css. -->
+<link rel="preload" href="/assets/fonts/inter-100-900-latin.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/fonts.css{v}" />
 
 <link rel="stylesheet" href="/src/index.css{v}" />
+<!-- The broadcast layer is a separate bundle for consumers; the docs load it
+     so the Broadcast pages can demo it. -->
+<link rel="stylesheet" href="/src/7-broadcast/index.css{v}" />
 <link rel="stylesheet" href="/assets/docs.css{v}" />
 <link rel="stylesheet" href="/assets/home.css{v}" />
 <script src="/assets/docs.js{v}" defer></script>
 </head>
 
-<body class="is-home">
+<body>
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="bar">
@@ -42,15 +46,20 @@ try {
     <span class="brand__sub">Design System</span>
   </a>
 
-  <div class="bar__end">
+  <nav class="bar__nav" aria-label="Primary">
     <a class="barlink" href="/introduction.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-file"/></svg>Docs</a>
     <a class="barlink" href="/principles.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-bookmark"/></svg>Principles</a>
-    <a class="barlink" href="https://icons.imswarnil.com" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-capture"/></svg>Icons</a>
+    <a class="barlink" href="/install.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-box"/></svg>Install</a>
+    <a class="barlink" href="/icons.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-capture"/></svg>Icons</a>
+    <a class="barlink" href="/templates.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-folder"/></svg>Templates</a>
+  </nav>
+
+  <div class="bar__end">
     <button class="themebtn" type="button" data-theme-toggle aria-label="Switch theme">
       <span class="themebtn__dot" aria-hidden="true"></span>
       <span class="themebtn__label" data-theme-label>Light</span>
     </button>
-    <a class="ghbtn" href="https://github.com/imswarnil/swarnil-design" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-star"/></svg>Star</a>
+    <a class="ghbtn ghbtn-sm" href="https://github.com/imswarnil/Swarnil-Design-System" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-star"/></svg>Star</a>
   </div>
 </header>
 
@@ -81,13 +90,21 @@ try {
         <a href="/badge.html">Badge</a>
       </nav>
 
+      <nav class="foot-col" aria-label="Broadcast">
+        <p class="foot-col__head">Broadcast</p>
+        <a href="/canvas.html">Canvas</a>
+        <a href="/thumbnail.html">Thumbnail</a>
+        <a href="/scene.html">Scenes</a>
+        <a href="/templates.html">Templates</a>
+      </nav>
+
       <nav class="foot-col" aria-label="Project">
         <p class="foot-col__head">Project</p>
         <a href="/introduction.html">Introduction</a>
         <a href="/principles.html">Principles</a>
         <a href="/install.html">Install</a>
-        <a href="https://icons.imswarnil.com">Swarnil Icons</a>
-        <a href="https://github.com/imswarnil/swarnil-design" rel="noopener">GitHub</a>
+        <a href="/icons.html">Swarnil Icons</a>
+        <a href="https://github.com/imswarnil/Swarnil-Design-System" rel="noopener">GitHub</a>
       </nav>
     </div>
 

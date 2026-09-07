@@ -279,6 +279,13 @@
 		--selection-bg: light-dark(var(--signal-100), oklch(63% 0.19 34 / 0.3));
 		--selection-fg: light-dark(var(--signal-900), var(--ink-0));
 
+		/* ── Absolutes ─────────────────────────────────────────────────────
+		   The two colours that do NOT flip with the theme: text over a photo
+		   or a video scrim is white in both, and a scrim is black in both.
+		   Theme-independent by definition, so they are not light-dark(). */
+		--pure-black: #000;
+		--pure-white: #fff;
+
 		/* ── Chart series ──────────────────────────────────────────────────
 		   Six hues at one lightness, so no series looks louder than another
 		   just because of its colour — which is the most common way a chart

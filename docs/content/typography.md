@@ -2,33 +2,63 @@
 title: Typography
 group: Foundation
 order: 20
-lead: Two faces. Monospace is not a third voice — it is a tool, and it comes out only for code.
+lead: One face. Monospace is not a second voice — it is a tool, and it comes out only for code.
 ---
 
 ## The four voices
 
 | Token | Face | Job |
 | --- | --- | --- |
-| `--font-display` | Space Grotesk | Headlines, numbers, the mark |
+| `--font-display` | Inter | Headlines, numbers, the mark |
 | `--font-body` | Inter | Everything read in sentences |
 | `--font-label` | Inter | Worn small, uppercase, tracked, **semibold** |
 | `--font-data` | Inter | Worn small, tracked, **light**, tabular figures |
 | `--font-mono` | IBM Plex Mono | **Code only** |
 
-`--font-label` and `--font-data` are *aliases* of the body face on purpose. A
-label and a timecode are not different faces from body copy; they are the same
-face worn differently. Change `--font-body` and all three follow — which a
-second family name would quietly prevent.
+`--font-display`, `--font-label` and `--font-data` are all *aliases* of the body
+face on purpose. A headline, a label and a timecode are not different faces from
+body copy; they are the same face worn differently — by weight, size and
+tracking. Change `--font-body` and all four follow, which a second family name
+would quietly prevent.
+
+The token still exists, so a display face is one line away:
+
+```css
+:root { --font-display: "Your Display Face", sans-serif; }
+```
+
+Nothing else has to change — every heading and `.t-*` role already reads that
+token.
 
 :::demo The same face, four ways
 <div class="stack stack-sm">
-  <p class="spec-display spec-2xl u-m-0">Space Grotesk sets headlines</p>
+  <p class="spec-display spec-2xl u-m-0">Inter sets the headlines</p>
   <p class="u-m-0">Inter sets everything you actually read, in sentences like this one.</p>
   <p class="t-label u-m-0">A label · Inter, semibold, uppercase</p>
   <p class="t-data u-m-0">00:12:47 · 1280 × 720 · v2.1.0</p>
   <p class="t-mono u-m-0">const accent = "oklch(63% 0.19 34)";</p>
 </div>
 :::
+
+## Why one face and not a pairing
+
+A display face earns its keep only if it says something the body face cannot.
+Set Inter at 600, close the tracking to `-0.02em` and take the size to
+`2.5rem`, and it already reads as a headline. The **size** and the **tracking**
+are doing that work — not the family. A second family layered on top changes the
+*flavour* of the headline without changing what it communicates.
+
+What it does cost is concrete:
+
+| | |
+| --- | --- |
+| **a file** | another download on the critical path |
+| **a FOUT** | another swap to sequence and pay for |
+| **a decision** | display or body? — at every new call site |
+| **a mismatch** | headline metrics that no longer match the paragraph below |
+
+Hierarchy here comes from weight, size and tracking, which is why the scale and
+the tracking table below carry the weight they do.
 
 ## Why the data voice is not monospace
 

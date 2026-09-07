@@ -26,16 +26,12 @@ jobs:
       - uses: actions/setup-python@v5
         with: { python-version: '3.12' }
       - run: npm ci
-      - name: Build CSS and docs
-        run: npm run build:css && npm run build:min && npm run docs
-      - name: Stage the site
-        run: |
-          mkdir -p _site
-          cp -R docs/. _site/          # build.py already mirrored src/ icons/ dist/
-          rm -rf _site/_build
-          touch _site/.nojekyll
+      # `npm run build` = bundles into dist/ + the site into site/. build.py
+      # mirrors src/, dist/ and the icon sprite into site/ and writes CNAME,
+      # robots.txt, sitemap.xml and .nojekyll, so site/ is the whole artifact.
+      - run: npm run build
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
-        with: { path: _site }
+        with: { path: site }
       - id: deployment
         uses: actions/deploy-pages@v4

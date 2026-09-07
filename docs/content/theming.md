@@ -53,4 +53,4 @@ raw property, never a raw value.
 
 Read a tier-1 ramp step from a component (`--ink-700`), hard-code a hex, or add
 `!important` — none is ever needed, because the cascade order is a declared
-contract. If you feel the need, a token is missing: [open an issue](https://github.com/imswarnil/swarnil-design/issues).
+contract. If you feel the need, a token is missing: [open an issue](https://github.com/imswarnil/Swarnil-Design-System/issues).

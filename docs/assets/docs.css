@@ -9,9 +9,9 @@
    a number the system does not have, the system is missing a token, and the
    right fix is upstream in src/, not a magic number down here.
 
-   The type follows the rule the system states (PRINCIPLES #9): Space Grotesk
-   for display, Inter for everything read — including labels, which are Inter
-   worn small, uppercase and tracked. Mono appears only on code and data.
+   The type follows the rule the system states: Inter for display and for
+   everything read — including labels, which are Inter worn small, uppercase
+   and tracked. Mono appears only on code and data.
    ========================================================================== */
 
 :root {
@@ -46,12 +46,18 @@ body {
 
 /* ── The bar ──────────────────────────────────────────────────────────────── */
 
+/* Three tracks, not flex: 1fr | auto | 1fr centres the nav against the PAGE
+   rather than against whatever the brand and the buttons happen to measure, so
+   the centre stays put when a link is added. The burger is display:none on
+   desktop and therefore occupies no track; on mobile the nav hides and the
+   burger takes its place, so it is three children either way. */
 .bar {
 	position: sticky;
 	top: 0;
 	z-index: var(--z-nav);
 	height: var(--bar-h);
-	display: flex;
+	display: grid;
+	grid-template-columns: 1fr auto 1fr;
 	align-items: center;
 	gap: var(--space-5);
 	padding-inline: var(--gutter);
@@ -95,7 +101,7 @@ body {
 }
 
 .bar__end {
-	margin-left: auto;
+	justify-self: end;
 	display: flex;
 	align-items: center;
 	gap: var(--space-3);
@@ -125,6 +131,49 @@ body {
 .bar__burger[aria-expanded='true'] > span:nth-child(1) { translate: 0 5.5px; }
 .bar__burger[aria-expanded='true'] > span:nth-child(2) { opacity: 0; }
 .bar__burger[aria-expanded='true'] > span:nth-child(3) { translate: 0 -5.5px; }
+
+/* ── The primary nav ──────────────────────────────────────────────────────
+   Centre track of the bar, on the landing page and the docs alike. */
+.bar__nav {
+	display: flex;
+	align-items: center;
+	gap: var(--space-1);
+	justify-content: center;
+}
+
+.barlink {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-2);
+	font-size: var(--text-sm);
+	font-weight: var(--weight-medium);
+	color: var(--fg-muted);
+	text-decoration: none;
+	padding-inline: var(--space-2);
+}
+
+.barlink:hover { color: var(--fg-default); }
+.barlink .icon { --icon-size: 0.9rem; color: var(--fg-faint); }
+.barlink:hover .icon { color: var(--accent); }
+
+/* Active is a dot, never a filled pill — the same mark the sidebar uses, so
+   "you are here" means one thing everywhere. State comes from [aria-current],
+   so the styling cannot disagree with the accessibility tree. */
+.barlink[aria-current='page'] {
+	color: var(--fg-default);
+	font-weight: var(--weight-semibold);
+}
+
+.barlink[aria-current='page']::before {
+	content: '';
+	width: 0.3125rem;
+	height: 0.3125rem;
+	border-radius: var(--radius-full);
+	background: var(--accent);
+	flex: none;
+}
+
+.barlink[aria-current='page'] .icon { color: var(--fg-muted); }
 
 /* ── Search ───────────────────────────────────────────────────────────────── */
 
@@ -205,6 +254,28 @@ body {
 	color: var(--fg-faint);
 }
 
+/* The sidebar's own search. The bar keeps its copy — the bar is reachable from
+   every page and from the home page, where there is no sidebar at all — but a
+   reader who is already IN the docs is looking at the sidebar, and making them
+   travel back up to the bar to find a page is the wrong ask.
+
+   Same markup, same JS, same index; only the shape changes. */
+.search-side {
+	display: flex;
+	width: 100%;
+	margin-bottom: var(--space-5);
+}
+
+.search-side .search__input { width: 100%; }
+
+/* In the bar the panel hangs from the right edge; in the sidebar the column is
+   narrower than the panel, so it anchors left and is allowed to overhang. */
+.search-side .search__out {
+	right: auto;
+	left: 0;
+	width: min(22rem, 68vw);
+}
+
 /* ── Theme + GitHub buttons ───────────────────────────────────────────────── */
 
 .themebtn,
@@ -231,6 +302,20 @@ body {
 
 .ghbtn .icon { --icon-size: 0.875rem; }
 .ghbtn:hover .icon { fill: var(--craft); stroke: var(--craft); }
+
+/* The Star button is a courtesy, not a call to action — the page's real CTA is
+   "Read the docs". Small keeps that ranking honest. */
+.ghbtn-sm {
+	height: 1.875rem;
+	gap: var(--space-2);
+	padding-inline: var(--space-2);
+	font-size: var(--text-xs);
+	font-weight: var(--weight-semibold);
+	letter-spacing: var(--tracking-label);
+	text-transform: uppercase;
+}
+
+.ghbtn-sm .icon { --icon-size: 0.8125rem; }
 
 .themebtn__label { font-variant-numeric: tabular-nums; }
 
@@ -292,7 +377,13 @@ body {
 
 .nav__title::-webkit-details-marker { display: none; }
 
-.nav__title::before {
+/* The group's glyph sits where the eye lands first; the chevron goes to the
+   far end where a disclosure control is expected. Both are drawn in the
+   label's colour so the row reads as one thing. */
+.nav__icon { --icon-size: 0.875rem; flex: none; opacity: 0.8; }
+.nav__label { flex: 1; min-width: 0; }
+
+.nav__title::after {
 	content: '';
 	width: 0.3rem;
 	height: 0.3rem;
@@ -301,11 +392,23 @@ body {
 	rotate: -45deg;
 	transition: rotate var(--dur-2) var(--ease-out);
 	flex: none;
-	margin-left: 2px;
+	margin-inline-end: var(--space-1);
 }
 
-.nav__group[open] > .nav__title::before { rotate: 45deg; }
+.nav__group[open] > .nav__title::after { rotate: 45deg; }
 .nav__title:hover { color: var(--fg-default); background: var(--bg-sunken); }
+
+/* The open group gets a hairline under its title, so the eye can find the
+   block it is in when three groups are open at once. Square corners on the
+   bottom edge so the rule meets the row cleanly. */
+.nav__group[open] > .nav__title {
+	color: var(--fg-default);
+	border-bottom: var(--border-hair) solid var(--line-subtle);
+	border-end-start-radius: 0;
+	border-end-end-radius: 0;
+	margin-bottom: var(--space-2);
+}
+.nav__group[open] > .nav__title .nav__icon { opacity: 1; color: var(--fg-accent); }
 
 .nav__links {
 	display: flex;
@@ -392,7 +495,7 @@ body {
 .doc__title {
 	font-family: var(--font-display);
 	font-size: var(--text-4xl);
-	font-weight: var(--weight-bold);
+	font-weight: var(--weight-semibold);
 	line-height: var(--leading-tight);
 	letter-spacing: var(--tracking-tighter);
 	margin: 0;
@@ -724,169 +827,57 @@ body {
 	padding-inline-start: var(--space-5);
 }
 
-/* ── The TOC, as a video timeline ─────────────────────────────────────────
-   A page and a video are the same shape: something you move through at your
-   own pace, with named parts you might want to jump to. So this is a scrubber
-   — a track, a progress fill, a playhead, and a chapter marker per heading.
-
-   It answers the one question a nested list cannot: how far through am I.
-
-   The fill is driven by --toc-progress (0…1). Where the browser supports
-   scroll-driven animations it is animated off the main thread instead, which
-   is the difference between a progress bar that tracks the scroll and one that
-   lags behind it by a frame. See the @supports block at the bottom.
+/* ── The TOC ──────────────────────────────────────────────────────────────
+   Deliberately plain for now: a heading and a list of links. The scrubber
+   that used to live here (track, progress fill, playhead, read-time counter)
+   was a lot of machinery for a sidebar, and Swarnil is building his own.
+   Nothing here needs JavaScript.
    ========================================================================== */
 
 .toc {
-	--toc-fill: 0px;
-	--toc-track-x: 5px;
-
 	position: sticky;
 	top: calc(var(--bar-h) + var(--space-8));
 	display: flex;
 	flex-direction: column;
-	max-height: calc(100dvh - var(--bar-h) - var(--space-16));
+	gap: var(--space-2);
+	max-height: calc(100dvh - var(--bar-h) - var(--space-12));
 	overflow-y: auto;
-	overscroll-behavior: contain;
+	padding-block: var(--space-8);
 	scrollbar-width: thin;
 }
 
-.toc__bar {
-	display: flex;
-	justify-content: flex-end;
-	margin-block-end: var(--space-4);
-}
-
-/* The position readout. A chapter count IS data, so it takes the data voice —
-   light, tracked, tabular — which is why "03 / 09" does not jump about as the
-   first digit changes. */
-.toc__time[data-done] { color: var(--fg-accent); font-weight: var(--weight-regular); }
-
-.toc__time {
-	font-family: var(--font-data);
+.toc__head {
+	font-family: var(--font-label);
 	font-size: var(--text-2xs);
-	font-weight: var(--weight-light);
-	letter-spacing: var(--tracking-data);
-	font-variant-numeric: tabular-nums;
+	font-weight: var(--weight-semibold);
+	letter-spacing: var(--tracking-label);
+	text-transform: uppercase;
 	color: var(--fg-faint);
-}
-
-.toc__list {
-	position: relative;
-	display: flex;
-	flex-direction: column;
-	gap: 2px;
-	padding-inline-start: var(--space-5);
-}
-
-/* The unplayed track. */
-.toc__track,
-.toc__fill {
-	position: absolute;
-	inset-inline-start: var(--toc-track-x);
-	inline-size: 2px;
-	border-radius: var(--radius-full);
-}
-
-.toc__track {
-	inset-block: 0;
-	background: var(--line-default);
-}
-
-/* The played portion. */
-/* Measured in PIXELS against the chapter nodes, not as a fraction of the page.
-
-   A page-progress fill and an evenly-spaced list of chapters are two different
-   scales, and mixing them puts the playhead in the wrong chapter — it sat two
-   rows past the active one, which reads as a bug even though both numbers were
-   individually right. The fill now interpolates between the node you are at
-   and the node you are heading for, so the playhead is always inside the
-   chapter the list says you are in. */
-.toc__fill {
-	inset-block-start: 0;
-	block-size: var(--toc-fill);
-	background: var(--accent);
-	transition: block-size var(--dur-1) linear;
-}
-
-@media (prefers-reduced-motion: reduce) {
-	.toc__fill { transition: none; }
-}
-
-/* The playhead — the record dot, riding the end of the fill. The ring is the
-   page colour rather than a border, so the head reads as sitting ON the track
-   instead of being a bead threaded onto it. */
-.toc__fill::after {
-	content: '';
-	position: absolute;
-	inset-block-end: 0;
-	inset-inline-start: 50%;
-	inline-size: 9px;
-	block-size: 9px;
-	border-radius: var(--radius-full);
-	background: var(--accent);
-	translate: -50% 50%;
-	box-shadow: 0 0 0 3px var(--bg-canvas);
+	margin: 0 0 var(--space-1);
 }
 
 .toc__link {
-	position: relative;
-	display: flex;
-	align-items: flex-start;
-	gap: var(--space-2);
-	font-size: var(--text-sm);
-	line-height: var(--leading-snug);
-	color: var(--fg-subtle);
-	text-decoration: none;
+	display: block;
 	padding-block: var(--space-1);
-	transition: color var(--dur-1) var(--ease-out);
+	padding-inline-start: var(--space-3);
+	border-inline-start: 1px solid var(--line-subtle);
+	font-size: var(--text-sm);
+	color: var(--fg-muted);
+	text-decoration: none;
+	transition: color var(--dur-2) var(--ease-out),
+		border-color var(--dur-2) var(--ease-out);
 }
 
-/* The chapter marker, sitting on the track. */
-.toc__node {
-	position: absolute;
-	inset-inline-start: calc(var(--toc-track-x) - var(--space-5));
-	inset-block-start: 0.72em;
-	inline-size: 6px;
-	block-size: 6px;
-	border-radius: var(--radius-full);
-	background: var(--line-strong);
-	translate: -2px 0;
-	transition:
-		background-color var(--dur-2) var(--ease-out),
-		scale var(--dur-2) var(--ease-out);
+.toc__link:hover {
+	color: var(--fg-default);
+	border-inline-start-color: var(--line-strong);
 }
 
-/* h2 is the default depth; h3 indents and shrinks. --h2 exists as a rule so
-   the class in the markup resolves to something — a class with no definition
-   anywhere is exactly what the class audit is for. */
-.toc__link--h2 { font-weight: var(--weight-regular); }
-.toc__link--h3 { font-size: var(--text-xs); padding-inline-start: var(--space-3); }
+.toc__link--h2 { font-weight: var(--weight-medium); }
 
-/* The label itself, so the node can be positioned independently of it. */
-.toc__text { display: block; min-inline-size: 0; }
-.toc__link:hover { color: var(--fg-default); }
-.toc__link:hover .toc__node { background: var(--fg-muted); }
-
-/* A chapter already scrolled past — accent, but quiet. */
-.toc__link[data-played] { color: var(--fg-muted); }
-.toc__link[data-played] .toc__node { background: var(--accent); }
-
-/* The chapter you are in. Dot, semibold, accent — the house active state, and
-   the node grows so the playhead has something to land on. */
-.toc__link[aria-current='true'] {
-	color: var(--fg-accent);
-	font-weight: var(--weight-semibold);
-}
-
-.toc__link[aria-current='true'] .toc__node {
-	background: var(--accent);
-	scale: 1.5;
-}
-
-@media (prefers-reduced-motion: reduce) {
-	.toc__node { transition: none; }
-	.toc__fill { will-change: auto; }
+.toc__link--h3 {
+	font-size: var(--text-xs);
+	padding-inline-start: var(--space-5);
 }
 
 /* ── Pager + footer ───────────────────────────────────────────────────────── */
@@ -986,6 +977,7 @@ body {
 @media (max-width: 60rem) {
 	.shell { grid-template-columns: minmax(0, 1fr); }
 	.bar__burger { display: flex; }
+	.bar__nav { display: none; }
 	.search__input { width: 9rem; }
 	.brand__sub { display: none; }
 
@@ -1321,3 +1313,51 @@ a.crumbs__link:hover { color: var(--fg-default); }
 	border-radius: var(--radius-lg);
 	box-shadow: var(--e);
 }
+
+/* =============================================================================
+   THE LAYER DIAGRAM (introduction page)
+
+   Inline SVG rather than an <img> so every fill is a system token and the
+   drawing follows the theme toggle. The inset staircase is the argument: a
+   layer may only reach DOWN, so each one is drawn narrower than the one it
+   sits on.
+   ========================================================================== */
+
+.layers { width: 100%; height: auto; display: block; }
+
+.layers__base,
+.layers__l { fill: var(--bg-surface); stroke: var(--line-default); }
+.layers__base { fill: var(--bg-sunken); }
+.layers__top { fill: var(--fg-default); stroke: none; }
+
+.layers__n,
+.layers__t {
+	fill: var(--fg-muted);
+	font-family: var(--font-body);
+	font-size: 12px;
+}
+
+.layers__n { fill: var(--accent); font-weight: 700; font-variant-numeric: tabular-nums; }
+.layers__t { fill: var(--fg-default); font-weight: 500; }
+
+.layers__nt,
+.layers__tt {
+	fill: var(--bg-canvas);
+	font-family: var(--font-body);
+	font-size: 12px;
+	font-weight: 500;
+}
+
+.layers__nt { font-weight: 700; font-variant-numeric: tabular-nums; }
+
+.layers__w {
+	fill: var(--fg-faint);
+	font-family: var(--font-label);
+	font-size: 9px;
+	font-weight: 600;
+	letter-spacing: 1.2px;
+	text-anchor: end;
+	text-transform: uppercase;
+}
+
+.layers__arrow { stroke: var(--line-strong); stroke-width: 1.25; fill: none; }

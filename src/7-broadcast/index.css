@@ -1,0 +1,23 @@
+/* =============================================================================
+   7 · BROADCAST — the creator layer
+
+   Thumbnails, scenes, lower thirds, stream overlays, channel art. The half of
+   the system nobody else has. None of it ships to a web page: it is rendered
+   into OBS as a browser source, screenshotted into an export, or printed to a
+   PNG. It lives in its own bundle (dist/swarnil-broadcast.css) so a website
+   never pays for it — see src/broadcast.css.
+
+   ONE RULE MAKES ALL OF IT WORK
+   Every stage is a container, and every size inside is in `cqi` — a
+   percentage of the stage's width. A title at 8cqi is 102px on a 1280-wide
+   thumbnail and 26px in a 320px docs preview, and the composition is
+   identical. There are no breakpoints in this layer, and no pixel values.
+
+   Layer: sections — full-frame compositions, above every component they use.
+   ========================================================================== */
+
+@import url('./80-canvas.css');     /* the export stages and their safe areas */
+@import url('./81-scene.css');      /* title, starting soon, BRB, outro, live */
+@import url('./82-lowerthird.css'); /* the name plate, four ways              */
+@import url('./83-stream.css');     /* cam, bug, alert, chat, goal, countdown */
+@import url('./84-thumb.css');      /* the thumbnail and the OG image         */

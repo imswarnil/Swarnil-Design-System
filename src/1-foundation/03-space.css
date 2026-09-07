@@ -52,5 +52,9 @@
 		--width-xl:   75rem;
 		--width-2xl:  90rem;
 		--width-full: 100%;
+
+		/* Minimum interactive target. WCAG 2.5.8 asks for 24px; a thumb wants
+		   44. Components read this on coarse pointers. */
+		--tap-min: 44px;
 	}
 }

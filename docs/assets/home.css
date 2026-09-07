@@ -6,23 +6,6 @@
    that cannot be built out of the system is an argument against the system.
    ========================================================================== */
 
-.is-home .bar { border-bottom: 0; }
-
-.barlink {
-	display: inline-flex;
-	align-items: center;
-	gap: var(--space-2);
-	font-size: var(--text-sm);
-	font-weight: var(--weight-medium);
-	color: var(--fg-muted);
-	text-decoration: none;
-	padding-inline: var(--space-2);
-}
-
-.barlink:hover { color: var(--fg-default); }
-.barlink .icon { --icon-size: 0.9rem; color: var(--fg-faint); }
-.barlink:hover .icon { color: var(--accent); }
-
 .band {
 	padding-inline: var(--gutter);
 	max-width: 74rem;
@@ -45,11 +28,15 @@
 /* ── Hero ─────────────────────────────────────────────────────────────────── */
 
 .hero {
+	position: relative;
 	display: grid;
 	grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
 	gap: var(--space-12);
 	align-items: center;
-	padding-block: var(--space-16) var(--space-4);
+	padding-block: var(--space-16) var(--space-10);
+	/* The band clips nothing itself; the footage is pinned to the viewport, so
+	   isolate keeps its z-index from leaking into the sections below. */
+	isolation: isolate;
 }
 
 .hero__eyebrow {
@@ -103,115 +90,122 @@
 	margin: var(--space-6) 0 0;
 }
 
-/* The viewfinder. The system's signature device, doing its actual job:
-   saying "this is footage" before you read a word. */
-.hero__vf {
-	aspect-ratio: 4 / 3;
-	border-radius: var(--radius-lg);
-	background:
-		linear-gradient(var(--line-subtle) 1px, transparent 1px) 0 0 / 100% 2rem,
-		linear-gradient(90deg, var(--line-subtle) 1px, transparent 1px) 0 0 / 2rem 100%;
-	background-color: var(--bg-surface);
-	border: 1px solid var(--line-default);
-	display: grid;
-	place-items: center;
-	position: relative;
-}
-
-.hero__tc {
+/* ── The hero ────────────────────────────────────────────────────────────────
+   Footage behind the whole band, copy left, the rig right. The band is
+   max-width'd and centred, so the video escapes it: 100vw pinned to the
+   viewport centre. Empty in the markup — docs.js injects the iframe, and never
+   under prefers-reduced-motion, so a reduced-motion visitor gets the ink
+   background and loses nothing but the movement. */
+.hero__bg {
 	position: absolute;
-	top: var(--space-5);
-	left: var(--space-6);
-	font-family: var(--font-data);
-	font-variant-numeric: tabular-nums;
-	font-weight: var(--weight-light);
-	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-data);
-	color: var(--fg-faint);
+	inset-block: 0;
+	left: 50%;
+	translate: -50% 0;
+	width: 100vw;
+	overflow: hidden;
+	z-index: 0;
+	opacity: 0;
+	transition: opacity var(--dur-4) var(--ease-out);
 }
 
-.hero__rec {
+.hero__bg[data-on] { opacity: 1; }
+
+/* 16:9 footage across a band that is much wider than it is tall: cover by
+   height and let the sides overflow. */
+.hero__bg iframe {
 	position: absolute;
-	top: var(--space-5);
-	right: var(--space-6);
-	display: inline-flex;
-	align-items: center;
-	gap: var(--space-2);
-	font-family: var(--font-data);
-	font-variant-numeric: tabular-nums;
-	font-weight: var(--weight-light);
-	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-data);
-	color: var(--accent);
+	top: 50%;
+	left: 50%;
+	translate: -50% -50%;
+	width: 100vw;
+	height: 56.25vw;
+	min-height: 100%;
+	min-width: 177.78vh;
+	border: 0;
+	pointer-events: none;
 }
 
-.hero__rec::before {
+/* Footage is busy and body copy has to stay readable on top of it, so the
+   scrim is not optional. It reads as a deliberate grade rather than a veil:
+   heaviest at the left where the words are, opening up on the right where the
+   rig sits. */
+.hero__bg::after {
 	content: '';
-	width: 0.5rem;
-	height: 0.5rem;
-	border-radius: var(--radius-full);
-	background: var(--accent);
-	animation: fx-pulse 2s var(--ease-inout) infinite;
+	position: absolute;
+	inset: 0;
+	background:
+		linear-gradient(to right,
+			var(--bg-canvas) 0%,
+			color-mix(in oklab, var(--bg-canvas) 86%, transparent) 42%,
+			color-mix(in oklab, var(--bg-canvas) 62%, transparent) 100%),
+		linear-gradient(to bottom,
+			var(--bg-canvas),
+			color-mix(in oklab, var(--bg-canvas) 40%, transparent) 22%,
+			color-mix(in oklab, var(--bg-canvas) 55%, transparent) 78%,
+			var(--bg-canvas));
+}
+
+.hero__copy,
+.hero__art { position: relative; z-index: 1; }
+
+/* ── The rig ─────────────────────────────────────────────────────────────────
+   The landing illustration. Inline, not an <img>, for one reason that matters:
+   every fill below is a system token, so it follows the theme toggle. The old
+   media/hero.svg hard-coded two palettes and guessed with
+   prefers-color-scheme, which meant it was simply wrong for anyone who had
+   picked a theme by hand. */
+.hero__art { display: grid; place-items: center; }
+
+.rig { width: 100%; height: auto; max-width: 27.5rem; }
+
+.rig__plate { fill: var(--bg-surface); stroke: var(--line-default); }
+.rig__grid { stroke: var(--line-subtle); stroke-width: 1; }
+.rig__tick { stroke: var(--fg-faint); stroke-width: 1.5; }
+.rig__rec { fill: var(--accent); }
+.rig__lens { fill: none; stroke: var(--line-strong); stroke-width: 1.5; }
+.rig__lens2 { fill: var(--bg-sunken); stroke: var(--line-default); }
+.rig__play { fill: var(--fg-muted); }
+.rig__card,
+.rig__btn { fill: var(--bg-surface); stroke: var(--line-default); }
+.rig__btn { fill: var(--fg-default); stroke: none; }
+.rig__btnl { fill: var(--bg-canvas); }
+.rig__dot { fill: var(--accent); }
+.rig__bar { fill: var(--fg-muted); opacity: 0.55; }
+.rig__barf { fill: var(--fg-faint); opacity: 0.4; }
+.rig__spec { fill: var(--fg-default); font-size: 34px; font-weight: 700; letter-spacing: -1px; }
+.rig__accent { fill: var(--accent); }
+
+/* The ramp, as four steps of one ladder — the argument the colour page makes,
+   drawn. */
+.rig__sw1 { fill: var(--fg-default); }
+.rig__sw2 { fill: var(--fg-muted); }
+.rig__sw3 { fill: var(--fg-faint); }
+.rig__sw4 { fill: var(--line-default); }
+
+.rig__label,
+.rig__slate {
+	fill: var(--fg-faint);
+	font-family: var(--font-label);
+	font-size: 10px;
+	font-weight: 600;
+	letter-spacing: 1.4px;
+}
+
+.rig__slate { font-variant-numeric: tabular-nums; }
+
+/* One moving part, and it is the one that says "footage". */
+.rig__scan { fill: var(--accent); opacity: 0.5; animation: rig-scan 6s var(--ease-inout) infinite; }
+
+@keyframes rig-scan {
+	0%, 100% { transform: translateY(0); opacity: 0; }
+	10% { opacity: 0.5; }
+	50% { transform: translateY(225px); opacity: 0.5; }
+	60% { opacity: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.hero__rec::before { animation: none; }
+	.rig__scan { animation: none; opacity: 0; }
 }
-
-.hero__dims {
-	position: absolute;
-	bottom: var(--space-5);
-	left: var(--space-6);
-	font-family: var(--font-data);
-	font-variant-numeric: tabular-nums;
-	font-weight: var(--weight-light);
-	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-data);
-	color: var(--fg-faint);
-}
-
-/* ── The VHS layer ─────────────────────────────────────────────────────────
-   Scanlines and an OSD mode badge over the viewfinder — the tape-deck half of
-   the camera language. The scanlines ride a CHILD (the frame owns both
-   pseudo-elements), and everything readable stays in the data voice, because
-   a VCR's on-screen display was the original data voice. */
-
-.hero__scan {
-	position: absolute;
-	inset: 0;
-	border-radius: inherit;
-	background: repeating-linear-gradient(
-		180deg,
-		var(--pattern-ink) 0 1px,
-		transparent 1px 4px);
-	pointer-events: none;
-	opacity: 0.5;
-}
-
-.hero__mode {
-	position: absolute;
-	inset-block-end: var(--space-5);
-	inset-inline-end: var(--space-6);
-	font-family: var(--font-data);
-	font-weight: var(--weight-light);
-	font-size: var(--text-2xs);
-	letter-spacing: var(--tracking-label);
-	font-variant-numeric: tabular-nums;
-	color: var(--fg-faint);
-}
-
-.hero__play {
-	width: 4rem;
-	height: 4rem;
-	border-radius: var(--radius-full);
-	background: var(--accent);
-	display: grid;
-	place-items: center;
-	color: var(--fg-on-accent);
-	box-shadow: var(--shadow-3);
-}
-
-.hero__play svg { width: 1.5rem; height: 1.5rem; }
 
 /* ── Section heads ────────────────────────────────────────────────────────── */
 
@@ -477,8 +471,8 @@
 @media (max-width: 60rem) {
 	.hero,
 	.install { grid-template-columns: minmax(0, 1fr); }
-	.hero { padding-block: var(--space-10) var(--space-4); }
+	.hero { grid-template-columns: 1fr; padding-block: var(--space-10) var(--space-8); }
+	.hero__art { display: none; }
 	.hero__title { font-size: var(--text-4xl); }
-	.barlink { display: none; }
 	.install { padding: var(--space-6); }
 }

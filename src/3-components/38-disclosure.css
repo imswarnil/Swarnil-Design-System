@@ -1,22 +1,33 @@
 /* =============================================================================
-   38 · DISCLOSURE — accordion, collapse, FAQ
+   38 · DISCLOSURE — accordion, collapse, list group, carousel, marquee
 
-   Built on <details>/<summary>, the platform's disclosure (PRINCIPLES #4):
-   keyboard toggling, state exposure and find-in-page auto-expansion come free.
-   Chrome even searches CLOSED details and opens the one with the match —
-   behaviour nobody reimplements correctly.
+   Things that open, close, cycle and slide. Every one rides a platform
+   behaviour instead of a script (PRINCIPLES #4):
 
-   The height animation uses interpolate-size / calc-size, the modern answer to
-   "you cannot animate to height:auto". Where unsupported the panel snaps open,
-   which is a downgrade in polish and not in function.
+     accordion, collapse   <details>/<summary> — keyboard toggling, state
+                           exposure and find-in-page auto-expansion come free.
+                           Chrome even searches CLOSED details and opens the
+                           one with the match; nobody reimplements that.
+     exclusive accordion   <details name="group"> — opening one closes its
+                           siblings, no JavaScript.
+     carousel              scroll-snap and anchor links. The rail scrolls,
+                           the dots are links to slides.
+     marquee               one keyframe, and it stops under reduced motion.
 
-   Exclusive accordions use the platform too: <details name="group"> — opening
-   one closes its siblings, no JavaScript.
+   The height animation uses interpolate-size / calc-size, the modern answer
+   to "you cannot animate to height:auto". Where unsupported the panel snaps
+   open, which is a downgrade in polish and not in function.
+
+   COMPOSITION WARNING
+   .acc > summary spends ::after on its chevron; .list__item[aria-current]
+   spends ::before on its rule. Neither can take .frame.
 
    Layer: components.
    ========================================================================== */
 
 @layer components {
+
+	/* ── .acc — the accordion item ─────────────────────────────────────────── */
 
 	.acc {
 		--acc-pad: var(--space-4);
@@ -65,6 +76,30 @@
 		line-height: var(--leading-relaxed);
 	}
 
+	/* A leading icon in the summary. Faint at rest, accent when open, so the
+	   icon and the text agree about the state. */
+	.acc__icon {
+		--icon-size: 1.125rem;
+		flex: none;
+		color: var(--fg-faint);
+		transition: color var(--dur-2) var(--ease-out);
+	}
+
+	.acc[open] > summary .acc__icon { color: var(--fg-accent); }
+
+	/* The summary's text, when it needs to grow past the icon. */
+	.acc__label { flex: 1; }
+
+	/* A count or a timecode beside the label — data. */
+	.acc__meta {
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-xs);
+		font-variant-numeric: tabular-nums;
+		letter-spacing: var(--tracking-data);
+		color: var(--fg-faint);
+	}
+
 	/* Height-to-auto animation, where the platform has learned to do it. */
 	@supports (interpolate-size: allow-keywords) {
 		.acc::details-content {
@@ -78,7 +113,7 @@
 		.acc[open]::details-content { block-size: auto; }
 	}
 
-	/* ── Variants ──────────────────────────────────────────────────────────── */
+	/* ── Accordion variants ────────────────────────────────────────────────── */
 
 	/* Boxed: each item is a bordered card of its own. */
 	.acc-boxed {
@@ -102,5 +137,406 @@
 		letter-spacing: var(--tracking-label);
 		text-transform: uppercase;
 		color: var(--fg-subtle);
+	}
+
+	/* Plus/minus marker instead of the chevron, for FAQ pages where the
+	   question is long and a chevron reads as navigation. */
+	.acc-plus > summary::after {
+		inline-size: var(--space-3);
+		block-size: var(--space-3);
+		border: 0;
+		rotate: 0deg;
+		translate: 0 0;
+		background:
+			linear-gradient(currentcolor, currentcolor) center / 100% var(--border-2) no-repeat,
+			linear-gradient(currentcolor, currentcolor) center / var(--border-2) 100% no-repeat;
+	}
+
+	.acc-plus[open] > summary::after { rotate: 45deg; translate: 0 0; }
+
+	/* A group wrapper: welds boxed items into one surface, and gives a flush
+	   or plain stack a top rule so the first item is not bare. */
+	.acc-group {
+		border: var(--border-hair) solid var(--line-default);
+		border-radius: var(--radius-lg);
+		background: var(--bg-surface);
+		padding-inline: var(--acc-pad, var(--space-4));
+	}
+
+	.acc-group > .acc:last-child { border-block-end: 0; }
+
+	/* ── .collapse — one inline disclosure ─────────────────────────────────
+	   "Show transcript", "More options": a toggle that reads as a link, not a
+	   panel, and reveals a block beneath. The accordion is a list; this is a
+	   single sentence that can open. */
+
+	.collapse > summary {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-2);
+		list-style: none;
+		cursor: pointer;
+		font-size: var(--text-sm);
+		font-weight: var(--weight-medium);
+		color: var(--fg-link);
+		transition: color var(--dur-2) var(--ease-out);
+	}
+
+	.collapse > summary::-webkit-details-marker { display: none; }
+	.collapse > summary:hover { color: var(--fg-link-hover); }
+
+	.collapse > summary::after {
+		content: '';
+		inline-size: 0.35rem;
+		block-size: 0.35rem;
+		border-inline-end: var(--border-2) solid currentcolor;
+		border-block-end: var(--border-2) solid currentcolor;
+		rotate: 45deg;
+		translate: 0 -2px;
+		flex: none;
+		transition: rotate var(--dur-3) var(--ease-out), translate var(--dur-3) var(--ease-out);
+	}
+
+	.collapse[open] > summary::after { rotate: 225deg; translate: 0 1px; }
+
+	/* The summary can carry two labels; the closed one hides when open. */
+	.collapse[open] > summary .collapse__closed { display: none; }
+	.collapse:not([open]) > summary .collapse__open { display: none; }
+
+	.collapse__body {
+		margin-block-start: var(--space-3);
+		color: var(--fg-muted);
+		font-size: var(--text-sm);
+		line-height: var(--leading-relaxed);
+	}
+
+	/* Boxed body — the revealed block sits on the sunken surface. */
+	.collapse-boxed .collapse__body {
+		padding: var(--space-4);
+		border-radius: var(--radius-lg);
+		background: var(--bg-sunken);
+	}
+
+	@supports (interpolate-size: allow-keywords) {
+		.collapse::details-content {
+			block-size: 0;
+			overflow-y: clip;
+			transition:
+				block-size var(--dur-3) var(--ease-out),
+				content-visibility var(--dur-3) allow-discrete;
+		}
+
+		.collapse[open]::details-content { block-size: auto; }
+	}
+
+	/* ── .list — the list group ────────────────────────────────────────────
+	   Stacked rows on one surface. A row is a link, a button or a plain div;
+	   only the interactive ones get hover, and the current one gets a rule —
+	   2px on the inline edge, never a fill. */
+
+	.list {
+		--list-pad: var(--space-3) var(--space-4);
+		--list-gap: var(--space-3);
+
+		display: flex;
+		flex-direction: column;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		border: var(--border-hair) solid var(--line-default);
+		border-radius: var(--radius-lg);
+		background: var(--bg-surface);
+		overflow: hidden;
+	}
+
+	.list__item {
+		position: relative;
+		display: flex;
+		align-items: center;
+		gap: var(--list-gap);
+		padding: var(--list-pad);
+		font-size: var(--text-sm);
+		color: var(--fg-default);
+		text-decoration: none;
+		text-align: start;
+		inline-size: 100%;
+		border: 0;
+		background: none;
+		font-family: inherit;
+	}
+
+	.list__item + .list__item { border-block-start: var(--border-hair) solid var(--line-subtle); }
+
+	a.list__item,
+	button.list__item,
+	label.list__item {
+		cursor: pointer;
+		transition: background-color var(--dur-1) var(--ease-out);
+	}
+
+	a.list__item:hover,
+	button.list__item:hover,
+	label.list__item:hover { background: var(--hover-wash); }
+
+	a.list__item:active,
+	button.list__item:active { background: var(--press-wash); }
+
+	.list__item[aria-current] { font-weight: var(--weight-semibold); }
+
+	.list__item[aria-current]::before {
+		content: '';
+		position: absolute;
+		inset-block: var(--space-2);
+		inset-inline-start: 0;
+		inline-size: var(--border-2);
+		border-radius: var(--radius-full);
+		background: var(--accent);
+	}
+
+	.list__item[aria-disabled='true'],
+	.list__item[disabled] {
+		color: var(--fg-disabled);
+		pointer-events: none;
+	}
+
+	/* Done: struck through and muted, for a checklist. */
+	.list__item[data-done] { color: var(--fg-faint); }
+	.list__item[data-done] .list__title { text-decoration: line-through; }
+
+	/* Parts. Lead sits before the text (icon, avatar, checkbox); end sits
+	   after it (badge, count, chevron) and is pushed to the far edge. */
+	.list__lead { flex: none; display: inline-grid; place-items: center; color: var(--fg-faint); }
+	.list__body { flex: 1; min-inline-size: 0; }
+	.list__title { display: block; font-weight: var(--weight-medium); }
+
+	.list__desc {
+		display: block;
+		font-size: var(--text-xs);
+		color: var(--fg-muted);
+		line-height: var(--leading-normal);
+	}
+
+	.list__end {
+		flex: none;
+		margin-inline-start: auto;
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-2);
+		color: var(--fg-faint);
+	}
+
+	/* A count or timecode at the end — data. */
+	.list__meta {
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-xs);
+		font-variant-numeric: tabular-nums;
+		letter-spacing: var(--tracking-data);
+		color: var(--fg-faint);
+	}
+
+	/* A label row that heads a run of items. */
+	.list__head {
+		padding: var(--space-2) var(--space-4);
+		background: var(--bg-sunken);
+		font-family: var(--font-label);
+		font-size: var(--text-2xs);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: var(--fg-faint);
+	}
+
+	.list__head + .list__item { border-block-start: 0; }
+
+	/* Variants */
+	.list-flush { border: 0; border-radius: 0; background: none; }
+	.list-flush .list__item { padding-inline: 0; }
+	.list-flush .list__item[aria-current]::before { inset-inline-start: calc(-1 * var(--space-3)); }
+	.list-sm { --list-pad: var(--space-2) var(--space-3); --list-gap: var(--space-2); }
+	.list-sm .list__item { font-size: var(--text-xs); }
+	.list-lg { --list-pad: var(--space-4) var(--space-5); --list-gap: var(--space-4); }
+
+	/* Numbered rows: the counter is data, so it takes the data voice. */
+	.list-numbered { counter-reset: list; }
+
+	.list-numbered .list__item::after {
+		content: counter(list, decimal-leading-zero);
+		counter-increment: list;
+		order: -1;
+		flex: none;
+		min-inline-size: 1.5rem;
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-xs);
+		font-variant-numeric: tabular-nums;
+		letter-spacing: var(--tracking-data);
+		color: var(--fg-faint);
+	}
+
+	/* ── .carousel — a scroll-snap rail with page dots ─────────────────────
+	   No script. The track scrolls and snaps; each dot is an anchor to a
+	   slide, so it works with a keyboard and without JavaScript. What a
+	   script WOULD add — the dots following the scroll, autoplay — is left
+	   out on purpose: autoplay is motion nobody asked for. */
+
+	.carousel {
+		--carousel-slide: min(18rem, 85%);
+		--carousel-gap: var(--space-4);
+
+		position: relative;
+	}
+
+	.carousel__track {
+		display: flex;
+		gap: var(--carousel-gap);
+		overflow-x: auto;
+		scroll-snap-type: x mandatory;
+		scroll-behavior: smooth;
+		scrollbar-width: none;
+		overscroll-behavior-x: contain;
+		/* A vertical wheel must keep scrolling the PAGE — the classic trap. */
+		touch-action: pan-x pan-y;
+		scroll-padding-inline: var(--space-1);
+		padding-block-end: var(--space-2);
+	}
+
+	.carousel__track::-webkit-scrollbar { display: none; }
+
+	.carousel__slide {
+		flex: 0 0 var(--carousel-slide);
+		scroll-snap-align: start;
+	}
+
+	/* One slide per view. */
+	.carousel-full { --carousel-slide: 100%; }
+
+	/* Peek: the next slide shows an edge, which is the affordance. */
+	.carousel-peek { --carousel-slide: min(18rem, 78%); }
+
+	/* Centred snapping, for a hero-style rail. */
+	.carousel-center .carousel__slide { scroll-snap-align: center; }
+
+	.carousel__nav {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: var(--space-3);
+		margin-block-start: var(--space-2);
+	}
+
+	/* A dot is a link. The hit area is larger than the dot it paints. */
+	.carousel__dot {
+		display: grid;
+		place-items: center;
+		inline-size: 1.25rem;
+		block-size: 1.25rem;
+		border: 0;
+		padding: 0;
+		background: none;
+		cursor: pointer;
+	}
+
+	.carousel__dot::before {
+		content: '';
+		inline-size: var(--dot-sm);
+		block-size: var(--dot-sm);
+		border-radius: var(--radius-full);
+		background: var(--line-strong);
+		transition: background-color var(--dur-2) var(--ease-out), scale var(--dur-2) var(--ease-out);
+	}
+
+	.carousel__dot:hover::before { background: var(--fg-subtle); }
+	.carousel__dot[aria-current]::before { background: var(--accent); scale: 1.25; }
+
+	/* Prev/next — anchors to the neighbouring slides, on the rail's edges. */
+	.carousel__arrow {
+		position: absolute;
+		inset-block-start: 50%;
+		translate: 0 -50%;
+		z-index: var(--z-raised);
+		display: inline-grid;
+		place-items: center;
+		inline-size: 2.5rem;
+		block-size: 2.5rem;
+		border: var(--border-hair) solid var(--line-default);
+		border-radius: var(--radius-full);
+		background: var(--bg-raised);
+		color: var(--fg-default);
+		box-shadow: var(--elevation-2);
+		cursor: pointer;
+		transition: var(--t-colors);
+	}
+
+	.carousel__arrow:hover { border-color: var(--line-strong); }
+	.carousel__arrow-prev { inset-inline-start: var(--space-2); }
+	.carousel__arrow-next { inset-inline-end: var(--space-2); }
+
+	/* ── .marquee — the looping strip ──────────────────────────────────────
+	   Duplicate the run and hide the twin from assistive tech:
+	     <div class="marquee">
+	       <div class="marquee__run">…</div>
+	       <div class="marquee__run" aria-hidden="true">…</div>
+	     </div>
+	   The global kill switch collapses --dur-*, but a marquee has its own
+	   duration on purpose (28s is not feedback), so it writes its own query. */
+
+	.marquee {
+		--marquee-gap: var(--space-8);
+		--marquee-dur: 28s;
+		--marquee-h: 12rem;
+
+		display: flex;
+		gap: var(--marquee-gap);
+		overflow: hidden;
+		mask-image: linear-gradient(to right, transparent, var(--pure-black) 8%, var(--pure-black) 92%, transparent);
+	}
+
+	.marquee__run {
+		display: flex;
+		align-items: center;
+		gap: var(--marquee-gap);
+		flex: none;
+		min-inline-size: 100%;
+		animation: marquee var(--marquee-dur) linear infinite;
+	}
+
+	@keyframes marquee {
+		to { translate: calc(-100% - var(--marquee-gap)) 0; }
+	}
+
+	.marquee:hover .marquee__run,
+	.marquee:focus-within .marquee__run { animation-play-state: paused; }
+
+	.marquee-reverse .marquee__run { animation-direction: reverse; }
+	.marquee-fast { --marquee-dur: 14s; }
+	.marquee-slow { --marquee-dur: 48s; }
+
+	/* Vertical — a ticker of names or titles. */
+	.marquee-vertical {
+		flex-direction: column;
+		block-size: var(--marquee-h);
+		mask-image: linear-gradient(to bottom, transparent, var(--pure-black) 12%, var(--pure-black) 88%, transparent);
+	}
+
+	.marquee-vertical .marquee__run {
+		flex-direction: column;
+		align-items: stretch;
+		min-inline-size: 0;
+		min-block-size: 100%;
+		animation-name: marquee-vertical;
+	}
+
+	@keyframes marquee-vertical {
+		to { translate: 0 calc(-100% - var(--marquee-gap)); }
+	}
+
+	/* Under reduced motion the strip becomes a plain scrollable row: the same
+	   content, reachable, standing still. The twin is dropped so nothing is
+	   read twice. */
+	@media (prefers-reduced-motion: reduce) {
+		.marquee { mask-image: none; overflow-x: auto; }
+		.marquee__run { animation: none; }
+		.marquee__run[aria-hidden] { display: none; }
 	}
 }

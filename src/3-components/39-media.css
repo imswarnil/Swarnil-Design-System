@@ -1,0 +1,429 @@
+/* =============================================================================
+   39 · MEDIA — player chrome, the play affordance, poster, episode row
+
+   The part of the system the site is actually about. Everything else is
+   furniture around a rectangle of footage, so the rectangle gets the rules:
+   it is always dark (a player is a window onto a darker room, whatever the
+   page theme), the controls are quiet until asked for, and the ONE accent on
+   the screen belongs to playback — the played rail and the play disc. A page
+   with a player on it should carry no other accent-filled surface.
+
+   The player is CHROME, not a video implementation: it dresses whatever
+   <video>, <iframe> or <img> you put inside it. Progress is a custom property
+   (`--value`) the host sets; nothing here polls a media element.
+
+   COMPOSITION WARNING
+   .play__disc spends ::before on its triangle, .poster spends ::after on its
+   gradient, and .player__played spends ::after on the scrub head. None of
+   them can also take .frame.
+
+   Layer: components.
+   ========================================================================== */
+
+@layer components {
+
+	/* ── .player ───────────────────────────────────────────────────────────── */
+
+	.player {
+		--player-ratio: 16 / 9;
+		--player-radius: var(--radius-media);
+		--player-rail: var(--border-3);
+
+		position: relative;
+		aspect-ratio: var(--player-ratio);
+		border-radius: var(--player-radius);
+		background: var(--bg-media);
+		overflow: hidden;
+		isolation: isolate;
+		color-scheme: dark;
+	}
+
+	.player > :is(img, video, iframe) {
+		position: absolute;
+		inset: 0;
+		inline-size: 100%;
+		block-size: 100%;
+		object-fit: cover;
+		border: 0;
+	}
+
+	/* The control bar. Always visible on touch, because there is nothing to
+	   hover; on a fine pointer it waits to be asked. Focus-within keeps it
+	   present for a keyboard user tabbing through the controls. */
+	.player__bar {
+		position: absolute;
+		inset: auto 0 0;
+		z-index: var(--z-raised);
+		display: flex;
+		align-items: center;
+		gap: var(--space-3);
+		padding: var(--space-3) var(--space-4);
+		background: linear-gradient(to top, var(--bg-scrim), transparent);
+		color: var(--pure-white);
+		transition: opacity var(--dur-2) var(--ease-out);
+	}
+
+	@media (hover: hover) and (pointer: fine) {
+		.player__bar { opacity: 0; }
+
+		.player:hover .player__bar,
+		.player:focus-within .player__bar { opacity: 1; }
+	}
+
+	/* A bar that is always on — for a demo, or a player paused on a still. */
+	.player-bar-open .player__bar { opacity: 1; }
+
+	/* Icon-only controls inside the bar. Transparent, white, no chrome: the
+	   footage is the surface. */
+	.player__btn {
+		display: inline-grid;
+		place-items: center;
+		inline-size: 2rem;
+		block-size: 2rem;
+		flex: none;
+		border: 0;
+		border-radius: var(--radius-control);
+		background: transparent;
+		color: inherit;
+		cursor: pointer;
+		transition: background-color var(--dur-1) var(--ease-out);
+	}
+
+	.player__btn:hover { background: var(--line-inverse); }
+
+	.player__rail {
+		position: relative;
+		flex: 1;
+		block-size: var(--player-rail);
+		border-radius: var(--radius-full);
+		background: var(--line-inverse);
+		cursor: pointer;
+	}
+
+	/* `--value` is a percentage the host sets: style="--value: 42%". */
+	.player__played {
+		position: absolute;
+		inset: 0 auto 0 0;
+		inline-size: var(--value, 0%);
+		border-radius: inherit;
+		background: var(--accent);
+	}
+
+	/* The scrub head only appears when the rail is hovered — quiet by default. */
+	.player__played::after {
+		content: '';
+		position: absolute;
+		inset-inline-end: calc(var(--dot-lg) * -0.5);
+		inset-block-start: 50%;
+		inline-size: var(--dot-lg);
+		block-size: var(--dot-lg);
+		border-radius: var(--radius-full);
+		background: var(--accent);
+		translate: 0 -50%;
+		scale: 0;
+		transition: scale var(--dur-1) var(--ease-out);
+	}
+
+	.player__rail:hover .player__played::after { scale: 1; }
+
+	/* Buffered footage, under the played run. Same `--value` contract. */
+	.player__buffered {
+		position: absolute;
+		inset: 0 auto 0 0;
+		inline-size: var(--value, 0%);
+		border-radius: inherit;
+		background: var(--line-inverse);
+	}
+
+	/* A timecode is DATA: light, tracked, tabular. */
+	.player__time {
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-2xs);
+		font-variant-numeric: tabular-nums;
+		letter-spacing: var(--tracking-data);
+		color: var(--fg-on-accent);
+		white-space: nowrap;
+	}
+
+	/* A title over the top edge, for a player that has left its page. */
+	.player__title {
+		position: absolute;
+		inset: 0 0 auto;
+		z-index: var(--z-raised);
+		padding: var(--space-3) var(--space-4);
+		background: linear-gradient(to bottom, var(--bg-scrim), transparent);
+		color: var(--pure-white);
+		font-size: var(--text-sm);
+		font-weight: var(--weight-medium);
+		transition: opacity var(--dur-2) var(--ease-out);
+	}
+
+	@media (hover: hover) and (pointer: fine) {
+		.player__title { opacity: 0; }
+
+		.player:hover .player__title,
+		.player:focus-within .player__title,
+		.player-bar-open .player__title { opacity: 1; }
+	}
+
+	/* Portrait and square cuts, for shorts and thumbnails. */
+	.player-square { --player-ratio: 1; }
+	.player-story  { --player-ratio: 9 / 16; }
+
+	/* ── .play — the disc over a poster ────────────────────────────────────
+	   Fills its positioned parent so the whole still is the hit target; the
+	   disc is only the visible part. */
+
+	.play {
+		--play-size: 4rem;
+
+		position: absolute;
+		inset: 0;
+		z-index: var(--z-raised);
+		display: grid;
+		place-items: center;
+		border: 0;
+		padding: 0;
+		background: none;
+		color: var(--fg-on-accent);
+		cursor: pointer;
+	}
+
+	.play__disc {
+		display: grid;
+		place-items: center;
+		inline-size: var(--play-size);
+		block-size: var(--play-size);
+		border-radius: var(--radius-full);
+		background: var(--accent);
+		box-shadow: var(--elevation-3);
+		transition: var(--t-transform), var(--t-shadow);
+	}
+
+	/* The triangle is borders, so it needs no asset and takes currentcolor.
+	   Nudged right, because an optically centred triangle is not a
+	   geometrically centred one. */
+	.play__disc::before {
+		content: '';
+		inline-size: 0;
+		block-size: 0;
+		margin-inline-start: calc(var(--play-size) * 0.06);
+		border-inline-start: calc(var(--play-size) * 0.22) solid currentcolor;
+		border-block-start: calc(var(--play-size) * 0.14) solid transparent;
+		border-block-end: calc(var(--play-size) * 0.14) solid transparent;
+	}
+
+	@media (hover: hover) and (pointer: fine) {
+		.play:hover .play__disc,
+		.play:focus-visible .play__disc {
+			scale: 1.08;
+			box-shadow: 0 0 0 var(--space-2) var(--accent-ring), var(--elevation-3);
+		}
+	}
+
+	.play-sm { --play-size: 2.75rem; }
+	.play-lg { --play-size: 5.5rem; }
+
+	/* Ghost — over busy artwork, where a solid disc fights the still. */
+	.play-ghost { color: var(--pure-white); }
+
+	.play-ghost .play__disc {
+		background: var(--bg-scrim);
+		box-shadow: inset 0 0 0 var(--border-2) var(--line-inverse);
+	}
+
+	/* Inverse — a white disc, for a poster that is already the accent. */
+	.play-inverse { color: var(--pure-black); }
+	.play-inverse .play__disc { background: var(--pure-white); }
+
+	/* ── .poster — a still with the slate baked in ─────────────────────────
+	   The thumbnail as it ships to a platform: image, gradient, label. */
+
+	.poster {
+		--poster-ratio: 16 / 9;
+		--poster-pad: var(--space-4);
+
+		position: relative;
+		aspect-ratio: var(--poster-ratio);
+		border-radius: var(--radius-media);
+		overflow: hidden;
+		background: var(--bg-media);
+		isolation: isolate;
+		color-scheme: dark;
+	}
+
+	.poster > :is(img, video) {
+		position: absolute;
+		inset: 0;
+		inline-size: 100%;
+		block-size: 100%;
+		object-fit: cover;
+	}
+
+	/* The gradient sits between the image and the label. */
+	.poster::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: var(--z-base);
+		background: linear-gradient(to top, var(--bg-scrim), transparent 60%);
+	}
+
+	.poster__label {
+		position: absolute;
+		inset: auto var(--poster-pad) var(--poster-pad);
+		z-index: var(--z-raised);
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-1);
+		color: var(--pure-white);
+	}
+
+	.poster__eyebrow {
+		font-family: var(--font-label);
+		font-size: var(--text-2xs);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		opacity: 0.8;
+	}
+
+	.poster__title {
+		font-family: var(--font-display);
+		font-size: var(--text-lg);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-tight);
+		line-height: var(--leading-tight);
+	}
+
+	/* A pinned corner — the duration, a LIVE badge, a resolution. */
+	.poster__corner {
+		position: absolute;
+		inset: var(--space-3) var(--space-3) auto auto;
+		z-index: var(--z-raised);
+		display: inline-flex;
+		gap: var(--space-2);
+	}
+
+	.poster-square { --poster-ratio: 1; }
+	.poster-story  { --poster-ratio: 9 / 16; }
+
+	/* ── .episode — the row beside a player ────────────────────────────────
+	   Thumbnail, title, meta. The current one carries a 2px rule on its
+	   inline edge — the house active state — and never a fill. */
+
+	.episode {
+		--episode-thumb: 7.5rem;
+
+		display: grid;
+		grid-template-columns: var(--episode-thumb) 1fr;
+		gap: var(--space-3);
+		align-items: start;
+		padding: var(--space-3);
+		border-radius: var(--radius-lg);
+		color: inherit;
+		text-decoration: none;
+		position: relative;
+		transition: background-color var(--dur-1) var(--ease-out);
+	}
+
+	a.episode:hover,
+	button.episode:hover { background: var(--hover-wash); }
+
+	.episode[aria-current='true'] { background: var(--accent-soft); }
+
+	.episode[aria-current='true']::before {
+		content: '';
+		position: absolute;
+		inset-block: var(--space-3);
+		inset-inline-start: 0;
+		inline-size: var(--border-2);
+		border-radius: var(--radius-full);
+		background: var(--accent);
+	}
+
+	.episode__thumb {
+		position: relative;
+		aspect-ratio: 16 / 9;
+		border-radius: var(--radius-sm);
+		overflow: hidden;
+		background: var(--bg-media);
+	}
+
+	.episode__thumb > img {
+		inline-size: 100%;
+		block-size: 100%;
+		object-fit: cover;
+	}
+
+	/* The duration pinned to the thumbnail's corner — data, on dark. */
+	.episode__dur {
+		position: absolute;
+		inset: auto var(--space-1) var(--space-1) auto;
+		padding: 0 var(--space-1);
+		border-radius: var(--radius-xs);
+		background: var(--bg-scrim);
+		color: var(--pure-white);
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-3xs);
+		font-variant-numeric: tabular-nums;
+		letter-spacing: var(--tracking-data);
+	}
+
+	.episode__body { min-inline-size: 0; }
+
+	.episode__title {
+		font-size: var(--text-sm);
+		font-weight: var(--weight-semibold);
+		line-height: var(--leading-snug);
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
+		line-clamp: 2;
+		overflow: hidden;
+	}
+
+	/* EPISODE 12 · 24 MIN — a label, not data, because it is read as a phrase. */
+	.episode__meta {
+		margin-block-start: var(--space-1);
+		font-family: var(--font-label);
+		font-size: var(--text-2xs);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: var(--fg-subtle);
+	}
+
+	/* The episode number, when the list is ordered. Data. */
+	.episode__num {
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-xs);
+		font-variant-numeric: tabular-nums;
+		letter-spacing: var(--tracking-data);
+		color: var(--fg-faint);
+		align-self: center;
+		text-align: end;
+		min-inline-size: 1.5rem;
+	}
+
+	/* With a number column: num | thumb | body. */
+	.episode-numbered { grid-template-columns: auto var(--episode-thumb) 1fr; }
+
+	.episode[data-done] .episode__title { color: var(--fg-muted); font-weight: var(--weight-medium); }
+	.episode[data-done] .episode__meta::before { content: 'Watched · '; }
+
+	/* Compact, for a rail: a smaller thumbnail and one line of title. */
+	.episode-sm { --episode-thumb: 5rem; padding: var(--space-2); }
+	.episode-sm .episode__title { -webkit-line-clamp: 1; line-clamp: 1; font-size: var(--text-xs); }
+
+	/* The box decides, not the viewport: inside a narrow rail the thumbnail
+	   gives way. */
+	.episodes { container-type: inline-size; }
+
+	@container (width < 26rem) {
+		.episode { --episode-thumb: 5rem; }
+	}
+}

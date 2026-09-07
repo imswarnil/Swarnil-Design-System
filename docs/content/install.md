@@ -35,13 +35,30 @@ alone if you only want the tokens and intend to write your own components.
 @import "@imswarnil/swarnil-design/components";
 ```
 
-## The fonts
+## The broadcast bundle
 
-The fonts are the only external dependency, and even they are a choice. Point the
-three family tokens anywhere you like and drop the `<link>`.
+Thumbnails, scenes, lower thirds and stream widgets live in a second bundle,
+so a website never pays for them. It contains everything the web bundle does
+plus the [creator layer](/canvas.html). Load it in OBS as a browser source, or
+in the page that renders your thumbnails.
 
 ```html
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@imswarnil/swarnil-design/dist/swarnil-broadcast.min.css">
+```
+
+```css
+@import "@imswarnil/swarnil-design/broadcast";
+```
+
+## The fonts
+
+The fonts are the only external dependency, and even they are a choice. Two
+families, not three — Inter does display and body alike. Point the family tokens
+anywhere you like and drop the `<link>`.
+
+```html
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
       rel="stylesheet">
 ```
 

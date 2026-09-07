@@ -16,15 +16,11 @@ jobs:
       - run: npm ci
       - name: Lint the CSS
         run: npm run lint
-      - name: Build the bundles
-        run: npm run build:css && npm run build:min
-      # The docs are generated and no longer committed, so there is no "stale
-      # docs" state to check for — the only question left is whether they still
-      # build. See PRINCIPLES #10 and learn/1-start-why-design-systems-exist.md.
-      - name: Build the docs
-        run: npm run docs
-      - name: Fail if the mono voice escaped its allowlist
-        run: python3 scripts/audit-mono.py --strict
-      - name: Fail on a class the markup uses but the CSS never defines
-        run: python3 scripts/audit-classes.py --strict
+      - name: Build the bundles and the docs
+        run: npm run build
+      # The audits read the built site, so they run after the build. Mono
+      # outside the code allowlist, or a class the markup uses that no CSS
+      # defines, each fail the job.
+      - name: Audit
+        run: npm run audit
       - run: npm run size

@@ -1,0 +1,295 @@
+/* =============================================================================
+   51 · TIMELINE — an ordered sequence with a rail through it
+
+   The build log, the itinerary and the curriculum are all one idea — an
+   ordered list that knows where you are — wearing their collection's clothes.
+   This is that idea with no clothes on, so a page that needs a plain sequence
+   does not borrow a build log and override the parts that say "project".
+
+   Two axes, and the axis is the only structural decision: vertical is the
+   default and reads as a list; .timeline-h is horizontal, reads as a process,
+   scrolls on overflow and folds back to vertical when the viewport cannot hold
+   it honestly. Everything else is a modifier that works on both.
+
+   State is ARIA and data attributes, never a styling-only class:
+     [data-done]      behind you — the node fills
+     [aria-current]   you are here — the node takes the accent ring
+     [data-upcoming]  ahead of you — the node goes dashed. Everything after
+                      [aria-current] is upcoming without being told.
+     [data-kind]      start | ship | now — swaps the node glyph
+
+   The fold points are media queries, not container queries: the alternating
+   and horizontal forms decide by the viewport because they are page-level
+   layout, and a timeline is never narrower than the column it lives in.
+
+   COMPOSITION WARNING
+   .timeline::before is the rail and .timeline__node::before is the glyph.
+   A node carrying a real mark (an .icon) drops the glyph rather than doubling
+   it — two marks in one circle is one too many.
+
+   Layer: patterns.
+   ========================================================================== */
+
+@layer patterns {
+
+	.timeline {
+		--timeline-node: 1.45rem;
+		--timeline-gap: var(--space-5);
+		--timeline-rail: var(--border-hair);
+		--timeline-rail-color: var(--line-default);
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		gap: var(--timeline-gap);
+	}
+
+	/* The rail. Inset by half a node so it runs through their centres, and
+	   stopped short at both ends — a line that runs past the first and last
+	   node reads as "there is more", which is a lie in a finished sequence. */
+	.timeline::before {
+		content: '';
+		position: absolute;
+		inset-inline-start: calc(var(--timeline-node) / 2 - var(--timeline-rail) / 2);
+		inset-block: calc(var(--timeline-node) / 2);
+		width: var(--timeline-rail);
+		background: var(--timeline-rail-color);
+	}
+
+	.timeline__item {
+		position: relative;
+		display: flex;
+		align-items: flex-start;
+		gap: var(--space-4);
+		min-width: 0;
+	}
+
+	/* The node's number is DATA, so it takes the data voice. */
+	.timeline__node {
+		position: relative;
+		z-index: var(--z-raised);
+		flex: none;
+		width: var(--timeline-node);
+		height: var(--timeline-node);
+		border-radius: var(--radius-full);
+		border: var(--border-2) solid var(--line-strong);
+		background: var(--bg-canvas);
+		display: grid;
+		place-items: center;
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		letter-spacing: var(--tracking-data);
+		font-size: var(--text-2xs);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-subtle);
+		transition: var(--t-colors), var(--t-shadow);
+	}
+
+	.timeline__body {
+		min-width: 0;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-px);
+		padding-block-start: calc((var(--timeline-node) - 1.15rem) / 2);
+	}
+
+	/* A date is data; it sits above the title whatever order the markup used,
+	   so a screen reader hears the event before the when. */
+	.timeline__time {
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		letter-spacing: var(--tracking-data);
+		font-size: var(--text-2xs);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-faint);
+		order: -1;
+	}
+
+	.timeline__title {
+		font-weight: var(--weight-semibold);
+		font-size: var(--text-sm);
+		line-height: var(--leading-snug);
+		color: var(--fg-default);
+	}
+
+	a.timeline__title { text-decoration: none; transition: var(--t-colors); }
+	a.timeline__title:hover { color: var(--fg-accent); }
+
+	.timeline__note {
+		font-size: var(--text-sm);
+		line-height: var(--leading-normal);
+		color: var(--fg-subtle);
+		max-width: var(--measure-ui);
+	}
+
+	.timeline__meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-1);
+		margin-block-start: var(--space-2);
+	}
+
+	/* ── State ─────────────────────────────────────────────────────────────── */
+
+	.timeline__item[data-done] .timeline__node {
+		background: var(--fg-default);
+		border-color: var(--fg-default);
+		color: var(--bg-canvas);
+	}
+
+	.timeline__item[data-done] .timeline__node::before { content: '✓'; }
+
+	.timeline__item[aria-current] .timeline__node {
+		border-color: var(--accent);
+		color: var(--accent);
+		background: var(--bg-canvas);
+		box-shadow: 0 0 0 3px var(--accent-ring);
+	}
+
+	.timeline__item[aria-current] .timeline__node::before { content: none; }
+	.timeline__item[aria-current] .timeline__title { color: var(--fg-default); }
+
+	/* Ahead of you: the copy recedes and the node goes dashed. Everything
+	   after the current item is upcoming without being told; [data-upcoming]
+	   says it explicitly when there is no current item to count from. */
+	.timeline__item[aria-current] ~ .timeline__item .timeline__title,
+	.timeline__item[data-upcoming] .timeline__title { font-weight: var(--weight-medium); color: var(--fg-muted); }
+
+	.timeline__item[aria-current] ~ .timeline__item .timeline__node,
+	.timeline__item[data-upcoming] .timeline__node { border-style: dashed; }
+
+	/* Glyph kinds. Content only — the node geometry never changes. */
+	.timeline__item[data-kind='start'] .timeline__node::before { content: '▸'; }
+	.timeline__item[data-kind='ship'] .timeline__node::before { content: '✓'; }
+	.timeline__item[data-kind='now'] .timeline__node::before { content: ''; }
+
+	.timeline__item[data-kind='now'] .timeline__node {
+		border-color: var(--accent);
+		background: var(--accent);
+		color: var(--fg-on-accent);
+	}
+
+	/* A node carrying a real mark drops the generated glyph. The mark wins
+	   because it says more than "done" does; it inherits the node's colour so
+	   it flips to canvas on a filled node with no second rule. */
+	.timeline__node > .icon { width: 1rem; height: 1rem; color: currentcolor; }
+	.timeline__item .timeline__node:has(> .icon)::before { content: none; }
+
+	/* ── Density ───────────────────────────────────────────────────────────── */
+
+	.timeline-compact { --timeline-node: 1rem; --timeline-gap: var(--space-3); }
+	.timeline-compact .timeline__title { font-size: var(--text-xs); }
+	.timeline-compact .timeline__node { font-size: 0; }
+
+	.timeline-lg { --timeline-node: 2rem; --timeline-gap: var(--space-8); }
+	.timeline-lg .timeline__title { font-size: var(--text-base); }
+
+	/* ── Ranged — the rail is a span, not a point ──────────────────────────────
+	   A role held for three years is a bar, not a dot. The node becomes a
+	   capsule that fills its own row, which is what makes a CV read as
+	   duration. Its mark sits at the TOP, where the span begins — an icon
+	   floating in the middle of a three-year bar is pointing at nothing. */
+
+	.timeline-ranged .timeline__node {
+		border-radius: var(--radius-full);
+		height: auto;
+		align-self: stretch;
+		min-height: var(--timeline-node);
+		place-items: start center;
+		padding-block-start: calc((var(--timeline-node) - 1rem) / 2);
+	}
+
+	/* The glyph is meaningless on a duration: the bar IS the statement. */
+	.timeline-ranged .timeline__item .timeline__node::before { content: none; }
+
+	/* ── Alternating — vertical only ───────────────────────────────────────────
+	   Items zig-zag either side of a centred rail. Only honest with short copy
+	   and an even-ish count, and only above the fold — below it, it collapses
+	   to the plain rail rather than shrinking two columns into nothing. */
+
+	@media (min-width: 48rem) {
+		.timeline-alt::before { inset-inline-start: 50%; translate: -50% 0; }
+
+		.timeline-alt .timeline__item {
+			width: 50%;
+			padding-inline-end: var(--space-8);
+			flex-direction: row-reverse;
+			text-align: end;
+		}
+
+		.timeline-alt .timeline__item .timeline__body { align-items: flex-end; }
+
+		.timeline-alt .timeline__node {
+			position: absolute;
+			inset-inline-end: calc(-1 * var(--timeline-node) / 2);
+			inset-block-start: 0;
+		}
+
+		.timeline-alt .timeline__item:nth-child(even) {
+			margin-inline-start: 50%;
+			padding-inline-end: 0;
+			padding-inline-start: var(--space-8);
+			flex-direction: row;
+			text-align: start;
+		}
+
+		.timeline-alt .timeline__item:nth-child(even) .timeline__body { align-items: flex-start; }
+
+		.timeline-alt .timeline__item:nth-child(even) .timeline__node {
+			inset-inline-end: auto;
+			inset-inline-start: calc(-1 * var(--timeline-node) / 2);
+		}
+	}
+
+	/* ── Horizontal ────────────────────────────────────────────────────────────
+	   A process, not a list. Scrolls rather than wraps: a horizontal timeline
+	   that wraps to a second row has stopped being one line of time. */
+
+	@media (min-width: 48rem) {
+		.timeline-h {
+			--timeline-col: 12rem;
+			flex-direction: row;
+			gap: 0;
+			overflow-x: auto;
+			overscroll-behavior-x: contain;
+			scroll-snap-type: x proximity;
+			padding-block-end: var(--space-3);
+			scrollbar-width: thin;
+		}
+
+		.timeline-h::before {
+			inset-inline: var(--space-6);
+			inset-block-start: calc(var(--timeline-node) / 2);
+			inset-block-end: auto;
+			width: auto;
+			height: var(--timeline-rail);
+		}
+
+		.timeline-h .timeline__item {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: var(--space-3);
+			flex: 1 0 var(--timeline-col);
+			min-width: var(--timeline-col);
+			padding-inline-end: var(--space-5);
+			scroll-snap-align: start;
+		}
+
+		.timeline-h .timeline__body { padding-block-start: 0; }
+		.timeline-h .timeline__note { max-width: none; }
+	}
+
+	/* ── Print ─────────────────────────────────────────────────────────────── */
+
+	@media print {
+		.timeline-h { flex-direction: column; overflow: visible; }
+		.timeline-h::before { inset-inline: calc(var(--timeline-node) / 2) auto; inset-block: 0; width: var(--timeline-rail); height: auto; }
+		.timeline__item[aria-current] .timeline__node { box-shadow: none; }
+		.timeline-alt .timeline__item,
+		.timeline-alt .timeline__item:nth-child(even) { width: auto; margin-inline-start: 0; padding: 0; text-align: start; flex-direction: row; }
+		.timeline-alt::before { inset-inline-start: calc(var(--timeline-node) / 2); translate: none; }
+		.timeline-alt .timeline__node { position: relative; inset: auto; }
+	}
+}

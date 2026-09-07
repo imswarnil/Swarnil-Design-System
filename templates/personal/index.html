@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Swarnil Singhai — engineer, creator, traveller</title>
+<meta name="description" content="One page for everything I make: videos, code, courses, writing and the odd film." />
+<script>
+try {
+  var t = localStorage.getItem('sds-theme');
+  if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  document.documentElement.dataset.theme = t;
+} catch (e) { document.documentElement.dataset.theme = 'light'; }
+</script>
+<link rel="preload" href="/assets/fonts/inter-100-900-latin.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/fonts.css" />
+<!-- The system. To take this template, replace the next line with the CDN link:
+     https://cdn.jsdelivr.net/npm/@imswarnil/swarnil-design/dist/swarnil-design.min.css -->
+<link rel="stylesheet" href="/src/index.css" />
+<!-- Page composition only — see templates/templates.css. -->
+<link rel="stylesheet" href="/templates/templates.css" />
+<script src="/src/js/nav.js" defer></script>
+</head>
+<body class="tpl">
+<a class="skip" href="#main">Skip to content</a>
+<header class="navbar navbar-sticky navbar-blur navbar-bordered">
+  <button class="navbar__burger" type="button" popovertarget="drawer" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
+  <a class="navbar__brand" href="/templates/personal/index.html"><span class="dot dot-accent"></span> Swarnil</a>
+  <nav class="navbar__nav" aria-label="Main">
+    <a class="navbar__link" href="/templates/personal/index.html" aria-current="page"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-user"/></svg>Home</a><a class="navbar__link" href="/templates/blog/index.html#watch"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg>Watch</a><a class="navbar__link" href="/templates/blog/index.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-file"/></svg>Blog</a><a class="navbar__link" href="/templates/personal/index.html#learn"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-folder"/></svg>Courses</a><a class="navbar__link" href="/templates/personal/index.html#travel"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-camera"/></svg>Travel</a>
+  </nav>
+  <div class="navbar__actions">
+    <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Search"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-search"/></svg></button>
+    <a class="btn btn-primary btn-sm" href="#newsletter">Subscribe</a>
+  </div>
+  <div class="sheet" id="drawer" popover>
+    <div class="sheet__head">
+      <button class="btn btn-quiet btn-sm btn-icon" type="button" popovertarget="drawer" popovertargetaction="hide" aria-label="Close"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-x"/></svg></button>
+      <span class="navbar__brand"><span class="dot dot-accent"></span> Swarnil</span>
+    </div>
+    <div class="sheet__body">
+      <div class="sheet__group">
+        <a class="sheet__link" href="/templates/personal/index.html" aria-current="page"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-user"/></svg>Home</a><a class="sheet__link" href="/templates/blog/index.html#watch"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg>Watch</a><a class="sheet__link" href="/templates/blog/index.html"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-file"/></svg>Blog</a><a class="sheet__link" href="/templates/personal/index.html#learn"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-folder"/></svg>Courses</a><a class="sheet__link" href="/templates/personal/index.html#travel"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-camera"/></svg>Travel</a>
+      </div>
+      <div class="sheet__group">
+        <p class="sheet__label">Elsewhere</p>
+        <a class="sheet__link" href="https://youtube.com/@imswarnil" rel="noopener"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-video"/></svg>YouTube</a>
+        <a class="sheet__link" href="https://github.com/imswarnil" rel="noopener"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>GitHub</a>
+      </div>
+    </div>
+    <p class="sheet__foot">Built on the Swarnil Design System</p>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ── Hero ─────────────────────────────────────────────────────────── -->
+  <section class="section bg-glow bg-noise tpl-hero" style="--bg-glow-alpha: 0.22">
+    <div class="center hero">
+      <div class="fx-stagger">
+        <p class="hero__eyebrow"><span class="dot dot-sm dot-live"></span> Rolling · Episode 48 is in the edit</p>
+        <h1 class="hero__title">I make things. Then I make a video <em>about</em> it.</h1>
+        <p class="hero__lead">Software engineer by trade, YouTuber by habit. Courses, code, a travel blog, a web series that got out of hand, and a design system so it all looks like one person made it.</p>
+        <div class="hero__actions">
+          <a class="btn btn-primary btn-lg" href="#watch"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg> Watch the latest</a>
+          <a class="btn btn-secondary btn-lg frame frame-sm frame-hover" href="/templates/blog/index.html">Read the blog</a>
+        </div>
+        <p class="hero__note">Every Thursday · 128 episodes · no sponsor reads</p>
+      </div>
+      <div class="hero__media">
+        <div class="vf vf-thirds tpl-hero__vf ratio u-rounded-lg fx-kenburns frame frame-signal">
+          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%235b6b7a'/%3E%3Cstop offset='1' stop-color='%231d232b'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="A still from the latest episode" />
+          <span class="veil veil-vignette"></span>
+          <span class="veil veil-scrim"></span>
+          <span class="vf__tc">TAKE 48 · 00:12:47</span>
+          <span class="vf__rec">REC</span>
+          <span class="vf__dims">1920 × 1080</span>
+          <a class="play" href="#watch" aria-label="Play the latest episode"><span class="play__disc"></span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Numbers ──────────────────────────────────────────────────────── -->
+  <section class="section section-tight section-line">
+    <div class="center">
+      <div class="stats stats-row">
+        <div class="stats__item"><span class="t-stat"><span class="fx-count" style="--fx-target: 128" aria-hidden="true"></span><span class="u-sr-only">128</span></span><span class="stats__label">Episodes</span></div>
+        <div class="stats__item"><span class="t-stat"><span class="fx-count" style="--fx-target: 42" aria-hidden="true"></span><span class="u-sr-only">42</span>k</span><span class="stats__label">Subscribers</span></div>
+        <div class="stats__item"><span class="t-stat"><span class="fx-count" style="--fx-target: 6" aria-hidden="true"></span><span class="u-sr-only">6</span></span><span class="stats__label">Courses</span></div>
+        <div class="stats__item"><span class="t-stat"><span class="fx-count" style="--fx-target: 23" aria-hidden="true"></span><span class="u-sr-only">23</span></span><span class="stats__label">Countries filmed</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── What I make ──────────────────────────────────────────────────── -->
+  <section class="section section-line" id="make">
+    <div class="center stack stack-lg">
+      <header class="sec">
+        <div class="sec__text">
+          <span class="sec__eyebrow">What I make</span>
+          <h2 class="sec__title">Six shapes of the same habit</h2>
+          <p class="sec__lead">Each one feeds the others. The code becomes a video, the video becomes a course, the trip becomes a blog post and a short film.</p>
+        </div>
+      </header>
+      <div class="deck ix-dim">
+        <article class="card card-link card-hover-frame frame-hover"><div class="card__body"><svg class="icon icon-lg" aria-hidden="true"><use href="/icons/sprite.svg#i-video"/></svg><div><h3 class="card__title"><a class="card__link" href="#watch">YouTube</a></h3><p class="card__excerpt">Tutorials, build vlogs, the odd over-produced answer.</p></div><svg class="icon icon-sm card__arrow" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-right"/></svg></div></article>
+        <article class="card card-link card-hover-frame frame-hover"><div class="card__body"><svg class="icon icon-lg" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg><div><h3 class="card__title"><a class="card__link" href="#build">Code &amp; web apps</a></h3><p class="card__excerpt">Open source, and the tools I actually use every day.</p></div><svg class="icon icon-sm card__arrow" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-right"/></svg></div></article>
+        <article class="card card-link card-hover-frame frame-hover"><div class="card__body"><svg class="icon icon-lg" aria-hidden="true"><use href="/icons/sprite.svg#i-folder"/></svg><div><h3 class="card__title"><a class="card__link" href="#learn">Courses</a></h3><p class="card__excerpt">Filmed in the order the skills are actually needed.</p></div><svg class="icon icon-sm card__arrow" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-right"/></svg></div></article>
+        <article class="card card-link card-hover-frame frame-hover"><div class="card__body"><svg class="icon icon-lg" aria-hidden="true"><use href="/icons/sprite.svg#i-file"/></svg><div><h3 class="card__title"><a class="card__link" href="/templates/blog/index.html">Writing</a></h3><p class="card__excerpt">Long-form, when a video would be the wrong shape.</p></div><svg class="icon icon-sm card__arrow" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-right"/></svg></div></article>
+        <article class="card card-link card-hover-frame frame-hover"><div class="card__body"><svg class="icon icon-lg" aria-hidden="true"><use href="/icons/sprite.svg#i-camera"/></svg><div><h3 class="card__title"><a class="card__link" href="#travel">Travel &amp; film</a></h3><p class="card__excerpt">A blog, a camera, and a web series shot on the road.</p></div><svg class="icon icon-sm card__arrow" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-right"/></svg></div></article>
+        <article class="card card-link card-hover-frame frame-hover"><div class="card__body"><svg class="icon icon-lg" aria-hidden="true"><use href="/icons/sprite.svg#i-activity"/></svg><div><h3 class="card__title"><a class="card__link" href="#build">AI &amp; prompts</a></h3><p class="card__excerpt">Prompt systems, agents, and honest notes on what works.</p></div><svg class="icon icon-sm card__arrow" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-right"/></svg></div></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Latest episodes ──────────────────────────────────────────────── -->
+  <section class="section section-line section-sunken" id="watch">
+    <div class="center stack stack-lg">
+      <header class="sec">
+        <div class="sec__text">
+          <span class="sec__eyebrow"><span class="dot dot-sm dot-live"></span> Fresh this week</span>
+          <h2 class="sec__title">Latest episodes</h2>
+        </div>
+        <div class="sec__actions"><a class="sec__more ix-arrow" href="/templates/blog/index.html#watch">All 128 <svg class="icon icon-xs" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-right"/></svg></a></div>
+      </header>
+      <div class="grid-3 cq-card fx-scroll-rise">
+      <article class="card card-video card-hover-frame frame-hover ">
+        <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237a5b4e'/%3E%3Cstop offset='1' stop-color='%232a1d17'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">24:07</span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+        <div class="card__body">
+          <p class="card__kicker">Ep. 48 · Craft</p>
+          <h3 class="card__title"><a class="card__link" href="/templates/blog/post.html">Colour, in one block of tokens</a></h3>
+          <p class="card__excerpt">Eight ramps, ninety-seven tones, and why dark mode is not an inversion.</p>
+        </div>
+      </article>
+      <article class="card card-video card-hover-frame frame-hover ">
+        <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234e6f5c'/%3E%3Cstop offset='1' stop-color='%23172a20'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">18:30</span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+        <div class="card__body">
+          <p class="card__kicker">Ep. 47 · Craft</p>
+          <h3 class="card__title"><a class="card__link" href="/templates/blog/post.html">The frame layer, explained</a></h3>
+          <p class="card__excerpt">Corner brackets belong on footage, not on a blog post.</p>
+        </div>
+      </article>
+      <article class="card card-video card-hover-frame frame-hover ">
+        <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236a5a7e'/%3E%3Cstop offset='1' stop-color='%23221a2e'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">31:12</span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+        <div class="card__body">
+          <p class="card__kicker">Ep. 46 · Business</p>
+          <h3 class="card__title"><a class="card__link" href="/templates/blog/post.html">Why the thumbnail is the product</a></h3>
+          <p class="card__excerpt">Seen ten thousand times for every click. Design it like that.</p>
+        </div>
+      </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Writing + Now ────────────────────────────────────────────────── -->
+  <section class="section section-line" id="build">
+    <div class="center sidebar sidebar-end" style="--side-width: 20rem">
+      <div class="stack stack-lg">
+        <header class="sec">
+          <div class="sec__text"><span class="sec__eyebrow">Writing</span><h2 class="sec__title">Recent posts</h2></div>
+          <div class="sec__actions"><a class="sec__more ix-arrow" href="/templates/blog/index.html">The blog <svg class="icon icon-xs" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-right"/></svg></a></div>
+        </header>
+        <div class="stack stack-sm cq-card">
+          <article class="card card-row card-quiet card-hover-lift"><div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237c6f3f'/%3E%3Cstop offset='1' stop-color='%232a2412'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /></div><div class="card__body"><p class="card__kicker">Design systems · 8 min</p><h3 class="card__title"><a class="card__link" href="/templates/blog/post.html">Decide once. Then stop deciding.</a></h3><p class="card__excerpt">Why a token-first system is the only kind that survives a rebrand.</p></div></article>
+          <article class="card card-row card-quiet card-hover-lift"><div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%233f5f7c'/%3E%3Cstop offset='1' stop-color='%2312202a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /></div><div class="card__body"><p class="card__kicker">AI · 11 min</p><h3 class="card__title"><a class="card__link" href="/templates/blog/post.html">A prompt is a spec you have not written yet</a></h3><p class="card__excerpt">What building agents taught me about writing requirements.</p></div></article>
+          <article class="card card-row card-quiet card-hover-lift"><div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236b4a4a'/%3E%3Cstop offset='1' stop-color='%232a1717'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /></div><div class="card__body"><p class="card__kicker">Travel · 6 min</p><h3 class="card__title"><a class="card__link" href="/templates/blog/post.html">Ladakh, on film</a></h3><p class="card__excerpt">Fourteen photographs and the one that did not come out.</p></div></article>
+        </div>
+      </div>
+      <aside class="stack">
+        <article class="card card-sunken">
+          <div class="card__body">
+            <p class="card__kicker"><span class="dot dot-sm dot-live"></span> Now</p>
+            <h3 class="card__title">What I'm on this month</h3>
+            <ol class="buildlog u-mt-3">
+              <li class="buildlog__step" data-kind="start" data-done><span class="buildlog__node"></span><a class="buildlog__link" href="#i">Design system rebuilt<span class="buildlog__date">Sep 05</span></a></li>
+              <li class="buildlog__step" data-done><span class="buildlog__node">2</span><a class="buildlog__link" href="#i">Broadcast layer — scenes, thumbs<span class="buildlog__date">Sep 07</span></a></li>
+              <li class="buildlog__step" aria-current="step"><span class="buildlog__node">3</span><a class="buildlog__link" href="#i">Episode 48 in the edit<span class="buildlog__date">Sep 10</span></a></li>
+              <li class="buildlog__step" data-kind="ship"><span class="buildlog__node"></span><a class="buildlog__link" href="#i">Ship the Ghost theme<span class="buildlog__date">target Sep 20</span></a></li>
+            </ol>
+          </div>
+        </article>
+        <article class="card card-inverse">
+          <div class="card__body">
+            <p class="card__kicker">Open source</p>
+            <h3 class="card__title">Swarnil Design System</h3>
+            <p class="card__excerpt">Token-first, dependency-free CSS. This page is built on it.</p>
+            <div class="card__tags"><span class="badge badge-outline">css</span><span class="badge badge-outline">tokens</span><span class="badge badge-outline">MIT</span></div>
+          </div>
+          <div class="card__footer"><span>1.2k stars</span><a class="btn btn-sm btn-ghost card__above" href="https://design.imswarnil.com">Docs</a></div>
+        </article>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ── Courses ──────────────────────────────────────────────────────── -->
+  <section class="section section-line section-sunken" id="learn">
+    <div class="center stack stack-lg">
+      <header class="sec sec-rule">
+        <div class="sec__text">
+          <span class="sec__eyebrow">Courses</span>
+          <h2 class="sec__title">Learn the camera before the software</h2>
+          <p class="sec__lead">Six courses, filmed in the order the skills are actually needed — light, sound, framing, then the edit, then the code that publishes it.</p>
+        </div>
+        <div class="sec__actions"><a class="btn btn-outline btn-sm" href="#i">Browse all six</a></div>
+      </header>
+      <div class="sidebar" style="--side-width: 24rem">
+        <section class="curriculum">
+          <header class="curriculum__head">
+            <h3 class="curriculum__title">CRM Analytics, from zero</h3>
+            <span class="curriculum__meta">12 lessons · 3h 40m</span>
+            <progress class="progress progress-thin" value="4" max="12" aria-label="4 of 12 lessons watched"></progress>
+          </header>
+          <div class="curriculum__modules">
+            <details class="curriculum__module" open>
+              <summary><span class="curriculum__no">01</span><span class="curriculum__module-title">The data model</span><span class="curriculum__count">4 lessons</span></summary>
+              <ol class="curriculum__lessons">
+                <li><a class="lesson" href="#i" data-done><span class="lesson__tick"></span><span class="lesson__title">What a dataset is</span><span class="lesson__len">08:12</span></a></li>
+                <li><a class="lesson" href="#i" data-done><span class="lesson__tick"></span><span class="lesson__title">Recipes and dataflows</span><span class="lesson__len">14:30</span></a></li>
+                <li><a class="lesson" href="#i" aria-current="page"><span class="lesson__tick"></span><span class="lesson__title">Joins, and where they go wrong</span><span class="lesson__len">19:04</span></a></li>
+              </ol>
+            </details>
+            <details class="curriculum__module">
+              <summary><span class="curriculum__no">02</span><span class="curriculum__module-title">Building the dashboard</span><span class="curriculum__count">5 lessons</span></summary>
+              <ol class="curriculum__lessons">
+                <li><a class="lesson" href="#i"><span class="lesson__tick"></span><span class="lesson__title">The first widget</span><span class="lesson__len">09:20</span><span class="lesson__free">Free</span></a></li>
+                <li><a class="lesson" href="#i" data-locked><span class="lesson__tick"></span><span class="lesson__title">Bindings</span><span class="lesson__len">22:15</span></a></li>
+              </ol>
+            </details>
+          </div>
+        </section>
+        <div class="grid-2 cq-card">
+          <article class="card card-video card-hover-frame frame-hover card-quiet">
+        <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%233f5f7c'/%3E%3Cstop offset='1' stop-color='%2312202a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">1h 12m</span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+        <div class="card__body">
+          <p class="card__kicker">Course · 6 lessons</p>
+          <h3 class="card__title"><a class="card__link" href="/templates/blog/post.html">Lighting a talking head</a></h3>
+          
+        </div>
+      </article>
+          <article class="card card-video card-hover-frame frame-hover card-quiet">
+        <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236b4a4a'/%3E%3Cstop offset='1' stop-color='%232a1717'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">2h 04m</span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+        <div class="card__body">
+          <p class="card__kicker">Course · 9 lessons</p>
+          <h3 class="card__title"><a class="card__link" href="/templates/blog/post.html">Ship a site with Ghost</a></h3>
+          
+        </div>
+      </article>
+          <article class="card card-video card-hover-frame frame-hover card-quiet">
+        <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234a6b6b'/%3E%3Cstop offset='1' stop-color='%23172a2a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">1h 48m</span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+        <div class="card__body">
+          <p class="card__kicker">Course · 8 lessons</p>
+          <h3 class="card__title"><a class="card__link" href="/templates/blog/post.html">Prompt systems that hold up</a></h3>
+          
+        </div>
+      </article>
+          <article class="card card-video card-hover-frame frame-hover card-quiet">
+        <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%235b6b7a'/%3E%3Cstop offset='1' stop-color='%231d232b'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">58m</span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+        <div class="card__body">
+          <p class="card__kicker">Course · 5 lessons</p>
+          <h3 class="card__title"><a class="card__link" href="/templates/blog/post.html">Edit faster than you shoot</a></h3>
+          
+        </div>
+      </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Travel ───────────────────────────────────────────────────────── -->
+  <section class="section section-line" id="travel">
+    <div class="center stack stack-lg">
+      <header class="sec">
+        <div class="sec__text">
+          <span class="sec__eyebrow">Travel &amp; film</span>
+          <h2 class="sec__title">Twenty-three countries, one lens</h2>
+          <p class="sec__lead">The blog is where the trips go; the web series is where they got out of hand. Every frame graded to the same palette as this page.</p>
+        </div>
+        <div class="sec__actions"><a class="sec__more ix-arrow" href="/templates/blog/index.html">The travel log <svg class="icon icon-xs" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-right"/></svg></a></div>
+      </header>
+    </div>
+    <div class="center">
+      <div class="reel tpl-reel">
+        <a class="poster poster-square ix-zoom veil-mono" href="/templates/blog/post.html"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237a5b4e'/%3E%3Cstop offset='1' stop-color='%232a1d17'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-grade"></span><span class="veil veil-scrim"></span><span class="poster__label"><span class="poster__eyebrow">Ladakh</span><span class="poster__title">On film</span></span></a>
+        <a class="poster poster-square ix-zoom veil-mono" href="/templates/blog/post.html"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234e6f5c'/%3E%3Cstop offset='1' stop-color='%23172a20'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-grade"></span><span class="veil veil-scrim"></span><span class="poster__label"><span class="poster__eyebrow">Kyoto</span><span class="poster__title">Eleven mornings</span></span></a>
+        <a class="poster poster-square ix-zoom veil-mono" href="/templates/blog/post.html"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236a5a7e'/%3E%3Cstop offset='1' stop-color='%23221a2e'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-grade"></span><span class="veil veil-scrim"></span><span class="poster__label"><span class="poster__eyebrow">Lisbon</span><span class="poster__title">The tram episode</span></span></a>
+        <a class="poster poster-square ix-zoom veil-mono" href="/templates/blog/post.html"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237c6f3f'/%3E%3Cstop offset='1' stop-color='%232a2412'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-grade"></span><span class="veil veil-scrim"></span><span class="poster__label"><span class="poster__eyebrow">Hampi</span><span class="poster__title">Boulders</span></span></a>
+        <a class="poster poster-square ix-zoom veil-mono" href="/templates/blog/post.html"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%233f5f7c'/%3E%3Cstop offset='1' stop-color='%2312202a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-grade"></span><span class="veil veil-scrim"></span><span class="poster__corner"><span class="badge badge-live">Series</span></span><span class="poster__label"><span class="poster__eyebrow">Web series</span><span class="poster__title">Out of hand, S2</span></span></a>
+        <a class="poster poster-square ix-zoom veil-mono" href="/templates/blog/post.html"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236b4a4a'/%3E%3Cstop offset='1' stop-color='%232a1717'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-grade"></span><span class="veil veil-scrim"></span><span class="poster__label"><span class="poster__eyebrow">Tbilisi</span><span class="poster__title">Wine and cable cars</span></span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Newsletter ───────────────────────────────────────────────────── -->
+  <section class="section section-line" id="newsletter">
+    <div class="center center-md">
+      <div class="cta cta-boxed bg-glow bg-glow-centre bg-faint">
+        <p class="cta__kicker">Every Friday</p>
+        <h2 class="cta__title u-m-0">One episode, one thing I learned.</h2>
+        <p class="cta__body">No sponsor reads. Unsubscribe is one click and I will not ask why.</p>
+        <form class="cta__actions form form-inline" action="#i" onsubmit="return false">
+          <input class="input" type="email" placeholder="you@studio.tv" aria-label="Email" autocomplete="email" />
+          <button class="btn btn-primary" type="submit">Subscribe</button>
+        </form>
+        <p class="cta__fine">4,812 readers · new issue every Friday</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+<footer class="footer">
+  <div class="center">
+    <div class="footer__top">
+      <div>
+        <p class="footer__brand"><span class="dot dot-accent"></span> Swarnil</p>
+        <p class="footer__note">Engineer, creator, occasional traveller. Everything here is made in the open.</p>
+      </div>
+      <nav class="footer__col" aria-label="Make"><p class="footer__head">Make</p><a href="/templates/blog/index.html#watch">Watch</a><a href="/templates/blog/index.html">Read</a><a href="/templates/personal/index.html#learn">Learn</a></nav>
+      <nav class="footer__col" aria-label="Elsewhere"><p class="footer__head">Elsewhere</p><a href="https://youtube.com/@imswarnil" rel="noopener">YouTube</a><a href="https://github.com/imswarnil" rel="noopener">GitHub</a><a href="https://design.imswarnil.com">Design system</a></nav>
+      <nav class="footer__col" aria-label="Site"><p class="footer__head">Site</p><a href="#newsletter">Newsletter</a><a href="#i">RSS</a><a href="#i">Colophon</a></nav>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__fine">© 2026 Swarnil Singhai · Built on the <a href="https://design.imswarnil.com">Swarnil Design System</a></p>
+      <span class="footer__rec"><span class="dot dot-sm dot-live"></span> Still rolling</span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

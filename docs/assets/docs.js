@@ -84,7 +84,10 @@
 	document.addEventListener('click', function (e) {
 		var btn = e.target.closest('[data-copy]');
 		if (!btn) return;
-		var root = btn.closest('.demo') || btn.closest('.cb');
+		/* Most specific first. A .codeplayer copy button lives INSIDE a .demo
+		   when it is being demonstrated, and closest('.demo') would hand back the
+		   demo's own source pane instead of the block the reader clicked. */
+		var root = btn.closest('.codeplayer') || btn.closest('.cb') || btn.closest('.demo');
 		var code = root && root.querySelector('code');
 		if (!code) return;
 		var done = function () {
@@ -97,126 +100,6 @@
 			navigator.clipboard.writeText(code.textContent).then(done, function () {});
 		}
 	});
-
-	/* ── The TOC timeline ────────────────────────────────────────────────
-	   Three jobs, one scroll listener:
-
-	     progress   how far through the page you are        (the fill)
-	     current    which chapter you are in                (the active dot)
-	     played     which chapters you have already passed  (the dim dots)
-
-	   Progress is measured against the ARTICLE, not the document. A long
-	   footer would otherwise mean the bar never fills — you would finish
-	   reading with the playhead at 80% and it would look broken rather than
-	   accurate.
-
-	   Where the browser supports scroll-driven animations the fill is animated
-	   off the main thread and this listener only handles the counter and the
-	   dots, so a slow frame can never make the bar lag the page.
-	*/
-
-	var toc = $('.toc');
-	if (toc) {
-		var links = $$('[data-toc-link]', toc);
-		var time = $('[data-toc-time]', toc);
-		var list = $('.toc__list', toc);
-		var article = $('.doc') || document.body;
-
-		var heads = links.map(function (a) {
-			return document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1)));
-		});
-
-		var ticking = false;
-
-		// The page as a tape: total running time is the read estimate
-		// (200 wpm — the standard figure), elapsed is progress through the
-		// article. mm:ss both sides, tabular figures in the CSS so the digits
-		// do not jitter. At the end the readout says what a deck would say.
-		var words = (article.textContent.match(/\S+/g) || []).length;
-		var totalSec = Math.max(60, Math.round(words / 200 * 60));
-
-		var mmss = function (s) {
-			s = Math.max(0, Math.round(s));
-			var m = Math.floor(s / 60), r = s % 60;
-			return (m < 10 ? '0' : '') + m + ':' + (r < 10 ? '0' : '') + r;
-		};
-
-		// Where each chapter's DOT sits inside the list, in pixels. This is what
-		// the fill interpolates between, so the playhead is always in the
-		// chapter the list says you are in.
-		//
-		// Measured with getBoundingClientRect, NOT offsetTop. offsetTop is
-		// relative to the nearest POSITIONED ancestor, and .toc__link is
-		// position:relative — so `node.offsetTop - list.offsetTop` measured the
-		// node against its own row and came out negative. Rects are absolute
-		// and account for the TOC's own scroll, which offsetTop does not.
-		function nodeOffset(i) {
-			var node = $('.toc__node', links[i]);
-			if (!node) return 0;
-			var n = node.getBoundingClientRect();
-			var l = list.getBoundingClientRect();
-			return (n.top - l.top) + n.height / 2;
-		}
-
-		function update() {
-			// The chapter you are in is the LAST heading above the fold line.
-			// A line rather than a box is what stops two chapters being current
-			// at once on a page of short sections.
-			var line = window.scrollY + window.innerHeight * 0.25;
-			var current = -1;
-			heads.forEach(function (h, i) {
-				if (h && h.offsetTop <= line) current = i;
-			});
-
-			links.forEach(function (a, i) {
-				if (i < current) { a.dataset.played = ''; } else { delete a.dataset.played; }
-				if (i === current) { a.setAttribute('aria-current', 'true'); }
-				else { a.removeAttribute('aria-current'); }
-			});
-
-			var fill = 0;
-			if (current >= 0) {
-				var here = nodeOffset(current);
-				var next = current + 1 < links.length ? nodeOffset(current + 1) : list.offsetHeight;
-
-				// How far through THIS chapter we are, 0…1.
-				var hTop = heads[current] ? heads[current].offsetTop : 0;
-				var hEnd = heads[current + 1]
-					? heads[current + 1].offsetTop
-					: article.offsetTop + article.offsetHeight;
-				var span = hEnd - hTop;
-				var frac = span > 0 ? (line - hTop) / span : 1;
-				frac = Math.min(1, Math.max(0, frac));
-
-				fill = here + (next - here) * frac;
-			}
-
-			toc.style.setProperty('--toc-fill', Math.round(fill) + 'px');
-
-			if (time) {
-				var travel = Math.max(1, article.offsetHeight - window.innerHeight);
-				var prog = Math.min(1, Math.max(0, (window.scrollY - article.offsetTop) / travel));
-				if (prog >= 0.995) {
-					time.textContent = mmss(totalSec) + ' / ' + mmss(totalSec);
-					time.dataset.done = '';
-				} else {
-					time.textContent = mmss(prog * totalSec) + ' / ' + mmss(totalSec);
-					delete time.dataset.done;
-				}
-			}
-			ticking = false;
-		}
-
-		update();
-
-		window.addEventListener('scroll', function () {
-			if (ticking) return;
-			ticking = true;
-			requestAnimationFrame(update);
-		}, { passive: true });
-
-		window.addEventListener('resize', update, { passive: true });
-	}
 
 	/* ── Burger ──────────────────────────────────────────────────────────── */
 
@@ -232,25 +115,28 @@
 
 	/* ── Search ──────────────────────────────────────────────────────────── */
 
-	var input = $('[data-search]');
-	var out = $('[data-search-out]');
-	if (input && out) {
-		var index = null;
+	/* Every .search widget on the page wires itself: the bar has one, and the
+	   docs sidebar has another. One shared, lazily-fetched index behind both —
+	   fetching /search.json twice for the same page would be silly. */
+	var index = null;
+	var loadIndex = function () {
+		if (index) return Promise.resolve(index);
+		return fetch('/search.json')
+			.then(function (r) { return r.json(); })
+			.then(function (j) { index = j; return j; })
+			.catch(function () { index = []; return index; });
+	};
 
-		var load = function () {
-			if (index) return Promise.resolve(index);
-			return fetch('/search.json')
-				.then(function (r) { return r.json(); })
-				.then(function (j) { index = j; return j; })
-				.catch(function () { index = []; return index; });
-		};
+	var searches = $$('[data-search]').map(function (input) {
+		var out = input.closest('.search').querySelector('[data-search-out]');
+		if (!out) return null;
 
 		var close = function () { out.hidden = true; out.innerHTML = ''; };
 
 		input.addEventListener('input', function () {
 			var q = input.value.trim().toLowerCase();
 			if (!q) return close();
-			load().then(function (rows) {
+			loadIndex().then(function (rows) {
 				var hits = rows.filter(function (r) {
 					return (r.t + ' ' + r.g + ' ' + (r.d || '')).toLowerCase().indexOf(q) !== -1;
 				}).slice(0, 8);
@@ -264,14 +150,48 @@
 		});
 
 		input.addEventListener('blur', function () { setTimeout(close, 150); });
+		return { input: input, close: close };
+	}).filter(Boolean);
 
+	if (searches.length) {
 		document.addEventListener('keydown', function (e) {
-			if (e.key === '/' && document.activeElement !== input
-				&& !/^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName)) {
+			/* "/" focuses the FIRST search on the page — the one in the bar.
+			   Escape closes every open panel, wherever focus happens to be. */
+			if (e.key === '/' && !/^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName)) {
 				e.preventDefault();
-				input.focus();
+				searches[0].input.focus();
 			}
-			if (e.key === 'Escape') { close(); input.blur(); }
+			if (e.key === 'Escape') {
+				searches.forEach(function (s) { s.close(); s.input.blur(); });
+			}
 		});
+	}
+
+	/* ── Hero background video ───────────────────────────────────────────────
+	   The iframe is BUILT HERE rather than sitting in the markup, for three
+	   reasons: it stays off the critical path, it never loads at all under
+	   prefers-reduced-motion (house rule — motion is honest), and the video id
+	   lives in exactly one place, the data attribute on the element. */
+	var vbox = $('[data-hero-video]');
+	if (vbox && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+		var id = vbox.dataset.heroVideo;
+		var params = [
+			'autoplay=1', 'mute=1', 'loop=1', 'playlist=' + id, 'controls=0',
+			'playsinline=1', 'modestbranding=1', 'rel=0', 'disablekb=1',
+			'fs=0', 'iv_load_policy=3'
+		].join('&');
+		var f = document.createElement('iframe');
+		/* -nocookie is the privacy-preserving host; the page sets no cookies
+		   until the visitor actually interacts with a YouTube control, and
+		   there are no controls. */
+		f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?' + params;
+		f.title = 'Background footage';
+		f.tabIndex = -1;
+		f.setAttribute('aria-hidden', 'true');
+		f.setAttribute('frameborder', '0');
+		f.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture');
+		f.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+		f.addEventListener('load', function () { vbox.dataset.on = ''; });
+		vbox.appendChild(f);
 	}
 }());

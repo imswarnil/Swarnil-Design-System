@@ -461,7 +461,8 @@ mapping. This file is the entire theming surface of the system.
 
 ### 02-typography.css
 Three voices, and they are the personality:
-- `--font-display` — Space Grotesk. Headlines, numbers, the mark. Tight tracking.
+- `--font-display` — Inter, aliased to `--font-body`. Headlines, numbers, the mark;
+  separated by weight and tight tracking rather than by a second family.
 - `--font-body` — Inter. Everything read in sentences.
 - `--font-slate` — IBM Plex Mono. The metadata voice: labels, timecodes, code,
   coordinates, dimensions. This is the one that makes the system look like a camera.
