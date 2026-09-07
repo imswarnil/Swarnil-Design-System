@@ -1,7 +1,7 @@
 ---
 title: Media & container queries
 group: Layout
-order: 30
+order: 50
 lead: Media queries describe the page. Container queries describe the component. Confusing the two is how responsive CSS rots.
 ---
 

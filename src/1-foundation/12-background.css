@@ -103,6 +103,7 @@
 				color-mix(in oklab, var(--pure-white) 14%, transparent), transparent 70%),
 			var(--ink-950);
 		color: var(--ink-50);
+		color-scheme: dark;
 	}
 
 	/* ── Vignette — the edges fall away ────────────────────────────────────
@@ -122,12 +123,98 @@
 	.bg-ink {
 		background: linear-gradient(160deg, var(--ink-900), var(--ink-1000));
 		color: var(--ink-50);
+		color-scheme: dark;
+	}
+
+	/* ── Loops — a ground that keeps moving ───────────────────────────────
+	   Three, and the budget is spent. Ambient background motion is the most
+	   expensive thing a page can do for the least benefit: it repaints
+	   forever, it competes with the content, and it is exactly what
+	   prefers-reduced-motion exists to switch off. So each of these is slow
+	   (12s and up), moves ONE thing, and is off under that setting — not
+	   slower, off.
+
+	   None of them replaces a ground: each expects a .bg-* underneath, and
+	   they compose because they animate a position or a rotation rather than
+	   painting a second background over the first. */
+
+	/* The tape, running. Scanlines that travel down the band — the moving
+	   version of pattern-scan, for a hero that should read as footage. */
+	.bg-scanlines {
+		background-image: repeating-linear-gradient(
+			to bottom,
+			color-mix(in oklab, var(--pattern-ink) 60%, transparent) 0 1px,
+			transparent 1px 4px);
+		animation: bg-scanlines 12s linear infinite;
+	}
+
+	@keyframes bg-scanlines {
+		from { background-position: 0 0; }
+		to   { background-position: 0 4px; }
+	}
+
+	/* Beams — a slow sweep of light from one corner, as if something off
+	   camera is turning. One conic gradient, one rotation. */
+	.bg-beams {
+		position: relative;
+		isolation: isolate;
+		overflow: hidden;
+	}
+
+	.bg-beams::after {
+		content: '';
+		position: absolute;
+		inset: -50%;
+		z-index: -1;
+		pointer-events: none;
+		background: conic-gradient(
+			from 0deg,
+			transparent 0deg,
+			color-mix(in oklab, var(--accent) 14%, transparent) 22deg,
+			transparent 44deg,
+			transparent 180deg,
+			color-mix(in oklab, var(--craft) 10%, transparent) 202deg,
+			transparent 224deg,
+			transparent 360deg);
+		animation: bg-beams 40s linear infinite;
+	}
+
+	@keyframes bg-beams { to { rotate: 1turn; } }
+
+	/* The grid, drifting. The blueprint under a page that is being drawn.
+	   Paints on the element like every other ground, so it still composes
+	   with a .pattern on ::before. */
+	.bg-graph {
+		background-image:
+			linear-gradient(var(--pattern-ink) 1px, transparent 1px),
+			linear-gradient(90deg, var(--pattern-ink) 1px, transparent 1px);
+		background-size: 2.5rem 2.5rem, 2.5rem 2.5rem;
+		animation: bg-graph 26s linear infinite;
+	}
+
+	@keyframes bg-graph {
+		from { background-position: 0 0, 0 0; }
+		to   { background-position: 2.5rem 2.5rem, 2.5rem 2.5rem; }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.bg-scanlines,
+		.bg-graph { animation: none; }
+		.bg-beams::after { animation: none; }
 	}
 
 	/* ── Noise — film grain over whatever is underneath ────────────────────
 	   Not a `background` shorthand, so it stacks ON TOP of any .bg-* above
 	   instead of replacing it. The order matters: noise is a mask, not a
-	   wash, so the grain is the first image and paints last. */
+	   wash, so the grain is the first image and paints last.
+
+	   A ground built from GRADIENTS still needs an explicit pair rule below,
+	   because `background-image` on .bg-noise replaces the gradient rather
+	   than adding to it — and it does so silently, leaving the band the
+	   colour of the page. The grounds that pair: glow, aurora, mesh, ink,
+	   spot. Anything new that paints a gradient needs its pair adding here,
+	   and the way you find out that it does not have one is by looking at
+	   the band, not at the file. */
 	.bg-noise {
 		background-image: var(--bg-noise);
 		background-size: 160px 160px;
@@ -152,6 +239,24 @@
 			radial-gradient(ellipse 55% 60% at 82% 75%, color-mix(in oklab, var(--craft) 20%, transparent), transparent 70%);
 		background-size: 160px 160px, auto, auto;
 		background-blend-mode: soft-light, normal, normal;
+	}
+
+	.bg-ink.bg-noise {
+		background-image:
+			var(--bg-noise),
+			linear-gradient(160deg, var(--ink-900), var(--ink-1000));
+		background-size: 160px 160px, auto;
+		background-blend-mode: soft-light, normal;
+	}
+
+	.bg-spot.bg-noise {
+		background-color: var(--ink-950);
+		background-image:
+			var(--bg-noise),
+			radial-gradient(ellipse 70% 60% at 50% -10%,
+				color-mix(in oklab, var(--pure-white) 14%, transparent), transparent 70%);
+		background-size: 160px 160px, auto;
+		background-blend-mode: soft-light, normal;
 	}
 
 	.bg-mesh.bg-noise {

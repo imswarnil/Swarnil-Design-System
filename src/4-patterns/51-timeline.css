@@ -448,4 +448,65 @@
 		.stepper:not(.stepper-vertical) .stepper__label,
 		.stepper:not(.stepper-vertical) .stepper__hint { display: none; }
 	}
+
+	/* ── The illustrated timeline ──────────────────────────────────────────
+	   A sequence that has PICTURES — a syllabus with a still per module, a
+	   trip with a photograph per stop, a changelog with a screenshot per
+	   release. The picture belongs to the entry, so it goes inside the body,
+	   under the words: a reader scans titles down the rail first and looks at
+	   the pictures second, and putting the image above the title inverts that.
+
+	   .timeline-media only sizes the plate. Any ratio is a token on the
+	   instance, so one entry can be a 16:9 still and the next a 1:1 crop
+	   without a second class. */
+	.timeline__media {
+		--timeline-media: 16 / 9;
+		display: block;
+		margin-block-start: var(--space-3);
+		aspect-ratio: var(--timeline-media);
+		max-inline-size: 22rem;
+		overflow: hidden;
+		border: var(--border-hair) solid var(--line-subtle);
+		border-radius: var(--radius-media);
+		background: var(--bg-media);
+	}
+
+	.timeline__media > :is(img, video) { inline-size: 100%; block-size: 100%; object-fit: cover; display: block; }
+
+	/* A strip of small stills instead of one — the day that had six photos.
+	   It scrolls rather than wrapping, so an entry never becomes a wall. */
+	.timeline__strip {
+		display: flex;
+		gap: var(--space-2);
+		margin-block-start: var(--space-3);
+		overflow-x: auto;
+		scroll-snap-type: inline proximity;
+		padding-block-end: var(--space-1);
+	}
+
+	.timeline__strip > * {
+		flex: 0 0 5.5rem;
+		aspect-ratio: 1;
+		scroll-snap-align: start;
+		overflow: hidden;
+		border-radius: var(--radius-sm);
+		background: var(--bg-media);
+	}
+
+	.timeline__strip img { inline-size: 100%; block-size: 100%; object-fit: cover; display: block; }
+
+	/* Wide plates and a bigger node, for a page where the timeline IS the
+	   content rather than a sidebar summary. */
+	.timeline-media { --timeline-node: 2rem; --timeline-gap: var(--space-8); }
+	.timeline-media .timeline__media { max-inline-size: none; }
+	.timeline-media .timeline__title { font-size: var(--text-lg); }
+
+	/* Every node carries a glyph rather than the default dot. The rail goes
+	   with it: a chain of icons reads as a process, and a process is allowed
+	   a heavier line than a list of dates. */
+	.timeline-icons { --timeline-node: 2.25rem; --timeline-rail-color: var(--line-default); }
+	.timeline-icons .timeline__node { background: var(--bg-surface); color: var(--fg-muted); }
+	.timeline-icons .timeline__node > .icon { --icon-size: 1.1rem; width: auto; height: auto; }
+	.timeline-icons .timeline__item[aria-current] .timeline__node { color: var(--accent); }
+	.timeline-icons .timeline__item[data-done] .timeline__node { color: var(--fg-on-accent); }
 }

@@ -1,7 +1,7 @@
 ---
 title: Stats
 group: Sections
-order: 20
+order: 50
 lead: Numbers with receipts — display numerals over label captions, each carrying the accent rule.
 ---
 

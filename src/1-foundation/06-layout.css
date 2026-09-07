@@ -143,6 +143,10 @@
 	.center-sm   { --measure: var(--width-sm); }
 	.center-md   { --measure: var(--width-md); }
 	.center-xl   { --measure: var(--width-xl); }
+	/* The widest column the system offers. A page that shows COLLECTIONS —
+	   a video wall, a project grid, a shelf of courses — needs the extra
+	   two columns; a page of sentences never does. */
+	.center-2xl  { --measure: var(--width-2xl); }
 	.center-prose { --measure: var(--measure-prose); }
 
 	/* Break out of a .center to full width without closing the element. */

@@ -1,0 +1,243 @@
+/* =============================================================================
+   43 · MASTHEAD — the identity of one thing, held at the top of its page
+
+   A case study, a build log and a project page all have the same problem: the
+   reader scrolls a long way through content that belongs to a PROJECT, and
+   two screens down nothing on screen says which project it is. A page title
+   that scrolls away is a title that only worked for the first screen.
+
+   So the masthead pins, and as the page moves under it, it condenses:
+
+     at rest      the mark at full size, the claim, the facts, the actions
+     condensed    one line — the mark small, the name beside it, the actions
+
+   Nothing appears or disappears in that transition. The same elements are
+   simply smaller and on one row, so the eye tracks them down rather than
+   re-reading a new bar. The MARK never leaves; it is the constant, and it is
+   the only reason the condensed state is worth having at all.
+
+   The condensing is a scroll-driven animation — `animation-timeline: scroll()`
+   — which means no listener, no observer, and no JavaScript. A browser
+   without it falls through @supports and gets a masthead that simply stays at
+   rest size, which is a correct page and not a broken one. Under reduced
+   motion the same thing happens, on purpose.
+
+   The rail along the bottom edge is how far through the content you are. It
+   belongs to the masthead rather than to the viewport because it measures
+   THIS article, not the document.
+
+   Layer: components.
+   ========================================================================== */
+
+@layer components {
+
+	.masthead {
+		--masthead-top: 0px;
+		--masthead-pad: var(--space-8);
+		--masthead-mark: 3.5rem;
+		position: relative;
+		z-index: var(--z-sticky);
+		background: var(--bg-canvas);
+		border-block-end: var(--border-hair) solid transparent;
+		padding-block: var(--masthead-pad);
+		transition: border-color var(--dur-2) var(--ease-out);
+	}
+
+	.masthead__inner {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: var(--space-4) var(--space-6);
+	}
+
+	/* The mark. A square plate so a logo, an initial and an icon all land on
+	   the same footprint — a header whose height depends on which artwork was
+	   supplied is a header that jumps between projects. */
+	.masthead__mark {
+		display: grid;
+		place-items: center;
+		inline-size: var(--masthead-mark);
+		block-size: var(--masthead-mark);
+		flex: none;
+		border: var(--border-hair) solid var(--line-default);
+		border-radius: var(--radius-lg);
+		background: var(--bg-surface);
+		overflow: hidden;
+		font-family: var(--font-display);
+		font-size: calc(var(--masthead-mark) * 0.4);
+		font-weight: var(--weight-bold);
+		letter-spacing: var(--tracking-tighter);
+		color: var(--fg-default);
+		transition: inline-size var(--dur-3) var(--ease-out), block-size var(--dur-3) var(--ease-out);
+	}
+
+	.masthead__mark > :is(img, svg) { inline-size: 100%; block-size: 100%; object-fit: cover; }
+
+	.masthead__text { min-inline-size: 0; flex: 1 1 16rem; }
+
+	.masthead__eyebrow {
+		display: flex;
+		align-items: center;
+		gap: var(--space-2);
+		font-family: var(--font-label);
+		font-size: var(--text-2xs);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: var(--fg-faint);
+		margin: 0 0 var(--space-2);
+	}
+
+	.masthead__title {
+		font-family: var(--font-display);
+		font-size: var(--text-3xl);
+		font-weight: var(--weight-bold);
+		letter-spacing: var(--tracking-tighter);
+		line-height: var(--leading-tight);
+		margin: 0;
+		transition: font-size var(--dur-3) var(--ease-out);
+	}
+
+	.masthead__lead {
+		font-size: var(--text-base);
+		color: var(--fg-muted);
+		max-inline-size: var(--measure-lead);
+		margin: var(--space-3) 0 0;
+		text-wrap: pretty;
+	}
+
+	/* The facts — shipped, stack, status. Data voice, tabular, so two
+	   projects' mastheads line up when you flick between them. */
+	.masthead__facts {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-2) var(--space-5);
+		margin-block-start: var(--space-4);
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-2xs);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		text-transform: uppercase;
+		color: var(--fg-faint);
+	}
+
+	.masthead__facts > * { display: inline-flex; align-items: center; gap: var(--space-2); }
+	.masthead__facts strong { font-weight: var(--weight-semibold); color: var(--fg-default); }
+	.masthead__facts .icon { --icon-size: 0.9rem; }
+
+	.masthead__actions { display: flex; flex-wrap: wrap; gap: var(--space-2); flex: none; margin-inline-start: auto; }
+
+	/* How far through the article you are, on the masthead's own edge. */
+	.masthead__rail {
+		position: absolute;
+		inset: auto 0 calc(var(--border-2) * -1);
+		block-size: var(--border-2);
+		background: var(--accent);
+		transform-origin: 0 50%;
+		scale: 0 1;
+	}
+
+	/* ── Sticky and condensing ─────────────────────────────────────────────
+	   Sticky first: even with no scroll timeline, the header stays. Then the
+	   condense, which is progressive enhancement on top of that. */
+
+	.masthead-sticky {
+		position: sticky;
+		inset-block-start: var(--masthead-top);
+	}
+
+	@supports (animation-timeline: scroll()) {
+		.masthead-sticky {
+			animation: masthead-settle linear both;
+			animation-timeline: scroll(root block);
+			animation-range: 0 var(--masthead-range, 240px);
+		}
+
+		.masthead-sticky .masthead__mark,
+		.masthead-sticky .masthead__title,
+		.masthead-sticky :is(.masthead__lead, .masthead__facts, .masthead__eyebrow) {
+			animation: linear both;
+			animation-timeline: scroll(root block);
+			animation-range: 0 var(--masthead-range, 240px);
+		}
+
+		.masthead-sticky .masthead__mark { animation-name: masthead-mark; }
+		.masthead-sticky .masthead__title { animation-name: masthead-title; }
+		/* The supporting copy is what the condensed state gives up. It fades
+		   and collapses together, so nothing jumps when it goes. */
+		.masthead-sticky :is(.masthead__lead, .masthead__facts, .masthead__eyebrow) { animation-name: masthead-drop; }
+
+		.masthead-sticky .masthead__rail {
+			animation: masthead-rail linear both;
+			animation-timeline: scroll(root block);
+			animation-range: normal;
+		}
+	}
+
+	@keyframes masthead-settle {
+		from { padding-block: var(--masthead-pad); border-block-end-color: transparent; }
+		to   { padding-block: var(--space-3); border-block-end-color: var(--line-default); }
+	}
+
+	@keyframes masthead-mark {
+		from { inline-size: var(--masthead-mark); block-size: var(--masthead-mark); }
+		to   { inline-size: 2.25rem; block-size: 2.25rem; }
+	}
+
+	@keyframes masthead-title {
+		from { font-size: var(--text-3xl); }
+		to   { font-size: var(--text-lg); }
+	}
+
+	@keyframes masthead-drop {
+		from { opacity: 1; max-block-size: 8rem; margin-block: 0 var(--space-3); }
+		to   { opacity: 0; max-block-size: 0; margin-block: 0; }
+	}
+
+	@keyframes masthead-rail { from { scale: 0 1; } to { scale: 1 1; } }
+
+	/* ── Variants ──────────────────────────────────────────────────────────── */
+
+	/* Blurred, for a masthead over content that scrolls beneath it. */
+	.masthead-blur {
+		background: color-mix(in oklab, var(--bg-canvas) 82%, transparent);
+		-webkit-backdrop-filter: blur(12px) saturate(1.4);
+		backdrop-filter: blur(12px) saturate(1.4);
+	}
+
+	.masthead-sunken { background: var(--bg-sunken); }
+	.masthead-line { border-block-end-color: var(--line-default); }
+
+	.masthead-inverse {
+		background: var(--bg-inverse);
+		color: var(--fg-on-inverse);
+	}
+
+	.masthead-inverse :is(.masthead__eyebrow, .masthead__lead, .masthead__facts) { color: color-mix(in oklab, var(--fg-on-inverse) 65%, transparent); }
+	.masthead-inverse .masthead__facts strong { color: var(--fg-on-inverse); }
+	.masthead-inverse .masthead__mark { border-color: var(--line-inverse); background: color-mix(in oklab, var(--fg-on-inverse) 8%, transparent); color: var(--fg-on-inverse); }
+
+	/* Bigger mark, for a project page whose artwork is the point. */
+	.masthead-lg { --masthead-mark: 5rem; --masthead-pad: var(--space-12); }
+	.masthead-lg .masthead__title { font-size: var(--text-4xl); }
+
+	/* ── Honesty ───────────────────────────────────────────────────────────
+	   Reduced motion turns the condense off entirely — a header that resizes
+	   itself as you scroll is exactly the kind of movement the setting is
+	   asking about. Sticky stays: that is position, not motion. */
+	@media (prefers-reduced-motion: reduce) {
+		.masthead-sticky,
+		.masthead-sticky :is(.masthead__mark, .masthead__title, .masthead__lead, .masthead__facts, .masthead__eyebrow, .masthead__rail) {
+			animation: none;
+		}
+
+		.masthead__rail { scale: 1 1; }
+	}
+
+	@media (width < 48rem) {
+		.masthead { --masthead-mark: 2.75rem; --masthead-pad: var(--space-6); }
+		.masthead__title { font-size: var(--text-2xl); }
+		.masthead__actions { margin-inline-start: 0; inline-size: 100%; }
+	}
+}

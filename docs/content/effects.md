@@ -1,19 +1,28 @@
 ---
-title: Effects & interactions
-group: Elements
-order: 60
-lead: Transitions, hover answers, entrances, scroll-driven reveals and the few ambient moves a creator's page is allowed — three registers, kept apart.
+title: Effects
+group: Foundation
+order: 50
+lead: Transitions, entrances, scroll-driven reveals, drawn marks and the few ambient moves a creator's page is allowed. Things the page decides to do.
 ---
 
-[Motion](/motion.html) owns the vocabulary: durations, curves, the base
-keyframes and the first `fx-*` sentences. This page is the rest of the
-language, in three registers that must not be confused.
+[Motion](/motion.html) owns the vocabulary: durations, curves and the base
+keyframes. This page is what the page decides to **do** with them.
+
+The distinction that splits this page from
+[Interactions](/interactions.html) is worth stating once, because getting it
+wrong is how a design system ends up with forty animation classes:
+
+- an **effect** happens because the page decided it should — it arrives, it
+  reveals, it loops. Nobody asked for it.
+- an **interaction** happens because a person pointed at something, and it is
+  over the moment they point somewhere else.
+
+They live in separate files for the same reason. Two registers here:
 
 | Prefix | Register | Rule |
 | --- | --- | --- |
 | `tr-*` | **transition** — how a change will feel | adds nothing visible on its own |
-| `ix-*` | **interaction** — the hover or focus answer | one property, under 200ms, guarded by `(hover: hover)` |
-| `fx-*` | **effect** — an entrance, a reveal, an ambient move | `both`, so the resting state is the finished state |
+| `fx-*` | **effect** — an entrance, a reveal, a drawn mark, an ambient loop | `both`, so the resting state is the finished state |
 
 Everything is off under `prefers-reduced-motion`. Entrances collapse to the
 1ms token; the ambient ones are told explicitly, because a slow loop cannot
@@ -37,50 +46,6 @@ the first box.
   <span class="tr-colors tr-slow u-p-3 u-border u-rounded">tr-slow</span>
 </div>
 :::
-
-## Interactions
-
-Hover the cards. Each answers with one property.
-
-:::demo Raise, glow, tilt
-<div class="grid-3">
-  <article class="card ix-raise"><div class="card__body"><p class="card__kicker">ix-raise</p><p class="card__excerpt">Steps toward you; the shadow follows.</p></div></article>
-  <article class="card ix-glow"><div class="card__body"><p class="card__kicker">ix-glow</p><p class="card__excerpt">The accent ring lights up at the edge.</p></div></article>
-  <article class="card ix-tilt"><div class="card__body"><p class="card__kicker">ix-tilt</p><p class="card__excerpt">A degree and a half — a poster picked up.</p></div></article>
-</div>
-:::
-
-:::demo Zoom, shine, reveal — for media
-<div class="grid-3">
-  <div class="poster ix-zoom"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%23555'/%3E%3Cstop offset='1' stop-color='%23111'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3Ccircle cx='11' cy='4' r='2.2' fill='%23888'/%3E%3C/svg%3E" alt="" /><div class="poster__label"><span class="poster__eyebrow">ix-zoom</span></div></div>
-  <div class="poster ix-shine bg-ink"><div class="poster__label"><span class="poster__eyebrow">ix-shine</span></div></div>
-  <div class="poster ix-reveal bg-ink">
-    <div class="poster__label"><span class="poster__eyebrow">ix-reveal</span><span class="poster__title">Hover for the actions</span></div>
-    <div class="ix-reveal__hidden glass glass-dark u-p-3 cluster cluster-sm" style="border-radius: 0">
-      <button class="btn btn-sm btn-primary" type="button">Play</button>
-      <button class="btn btn-sm btn-ghost" type="button">Save</button>
-    </div>
-  </div>
-</div>
-:::
-
-:::demo Underline, arrow, dim, colour
-<div class="stack">
-  <p class="u-m-0"><a class="ix-underline" href="#i">The underline draws itself in from the start</a> · <a class="ix-arrow btn btn-link" href="#i">Read the post <svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-right"/></svg></a></p>
-  <div class="cluster ix-dim">
-    <span class="badge badge-outline">Hover one</span><span class="badge badge-outline">and the</span><span class="badge badge-outline">others</span><span class="badge badge-outline">step back</span>
-  </div>
-  <div class="cluster">
-    <span class="ix-color avatar avatar-lg" style="background: var(--accent); color: var(--fg-on-accent)">A</span>
-    <span class="ix-color avatar avatar-lg" style="background: var(--craft); color: var(--fg-on-accent)">B</span>
-    <span class="ix-color avatar avatar-lg" style="background: var(--info-solid); color: var(--fg-on-accent)">C</span>
-  </div>
-</div>
-:::
-
-`ix-shine` uses `::after`, so it cannot share an element with `.frame` or
-`[data-loading]` — put it on the media child. `ix-reveal` also opens on
-`:focus-within`, so a keyboard user reaches the hidden row.
 
 ## Entrances
 
@@ -115,6 +80,23 @@ delay and the last frame after, so nothing flashes and nothing snaps back.
     <li class="list__item">Sound</li>
     <li class="list__item">Action</li>
   </ul>
+</div>
+:::
+
+### Three more arrivals
+
+Each covers something the first six do not. `fx-flip-in` is the only entrance
+with perspective, so it reads as an **object** turning rather than a layer
+fading. `fx-unfold` opens from the middle outward, for a band that should feel
+like it was always there and is being revealed. `fx-settle` starts slightly too
+large and comes to rest — the opposite of `scale-in`, and the right one when
+the element is already the subject: it does not approach, it focuses.
+
+:::demo Reload the page to run them
+<div class="grid-3 cq-card">
+  <article class="card fx-flip-in"><div class="card__media"><img src="/assets/media/desk.jpg" alt="" /></div><div class="card__body"><p class="card__kicker">fx-flip-in</p><p class="card__excerpt">Turns on the X axis — face-down to face-up.</p></div></article>
+  <article class="card fx-unfold"><div class="card__media"><img src="/assets/media/city.jpg" alt="" /></div><div class="card__body"><p class="card__kicker">fx-unfold</p><p class="card__excerpt">Opens from the middle outward.</p></div></article>
+  <article class="card fx-settle"><div class="card__media"><img src="/assets/media/coast.jpg" alt="" /></div><div class="card__body"><p class="card__kicker">fx-settle</p><p class="card__excerpt">Starts too large and comes to rest.</p></div></article>
 </div>
 :::
 
@@ -176,6 +158,24 @@ only on a hero, a poster or a scene. Never on a control.
   <div class="poster fx-kenburns"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23222'/%3E%3Ccircle cx='5' cy='5' r='3' fill='%23555'/%3E%3Crect x='9' y='2' width='6' height='5' fill='%23444'/%3E%3C/svg%3E" alt="" /></div>
   <div class="poster fx-scan bg-ink"><div class="poster__label"><span class="poster__eyebrow">fx-scan</span></div></div>
   <div class="poster bg-ink" style="display: grid; place-items: center"><span class="fx-glitch t-h2" data-text="GLITCH" style="color: var(--pure-white)">GLITCH</span></div>
+</div>
+:::
+
+### Three more loops
+
+Same budget as the rest: slow, one property, gone under reduced motion.
+
+`fx-breathe` is a scale that never resolves — for a thing that is **waiting**,
+the way a record light waits. Never put it on a control: something interactive
+that breathes reads as something that is loading. `fx-swing` hinges at the top,
+for a hanging sign or a badge on a ribbon. `fx-drift` is a slow horizontal
+wander for a background object that should not feel placed.
+
+:::demo
+<div class="grid-3 u-text-center">
+  <div class="u-p-8 u-rounded-lg u-border"><span class="badge badge-live fx-breathe">Waiting</span><p class="t-fine t-muted u-mt-4 u-m-0">fx-breathe</p></div>
+  <div class="u-p-8 u-rounded-lg u-border"><span class="fx-swing u-iblock"><svg class="icon icon-xl" aria-hidden="true"><use href="/icons/sprite.svg#i-clapperboard"/></svg></span><p class="t-fine t-muted u-mt-4 u-m-0">fx-swing</p></div>
+  <div class="u-p-8 u-rounded-lg u-border u-overflow-hidden"><span class="fx-drift u-iblock"><svg class="icon icon-xl" aria-hidden="true"><use href="/icons/sprite.svg#i-plane"/></svg></span><p class="t-fine t-muted u-mt-4 u-m-0">fx-drift</p></div>
 </div>
 :::
 

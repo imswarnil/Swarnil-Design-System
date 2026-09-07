@@ -1,7 +1,7 @@
 ---
 title: Share
 group: Patterns
-order: 38
+order: 50
 lead: The row of quiet actions under an article, and the sticky rail beside it.
 ---
 

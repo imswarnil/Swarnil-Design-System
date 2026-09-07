@@ -1,7 +1,7 @@
 ---
 title: Thread
 group: Patterns
-order: 34
+order: 50
 lead: A comment thread and the box that adds to it — one level of nesting, the author's name in body, the time in data, liked in ARIA.
 ---
 

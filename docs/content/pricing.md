@@ -1,7 +1,7 @@
 ---
 title: Pricing
 group: Sections
-order: 30
+order: 50
 lead: The plans, read across — every part a named slot in a fixed order, and exactly one plan featured.
 ---
 

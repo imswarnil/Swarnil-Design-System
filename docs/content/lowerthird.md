@@ -1,7 +1,7 @@
 ---
 title: Lower third
 group: Broadcast
-order: 40
+order: 50
 lead: Who is talking and why you should listen — a name and a role in the lower third of the frame, for eight seconds. One anatomy, five dresses.
 ---
 

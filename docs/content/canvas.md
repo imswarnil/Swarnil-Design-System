@@ -1,7 +1,7 @@
 ---
 title: Canvas
 group: Broadcast
-order: 10
+order: 50
 lead: The export stages — thumbnail, OG image, square, story, banner, scene — each a ratio, a name and a safe area, sized in container units so one design renders at any width.
 ---
 

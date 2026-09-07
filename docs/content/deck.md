@@ -1,7 +1,7 @@
 ---
 title: Deck
 group: Patterns
-order: 10
+order: 50
 lead: A grid that knows its children are cards — density, the feature slot, and level footers.
 ---
 

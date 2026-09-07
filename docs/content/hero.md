@@ -1,7 +1,7 @@
 ---
 title: Hero
 group: Sections
-order: 10
+order: 50
 lead: One claim, one supporting line, at most two actions.
 ---
 
@@ -51,3 +51,54 @@ own opening shot.
 
 Below 60rem the split stacks and the title steps down one size — the one
 media query this section owns, because a hero collapsing is page topology.
+
+## Wider — when the footage is the subject
+
+The default ratio favours the words, because most heroes are an argument. A hero
+whose **subject** is the picture — an episode, a course trailer, a case study —
+should favour the picture. `.hero-wide` flips the ratio and opens the gap;
+`.hero-xl` steps the type up for a `center-2xl` column;
+`.hero-media-start` puts the media first, so two heroes on one site do not read
+as the same page twice.
+
+:::demo `.hero-wide` with `.hero__facts`
+<div class="hero hero-wide">
+  <div>
+    <p class="hero__eyebrow"><span class="dot dot-sm dot-live"></span> Featured · new this week</p>
+    <h2 class="hero__title u-m-0">Colour, in one block of tokens</h2>
+    <p class="hero__lead">Eight ramps, ninety-seven tones, and why dark mode is not an inversion.</p>
+    <div class="hero__actions">
+      <button class="btn btn-primary btn-lg btn-play" type="button"><span class="btn__disc"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span>Watch — 24:07</button>
+      <button class="btn btn-secondary btn-lg" type="button">All 128 videos</button>
+    </div>
+    <p class="hero__facts">
+      <span><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-eye"/></svg> <strong>18k</strong> views</span>
+      <span><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-clock"/></svg> <strong>24:07</strong></span>
+      <span><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-hash"/></svg> Episode 48</span>
+    </p>
+  </div>
+  <div class="hero__media">
+    <div class="ratio ratio-wide u-rounded-lg u-overflow-hidden pattern pattern-scan u-border"></div>
+  </div>
+</div>
+:::
+
+`.hero__facts` is the smallest honest way to say "128 episodes, 23 countries"
+without opening a whole [stats](/stats.html) band inside the hero: a hairline,
+the data voice, and tabular figures so two heroes line up.
+
+:::demo `.hero-media-start` — the alternate band
+<div class="hero hero-media-start">
+  <div class="hero__media"><div class="ratio ratio-photo u-rounded-lg u-overflow-hidden pattern pattern-halftone u-border"></div></div>
+  <div>
+    <p class="hero__eyebrow">About</p>
+    <h2 class="hero__title u-m-0">I explain things I had to learn twice.</h2>
+    <p class="hero__lead">Salesforce engineer, YouTuber, and a fairly stubborn believer that anything worth understanding can be explained in twenty minutes.</p>
+    <div class="hero__actions"><button class="btn btn-primary" type="button">How I work</button></div>
+  </div>
+</div>
+:::
+
+Stacked, the picture goes back under the claim it illustrates —
+`hero-media-start` only reorders above 60rem, where there are two columns to
+reorder.

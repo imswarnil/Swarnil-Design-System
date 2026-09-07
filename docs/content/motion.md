@@ -1,7 +1,7 @@
 ---
 title: Motion
 group: Foundation
-order: 45
+order: 50
 lead: Five durations, four curves, honest by contract — and off entirely when the reader asks.
 ---
 
@@ -107,3 +107,64 @@ Parallax, scroll-jacking, bounce-on-everything, attention loops on things that
 are not live. The record dot pulses because *live* is the one meaning worth an
 infinite loop; a second looping element on the page would compete with it, and
 the accent does not share.
+
+## Micro-interactions, side by side
+
+The vocabulary above is abstract until you see two of them next to each other
+and notice that one of them is wrong for the job. This is the whole set a page
+actually uses, live, at the size it is used.
+
+**Hover something once and the rule becomes obvious:** feedback is under
+200ms, an entrance is under 400ms, and anything ambient is over 6 seconds.
+There is nothing in between, because the middle is where motion stops reading
+as either response or atmosphere and starts reading as lag.
+
+:::demo Feedback — under 200ms, one property, on a control
+<div class="cluster cluster-lg">
+  <button class="btn btn-primary" type="button">Press me — scale 0.98</button>
+  <button class="btn btn-outline btn-fill" type="button">Fill</button>
+  <button class="btn btn-secondary btn-lift" type="button">Lift</button>
+  <button class="btn btn-primary btn-ring" type="button">Ring</button>
+  <a class="btn btn-ghost ix-arrow" href="#i">Arrow <svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-right"/></svg></a>
+  <a class="ix-underline" href="#i">Underline</a>
+</div>
+:::
+
+:::demo Attention on a surface — still feedback, but the object is bigger, so it may take longer
+<div class="grid-3 cq-card">
+  <article class="card card-hover-lift"><div class="card__media"><img src="/assets/media/desk.jpg" alt="" /></div><div class="card__body"><h4 class="card__title">Lift</h4><p class="card__excerpt">Rest to hover is one rung of elevation.</p></div></article>
+  <article class="card card-hover-zoom"><div class="card__media"><img src="/assets/media/city.jpg" alt="" /></div><div class="card__body"><h4 class="card__title">Zoom</h4><p class="card__excerpt">Only the picture moves; the box stays put.</p></div></article>
+  <article class="card card-hover-frame frame-hover"><div class="card__media"><img src="/assets/media/road.jpg" alt="" /></div><div class="card__body"><h4 class="card__title">Frame</h4><p class="card__excerpt">The brackets ARE the feedback, so nothing lifts.</p></div></article>
+</div>
+:::
+
+:::demo On footage — the scan, the shine, the reveal, the grade
+<div class="grid-2">
+  <figure class="figure u-m-0 ix-scan u-rounded-lg"><img src="/assets/media/studio.jpg" alt="" /><figcaption class="figure__caption">ix-scan</figcaption></figure>
+  <figure class="figure u-m-0 ix-shine u-rounded-lg"><img src="/assets/media/coast.jpg" alt="" /><figcaption class="figure__caption">ix-shine</figcaption></figure>
+  <figure class="figure u-m-0 ix-color u-rounded-lg"><img src="/assets/media/peak.jpg" alt="" /><figcaption class="figure__caption">ix-color — grey until touched</figcaption></figure>
+  <div class="ix-reveal u-rounded-lg u-overflow-hidden"><img src="/assets/media/night.jpg" alt="" style="display:block;width:100%" /><div class="ix-reveal__hidden u-p-4" style="background: var(--bg-scrim); color: var(--pure-white)"><span class="t-small">ix-reveal — the caption arrives on hover</span></div></div>
+</div>
+:::
+
+:::demo Ambient — over six seconds, and off under reduced motion
+<div class="grid-3">
+  <div class="bg-ink bg-scanlines u-p-6 u-rounded-lg"><span class="t-data">bg-scanlines</span></div>
+  <div class="bg-sunken bg-beams u-p-6 u-rounded-lg u-border"><span class="t-data">bg-beams</span></div>
+  <div class="u-p-6 u-rounded-lg u-border u-text-center"><span class="fx-float u-iblock"><svg class="icon icon-xl" aria-hidden="true"><use href="/icons/sprite.svg#i-camera"/></svg></span><br /><span class="t-data">fx-float</span></div>
+</div>
+:::
+
+:::demo The two that are neither — a state that is genuinely working, and one that is genuinely live
+<div class="cluster cluster-lg">
+  <button class="btn btn-primary" type="button" aria-busy="true">Uploading</button>
+  <span class="spinner"></span>
+  <span class="badge badge-live">Live</span>
+  <span class="avatar avatar-live">S</span>
+  <span class="dot dot-live"></span>
+  <div class="buffer" style="inline-size: 10rem"><span></span></div>
+</div>
+:::
+
+A pulse means **something is happening now**. Anything that pulses when nothing
+is happening has spent the only signal the page had for when something is.

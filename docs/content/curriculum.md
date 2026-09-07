@@ -1,7 +1,7 @@
 ---
 title: Curriculum
 group: Patterns
-order: 32
+order: 50
 lead: The course syllabus — modules that collapse on the platform, lessons that know which one you are in — and the episode list beside a player.
 ---
 
@@ -258,3 +258,103 @@ drops under the stage.
 - `<progress>` needs an `aria-label` or a visible label.
 - The scrolling list keeps `overscroll-behavior: contain` so a wheel at the
   end does not scroll the page.
+
+## A still per module
+
+A syllabus of twelve identical rows is hard to hold in the head. One small frame
+per **module** gives each section something to be remembered by.
+
+Per module, never per lesson: twelve pictures is a contact sheet, not a
+syllabus. Below 34rem the stills drop out entirely.
+
+:::demo `.curriculum__shot` in the summary
+<section class="curriculum w-lg">
+  <header class="curriculum__head">
+    <h3 class="curriculum__title">CRM Analytics, from zero</h3>
+    <span class="curriculum__meta">12 lessons · 3h 40m</span>
+    <progress class="progress progress-thin" value="4" max="12" aria-label="4 of 12 lessons watched"></progress>
+  </header>
+  <div class="curriculum__modules">
+    <details class="curriculum__module" open>
+      <summary><span class="curriculum__shot pattern pattern-grid"></span><span class="curriculum__no">01</span><span class="curriculum__module-title">The data model</span><span class="curriculum__count">4 lessons</span></summary>
+      <ol class="curriculum__lessons">
+        <li><a class="lesson" href="#i" data-done><span class="lesson__tick"></span><span class="lesson__title">What a dataset actually is</span><span class="lesson__len">08:12</span></a></li>
+        <li><a class="lesson" href="#i" aria-current="page"><span class="lesson__tick"></span><span class="lesson__title">Joins, and where they go wrong</span><span class="lesson__len">19:04</span></a></li>
+      </ol>
+    </details>
+    <details class="curriculum__module">
+      <summary><span class="curriculum__shot pattern pattern-halftone"></span><span class="curriculum__no">02</span><span class="curriculum__module-title">Building the dashboard</span><span class="curriculum__count">5 lessons</span></summary>
+      <ol class="curriculum__lessons">
+        <li><a class="lesson" href="#i"><span class="lesson__tick"></span><span class="lesson__title">The first widget</span><span class="lesson__free">Free</span><span class="lesson__len">09:20</span></a></li>
+        <li><a class="lesson" href="#i" data-locked><span class="lesson__tick"></span><span class="lesson__title">Bindings, the readable way</span><span class="lesson__len">22:15</span></a></li>
+      </ol>
+    </details>
+  </div>
+</section>
+:::
+
+## The player, finished
+
+The classroom is the lesson page: the stage on one side, the syllabus on the
+other. Three parts complete it.
+
+`.classroom__tabs` are the **lesson's** tabs — overview, transcript, resources —
+so they sit under the player rather than at the top of the document.
+`.classroom__foot` pins previous-and-next under the stage, because moving on is
+the single most common thing a reader wants after watching, and making them
+scroll back up to the syllabus for it is the commonest mistake in the shape.
+
+:::demo `.classroom__tabs`, `.classroom__foot` and `.classroom__meta`
+<div class="classroom" style="--classroom-side: 15rem">
+  <div class="classroom__stage">
+    <div class="ratio ratio-wide u-rounded-lg u-overflow-hidden pattern pattern-scan u-border"></div>
+    <header class="classroom__head">
+      <div>
+        <p class="classroom__meta">Module 01 · Lesson 3 of 12</p>
+        <h3 class="classroom__title">Joins, and where they go wrong</h3>
+      </div>
+      <div class="classroom__nav">
+        <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Previous lesson"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-left"/></svg></button>
+        <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Next lesson"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-right"/></svg></button>
+      </div>
+    </header>
+    <div class="tabs tabs-underline classroom__tabs" role="tablist" aria-label="Lesson">
+      <button class="tab" type="button" role="tab" aria-selected="true">Notes</button>
+      <button class="tab" type="button" role="tab" aria-selected="false">Resources <span class="tab__count">4</span></button>
+      <button class="tab" type="button" role="tab" aria-selected="false">Transcript</button>
+    </div>
+    <p class="t-small t-muted">A join is not a technique, it is a claim about the world: that one row over here corresponds to one row over there.</p>
+    <footer class="classroom__foot">
+      <button class="btn btn-ghost btn-sm" type="button">Previous lesson</button>
+      <button class="btn btn-primary btn-sm" type="button">Mark complete and continue</button>
+    </footer>
+  </div>
+  <aside class="classroom__side">
+    <section class="curriculum curriculum-scroll">
+      <header class="curriculum__head"><h3 class="curriculum__title">Syllabus</h3><span class="curriculum__meta">12 lessons</span></header>
+      <div class="curriculum__modules">
+        <details class="curriculum__module" open>
+          <summary><span class="curriculum__no">01</span><span class="curriculum__module-title">The data model</span><span class="curriculum__count">4</span></summary>
+          <ol class="curriculum__lessons">
+            <li><a class="lesson" href="#i" data-done><span class="lesson__tick"></span><span class="lesson__title">What a dataset is</span><span class="lesson__len">08:12</span></a></li>
+            <li><a class="lesson" href="#i" aria-current="page"><span class="lesson__tick"></span><span class="lesson__title">Joins</span><span class="lesson__len">19:04</span></a></li>
+          </ol>
+        </details>
+      </div>
+    </section>
+  </aside>
+</div>
+:::
+
+`.classroom-side-start` moves the syllabus to the start edge — for a course
+whose lessons are short and numerous, where the list *is* the navigation.
+`.classroom-wide` gives the side column 26rem.
+
+| Class | What it does |
+| --- | --- |
+| `.curriculum__shot` | a 16:9 still on a module's summary |
+| `.classroom__tabs` | the lesson's own tabs, under the player |
+| `.classroom__foot` | previous and next, pinned under the stage |
+| `.classroom__meta` | where you are in the course, in the data voice |
+| `.classroom-side-start` | syllabus on the start edge |
+| `.classroom-wide` | a 26rem side column |

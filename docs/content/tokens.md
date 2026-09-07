@@ -1,7 +1,7 @@
 ---
 title: Tokens & variables
-group: Layout
-order: 40
+group: Foundation
+order: 50
 lead: How to read the system's tokens, define your own, and keep the two from tangling.
 ---
 

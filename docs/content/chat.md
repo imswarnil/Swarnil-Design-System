@@ -1,7 +1,7 @@
 ---
 title: Chat
 group: Patterns
-order: 20
+order: 50
 lead: The transcript — human on the accent side, machine on the surface, tool calls in honest mono.
 ---
 

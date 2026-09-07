@@ -1,7 +1,7 @@
 ---
 title: Utilities
 group: Utilities
-order: 10
+order: 50
 lead: The escape hatch — every utility is a token with a class name, and it always wins.
 ---
 

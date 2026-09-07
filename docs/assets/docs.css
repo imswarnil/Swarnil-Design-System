@@ -577,17 +577,25 @@ body {
 	text-wrap: pretty;
 }
 
-/* Prose links only. Scoped to the elements prose actually lives in, because
-   an unscoped `.doc a` also repaints every link INSIDE a demo — which made the
-   navbar example render its whole nav in link colour and quietly contradicted
-   the component it was documenting. A demo has to show the component, not the
-   page it happens to sit on. */
-.doc :is(p, li, td, th, blockquote) a {
+/* Prose links only, and only BARE ones.
+   Scoping to the elements prose lives in was the first fix, because an
+   unscoped `.doc a` repainted every link inside a demo and made the navbar
+   example render its whole nav in link colour. It was not enough: a component
+   whose rows are links inside list items — .lesson, .chapters__link, .ts,
+   .navlist__link — still got repainted, so a syllabus demo rendered every
+   lesson in accent and the "current" state it was documenting became
+   invisible. That went unnoticed because it looks like a taste problem rather
+   than a cascade one.
+
+   `:not([class])` is the same rule the system's own .prose uses: dress the
+   bare tag, and the moment a link carries a class it keeps its component's
+   colour. A demo has to show the component, not the page it sits on. */
+.doc :is(p, li, td, th, blockquote) a:not([class]) {
 	color: var(--fg-link);
 	text-underline-offset: 0.2em;
 }
 
-.doc :is(p, li, td, th, blockquote) a:hover { color: var(--fg-link-hover); }
+.doc :is(p, li, td, th, blockquote) a:not([class]):hover { color: var(--fg-link-hover); }
 .doc strong { color: var(--fg-default); font-weight: var(--weight-semibold); }
 
 .list { margin-block: var(--space-5); padding-left: var(--space-5); color: var(--fg-muted); }
@@ -827,6 +835,40 @@ body {
 	padding-inline-start: var(--space-5);
 }
 
+/* ── The pinned block ─────────────────────────────────────────────────────
+   ONE sticky element holding both the contents and the ad, rather than two
+   that pin independently. Two sticky siblings drift apart as you scroll —
+   which is exactly what "half floating in the middle" looks like — because
+   each one pins against the parent separately and they have different
+   heights.
+
+   The block starts level with the page title, not a paragraph below it: the
+   rail's own padding already put it there, so the pin offset is the bar plus
+   one step and nothing else.
+
+   max-block-size caps the pair at the viewport, and the TOC (not the ad) is
+   the part allowed to scroll inside it, so a long contents list never pushes
+   the slot off the screen. */
+.rail__pin {
+	position: sticky;
+	top: calc(var(--bar-h) + var(--space-6));
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-8);
+	max-height: calc(100dvh - var(--bar-h) - var(--space-10));
+}
+
+.rail__ad {
+	flex: none;
+	--ad-h: 12.5rem;
+}
+
+/* Below a certain height there is no room for both. The contents win: an ad
+   nobody can see is worth less than a table of contents somebody uses. */
+@media (max-height: 46rem) {
+	.rail__ad { display: none; }
+}
+
 /* ── The TOC ──────────────────────────────────────────────────────────────
    Deliberately plain for now: a heading and a list of links. The scrubber
    that used to live here (track, progress fill, playhead, read-time counter)
@@ -834,50 +876,13 @@ body {
    Nothing here needs JavaScript.
    ========================================================================== */
 
+/* The contents is the system's own .toc component — see /toc.html. The docs
+   only say where it sits and how tall it may get; every visual decision in it
+   belongs to the component, which is the point of dogfooding one. */
 .toc {
-	position: sticky;
-	top: calc(var(--bar-h) + var(--space-8));
-	display: flex;
-	flex-direction: column;
-	gap: var(--space-2);
-	max-height: calc(100dvh - var(--bar-h) - var(--space-12));
+	min-height: 0;
 	overflow-y: auto;
-	padding-block: var(--space-8);
 	scrollbar-width: thin;
-}
-
-.toc__head {
-	font-family: var(--font-label);
-	font-size: var(--text-2xs);
-	font-weight: var(--weight-semibold);
-	letter-spacing: var(--tracking-label);
-	text-transform: uppercase;
-	color: var(--fg-faint);
-	margin: 0 0 var(--space-1);
-}
-
-.toc__link {
-	display: block;
-	padding-block: var(--space-1);
-	padding-inline-start: var(--space-3);
-	border-inline-start: 1px solid var(--line-subtle);
-	font-size: var(--text-sm);
-	color: var(--fg-muted);
-	text-decoration: none;
-	transition: color var(--dur-2) var(--ease-out),
-		border-color var(--dur-2) var(--ease-out);
-}
-
-.toc__link:hover {
-	color: var(--fg-default);
-	border-inline-start-color: var(--line-strong);
-}
-
-.toc__link--h2 { font-weight: var(--weight-medium); }
-
-.toc__link--h3 {
-	font-size: var(--text-xs);
-	padding-inline-start: var(--space-5);
 }
 
 /* ── Pager + footer ───────────────────────────────────────────────────────── */
@@ -996,6 +1001,15 @@ body {
 }
 
 @media (max-width: 40rem) {
+	/* The bar's right-hand group is brand + search + theme + star + burger,
+	   and at 390px that is about 540px of min-content — so the whole page
+	   scrolled sideways on a phone, on every docs page. The search lives in
+	   the sidebar too (.search-side), and the theme button's label is a word
+	   for a control the dot already explains. Both go. */
+	.bar .search { display: none; }
+	.themebtn__label { display: none; }
+	.themebtn { padding-inline: var(--space-2); }
+
 	.pager { grid-template-columns: 1fr; }
 	.pager__item--next { grid-column: 1; }
 	.doc__title { font-size: var(--text-3xl); }

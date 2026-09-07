@@ -1,7 +1,7 @@
 ---
 title: Dropdown
 group: Components
-order: 35
+order: 50
 lead: Click menus, hover menus, the account menu and the mega panel — and when each is honest.
 ---
 
@@ -77,3 +77,65 @@ destination, a footer strip. Full demo on the [navbar page](/navbar.html).
 | identity + session | account menu, click |
 | a whole sitemap | mega panel |
 | more than ~7 ungrouped items | stop — group them or rethink |
+
+## The popover — a panel, not a list
+
+A `.menu` is a list of actions. A `.pop` is a **panel**: a filter box, a share
+sheet, a confirm-in-place, a hint on touch where a tooltip cannot reach. If the
+contents would be a `<ul>` of verbs, it is a menu; if it would be a paragraph
+and a control, it is this.
+
+The wiring is the platform's, in full: the trigger is
+`<button popovertarget="id">`, the panel is `<div class="pop" id="id" popover>`.
+Escape, click-outside, focus return and top-layer rendering all come free, and
+there is no JavaScript on this page making any of it work.
+
+:::demo Four placements. Open one, then press Escape.
+<div class="cluster">
+  <button class="btn btn-outline" type="button" popovertarget="pop-b">Below <svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-down"/></svg></button>
+  <div class="pop pop-arrow" id="pop-b" popover>
+    <div class="pop__head"><p class="pop__title">Share this take</p><button class="pop__close" type="button" popovertarget="pop-b" popovertargetaction="hide" aria-label="Close"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-x"/></svg></button></div>
+    <div class="pop__body"><p class="t-small u-m-0">Anyone with the link can watch it before it is public.</p></div>
+    <div class="pop__foot"><button class="btn btn-ghost btn-sm" type="button" popovertarget="pop-b" popovertargetaction="hide">Cancel</button><button class="btn btn-primary btn-sm" type="button">Copy link</button></div>
+  </div>
+
+  <button class="btn btn-outline" type="button" popovertarget="pop-a">Above</button>
+  <div class="pop pop-above pop-sm" id="pop-a" popover>
+    <div class="pop__body"><p class="t-small u-m-0">A small one, above the trigger.</p></div>
+  </div>
+
+  <button class="btn btn-outline" type="button" popovertarget="pop-e">End</button>
+  <div class="pop pop-end pop-align-start" id="pop-e" popover>
+    <div class="pop__head"><p class="pop__title">Aligned to the start edge</p></div>
+    <div class="pop__body"><p class="t-small u-m-0"><code class="code">pop-start</code>, <code class="code">pop-end</code>, <code class="code">pop-above</code> pick the side; <code class="code">pop-align-start</code> and <code class="code">pop-align-end</code> pick which edge lines up.</p></div>
+  </div>
+
+  <button class="btn btn-outline" type="button" popovertarget="pop-l">Large</button>
+  <div class="pop pop-lg" id="pop-l" popover>
+    <div class="pop__head"><p class="pop__title">Filter episodes</p><button class="pop__close" type="button" popovertarget="pop-l" popovertargetaction="hide" aria-label="Close"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-x"/></svg></button></div>
+    <div class="pop__body">
+      <div class="facets">
+        <div class="facets__group">
+          <p class="facets__label">Category</p>
+          <ul class="facets__list">
+            <li><label class="facets__opt"><input type="checkbox" checked /><span>Craft</span><span class="facets__count">41</span></label></li>
+            <li><label class="facets__opt"><input type="checkbox" /><span>Code</span><span class="facets__count">33</span></label></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="pop__foot"><button class="btn btn-ghost btn-sm" type="button">Clear</button><button class="btn btn-primary btn-sm" type="button" popovertarget="pop-l" popovertargetaction="hide">Apply</button></div>
+  </div>
+
+  <button class="btn btn-ghost btn-sm btn-icon" type="button" popovertarget="pop-t" aria-label="What is a take?"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-info"/></svg></button>
+  <div class="pop pop-tip pop-sm" id="pop-t" popover>A take is one recorded attempt. The number in the corner of a frame is which one you are watching.</div>
+</div>
+:::
+
+`.pop-tip` is the hint dress: no head, no foot, one paragraph. It exists
+because a tooltip cannot be opened by touch, and a touch user asking "what is
+this?" deserves an answer rather than a hover they cannot perform.
+
+Where the browser supports `position-area`, the panel anchors itself to its
+invoker and flips when the chosen side would clip. Where it does not, it
+centres — which is a correct panel, just a less clever one.

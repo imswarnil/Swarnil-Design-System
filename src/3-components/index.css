@@ -13,3 +13,9 @@
 @import url('./38-disclosure.css'); /* accordion, collapse             */
 @import url('./39-media.css');    /* player, play, poster, episode     */
 @import url('./40-codeplayer.css'); /* code as a screen: TV, flat, light */
+@import url('./41-shelf.css');    /* the row you scroll sideways       */
+@import url('./42-filter.css');   /* facets, the bar, the view switch  */
+@import url('./43-masthead.css'); /* one project, held at the top      */
+@import url('./44-ad.css');       /* the paid slot, made honest        */
+@import url('./45-toc.css');      /* the table of contents             */
+@import url('./46-timestamps.css'); /* the timecodes under a video     */

@@ -417,6 +417,75 @@
 	/* Centred snapping, for a hero-style rail. */
 	.carousel-center .carousel__slide { scroll-snap-align: center; }
 
+	/* ── More styles ───────────────────────────────────────────────────────
+	   Five more, and each answers a question the first three do not. */
+
+	/* Portrait slides — a rail of 9:16, for shorts or covers. */
+	.carousel-tall { --carousel-slide: min(12rem, 60%); }
+
+	/* Two-up and three-up, for a gallery where the pictures are the content
+	   rather than the subject. Fractions rather than pixels, so the count is
+	   the same at every width until it stops fitting. */
+	.carousel-2 { --carousel-slide: calc(50% - var(--carousel-gap) / 2); }
+	.carousel-3 { --carousel-slide: calc(33.333% - var(--carousel-gap) * 2 / 3); }
+
+	/* Free: no snapping. For a strip somebody is browsing rather than
+	   stepping through — snapping a browse is a fight with the finger. */
+	.carousel-free .carousel__track { scroll-snap-type: none; }
+
+	/* Bleed: the rail runs off the page edge so it is obvious it continues.
+	   The track re-pads its own ends, so the first slide still lines up with
+	   the column above it. */
+	.carousel-bleed .carousel__track {
+		padding-inline: var(--gutter);
+		margin-inline: calc(var(--gutter) * -1);
+		scroll-padding-inline: var(--gutter);
+	}
+
+	/* ── The readout ───────────────────────────────────────────────────────
+	   Twelve dots is not a control, it is a texture. Past about seven slides
+	   a count says more in less space and is the only version that works
+	   with a screen reader without twelve identical link names. */
+	.carousel__count {
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-2xs);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-faint);
+		min-inline-size: 5ch;
+		text-align: center;
+	}
+
+	/* ── Thumbnail navigation ──────────────────────────────────────────────
+	   For a gallery, where a dot tells you nothing and a picture tells you
+	   which one you are going to. Scrolls itself when there are many. */
+	.carousel__thumbs {
+		display: flex;
+		gap: var(--space-2);
+		margin-block-start: var(--space-3);
+		overflow-x: auto;
+		scrollbar-width: thin;
+		padding-block-end: var(--space-1);
+	}
+
+	.carousel__thumb {
+		flex: 0 0 4.5rem;
+		aspect-ratio: 16 / 9;
+		padding: 0;
+		border: var(--border-2) solid transparent;
+		border-radius: var(--radius-sm);
+		overflow: hidden;
+		background: var(--bg-media);
+		cursor: pointer;
+		opacity: 0.55;
+		transition: opacity var(--dur-2) var(--ease-out), border-color var(--dur-2) var(--ease-out);
+	}
+
+	.carousel__thumb > img { inline-size: 100%; block-size: 100%; object-fit: cover; display: block; }
+	.carousel__thumb:hover { opacity: 0.85; }
+	.carousel__thumb[aria-current] { opacity: 1; border-color: var(--accent); }
+
 	.carousel__nav {
 		display: flex;
 		align-items: center;

@@ -1,7 +1,7 @@
 ---
 title: Colour
 group: Foundation
-order: 10
+order: 50
 lead: Two tiers, eight ramps, 97 tones — and components may only ever read the second tier.
 ---
 

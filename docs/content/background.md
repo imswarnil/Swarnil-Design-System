@@ -1,7 +1,7 @@
 ---
 title: Backgrounds
 group: Foundation
-order: 36
+order: 50
 lead: Glows, aurora, spotlight, grain — light that falls on a band, built from the same tokens as everything else, so it retints when the accent does.
 ---
 
@@ -118,3 +118,63 @@ conflict.
 | `--bg-glow-size` | the ellipse's diameter |
 | `--bg-glow-alpha` | 0–1; `bg-faint` and `bg-strong` are its named steps |
 | `--bg-noise` | the grain image; swap for your own SVG |
+
+## Loops — a ground that keeps moving
+
+Three, and the budget is spent. Ambient background motion is the most expensive
+thing a page can do for the least benefit: it repaints forever, it competes
+with the content, and it is exactly what `prefers-reduced-motion` exists to
+switch off.
+
+So each of these is slow (12 seconds and up), moves **one** thing, and is off
+under that setting — not slower, off. None of them replaces a ground: each
+expects a `bg-*` underneath and composes with it, because they animate a
+position or a rotation rather than painting a second background over the first.
+
+:::demo `.bg-scanlines` over ink — the tape, running
+<div class="bg-ink bg-scanlines u-p-8 u-rounded-lg">
+  <p class="t-h3 u-m-0">Take 48</p>
+  <p class="t-small u-mt-2 u-m-0">The moving version of <code class="code">pattern-scan</code>, for a hero that should read as footage.</p>
+</div>
+:::
+
+:::demo `.bg-beams` — a slow sweep, as if something off camera is turning
+<div class="bg-sunken bg-beams u-p-8 u-rounded-lg u-border">
+  <p class="t-h3 u-m-0">Forty seconds a turn</p>
+  <p class="t-small t-muted u-mt-2 u-m-0">One conic gradient on <code class="code">::after</code>, one rotation. It sets <code class="code">isolation: isolate</code>, so the beams stay inside the box.</p>
+</div>
+:::
+
+:::demo `.bg-graph` — the blueprint under a page that is being drawn
+<div class="bg-canvas bg-graph u-p-8 u-rounded-lg u-border">
+  <p class="t-h3 u-m-0">Still being built</p>
+  <p class="t-small t-muted u-mt-2 u-m-0">Paints on the element like every other ground, so it still composes with a <code class="code">.pattern</code> on <code class="code">::before</code>.</p>
+</div>
+:::
+
+| Class | Moves | Period |
+| --- | --- | --- |
+| `.bg-scanlines` | the scanlines travel down | 12s |
+| `.bg-beams` | a conic sweep rotates | 40s |
+| `.bg-graph` | the grid drifts diagonally | 26s |
+
+## A ground that is a gradient needs a pair rule
+
+`.bg-noise` sets `background-image`, which **replaces** a gradient ground
+rather than adding to it — silently, leaving the band the colour of the page.
+Every ground built from gradients therefore has an explicit `.bg-x.bg-noise`
+pair rule in the file: glow, aurora, mesh, ink, spot.
+
+Anything new that paints a gradient needs its pair adding, and the way you find
+out that it does not have one is by **looking at the band**, not at the file.
+
+:::demo Both of these are grain over a dark slab — and both needed a pair rule to be
+<div class="grid-2">
+  <div class="bg-ink bg-noise u-p-6 u-rounded-lg"><span class="t-data">bg-ink · bg-noise</span></div>
+  <div class="bg-spot bg-noise u-p-6 u-rounded-lg"><span class="t-data">bg-spot · bg-noise</span></div>
+</div>
+:::
+
+`.bg-ink` and `.bg-spot` also declare `color-scheme: dark`, so `light-dark()`
+resolves to its dark branch inside them and a muted paragraph on a dark slab is
+legible rather than landing at 2:1.

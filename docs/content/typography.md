@@ -1,7 +1,7 @@
 ---
 title: Typography
 group: Foundation
-order: 20
+order: 50
 lead: One face. Monospace is not a second voice — it is a tool, and it comes out only for code.
 ---
 
@@ -248,3 +248,78 @@ and hyphens into the margin so the left edge of the text block reads straight.
 
 `float` plus `line-height: 0.8` is what seats it on the baseline of the third
 line. It switches off below 40rem, where three lines is most of the screen.
+
+## Marks a reader would make
+
+Three annotations, and they are the same idea: a shape that is already the
+right shape, revealed along `--draw` by a mask — so it looks **drawn** rather
+than faded in. That is the whole difference between a highlight and an
+animation of one.
+
+They mark a phrase, so they go on an inline element inside a sentence. They
+draw as the sentence scrolls into view, which is when a reader is actually
+looking at it; without a view timeline they draw on load, which is the honest
+fallback rather than a broken one.
+
+:::demo Scroll them out of view and back to run them again
+<article class="prose">
+  <p class="t-lead">I make things. Then I make a
+  <em class="fx-mark">video about it</em> — which is how I found out that
+  <em class="fx-circle">explaining</em> is the work, not the by-product, and
+  that the part worth keeping is almost always the
+  <em class="fx-underline">second half</em>.</p>
+</article>
+:::
+
+| Class | The mark |
+| --- | --- |
+| `.fx-mark` | the highlighter — a band on the baseline, not a full-height fill |
+| `.fx-circle` | a ring round a word, with uneven radii so it reads as a hand |
+| `.fx-underline` | a rule drawn left to right, thicker than a `text-decoration` |
+
+`--mark-ink` sets the highlighter's colour on the instance; the ring and the
+underline take the accent.
+
+```html
+<em class="fx-mark" style="--mark-ink: var(--craft-soft)">worth keeping</em>
+```
+
+Under `prefers-reduced-motion` all three stop being drawn and are simply
+**there**. The finished state is the resting state, so nothing is lost.
+
+## The footage, read through the letters
+
+`background-clip: text` cannot take a `<video>`, and a poster frame is not the
+effect anybody actually wants. So the cutout is a **knockout**: a solid plate
+over the media with the type punched out of it by a blend mode, which works
+with any media element underneath, moving or still.
+
+:::demo The clip is playing behind the word
+<div class="cutout">
+  <video class="cutout__media" src="/assets/media/loop.mp4" poster="/assets/media/loop.jpg" muted loop playsinline autoplay></video>
+  <p class="cutout__text">SWARNIL</p>
+</div>
+:::
+
+The mechanics, once, because they are unobvious: the plate is the **page**
+colour and the type is the **inverse** of it. On a light page `screen` keeps
+white opaque and turns black clear; on a dark page the same job needs
+`multiply`, with the two swapped. Both branches ship, keyed off the theme, so
+the effect follows the page rather than assuming one — switch the theme at the
+top of this page and watch it hold.
+
+:::demo `.cutout-sm` over a still, and `.cutout-lg` for a band
+<div class="stack">
+  <div class="cutout cutout-sm">
+    <img class="cutout__media" src="/assets/media/night.jpg" alt="" />
+    <p class="cutout__text">ON THE ROAD</p>
+  </div>
+  <div class="cutout cutout-lg">
+    <img class="cutout__media" src="/assets/media/coast.jpg" alt="" />
+    <p class="cutout__text">S02</p>
+  </div>
+</div>
+:::
+
+`isolation: isolate` on `.cutout` is load-bearing — without it the blend mode
+reaches past the box and knocks a hole in the page behind it.

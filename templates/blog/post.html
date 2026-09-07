@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Decide once. Then stop deciding. — Swarnil</title>
-<meta name="description" content="Why a token-first design system is the only kind that survives a rebrand." />
+<title>Decide once. Then stop deciding. — Swarnil Singhai</title>
+<meta name="description" content="Why a token-first system is the only kind that survives a rebrand." />
 <script>
 try {
   var t = localStorage.getItem('sds-theme');
@@ -23,12 +23,11 @@ try {
 </head>
 <body class="tpl">
 <a class="skip" href="#main">Skip to content</a>
-<div class="fx-scroll-progress" aria-hidden="true"></div>
-<header class="navbar navbar-sticky navbar-blur navbar-bordered">
+<header class="navbar navbar-sticky navbar-blur navbar-bordered navbar-centered">
   <button class="navbar__burger" type="button" popovertarget="drawer" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
   <a class="navbar__brand" href="/templates/personal/index.html"><span class="dot dot-accent"></span> Swarnil</a>
   <nav class="navbar__nav" aria-label="Main">
-    <a class="navbar__link" href="/templates/personal/index.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-user"/></svg>Home</a><a class="navbar__link" href="/templates/blog/index.html#watch"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg>Watch</a><a class="navbar__link" href="/templates/blog/index.html" aria-current="page"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-file"/></svg>Blog</a><a class="navbar__link" href="/templates/personal/index.html#learn"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-folder"/></svg>Courses</a><a class="navbar__link" href="/templates/personal/index.html#travel"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-camera"/></svg>Travel</a>
+    <a class="navbar__link" href="/templates/personal/index.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-home"/></svg>Home</a><a class="navbar__link" href="/templates/personal/about.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-user"/></svg>About</a><a class="navbar__link" href="/templates/video/index.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg>Video</a><a class="navbar__link" href="/templates/blog/index.html" aria-current="page"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-file"/></svg>Blog</a><a class="navbar__link" href="/templates/projects/index.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>Projects</a><a class="navbar__link" href="/templates/courses/index.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-folder"/></svg>Courses</a>
   </nav>
   <div class="navbar__actions">
     <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Search"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-search"/></svg></button>
@@ -41,7 +40,7 @@ try {
     </div>
     <div class="sheet__body">
       <div class="sheet__group">
-        <a class="sheet__link" href="/templates/personal/index.html"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-user"/></svg>Home</a><a class="sheet__link" href="/templates/blog/index.html#watch"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg>Watch</a><a class="sheet__link" href="/templates/blog/index.html" aria-current="page"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-file"/></svg>Blog</a><a class="sheet__link" href="/templates/personal/index.html#learn"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-folder"/></svg>Courses</a><a class="sheet__link" href="/templates/personal/index.html#travel"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-camera"/></svg>Travel</a>
+        <a class="sheet__link" href="/templates/personal/index.html"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-home"/></svg>Home</a><a class="sheet__link" href="/templates/personal/about.html"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-user"/></svg>About</a><a class="sheet__link" href="/templates/video/index.html"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg>Video</a><a class="sheet__link" href="/templates/blog/index.html" aria-current="page"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-file"/></svg>Blog</a><a class="sheet__link" href="/templates/projects/index.html"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>Projects</a><a class="sheet__link" href="/templates/courses/index.html"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-folder"/></svg>Courses</a>
       </div>
       <div class="sheet__group">
         <p class="sheet__label">Elsewhere</p>
@@ -228,20 +227,38 @@ try {
   </section>
 
 </main>
-<footer class="footer">
-  <div class="center">
+<footer class="footer footer-loose">
+  <div class="center center-2xl">
     <div class="footer__top">
       <div>
         <p class="footer__brand"><span class="dot dot-accent"></span> Swarnil</p>
-        <p class="footer__note">Engineer, creator, occasional traveller. Everything here is made in the open.</p>
+        <p class="footer__note">Engineer, creator, occasional traveller. Everything here is made in the open — the site, the system it is built on, and the notes from getting both wrong first.</p>
+        <div class="footer__social">
+          <a class="btn btn-social btn-sm btn-icon" href="https://youtube.com/@imswarnil" rel="noopener" aria-label="YouTube"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-video"/></svg></a>
+          <a class="btn btn-social btn-sm btn-icon" href="https://github.com/imswarnil" rel="noopener" aria-label="GitHub"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg></a>
+          <a class="btn btn-social btn-sm btn-icon" href="#i" rel="noopener" aria-label="Instagram"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-camera"/></svg></a>
+          <a class="btn btn-social btn-sm btn-icon" href="#i" rel="noopener" aria-label="RSS"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-rss"/></svg></a>
+        </div>
+        <form class="footer__form" action="#i" onsubmit="return false">
+          <label class="u-sr-only" for="foot-mail">Email</label>
+          <input class="input input-sm" id="foot-mail" type="email" placeholder="you@studio.tv" autocomplete="email" />
+          <button class="btn btn-secondary btn-sm" type="submit">Subscribe</button>
+        </form>
       </div>
-      <nav class="footer__col" aria-label="Make"><p class="footer__head">Make</p><a href="/templates/blog/index.html#watch">Watch</a><a href="/templates/blog/index.html">Read</a><a href="/templates/personal/index.html#learn">Learn</a></nav>
-      <nav class="footer__col" aria-label="Elsewhere"><p class="footer__head">Elsewhere</p><a href="https://youtube.com/@imswarnil" rel="noopener">YouTube</a><a href="https://github.com/imswarnil" rel="noopener">GitHub</a><a href="https://design.imswarnil.com">Design system</a></nav>
-      <nav class="footer__col" aria-label="Site"><p class="footer__head">Site</p><a href="#newsletter">Newsletter</a><a href="#i">RSS</a><a href="#i">Colophon</a></nav>
+      <nav class="footer__col" aria-label="Make"><p class="footer__head">Make</p><a href="/templates/video/index.html">Video</a><a href="/templates/blog/index.html">Writing</a><a href="/templates/projects/index.html">Projects</a><a href="/templates/courses/index.html">Courses</a></nav>
+      <nav class="footer__col" aria-label="Elsewhere"><p class="footer__head">Elsewhere</p><a href="https://youtube.com/@imswarnil" rel="noopener">YouTube</a><a href="https://github.com/imswarnil" rel="noopener">GitHub</a><a href="https://design.imswarnil.com">Design system</a><a href="#i">Newsletter</a></nav>
+      <nav class="footer__col" aria-label="Site"><p class="footer__head">Site</p><a href="/templates/personal/about.html">About</a><a href="#i">Now</a><a href="#i">Uses</a><a href="#i">Colophon</a></nav>
     </div>
+    <span class="footer__mark" aria-hidden="true">Swarnil</span>
     <div class="footer__bottom">
-      <p class="footer__fine">© 2026 Swarnil Singhai · Built on the <a href="https://design.imswarnil.com">Swarnil Design System</a></p>
-      <span class="footer__rec"><span class="dot dot-sm dot-live"></span> Still rolling</span>
+      <div>
+        <p class="footer__fine">© 2026 Swarnil Singhai · Built on the <a href="https://design.imswarnil.com">Swarnil Design System</a></p>
+        <p class="footer__meta"><span><strong>v2.4</strong> of this site</span><span>Deployed <strong>Sep 07</strong></span><span>Type set in <strong>Inter</strong></span></p>
+      </div>
+      <div class="stack stack-sm">
+        <nav class="footer__legal" aria-label="Legal"><a href="#i">Privacy</a><a href="#i">Licence</a><a href="#i">RSS</a><a href="#i">Sitemap</a></nav>
+        <span class="footer__rec"><span class="dot dot-sm dot-live"></span> Still rolling</span>
+      </div>
     </div>
   </div>
 </footer>

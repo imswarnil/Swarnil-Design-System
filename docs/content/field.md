@@ -1,7 +1,7 @@
 ---
 title: Field
-group: Components
-order: 15
+group: Forms
+order: 50
 lead: Label, control, hint or error — one unit, built on native controls that are dressed rather than rebuilt.
 ---
 
@@ -334,3 +334,55 @@ sets the label column so a stack of them lines up.
   same target the mouse does.
 - The floating label is a real `<label>` wrapping the input, so it is the
   accessible name whether floated or resting.
+
+## The marks that answer a keystroke
+
+A subscribe field, a comment box, a search: the moment somebody starts typing,
+a small spray of marks leaves the field. It is the same idea as
+[`.btn-burst`](/button.html), and it is here for the same reason — the one
+moment on a creator's page where a flourish is the point rather than a
+distraction.
+
+:::demo Type something
+<div class="stack" style="max-inline-size: 24rem">
+  <label class="field">
+    <span class="field__label">Email</span>
+    <input class="input" type="email" placeholder="you@studio.tv" autocomplete="email" />
+    <span class="field__pop" aria-hidden="true">
+      <span style="--a: 70deg"><svg class="icon"><use href="/icons/sprite.svg#i-mail"/></svg></span>
+      <span style="--a: 110deg"><svg class="icon"><use href="/icons/sprite.svg#i-heart"/></svg></span>
+      <span style="--a: 90deg; --d: 3.4rem"><svg class="icon"><use href="/icons/sprite.svg#i-sparkle"/></svg></span>
+    </span>
+    <span class="field__hint">One issue a week. Unsubscribe in one click.</span>
+  </label>
+
+  <label class="field">
+    <span class="field__label">Say something</span>
+    <input class="input" type="text" placeholder="What did this miss?" />
+    <span class="field__pop" aria-hidden="true">
+      <span style="--a: 60deg"><svg class="icon"><use href="/icons/sprite.svg#i-message"/></svg></span>
+      <span style="--a: 120deg"><svg class="icon"><use href="/icons/sprite.svg#i-thumbs-up"/></svg></span>
+    </span>
+  </label>
+</div>
+:::
+
+It fires on `:not(:placeholder-shown)`, which is CSS's way of asking *has
+anyone typed anything* — so the input needs a `placeholder` for the selector to
+have something to test. That is not a hack: a field with no placeholder has no
+empty state to detect.
+
+```html
+<label class="field">
+  <span class="field__label">Email</span>
+  <input class="input" type="email" placeholder="you@studio.tv" />
+  <span class="field__pop" aria-hidden="true">
+    <span style="--a: 70deg">…icon…</span>
+    <span style="--a: 110deg">…icon…</span>
+  </span>
+</label>
+```
+
+`aria-hidden` and `pointer-events: none`, because these are confetti. Delete
+the whole block and the field is identical in every way that matters — which is
+the test any flourish has to pass before it ships.

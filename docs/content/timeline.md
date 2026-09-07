@@ -1,7 +1,7 @@
 ---
 title: Timeline
 group: Patterns
-order: 30
+order: 50
 lead: An ordered sequence with a rail through it — the one idea the build log, itinerary and curriculum all wear differently.
 ---
 
@@ -218,3 +218,58 @@ survive on a phone.
 - An icon in a node is `aria-hidden`; the title carries the meaning.
 - The horizontal form is a scroll container — it reaches the keyboard by
   tabbing into a linked title.
+
+## Illustrated — pictures on the rail
+
+A sequence that has pictures: a syllabus with a still per module, a trip with a
+photograph per stop, a changelog with a screenshot per release.
+
+The picture belongs to the entry, so it goes **inside the body, under the
+words**. A reader scans titles down the rail first and looks at the pictures
+second; putting the image above the title inverts that.
+
+:::demo `.timeline-media` with `.timeline-icons` — every node a glyph
+<ol class="timeline timeline-media timeline-icons">
+  <li class="timeline__item" data-done>
+    <span class="timeline__node"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-rocket"/></svg></span>
+    <div class="timeline__body">
+      <span class="timeline__time">Week 1</span>
+      <h3 class="timeline__title">Watch, do not take notes</h3>
+      <p class="timeline__note">The first pass is watching. Notes on a first pass are a transcription exercise, and transcription is not learning.</p>
+      <span class="timeline__media pattern pattern-grid"></span>
+    </div>
+  </li>
+  <li class="timeline__item" aria-current="step">
+    <span class="timeline__node"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-terminal"/></svg></span>
+    <div class="timeline__body">
+      <span class="timeline__time">Week 2</span>
+      <h3 class="timeline__title">Rebuild it without the video</h3>
+      <p class="timeline__note">Same dataset, blank screen. This is the week that hurts and the week that works.</p>
+      <span class="timeline__media pattern pattern-blueprint"></span>
+    </div>
+  </li>
+  <li class="timeline__item">
+    <span class="timeline__node"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-bug"/></svg></span>
+    <div class="timeline__body">
+      <span class="timeline__time">Week 3</span>
+      <h3 class="timeline__title">Break it on purpose</h3>
+      <p class="timeline__note">Wrong join, wrong grain, wrong filter. You will meet all three in production; better to meet them here.</p>
+      <span class="timeline__strip">
+        <span class="pattern pattern-dot"></span><span class="pattern pattern-hatch"></span><span class="pattern pattern-line"></span><span class="pattern pattern-halftone"></span><span class="pattern pattern-cross"></span>
+      </span>
+    </div>
+  </li>
+</ol>
+:::
+
+`.timeline__media` takes any ratio from `--timeline-media` on the instance, so
+one entry can be a 16:9 still and the next a 1:1 crop without a second class.
+`.timeline__strip` is the alternative for the day that had six photographs: it
+scrolls rather than wrapping, so an entry never becomes a wall.
+
+| Class | What it does |
+| --- | --- |
+| `.timeline__media` | one framed still inside an entry. `--timeline-media` sets the ratio |
+| `.timeline__strip` | a scrolling row of small stills |
+| `.timeline-media` | wide plates and a bigger node — the timeline as content |
+| `.timeline-icons` | every node carries a glyph; the chain reads as a process |

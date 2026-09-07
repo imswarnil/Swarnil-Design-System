@@ -82,3 +82,27 @@ specificity fights and no `!important`.
 ```
 
 That is the entire customisation API. There is no configuration file.
+
+## The three bundles
+
+The package ships three stylesheets. Each contains the one before it, so you
+load exactly one.
+
+| Bundle | Contains | For |
+| --- | --- | --- |
+| `swarnil-design.css` | tokens, elements, components, patterns, sections, utilities | a website |
+| `swarnil-broadcast.css` | + canvases, scenes, lower thirds, stream widgets, thumbnails | OBS, thumbnail rendering |
+| `swarnil-framework.css` | + the [twelve-column grid](/framework.html) and responsive utilities | porting from Bootstrap or Bulma |
+
+```html
+<link rel="stylesheet" href=".../dist/swarnil-design.min.css">
+```
+```css
+@import "@imswarnil/swarnil-design";            /* the web bundle    */
+@import "@imswarnil/swarnil-design/broadcast";  /* + the creator layer */
+@import "@imswarnil/swarnil-design/framework";  /* + the 12-col grid   */
+```
+
+Gzipped, the framework bundle is about 2 KB more than the base one — a
+repetitive grid compresses almost to nothing, which is the one genuinely good
+argument for shipping the whole twelve columns rather than a subset.

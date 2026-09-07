@@ -109,4 +109,37 @@
 	}
 	.rule-accent { border-block-start: var(--border-2) solid var(--accent); }
 	.rule-dashed { border-block-start-style: dashed; }
+
+	/* ── More rules ────────────────────────────────────────────────────────
+	   A divider is a piece of punctuation, and a page needs more than one
+	   full stop. These are the other two marks. */
+
+	/* Dotted — quieter than dashed, for a break inside a card. */
+	.rule-dotted { border-block-start-style: dotted; }
+
+	/* A line that fades out at both ends, so it stops without a hard edge —
+	   the right divider under a centred heading, where a full-width rule
+	   reads as a box. */
+	.rule-fade {
+		border: 0;
+		block-size: var(--border-hair);
+		background: linear-gradient(
+			to right, transparent, var(--line-default) 20%, var(--line-default) 80%, transparent);
+	}
+
+	/* ── .notch — the corner cut ───────────────────────────────────────────
+	   A clipped corner reads as a ticket, a badge, a slate. One class, and
+	   the size is a variable so a small chip and a large card can both wear
+	   it without either looking wrong. */
+	.notch {
+		--notch: 0.75rem;
+		clip-path: polygon(
+			var(--notch) 0, 100% 0, 100% calc(100% - var(--notch)),
+			calc(100% - var(--notch)) 100%, 0 100%, 0 var(--notch));
+	}
+
+	.notch-sm { --notch: 0.4rem; }
+	.notch-lg { --notch: 1.5rem; }
+	/* One corner only — the folded page. */
+	.notch-end { clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--notch)), calc(100% - var(--notch)) 100%, 0 100%); }
 }

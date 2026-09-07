@@ -76,13 +76,14 @@ Then rebrand in one rule, outside every layer:
 | --- | --- |
 | `0-config` | the `@layer` order |
 | `1-foundation` | reset, colour, typography, space, elevation, motion, layout, pattern, a11y, shape, frame, icon, background |
-| `2-elements` | badge, table, code, indicators, text, effects & interactions, veils & glass |
-| `3-components` | button, card, field, navigation, alert, navbar, menu, overlay, disclosure, media, code player |
-| `4-patterns` | deck, chat, timeline, curriculum, thread, log, share, prose |
+| `2-elements` | badge, table, code, indicators, text, effects & interactions, veils & glass, link cards & references |
+| `3-components` | button, card, field, navigation, alert, navbar, menu, overlay, disclosure, media, code player, shelf, filter & facets, masthead, ad |
+| `4-patterns` | deck, chat, timeline, curriculum, thread, log, share, prose, kit, results |
 | `5-sections` | hero, stats, cta, footer, pricing |
 | `7-broadcast` | canvas, scene, lower third, stream widgets, thumbnail & OG image — separate bundle |
+| `8-framework` | the opt-in twelve-column grid: container, row, col-*, six breakpoints, responsive d-/f-/j-/a-/text-* — separate bundle |
 | `6-utilities` | the `u-*` escape hatch |
-| `templates/` | whole pages built out of the system: a personal homepage, a blog home, a post |
+| `templates/` | twelve whole pages built out of the system: a homepage, an about page, a video channel and its two post shapes, a blog, a course catalogue with a lesson player, and a project portfolio with a case study |
 
 ## Develop
 

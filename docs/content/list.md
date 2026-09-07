@@ -1,7 +1,7 @@
 ---
 title: List
 group: Components
-order: 62
+order: 50
 lead: Stacked rows on one surface. Only the interactive rows respond, and the current one gets a rule, never a fill.
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Spacing
 group: Foundation
-order: 25
+order: 50
 lead: One 4px ladder. "A bit more room" becomes "the next step up" — a decision anyone makes the same way twice.
 ---
 

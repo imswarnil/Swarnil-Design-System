@@ -172,9 +172,20 @@
 	   3-components/40-codeplayer.css. */
 
 	.codeblock-dark .codeblock__copy:hover { background: color-mix(in oklab, var(--fg-on-inverse) 10%, transparent); }
-	.codeblock-dark :is(.tok-attr, .tok-sel, .tok-prop) { color: var(--code-fg); }
-	.codeblock-dark :is(.tok-str, .tok-fn) { color: color-mix(in oklab, var(--fg-on-inverse) 72%, transparent); }
-	.codeblock-dark :is(.tok-com, .tok-punc) { color: var(--code-muted); }
+	/* On the forced-dark block the page's light-dark() branch is the wrong
+	   one, so the palette is remapped to the light ramp steps rather than
+	   every .tok-* being restated. Eight lines, and the highlighting is
+	   correct on a dark slab in a light page. */
+	.codeblock-dark {
+		--syn-structure: var(--ink-100);
+		--syn-key:  var(--signal-300);
+		--syn-str:  var(--teal-300);
+		--syn-num:  var(--craft-300);
+		--syn-fn:   var(--azure-300);
+		--syn-var:  var(--iris-300);
+		--syn-com:  var(--code-muted);
+		--syn-punc: var(--code-muted);
+	}
 	.codeblock-dark .codeblock__ln[data-hl] { background: color-mix(in oklab, var(--accent) 18%, transparent); }
 	.codeblock-dark .codeblock__ln[data-diff='add'] { background: color-mix(in oklab, var(--success-solid) 22%, transparent); color: var(--code-fg); }
 	.codeblock-dark .codeblock__ln[data-diff='del'] { background: color-mix(in oklab, var(--danger-solid) 22%, transparent); color: var(--code-fg); }
@@ -220,15 +231,19 @@
 	/* ── Syntax tokens ─────────────────────────────────────────────────────
 	   Deliberately few — the accent marks structure, everything else is a
 	   step on the ink ramp. A rainbow is not comprehension. */
-	.tok-tag  { color: var(--fg-accent); }
-	.tok-attr { color: var(--fg-default); }
-	.tok-str  { color: var(--fg-muted); }
-	.tok-com  { color: var(--fg-faint); font-style: italic; }
-	.tok-key  { color: var(--fg-accent); }
-	.tok-num  { color: var(--craft); }
-	.tok-var  { color: var(--fg-accent); }
-	.tok-sel  { color: var(--fg-default); }
-	.tok-fn   { color: var(--fg-muted); }
-	.tok-prop { color: var(--fg-default); }
-	.tok-punc { color: var(--fg-faint); }
+	/* Every token reads a --syn-* token and NOTHING else. That is what makes
+	   a dress a remap of eight variables rather than eleven restated
+	   selectors, and it is why the CRT screen below can go monochrome-green
+	   in four lines. */
+	.tok-tag  { color: var(--syn-structure); }
+	.tok-sel  { color: var(--syn-structure); }
+	.tok-prop { color: var(--syn-structure); }
+	.tok-attr { color: var(--syn-structure); }
+	.tok-key  { color: var(--syn-key); font-weight: var(--weight-medium); }
+	.tok-str  { color: var(--syn-str); }
+	.tok-num  { color: var(--syn-num); }
+	.tok-fn   { color: var(--syn-fn); }
+	.tok-var  { color: var(--syn-var); }
+	.tok-com  { color: var(--syn-com); font-style: italic; }
+	.tok-punc { color: var(--syn-punc); }
 }

@@ -159,6 +159,14 @@
 		transition: opacity var(--dur-2) var(--ease-out);
 	}
 
+	/* The viewfinder dress owns the top row: __tc at the start corner, __rec at
+	   the end. A title bar pinned to inset-block-start: 0 lands on top of both.
+	   When the player wears the dress, the title starts below that row — one
+	   rule, rather than a template being told not to use two parts together. */
+	.player:has(> :is(.player__tc, .player__rec)) .player__title {
+		padding-block-start: calc(var(--space-5) + var(--space-5));
+	}
+
 	@media (hover: hover) and (pointer: fine) {
 		.player__title { opacity: 0; }
 

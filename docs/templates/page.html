@@ -34,6 +34,8 @@ try {
 <!-- The broadcast layer is a separate bundle for consumers; the docs load it
      so the Broadcast pages can demo it. -->
 <link rel="stylesheet" href="/src/7-broadcast/index.css{v}" />
+<!-- Same for the opt-in twelve-column framework layer. -->
+<link rel="stylesheet" href="/src/8-framework/index.css{v}" />
 <!-- The docs site's own chrome — nav, demo frames, layout. Nothing here is
      part of the design system. -->
 <link rel="stylesheet" href="/assets/docs.css{v}" />
@@ -122,7 +124,15 @@ try {
     </footer>
   </main>
 
-  <div class="rail">{toc}</div>
+  <div class="rail">
+    <div class="rail__pin">
+      {toc}
+      <aside class="ad ad-rect rail__ad" data-ad-state="idle">
+        <p class="ad__label">Sponsored<button class="ad__close" type="button" aria-label="Hide this ad"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-x"/></svg></button></p>
+        <div class="ad__slot"><p class="ad__note">The system&#39;s own <a href="/ad.html">ad slot</a>, reserving its height before anything loads.</p></div>
+      </aside>
+    </div>
+  </div>
 </div>
 </body>
 </html>

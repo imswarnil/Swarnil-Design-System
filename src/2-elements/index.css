@@ -9,3 +9,5 @@
 @import url('./24-text.css');    /* figure, pullquote, mark, note, footnote */
 @import url('./25-effect.css');  /* transitions, interactions, entrances, ambient */
 @import url('./26-veil.css');    /* scrims, grades, grain, glass — over footage */
+@import url('./27-linkcard.css'); /* the bookmark card and the source list */
+@import url('./28-interaction.css'); /* ix-* — the hover and focus answers */

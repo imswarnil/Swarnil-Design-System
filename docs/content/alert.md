@@ -1,7 +1,7 @@
 ---
 title: Alert
 group: Components
-order: 70
+order: 50
 lead: A message with a status — what happened, then what to do. Colour is never the only signal.
 ---
 

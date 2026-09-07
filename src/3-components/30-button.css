@@ -20,9 +20,28 @@
 
 @layer components {
 
+	/* ── Density ───────────────────────────────────────────────────────────
+	   These five numbers set the feel of the whole system, because a button
+	   is the most repeated object on any page.
+
+	   They were bigger. A 40px button with 16px of padding is the size a
+	   landing page uses, where there are three buttons and each one is a
+	   decision; on a page with twenty of them it reads as a marketing site
+	   that wandered into an application. The scale below is an app scale —
+	   34px default, 12px padding — and the two large sizes were pulled in
+	   hardest, because 56px was only ever there for a hero.
+
+	     xs   1.5rem   24px    a control inside a row of data
+	     sm   1.75rem  28px    a toolbar, a card footer
+	     ——   2.125rem 34px    the default
+	     lg   2.5rem   40px    a form's submit, a page's primary action
+	     xl   2.875rem 46px    a hero. One per page, if that.
+
+	   The 44px touch minimum is enforced separately, below, so shrinking the
+	   visual size never shrinks the target. */
 	.btn {
-		--btn-h: 2.5rem;
-		--btn-pad: var(--space-4);
+		--btn-h: 2.125rem;
+		--btn-pad: var(--space-3);
 		--btn-radius: var(--radius-control);
 		--btn-bg: transparent;
 		--btn-fg: var(--fg-default);
@@ -50,9 +69,13 @@
 		transition: var(--t-colors), var(--t-transform);
 	}
 
-	/* A coarse pointer needs 44px however small the design says. */
+	/* A coarse pointer needs 44px however small the design says — which is
+	   what makes the compact scale above safe. The visual size shrinks; the
+	   TARGET does not. An icon-only button gets the width too, because a
+	   44×34 target is only half a fix. */
 	@media (pointer: coarse) {
-		.btn { min-height: 44px; }
+		.btn { min-height: var(--tap-min); }
+		.btn-icon { min-width: var(--tap-min); }
 	}
 
 	.btn:active { scale: 0.98; }
@@ -141,8 +164,8 @@
 
 	/* ── Size ──────────────────────────────────────────────────────────────── */
 
-	.btn-sm { --btn-h: 2rem; --btn-pad: var(--space-3); --btn-gap: var(--space-1); font-size: var(--text-xs); }
-	.btn-lg { --btn-h: 3rem; --btn-pad: var(--space-6); font-size: var(--text-base); }
+	.btn-sm { --btn-h: 1.75rem; --btn-pad: var(--space-2); --btn-gap: var(--space-1); font-size: var(--text-xs); }
+	.btn-lg { --btn-h: 2.5rem; --btn-pad: var(--space-5); font-size: var(--text-sm); }
 
 	/* Square: the width follows the height, so .btn-sm and .btn-lg size an
 	   icon button with no extra class. Needs an aria-label — there is no
@@ -268,8 +291,8 @@
 	}
 
 	/* ── More sizes ────────────────────────────────────────────────────────── */
-	.btn-xs { --btn-h: 1.625rem; --btn-pad: var(--space-2); --btn-gap: var(--space-1); font-size: var(--text-2xs); }
-	.btn-xl { --btn-h: 3.5rem; --btn-pad: var(--space-8); font-size: var(--text-lg); }
+	.btn-xs { --btn-h: 1.5rem; --btn-pad: var(--space-2); --btn-gap: var(--space-1); font-size: var(--text-2xs); }
+	.btn-xl { --btn-h: 2.875rem; --btn-pad: var(--space-6); font-size: var(--text-base); }
 
 	/* ── Inverse — the button on ink ──────────────────────────────────────── */
 	.btn-inverse { --btn-bg: var(--bg-inverse); --btn-fg: var(--fg-on-inverse); --btn-line: transparent; }
@@ -324,8 +347,8 @@
 	.btn-play > .btn__disc {
 		display: grid;
 		place-items: center;
-		width: calc(var(--btn-h) - var(--space-4));
-		height: calc(var(--btn-h) - var(--space-4));
+		width: calc(var(--btn-h) - var(--space-3));
+		height: calc(var(--btn-h) - var(--space-3));
 		border-radius: var(--radius-full);
 		background: var(--accent);
 		color: var(--fg-on-accent);
@@ -356,4 +379,243 @@
 		transition: background-size var(--dur-3) var(--ease-out), var(--t-colors);
 	}
 	.btn-underline:hover { background-size: 100% var(--border-hair); }
+
+	/* ═══════════════════════════════════════════════════════════════════════
+	   MOTION — what a button does when you touch it
+
+	   The base answer is `scale: 0.98` on :active, and it is the right default
+	   because it is the cheapest honest one: the button moves under the
+	   finger, nothing else on the page reflows. Everything below is an
+	   ALTERNATIVE to that answer, never an addition to it — a button that
+	   both presses and fills and shines is a button that has not decided what
+	   it is.
+
+	   All of them are guarded by (hover: hover), because a touch device has
+	   no way to leave a hover state and a stuck hover is worse than none.
+	   ═══════════════════════════════════════════════════════════════════════ */
+
+	@media (hover: hover) and (pointer: fine) {
+
+		/* Fill — the ground floods in from the start edge. For an outline
+		   button that wants to become solid rather than merely tint. */
+		.btn-fill { overflow: hidden; isolation: isolate; }
+		.btn-fill::before {
+			content: '';
+			position: absolute;
+			inset: 0;
+			z-index: -1;
+			background: var(--accent);
+			transform-origin: 0 50%;
+			scale: 0 1;
+			transition: scale var(--dur-3) var(--ease-out);
+		}
+		.btn-fill:hover { --btn-fg: var(--fg-on-accent); --btn-line: var(--accent); }
+		.btn-fill:hover::before { scale: 1 1; }
+
+		/* Swap — the label slides up and its second self takes its place.
+		   Two spans, one visible at a time; the button keeps its width
+		   because both are in the flow, one clipped. */
+		.btn-swap { overflow: hidden; }
+		.btn-swap .btn__swap {
+			display: inline-grid;
+			overflow: hidden;
+		}
+		.btn-swap .btn__swap > * {
+			grid-area: 1 / 1;
+			transition: translate var(--dur-3) var(--ease-out), opacity var(--dur-2) var(--ease-out);
+		}
+		.btn-swap .btn__swap > :last-child { translate: 0 100%; opacity: 0; }
+		.btn-swap:hover .btn__swap > :first-child { translate: 0 -100%; opacity: 0; }
+		.btn-swap:hover .btn__swap > :last-child { translate: 0 0; opacity: 1; }
+
+		/* Slide — the icon leaves on one side and returns on the other. The
+		   arrow that goes somewhere, without the label moving. */
+		.btn-slide { overflow: hidden; }
+		.btn-slide > .icon { transition: translate var(--dur-2) var(--ease-out), opacity var(--dur-1) var(--ease-out); }
+		.btn-slide:hover > .icon { translate: 140% 0; opacity: 0; }
+
+		/* Lift — the button steps toward you instead of away. Pair it with a
+		   card that does not also lift. */
+		.btn-lift:hover { translate: 0 -2px; box-shadow: var(--elevation-2); }
+		.btn-lift:active { translate: 0 0; scale: 1; box-shadow: var(--elevation-0); }
+	}
+
+	/* Ring — a single ripple leaves the edge on press. This one is NOT in the
+	   hover guard: a press is the one interaction a touch device does have,
+	   and the ring is the only feedback that survives a finger covering the
+	   button. It runs on :active, so it restarts on every press. */
+	.btn-ring::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+		border: var(--border-2) solid var(--accent);
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	.btn-ring:active::after { animation: btn-ring var(--dur-5) var(--ease-out); }
+
+	@keyframes btn-ring {
+		from { opacity: 0.7; scale: 1; }
+		to   { opacity: 0; scale: 1.35; }
+	}
+
+	/* ── .btn-video — the button IS the footage ────────────────────────────
+	   A play control with the clip running inside it: poster at rest, video
+	   on hover, the label sitting over both on a scrim. It is the strongest
+	   thing in this file, so a page gets one.
+
+	       <a class="btn btn-lg btn-video" href="…">
+	         <video class="btn__video" muted loop playsinline poster="…">…</video>
+	         <span class="btn__label">Watch the latest</span>
+	       </a>
+
+	   The video needs `muted loop playsinline` in the markup and one line of
+	   JavaScript to play on hover — or `autoplay`, which costs nothing here
+	   because the clip is muted and 8 seconds long. Either way the poster is
+	   the resting state, so the button is complete before the video loads and
+	   correct if it never does. */
+	.btn-video {
+		--btn-bg: var(--bg-media);
+		--btn-fg: var(--pure-white);
+		--btn-h: 2.875rem;
+		--btn-pad: var(--space-5);
+		overflow: hidden;
+		isolation: isolate;
+		border-color: transparent;
+	}
+
+	.btn__video {
+		position: absolute;
+		inset: 0;
+		z-index: -2;
+		inline-size: 100%;
+		block-size: 100%;
+		object-fit: cover;
+		filter: saturate(0.95) brightness(0.86);
+		transition: filter var(--dur-4) var(--ease-out), scale var(--dur-5) var(--ease-out);
+	}
+
+	/* The scrim. Without it the label sits on whatever frame happens to be
+	   playing, which is a legibility lottery. */
+	.btn-video::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		background: linear-gradient(90deg, color-mix(in oklab, var(--pure-black) 48%, transparent), color-mix(in oklab, var(--pure-black) 14%, transparent));
+	}
+
+	.btn__label { position: relative; z-index: 1; }
+
+	@media (hover: hover) and (pointer: fine) {
+		.btn-video:hover .btn__video { filter: saturate(1.05) brightness(1); scale: 1.06; }
+	}
+
+	/* ── .btn-burst — the reaction ─────────────────────────────────────────
+	   Press subscribe and a handful of marks fly out of the button. It is the
+	   one place in this system where delight is the entire argument, so the
+	   rules that keep it honest matter more than usual:
+
+	     · the marks are aria-hidden — they are confetti, not content;
+	     · they are pointer-events:none, so they never eat the next click;
+	     · they run on [aria-pressed='true'], which means the burst fires when
+	       the state actually CHANGES, not on every stray press;
+	     · and they are gone under reduced motion, where the state change is
+	       still perfectly legible from the button itself.
+
+	       <button class="btn btn-primary btn-burst" aria-pressed="false">
+	         Subscribe
+	         <span class="btn__pop" aria-hidden="true">
+	           <span>…icon…</span><span>…</span><span>…</span><span>…</span>
+	         </span>
+	       </button>
+
+	   Each mark reads --a (its angle) from the markup, so the spray is
+	   authored rather than random — five marks at five angles look designed;
+	   five at random angles look broken about a third of the time. */
+	.btn-burst { overflow: visible; }
+
+	.btn__pop {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		z-index: 2;
+	}
+
+	.btn__pop > * {
+		position: absolute;
+		inset-block-start: 50%;
+		inset-inline-start: 50%;
+		display: grid;
+		place-items: center;
+		inline-size: 1.5rem;
+		block-size: 1.5rem;
+		margin: -0.75rem 0 0 -0.75rem;
+		border-radius: var(--radius-full);
+		background: var(--bg-surface);
+		color: var(--fg-accent);
+		box-shadow: var(--elevation-2);
+		opacity: 0;
+		scale: 0.4;
+	}
+
+	.btn__pop > * > .icon { --icon-size: 0.85rem; }
+
+	.btn-burst[aria-pressed='true'] .btn__pop > * {
+		animation: btn-pop var(--dur-5) var(--ease-overshoot) both;
+	}
+
+	/* A stagger, so the marks leave one after another rather than as a single
+	   ring. 40ms is enough to read as a spray and short enough that the whole
+	   thing is still over inside half a second. */
+	.btn__pop > :nth-child(2) { animation-delay: 40ms; }
+	.btn__pop > :nth-child(3) { animation-delay: 80ms; }
+	.btn__pop > :nth-child(4) { animation-delay: 120ms; }
+	.btn__pop > :nth-child(5) { animation-delay: 160ms; }
+
+	/* The spray: out along --a, then back down as it fades. translate takes
+	   the angle through a rotation so the markup only has to name a degree. */
+	@keyframes btn-pop {
+		0%   { opacity: 0; scale: 0.4; rotate: 0deg; translate: 0 0; }
+		35%  { opacity: 1; scale: 1; }
+		100% { opacity: 0; scale: 0.75; translate: calc(cos(var(--a, 0deg)) * var(--d, 3.2rem)) calc(sin(var(--a, 0deg)) * var(--d, 3.2rem) * -1); }
+	}
+
+	/* ── .btn-count — the number beside the verb ───────────────────────────
+	   Like · 1.4k. The count is data, so it wears the data voice and gets its
+	   own plate, and it flips to the accent when the button is pressed. */
+	.btn__count {
+		margin-inline-start: var(--space-1);
+		padding: 0.1em 0.45em;
+		border-radius: var(--radius-sm);
+		background: var(--hover-wash);
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-2xs);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+	}
+
+	.btn[aria-pressed='true'] .btn__count { background: var(--accent-soft); color: var(--accent-soft-fg); }
+
+	/* Pressed, for a toggle: the mark fills and the label stays put. A
+	   filled pill is banned for NAVIGATION state; a toggle is not navigation,
+	   it is a control whose whole job is to be on or off. */
+	.btn-toggle[aria-pressed='true'] {
+		--btn-bg: var(--accent-soft);
+		--btn-fg: var(--accent-soft-fg);
+		--btn-line: var(--line-accent);
+	}
+
+	.btn-toggle[aria-pressed='true'] > .icon { fill: currentcolor; }
+
+	@media (prefers-reduced-motion: reduce) {
+		.btn-ring:active::after,
+		.btn-burst[aria-pressed='true'] .btn__pop > * { animation: none; }
+		.btn-fill::before { transition: none; }
+		.btn-video:hover .btn__video { scale: 1; }
+		.btn-swap .btn__swap > * { transition: none; }
+	}
 }

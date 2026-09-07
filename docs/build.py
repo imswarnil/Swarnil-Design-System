@@ -61,8 +61,10 @@ GROUPS = [
     'Layout',
     'Elements',
     'Components',
+    'Forms',
     'Patterns',
     'Sections',
+    'Collections',
     'Broadcast',
     'Utilities',
     'Templates',
@@ -77,8 +79,10 @@ GROUP_ICONS = {
     'Layout': 'crop',
     'Elements': 'type',
     'Components': 'box',
+    'Forms': 'edit',
     'Patterns': 'scan',
     'Sections': 'browser',
+    'Collections': 'playlist',
     'Broadcast': 'live',
     'Utilities': 'settings',
     'Templates': 'folder',
@@ -319,13 +323,32 @@ def render(md):
             continue
 
         # ── list
+        #
+        # A wrapped bullet is one item, not an item and a paragraph. The first
+        # version of this took one LINE per item, so a bullet long enough to
+        # wrap silently split the list in two and left the remainder as a
+        # stray <p> outside it. That went unnoticed on six pages, because the
+        # result still reads correctly in the markdown and only looks wrong in
+        # the browser — which is the definition of the bug this build should
+        # be catching rather than causing.
+        #
+        # A continuation line is any non-blank line that does not itself start
+        # a new item or a new block. That is the whole rule.
         if re.match(r'^[-*] ', s) or re.match(r'^\d+\. ', s):
             ordered = bool(re.match(r'^\d+\. ', s))
             items = []
-            while i < n and (re.match(r'^[-*] ', lines[i].strip())
-                             or re.match(r'^\d+\. ', lines[i].strip())):
-                items.append(re.sub(r'^([-*]|\d+\.)\s+', '', lines[i].strip()))
-                i += 1
+            while i < n:
+                cur = lines[i].strip()
+                if re.match(r'^[-*] ', cur) or re.match(r'^\d+\. ', cur):
+                    items.append(re.sub(r'^([-*]|\d+\.)\s+', '', cur))
+                    i += 1
+                    continue
+                # continuation of the item above
+                if items and cur and not re.match(r'^(#|```|:::|\||>|<|---$)', cur):
+                    items[-1] += ' ' + cur
+                    i += 1
+                    continue
+                break
             tag = 'ol' if ordered else 'ul'
             li = ''.join(f'<li>{inline(t)}</li>' for t in items)
             out.append(f'<{tag} class="list">{li}</{tag}>')
@@ -385,7 +408,7 @@ def toc_html(toc):
     if len(toc) < 2:
         return ''
     li = ''.join(
-        f'<a class="toc__link toc__link--h{lvl}" href="#{sid}">{html.escape(txt)}</a>'
+        f'<a class="toc__link toc__link-h{lvl}" href="#{sid}">{html.escape(txt)}</a>'
         for lvl, sid, txt in toc)
     return ('<nav class="toc" aria-label="On this page">'
             '<p class="toc__head">On this page</p>'

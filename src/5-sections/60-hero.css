@@ -80,9 +80,57 @@
 
 	.hero-centre .hero__actions { justify-content: center; }
 	.hero-centre .hero__lead { margin-inline: auto; }
+	.hero-centre .hero__facts { justify-content: center; }
+
+	/* Wide: the media takes the larger half. The default ratio favours the
+	   words because most heroes are an argument; a hero whose SUBJECT is the
+	   footage — an episode, a course trailer — should favour the picture. */
+	.hero-wide { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); --hero-gap: var(--space-16); }
+
+	/* Media first, words second — for the alternate band, so two heroes on
+	   one site do not read as the same page twice. */
+	.hero-media-start .hero__media { order: -1; }
+
+	/* Roomier: more air between the columns and a bigger supporting line.
+	   The TITLE only steps up when the hero has one column to carry it —
+	   --text-6xl is 104px on a wide screen, and 104px inside a half-width
+	   copy column is five words on five lines, which is not a bigger claim,
+	   it is a smaller one that takes longer to read. */
+	.hero-xl { --hero-gap: var(--space-16); }
+	.hero-xl .hero__lead { font-size: var(--text-xl); }
+	.hero-xl.hero-centre .hero__title { font-size: var(--text-6xl); }
+
+	/* ── .hero__facts — the strip of numbers under the actions ─────────────
+	   Data voice, hairline separators, tabular so two heroes line up. It is
+	   the smallest honest way to say "128 episodes, 23 countries" without
+	   opening a whole .stats band inside the hero. */
+	.hero__facts {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--space-3) var(--space-5);
+		margin-block-start: var(--space-8);
+		padding-block-start: var(--space-5);
+		border-block-start: var(--border-hair) solid var(--line-subtle);
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-2xs);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		text-transform: uppercase;
+		color: var(--fg-faint);
+	}
+
+	.hero__facts > * { display: inline-flex; align-items: center; gap: var(--space-2); }
+	.hero__facts strong { font-weight: var(--weight-semibold); color: var(--fg-default); }
+	.hero__facts .icon { --icon-size: 0.9rem; }
 
 	@media (width < 60rem) {
-		.hero { grid-template-columns: minmax(0, 1fr); }
-		.hero__title { font-size: var(--text-4xl); }
+		.hero,
+		.hero-wide { grid-template-columns: minmax(0, 1fr); }
+		.hero__title,
+		.hero-xl.hero-centre .hero__title { font-size: var(--text-4xl); }
+		/* Stacked, the picture goes back under the claim it illustrates. */
+		.hero-media-start .hero__media { order: 0; }
 	}
 }

@@ -1,7 +1,7 @@
 ---
 title: Carousel
 group: Components
-order: 64
+order: 50
 lead: A scroll-snap rail with page dots, and the marquee — the two things that move sideways, both without a script.
 ---
 
@@ -73,6 +73,88 @@ the middle instead of the start.
   </div>
 </div>
 :::
+
+## More styles
+
+Five more, each answering a question the first three do not.
+
+:::demo `.carousel-3` with `.carousel-free` — a browse, not a step-through
+<div class="carousel carousel-3 carousel-free">
+  <div class="carousel__track">
+    <figure class="carousel__slide figure u-m-0"><img src="/assets/media/coast.jpg" alt="" /></figure>
+    <figure class="carousel__slide figure u-m-0"><img src="/assets/media/peak.jpg" alt="" /></figure>
+    <figure class="carousel__slide figure u-m-0"><img src="/assets/media/city.jpg" alt="" /></figure>
+    <figure class="carousel__slide figure u-m-0"><img src="/assets/media/road.jpg" alt="" /></figure>
+    <figure class="carousel__slide figure u-m-0"><img src="/assets/media/night.jpg" alt="" /></figure>
+  </div>
+</div>
+:::
+
+Snapping a browse is a fight with the finger. `.carousel-free` turns it off;
+`.carousel-2` and `.carousel-3` set the count as a fraction rather than a pixel
+width, so it stays two-up or three-up at every size until it stops fitting.
+
+:::demo `.carousel-tall` — a rail of 9:16
+<div class="carousel carousel-tall">
+  <div class="carousel__track">
+    <div class="carousel__slide ratio ratio-story u-rounded-lg u-overflow-hidden"><img src="/assets/media/portrait.jpg" alt="" /></div>
+    <div class="carousel__slide ratio ratio-story u-rounded-lg u-overflow-hidden"><img src="/assets/media/night.jpg" alt="" /></div>
+    <div class="carousel__slide ratio ratio-story u-rounded-lg u-overflow-hidden"><img src="/assets/media/peak.jpg" alt="" /></div>
+    <div class="carousel__slide ratio ratio-story u-rounded-lg u-overflow-hidden"><img src="/assets/media/coast.jpg" alt="" /></div>
+    <div class="carousel__slide ratio ratio-story u-rounded-lg u-overflow-hidden"><img src="/assets/media/city.jpg" alt="" /></div>
+  </div>
+</div>
+:::
+
+## Thumbnails instead of dots
+
+Twelve dots is not a control, it is a texture — and to a screen reader it is
+twelve links called "1" through "12". Past about seven slides, use one of these
+two instead.
+
+:::demo Thumbnails: the picture tells you which one you are going to
+<div class="carousel carousel-full">
+  <div class="carousel__track">
+    <figure class="carousel__slide figure u-m-0" id="cg-1"><img src="/assets/media/coast.jpg" alt="" /><figcaption class="figure__caption">Day 1 — the coast road</figcaption></figure>
+    <figure class="carousel__slide figure u-m-0" id="cg-2"><img src="/assets/media/road.jpg" alt="" /><figcaption class="figure__caption">Day 3 — inland</figcaption></figure>
+    <figure class="carousel__slide figure u-m-0" id="cg-3"><img src="/assets/media/city.jpg" alt="" /><figcaption class="figure__caption">Day 6 — the city at dusk</figcaption></figure>
+    <figure class="carousel__slide figure u-m-0" id="cg-4"><img src="/assets/media/night.jpg" alt="" /><figcaption class="figure__caption">Day 6 — and after dark</figcaption></figure>
+  </div>
+  <div class="carousel__thumbs">
+    <a class="carousel__thumb" href="#cg-1" aria-current="true" aria-label="Day 1"><img src="/assets/media/coast.jpg" alt="" /></a>
+    <a class="carousel__thumb" href="#cg-2" aria-label="Day 3"><img src="/assets/media/road.jpg" alt="" /></a>
+    <a class="carousel__thumb" href="#cg-3" aria-label="Day 6"><img src="/assets/media/city.jpg" alt="" /></a>
+    <a class="carousel__thumb" href="#cg-4" aria-label="Day 6, after dark"><img src="/assets/media/night.jpg" alt="" /></a>
+  </div>
+</div>
+:::
+
+:::demo A count, between the two arrows — for a rail of forty
+<div class="carousel carousel-peek">
+  <div class="carousel__track">
+    <figure class="carousel__slide figure u-m-0"><img src="/assets/media/desk.jpg" alt="" /></figure>
+    <figure class="carousel__slide figure u-m-0"><img src="/assets/media/studio.jpg" alt="" /></figure>
+    <figure class="carousel__slide figure u-m-0"><img src="/assets/media/code.jpg" alt="" /></figure>
+    <figure class="carousel__slide figure u-m-0"><img src="/assets/media/camera.jpg" alt="" /></figure>
+  </div>
+  <div class="carousel__nav">
+    <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Previous"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-left"/></svg></button>
+    <span class="carousel__count">1 / 40</span>
+    <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Next"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-right"/></svg></button>
+  </div>
+</div>
+:::
+
+## Bleeding past the column
+
+`.carousel-bleed` runs the rail off the page edge, so it is obvious it
+continues. The track re-pads its own ends, so the first slide still lines up
+with the column above it.
+
+For a **titled** row of many items — a catalogue shelf rather than a slideshow
+— that shape has its own component: [`.shelf`](/shelf.html). Choosing between
+them is choosing whether the reader is stepping through one thing at a time or
+scanning a row.
 
 ## The marquee
 

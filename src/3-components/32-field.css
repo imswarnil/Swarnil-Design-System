@@ -106,13 +106,13 @@
 	/* Size cascades through the field, so one class on the wrapper resizes
 	   every control inside it. --field-h is inherited on purpose; the control
 	   reads it with a fallback rather than declaring its own default. */
-	.field-sm, .form-sm { --field-h: 2rem; --field-text: var(--text-xs); }
-	.field-lg, .form-lg { --field-h: 3rem; --field-text: var(--text-base); }
+	.field-sm, .form-sm { --field-h: 1.75rem; --field-text: var(--text-xs); }
+	.field-lg, .form-lg { --field-h: 2.5rem; --field-text: var(--text-sm); }
 
 	/* ── .input — text, email, number, date, search, file, textarea ────────── */
 
 	.input {
-		--input-h: var(--field-h, 2.5rem);
+		--input-h: var(--field-h, 2.125rem);
 		--input-bg: var(--bg-surface);
 		--input-line: var(--line-default);
 		--input-pad: var(--space-3);
@@ -156,8 +156,8 @@
 		box-shadow: 0 0 0 3px var(--danger-line);
 	}
 
-	.input-sm { --input-h: 2rem; font-size: var(--text-xs); }
-	.input-lg { --input-h: 3rem; font-size: var(--text-base); }
+	.input-sm { --input-h: 1.75rem; font-size: var(--text-xs); }
+	.input-lg { --input-h: 2.5rem; font-size: var(--text-sm); }
 
 	textarea.input {
 		height: auto;
@@ -263,7 +263,7 @@
 	   data-URI cannot read a custom property. */
 
 	.select {
-		--input-h: var(--field-h, 2.5rem);
+		--input-h: var(--field-h, 2.125rem);
 		--input-line: var(--line-default);
 		appearance: none;
 		inline-size: 100%;
@@ -603,4 +603,71 @@
 
 	/* A hairline between groups of a long form. */
 	.form__divider { height: 0; margin: 0; border: 0; border-block-start: var(--border-hair) solid var(--line-subtle); }
+
+	/* ── .field__pop — the marks that answer a keystroke ───────────────────
+	   A subscribe field, a comment box, a search: the moment somebody starts
+	   typing, a small spray of marks leaves the field. It is the same idea as
+	   .btn-burst and it is here for the same reason — the one moment on a
+	   creator's page where a flourish is the point rather than a distraction.
+
+	   It fires on `:not(:placeholder-shown)`, which is CSS's way of asking
+	   "has anyone typed anything", so the field needs a `placeholder` in the
+	   markup for the selector to have anything to test. That is not a hack:
+	   a field with no placeholder has no empty state to detect.
+
+	       <label class="field">
+	         <span class="field__label">Email</span>
+	         <input class="input" type="email" placeholder="you@studio.tv" />
+	         <span class="field__pop" aria-hidden="true">
+	           <span style="--a: 60deg">…</span> …
+	         </span>
+	       </label>
+
+	   aria-hidden and pointer-events:none, because these are confetti. The
+	   field works identically with the whole block deleted. */
+	.field { position: relative; }
+
+	.field__pop {
+		position: absolute;
+		inset-block-start: 50%;
+		inset-inline-end: var(--space-4);
+		inline-size: 0;
+		block-size: 0;
+		pointer-events: none;
+	}
+
+	.field__pop > * {
+		position: absolute;
+		display: grid;
+		place-items: center;
+		inline-size: 1.4rem;
+		block-size: 1.4rem;
+		margin: -0.7rem 0 0 -0.7rem;
+		border-radius: var(--radius-full);
+		background: var(--bg-surface);
+		color: var(--fg-accent);
+		box-shadow: var(--elevation-2);
+		opacity: 0;
+		scale: 0.4;
+	}
+
+	.field__pop > * > .icon { --icon-size: 0.8rem; }
+
+	.field:has(.input:not(:placeholder-shown)) .field__pop > * {
+		animation: field-pop var(--dur-5) var(--ease-overshoot) both;
+	}
+
+	.field__pop > :nth-child(2) { animation-delay: 50ms; }
+	.field__pop > :nth-child(3) { animation-delay: 100ms; }
+	.field__pop > :nth-child(4) { animation-delay: 150ms; }
+
+	@keyframes field-pop {
+		0%   { opacity: 0; scale: 0.4; translate: 0 0; }
+		30%  { opacity: 1; scale: 1; }
+		100% { opacity: 0; scale: 0.7; translate: calc(cos(var(--a, 0deg)) * var(--d, 2.6rem)) calc(sin(var(--a, 0deg)) * var(--d, 2.6rem) * -1); }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.field:has(.input:not(:placeholder-shown)) .field__pop > * { animation: none; }
+	}
 }

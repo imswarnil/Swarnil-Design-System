@@ -18,7 +18,3 @@ dist/
 
 # docs/ is SOURCE and is committed. site/ is the built output.
 site/
-
-# The previous system, frozen at f84ccf7 for reference only. Runnable on :8081,
-# never imported, never committed. See old-design/README-OLD.md.
-old-design/

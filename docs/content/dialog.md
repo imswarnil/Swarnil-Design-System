@@ -1,7 +1,7 @@
 ---
 title: Dialog
 group: Components
-order: 40
+order: 50
 lead: The native dialog — confirm, danger, large, and the bottom sheet, all one element.
 ---
 

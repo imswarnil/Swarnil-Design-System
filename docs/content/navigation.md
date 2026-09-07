@@ -1,7 +1,7 @@
 ---
 title: Navigation
 group: Components
-order: 45
+order: 50
 lead: Tabs, breadcrumb, pagination, chapters, navlist and pager — every one marks "you are here" with a dot or a 2px rule, never a filled pill.
 ---
 
@@ -524,3 +524,80 @@ Retheme one instance without touching the system:
 - Chapters and navlist are `<nav>`s with labels; the current entry carries `aria-current="true"`, `"location"` or `"page"`.
 - Section and page headers are `<header>` elements with a real `<h1>` or `<h2>`; the eyebrow is a `<span>`, not a heading.
 - The one motion here — the arrow nudging on hover — is a single transform under 200ms and collapses to 1ms under `prefers-reduced-motion`.
+
+## Three kinds of "next"
+
+The plain pager is two links. A course, a series and a project all need those
+same two links to carry one more thing each — and it is not the same thing. A
+lesson needs its **number**, an episode needs its **still**, a project needs its
+**mark**. So: three dresses, one component, shared parts.
+
+:::demo `.pager-course` — quiet, numbered, and the two share one border so they read as one control
+<nav class="pager pager-course" aria-label="Lessons">
+  <a class="pager__item" href="#i">
+    <span class="pager__dir"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-left"/></svg> Previous</span>
+    <span class="pager__no">Lesson 02</span>
+    <span class="pager__title">Recipes and dataflows</span>
+    <span class="pager__meta">14:30</span>
+  </a>
+  <a class="pager__item pager__item-next" href="#i">
+    <span class="pager__dir">Next <svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-right"/></svg></span>
+    <span class="pager__no">Lesson 04</span>
+    <span class="pager__title">Security predicates</span>
+    <span class="pager__meta">11:47</span>
+  </a>
+</nav>
+:::
+
+:::demo `.pager-media` — the still leads on previous and follows on next, so the two mirror each other across the gap
+<nav class="pager pager-media" aria-label="Episodes">
+  <a class="pager__item" href="#i">
+    <span class="pager__thumb"><img src="/assets/media/studio.jpg" alt="" /></span>
+    <span class="pager__body">
+      <span class="pager__dir"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-left"/></svg> Previous</span>
+      <span class="pager__title">The frame layer, explained</span>
+      <span class="pager__meta">Episode 47 · 18:30</span>
+    </span>
+  </a>
+  <a class="pager__item pager__item-next" href="#i">
+    <span class="pager__thumb"><img src="/assets/media/city.jpg" alt="" /></span>
+    <span class="pager__body">
+      <span class="pager__dir">Next <svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-right"/></svg></span>
+      <span class="pager__title">Why the thumbnail is the product</span>
+      <span class="pager__meta">Episode 46 · 31:12</span>
+    </span>
+  </a>
+</nav>
+:::
+
+:::demo `.pager-series` — for a web series, where "next" is an instalment rather than a page
+<nav class="pager pager-series" aria-label="Episodes">
+  <a class="pager__item" href="#i">
+    <span class="pager__thumb"><img src="/assets/media/coast.jpg" alt="" /></span>
+    <span class="pager__body">
+      <span class="pager__no">S02E03</span>
+      <span class="pager__title">The tram episode</span>
+      <span class="pager__meta">Lisbon · 22:40</span>
+    </span>
+  </a>
+  <a class="pager__item pager__item-next" href="#i">
+    <span class="pager__thumb"><img src="/assets/media/peak.jpg" alt="" /></span>
+    <span class="pager__body">
+      <span class="pager__no">S02E05</span>
+      <span class="pager__title">Four thousand metres</span>
+      <span class="pager__meta">Ladakh · 26:12</span>
+    </span>
+  </a>
+</nav>
+:::
+
+| Part | Used by |
+| --- | --- |
+| `.pager__thumb` | media, series — a fixed-width still, so both items are the same size whatever their titles run to |
+| `.pager__no` | course, series — the lesson number or `S02E04`, in the data voice |
+| `.pager__body` | media, series — the column beside the still |
+
+Below 40rem the mirroring stops (a reversed row on a phone is a row with the
+picture in the wrong place) and the course dress goes back to two separate
+boxes, because a shared border across a stacked pair is a border in the middle
+of nothing.

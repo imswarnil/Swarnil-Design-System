@@ -1,7 +1,7 @@
 ---
 title: Accordion
 group: Components
-order: 45
+order: 50
 lead: Built on details/summary — the platform's disclosure, dressed rather than rebuilt.
 ---
 

@@ -35,8 +35,9 @@
 	.tpl-feature { grid-template-columns: minmax(0, 1fr); }
 }
 
-/* A rail that pins below the sticky bar. */
-.tpl-rail { --rail-top: calc(var(--tpl-bar) + var(--space-6)); }
+/* A rail that pins below the sticky bar. Same offset for the facets column
+   and the chapters list, so three different sticky things line up. */
+.tpl-rail { --rail-top: calc(var(--tpl-bar) + var(--space-6)); --facets-top: calc(var(--tpl-bar) + var(--space-6)); }
 .tpl-rail .chapters-sticky { --chapters-top: calc(var(--tpl-bar) + var(--space-6)); }
 
 /* The reading layout on the post: article measure and the rail beside it. */
@@ -47,3 +48,38 @@
 
 /* Hero media: the viewfinder holds the poster and the play control. */
 .tpl-hero__vf { --frame-color: var(--accent); }
+
+/* The 9:16 page: a portrait stage that never grows past a comfortable phone
+   width, and the words beside it. One column under 60rem. */
+.tpl-short {
+	display: grid;
+	grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
+	gap: var(--space-10);
+	align-items: start;
+}
+
+.tpl-short__stage { position: sticky; inset-block-start: calc(var(--tpl-bar) + var(--space-6)); }
+.tpl-short__side { min-inline-size: 0; }
+
+@media (width < 60rem) {
+	.tpl-short { grid-template-columns: minmax(0, 1fr); }
+	.tpl-short__stage { position: static; justify-self: center; inline-size: min(100%, 22rem); }
+}
+
+/* The enrol card follows the trailer down the course page. */
+.tpl-enrol { position: sticky; inset-block-start: calc(var(--tpl-bar) + var(--space-6)); }
+
+@media (width < 60rem) {
+	.tpl-enrol { position: static; }
+}
+
+/* The lesson player's syllabus pins below the sticky bar rather than at the
+   top of the viewport, where the bar would sit on top of it. */
+.tpl-classroom .classroom__side { inset-block-start: calc(var(--tpl-bar) + var(--space-4)); }
+
+/* The project masthead pins UNDER the site bar, not over it. */
+.tpl-masthead { --masthead-top: var(--tpl-bar); --masthead-range: 260px; }
+
+/* The about page's portrait. A 3:4 plate filling half a 1440px band is a
+   photograph the size of a poster; capped, it is a portrait beside a claim. */
+.tpl-portrait { max-inline-size: 26rem; }

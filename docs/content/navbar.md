@@ -1,7 +1,7 @@
 ---
 title: Navbar
 group: Components
-order: 30
+order: 50
 lead: The bar, the dropdown, the mega panel and the drawer — four things, split on purpose.
 ---
 
@@ -60,10 +60,106 @@ and a nav without are the same component — not two.
 Those are [Swarnil Icons](https://icons.imswarnil.com) — the same 24 grid and
 1.5 stroke, so they sit at the same weight as the text beside them.
 
-## Menus
+## Menus, in the bar
 
-Dropdowns, the hover menu, the account menu and the mega panel have [their own
-page](/dropdown.html) — this page stays about the bar itself.
+The [menu components](/dropdown.html) have their own page. This is what they
+look like **in a navbar**, which is the only place most of them ever appear —
+a dropdown on one item, a mega panel on another, both opened by the platform's
+popover and closed by Escape without a line of JavaScript.
+
+:::demo Click "Watch" for a dropdown, "Learn" for the mega panel
+<header class="navbar navbar-bordered u-rounded-lg">
+  <a class="navbar__brand" href="#i"><span class="dot dot-accent"></span> Swarnil</a>
+  <nav class="navbar__nav" aria-label="Main">
+    <a class="navbar__link" href="#i" aria-current="page">Home</a>
+    <button class="navbar__link" type="button" popovertarget="nb-watch" aria-expanded="false">Watch <svg class="icon icon-xs" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-down"/></svg></button>
+    <button class="navbar__link" type="button" popovertarget="nb-learn" aria-expanded="false">Learn <svg class="icon icon-xs" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-down"/></svg></button>
+    <a class="navbar__link" href="#i">Blog</a>
+  </nav>
+  <div class="navbar__actions">
+    <a class="btn btn-primary btn-sm" href="#i">Subscribe</a>
+  </div>
+
+  <div class="menu" id="nb-watch" popover>
+    <p class="menu__label">Collections</p>
+    <a class="menu__item" href="#i"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg> Latest episodes</a>
+    <a class="menu__item" href="#i"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-film"/></svg> Series</a>
+    <a class="menu__item" href="#i"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-video"/></svg> Shorts <span class="menu__kbd">64</span></a>
+    <div class="menu__sep" role="separator"></div>
+    <a class="menu__item" href="#i"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-external-link"/></svg> On YouTube</a>
+  </div>
+
+  <div class="menu menu-mega" id="nb-learn" popover>
+    <div class="menu-mega__grid">
+      <div class="menu-mega__col">
+        <p class="menu-mega__title">Courses</p>
+        <a class="menu-mega__item" href="#i"><span class="menu-mega__ico"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-folder"/></svg></span><span><span class="menu-mega__title">CRM Analytics</span><span class="menu-mega__desc">Twelve lessons, from an empty org.</span></span></a>
+        <a class="menu-mega__item" href="#i"><span class="menu-mega__ico"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-camera"/></svg></span><span><span class="menu-mega__title">Lighting a talking head</span><span class="menu-mega__desc">One light, one wall, six lessons.</span></span></a>
+      </div>
+      <div class="menu-mega__col">
+        <p class="menu-mega__title">Free</p>
+        <a class="menu-mega__item" href="#i"><span class="menu-mega__ico"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-book"/></svg></span><span><span class="menu-mega__title">The design system</span><span class="menu-mega__desc">Every token and class, documented.</span></span></a>
+        <a class="menu-mega__item" href="#i"><span class="menu-mega__ico"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-terminal"/></svg></span><span><span class="menu-mega__title">Snippets</span><span class="menu-mega__desc">The bits I paste into everything.</span></span></a>
+      </div>
+    </div>
+    <div class="menu-mega__foot"><span class="t-small t-muted">11,400 students so far</span><a class="btn btn-outline btn-sm" href="#i">All six courses</a></div>
+  </div>
+</header>
+:::
+
+A `<button popovertarget>` in the nav opens either one. The bar does not know
+which — that is the whole wiring, and it is why a dropdown and a mega panel are
+the same amount of work.
+
+## The hamburger
+
+Three lines that become a cross. The middle one fades while the outer two
+travel and rotate — animated with `translate` and `rotate` rather than
+`transform`, so neither declaration overwrites the other.
+
+The state is `aria-expanded` on the button, so the animation and the screen
+reader are reading the **same** attribute. There is no `.is-open` class that
+can disagree with the accessibility tree.
+
+:::demo `.navbar-burger` keeps the burger at every width, so it is visible here. Click it.
+<header class="navbar navbar-burger navbar-bordered u-rounded-lg">
+  <button class="navbar__burger" type="button" popovertarget="nb-drawer" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
+  <a class="navbar__brand" href="#i"><span class="dot dot-accent"></span> Swarnil</a>
+  <div class="navbar__actions"><a class="btn btn-primary btn-sm" href="#i">Subscribe</a></div>
+
+  <div class="sheet" id="nb-drawer" popover>
+    <div class="sheet__head">
+      <button class="btn btn-quiet btn-sm btn-icon" type="button" popovertarget="nb-drawer" popovertargetaction="hide" aria-label="Close"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-x"/></svg></button>
+      <span class="navbar__brand"><span class="dot dot-accent"></span> Swarnil</span>
+    </div>
+    <div class="sheet__body">
+      <div class="sheet__group">
+        <a class="sheet__link" href="#i" aria-current="page"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-home"/></svg>Home</a>
+        <a class="sheet__link" href="#i"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg>Video<span class="sheet__count">128</span></a>
+        <a class="sheet__link" href="#i"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-file"/></svg>Blog<span class="sheet__count">214</span></a>
+        <a class="sheet__link" href="#i"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-folder"/></svg>Courses<span class="sheet__count">6</span></a>
+      </div>
+      <div class="sheet__group">
+        <p class="sheet__label">Elsewhere</p>
+        <a class="sheet__link" href="#i"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-video"/></svg>YouTube</a>
+        <a class="sheet__link" href="#i"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>GitHub</a>
+      </div>
+    </div>
+    <p class="sheet__foot">Built on the Swarnil Design System</p>
+  </div>
+</header>
+:::
+
+```css
+.navbar__burger[aria-expanded='true'] > span:nth-child(1) { translate: 0 6.5px;  rotate:  45deg; }
+.navbar__burger[aria-expanded='true'] > span:nth-child(2) { opacity: 0; }
+.navbar__burger[aria-expanded='true'] > span:nth-child(3) { translate: 0 -6.5px; rotate: -45deg; }
+```
+
+`nav.js` mirrors the popover's own state onto `aria-expanded` — that is the
+**only** thing it does for the burger. Without the script the drawer still
+opens and closes, because it is a popover; it just does not animate the
+three lines.
 
 ## The drawer
 

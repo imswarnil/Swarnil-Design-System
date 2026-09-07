@@ -1,7 +1,7 @@
 ---
 title: Button
 group: Components
-order: 10
+order: 50
 lead: One shape, eight emphases, three sizes. Only one button on a screen should be primary.
 ---
 
@@ -23,6 +23,39 @@ principle applied to a component: one primary per screen. Everything below is
 the same button in a different arrangement — an icon in the label slot, two
 buttons sharing an edge, a row of them on a track — so a change to `.btn`
 restyles all of it.
+
+## The density
+
+Five sizes, and the scale is an **app** scale rather than a landing-page one:
+the default is 34px with 12px of padding.
+
+| | Height | Padding | Type | For |
+| --- | --- | --- | --- | --- |
+| `btn-xs` | 24px | 8px | 11px | a control inside a row of data |
+| `btn-sm` | 28px | 8px | 12px | a toolbar, a card footer |
+| *(default)* | **34px** | **12px** | 14px | everything else |
+| `btn-lg` | 40px | 20px | 14px | a form's submit, a page's primary action |
+| `btn-xl` | 46px | 24px | 16px | a hero. One per page, if that |
+
+These were bigger. A 40px button with 16px of padding is the size a landing
+page uses, where there are three buttons and each one is a decision; on a page
+with twenty of them it reads as a marketing site that wandered into an
+application. The two large sizes were pulled in hardest, because 56px was only
+ever there for a hero.
+
+**Shrinking the visual size does not shrink the target.** A coarse pointer gets
+a 44px minimum — height *and* width on an icon button — from one media query,
+so the compact scale is safe on a phone:
+
+```css
+@media (pointer: coarse) {
+  .btn { min-height: var(--tap-min); }
+  .btn-icon { min-width: var(--tap-min); }
+}
+```
+
+[Fields](/field.html) follow the same numbers, so a button beside an input
+lines up without either being told about the other.
 
 ## Emphasis × size
 
@@ -337,7 +370,7 @@ viewport (shown static here).
 
 | Variable | Does |
 | --- | --- |
-| `--btn-h` | Control height — `2rem` / `2.5rem` / `3rem` for the three sizes; `btn-icon` reads it for width too |
+| `--btn-h` | Control height — `1.5` / `1.75` / `2.125` / `2.5` / `2.875rem` across the five sizes; `btn-icon` reads it for width too |
 | `--btn-pad` | Inline padding |
 | `--btn-gap` | Space between icon and label |
 | `--btn-radius` | Corner radius |
@@ -348,7 +381,7 @@ viewport (shown static here).
 Retheme one instance without touching the system:
 
 ```css
-.btn-checkout { --btn-h: 3rem; --btn-radius: var(--radius-full); }
+.btn-checkout { --btn-h: 2.5rem; --btn-radius: var(--radius-full); }
 ```
 
 ## Accessibility
@@ -362,3 +395,139 @@ Retheme one instance without touching the system:
 - The split button's trigger has its own `aria-label` and opens a popover, so
   Escape and focus return come from the platform.
 - Focus is visible in both themes.
+
+## What a button does when you touch it
+
+The base answer is `scale: 0.98` on `:active`, and it is the right default
+because it is the cheapest honest one — the button moves under the finger and
+nothing else on the page reflows.
+
+Everything below is an **alternative** to that answer, never an addition to it.
+A button that presses *and* fills *and* shines is a button that has not decided
+what it is. Pick one.
+
+:::demo Hover each. They are five different sentences, not five decorations.
+<div class="cluster cluster-lg">
+  <button class="btn btn-outline btn-lg btn-fill" type="button">Fill</button>
+  <button class="btn btn-secondary btn-lg btn-swap" type="button"><span class="btn__swap"><span>Copy link</span><span>Copied</span></span></button>
+  <a class="btn btn-outline btn-lg btn-slide" href="#i">Read the post <svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-right"/></svg></a>
+  <button class="btn btn-secondary btn-lg btn-lift" type="button">Lift</button>
+  <button class="btn btn-primary btn-lg btn-ring" type="button">Ring — press it</button>
+</div>
+:::
+
+| Class | The answer |
+| --- | --- |
+| `.btn-fill` | the ground floods in from the start edge |
+| `.btn-swap` | the label slides up and its second self takes its place |
+| `.btn-slide` | the icon leaves on one side; the label stays put |
+| `.btn-lift` | the button steps toward you instead of away |
+| `.btn-ring` | one ripple leaves the edge **on press** |
+
+All of them except the ring are inside `(hover: hover)`, because a touch device
+has no way to leave a hover state and a stuck hover is worse than none. The
+ring is deliberately outside it: a press is the one interaction a touch device
+*does* have, and it is the only feedback that survives a finger covering the
+button.
+
+`.btn-swap` needs two spans in a `.btn__swap`, and the button keeps its width
+because both are in the flow with one clipped:
+
+```html
+<button class="btn btn-swap"><span class="btn__swap">
+  <span>Copy link</span><span>Copied</span>
+</span></button>
+```
+
+## The button that is the footage
+
+A play control with the clip running inside it: poster at rest, video on
+hover, the label over both on a scrim. It is the strongest thing in this file,
+so a page gets **one**.
+
+:::demo Hover it
+<div class="cluster">
+  <a class="btn btn-lg btn-video" href="#i">
+    <video class="btn__video" src="/assets/media/loop.mp4" poster="/assets/media/loop.jpg" muted loop playsinline autoplay></video>
+    <svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg>
+    <span class="btn__label">Watch the latest</span>
+  </a>
+  <a class="btn btn-xl btn-video" href="#i">
+    <video class="btn__video" src="/assets/media/loop.mp4" poster="/assets/media/loop.jpg" muted loop playsinline autoplay></video>
+    <span class="btn__label">Episode 48 · 24:07</span>
+  </a>
+</div>
+:::
+
+The poster is the resting state, so the button is complete before the video
+loads and **correct if it never does**. The clip needs `muted loop playsinline`
+in the markup; `autoplay` costs nothing here because it is muted and eight
+seconds long, and a scrim sits under the label so the words are not on whatever
+frame happens to be playing — legibility is not a lottery.
+
+## The reaction
+
+Press subscribe and a handful of marks fly out of the button. This is the one
+place in the system where delight is the entire argument, so the rules that
+keep it honest matter more than usual:
+
+- the marks are `aria-hidden` — they are confetti, not content;
+- they are `pointer-events: none`, so they never eat the next click;
+- they run on `[aria-pressed='true']`, so the burst fires when the state
+  actually **changes**, not on every stray press;
+- and they are gone under reduced motion, where the state change is still
+  perfectly legible from the button itself.
+
+:::demo Press them. Press again to release.
+<div class="cluster cluster-lg">
+  <button class="btn btn-primary btn-lg btn-burst btn-toggle" type="button" aria-pressed="false" data-toggle>
+    Subscribe
+    <span class="btn__pop" aria-hidden="true">
+      <span style="--a: 70deg"><svg class="icon"><use href="/icons/sprite.svg#i-bell"/></svg></span>
+      <span style="--a: 110deg"><svg class="icon"><use href="/icons/sprite.svg#i-heart"/></svg></span>
+      <span style="--a: 45deg"><svg class="icon"><use href="/icons/sprite.svg#i-star"/></svg></span>
+      <span style="--a: 135deg; --d: 2.6rem"><svg class="icon"><use href="/icons/sprite.svg#i-message"/></svg></span>
+      <span style="--a: 90deg; --d: 4rem"><svg class="icon"><use href="/icons/sprite.svg#i-share"/></svg></span>
+    </span>
+  </button>
+
+  <button class="btn btn-outline btn-lg btn-burst btn-toggle" type="button" aria-pressed="false" data-toggle>
+    <svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-thumbs-up"/></svg> Like
+    <span class="btn__count">1.4k</span>
+    <span class="btn__pop" aria-hidden="true">
+      <span style="--a: 60deg"><svg class="icon"><use href="/icons/sprite.svg#i-heart"/></svg></span>
+      <span style="--a: 120deg"><svg class="icon"><use href="/icons/sprite.svg#i-thumbs-up"/></svg></span>
+      <span style="--a: 90deg; --d: 4rem"><svg class="icon"><use href="/icons/sprite.svg#i-sparkle"/></svg></span>
+    </span>
+  </button>
+
+  <button class="btn btn-ghost btn-lg btn-toggle" type="button" aria-pressed="false" data-toggle>
+    <svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-bookmark"/></svg> Save
+  </button>
+</div>
+:::
+
+Each mark reads `--a` (its angle) and optionally `--d` (its distance) from the
+markup, so the spray is **authored** rather than random. Five marks at five
+chosen angles look designed; five at random angles look broken about a third of
+the time.
+
+```html
+<button class="btn btn-primary btn-burst btn-toggle" aria-pressed="false">
+  Subscribe
+  <span class="btn__pop" aria-hidden="true">
+    <span style="--a: 70deg"><svg class="icon">…</svg></span>
+    <span style="--a: 110deg">…</span>
+  </span>
+</button>
+```
+
+`.btn-toggle` is the pressed dress, and it is the one place a filled pill is
+allowed: the house rule bans a fill for **navigation** state, and a toggle is
+not navigation — it is a control whose entire job is to be on or off.
+`.btn__count` is the number beside the verb, in the data voice, and it takes
+the accent when the button is pressed.
+
+The `aria-pressed` attribute is the whole contract. The docs flip it with four
+lines of JavaScript; your app's own state code replaces those without the CSS
+knowing anything happened.

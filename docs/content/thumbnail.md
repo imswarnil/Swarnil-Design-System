@@ -1,7 +1,7 @@
 ---
 title: Thumbnail
 group: Broadcast
-order: 20
+order: 50
 lead: The thumbnail is the product — seen ten thousand times for every click, at 168px, beside eleven others, for three seconds. Seven compositions on one anatomy.
 ---
 

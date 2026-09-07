@@ -1,7 +1,7 @@
 ---
 title: Scenes
 group: Broadcast
-order: 30
+order: 50
 lead: Starting soon, be right back, the title card, the chapter card, the end card, the live layout — the full-frame cards of a stream, for OBS as a browser source.
 ---
 

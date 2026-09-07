@@ -1,7 +1,7 @@
 ---
 title: Tooltip
 group: Components
-order: 42
+order: 50
 lead: Labels on hover — four placements, a rich hover card, and the touch rule that governs all of it.
 ---
 

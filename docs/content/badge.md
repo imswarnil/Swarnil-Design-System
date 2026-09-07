@@ -1,7 +1,7 @@
 ---
 title: Badge
-group: Elements
-order: 10
+group: Components
+order: 50
 lead: A label with a background. The status colours are chosen so none of them can be mistaken for the accent.
 ---
 

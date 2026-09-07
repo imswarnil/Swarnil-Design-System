@@ -54,6 +54,8 @@
 		font-size: var(--text-lg);
 		font-weight: var(--weight-semibold);
 		letter-spacing: var(--tracking-tight);
+		line-height: var(--leading-snug);
+		margin: 0;
 	}
 
 	/* "12 lessons · 3h 40m" is data, not a label. */
@@ -88,7 +90,14 @@
 	.curriculum__module > summary::-webkit-details-marker { display: none; }
 	.curriculum__module > summary:hover { background: var(--hover-wash); }
 
-	/* The module number and the lesson count are data. */
+	/* The module number and the lesson count are data.
+
+	   THE HIERARCHY, stated once, because the first version of this file did
+	   not have one: the curriculum title is display type, a module title is
+	   base-size semibold, and a lesson title is small regular. Three steps,
+	   each one visible on its own — the earlier draft gave the module and the
+	   lesson the SAME size and asked weight alone to carry the difference,
+	   which is a hierarchy you can only see if you already know it is there. */
 	.curriculum__no,
 	.curriculum__count {
 		font-family: var(--font-data);
@@ -100,12 +109,29 @@
 		white-space: nowrap;
 	}
 
-	.curriculum__no { font-size: var(--text-xs); }
+	/* The numeral gets a column of its own. Fixed by ch rather than by rem so
+	   01 and 12 occupy the same width and every module title starts on one
+	   edge — which is most of what makes a syllabus look ordered. */
+	.curriculum__no {
+		flex: none;
+		min-inline-size: 2.5ch;
+		font-size: var(--text-2xs);
+		font-weight: var(--weight-regular);
+		color: var(--fg-subtle);
+	}
+
+	/* An open module states itself: the number takes the accent, so the eye
+	   can find the section it is inside without reading. */
+	.curriculum__module[open] > summary .curriculum__no { color: var(--fg-accent); }
 
 	.curriculum__module-title {
 		font-weight: var(--weight-semibold);
-		font-size: var(--text-sm);
+		font-size: var(--text-base);
+		line-height: var(--leading-snug);
+		letter-spacing: var(--tracking-tight);
+		color: var(--fg-default);
 		flex: 1;
+		min-inline-size: 0;
 	}
 
 	/* The chevron is drawn, not shipped: two strokes that fold. */
@@ -133,14 +159,21 @@
 	/* ── One lesson row ────────────────────────────────────────────────────────
 	   aria-current = you are here; [data-done] = watched. */
 
+	/* A lesson is the thing a reader is actually here to read, so it is
+	   legible AT REST and the states make it quieter — done, locked. The
+	   first draft had it the other way round, at --fg-subtle by default, so
+	   an ordinary unwatched lesson looked disabled and the syllabus read as
+	   a list of things you could not have. */
 	.lesson {
 		--lesson-tick: 1.1rem;
 		display: flex;
 		align-items: center;
 		gap: var(--space-3);
 		padding: var(--space-2) var(--curriculum-pad, var(--space-6)) var(--space-2) calc(var(--curriculum-pad, var(--space-6)) + var(--space-2));
+		min-block-size: 2.25rem;
 		font-size: var(--text-sm);
-		color: var(--fg-subtle);
+		line-height: var(--leading-snug);
+		color: var(--fg-default);
 		text-decoration: none;
 		transition: var(--t-colors);
 	}
@@ -169,7 +202,11 @@
 
 	.lesson[data-done] .lesson__tick::before { content: '✓'; }
 
-	.lesson[aria-current] { color: var(--fg-default); font-weight: var(--weight-semibold); }
+	/* Watched: quieter, because it is behind you. It stays a link. */
+	.lesson[data-done] { color: var(--fg-muted); }
+
+	/* Here: the accent and a step of weight. */
+	.lesson[aria-current] { color: var(--fg-accent); font-weight: var(--weight-semibold); }
 
 	.lesson[aria-current] .lesson__tick {
 		border-color: var(--accent);
@@ -183,7 +220,12 @@
 	.lesson__title { flex: 1; min-width: 0; }
 
 	/* Length is a timecode: data. */
+	/* Right-aligned in a fixed column, so 08:12 and 1:19:04 end on the same
+	   edge and the eye can add them up without reading each one. */
 	.lesson__len {
+		flex: none;
+		min-inline-size: 5ch;
+		text-align: end;
 		font-family: var(--font-data);
 		font-weight: var(--weight-light);
 		letter-spacing: var(--tracking-data);
@@ -391,8 +433,73 @@
 	.classroom__title { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: var(--weight-semibold); letter-spacing: var(--tracking-tight); line-height: var(--leading-snug); margin: 0; }
 	.classroom__nav { display: flex; gap: var(--space-2); flex: none; }
 
+	/* The lesson's own tabs — overview, transcript, resources. They belong to
+	   the stage, not to the page, so they sit under the player and above the
+	   notes rather than at the top of the document. */
+	.classroom__tabs { border-block-end: var(--border-hair) solid var(--line-subtle); }
+
+	/* Previous and next lesson. Pinned under the stage so the reader who has
+	   finished watching does not have to go back up to the syllabus to move
+	   on — which is the single most common thing they will want to do. */
+	.classroom__foot {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: var(--space-3);
+		padding-block-start: var(--space-5);
+		border-block-start: var(--border-hair) solid var(--line-subtle);
+	}
+
+	/* Where you are in the whole course, in the data voice. */
+	.classroom__meta {
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-2xs);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		text-transform: uppercase;
+		color: var(--fg-faint);
+		margin: 0;
+	}
+
+	/* The syllabus on the start edge — for a course whose lessons are short
+	   and numerous, where the list is the navigation and the player is what
+	   you look at once you have chosen. */
+	.classroom-side-start { grid-template-columns: var(--classroom-side) minmax(0, 1fr); }
+	.classroom-side-start .classroom__side { order: -1; }
+
+	.classroom-wide { --classroom-side: 26rem; }
+
+	/* ── A still per module ────────────────────────────────────────────────
+	   A syllabus of twelve identical rows is hard to hold in the head. One
+	   small frame per MODULE (never per lesson — twelve pictures is a
+	   contact sheet, not a syllabus) gives each section something to be
+	   remembered by. */
+	.curriculum__shot {
+		inline-size: 4rem;
+		aspect-ratio: 16 / 9;
+		flex: none;
+		overflow: hidden;
+		border-radius: var(--radius-sm);
+		background: var(--bg-media);
+		order: -1;
+	}
+
+	.curriculum__shot > img { inline-size: 100%; block-size: 100%; object-fit: cover; display: block; }
+
+	/* Baseline alignment is right for text and wrong for a picture, so the
+	   summary only switches when there is one. */
+	.curriculum__module > summary:has(.curriculum__shot) { align-items: center; }
+
 	@media (width < 60rem) {
-		.classroom { grid-template-columns: minmax(0, 1fr); }
+		.classroom,
+		.classroom-side-start { grid-template-columns: minmax(0, 1fr); }
 		.classroom__side { position: static; }
+		.classroom-side-start .classroom__side { order: 0; }
+	}
+
+	@media (width < 34rem) {
+		.curriculum__shot { display: none; }
 	}
 }

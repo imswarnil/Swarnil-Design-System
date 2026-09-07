@@ -298,6 +298,43 @@
 		--chart-5: var(--teal-500);
 		--chart-6: var(--mint-500);
 
+		/* ── Syntax ────────────────────────────────────────────────────────
+		   Code is the one place in this system where a hue is allowed to be
+		   loud, and the reason is the same one that lets the repo card colour
+		   its language dot: the colour is DATA. It encodes what a token is —
+		   a string, a call, a number — not how important it is. Nobody is
+		   being told to look here rather than there.
+
+		   The old scheme collapsed everything into accent / default / muted,
+		   which meant a string and a function name were the same colour. That
+		   is not restraint, it is a highlighter that has stopped
+		   distinguishing, and a reader has to parse the code themselves to
+		   read it — which is the job the highlighting was supposed to do.
+
+		   Six hues, and they are assigned by CATEGORY so the same idea keeps
+		   the same colour in every language:
+
+		     structure  the skeleton — tag, selector, property, attribute.
+		                Full-strength ink, because it is what you scan.
+		     key        the words the language reserves. The accent, rationed
+		                here as everywhere: one colour that means "special".
+		     str        literal text. Its own calm hue, so a quoted string is
+		                never confusable with a call.
+		     num        a literal number.
+		     fn         a call — something happens here.
+		     var        a name somebody chose.
+
+		   Comment and punctuation stay out of the palette entirely: they are
+		   the two things a reader skips, so they stay quiet. */
+		--syn-structure: light-dark(var(--ink-900), var(--ink-100));
+		--syn-key:       light-dark(var(--signal-600), var(--signal-300));
+		--syn-str:       light-dark(var(--teal-700),   var(--teal-300));
+		--syn-num:       light-dark(var(--craft-700),  var(--craft-300));
+		--syn-fn:        light-dark(var(--azure-700),  var(--azure-300));
+		--syn-var:       light-dark(var(--iris-700),   var(--iris-300));
+		--syn-com:       var(--fg-faint);
+		--syn-punc:      var(--fg-subtle);
+
 		/* ── Pattern ink ───────────────────────────────────────────────────
 		   Every texture in 07-pattern derives from these, which is how a
 		   pattern never needs to know which theme it is in. */

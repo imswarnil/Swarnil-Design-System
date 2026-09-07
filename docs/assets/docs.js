@@ -79,6 +79,30 @@
 		if (d && d.tagName === 'DIALOG') d.showModal();
 	});
 
+	/* ── Toggle ──────────────────────────────────────────────────────────
+	   Flips aria-pressed on any [data-toggle] button. That attribute IS the
+	   contract — the stylesheet reads it for .btn-toggle's pressed dress and
+	   for .btn-burst's spray — so this is the whole implementation of a
+	   toggle in the docs, and a real app's own state code replaces it
+	   without the CSS knowing. */
+
+	document.addEventListener('click', function (e) {
+		var b = e.target.closest('[data-toggle]');
+		if (!b) return;
+		var on = b.getAttribute('aria-pressed') === 'true';
+		b.setAttribute('aria-pressed', String(!on));
+		/* Re-running an animation needs the attribute to actually change, and
+		   it just did — but a second press within the animation's own life
+		   would otherwise be swallowed, so the marks are reset by hand. */
+		if (!on) {
+			$$('.btn__pop > *', b).forEach(function (m) {
+				m.style.animation = 'none';
+				void m.offsetWidth;
+				m.style.animation = '';
+			});
+		}
+	});
+
 	/* ── Copy ────────────────────────────────────────────────────────────── */
 
 	document.addEventListener('click', function (e) {

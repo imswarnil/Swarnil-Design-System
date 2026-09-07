@@ -1,7 +1,7 @@
 ---
 title: Card
 group: Components
-order: 20
+order: 50
 lead: One card, every shape — anatomy, media ratios, content types, states, and the compositions that make them.
 ---
 
@@ -127,7 +127,7 @@ and hit the 320px toggle.
 
 ## Media ratios — one variable
 
-`--card-ratio` feeds the media's `aspect-ratio`. Four named ratios ship; any
+`--card-ratio` feeds the media's `aspect-ratio`. Five named ratios ship; any
 other is one custom property on one instance.
 
 :::demo Video 16:9 · Movie 2:3 · Reel 9:16 · Square 1:1
@@ -154,6 +154,20 @@ other is one custom property on one instance.
 ```html
 <article class="card" style="--card-ratio: 21 / 9">   <!-- any other ratio -->
 ```
+
+`.card-reel` caps its own width at 15rem, because it is the loose one that has
+to stop itself getting silly. `.card-story` is the same 9:16 with **no cap** —
+for a wall of shorts, where the grid sets the width and the card must fill its
+slot.
+
+:::demo `.card-story` in a `.results-sm` grid — the shorts wall
+<div class="results results-sm cq-card">
+  <article class="card card-story card-tile card-hover-zoom"><div class="card__media pattern pattern-line"><span class="card__stamp">00:48</span></div><div class="card__body"><h3 class="card__title"><a class="card__link" href="#i">The one light setup</a></h3></div></article>
+  <article class="card card-story card-tile card-hover-zoom"><div class="card__media pattern pattern-hatch"><span class="card__stamp">00:36</span></div><div class="card__body"><h3 class="card__title"><a class="card__link" href="#i">Stop centring everything</a></h3></div></article>
+  <article class="card card-story card-tile card-hover-zoom"><div class="card__media pattern pattern-dot"><span class="card__stamp">01:02</span></div><div class="card__body"><h3 class="card__title"><a class="card__link" href="#i">Why your audio sounds thin</a></h3></div></article>
+  <article class="card card-story card-tile card-hover-zoom"><div class="card__media pattern pattern-halftone"><span class="card__stamp">00:29</span></div><div class="card__body"><h3 class="card__title"><a class="card__link" href="#i">Cheap tripod, good shot</a></h3></div></article>
+</div>
+:::
 
 ## Content types — the recipes
 
@@ -456,6 +470,131 @@ a custom property the host sets.
   <article class="card card-quiet"><div class="card__body"><span class="card__icon"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-folder"/></svg></span><h3 class="card__title">Courses</h3><p class="card__excerpt">In the order the skills are needed.</p></div></article>
 </div>
 :::
+
+## The texture slot
+
+A [pattern](/pattern.html) paints on `::before`, and so does
+[`.frame`](/frame.html); a card carrying both loses one of them silently. So the
+card takes its texture as a **child**, the way it takes a [veil](/overlays.html)
+— which also means the pattern can be masked back from the words without
+touching the card's own background.
+
+:::demo `.card__pattern` composes with any `pattern-*`
+<div class="grid-3 cq-card">
+  <article class="card card-link card-hover-frame frame-hover">
+    <span class="card__pattern pattern pattern-grid" aria-hidden="true"></span>
+    <div class="card__body"><span class="card__icon"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg></span><div><h3 class="card__title"><a class="card__link" href="#i">Code</a></h3><p class="card__excerpt">A grid, faded back before it reaches the words.</p></div><svg class="icon icon-sm card__arrow" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-right"/></svg></div>
+  </article>
+  <article class="card card-link card-hover-frame frame-hover">
+    <span class="card__pattern pattern pattern-scan" aria-hidden="true"></span>
+    <div class="card__body"><span class="card__icon"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-video"/></svg></span><div><h3 class="card__title"><a class="card__link" href="#i">Video</a></h3><p class="card__excerpt">Scanlines — the tape, on a card.</p></div><svg class="icon icon-sm card__arrow" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-right"/></svg></div>
+  </article>
+  <article class="card card-quiet">
+    <span class="card__pattern card__pattern-full pattern pattern-blueprint pattern-fine" aria-hidden="true"></span>
+    <div class="card__body"><p class="card__kicker">Full strength</p><h3 class="card__title">No mask</h3><p class="card__excerpt">For a card whose whole point is the ground.</p></div>
+  </article>
+</div>
+:::
+
+`.card__pattern` is masked from the top-left corner and gone by the time it
+reaches the text — a texture a reader has to see through is a texture that has
+stopped being decoration. `.card__pattern-full` drops the mask.
+
+## The repository card
+
+The shape every developer already knows how to read: `owner/name`, one
+sentence, the topics, then the facts — language, stars, forks, when it last
+moved.
+
+The language dot takes its colour from `--lang` on the instance. That is the
+only place in this system where a hue is set per item, and it is set because the
+hue is **data** (the language), not emphasis. Everything else stays monochrome.
+
+:::demo `.card-repo`, with the composition bar on the bottom edge
+<div class="grid-2 cq-card">
+  <article class="card card-repo card-hover-lift">
+    <div class="card__body">
+      <p class="card__kicker"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-book"/></svg> imswarnil / <strong>Swarnil-Design-System</strong> <span class="badge badge-outline">Public</span></p>
+      <p class="card__excerpt">Token-first, dependency-free CSS. Nine cascade layers, no runtime, no build step required to use it.</p>
+      <div class="card__tags"><span class="chip">css</span><span class="chip">design-tokens</span><span class="chip">oklch</span></div>
+      <p class="card__facts"><span class="card__lang" style="--lang: var(--chart-2)">CSS</span><span><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-star"/></svg> 1.2k</span><span><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-git-branch"/></svg> 84</span><span>Updated 2 hours ago</span></p>
+    </div>
+    <a class="card__link u-sr-only" href="#i">Open Swarnil-Design-System</a>
+    <span class="card__langs" aria-hidden="true"><span style="--lang: var(--chart-2); --value: 78%"></span><span style="--lang: var(--chart-4); --value: 16%"></span><span style="--lang: var(--chart-1); --value: 6%"></span></span>
+  </article>
+  <article class="card card-repo card-hover-lift">
+    <div class="card__body">
+      <p class="card__kicker"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-book"/></svg> imswarnil / <strong>swarnil-icons</strong> <span class="badge badge-outline">Public</span></p>
+      <p class="card__excerpt">One sprite, 96 icons, drawn on a 24px grid so a 16px render still lands on whole pixels.</p>
+      <div class="card__tags"><span class="chip">icons</span><span class="chip">svg</span></div>
+      <p class="card__facts"><span class="card__lang" style="--lang: var(--chart-6)">SVG</span><span><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-star"/></svg> 410</span><span><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-git-branch"/></svg> 21</span><span>Updated 4 days ago</span></p>
+    </div>
+    <a class="card__link u-sr-only" href="#i">Open swarnil-icons</a>
+    <span class="card__langs" aria-hidden="true"><span style="--lang: var(--chart-6); --value: 82%"></span><span style="--lang: var(--chart-1); --value: 18%"></span></span>
+  </article>
+</div>
+:::
+
+`.card__langs` and `.card__progress` occupy the same slot — the card's bottom
+edge. A card has one or the other, never both.
+
+## The product card
+
+A thing that costs money: the shot, the name, what it is, the rating, the price
+and the one control that buys it. The order is not negotiable, and the price
+and the control sit **together at the bottom**, because that is the pair a
+reader is comparing across a row.
+
+The rating is a **number**, not five glyphs. Five stars is a picture of a
+number that a screen reader has to be told about anyway; the number with its
+count says more in less space and needs no explanation.
+
+:::demo The third one is `data-sold`
+<div class="grid-3 cq-card">
+  <article class="card card-product card-hover-lift">
+    <div class="card__media" style="--card-ratio: 4 / 3"><img src="/assets/media/camera.jpg" alt="" /><span class="card__badge"><span class="badge badge-solid">Pick</span></span></div>
+    <div class="card__body">
+      <p class="card__kicker">Camera</p>
+      <h3 class="card__title"><a class="card__link" href="#i">Sony FX3</a></h3>
+      <p class="card__rating"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-star"/></svg><b>4.8</b> · 1,204</p>
+      <p class="card__excerpt">Full frame, no fan noise, and it does not overheat halfway through a take.</p>
+    </div>
+    <div class="card__buy"><span class="card__price">₹2,40,000<span class="card__was">₹2,68,000</span></span><button class="btn btn-primary btn-sm card__above" type="button">Buy</button></div>
+  </article>
+  <article class="card card-product card-hover-lift">
+    <div class="card__media" style="--card-ratio: 4 / 3"><img src="/assets/media/studio.jpg" alt="" /></div>
+    <div class="card__body">
+      <p class="card__kicker">Light</p>
+      <h3 class="card__title"><a class="card__link" href="#i">Aputure 120d II</a></h3>
+      <p class="card__rating"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-star"/></svg><b>4.6</b> · 812</p>
+      <p class="card__excerpt">One key light, bounced. Everything else in frame is the room.</p>
+    </div>
+    <div class="card__buy"><span class="card__price">₹52,000</span><button class="btn btn-outline btn-sm card__above" type="button">Buy</button></div>
+  </article>
+  <article class="card card-product" data-sold>
+    <div class="card__media" style="--card-ratio: 4 / 3"><img src="/assets/media/desk.jpg" alt="" /><span class="card__badge"><span class="badge badge-quiet">Sold out</span></span></div>
+    <div class="card__body">
+      <p class="card__kicker">Desk</p>
+      <h3 class="card__title">Keychron Q1</h3>
+      <p class="card__rating"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-star"/></svg><b>4.4</b> · 306</p>
+      <p class="card__excerpt">Loud enough to hear in the early videos.</p>
+    </div>
+    <div class="card__buy"><span class="card__price">₹16,500</span><button class="btn btn-outline btn-sm" type="button" disabled>Sold out</button></div>
+  </article>
+</div>
+:::
+
+| Part | What it is |
+| --- | --- |
+| `.card__rating` | the number, its count, and one star as a glyph |
+| `.card__price` | the number, tabular so a row lines up |
+| `.card__was` | the old price, **struck** rather than faint — faint reads as unimportant, and this one is the whole offer |
+| `.card__buy` | price and control, pinned to the bottom |
+| `[data-sold]` | greys the shot and quiets the price |
+
+`data-sold` is an attribute, not a class, and the control is disabled by the
+markup as well — a disabled-looking button that still submits is worse than no
+state at all.
 
 ## Properties
 

@@ -1,7 +1,7 @@
 ---
 title: Radius & borders
 group: Foundation
-order: 28
+order: 50
 lead: A corner ladder, named jobs, and the px-vs-rem rule that keeps hairlines hairline.
 ---
 

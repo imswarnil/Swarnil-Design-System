@@ -472,6 +472,96 @@
 	.pager__item-next .pager__dir { justify-content: flex-end; }
 	.pager__title { font-weight: var(--weight-semibold); }
 
+	/* ── Pager dresses — what "next" means depends on what you are in ──────
+	   The plain pager is two links. A course, a series and a project all need
+	   the same two links to carry one more thing each, and they are not the
+	   same thing: a lesson needs its NUMBER, an episode needs its STILL, a
+	   project needs its MARK. So three dresses, one component.
+
+	   The parts are shared; only which of them a dress uses changes. */
+
+	/* A still beside the words — the episode pager. Fixed width so previous
+	   and next are the same size whatever their titles run to. */
+	.pager__thumb {
+		inline-size: 5.5rem;
+		aspect-ratio: 16 / 9;
+		flex: none;
+		overflow: hidden;
+		border-radius: var(--radius-sm);
+		background: var(--bg-media);
+	}
+
+	.pager__thumb > img { inline-size: 100%; block-size: 100%; object-fit: cover; display: block; }
+
+	/* The lesson number, or S02E04. Data, and monospaced by figure rather
+	   than by face — this is the data voice, not code. */
+	.pager__no {
+		font-family: var(--font-data);
+		font-size: var(--text-2xs);
+		font-weight: var(--weight-light);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		text-transform: uppercase;
+		color: var(--fg-accent);
+	}
+
+	/* Media dress: the still leads on previous, and follows on next, so the
+	   two items mirror each other across the gap the way the arrows do. */
+	.pager-media .pager__item {
+		flex-direction: row;
+		align-items: center;
+		gap: var(--space-4);
+	}
+
+	.pager-media .pager__item-next { flex-direction: row-reverse; }
+	.pager-media .pager__body { display: flex; flex-direction: column; gap: var(--space-1); min-inline-size: 0; }
+
+	/* Course dress: quiet, numbered, and the two items share one border so
+	   they read as one control rather than two cards. */
+	.pager-course { gap: 0; }
+
+	.pager-course .pager__item {
+		border-radius: 0;
+		border-inline-start-width: 0;
+	}
+
+	.pager-course .pager__item:first-child {
+		border-inline-start-width: var(--border-hair);
+		border-start-start-radius: var(--radius-lg);
+		border-end-start-radius: var(--radius-lg);
+	}
+
+	.pager-course .pager__item:last-child {
+		border-start-end-radius: var(--radius-lg);
+		border-end-end-radius: var(--radius-lg);
+	}
+
+	/* Series dress: the still, and the episode code above the title. For a
+	   web series, where "next" is an instalment rather than a page. */
+	.pager-series .pager__item {
+		flex-direction: row;
+		align-items: center;
+		gap: var(--space-4);
+		padding: var(--space-3);
+		background: var(--bg-sunken);
+		border-color: transparent;
+	}
+
+	.pager-series .pager__item:hover { border-color: var(--line-accent); background: var(--bg-surface); }
+	.pager-series .pager__item-next { flex-direction: row-reverse; }
+	.pager-series .pager__thumb { inline-size: 7rem; }
+	.pager-series .pager__body { display: flex; flex-direction: column; gap: var(--space-1); min-inline-size: 0; }
+	.pager-series .pager__title { font-size: var(--text-sm); }
+
+	@media (width < 40rem) {
+		.pager-media .pager__item-next,
+		.pager-series .pager__item-next { flex-direction: row; }
+		.pager-course .pager__item {
+			border-inline-start-width: var(--border-hair);
+			border-radius: var(--radius-lg);
+		}
+	}
+
 	.pager__meta {
 		font-family: var(--font-data);
 		font-size: var(--text-xs);

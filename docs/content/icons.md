@@ -1,7 +1,7 @@
 ---
 title: Icons
 group: Foundation
-order: 32
+order: 50
 lead: Swarnil Icons in this system — sizes, weights, alignment, and the one-request sprite.
 ---
 

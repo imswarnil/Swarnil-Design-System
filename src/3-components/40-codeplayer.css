@@ -235,14 +235,31 @@
 	   tokens are re-expressed against the screen's own foreground. Structure
 	   keeps the accent; everything else is a step of the same light. */
 
-	.codeplayer :is(.tok-attr, .tok-sel, .tok-prop) { color: var(--cp-fg); }
-	.codeplayer :is(.tok-str, .tok-fn) { color: color-mix(in oklab, var(--cp-fg) 74%, transparent); }
-	.codeplayer :is(.tok-com, .tok-punc) { color: var(--cp-muted); }
-	.codeplayer .tok-com { font-style: italic; }
+	/* The screen is always dark, whatever the page is, so it remaps the
+	   syntax palette to the light ramp steps once. Same eight variables as
+	   the dark code block — a dress is a remap, not a second highlighter. */
+	.codeplayer {
+		--syn-structure: var(--cp-fg);
+		--syn-key:  var(--signal-300);
+		--syn-str:  var(--teal-300);
+		--syn-num:  var(--craft-300);
+		--syn-fn:   var(--azure-300);
+		--syn-var:  var(--iris-300);
+		--syn-com:  var(--cp-muted);
+		--syn-punc: var(--cp-muted);
+	}
 
-	.codeplayer-light :is(.tok-attr, .tok-sel, .tok-prop) { color: var(--fg-default); }
-	.codeplayer-light :is(.tok-str, .tok-fn) { color: var(--fg-muted); }
-	.codeplayer-light :is(.tok-com, .tok-punc) { color: var(--fg-faint); }
+	/* The paper screen goes back to the page's own palette. */
+	.codeplayer-light {
+		--syn-structure: light-dark(var(--ink-900), var(--ink-100));
+		--syn-key:  light-dark(var(--signal-600), var(--signal-300));
+		--syn-str:  light-dark(var(--teal-700),   var(--teal-300));
+		--syn-num:  light-dark(var(--craft-700),  var(--craft-300));
+		--syn-fn:   light-dark(var(--azure-700),  var(--azure-300));
+		--syn-var:  light-dark(var(--iris-700),   var(--iris-300));
+		--syn-com:  var(--fg-faint);
+		--syn-punc: var(--fg-subtle);
+	}
 
 	/* ── Sizes ─────────────────────────────────────────────────────────────── */
 
@@ -253,5 +270,90 @@
 	   hover do, and those go under reduced motion like everything else. */
 	@media (prefers-reduced-motion: reduce) {
 		.codeplayer__copy { transition: none; }
+	}
+
+	/* ── .codeplayer-crt — the monitor, curved ─────────────────────────────
+	   The full television. Where the base dress is a screen that happens to
+	   be on, this one is a piece of hardware from before flat panels: the
+	   glass bulges, the corners are rounded harder than the bezel, the
+	   phosphor blooms toward the middle and the whole thing is very slightly
+	   green because that is what P1 phosphor was.
+
+	   The curve is `border-radius` plus a radial inset shadow, not a 3D
+	   transform. A transform would fight text rendering at every zoom level
+	   and would blur the code, which is the one thing a code block may not
+	   do. So the glass is faked at the EDGES and left alone in the middle,
+	   where the reading happens. */
+	.codeplayer-crt {
+		--cp-fg: oklch(88% 0.09 145);
+		--cp-muted: oklch(62% 0.06 145);
+		border-radius: var(--radius-2xl);
+		padding: var(--space-3);
+		background: linear-gradient(160deg, var(--ink-800), var(--ink-950));
+	}
+
+	.codeplayer-crt .codeplayer__screen {
+		border-radius: var(--radius-xl);
+		box-shadow:
+			inset 0 0 3rem 1rem color-mix(in oklab, var(--pure-black) 55%, transparent),
+			inset 0 0 0.5rem color-mix(in oklab, var(--pure-black) 70%, transparent);
+	}
+
+	/* The bloom: brightest in the centre, falling off to the glass. */
+	.codeplayer-crt .codeplayer__screen::after {
+		display: block;
+		background: radial-gradient(
+			ellipse 80% 70% at 50% 45%,
+			color-mix(in oklab, var(--cp-fg) 10%, transparent),
+			transparent 70%);
+	}
+
+	.codeplayer-crt .codeplayer__pre { text-shadow: 0 0 6px color-mix(in oklab, var(--cp-fg) 45%, transparent); }
+
+	/* A CRT had ONE phosphor. Colour-coding the syntax on a monochrome tube
+	   would be a lie about the hardware the dress is imitating, so the CRT
+	   throws the palette away and separates tokens by brightness instead —
+	   which is exactly what those machines did. */
+	.codeplayer-crt {
+		--syn-structure: var(--cp-fg);
+		--syn-key:  oklch(94% 0.12 145);
+		--syn-str:  oklch(80% 0.10 145);
+		--syn-num:  oklch(80% 0.10 145);
+		--syn-fn:   oklch(88% 0.11 145);
+		--syn-var:  var(--cp-fg);
+		--syn-com:  var(--cp-muted);
+		--syn-punc: var(--cp-muted);
+	}
+
+	/* ── .codeplayer-flicker — the tube is not quite happy ─────────────────
+	   Two motions, both tiny, both slow: the whole screen's brightness
+	   wavers, and one band of brighter lines crawls down it. This is ambient
+	   motion on a block of TEXT, which is the most annoying place to put any,
+	   so the budget is deliberately mean — 6% of brightness and a band that
+	   takes eight seconds to cross. Anything more and the code stops being
+	   readable, which would be a decorative effect defeating the component.
+
+	   Off entirely under reduced motion. */
+	.codeplayer-flicker .codeplayer__screen { animation: cp-flicker 7s var(--ease-inout) infinite; }
+
+	.codeplayer-flicker .codeplayer__screen::before {
+		animation: cp-roll 8s linear infinite;
+	}
+
+	@keyframes cp-flicker {
+		0%, 100% { filter: brightness(1); }
+		48%      { filter: brightness(0.97); }
+		50%      { filter: brightness(1.06); }
+		52%      { filter: brightness(0.98); }
+	}
+
+	@keyframes cp-roll {
+		from { background-position: 0 0; }
+		to   { background-position: 0 100%; }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.codeplayer-flicker .codeplayer__screen,
+		.codeplayer-flicker .codeplayer__screen::before { animation: none; }
 	}
 }

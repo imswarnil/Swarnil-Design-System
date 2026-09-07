@@ -1,7 +1,7 @@
 {
   "name": "@imswarnil/swarnil-design",
   "version": "0.1.0",
-  "description": "Swarnil Design System — a token-first, dependency-free CSS design system for people who make things: web, and the broadcast layer for thumbnails, scenes and streams. Almost monochrome, so one colour can mean something.",
+  "description": "Swarnil Design System \u2014 a token-first, dependency-free CSS design system for people who make things: web, and the broadcast layer for thumbnails, scenes and streams. Almost monochrome, so one colour can mean something.",
   "keywords": [
     "css",
     "design-system",
@@ -49,7 +49,10 @@
     "./broadcast": "./dist/swarnil-broadcast.css",
     "./broadcast/min": "./dist/swarnil-broadcast.min.css",
     "./broadcast/src": "./src/7-broadcast/index.css",
-    "./nav": "./src/js/nav.js"
+    "./nav": "./src/js/nav.js",
+    "./framework": "./dist/swarnil-framework.css",
+    "./framework/min": "./dist/swarnil-framework.min.css",
+    "./framework/src": "./src/8-framework/index.css"
   },
   "files": [
     "src",
@@ -60,12 +63,12 @@
   ],
   "scripts": {
     "build": "npm run css && npm run docs",
-    "css": "postcss src/index.css -o dist/swarnil-design.css && postcss src/index.css -o dist/swarnil-design.min.css --env production && postcss src/broadcast.css -o dist/swarnil-broadcast.css && postcss src/broadcast.css -o dist/swarnil-broadcast.min.css --env production",
+    "css": "postcss src/index.css -o dist/swarnil-design.css && postcss src/index.css -o dist/swarnil-design.min.css --env production && postcss src/broadcast.css -o dist/swarnil-broadcast.css && postcss src/broadcast.css -o dist/swarnil-broadcast.min.css --env production && postcss src/framework.css -o dist/swarnil-framework.css && postcss src/framework.css -o dist/swarnil-framework.min.css --env production",
     "docs": "python3 docs/build.py",
     "dev": "npm run docs && python3 -m http.server 8080 --directory site",
     "lint": "stylelint \"src/**/*.css\"",
     "audit": "python3 scripts/audit-mono.py --strict && python3 scripts/audit-classes.py --strict",
-    "size": "for f in dist/swarnil-design.min.css dist/swarnil-broadcast.min.css; do printf '%s  ' $f; gzip -c $f | wc -c | awk '{printf \"gzipped: %.1f KB\\n\", $1/1024}'; done",
+    "size": "for f in dist/swarnil-design.min.css dist/swarnil-broadcast.min.css dist/swarnil-framework.min.css; do printf '%s  ' $f; gzip -c $f | wc -c | awk '{printf \"gzipped: %.1f KB\\n\", $1/1024}'; done",
     "prepublishOnly": "npm run css"
   },
   "devDependencies": {

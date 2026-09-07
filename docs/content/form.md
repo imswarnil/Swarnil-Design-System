@@ -1,7 +1,7 @@
 ---
 title: Form
-group: Components
-order: 16
+group: Forms
+order: 50
 lead: Fields in a column, rows that pair, groups with a legend, and the actions at the end — the layout that holds every control on the Field page.
 ---
 

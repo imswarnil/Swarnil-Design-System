@@ -1,7 +1,7 @@
 ---
 title: Indicators
-group: Elements
-order: 20
+group: Components
+order: 50
 lead: Spinner, skeleton, progress, meter — the waiting states, added first rather than last.
 ---
 

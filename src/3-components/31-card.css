@@ -377,15 +377,30 @@
 	.card-compact .card__title { font-size: var(--text-base); }
 	.card-roomy   { --card-pad: var(--space-8); }
 
-	/* Media full-bleed behind the text. */
+	/* Media full-bleed behind the text.
+
+	   The body has to be RAISED, not merely later in the source. Both children
+	   sit in grid cell 1/1, and .card__media is positioned while .card__body
+	   is not — so the media paints in the positioned-descendants step and the
+	   body's text paints in the inline-content step, which comes first. The
+	   words end up under the picture. One position + z-index puts the body
+	   back on top, and it is not optional: without it a tile is a picture with
+	   an invisible title. */
 	.card-tile { display: grid; }
 	.card-tile > .card__media { grid-area: 1 / 1; aspect-ratio: var(--card-ratio, 3 / 4); }
 
 	.card-tile > .card__body {
 		grid-area: 1 / 1;
+		position: relative;
+		z-index: var(--z-raised);
 		justify-content: flex-end;
 		background: linear-gradient(transparent 30%, var(--bg-scrim));
 	}
+
+	/* On a tile the bottom belongs to the words, so the duration moves to the
+	   top edge rather than sitting under the title it would otherwise
+	   overlap. It is the same mark; only the corner changes. */
+	.card-tile .card__stamp { inset-block: var(--space-3) auto; }
 
 	.card-tile .card__title { color: var(--pure-white); }
 	.card-tile .card__excerpt { color: color-mix(in oklab, var(--pure-white) 80%, transparent); }
@@ -427,6 +442,10 @@
 
 	.card-video  { --card-ratio: 16 / 9; }
 	.card-reel   { --card-ratio: 9 / 16; max-inline-size: 15rem; }
+	/* The same 9:16 with no cap — a wall of shorts, where the GRID sets the
+	   width and the card must fill its slot. .card-reel is the loose one that
+	   has to stop itself getting silly; this one is in a column already. */
+	.card-story  { --card-ratio: 9 / 16; }
 	.card-movie  { --card-ratio: 2 / 3; }
 	.card-square { --card-ratio: 1; }
 
@@ -541,6 +560,134 @@
 		background: var(--accent);
 		transition: width var(--dur-5) var(--ease-out);
 	}
+
+	/* ── .card__pattern — the texture slot ────────────────────────────────
+	   A pattern paints on ::before, and so does .frame; a card that carries
+	   both loses one of them silently. So the card takes its texture as a
+	   CHILD, the way it takes a .veil — which also means the pattern can be
+	   masked back from the words without touching the card's own background.
+
+	       <article class="card">
+	         <span class="card__pattern pattern pattern-grid" aria-hidden="true"></span>
+	         <div class="card__body"> … </div>
+	       </article>                                                        */
+	.card__pattern {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+		border-radius: inherit;
+		pointer-events: none;
+		/* Strongest at the top-left corner, gone by the time it reaches the
+		   text. A texture a reader has to see through is a texture that has
+		   stopped being decoration. */
+		mask-image: linear-gradient(155deg, black, transparent 62%);
+		opacity: 0.75;
+	}
+
+	/* The body has to sit above the texture; nothing else in the card does. */
+	.card:has(> .card__pattern) > :not(.card__pattern) { position: relative; z-index: 1; }
+
+	/* Full strength, no mask — for a card whose whole point is the ground. */
+	.card__pattern-full { mask-image: none; }
+
+	/* ── The repository card ───────────────────────────────────────────────
+	   The shape every developer already knows how to read: owner/name, one
+	   sentence, the topics, then the facts — language, stars, forks, when it
+	   last moved. The language dot takes its colour from --lang on the
+	   instance, which is the only place in the system a hue is set per item,
+	   and it is set because the hue is DATA (the language) rather than
+	   emphasis. Everything else stays monochrome.
+
+	   The facts row pins to the bottom, so a grid of repos lines up however
+	   long the descriptions run. */
+	.card-repo {
+		--card-gap: var(--space-3);
+		--lang: var(--fg-faint);
+	}
+
+	.card-repo > .card__body { flex: 1; }
+	.card-repo .card__title { font-size: var(--text-base); }
+	.card-repo .card__kicker { text-transform: none; letter-spacing: normal; font-family: var(--font-body); font-size: var(--text-sm); font-weight: var(--weight-regular); color: var(--fg-muted); display: flex; align-items: center; gap: var(--space-2); }
+	.card-repo .card__kicker strong { font-weight: var(--weight-semibold); color: var(--fg-default); }
+	.card-repo .card__facts { margin-block-start: auto; padding-block-start: var(--space-2); }
+
+	/* Language: a dot in the language's own colour, then its name. */
+	.card__lang::before {
+		content: '';
+		inline-size: 0.625rem;
+		block-size: 0.625rem;
+		border-radius: var(--radius-full);
+		background: var(--lang, var(--fg-faint));
+		flex: none;
+	}
+
+	/* The composition bar along the card's bottom edge — one segment per
+	   language, width from --value, colour from --lang. Same slot as
+	   .card__progress, so a card has one or the other, never both. */
+	.card__langs {
+		position: absolute;
+		inset: auto 0 0;
+		display: flex;
+		block-size: var(--border-3);
+		background: var(--line-subtle);
+	}
+
+	.card__langs > * { inline-size: var(--value, 0%); background: var(--lang, var(--fg-faint)); }
+
+	/* ── The product card ──────────────────────────────────────────────────
+	   A thing that costs money: the shot, the name, what it is, the rating,
+	   the price and the one control that buys it. The order is not
+	   negotiable, and the price and the control sit together at the bottom
+	   because that is the pair a reader is actually comparing across a row.
+
+	   The rating is a number, not five glyphs. Five stars is a picture of a
+	   number that a screen reader has to be told about anyway; the number and
+	   the count say more in less space and need no explanation. */
+	.card-product .card__body { gap: var(--space-2); }
+
+	.card__rating {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-1);
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-2xs);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-faint);
+	}
+
+	.card__rating > .icon { --icon-size: 0.85rem; color: var(--accent); }
+	.card__rating b { font-weight: var(--weight-semibold); color: var(--fg-default); }
+
+	/* Was — the struck price beside the real one. Struck rather than faint,
+	   because faint reads as "unimportant" and this one is the whole offer. */
+	.card__was {
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-sm);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-faint);
+		text-decoration: line-through;
+		margin-inline-start: var(--space-2);
+	}
+
+	/* The buy row: price on one side, control on the other, pinned to the
+	   bottom so a grid of products lines its buttons up. */
+	.card__buy {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-3);
+		margin-block-start: auto;
+		padding: var(--space-3) var(--card-pad) var(--card-pad);
+	}
+
+	/* Out of stock is a state, so it is an attribute. The card goes quiet and
+	   the control is disabled by the markup, not by a class. */
+	.card[data-sold] .card__media { filter: grayscale(1); opacity: 0.6; }
+	.card[data-sold] .card__price { color: var(--fg-faint); }
 
 	/* A level or a state, top-left of the body rather than on the media. */
 	.card__level {

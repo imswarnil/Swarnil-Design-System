@@ -16,3 +16,8 @@
 @property --bg-glow-y { syntax: '<percentage>'; inherits: true; initial-value: 0%; }
 
 @property --fx-n      { syntax: '<integer>'; inherits: false; initial-value: 0; }
+
+/* The draw: 0% to 100% along a mask, so a mark, a circle or an underline can
+   be *drawn* rather than faded in. Registered because a conic or linear
+   gradient stop cannot interpolate from a plain custom property. */
+@property --draw      { syntax: '<percentage>'; inherits: false; initial-value: 0%; }

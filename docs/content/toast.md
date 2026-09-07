@@ -1,7 +1,7 @@
 ---
 title: Toast
 group: Components
-order: 75
+order: 50
 lead: An alert that arrives — placements, stacking, the timer, and the interruption rule.
 ---
 

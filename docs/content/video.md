@@ -1,8 +1,8 @@
 ---
-title: Media
+title: Video
 group: Components
-order: 60
-lead: Player chrome, the play disc, the poster and the episode row — the rectangle of footage the rest of the system is furniture around.
+order: 50
+lead: The player and everything around it — the bar, the play disc, chapter markers, the theatre cut, the filmstrip and the episode row.
 ---
 
 :::demo The player, with its bar held open for the demo
@@ -52,19 +52,6 @@ monospace face.
 </div>
 :::
 
-## Cuts
-
-The ratio is a property. Square and story cuts are the two that ship to
-platforms.
-
-:::demo
-<div class="grid-3">
-  <div class="player player-square player-bar-open"><div class="player__bar"><span class="player__time">1:1</span></div></div>
-  <div class="player player-story player-bar-open"><div class="player__bar"><span class="player__time">9:16</span></div></div>
-  <div class="player player-bar-open" style="--player-ratio: 4 / 3"><div class="player__bar"><span class="player__time">4:3</span></div></div>
-</div>
-:::
-
 ## The play disc
 
 `.play` fills its positioned parent so the whole still is the hit target; the
@@ -84,86 +71,6 @@ disc is only the visible part. The triangle is drawn with borders and takes
   <div class="poster"><button class="play play-sm" type="button" aria-label="Play"><span class="play__disc"></span></button></div>
   <div class="poster"><button class="play" type="button" aria-label="Play"><span class="play__disc"></span></button></div>
   <div class="poster"><button class="play play-lg" type="button" aria-label="Play"><span class="play__disc"></span></button></div>
-</div>
-:::
-
-## The poster
-
-A still with the slate baked in — the thumbnail as it ships. Image, gradient,
-label; the eyebrow is a label, the title is display type, the corner holds the
-duration or a live badge.
-
-:::demo
-<div class="grid-2">
-  <div class="poster">
-    <div class="poster__corner"><span class="timecode" style="color: var(--pure-white)">24:07</span></div>
-    <div class="poster__label">
-      <span class="poster__eyebrow">Episode 12</span>
-      <span class="poster__title">Lighting a two-camera interview</span>
-    </div>
-  </div>
-  <div class="poster">
-    <div class="poster__corner"><span class="badge badge-live">Live</span></div>
-    <button class="play play-sm" type="button" aria-label="Watch live"><span class="play__disc"></span></button>
-    <div class="poster__label">
-      <span class="poster__eyebrow">Now</span>
-      <span class="poster__title">Studio Q&amp;A</span>
-    </div>
-  </div>
-</div>
-:::
-
-:::demo Square and story posters
-<div class="grid-3">
-  <div class="poster poster-square"><div class="poster__label"><span class="poster__eyebrow">Short</span><span class="poster__title">The 30-second colour fix</span></div></div>
-  <div class="poster poster-story"><div class="poster__label"><span class="poster__eyebrow">Story</span><span class="poster__title">Behind take 47</span></div></div>
-</div>
-:::
-
-## The episode row
-
-The list beside a player. The current row carries a 2px rule on its inline
-edge — the house active state — and a soft wash, never a fill. A watched row
-says so in its meta and steps back.
-
-:::demo Wrap rows in <code>.episodes</code> and the thumbnail shrinks when the box is narrow, not the viewport
-<div class="episodes stack stack-sm w-lg">
-  <a class="episode" href="#i" aria-current="true">
-    <span class="episode__thumb"><span class="episode__dur">24:07</span></span>
-    <span class="episode__body">
-      <span class="episode__title">Lighting a two-camera interview without a second key light</span>
-      <span class="episode__meta">Episode 12 · Craft</span>
-    </span>
-  </a>
-  <a class="episode" href="#i" data-done>
-    <span class="episode__thumb"><span class="episode__dur">18:30</span></span>
-    <span class="episode__body">
-      <span class="episode__title">The audio chain from mic to upload</span>
-      <span class="episode__meta">Episode 11 · Craft</span>
-    </span>
-  </a>
-  <a class="episode" href="#i">
-    <span class="episode__thumb"><span class="episode__dur">31:12</span></span>
-    <span class="episode__body">
-      <span class="episode__title">Why the thumbnail is the product</span>
-      <span class="episode__meta">Episode 10 · Business</span>
-    </span>
-  </a>
-</div>
-:::
-
-:::demo Numbered, and the compact row for a rail
-<div class="grid-2">
-  <div class="episodes stack stack-sm">
-    <a class="episode episode-numbered" href="#i"><span class="episode__num">01</span><span class="episode__thumb"></span><span class="episode__body"><span class="episode__title">Setting up the room</span><span class="episode__meta">4 min</span></span></a>
-    <a class="episode episode-numbered" href="#i" aria-current="true"><span class="episode__num">02</span><span class="episode__thumb"></span><span class="episode__body"><span class="episode__title">Key, fill, and the window</span><span class="episode__meta">9 min</span></span></a>
-    <a class="episode episode-numbered" href="#i"><span class="episode__num">03</span><span class="episode__thumb"></span><span class="episode__body"><span class="episode__title">Grading the two cameras to match</span><span class="episode__meta">12 min</span></span></a>
-  </div>
-  <div class="episodes stack stack-sm">
-    <a class="episode episode-sm" href="#i"><span class="episode__thumb"><span class="episode__dur">0:42</span></span><span class="episode__body"><span class="episode__title">The 30-second colour fix that actually works every time</span><span class="episode__meta">Short</span></span></a>
-    <a class="episode episode-sm" href="#i"><span class="episode__thumb"><span class="episode__dur">0:58</span></span><span class="episode__body"><span class="episode__title">One mic, two people</span><span class="episode__meta">Short</span></span></a>
-    <a class="episode episode-sm" href="#i"><span class="episode__thumb"><span class="episode__dur">1:04</span></span><span class="episode__body"><span class="episode__title">Export settings for every platform</span><span class="episode__meta">Short</span></span></a>
-  </div>
 </div>
 :::
 
@@ -248,6 +155,91 @@ sits in each corner.
   <a class="filmstrip__frame" href="#i"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237a5b4e'/%3E%3Cstop offset='1' stop-color='%232a1d17'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /></a>
 </div>
 :::
+
+## The episode row
+
+The list beside a player. The current row carries a 2px rule on its inline
+edge — the house active state — and a soft wash, never a fill. A watched row
+says so in its meta and steps back.
+
+:::demo Wrap rows in <code>.episodes</code> and the thumbnail shrinks when the box is narrow, not the viewport
+<div class="episodes stack stack-sm w-lg">
+  <a class="episode" href="#i" aria-current="true">
+    <span class="episode__thumb"><span class="episode__dur">24:07</span></span>
+    <span class="episode__body">
+      <span class="episode__title">Lighting a two-camera interview without a second key light</span>
+      <span class="episode__meta">Episode 12 · Craft</span>
+    </span>
+  </a>
+  <a class="episode" href="#i" data-done>
+    <span class="episode__thumb"><span class="episode__dur">18:30</span></span>
+    <span class="episode__body">
+      <span class="episode__title">The audio chain from mic to upload</span>
+      <span class="episode__meta">Episode 11 · Craft</span>
+    </span>
+  </a>
+  <a class="episode" href="#i">
+    <span class="episode__thumb"><span class="episode__dur">31:12</span></span>
+    <span class="episode__body">
+      <span class="episode__title">Why the thumbnail is the product</span>
+      <span class="episode__meta">Episode 10 · Business</span>
+    </span>
+  </a>
+</div>
+:::
+
+:::demo Numbered, and the compact row for a rail
+<div class="grid-2">
+  <div class="episodes stack stack-sm">
+    <a class="episode episode-numbered" href="#i"><span class="episode__num">01</span><span class="episode__thumb"></span><span class="episode__body"><span class="episode__title">Setting up the room</span><span class="episode__meta">4 min</span></span></a>
+    <a class="episode episode-numbered" href="#i" aria-current="true"><span class="episode__num">02</span><span class="episode__thumb"></span><span class="episode__body"><span class="episode__title">Key, fill, and the window</span><span class="episode__meta">9 min</span></span></a>
+    <a class="episode episode-numbered" href="#i"><span class="episode__num">03</span><span class="episode__thumb"></span><span class="episode__body"><span class="episode__title">Grading the two cameras to match</span><span class="episode__meta">12 min</span></span></a>
+  </div>
+  <div class="episodes stack stack-sm">
+    <a class="episode episode-sm" href="#i"><span class="episode__thumb"><span class="episode__dur">0:42</span></span><span class="episode__body"><span class="episode__title">The 30-second colour fix that actually works every time</span><span class="episode__meta">Short</span></span></a>
+    <a class="episode episode-sm" href="#i"><span class="episode__thumb"><span class="episode__dur">0:58</span></span><span class="episode__body"><span class="episode__title">One mic, two people</span><span class="episode__meta">Short</span></span></a>
+    <a class="episode episode-sm" href="#i"><span class="episode__thumb"><span class="episode__dur">1:04</span></span><span class="episode__body"><span class="episode__title">Export settings for every platform</span><span class="episode__meta">Short</span></span></a>
+  </div>
+</div>
+:::
+
+## With real footage
+
+Everything above is chrome around a rectangle. Put a `<video>` in it and
+nothing changes except that the rectangle now moves.
+
+:::demo A real clip, in the full viewfinder dress
+<div class="player player-bar-open frame frame-signal" style="--frame-color: var(--accent)">
+  <video src="/assets/media/loop.mp4" poster="/assets/media/loop.jpg" muted loop playsinline autoplay></video>
+  <span class="veil veil-vignette"></span>
+  <span class="player__frame" aria-hidden="true"></span>
+  <span class="player__tc" aria-hidden="true">TAKE 48 · 00:04:12</span>
+  <span class="player__rec" aria-hidden="true">Rec</span>
+  <span class="player__title">Colour, in one block of tokens</span>
+  <a class="play play-lg" href="#i" aria-label="Play"><span class="play__disc"></span></a>
+  <div class="player__bar">
+    <span class="player__time">04:12</span>
+    <div class="player__rail" role="slider" aria-label="Seek" aria-valuemin="0" aria-valuemax="1447" aria-valuenow="252" tabindex="0">
+      <div class="player__buffered" style="--value: 61%"></div>
+      <div class="player__played" style="--value: 17%"></div>
+      <button class="player__marker" type="button" style="--at: 18%" aria-label="Colour, 04:20"></button>
+      <button class="player__marker" type="button" style="--at: 55%" aria-label="Dark mode, 13:10"></button>
+    </div>
+    <span class="player__time">24:07</span>
+  </div>
+</div>
+:::
+
+A player wearing the viewfinder dress starts its title bar **below** the
+timecode row, so `__title`, `__tc` and `__rec` can all be present without
+landing on top of each other.
+
+## Timestamps
+
+The list of moments under the video is its own component — see
+[Timestamps](/timestamps.html) for the timecode list, and
+[Navigation](/navigation.html) for `.chapters`, which is the video's own
+authored structure rather than a list of moments.
 
 ## Properties
 

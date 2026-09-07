@@ -1,7 +1,7 @@
 ---
 title: Log
 group: Patterns
-order: 36
+order: 50
 lead: Three lists that record what happened, in order — the build log, the release note, and the itinerary.
 ---
 
