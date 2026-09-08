@@ -6,9 +6,11 @@ versioning follows [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased] — the rebuild
 
-The system was rebuilt from scratch on the `rebuild` branch against
-`approach.md`. The previous system (Creator Design System, "Frame & Signal") is
-archived locally, is not imported, and its history is not carried forward.
+The system was rebuilt from scratch against `approach.md` and now serves
+`design.imswarnil.com`. The previous system (Creator Design System, "Frame &
+Signal") is not in this repository, is not imported, and its history is not
+carried forward. It survives as the tag `v0-frame-and-signal` and is worked on
+in `creator.imswarnil.com`.
 
 ### Added
 - **A Showcase page** — every family at its real size in one scroll, and the

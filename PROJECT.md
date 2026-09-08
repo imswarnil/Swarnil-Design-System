@@ -43,12 +43,26 @@ it for *paths*, never for design decisions about this repo.
 
 ## Where things stand
 
-Branch `rebuild` — the system was rebuilt from scratch against `approach.md`.
-The previous system ("Frame & Signal" / Creator Design System) **is no longer in
-this repo**: `old-design/` moved to `creator.imswarnil.com/_legacy/` on
-2026-09-07 and is now CreatorKit's migration source. Nothing here imports it and
-its history is not carried forward. The one thing that came out of it before it
-left is the eight-second clip in `docs/assets/media/` — see the CREDITS file
+`main` serves `design.imswarnil.com` (promoted 2026-09-08, merge `24e4252`).
+`rebuild` and `main` hold identical trees; decide whether `rebuild` keeps going
+as the working branch now that it has landed.
+
+**The previous system is not in this repo and is not referenced by it.** It is
+gone from the tree, gone from the docs and gone from the build — the only trace
+is the git tag below, which exists so the history is not lost, and past entries
+in the session log, which are a record rather than a dependency.
+
+| | |
+| --- | --- |
+| What it was | Creator Design System · "Frame & Signal", published here until 2026-09-08 |
+| Complete tree | tag **`v0-frame-and-signal`** (commit `f84ccf7`, 630 files) |
+| Restorable branch | `main-before-rebuild` |
+| Where it is worked on now | `creator.imswarnil.com` — see its `old-design.md` |
+
+Nothing here imports it, and its history is not carried forward. Do not treat
+it as a parts bin: if a component from it is worth having, it gets rebuilt on
+this system's own terms. The one thing that came out of it before it left is
+the eight-second clip in `docs/assets/media/`, credited in the CREDITS file
 beside it.
 
 | Layer | State |
@@ -302,6 +316,8 @@ next session.
 - ⚠️ `old-design/` **left this repo** during this session (workspace
   reorganisation moved it to `creator.imswarnil.com/_legacy/`). The only thing
   taken from it first was the video clip now vendored in `docs/assets/media/`.
+  Its complete tree is the tag `v0-frame-and-signal`; `_legacy/` is only the
+  part CreatorKit's migration did not consume.
 
 ### 2026-09-07 (third) — the collection layer: shelf, filters, masthead, kit, and nine more templates
 - **Five new modules.** `.shelf` (the catalogue row — bleeds past the page
@@ -463,7 +479,7 @@ next session.
   band (`.hero__bg`, 100vw pinned to the viewport centre, escaping the 74rem
   band) with a scrim graded heavier on the left where the copy sits. The right
   column is `.hero__art` — a new inline SVG, **the rig**. Inline and
-  token-driven on purpose: `old-design/media/hero.svg` hard-coded two palettes
+  token-driven on purpose: the old system's `media/hero.svg` hard-coded two palettes
   and guessed with `prefers-color-scheme`, so it was simply wrong for anyone who
   had picked a theme by hand. Verified 1512px bg over an 1184px band, no
   horizontal overflow.
