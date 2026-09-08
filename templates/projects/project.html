@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Swarnil Design System — case study</title>
+<meta name="description" content="Six sites rebuilt on one token-first system in thirty days, with 40% less CSS at the end of it." />
+<script>
+try {
+  var t = localStorage.getItem('sds-theme');
+  if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  document.documentElement.dataset.theme = t;
+} catch (e) { document.documentElement.dataset.theme = 'light'; }
+</script>
+<link rel="preload" href="/assets/fonts/inter-100-900-latin.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/fonts.css" />
+<!-- The system. To take this template, replace the next line with the CDN link:
+     https://cdn.jsdelivr.net/npm/@imswarnil/swarnil-design/dist/swarnil-design.min.css -->
+<link rel="stylesheet" href="/src/index.css" />
+<!-- Page composition only — see templates/templates.css. -->
+<link rel="stylesheet" href="/templates/templates.css" />
+<script src="/src/js/nav.js" defer></script>
+</head>
+<body class="tpl">
+<a class="skip" href="#main">Skip to content</a>
+<header class="navbar navbar-sticky navbar-blur navbar-bordered navbar-centered">
+  <button class="navbar__burger" type="button" popovertarget="drawer" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
+  <a class="navbar__brand" href="/templates/personal/index.html"><span class="dot dot-accent"></span> Swarnil</a>
+  <nav class="navbar__nav" aria-label="Main">
+    <a class="navbar__link" href="/templates/personal/index.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-home"/></svg>Home</a><a class="navbar__link" href="/templates/personal/about.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-user"/></svg>About</a><a class="navbar__link" href="/templates/video/index.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg>Video</a><a class="navbar__link" href="/templates/blog/index.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-file"/></svg>Blog</a><a class="navbar__link" href="/templates/projects/index.html" aria-current="page"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>Projects</a><a class="navbar__link" href="/templates/courses/index.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-folder"/></svg>Courses</a>
+  </nav>
+  <div class="navbar__actions">
+    <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Search"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-search"/></svg></button>
+    <a class="btn btn-primary btn-sm" href="#newsletter">Subscribe</a>
+  </div>
+  <div class="sheet" id="drawer" popover>
+    <div class="sheet__head">
+      <button class="btn btn-quiet btn-sm btn-icon" type="button" popovertarget="drawer" popovertargetaction="hide" aria-label="Close"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-x"/></svg></button>
+      <span class="navbar__brand"><span class="dot dot-accent"></span> Swarnil</span>
+    </div>
+    <div class="sheet__body">
+      <div class="sheet__group">
+        <a class="sheet__link" href="/templates/personal/index.html"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-home"/></svg>Home</a><a class="sheet__link" href="/templates/personal/about.html"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-user"/></svg>About</a><a class="sheet__link" href="/templates/video/index.html"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg>Video</a><a class="sheet__link" href="/templates/blog/index.html"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-file"/></svg>Blog</a><a class="sheet__link" href="/templates/projects/index.html" aria-current="page"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>Projects</a><a class="sheet__link" href="/templates/courses/index.html"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-folder"/></svg>Courses</a>
+      </div>
+      <div class="sheet__group">
+        <p class="sheet__label">Elsewhere</p>
+        <a class="sheet__link" href="https://youtube.com/@imswarnil" rel="noopener"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-video"/></svg>YouTube</a>
+        <a class="sheet__link" href="https://github.com/imswarnil" rel="noopener"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>GitHub</a>
+      </div>
+    </div>
+    <p class="sheet__foot">Built on the Swarnil Design System</p>
+  </div>
+</header>
+
+<!-- ── The masthead — pinned, and it condenses as the log scrolls ────── -->
+<header class="masthead masthead-sticky masthead-blur tpl-masthead">
+  <div class="center center-2xl masthead__inner">
+    <span class="masthead__mark" aria-hidden="true">SD</span>
+    <div class="masthead__text">
+      <p class="masthead__eyebrow"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg> Case study · Open source</p>
+      <h1 class="masthead__title">Swarnil Design System</h1>
+      <p class="masthead__lead">Six sites that looked like six people made them, rebuilt on one token-first system in thirty days — and 40% less CSS at the end of it.</p>
+      <p class="masthead__facts">
+        <span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-calendar"/></svg> <strong>2026</strong></span>
+        <span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-clock"/></svg> <strong>30</strong> days</span>
+        <span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-star"/></svg> <strong>1.2k</strong> stars</span>
+        <span><span class="dot dot-sm dot-live"></span> Active</span>
+      </p>
+    </div>
+    <div class="masthead__actions">
+      <a class="btn btn-primary btn-sm" href="https://design.imswarnil.com">Live site</a>
+      <a class="btn btn-outline btn-sm" href="https://github.com/imswarnil" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg> Source</a>
+    </div>
+  </div>
+  <span class="masthead__rail" aria-hidden="true"></span>
+</header>
+
+<main id="main">
+
+  <!-- ── The cover ────────────────────────────────────────────────────── -->
+  <section class="section section-tight bg-ink bg-noise pattern pattern-blueprint pattern-faint">
+    <div class="center center-2xl">
+      <div class="ratio ratio-wide frame frame-signal u-rounded-lg u-overflow-hidden">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%235b6b7a'/%3E%3Cstop offset='1' stop-color='%231d232b'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="The design system docs site" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ── The numbers ──────────────────────────────────────────────────── -->
+  <section class="section section-tight section-line">
+    <div class="center center-2xl">
+      <div class="stats stats-divided">
+        <div class="stats__item"><span class="stats__value">−40<span class="stats__unit">%</span></span><span class="stats__label">CSS shipped</span><span class="stats__delta" data-trend="down"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-down"/></svg> 62 KB → 37 KB</span></div>
+        <div class="stats__item"><span class="stats__value">19 → 1</span><span class="stats__label">Button styles</span></div>
+        <div class="stats__item"><span class="stats__value">58</span><span class="stats__label">Docs pages</span></div>
+        <div class="stats__item"><span class="stats__value">0</span><span class="stats__label">Runtime dependencies</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── The case study ───────────────────────────────────────────────── -->
+  <section class="section section-line">
+    <div class="center center-2xl sidebar sidebar-end tpl-rail" style="--side-width: 19rem">
+      <div class="stack stack-xl">
+
+        <article class="prose">
+          <h2 id="brief">The brief, written to myself</h2>
+          <p class="t-dropcap">Six sites, three themes, a YouTube channel and a link page. Every one of them had its own idea of what a button was, and I had written all of them. The audit took an afternoon and produced one number that made the argument on its own: nineteen button styles.</p>
+          <p>The temptation was to pick the nicest one and copy it around. I have done that before. It survives exactly until the next site, because copying a button does not decide anything — it just moves the decision to the next person, who is me, in three months, with less context.</p>
+
+          <div class="callout callout-accent">
+            <span class="callout__icon"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-info"/></svg></span>
+            <div class="callout__body"><p class="callout__title">The constraint I set first</p><p>No framework, no runtime, no build step required to <em>use</em> it. If a designer cannot drop one stylesheet into a CodePen and get the whole system, it is not a system, it is a toolchain.</p></div>
+          </div>
+
+          <h2 id="approach">What I did instead</h2>
+          <p>Tokens first, and nothing visual for the first four days. Eight OKLCH ramps, then a second tier that names what a step is <em>for</em> — <code>--fg-muted</code>, not <code>--ink-500</code>. A component may only read the second tier. That single rule is the entire customisation API: override a token after the import and the whole system moves.</p>
+
+          <blockquote>A palette is a set of nice colours. A system is a set of promises about which colour is allowed where.</blockquote>
+
+          <h3>Nine cascade layers</h3>
+          <p>The specificity fights stopped the day the layers went in. Every rule lives in a layer; an unlayered rule beats every layer and is therefore a bug, which is a sentence a linter can enforce.</p>
+
+          <div class="codeplayer codeplayer-ln">
+            <div class="codeplayer__bar"><span class="codeplayer__lang">CSS</span><button class="codeplayer__copy" type="button">Copy</button></div>
+            <div class="codeplayer__screen"><pre class="codeplayer__pre"><code><span class="tok-key">@layer</span> reset, tokens, base, layout, <span class="tok-sel">elements</span>,
+       <span class="tok-sel">components</span>, patterns, sections, utilities;</code></pre></div>
+          </div>
+
+          <h3>What it cost</h3>
+          <p>Thirty days, most of them spent deleting. The hardest single decision was dropping the second typeface: the display face was doing nothing that weight and tracking could not do, and every extra font is a request, a flash and a decision for whoever comes next.</p>
+
+          <figure class="figure figure-center">
+            <div class="ratio ratio-wide u-rounded-lg u-overflow-hidden u-border"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%233f5f7c'/%3E%3Cstop offset='1' stop-color='%2312202a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="Before and after the token layer" /></div>
+            <figcaption class="figure__caption">The same page, before and after. Nothing was redesigned — only decided once.</figcaption>
+          </figure>
+
+          <h2 id="result">Where it ended up</h2>
+          <p>Every site I own now imports one stylesheet. The Ghost themes, the link page, the course site and the docs all read the same tokens, and a change to <code>--accent</code> moves all of them. The CSS I ship went from 62 KB to 37 KB gzipped, and most of that saving is code I deleted rather than code I optimised.</p>
+          <p>The part I did not expect: the system made the <em>writing</em> easier. When you have stopped deciding what a card is, you spend the whole session on what the card should say.</p>
+        </article>
+
+        <!-- The build log, as content -->
+        <section class="stack stack-lg" id="log">
+          <header class="sec sec-rule">
+            <div class="sec__text"><span class="sec__eyebrow">Build log</span><h2 class="sec__title">Thirty days, in order</h2><p class="sec__lead">Written at the end of each week, not reconstructed afterwards. The wrong turns are still in it.</p></div>
+          </header>
+          <ol class="timeline timeline-media timeline-icons">
+            <li class="timeline__item" data-done data-kind="start">
+            <span class="timeline__node"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-rocket"/></svg></span>
+            <div class="timeline__body">
+              <span class="timeline__time">Day 1 · Jun 02</span>
+              <h3 class="timeline__title">Kick-off — six sites, one audit</h3>
+              <p class="timeline__note">I opened all six sites side by side and counted button styles. Nineteen. That was the whole business case.</p>
+              <span class="timeline__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%235b6b7a'/%3E%3Cstop offset='1' stop-color='%231d232b'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /></span>
+            </div>
+          </li><li class="timeline__item" data-done>
+            <span class="timeline__node"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-aperture"/></svg></span>
+            <div class="timeline__body">
+              <span class="timeline__time">Day 4 · Jun 05</span>
+              <h3 class="timeline__title">The token layer lands</h3>
+              <p class="timeline__note">Eight OKLCH ramps and a second tier that says what a step is <em>for</em>. Nothing visual shipped this week and it was the most important one.</p>
+              <span class="timeline__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%233f5f7c'/%3E%3Cstop offset='1' stop-color='%2312202a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /></span>
+            </div>
+          </li><li class="timeline__item" data-done>
+            <span class="timeline__node"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-network"/></svg></span>
+            <div class="timeline__body">
+              <span class="timeline__time">Day 9 · Jun 10</span>
+              <h3 class="timeline__title">Nine cascade layers</h3>
+              <p class="timeline__note">The specificity fights stopped the day the layers went in. One rule: a file may only reference something from a lower layer.</p>
+              <span class="timeline__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234e6f5c'/%3E%3Cstop offset='1' stop-color='%23172a20'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /></span>
+            </div>
+          </li><li class="timeline__item" aria-current="step">
+            <span class="timeline__node"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-box"/></svg></span>
+            <div class="timeline__body">
+              <span class="timeline__time">Day 16 · Jun 17</span>
+              <h3 class="timeline__title">Components, one file each</h3>
+              <p class="timeline__note">Forty-one modules. Each one has to argue for itself in the file header, which killed about six of them before they were written.</p>
+              <span class="timeline__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236b4a4a'/%3E%3Cstop offset='1' stop-color='%232a1717'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /></span>
+            </div>
+          </li><li class="timeline__item">
+            <span class="timeline__node"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-live"/></svg></span>
+            <div class="timeline__body">
+              <span class="timeline__time">Day 24 · Jun 25</span>
+              <h3 class="timeline__title">The broadcast layer</h3>
+              <p class="timeline__note">Thumbnails, scenes and lower thirds, sized in cqi so one canvas renders at 1280 and in a docs column.</p>
+              <span class="timeline__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237c6f3f'/%3E%3Cstop offset='1' stop-color='%232a2412'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /></span>
+            </div>
+          </li><li class="timeline__item" data-kind="ship">
+            <span class="timeline__node"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-check"/></svg></span>
+            <div class="timeline__body">
+              <span class="timeline__time">Day 30 · target</span>
+              <h3 class="timeline__title">Ship v1 and the docs site</h3>
+              <p class="timeline__note">Fifty-eight pages, built from markdown, every class demoed by the markup it documents.</p>
+              
+            </div>
+          </li>
+          </ol>
+        </section>
+
+        <!-- Releases -->
+        <section class="stack stack-lg" id="releases">
+          <header class="sec sec-rule"><div class="sec__text"><span class="sec__eyebrow">Releases</span><h2 class="sec__title">What changed, and when</h2></div></header>
+          <div>
+            <article class="release" aria-current="true">
+              <div class="release__meta"><span class="release__ver">v0.4.0 <span class="badge badge-live">Latest</span></span><span class="release__date">2026-09-07</span></div>
+              <div class="release__body"><h3 class="release__title">The creator layer</h3><p>Backgrounds, effects, veils and the broadcast bundle — canvases, scenes, lower thirds and thumbnails, all sized in <code class="code">cqi</code>.</p></div>
+            </article>
+            <article class="release">
+              <div class="release__meta"><span class="release__ver">v0.3.0</span><span class="release__date">2026-08-30</span></div>
+              <div class="release__body"><h3 class="release__title">The data voice</h3><p>Timecodes, counts and dimensions left monospace for Inter with tabular figures. Mono is code only, and CI fails on anything else.</p></div>
+            </article>
+            <article class="release">
+              <div class="release__meta"><span class="release__ver">v0.2.0</span><span class="release__date">2026-08-12</span></div>
+              <div class="release__body"><h3 class="release__title">Patterns and sections</h3><p>The arrangements that make a site rather than a kit: decks, prose, timelines, curricula, heroes and footers.</p></div>
+            </article>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- ── Rail ───────────────────────────────────────────────────── -->
+      <aside>
+        <div class="rail tpl-rail">
+          <section class="rail__block rail__block-accent">
+            <p class="rail__title">The project</p>
+            <dl class="dl dl-stack">
+              <dt>Role</dt><dd>Everything — design, code, docs, the videos about it</dd>
+              <dt>Timeline</dt><dd>30 days, June 2026</dd>
+              <dt>Stack</dt><dd>Plain CSS, PostCSS, Python for the docs build</dd>
+              <dt>Licence</dt><dd>MIT</dd>
+              <dt>Status</dt><dd><span class="dot dot-sm dot-live"></span> Active</dd>
+            </dl>
+          </section>
+          <section class="rail__block">
+            <p class="rail__title">Jump to</p>
+            <nav class="navlist" aria-label="On this page">
+              <a class="navlist__link" href="#brief" aria-current="true"><span class="navlist__label">The brief</span></a>
+              <a class="navlist__link" href="#approach"><span class="navlist__label">What I did instead</span></a>
+              <a class="navlist__link" href="#result"><span class="navlist__label">Where it ended up</span></a>
+              <a class="navlist__link" href="#log"><span class="navlist__label">Build log</span><span class="navlist__count">30</span></a>
+              <a class="navlist__link" href="#releases"><span class="navlist__label">Releases</span><span class="navlist__count">3</span></a>
+            </nav>
+          </section>
+          <section class="rail__block">
+            <p class="rail__title">Where it is now</p>
+            <ol class="buildlog">
+              <li class="buildlog__step" data-kind="start" data-done>
+            <span class="buildlog__node"></span>
+            <a class="buildlog__link" href="#i">Kick-off — six sites, one audit<span class="buildlog__date">Day 1 · Jun 02</span></a>
+          </li><li class="buildlog__step" data-done>
+            <span class="buildlog__node">2</span>
+            <a class="buildlog__link" href="#i">The token layer lands<span class="buildlog__date">Day 4 · Jun 05</span></a>
+          </li><li class="buildlog__step" data-done>
+            <span class="buildlog__node">3</span>
+            <a class="buildlog__link" href="#i">Nine cascade layers<span class="buildlog__date">Day 9 · Jun 10</span></a>
+          </li><li class="buildlog__step" aria-current="step">
+            <span class="buildlog__node">4</span>
+            <a class="buildlog__link" href="#i">Components, one file each<span class="buildlog__date">Day 16 · Jun 17</span></a>
+          </li><li class="buildlog__step">
+            <span class="buildlog__node">5</span>
+            <a class="buildlog__link" href="#i">The broadcast layer<span class="buildlog__date">Day 24 · Jun 25</span></a>
+          </li><li class="buildlog__step" data-kind="ship">
+            <span class="buildlog__node"></span>
+            <a class="buildlog__link" href="#i">Ship v1 and the docs site<span class="buildlog__date">Day 30 · target</span></a>
+          </li>
+            </ol>
+          </section>
+          <section class="rail__block rail__block-flush">
+            <p class="rail__title">Share</p>
+            <div class="share share-flush">
+              <a class="btn btn-ghost btn-sm btn-icon" href="#i" aria-label="Share on X"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-share"/></svg></a>
+              <a class="btn btn-ghost btn-sm btn-icon" href="#i" aria-label="Copy link"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-link"/></svg></a>
+              <a class="btn btn-ghost btn-sm btn-icon" href="#i" aria-label="Email"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-mail"/></svg></a>
+              <span class="share__count">94</span>
+            </div>
+          </section>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ── The video ────────────────────────────────────────────────────── -->
+  <section class="section section-line section-sunken">
+    <div class="center center-xl">
+      <article class="card card-row card-roomy card-gradient cq-card">
+        <div class="card__media" style="--card-ratio: 16 / 9"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237a5b4e'/%3E%3Cstop offset='1' stop-color='%232a1d17'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+        <div class="card__body">
+          <p class="card__kicker">The episode · 24:07</p>
+          <h2 class="card__title t-h3"><a class="card__link" href="/templates/video/post.html">Colour, in one block of tokens</a></h2>
+          <p class="card__excerpt">The four days that produced nothing visual, filmed. Eight ramps, ninety-seven tones, and why dark mode is not an inversion.</p>
+          <p class="card__facts"><span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-eye"/></svg> 18k views</span><span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-calendar"/></svg> Sep 04, 2026</span></p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ── Next ─────────────────────────────────────────────────────────── -->
+  <section class="section section-tight section-line">
+    <div class="center center-2xl">
+      <nav class="pager" aria-label="Projects">
+        <a class="pager__item" href="/templates/projects/project.html"><span class="pager__dir"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-left"/></svg> Previous</span><span class="pager__title">Swarnil Icons</span><span class="pager__meta">96 icons on a 24px grid</span></a>
+        <a class="pager__item pager__item-next" href="/templates/projects/project.html"><span class="pager__dir">Next <svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-right"/></svg></span><span class="pager__title">Signal — the Ghost theme</span><span class="pager__meta">Every collection, one system</span></a>
+      </nav>
+    </div>
+  </section>
+
+</main>
+<footer class="footer footer-loose">
+  <div class="center center-2xl">
+    <div class="footer__top">
+      <div>
+        <p class="footer__brand"><span class="dot dot-accent"></span> Swarnil</p>
+        <p class="footer__note">Engineer, creator, occasional traveller. Everything here is made in the open — the site, the system it is built on, and the notes from getting both wrong first.</p>
+        <div class="footer__social">
+          <a class="btn btn-social btn-sm btn-icon" href="https://youtube.com/@imswarnil" rel="noopener" aria-label="YouTube"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-video"/></svg></a>
+          <a class="btn btn-social btn-sm btn-icon" href="https://github.com/imswarnil" rel="noopener" aria-label="GitHub"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg></a>
+          <a class="btn btn-social btn-sm btn-icon" href="#i" rel="noopener" aria-label="Instagram"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-camera"/></svg></a>
+          <a class="btn btn-social btn-sm btn-icon" href="#i" rel="noopener" aria-label="RSS"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-rss"/></svg></a>
+        </div>
+        <form class="footer__form" action="#i" onsubmit="return false">
+          <label class="u-sr-only" for="foot-mail">Email</label>
+          <input class="input input-sm" id="foot-mail" type="email" placeholder="you@studio.tv" autocomplete="email" />
+          <button class="btn btn-secondary btn-sm" type="submit">Subscribe</button>
+        </form>
+      </div>
+      <nav class="footer__col" aria-label="Make"><p class="footer__head">Make</p><a href="/templates/video/index.html">Video</a><a href="/templates/blog/index.html">Writing</a><a href="/templates/projects/index.html">Projects</a><a href="/templates/courses/index.html">Courses</a></nav>
+      <nav class="footer__col" aria-label="Elsewhere"><p class="footer__head">Elsewhere</p><a href="https://youtube.com/@imswarnil" rel="noopener">YouTube</a><a href="https://github.com/imswarnil" rel="noopener">GitHub</a><a href="https://design.imswarnil.com">Design system</a><a href="#i">Newsletter</a></nav>
+      <nav class="footer__col" aria-label="Site"><p class="footer__head">Site</p><a href="/templates/personal/about.html">About</a><a href="#i">Now</a><a href="#i">Uses</a><a href="#i">Colophon</a></nav>
+    </div>
+    <span class="footer__mark" aria-hidden="true">Swarnil</span>
+    <div class="footer__bottom">
+      <div>
+        <p class="footer__fine">© 2026 Swarnil Singhai · Built on the <a href="https://design.imswarnil.com">Swarnil Design System</a></p>
+        <p class="footer__meta"><span><strong>v2.4</strong> of this site</span><span>Deployed <strong>Sep 07</strong></span><span>Type set in <strong>Inter</strong></span></p>
+      </div>
+      <div class="stack stack-sm">
+        <nav class="footer__legal" aria-label="Legal"><a href="#i">Privacy</a><a href="#i">Licence</a><a href="#i">RSS</a><a href="#i">Sitemap</a></nav>
+        <span class="footer__rec"><span class="dot dot-sm dot-live"></span> Still rolling</span>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -17,6 +17,8 @@
 		"keyframes-name-pattern": null,
 		"property-no-vendor-prefix": null,
 		"no-duplicate-selectors": null,
-		"number-max-precision": 10
+		"number-max-precision": 10,
+		"hue-degree-notation": "number",
+		"selector-not-notation": null
 	}
 }

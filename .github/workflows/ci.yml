@@ -16,17 +16,11 @@ jobs:
       - run: npm ci
       - name: Lint the CSS
         run: npm run lint
-      - name: Build the bundles
-        run: npm run build:css && npm run build:min
-      - name: Regenerate the docs
-        run: npm run docs
-      - name: Fail if the docs are out of date
-        run: |
-          if [ -n "$(git status --porcelain docs)" ]; then
-            echo "::error::docs/ is stale — run 'npm run docs' and commit the result."
-            git --no-pager diff --stat docs
-            exit 1
-          fi
-      - name: Fail on a class the markup uses but the CSS never defines
-        run: python3 scripts/audit-classes.py --strict
+      - name: Build the bundles and the docs
+        run: npm run build
+      # The audits read the built site, so they run after the build. Mono
+      # outside the code allowlist, or a class the markup uses that no CSS
+      # defines, each fail the job.
+      - name: Audit
+        run: npm run audit
       - run: npm run size

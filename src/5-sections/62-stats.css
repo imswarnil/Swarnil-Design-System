@@ -1,0 +1,130 @@
+/* =============================================================================
+   62 · STATS — numbers with receipts
+
+   Display numerals over label captions, each item marked with the accent rule.
+   The house rule for the content: never print a number the build (or the
+   business) cannot back — a stats band is a list of promises.
+
+   Layer: sections.
+   ========================================================================== */
+
+@layer sections {
+
+	.stats {
+		--stats-col: 11rem;
+		--stats-gap: var(--space-8);
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(var(--stats-col), 100%), 1fr));
+		gap: var(--stats-gap);
+	}
+
+	.stats__item {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2);
+		padding-inline-start: var(--space-4);
+		border-inline-start: var(--border-2) solid var(--accent);
+	}
+
+	.stats__label {
+		font-size: var(--text-sm);
+		color: var(--fg-muted);
+		max-inline-size: 14rem;
+	}
+
+	/* Quiet: the rule steps back to a hairline in the line colour. */
+	.stats-quiet .stats__item { border-inline-start: var(--border-hair) solid var(--line-strong); }
+
+	/* Row: a slim horizontal strip for a header band. */
+	.stats-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-8);
+	}
+
+	.stats-row .stats__item { padding-inline-start: var(--space-3); }
+	.stats-row .t-stat { font-size: var(--text-2xl); }
+
+	/* ── The value, and what moved it ──────────────────────────────────────
+	   .stats__value wraps the numeral so a prefix, a count-up span and a
+	   suffix sit on one baseline; .stats__delta is the change, in the data
+	   voice, coloured by [data-trend] and never by a class. */
+	.stats__value {
+		display: inline-flex;
+		align-items: baseline;
+		gap: var(--space-1);
+		font-family: var(--font-display);
+		font-size: var(--text-4xl);
+		font-weight: var(--weight-bold);
+		letter-spacing: var(--tracking-tighter);
+		line-height: 1;
+		font-variant-numeric: tabular-nums lining-nums;
+		color: var(--fg-default);
+	}
+
+	.stats__unit {
+		font-size: 0.45em;
+		font-weight: var(--weight-medium);
+		letter-spacing: var(--tracking-tight);
+		color: var(--fg-subtle);
+	}
+
+	.stats__delta {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-1);
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-xs);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-faint);
+	}
+
+	.stats__delta[data-trend='up']   { color: var(--success-fg); }
+	.stats__delta[data-trend='down'] { color: var(--danger-fg); }
+	.stats__delta .icon { --icon-size: 0.875rem; }
+
+	.stats__icon { color: var(--fg-faint); --icon-size: 1.25rem; }
+
+	.stats__note {
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-2xs);
+		letter-spacing: var(--tracking-data);
+		color: var(--fg-faint);
+	}
+
+	/* ── Dresses ───────────────────────────────────────────────────────────── */
+
+	/* Cards: each number in its own surface; the rule becomes a top edge. */
+	.stats-cards { --stats-gap: var(--space-4); }
+	.stats-cards .stats__item {
+		padding: var(--space-5);
+		border: var(--border-hair) solid var(--line-default);
+		border-inline-start-width: var(--border-hair);
+		border-inline-start-color: var(--line-default);
+		border-block-start: var(--border-2) solid var(--accent);
+		border-radius: var(--radius-card);
+		background: var(--bg-surface);
+	}
+
+	/* Centred: no rule at all, the number carries it. For a hero band. */
+	.stats-center .stats__item { align-items: center; text-align: center; padding-inline-start: 0; border-inline-start: 0; }
+	.stats-center .stats__label { max-inline-size: none; }
+
+	/* Divided: hairlines between items instead of a rule beside each. */
+	.stats-divided { --stats-gap: 0; }
+	.stats-divided .stats__item { padding: var(--space-2) var(--space-6); border-inline-start: var(--border-hair) solid var(--line-subtle); }
+	.stats-divided .stats__item:first-child { padding-inline-start: 0; border-inline-start: 0; }
+
+	/* Inverse: the dark band. The rule stays the accent — it is the one
+	   colour, and it reads on ink. */
+	.stats-inverse { padding: var(--space-8); border-radius: var(--radius-card); background: var(--bg-inverse); color: var(--fg-on-inverse); }
+	.stats-inverse .stats__value,
+	.stats-inverse .t-stat { color: var(--fg-on-inverse); }
+	.stats-inverse .stats__label { color: color-mix(in oklab, var(--fg-on-inverse) 65%, transparent); }
+
+	.stats-lg .stats__value { font-size: var(--text-5xl); }
+	.stats-sm .stats__value { font-size: var(--text-2xl); }
+}

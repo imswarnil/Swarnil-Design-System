@@ -1,0 +1,190 @@
+/* =============================================================================
+   27 · LINK CARD & REFERENCES — the two ways an article points elsewhere
+
+   An article sends the reader away twice, and the two are not the same act.
+
+   .linkcard is a link the writer WANTS taken now: it is the size of a
+   paragraph, it carries the destination's own title, description, favicon and
+   thumbnail, and it interrupts the column on purpose. It is what a bookmark
+   card is for.
+
+   .refs is the list at the bottom: the sources, numbered, quiet, and read
+   only by the reader who wants to check. It is deliberately the least
+   interesting thing on the page, because a reference that competes with the
+   argument is a footnote pretending to be a pull quote.
+
+   Both are ELEMENTS, not components: no state, no variants beyond a shape,
+   nothing to wire. A component is a thing that behaves; these are things that
+   sit there and are read.
+
+   COMPOSITION WARNING
+   .ref uses ::before for its number, so a .ref cannot also take .frame.
+
+   Layer: elements.
+   ========================================================================== */
+
+@layer elements {
+
+	/* ── .linkcard — the destination, previewed ────────────────────────── */
+
+	.linkcard {
+		display: flex;
+		align-items: stretch;
+		gap: 0;
+		min-inline-size: 0;
+		border: var(--border-hair) solid var(--line-default);
+		border-radius: var(--radius-card);
+		background: var(--bg-surface);
+		overflow: hidden;
+		text-decoration: none;
+		color: inherit;
+		transition: var(--t-colors), var(--t-transform);
+	}
+
+	@media (hover: hover) and (pointer: fine) {
+		.linkcard:hover { border-color: var(--line-strong); translate: 0 -2px; }
+	}
+
+	.linkcard__body {
+		flex: 1;
+		min-inline-size: 0;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-1);
+		padding: var(--space-5);
+	}
+
+	.linkcard__title {
+		font-family: var(--font-display);
+		font-size: var(--text-base);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-tight);
+		line-height: var(--leading-snug);
+		color: var(--fg-default);
+		margin: 0;
+	}
+
+	.linkcard__desc {
+		font-size: var(--text-sm);
+		line-height: var(--leading-relaxed);
+		color: var(--fg-muted);
+		margin: 0;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
+		overflow: hidden;
+	}
+
+	/* Favicon and host. The host is the honest part of a link — a reader
+	   deciding whether to follow one is deciding whether to trust a domain,
+	   not a title. So it gets its own line and the data voice. */
+	.linkcard__meta {
+		display: flex;
+		align-items: center;
+		gap: var(--space-2);
+		margin-block-start: auto;
+		padding-block-start: var(--space-3);
+		font-family: var(--font-data);
+		font-size: var(--text-2xs);
+		font-weight: var(--weight-light);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-faint);
+	}
+
+	.linkcard__icon {
+		inline-size: 1rem;
+		block-size: 1rem;
+		flex: none;
+		border-radius: var(--radius-xs);
+		object-fit: cover;
+	}
+
+	.linkcard__media {
+		inline-size: 11rem;
+		flex: none;
+		background: var(--bg-media);
+		overflow: hidden;
+	}
+
+	.linkcard__media > img { inline-size: 100%; block-size: 100%; object-fit: cover; display: block; }
+
+	/* Quiet: no surface, for a run of several in a row. */
+	.linkcard-quiet { background: transparent; border-color: var(--line-subtle); }
+
+	/* Compact: no thumbnail, one line of description. For a "further reading"
+	   list where three cards with three pictures would be a gallery. */
+	.linkcard-sm .linkcard__body { padding: var(--space-4); }
+	.linkcard-sm .linkcard__media { display: none; }
+	.linkcard-sm .linkcard__desc { -webkit-line-clamp: 1; }
+
+	@container (max-width: 30rem) {
+		.linkcard__media { display: none; }
+	}
+
+	/* ── .refs — the sources ───────────────────────────────────────────── */
+
+	.refs {
+		counter-reset: ref;
+		list-style: none;
+		margin: var(--space-8) 0 0;
+		padding: var(--space-6) 0 0;
+		border-block-start: var(--border-hair) solid var(--line-subtle);
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-3);
+	}
+
+	.refs__title {
+		font-family: var(--font-label);
+		font-size: var(--text-2xs);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: var(--fg-faint);
+		margin: 0 0 var(--space-2);
+	}
+
+	.ref {
+		counter-increment: ref;
+		position: relative;
+		padding-inline-start: var(--space-8);
+		font-size: var(--text-sm);
+		line-height: var(--leading-relaxed);
+		color: var(--fg-muted);
+	}
+
+	/* The number is data and it is right-aligned in its gutter, so a list
+	   running past nine still lines its text up. */
+	.ref::before {
+		content: '[' counter(ref) ']';
+		position: absolute;
+		inset-inline-start: 0;
+		inline-size: var(--space-6);
+		text-align: end;
+		font-family: var(--font-data);
+		font-size: var(--text-2xs);
+		font-weight: var(--weight-light);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-faint);
+	}
+
+	.ref a { color: var(--fg-link); }
+	.ref__where { color: var(--fg-faint); }
+
+	/* The marker in the running text that points at one. Same idea as the
+	   footnote reference, different list. */
+	.ref-mark {
+		font-family: var(--font-data);
+		font-size: 0.75em;
+		font-weight: var(--weight-light);
+		letter-spacing: var(--tracking-data);
+		vertical-align: super;
+		color: var(--fg-accent);
+		text-decoration: none;
+		padding-inline: 0.15em;
+	}
+
+	.ref-mark:hover { text-decoration: underline; }
+}

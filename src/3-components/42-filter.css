@@ -1,0 +1,273 @@
+/* =============================================================================
+   42 · FILTER — the sidebar, the bar above the results, the view switch
+
+   A collection page is three controls and a list. The controls are here; the
+   list is .results in the patterns layer, because only that one needs to know
+   its children are cards.
+
+   Everything is a REAL form control. The facet is a checkbox, the view switch
+   is a radio group, the search is <input type="search">. That is not purity:
+   it is how the keyboard, the screen reader, the browser's own reset button,
+   form submission and a page that has to work before its JavaScript arrives
+   all come free. A <div role="checkbox"> buys nothing and owes all of that.
+
+   The three pieces:
+
+     .facets     the filtering column — groups of options, with counts
+     .filterbar  the strip above the results — count, search, sort, view
+     .viewtoggle grid or list, as two radios on one track
+
+   State is the control's own state. Nothing here needs a class to say
+   "selected"; :checked already says it, and :checked cannot disagree with the
+   form the way a class can.
+
+   Layer: components.
+   ========================================================================== */
+
+@layer components {
+
+	/* ── .facets — the filter column ──────────────────────────────────────── */
+
+	.facets {
+		--facets-gap: var(--space-6);
+		display: flex;
+		flex-direction: column;
+		gap: var(--facets-gap);
+	}
+
+	.facets__head {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: var(--space-3);
+		padding-block-end: var(--space-3);
+		border-block-end: var(--border-hair) solid var(--line-subtle);
+	}
+
+	.facets__title {
+		font-family: var(--font-label);
+		font-size: var(--text-2xs);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: var(--fg-faint);
+		margin: 0;
+	}
+
+	.facets__group { display: flex; flex-direction: column; gap: var(--space-2); }
+
+	/* A group can be a <details> on a narrow screen and a plain section on a
+	   wide one. Styling the summary here means the markup does not change. */
+	.facets__group > summary {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-2);
+		cursor: pointer;
+		list-style: none;
+	}
+
+	.facets__group > summary::-webkit-details-marker { display: none; }
+
+	.facets__group > summary::after {
+		content: '';
+		inline-size: 0.5rem;
+		block-size: 0.5rem;
+		border-inline-end: var(--border-2) solid currentcolor;
+		border-block-end: var(--border-2) solid currentcolor;
+		rotate: 45deg;
+		color: var(--fg-faint);
+		transition: rotate var(--dur-2) var(--ease-out);
+	}
+
+	.facets__group[open] > summary::after { rotate: -135deg; }
+
+	.facets__label {
+		font-family: var(--font-label);
+		font-size: var(--text-2xs);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: var(--fg-faint);
+		margin: 0 0 var(--space-1);
+	}
+
+	.facets__list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-px);
+	}
+
+	/* The option is the LABEL, so the whole row is the hit area — the count
+	   included. A 6px checkbox is not a tap target; a 32px row is. */
+	.facets__opt {
+		display: flex;
+		align-items: center;
+		gap: var(--space-3);
+		min-block-size: var(--tap-min);
+		padding: var(--space-1) var(--space-2);
+		margin-inline: calc(var(--space-2) * -1);
+		border-radius: var(--radius-sm);
+		font-size: var(--text-sm);
+		color: var(--fg-muted);
+		cursor: pointer;
+		transition: var(--t-colors);
+	}
+
+	.facets__opt:hover { background: var(--hover-wash); color: var(--fg-default); }
+	.facets__opt > input { flex: none; }
+	.facets__opt > :nth-child(2) { min-inline-size: 0; }
+
+	/* Checked is weight and ink, not a filled row: the list still reads as a
+	   list, and two checked options do not turn the column into a block. */
+	.facets__opt:has(> input:checked) { color: var(--fg-default); font-weight: var(--weight-medium); }
+
+	/* Nothing left to match. Not disabled — a zero is information, and a
+	   reader deciding what to uncheck needs to see it. */
+	.facets__opt:has(> input:disabled) { color: var(--fg-disabled); cursor: not-allowed; }
+
+	/* Right-aligned tally, in the data voice so a column of them lines up. */
+	.facets__count {
+		margin-inline-start: auto;
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-2xs);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-faint);
+	}
+
+	/* A colour swatch or a language dot in front of the label — the same
+	   --lang custom property the repo card reads. */
+	.facets__swatch {
+		inline-size: 0.625rem;
+		block-size: 0.625rem;
+		border-radius: var(--radius-full);
+		background: var(--lang, var(--fg-faint));
+		flex: none;
+	}
+
+	/* The row of what is currently on, so a reader can undo one thing without
+	   hunting for it in the column. Chips carry their own dismiss. */
+	.facets__active { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+
+	/* ── Variants ──────────────────────────────────────────────────────────── */
+
+	.facets-sticky { position: sticky; inset-block-start: var(--facets-top, var(--space-6)); }
+	.facets-boxed {
+		padding: var(--space-5);
+		border: var(--border-hair) solid var(--line-default);
+		border-radius: var(--radius-lg);
+		background: var(--bg-surface);
+	}
+
+	/* Ruled: a hairline between groups, for a long column where the gap alone
+	   stops being enough to say where one question ends. */
+	.facets-ruled .facets__group + .facets__group {
+		padding-block-start: var(--facets-gap);
+		border-block-start: var(--border-hair) solid var(--line-subtle);
+	}
+
+	/* Laid out sideways — the filter as a bar, for a page with no room for a
+	   column. Groups sit next to each other and the lists wrap. */
+	.facets-inline {
+		flex-direction: row;
+		flex-wrap: wrap;
+		align-items: flex-start;
+		--facets-gap: var(--space-8);
+	}
+
+	.facets-inline .facets__list { flex-direction: row; flex-wrap: wrap; gap: var(--space-2); }
+	.facets-inline .facets__opt { margin-inline: 0; }
+
+	/* ── .filterbar — the strip above the results ─────────────────────────── */
+
+	.filterbar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: var(--space-3) var(--space-4);
+		padding-block-end: var(--space-4);
+		border-block-end: var(--border-hair) solid var(--line-subtle);
+	}
+
+	/* How many things you are looking at. It is a count, so it is data. */
+	.filterbar__count {
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-2xs);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		text-transform: uppercase;
+		color: var(--fg-faint);
+		margin: 0;
+	}
+
+	.filterbar__count strong { font-weight: var(--weight-semibold); color: var(--fg-default); }
+
+	.filterbar__actions {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: var(--space-2);
+		margin-inline-start: auto;
+	}
+
+	.filterbar__search { flex: 1 1 12rem; min-inline-size: 0; max-inline-size: 22rem; }
+
+	.filterbar-flush { border-block-end: 0; padding-block-end: 0; }
+
+	/* ── .viewtoggle — grid or list ────────────────────────────────────────
+	   Two radios on a sunken track. The chosen one rises to the surface with a
+	   breath of elevation and no accent — the same answer .btn-group-segmented
+	   gives, because a view switch must never compete with the page's primary
+	   action. The input itself is visually hidden but still focusable, which
+	   is what puts the focus ring on the label. */
+	.viewtoggle {
+		display: inline-flex;
+		gap: var(--space-1);
+		padding: var(--space-1);
+		border: var(--border-hair) solid var(--line-default);
+		border-radius: var(--radius-control);
+		background: var(--bg-sunken);
+		flex: none;
+	}
+
+	.viewtoggle__opt {
+		position: relative;
+		display: grid;
+		place-items: center;
+		inline-size: 2rem;
+		block-size: 2rem;
+		border-radius: var(--radius-sm);
+		color: var(--fg-muted);
+		cursor: pointer;
+		transition: var(--t-colors), var(--t-shadow);
+	}
+
+	.viewtoggle__opt:hover { color: var(--fg-default); }
+
+	.viewtoggle__opt > input {
+		position: absolute;
+		inline-size: 1px;
+		block-size: 1px;
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	.viewtoggle__opt:has(> input:checked) {
+		background: var(--bg-surface);
+		color: var(--fg-default);
+		box-shadow: var(--elevation-1);
+	}
+
+	.viewtoggle__opt:has(> input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+	@media (width < 48rem) {
+		.filterbar__actions { inline-size: 100%; margin-inline-start: 0; }
+	}
+}

@@ -1,0 +1,236 @@
+/* =============================================================================
+   35 · NAVBAR — the bar itself
+
+   Split deliberately: this file is the BAR. The things that open out of it —
+   dropdown, mega panel, mobile drawer — are 36-menu.css. The previous system
+   had all three in one 1,574-line file, which is how a navbar becomes the
+   scariest file in a repo.
+
+   State lives in ARIA and data-* (PRINCIPLES #3):
+     [aria-current='page']     which link you are on
+     [aria-expanded]           whether the burger is open
+     [data-scrolled]           the bar has left the top of the page
+     [data-dir='up'|'down']    last scroll direction, for hide-on-scroll
+   A class can disagree with the accessibility tree. An attribute cannot.
+
+   Layer: components.
+   ========================================================================== */
+
+@layer components {
+
+	.navbar {
+		--navbar-h: 3.5rem;
+		--navbar-bg: var(--bg-canvas);
+		--navbar-pad: var(--gutter);
+		--navbar-gap: var(--space-5);
+
+		position: relative;
+		z-index: var(--z-nav);
+		display: flex;
+		align-items: center;
+		gap: var(--navbar-gap);
+		block-size: var(--navbar-h);
+		padding-inline: var(--navbar-pad);
+		background: var(--navbar-bg);
+	}
+
+	/* ── Parts ─────────────────────────────────────────────────────────────── */
+
+	.navbar__brand {
+		display: flex;
+		align-items: center;
+		gap: var(--space-2);
+		flex: none;
+		font-family: var(--font-display);
+		font-weight: var(--weight-bold);
+		font-size: var(--text-lg);
+		letter-spacing: var(--tracking-tight);
+		color: var(--fg-default);
+		text-decoration: none;
+	}
+
+	.navbar__nav {
+		display: flex;
+		align-items: center;
+		gap: var(--space-1);
+		min-inline-size: 0;
+	}
+
+	/* Pushes everything after it to the far end. One class instead of a
+	   margin-left:auto scattered through the markup. */
+	.navbar__spacer { margin-inline-start: auto; }
+
+	.navbar__actions {
+		display: flex;
+		align-items: center;
+		gap: var(--space-2);
+		flex: none;
+		margin-inline-start: auto;
+	}
+
+	/* ── Links ─────────────────────────────────────────────────────────────
+	   An icon is optional and sized by the link, so a nav with icons and a nav
+	   without are the same component. */
+
+	.navbar__link {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-2);
+		block-size: 2.25rem;
+		padding-inline: var(--space-3);
+		border-radius: var(--radius-control);
+		font-size: var(--text-sm);
+		font-weight: var(--weight-medium);
+		color: var(--fg-muted);
+		text-decoration: none;
+		white-space: nowrap;
+		position: relative;
+		transition: color var(--dur-2) var(--ease-out);
+	}
+
+	.navbar__link:hover { color: var(--fg-default); }
+	.navbar__link .icon { --icon-size: 1rem; }
+
+	/* ── The house active state ────────────────────────────────────────────
+	   Dot, semibold, accent — the same three properties as the tabs, the side
+	   nav, the TOC and the drawer.
+
+	   WHERE the dot sits depends on whether the link has an icon, and :has()
+	   lets the CSS work that out instead of the author having to:
+
+	     no icon   →  ● Watch      the dot takes the leading slot
+	     icon      →  ▷ Watch ●    the icon already has it, so the dot follows
+
+	   Without this the dot and the icon fight over the same position, and a
+	   nav with mixed items lines up wrong. */
+
+	.navbar__link[aria-current='page'] {
+		color: var(--fg-accent);
+		font-weight: var(--weight-semibold);
+	}
+
+	.navbar__link[aria-current='page']::before,
+	.navbar__link:has(.icon)[aria-current='page']::after {
+		content: '';
+		inline-size: var(--dot-sm);
+		block-size: var(--dot-sm);
+		border-radius: var(--radius-full);
+		background: var(--accent);
+		flex: none;
+	}
+
+	/* An icon already occupies the leading slot, so the dot moves to the end. */
+	.navbar__link:has(.icon)[aria-current='page']::before { content: none; }
+
+	/* ── Variants ──────────────────────────────────────────────────────────── */
+
+	.navbar-sticky {
+		position: sticky;
+		inset-block-start: 0;
+	}
+
+	.navbar-bordered { border-block-end: var(--border-hair) solid var(--line-subtle); }
+
+	/* Translucent only once the page has scrolled, so it is glass over content
+	   and solid over the top of the page — where there is nothing to blur. */
+	.navbar-blur {
+		background: color-mix(in oklab, var(--navbar-bg) 88%, transparent);
+		backdrop-filter: blur(12px);
+	}
+
+	.navbar-transparent { --navbar-bg: transparent; border-block-end-color: transparent; }
+	.navbar-transparent[data-scrolled] {
+		--navbar-bg: var(--bg-canvas);
+		border-block-end-color: var(--line-subtle);
+	}
+
+	.navbar-tall { --navbar-h: 4.5rem; }
+	.navbar-inverse { --navbar-bg: var(--bg-inverse); color: var(--fg-on-inverse); }
+	.navbar-inverse .navbar__brand { color: var(--fg-on-inverse); }
+	.navbar-inverse .navbar__link { color: oklch(100% 0 0 / 0.7); }
+	.navbar-inverse .navbar__link:hover { color: var(--fg-on-inverse); }
+
+	/* Brand left, nav centred, actions right — the three-column bar. */
+	.navbar-centered { display: grid; grid-template-columns: 1fr auto 1fr; }
+	.navbar-centered .navbar__actions { justify-self: end; }
+	.navbar-centered .navbar__nav { justify-self: center; }
+
+	/* Hides going down, returns going up. nav.js sets data-dir. */
+	.navbar-hide-on-scroll {
+		transition: translate var(--dur-4) var(--ease-out);
+	}
+
+	.navbar-hide-on-scroll[data-dir='down'][data-scrolled] {
+		translate: 0 calc(var(--navbar-h) * -1);
+	}
+
+	/* ── Search field in the bar ───────────────────────────────────────────── */
+
+	.navbar__search {
+		position: relative;
+		display: flex;
+		align-items: center;
+		flex: 1 1 20rem;
+		max-inline-size: 32rem;
+	}
+
+	.navbar__search .input { padding-inline-start: var(--space-8); }
+
+	.navbar__search .icon {
+		position: absolute;
+		inset-inline-start: var(--space-3);
+		--icon-size: 1rem;
+		color: var(--fg-faint);
+		pointer-events: none;
+	}
+
+	/* ── The burger ────────────────────────────────────────────────────────
+	   Three lines that become a cross. The middle one fades while the outer
+	   two travel and rotate — animated with `translate` and `rotate` rather
+	   than `transform`, so neither overwrites the other. */
+
+	.navbar__burger {
+		display: none;
+		flex-direction: column;
+		justify-content: center;
+		gap: 5px;
+		inline-size: 2.5rem;
+		block-size: 2.5rem;
+		padding-inline: 0.5rem;
+		border: var(--border-hair) solid var(--line-default);
+		border-radius: var(--radius-control);
+		flex: none;
+	}
+
+	.navbar__burger > span {
+		display: block;
+		block-size: 1.5px;
+		background: currentcolor;
+		border-radius: var(--radius-full);
+		transition:
+			translate var(--dur-3) var(--ease-out),
+			rotate var(--dur-3) var(--ease-out),
+			opacity var(--dur-1) linear;
+	}
+
+	.navbar__burger[aria-expanded='true'] > span:nth-child(1) { translate: 0 6.5px; rotate: 45deg; }
+	.navbar__burger[aria-expanded='true'] > span:nth-child(2) { opacity: 0; }
+	.navbar__burger[aria-expanded='true'] > span:nth-child(3) { translate: 0 -6.5px; rotate: -45deg; }
+
+	/* ── Responsive ────────────────────────────────────────────────────────
+	   A media query is correct HERE and nowhere else in this file: the navbar
+	   collapsing is a PAGE-level decision, not a component one. */
+
+	@media (width < 48rem) {
+		.navbar__burger { display: flex; }
+		.navbar__nav { display: none; }
+		.navbar__search { display: none; }
+		.navbar-centered { display: flex; }
+	}
+
+	/* Keeps the burger at every width. Two real uses: a drawer that holds
+	   secondary navigation the bar never shows, and documenting the thing —
+	   an example of a burger that is invisible on the machine you are reading
+	   the docs on is not an example. */
+	.navbar-burger .navbar__burger { display: flex; }
+}

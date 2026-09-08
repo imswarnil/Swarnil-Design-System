@@ -1,0 +1,460 @@
+/* =============================================================================
+   25 · EFFECT — interactions, entrances, ambient motion
+
+   05-motion.css owns the vocabulary: the durations, the curves and the five
+   base keyframes. This file is what the page does with them, in two registers:
+
+     .tr-*   TRANSITIONS  a named bundle of properties that may change. Adds
+                          nothing visible on its own — it says how a change
+                          will feel when a state changes.
+     .fx-*   EFFECTS      entrances, scroll-driven reveals, drawn marks, the
+                          knockout, and the few ambient moves a creator's page
+                          is allowed (float, shimmer, scan, Ken Burns).
+                          Ambient motion is slow, one property, and OFF under
+                          reduced motion — not merely faster.
+
+   The third register, .ix-* — the hover and focus answers — is its own file,
+   28-interaction.css. It is split out because it answers a different question:
+   an effect happens because the PAGE decided it should, an interaction happens
+   because a PERSON pointed at something.
+
+   PRINCIPLES #5 still governs: the finished state is the resting state. Every
+   entrance uses `both`, so if the animation never runs the element is simply
+   there. Every reveal keeps its content in the DOM. Nothing here is required
+   for the page to be usable.
+
+   Layer: elements.
+   ========================================================================== */
+
+@layer elements {
+
+	/* ── Transitions — how a change feels ──────────────────────────────────
+	   Named bundles from the motion tokens, so a component states WHICH
+	   properties may move rather than reaching for `all`. */
+	.tr-colors    { transition: var(--t-colors); }
+	.tr-transform { transition: var(--t-transform); }
+	.tr-shadow    { transition: var(--t-shadow); }
+	.tr-opacity   { transition: opacity var(--dur-2) var(--ease-out); }
+	.tr-size      { transition: inline-size var(--dur-3) var(--ease-out), block-size var(--dur-3) var(--ease-out); }
+	.tr-all       { transition: var(--t-colors), var(--t-transform), var(--t-shadow), opacity var(--dur-2) var(--ease-out); }
+
+	/* Tempo. These override the bundle's duration wholesale. */
+	.tr-fast { transition-duration: var(--dur-1); }
+	.tr-slow { transition-duration: var(--dur-4); }
+
+	/* ── Entrances — arriving on the page ──────────────────────────────────
+	   `both`: the first keyframe is held before the delay and the last after,
+	   so nothing is unstyled for a frame and nothing snaps back. */
+	.fx-blur-in     { animation: fx-blur-in var(--dur-5) var(--ease-out) both; }
+	.fx-scale-in    { animation: fx-scale-in var(--dur-4) var(--ease-out) both; }
+	.fx-pop         { animation: fx-scale-in var(--dur-4) var(--ease-overshoot) both; }
+	.fx-slide-start { animation: fx-slide-start var(--dur-4) var(--ease-out) both; }
+	.fx-slide-end   { animation: fx-slide-end var(--dur-4) var(--ease-out) both; }
+	.fx-drop        { animation: fx-drop var(--dur-4) var(--ease-out) both; }
+	.fx-wipe        { animation: fx-wipe var(--dur-5) var(--ease-snap) both; }
+
+	@keyframes fx-blur-in     { from { opacity: 0; filter: blur(12px); } to { opacity: 1; filter: blur(0); } }
+
+	@keyframes fx-scale-in    { from { opacity: 0; scale: 0.92; } to { opacity: 1; scale: 1; } }
+
+	@keyframes fx-slide-start { from { opacity: 0; translate: -24px 0; } to { opacity: 1; translate: 0 0; } }
+
+	@keyframes fx-slide-end   { from { opacity: 0; translate: 24px 0; } to { opacity: 1; translate: 0 0; } }
+
+	@keyframes fx-drop        { from { opacity: 0; translate: 0 -16px; } to { opacity: 1; translate: 0 0; } }
+
+	@keyframes fx-wipe        { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+
+	/* Delays — a beat each, for choreographing a hero by hand. */
+	.fx-delay-1 { animation-delay: 80ms; }
+	.fx-delay-2 { animation-delay: 160ms; }
+	.fx-delay-3 { animation-delay: 240ms; }
+	.fx-delay-4 { animation-delay: 320ms; }
+	.fx-delay-5 { animation-delay: 400ms; }
+
+	/* Slower staggers for a long list — twice the beat of .fx-stagger. */
+	.fx-stagger-slow > * { animation: fx-rise var(--dur-5) var(--ease-out) both; }
+	.fx-stagger-slow > :nth-child(2) { animation-delay: 120ms; }
+	.fx-stagger-slow > :nth-child(3) { animation-delay: 240ms; }
+	.fx-stagger-slow > :nth-child(4) { animation-delay: 360ms; }
+	.fx-stagger-slow > :nth-child(5) { animation-delay: 480ms; }
+	.fx-stagger-slow > :nth-child(n+6) { animation-delay: 600ms; }
+
+	/* Three more arrivals, for the three things the first six do not cover.
+
+	   flip-in  turns on the X axis — a card that was face-down. It is the
+	            only entrance with perspective, so it reads as an object
+	            rather than as a layer, and that is the whole reason to use it.
+	   unfold   opens from the middle outward on both axes at once. For a
+	            band that should feel like it was always there and is being
+	            revealed, not something arriving from off-screen.
+	   settle   starts slightly too large and comes to rest. The opposite of
+	            scale-in, and the right one when the element is already the
+	            subject: it does not approach, it focuses. */
+	.fx-flip-in { animation: fx-flip-in var(--dur-5) var(--ease-out) both; transform-style: preserve-3d; }
+	.fx-unfold  { animation: fx-unfold var(--dur-5) var(--ease-out) both; }
+	.fx-settle  { animation: fx-settle var(--dur-5) var(--ease-out) both; }
+
+	@keyframes fx-flip-in {
+		from { opacity: 0; perspective: 600px; rotate: x -18deg; translate: 0 8px; }
+		to   { opacity: 1; perspective: 600px; rotate: x 0deg; translate: 0 0; }
+	}
+
+	@keyframes fx-unfold {
+		from { opacity: 0; clip-path: inset(45% 0 45% 0); }
+		to   { opacity: 1; clip-path: inset(0 0 0 0); }
+	}
+
+	@keyframes fx-settle {
+		from { opacity: 0; scale: 1.06; }
+		to   { opacity: 1; scale: 1; }
+	}
+
+	/* ── Typed text — the title card ───────────────────────────────────────
+	   Reveals `--chars` characters with a stepped width, so the caret sits at
+	   the last letter typed. Set the count on the instance:
+	       <span class="fx-type" style="--chars: 18">Rolling in five…</span>
+	   Single line by construction; a wrapped line has no "end" to type to. */
+	.fx-type {
+		--chars: 20;
+		--type-dur: 1.6s;
+		display: inline-block;
+		overflow: hidden;
+		white-space: nowrap;
+		max-inline-size: fit-content;
+		border-inline-end: var(--border-2) solid var(--accent);
+		animation:
+			fx-type var(--type-dur) steps(var(--chars)) both,
+			fx-blink 1s steps(1) infinite;
+	}
+
+	@keyframes fx-type { from { inline-size: 0; } to { inline-size: calc(var(--chars) * 1ch + 0.5ch); } }
+
+	/* ── Drawn marks — the annotations a reader makes on paper ─────────────
+	   A highlighter stroke, a circle round a word, an underline. All three
+	   are the same idea: a shape that is already the right shape, revealed
+	   along --draw by a mask, so it looks DRAWN rather than faded in. That is
+	   the whole difference between a highlight and an animation of one.
+
+	   They mark a phrase, so they go on an inline element inside a sentence:
+
+	       I make things. Then I make a <em class="fx-mark">video</em> about it.
+
+	   Each is off under reduced motion, where the mark is simply finished —
+	   which is the resting state, so nothing is lost. */
+
+	.fx-mark,
+	.fx-circle,
+	.fx-underline {
+		--draw: 0%;
+		position: relative;
+		display: inline-block;
+		font-style: inherit;
+	}
+
+	/* The highlighter. A band behind the words, sitting on the baseline the
+	   way a real marker does — not a full-height fill, which reads as a
+	   selection rather than as a mark. */
+	.fx-mark {
+		background:
+			linear-gradient(
+				to right,
+				var(--mark-ink, var(--accent-soft)) var(--draw),
+				transparent var(--draw))
+			0 88% / 100% 62% no-repeat;
+		padding-inline: 0.12em;
+	}
+
+	/* The ring. Irregular radii on purpose — a perfect ellipse reads as a
+	   border, an uneven one reads as a hand. The conic mask is the drawing:
+	   it opens from the top-left, the way a right-handed person starts. */
+	.fx-circle { padding: 0.12em 0.4em; }
+
+	.fx-circle::before {
+		content: '';
+		position: absolute;
+		inset: -0.18em -0.35em;
+		border: var(--border-2) solid var(--accent);
+		border-radius: 47% 53% 45% 55% / 62% 44% 56% 38%;
+		rotate: -1.5deg;
+		mask-image: conic-gradient(from -35deg, black var(--draw), transparent 0);
+		pointer-events: none;
+	}
+
+	/* The underline, drawn left to right. Thicker than a text-decoration and
+	   offset clear of the descenders, because it is a mark, not a link. */
+	.fx-underline {
+		background:
+			linear-gradient(to right, var(--accent) var(--draw), transparent var(--draw))
+			0 100% / 100% var(--border-3) no-repeat;
+		padding-block-end: 0.12em;
+	}
+
+	/* Run them: on arrival, and again when they scroll into view. `both`
+	   keeps the finished state, so a browser with neither still shows the
+	   mark. */
+	.fx-mark,
+	.fx-circle::before,
+	.fx-underline { animation: fx-draw var(--dur-5) var(--ease-out) both; }
+
+	@keyframes fx-draw { from { --draw: 0%; } to { --draw: 100%; } }
+
+	/* ── .cutout — the footage read through the letters ────────────────────
+	   Not `background-clip: text`: that cannot take a <video>, and a poster
+	   image is not the effect anybody actually wants. This is the knockout —
+	   a solid plate over the media with the type punched out of it by a blend
+	   mode, which works with any media element underneath, moving or still.
+
+	   The mechanics, once, because they are unobvious:
+	     the plate is the PAGE colour and the type is the INVERSE of it;
+	     `screen` on a light page keeps white opaque and turns black clear;
+	     on a dark page the same job needs `multiply`, with the two swapped.
+	   Both branches are below, keyed off the theme, so the effect follows the
+	   page rather than assuming one.
+
+	       <div class="cutout">
+	         <video class="cutout__media" …></video>
+	         <p class="cutout__text">SWARNIL</p>
+	       </div>
+
+	   `isolation: isolate` is load-bearing: without it the blend reaches past
+	   the box and knocks a hole in the page. */
+	.cutout {
+		position: relative;
+		isolation: isolate;
+		overflow: hidden;
+		border-radius: var(--radius-media);
+		background: var(--bg-canvas);
+	}
+
+	.cutout__media {
+		position: absolute;
+		inset: 0;
+		inline-size: 100%;
+		block-size: 100%;
+		object-fit: cover;
+	}
+
+	.cutout__text {
+		position: relative;
+		z-index: 1;
+		margin: 0;
+		padding: var(--space-8) var(--space-6);
+		background: var(--pure-white);
+		color: var(--pure-black);
+		mix-blend-mode: screen;
+		font-family: var(--font-display);
+		font-size: var(--text-6xl);
+		font-weight: var(--weight-bold);
+		letter-spacing: var(--tracking-tighter);
+		line-height: 0.9;
+		text-align: center;
+		text-wrap: balance;
+	}
+
+	:root[data-theme='dark'] .cutout__text {
+		background: var(--pure-black);
+		color: var(--pure-white);
+		mix-blend-mode: multiply;
+	}
+
+	@media (prefers-color-scheme: dark) {
+		:root:not([data-theme='light']) .cutout__text {
+			background: var(--pure-black);
+			color: var(--pure-white);
+			mix-blend-mode: multiply;
+		}
+	}
+
+	.cutout-sm .cutout__text { font-size: var(--text-4xl); padding-block: var(--space-6); }
+	.cutout-lg .cutout__text { font-size: clamp(3rem, 16vw, 11rem); }
+
+	/* ── Scroll-driven — the page reveals itself as you arrive ─────────────
+	   `animation-timeline: view()` ties progress to the element's own
+	   position in the scrollport, so the reveal runs as it enters and NEVER
+	   needs an IntersectionObserver. Browsers without it fall through
+	   @supports and get the resting state — the honest fallback. */
+	@supports (animation-timeline: view()) {
+		.fx-scroll-rise,
+		.fx-scroll-fade,
+		.fx-scroll-scale,
+		.fx-scroll-wipe {
+			animation-timeline: view();
+			animation-range: entry 10% entry 60%;
+			animation-fill-mode: both;
+			animation-timing-function: var(--ease-out);
+		}
+
+		/* The marks draw as the sentence arrives, which is when a reader is
+		   actually looking at it. Without a view timeline they draw on load,
+		   which is the honest fallback rather than a broken one. */
+		.fx-mark,
+		.fx-circle::before,
+		.fx-underline {
+			animation-timeline: view();
+			animation-range: entry 25% cover 35%;
+		}
+
+		.fx-scroll-rise  { animation-name: fx-rise; }
+		.fx-scroll-fade  { animation-name: fx-fade; }
+		.fx-scroll-scale { animation-name: fx-scale-in; }
+		.fx-scroll-wipe  { animation-name: fx-wipe; }
+
+		/* Parallax: the child drifts more slowly than the page. Amount is a
+		   token so the design decides how much, not the markup. */
+		.fx-parallax { --parallax: 12%; }
+		.fx-parallax > :first-child {
+			animation: fx-parallax linear both;
+			animation-timeline: view();
+			animation-range: cover 0% cover 100%;
+		}
+
+		@keyframes fx-parallax {
+			from { translate: 0 calc(var(--parallax) * -1); }
+			to   { translate: 0 var(--parallax); }
+		}
+
+		/* A progress bar for the page. Pin it; its width is the scroll. */
+		.fx-scroll-progress {
+			position: fixed;
+			inset: 0 auto auto 0;
+			block-size: var(--border-2);
+			inline-size: 100%;
+			background: var(--accent);
+			transform-origin: 0 50%;
+			z-index: var(--z-max);
+			animation: fx-grow-x linear both;
+			animation-timeline: scroll(root);
+		}
+
+		@keyframes fx-grow-x { from { scale: 0 1; } to { scale: 1 1; } }
+	}
+
+	/* ── Ambient — things that move while nobody is touching them ──────────
+	   The allowance is narrow: slow, one property, and gone under reduced
+	   motion. These are for a hero, a poster, a scene — never a control. */
+
+	/* A slow vertical bob — a device mockup floating. */
+	.fx-float { animation: fx-float 6s var(--ease-inout) infinite; }
+
+	@keyframes fx-float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -10px; } }
+
+	/* A light sweeping through display type. Text becomes the mask. */
+	.fx-shimmer {
+		background: linear-gradient(100deg, currentcolor 40%, color-mix(in oklab, currentcolor 35%, transparent) 50%, currentcolor 60%) 0 0 / 250% 100%;
+		-webkit-background-clip: text;
+		background-clip: text;
+		-webkit-text-fill-color: transparent;
+		animation: fx-shimmer 3.2s var(--ease-inout) infinite;
+	}
+
+	@keyframes fx-shimmer { from { background-position: 100% 0; } to { background-position: -50% 0; } }
+
+	/* The slow push-in that gives a still its air of footage. Two percent. */
+	.fx-kenburns { overflow: hidden; }
+	.fx-kenburns > :is(img, video, picture) { animation: fx-kenburns 14s var(--ease-inout) infinite alternate; transform-origin: 50% 40%; }
+
+	@keyframes fx-kenburns { from { scale: 1; } to { scale: 1.08; } }
+
+	/* A scan line falling through the box. ::after — see the .ix-shine note. */
+	.fx-scan { position: relative; overflow: hidden; }
+	.fx-scan::after {
+		content: '';
+		position: absolute;
+		inset: 0 0 auto;
+		block-size: 2px;
+		background: var(--accent);
+		box-shadow: 0 0 12px var(--accent-ring);
+		opacity: 0.8;
+		animation: fx-scan 3.6s var(--ease-inout) infinite;
+		pointer-events: none;
+	}
+
+	@keyframes fx-scan { from { translate: 0 -2px; } to { translate: 0 calc(100cqb + 2px); } }
+	.fx-scan { container-type: size; }
+
+	/* Glitch — two clipped copies of the text jitter off register. Needs the
+	   text repeated in data-text, because a pseudo cannot read its parent. */
+	.fx-glitch { position: relative; display: inline-block; }
+	.fx-glitch::before,
+	.fx-glitch::after {
+		content: attr(data-text);
+		position: absolute;
+		inset: 0;
+		opacity: 0.85;
+		pointer-events: none;
+	}
+	.fx-glitch::before { color: var(--accent); clip-path: inset(0 0 55% 0); animation: fx-glitch-a 2.4s steps(2) infinite; }
+	.fx-glitch::after  { color: var(--craft);  clip-path: inset(55% 0 0 0); animation: fx-glitch-b 2.4s steps(2) infinite; }
+
+	@keyframes fx-glitch-a { 0%, 88%, 100% { translate: 0 0; } 90% { translate: -3px 0; } 94% { translate: 2px 0; } }
+
+	@keyframes fx-glitch-b { 0%, 88%, 100% { translate: 0 0; } 91% { translate: 3px 0; } 95% { translate: -2px 0; } }
+
+	/* The record light's breath, for anything that is live. */
+	.fx-beacon { position: relative; }
+	.fx-beacon::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+		box-shadow: 0 0 0 0 var(--accent-ring);
+		animation: fx-beacon 1.8s var(--ease-out) infinite;
+		pointer-events: none;
+	}
+
+	@keyframes fx-beacon { to { box-shadow: 0 0 0 10px transparent; } }
+
+	/* Three more ambient loops. Same budget as the rest: slow, one property,
+	   and gone under reduced motion.
+
+	   breathe  a scale that never resolves — for a thing that is WAITING, in
+	            the way a record light waits. Never on something interactive:
+	            a control that breathes reads as a control that is loading.
+	   swing    a degree and a half of rotation, hinged at the top. A hanging
+	            sign, a suspended card, a badge on a ribbon.
+	   drift    a slow horizontal wander with no beginning or end, for a
+	            background object that should not feel placed. */
+	.fx-breathe { animation: fx-breathe 5s var(--ease-inout) infinite; }
+	.fx-swing   { animation: fx-swing 6s var(--ease-inout) infinite; transform-origin: 50% 0; }
+	.fx-drift   { animation: fx-drift 18s var(--ease-inout) infinite; }
+
+	@keyframes fx-breathe { 0%, 100% { scale: 1; } 50% { scale: 1.035; } }
+
+	@keyframes fx-swing   { 0%, 100% { rotate: -1.5deg; } 50% { rotate: 1.5deg; } }
+
+	@keyframes fx-drift   { 0%, 100% { translate: -8px 0; } 50% { translate: 8px 0; } }
+
+	/* ── Counting up — a stat that arrives ─────────────────────────────────
+	   The registered integer --fx-n is animated and printed with a counter,
+	   so a number counts from zero without a script. Set the target on the
+	   instance. Screen readers get the real number from the markup: put it
+	   in the element and this ::after is aria-hidden by construction. */
+	.fx-count {
+		--fx-target: 100;
+		animation: fx-count var(--dur-5) var(--ease-out) both;
+		counter-reset: fx var(--fx-n);
+		font-variant-numeric: tabular-nums;
+	}
+	.fx-count::after { content: counter(fx); }
+
+	@keyframes fx-count { from { --fx-n: 0; } to { --fx-n: var(--fx-target); } }
+
+	/* ── Off, when asked ───────────────────────────────────────────────────
+	   Entrances collapse to the 1ms token; the ambient ones must be told. */
+	@media (prefers-reduced-motion: reduce) {
+		.fx-blur-in, .fx-scale-in, .fx-pop, .fx-slide-start, .fx-slide-end, .fx-drop, .fx-wipe,
+		.fx-flip-in, .fx-unfold, .fx-settle,
+		.fx-stagger-slow > * { animation: fx-fade 1ms linear both; }
+		.fx-type { animation: none; inline-size: auto; border-inline-end: 0; }
+		.fx-float, .fx-shimmer, .fx-kenburns > *, .fx-beacon::after, .fx-glitch::before, .fx-glitch::after, .fx-scan::after,
+		.fx-breathe, .fx-swing, .fx-drift { animation: none; }
+		.fx-shimmer { -webkit-text-fill-color: currentcolor; background: none; }
+		.fx-glitch::before, .fx-glitch::after { display: none; }
+		.fx-scroll-rise, .fx-scroll-fade, .fx-scroll-scale, .fx-scroll-wipe, .fx-parallax > :first-child { animation: none; }
+		.fx-count { animation: none; counter-reset: fx var(--fx-target); }
+		/* The drawn marks stop being drawn and are simply THERE. The finished
+		   state is the resting state, so nothing is lost by not moving. */
+		.fx-mark, .fx-circle::before, .fx-underline { animation: none; --draw: 100%; }
+	}
+}
