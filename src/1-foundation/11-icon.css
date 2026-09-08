@@ -1,0 +1,57 @@
+/* =============================================================================
+   11 · ICON — a 24px grid, 1.5px stroke, currentColor
+
+   Icons inherit their colour from the text they sit beside, which is why none
+   of them carries a fill. One stroke weight across the whole set, because a
+   set with two weights reads as two sets.
+
+   Layer: elements.
+   ========================================================================== */
+
+@layer elements {
+	.icon {
+		--icon-size: 1.25rem;
+		width: var(--icon-size);
+		height: var(--icon-size);
+		flex: none;
+		fill: none;
+		stroke: currentcolor;
+		/* 1.25rem = 20px, so 1.68 renders at ~1.4px. See the note below. */
+		stroke-width: 1.68;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	/* ── Optical stroke ────────────────────────────────────────────────────
+	   Every symbol is drawn on a 24-unit viewBox, so the stroke is scaled by
+	   whatever size the icon renders at:
+
+	       rendered stroke = stroke-width × (rendered px / 24)
+
+	   With one stroke-width for every size, a 14px icon draws a 0.9px line and
+	   a 32px icon draws a 2px one. On a phone — where almost every icon in
+	   this system is 14px or 16px — that sub-pixel line is what makes an icon
+	   set look washed out and slightly blurry next to its own text, and it is
+	   the single most common way a good icon set renders badly at small sizes.
+
+	   So the stroke is corrected per size, to land at ~1.4px however big the
+	   icon is. The large sizes are NOT corrected all the way down: a 32px icon
+	   at a true 1.4px reads as spindly, so it keeps a little more weight. That
+	   is the one deliberately unmathematical number here. */
+	.icon-xs { --icon-size: 0.875rem; stroke-width: 2.4; }   /* 14px → ~1.4px */
+	.icon-sm { --icon-size: 1rem;     stroke-width: 2.1; }   /* 16px → ~1.4px */
+	.icon-lg { --icon-size: 1.5rem;   stroke-width: 1.5; }   /* 24px → 1.5px  */
+	.icon-xl { --icon-size: 2rem;     stroke-width: 1.25; }  /* 32px → ~1.7px */
+
+	/* An icon sized by its host rather than by a class — a button sets
+	   --icon-size: 1.15em — is almost always small, so it takes the small
+	   weight. A component that wants a big one says so with .icon-lg. */
+	:is(.btn, .badge, .chip, .navbar__link, .sheet__link, .menu__item) > .icon { stroke-width: 2.1; }
+
+	/* Filled icons (a play triangle) opt in — they are the exception. */
+	.icon-solid { fill: currentcolor; stroke: none; }
+
+	/* Optical alignment: an icon beside text sits a hair high because the cap
+	   height is shorter than the icon box. */
+	.icon-inline { vertical-align: -0.125em; display: inline-block; }
+}

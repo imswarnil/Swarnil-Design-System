@@ -17,47 +17,31 @@ to merge than a clever one that doesn't.
 4. **Motion is honest.** Interaction feedback under 200ms, one property, and
    everything degrades under `prefers-reduced-motion`.
 5. **Both themes.** Anything you add must be checked in light *and* dark.
-6. **The rules of one.** One signal dot per surface, one accent word per
-   headline, one inverse band per view, one ask per page.
+6. **One accent, rationed.** One signal dot per surface, one primary button per
+   screen, one live badge per page.
+7. **Monospace is for code.** Labels are Inter worn small and uppercase; data is
+   Inter with tabular figures. `npm run audit` fails on anything else.
 
-## Getting set up
+## Setting up
 
 ```bash
 git clone https://github.com/imswarnil/Swarnil-Design-System
-cd Swarnil-Design-System
+cd swarnil-design
 npm install
-npm run dev          # docs at http://localhost:8080
+npm run dev        # http://localhost:8080
 ```
 
 ## Adding or changing a component
 
-1. Put the CSS in the right layer — `src/3-components/` for anything with
-   variants or states, `src/2-elements/` for a single idea with neither.
-2. Add its `@import` to that layer's `index.css`.
-3. **Document it.** A component that isn't on the docs site doesn't exist.
-   Add a page in `docs/_build/content_*.py` and a line in `NAV` in
-   `docs/_build/build.py`, then run `npm run docs`.
-4. Show **every** variant and state, each with its class names in the spec
-   strip beneath it.
-5. `npm run lint` and check the page in both themes.
-
-Never edit `docs/*.html` — those files are generated.
-
-## Commit messages
-
-Plain and specific: `nav: add aperture burger variant`,
-`fix: grid-rail-left stacked when used alone`.
+1. Write the CSS in the right layer under `src/`, inside its `@layer`, with a
+   header comment that states the argument.
+2. Register it with one `@import` line in that layer's `index.css`.
+3. Write its page: `docs/content/<slug>.md`, front matter (`title`, `group`,
+   `order`, `lead`), then a `:::demo` block for **every class the file
+   defines**, a Properties table and an Accessibility list.
+4. `npm run lint && npm run build && npm run audit` — all clean.
+5. Screenshot in both themes if the change is visual.
 
 ## Pull requests
 
-Say what changed and why, and include a screenshot in both themes for anything
-visual. Small PRs get reviewed faster than large ones.
-
-## Reporting bugs
-
-Open an issue with the browser, the theme (light/dark), the markup you used,
-and what you expected. A link to a reduced test case is worth a thousand words.
-
-## Adding your site to the Showcase
-
-See [showcase/README.md](showcase/README.md) — it's one JSON file and a PR.
+Small, one concern each. The PR template asks the questions that matter.

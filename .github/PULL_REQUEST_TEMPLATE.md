@@ -12,7 +12,7 @@
 - [ ] State uses ARIA (`aria-current` / `aria-pressed` / `[data-done]`), not an `.active` class
 - [ ] Checked in **light and dark**
 - [ ] Motion degrades under `prefers-reduced-motion`
-- [ ] Documented on the docs site (`docs/_build/content_*.py` + a line in `NAV`)
+- [ ] Documented on the docs site (one markdown file in `docs/content/`, every class in a demo)
 - [ ] `npm run lint` passes
 
 ## Screenshots

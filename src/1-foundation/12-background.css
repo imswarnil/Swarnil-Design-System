@@ -1,0 +1,292 @@
+/* =============================================================================
+   12 · BACKGROUND — the ground a band stands on
+
+   Patterns (07) are lines: they draw. Backgrounds are light: they fall. A
+   glow, an aurora, a spotlight, a vignette, grain. Every one is built from the
+   tier-2 colour tokens, so a background never knows which theme it is in and
+   the accent inside a glow is THE accent — retint the system and the light
+   changes colour with it.
+
+   COMPOSITION
+   Every .bg-* paints on the element's own `background` (and `.bg-noise` on
+   `background-image`), never on a pseudo-element. That is deliberate: a
+   .pattern uses ::before and a .frame uses both, so a band can be
+   `bg-aurora pattern pattern-grid frame` and every layer gets its own slot.
+   Solid fills, gradients and the noise layer stack in one declaration, so
+   `.bg-glow.bg-noise` is one background with two images — not two elements.
+
+   Layer: elements — it paints, so it sits above tokens and below components.
+   ========================================================================== */
+
+@layer tokens {
+	:root {
+		/* Where the light comes from. Percentages of the box. */
+		--bg-glow-x: 50%;
+		--bg-glow-y: 0%;
+		--bg-glow-size: 60%;
+		/* Strength of a glow, 0–1. Above ~0.5 a glow stops being a background. */
+		--bg-glow-alpha: 0.28;
+		/* Film grain, as an inline SVG so it costs no request. The alpha is the
+		   knob; the frequency is the grain size. */
+		--bg-noise-alpha: 0.06;
+		--bg-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+	}
+}
+
+@layer elements {
+
+	/* ── Solid grounds — the tier-2 surfaces as classes ────────────────────
+	   For a band, a panel, a slab. Setting the colour with the background
+	   keeps text readable when a section flips to inverse. */
+	.bg-canvas  { background-color: var(--bg-canvas); }
+	.bg-surface { background-color: var(--bg-surface); }
+	.bg-sunken  { background-color: var(--bg-sunken); }
+	.bg-muted   { background-color: var(--bg-muted); }
+	.bg-media   { background-color: var(--bg-media); }
+	.bg-inverse { background-color: var(--bg-inverse); color: var(--fg-on-inverse); }
+	.bg-accent  { background-color: var(--accent); color: var(--fg-on-accent); }
+	.bg-accent-soft { background-color: var(--accent-soft); color: var(--accent-soft-fg); }
+
+	/* ── Glow — one light, one colour ──────────────────────────────────────
+	   A radial wash of the accent falling from --bg-glow-x/y. The default
+	   source is top-centre, which is where a hero's light comes from. */
+	.bg-glow {
+		background:
+			radial-gradient(
+				ellipse var(--bg-glow-size) var(--bg-glow-size) at var(--bg-glow-x) var(--bg-glow-y),
+				color-mix(in oklab, var(--accent) calc(var(--bg-glow-alpha) * 100%), transparent),
+				transparent 70%)
+			var(--bg-canvas);
+	}
+
+	.bg-glow-craft {
+		background:
+			radial-gradient(
+				ellipse var(--bg-glow-size) var(--bg-glow-size) at var(--bg-glow-x) var(--bg-glow-y),
+				color-mix(in oklab, var(--craft) calc(var(--bg-glow-alpha) * 100%), transparent),
+				transparent 70%)
+			var(--bg-canvas);
+	}
+
+	/* Corner light — a lamp in the top-left, a lamp in the bottom-right. */
+	.bg-glow-corner { --bg-glow-x: 0%; --bg-glow-y: 0%; --bg-glow-size: 80%; }
+	.bg-glow-end    { --bg-glow-x: 100%; --bg-glow-y: 100%; --bg-glow-size: 80%; }
+	.bg-glow-centre { --bg-glow-x: 50%; --bg-glow-y: 50%; --bg-glow-size: 70%; }
+
+	/* ── Aurora — two lights, accent and craft, kept faint ─────────────────
+	   The second hue is craft, the system's one permitted warm neutral, so an
+	   aurora still obeys the one-accent rule. */
+	.bg-aurora {
+		background:
+			radial-gradient(ellipse 60% 55% at 18% 20%,
+				color-mix(in oklab, var(--accent) 22%, transparent), transparent 70%),
+			radial-gradient(ellipse 55% 60% at 82% 75%,
+				color-mix(in oklab, var(--craft) 20%, transparent), transparent 70%),
+			var(--bg-canvas);
+	}
+
+	/* ── Mesh — three soft lobes, the "gradient mesh" look without a tool ── */
+	.bg-mesh {
+		background:
+			radial-gradient(at 15% 25%, color-mix(in oklab, var(--accent) 18%, transparent) 0, transparent 50%),
+			radial-gradient(at 85% 20%, color-mix(in oklab, var(--craft) 16%, transparent) 0, transparent 50%),
+			radial-gradient(at 50% 95%, color-mix(in oklab, var(--accent) 12%, transparent) 0, transparent 55%),
+			var(--bg-sunken);
+	}
+
+	/* ── Spot — a stage light from above, everything else in shadow ───────
+	   Dark by nature: this is a scene background, so it commits to the dark
+	   room like the player does. */
+	.bg-spot {
+		background:
+			radial-gradient(ellipse 70% 60% at 50% -10%,
+				color-mix(in oklab, var(--pure-white) 14%, transparent), transparent 70%),
+			var(--ink-950);
+		color: var(--ink-50);
+		color-scheme: dark;
+	}
+
+	/* ── Vignette — the edges fall away ────────────────────────────────────
+	   Reads as a lens, so it belongs on footage and scenes, not on a form. */
+	.bg-vignette {
+		background:
+			radial-gradient(ellipse 90% 90% at 50% 50%, transparent 55%,
+				color-mix(in oklab, var(--pure-black) 55%, transparent)),
+			var(--bg-media);
+	}
+
+	/* ── Fades — one edge dissolves into the canvas ─────────────────────── */
+	.bg-fade-down { background: linear-gradient(to bottom, var(--bg-sunken), var(--bg-canvas)); }
+	.bg-fade-up   { background: linear-gradient(to top, var(--bg-sunken), var(--bg-canvas)); }
+
+	/* Ink — the dark slab, graded so it is not flat. */
+	.bg-ink {
+		background: linear-gradient(160deg, var(--ink-900), var(--ink-1000));
+		color: var(--ink-50);
+		color-scheme: dark;
+	}
+
+	/* ── Loops — a ground that keeps moving ───────────────────────────────
+	   Three, and the budget is spent. Ambient background motion is the most
+	   expensive thing a page can do for the least benefit: it repaints
+	   forever, it competes with the content, and it is exactly what
+	   prefers-reduced-motion exists to switch off. So each of these is slow
+	   (12s and up), moves ONE thing, and is off under that setting — not
+	   slower, off.
+
+	   None of them replaces a ground: each expects a .bg-* underneath, and
+	   they compose because they animate a position or a rotation rather than
+	   painting a second background over the first. */
+
+	/* The tape, running. Scanlines that travel down the band — the moving
+	   version of pattern-scan, for a hero that should read as footage. */
+	.bg-scanlines {
+		background-image: repeating-linear-gradient(
+			to bottom,
+			color-mix(in oklab, var(--pattern-ink) 60%, transparent) 0 1px,
+			transparent 1px 4px);
+		animation: bg-scanlines 12s linear infinite;
+	}
+
+	@keyframes bg-scanlines {
+		from { background-position: 0 0; }
+		to   { background-position: 0 4px; }
+	}
+
+	/* Beams — a slow sweep of light from one corner, as if something off
+	   camera is turning. One conic gradient, one rotation. */
+	.bg-beams {
+		position: relative;
+		isolation: isolate;
+		overflow: hidden;
+	}
+
+	.bg-beams::after {
+		content: '';
+		position: absolute;
+		inset: -50%;
+		z-index: -1;
+		pointer-events: none;
+		background: conic-gradient(
+			from 0deg,
+			transparent 0deg,
+			color-mix(in oklab, var(--accent) 14%, transparent) 22deg,
+			transparent 44deg,
+			transparent 180deg,
+			color-mix(in oklab, var(--craft) 10%, transparent) 202deg,
+			transparent 224deg,
+			transparent 360deg);
+		animation: bg-beams 40s linear infinite;
+	}
+
+	@keyframes bg-beams { to { rotate: 1turn; } }
+
+	/* The grid, drifting. The blueprint under a page that is being drawn.
+	   Paints on the element like every other ground, so it still composes
+	   with a .pattern on ::before. */
+	.bg-graph {
+		background-image:
+			linear-gradient(var(--pattern-ink) 1px, transparent 1px),
+			linear-gradient(90deg, var(--pattern-ink) 1px, transparent 1px);
+		background-size: 2.5rem 2.5rem, 2.5rem 2.5rem;
+		animation: bg-graph 26s linear infinite;
+	}
+
+	@keyframes bg-graph {
+		from { background-position: 0 0, 0 0; }
+		to   { background-position: 2.5rem 2.5rem, 2.5rem 2.5rem; }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.bg-scanlines,
+		.bg-graph { animation: none; }
+		.bg-beams::after { animation: none; }
+	}
+
+	/* ── Noise — film grain over whatever is underneath ────────────────────
+	   Not a `background` shorthand, so it stacks ON TOP of any .bg-* above
+	   instead of replacing it. The order matters: noise is a mask, not a
+	   wash, so the grain is the first image and paints last.
+
+	   A ground built from GRADIENTS still needs an explicit pair rule below,
+	   because `background-image` on .bg-noise replaces the gradient rather
+	   than adding to it — and it does so silently, leaving the band the
+	   colour of the page. The grounds that pair: glow, aurora, mesh, ink,
+	   spot. Anything new that paints a gradient needs its pair adding here,
+	   and the way you find out that it does not have one is by looking at
+	   the band, not at the file. */
+	.bg-noise {
+		background-image: var(--bg-noise);
+		background-size: 160px 160px;
+		background-blend-mode: soft-light;
+	}
+
+	.bg-glow.bg-noise {
+		background-image:
+			var(--bg-noise),
+			radial-gradient(
+				ellipse var(--bg-glow-size) var(--bg-glow-size) at var(--bg-glow-x) var(--bg-glow-y),
+				color-mix(in oklab, var(--accent) calc(var(--bg-glow-alpha) * 100%), transparent),
+				transparent 70%);
+		background-size: 160px 160px, auto;
+		background-blend-mode: soft-light, normal;
+	}
+
+	.bg-aurora.bg-noise {
+		background-image:
+			var(--bg-noise),
+			radial-gradient(ellipse 60% 55% at 18% 20%, color-mix(in oklab, var(--accent) 22%, transparent), transparent 70%),
+			radial-gradient(ellipse 55% 60% at 82% 75%, color-mix(in oklab, var(--craft) 20%, transparent), transparent 70%);
+		background-size: 160px 160px, auto, auto;
+		background-blend-mode: soft-light, normal, normal;
+	}
+
+	.bg-ink.bg-noise {
+		background-image:
+			var(--bg-noise),
+			linear-gradient(160deg, var(--ink-900), var(--ink-1000));
+		background-size: 160px 160px, auto;
+		background-blend-mode: soft-light, normal;
+	}
+
+	.bg-spot.bg-noise {
+		background-color: var(--ink-950);
+		background-image:
+			var(--bg-noise),
+			radial-gradient(ellipse 70% 60% at 50% -10%,
+				color-mix(in oklab, var(--pure-white) 14%, transparent), transparent 70%);
+		background-size: 160px 160px, auto;
+		background-blend-mode: soft-light, normal;
+	}
+
+	.bg-mesh.bg-noise {
+		background-image:
+			var(--bg-noise),
+			radial-gradient(at 15% 25%, color-mix(in oklab, var(--accent) 18%, transparent) 0, transparent 50%),
+			radial-gradient(at 85% 20%, color-mix(in oklab, var(--craft) 16%, transparent) 0, transparent 50%),
+			radial-gradient(at 50% 95%, color-mix(in oklab, var(--accent) 12%, transparent) 0, transparent 55%);
+		background-size: 160px 160px, auto, auto, auto;
+		background-blend-mode: soft-light, normal, normal, normal;
+	}
+
+	/* ── Strength ──────────────────────────────────────────────────────────
+	   Named steps, like the pattern modifiers, so a variant is a class. */
+	.bg-faint  { --bg-glow-alpha: 0.14; --bg-noise-alpha: 0.03; }
+	.bg-strong { --bg-glow-alpha: 0.42; }
+
+	/* ── Drift — the light moves, slowly ──────────────────────────────────
+	   Ambient, not feedback, so it is allowed to be slow. It animates the two
+	   position knobs, which needs them registered so they interpolate. Fully
+	   off under reduced motion — a fixed duration cannot lean on the token
+	   collapse. */
+	.bg-drift { animation: bg-drift 18s var(--ease-inout) infinite alternate; }
+
+	@keyframes bg-drift {
+		from { --bg-glow-x: 30%; --bg-glow-y: 0%; }
+		to   { --bg-glow-x: 70%; --bg-glow-y: 25%; }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.bg-drift { animation: none; }
+	}
+}

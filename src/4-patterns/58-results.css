@@ -1,0 +1,109 @@
+/* =============================================================================
+   58 · RESULTS — the collection body, in two views
+
+   Every listing page ends up wanting the same two shapes: a GRID, which is
+   what a collection looks like when the pictures matter, and a LIST, which is
+   what it looks like when the titles matter. Sites usually ship this as two
+   templates and a query parameter. It is one container and one attribute.
+
+       <div class="results" data-view="grid">   …cards…   </div>
+
+   The cards do not change. .results-list turns each one into a row by setting
+   the same variables .card-row sets, which is allowed here and nowhere else:
+   this is the patterns layer, and a pattern is exactly the thing that is
+   permitted to know its children are cards (see .deck).
+
+   Switching it with no JavaScript
+   ------------------------------
+   Put a .viewtoggle and the results inside one wrapper and let :has() read
+   the radio. The page then works before, during and without its scripts:
+
+       <section class="browse">
+         <div class="filterbar"> … <div class="viewtoggle"> … </div> </div>
+         <div class="results"> …cards… </div>
+       </section>
+
+   A server-rendered page that already knows the answer writes data-view
+   instead and never ships the radios. Both are supported, on purpose: the
+   attribute is the contract, and :has() is one way of setting it.
+
+   Layer: patterns.
+   ========================================================================== */
+
+@layer patterns {
+
+	.results {
+		--results-col: 20rem;
+		--results-gap: var(--space-6);
+		display: grid;
+		gap: var(--results-gap);
+		grid-template-columns: repeat(auto-fill, minmax(min(var(--results-col), 100%), 1fr));
+	}
+
+	.results-sm { --results-col: 15rem; }
+	.results-lg { --results-col: 26rem; }
+
+	/* ── The list view ─────────────────────────────────────────────────────
+	   One column, and every card becomes a row: media at a fixed width, body
+	   beside it. The card is not restyled — it is handed the shape variables
+	   it already understands. */
+	.results[data-view='list'],
+	.browse:has(.viewtoggle input[value='list']:checked) .results {
+		grid-template-columns: minmax(0, 1fr);
+		--results-gap: var(--space-4);
+	}
+
+	.results[data-view='list'] > .card,
+	.browse:has(.viewtoggle input[value='list']:checked) .results > .card {
+		flex-direction: row;
+	}
+
+	.results[data-view='list'] > .card > .card__media,
+	.browse:has(.viewtoggle input[value='list']:checked) .results > .card > .card__media {
+		flex: 0 0 clamp(7rem, 26%, 15rem);
+		aspect-ratio: 16 / 9;
+	}
+
+	.results[data-view='list'] > .card > .card__body,
+	.browse:has(.viewtoggle input[value='list']:checked) .results > .card > .card__body {
+		flex: 1;
+	}
+
+	/* Below the fold of a phone, a row with a 7rem picture is a row with no
+	   room for words. The list view folds back to stacked cards, which is the
+	   same information in the only shape that fits. */
+	@media (width < 34rem) {
+		.results[data-view='list'] > .card,
+		.browse:has(.viewtoggle input[value='list']:checked) .results > .card {
+			flex-direction: column;
+		}
+
+		.results[data-view='list'] > .card > .card__media,
+		.browse:has(.viewtoggle input[value='list']:checked) .results > .card > .card__media {
+			flex: none;
+		}
+	}
+
+	/* ── The browse wrapper ────────────────────────────────────────────────
+	   Only two jobs: be the :has() scope for the view switch, and give the
+	   bar, the chips and the results one rhythm. */
+	.browse {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-6);
+	}
+
+	/* Nothing matched. The .empty component says so; this only reserves the
+	   full width of the grid for it, so a single result and no results are
+	   not laid out in one narrow column. */
+	.results__empty { grid-column: 1 / -1; }
+
+	/* The tail of a listing — pagination, or a load-more. Full width, always
+	   centred under the grid rather than under the last column. */
+	.results__foot {
+		grid-column: 1 / -1;
+		display: flex;
+		justify-content: center;
+		padding-block-start: var(--space-4);
+	}
+}

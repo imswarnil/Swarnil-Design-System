@@ -1,0 +1,451 @@
+/* =============================================================================
+   23 · INDICATORS — spinner, buffer, loading, skeleton, progress, meter
+
+   The waiting states. Every system needs them and most add them last, which is
+   how a product ends up with four ad-hoc spinners. These are the backbone
+   pieces: one of each, honest about what they can promise.
+
+   THE HONESTY RULE (PRINCIPLES #5 applied to waiting)
+   A spinner promises "soon". A progress bar promises a NUMBER. Never show a
+   progress bar you cannot back with a real value — a bar that crawls to 90%
+   and stalls is a spinner wearing a lie. If you have no number, use the
+   spinner or the indeterminate bar, which promise only that work continues.
+
+   Three questions, three shapes: "how long?" is a spinner, "how far?" is a
+   progress bar, "of what?" is a split bar. Do not answer one with another.
+
+   COMPOSITION WARNING
+   .loading spends ::after on its sweep. .progress-ring spends ::before on
+   the ring's hole.
+
+   Layer: elements.
+   ========================================================================== */
+
+@layer elements {
+
+	/* ── Spinner ───────────────────────────────────────────────────────────
+	   A ring with a gap, rotating. currentColor, so it inherits the text it
+	   replaces. Under reduced motion it stops spinning and pulses instead —
+	   the user asked not to be moved, not to be uninformed. */
+
+	.spinner {
+		--spinner-size: 1.25rem;
+		--spinner-stroke: 2px;
+
+		display: inline-block;
+		inline-size: var(--spinner-size);
+		block-size: var(--spinner-size);
+		border: var(--spinner-stroke) solid color-mix(in oklab, currentcolor 25%, transparent);
+		border-block-start-color: currentcolor;
+		border-radius: var(--radius-full);
+		animation: fx-spin 0.7s linear infinite;
+		flex: none;
+	}
+
+	.spinner-xs { --spinner-size: 0.75rem; --spinner-stroke: 1.5px; }
+	.spinner-sm { --spinner-size: 0.875rem; --spinner-stroke: 1.5px; }
+	.spinner-lg { --spinner-size: 2rem; --spinner-stroke: 3px; }
+	.spinner-xl { --spinner-size: 3rem; --spinner-stroke: 4px; }
+	.spinner-accent { color: var(--accent); }
+
+	/* In a sentence: sits on the text's middle and keeps a word-space. */
+	.spinner-inline { vertical-align: -0.2em; margin-inline-end: var(--space-2); }
+
+	@media (prefers-reduced-motion: reduce) {
+		.spinner {
+			animation: fx-pulse 1.6s var(--ease-inout) infinite;
+			border-color: currentcolor;
+		}
+	}
+
+	/* ── Buffer — the player's wait ────────────────────────────────────────
+	   Three dots bobbing in turn. This is the ONE indicator that takes the
+	   accent by default, because it lives on the player, where the accent
+	   means "the thing that is playing". Under reduced motion the dots stand
+	   still and the middle one holds full opacity — still legibly a wait. */
+
+	.buffer {
+		--buffer-dot: var(--dot-md);
+		--buffer-color: var(--accent);
+		display: inline-flex;
+		align-items: center;
+		gap: calc(var(--buffer-dot) * 0.8);
+	}
+
+	.buffer > span {
+		width: var(--buffer-dot);
+		height: var(--buffer-dot);
+		border-radius: var(--radius-full);
+		background: var(--buffer-color);
+		animation: buffer-bob 1.2s var(--ease-inout) infinite;
+	}
+
+	.buffer > span:nth-child(2) { animation-delay: 0.15s; }
+	.buffer > span:nth-child(3) { animation-delay: 0.3s; }
+	.buffer > span:nth-child(4) { animation-delay: 0.45s; }
+
+	@keyframes buffer-bob {
+		0%, 60%, 100% { opacity: 0.3; translate: 0 0; }
+		30% { opacity: 1; translate: 0 -35%; }
+	}
+
+	.buffer-sm { --buffer-dot: var(--dot-sm); }
+	.buffer-lg { --buffer-dot: var(--dot-lg); }
+	.buffer-neutral { --buffer-color: currentcolor; }
+
+	@media (prefers-reduced-motion: reduce) {
+		.buffer > span { animation: none; opacity: 0.4; }
+		.buffer > span:nth-child(2) { opacity: 1; }
+	}
+
+	/* ── Loading — a wait laid OVER media ──────────────────────────────────
+	   For a thumbnail still decoding, a frame still rendering. The box keeps
+	   the media's shape, so nothing moves when the picture arrives. .loading-
+	   scan sweeps a soft band down it; .loading-dim just washes it. */
+
+	.loading {
+		position: relative;
+		overflow: hidden;
+		background: var(--bg-media);
+		border-radius: var(--radius-media);
+	}
+
+	.loading > * { visibility: hidden; }
+
+	.loading-scan::after {
+		content: '';
+		position: absolute;
+		inset-inline: 0;
+		block-size: 28%;
+		background: linear-gradient(to bottom, transparent, color-mix(in oklab, var(--fg-on-inverse) 8%, transparent), transparent);
+		animation: loading-scan 1.5s var(--ease-inout) infinite;
+	}
+
+	@keyframes loading-scan {
+		from { inset-block-start: -28%; }
+		to   { inset-block-start: 100%; }
+	}
+
+	.loading-dim::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: var(--bg-scrim);
+	}
+
+	/* A spinner centred over the media, for when the wait needs a face. */
+	.loading-spinner::after {
+		content: '';
+		position: absolute;
+		inset-block-start: 50%;
+		inset-inline-start: 50%;
+		inline-size: 2rem;
+		block-size: 2rem;
+		translate: -50% -50%;
+		border: 3px solid color-mix(in oklab, var(--fg-on-inverse) 25%, transparent);
+		border-block-start-color: var(--fg-on-inverse);
+		border-radius: var(--radius-full);
+		animation: fx-spin 0.7s linear infinite;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.loading-scan::after { animation: none; inset-block: 0; block-size: auto; background: var(--bg-scrim); }
+		.loading-spinner::after { animation: fx-pulse 1.6s var(--ease-inout) infinite; border-color: var(--fg-on-inverse); }
+	}
+
+	/* ── Skeleton ──────────────────────────────────────────────────────────
+	   A placeholder shaped like the content it stands in for. The shimmer is a
+	   background-position sweep — one compositable property, honest motion.
+
+	   Size the skeleton with the layout, not with the skeleton: a text
+	   skeleton is 1em tall because it stands where a line of text will be. */
+
+	.skeleton {
+		--skel-base: var(--bg-muted);
+		display: block;
+		border-radius: var(--radius-sm);
+		background:
+			linear-gradient(90deg,
+				var(--skel-base) 25%,
+				color-mix(in oklab, var(--skel-base) 55%, var(--bg-canvas)) 42%,
+				var(--skel-base) 60%)
+			0 0 / 240% 100%;
+		animation: skeleton-sweep 1.4s var(--ease-inout) infinite;
+		color: transparent;
+		user-select: none;
+		pointer-events: none;
+	}
+
+	@keyframes skeleton-sweep {
+		from { background-position: 120% 0; }
+		to   { background-position: -120% 0; }
+	}
+
+	.skeleton-text   { block-size: 1em; inline-size: 100%; }
+	.skeleton-text-short { block-size: 1em; inline-size: 60%; }
+	.skeleton-title  { block-size: 1.4em; inline-size: 45%; }
+	.skeleton-circle { border-radius: var(--radius-full); aspect-ratio: 1; }
+	.skeleton-media  { aspect-ratio: 16 / 9; border-radius: var(--radius-media); }
+
+	/* Stands where an .avatar, a .btn or a .card will be, at their sizes. */
+	.skeleton-avatar { inline-size: 2.5rem; block-size: 2.5rem; border-radius: var(--radius-full); flex: none; }
+	.skeleton-btn    { inline-size: 6rem; block-size: 2.5rem; border-radius: var(--radius-control); }
+	.skeleton-card   { aspect-ratio: 4 / 3; border-radius: var(--radius-card); }
+
+	/* Breathe: for one big unknown block. Slower and quieter than a sweep. */
+	.skeleton-breathe {
+		background: var(--skel-base);
+		animation: fx-pulse 1.8s var(--ease-inout) infinite;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.skeleton { animation: none; background-size: 100% 100%; }
+	}
+
+	/* ── Progress — a promise with a number behind it ──────────────────────
+	   Styles the NATIVE <progress>, platform first. With a value it fills;
+	   without one the browser's indeterminate treatment is replaced by our
+	   sweep, which promises only that work continues. */
+
+	.progress {
+		--progress-h: 0.375rem;
+		--progress-fill: var(--accent);
+		--progress-track: var(--bg-muted);
+		appearance: none;
+		inline-size: 100%;
+		block-size: var(--progress-h);
+		border: 0;
+		border-radius: var(--radius-full);
+		background: var(--progress-track);
+		overflow: hidden;
+	}
+
+	.progress::-webkit-progress-bar { background: var(--progress-track); border-radius: var(--radius-full); }
+
+	.progress::-webkit-progress-value {
+		background: var(--progress-fill);
+		border-radius: var(--radius-full);
+		transition: inline-size var(--dur-3) var(--ease-out);
+	}
+
+	.progress::-moz-progress-bar {
+		background: var(--progress-fill);
+		border-radius: var(--radius-full);
+	}
+
+	.progress-thin  { --progress-h: 2px; }
+	.progress-thick { --progress-h: 0.625rem; }
+	.progress-square { border-radius: 0; }
+	.progress-square::-webkit-progress-bar,
+	.progress-square::-webkit-progress-value,
+	.progress-square::-moz-progress-bar { border-radius: 0; }
+
+	/* Meaning variants: an upload that failed is red, a render that finished
+	   is green. The default stays the accent — it is the thing in progress. */
+	.progress-success { --progress-fill: var(--success-solid); }
+	.progress-warning { --progress-fill: var(--warning-solid); }
+	.progress-danger  { --progress-fill: var(--danger-solid); }
+	.progress-craft   { --progress-fill: var(--craft); }
+	.progress-neutral { --progress-fill: var(--fg-default); }
+
+	/* Indeterminate: no value attribute. The sweep replaces the fill. */
+	.progress:indeterminate {
+		background:
+			linear-gradient(90deg, transparent 30%, var(--progress-fill) 50%, transparent 70%)
+			0 0 / 45% 100% no-repeat, var(--progress-track);
+		animation: progress-sweep 1.2s var(--ease-inout) infinite;
+	}
+
+	.progress:indeterminate::-webkit-progress-bar { background: transparent; }
+	.progress:indeterminate::-moz-progress-bar { background: transparent; }
+
+	@keyframes progress-sweep {
+		from { background-position: -60% 0, 0 0; }
+		to   { background-position: 160% 0, 0 0; }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.progress:indeterminate { animation: none; background: var(--progress-track); }
+	}
+
+	/* ── Split — a breakdown, not a completion ─────────────────────────────
+	   One bar divided into parts that sum to the whole: a repository's
+	   languages, a budget, a vote. Not a <progress>, because the question is
+	   different — progress asks "how far", this asks "of what". Each segment
+	   carries its own --value and --seg colour in the markup, where the data
+	   is. Always label the segments with a .progress-key: a bar of unlabelled
+	   colour is decoration, and colour is never alone in this system. */
+
+	.progress-split {
+		--progress-h: 0.375rem;
+		--progress-track: var(--bg-muted);
+		display: flex;
+		gap: 2px;
+		inline-size: 100%;
+		block-size: var(--progress-h);
+		border-radius: var(--radius-full);
+		background: var(--progress-track);
+		overflow: hidden;
+	}
+
+	.progress-split__seg {
+		flex: none;
+		block-size: 100%;
+		inline-size: var(--value, 0%);
+		background: var(--seg, var(--accent));
+	}
+
+	.progress-key {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-2) var(--space-4);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		font-size: var(--text-xs);
+		color: var(--fg-subtle);
+	}
+
+	.progress-key > li { display: inline-flex; align-items: center; gap: var(--space-2); }
+
+	.progress-key__dot {
+		width: var(--dot-sm);
+		height: var(--dot-sm);
+		border-radius: var(--radius-full);
+		background: var(--seg, var(--accent));
+	}
+
+	/* The share is data. */
+	.progress-key__value {
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-faint);
+	}
+
+	/* ── Ring — the same number, drawn round ───────────────────────────────
+	   For a tile or a thumbnail corner, where a bar has no room. Reads
+	   --value as a bare number 0–100. The hole is ::before, so the value can
+	   sit in the middle as a real, selectable child. */
+
+	.progress-ring {
+		--ring-size: 3rem;
+		--ring-stroke: 0.25rem;
+		--progress-fill: var(--accent);
+		--progress-track: var(--bg-muted);
+		--value: 0;
+		position: relative;
+		display: inline-grid;
+		place-items: center;
+		inline-size: var(--ring-size);
+		block-size: var(--ring-size);
+		border-radius: var(--radius-full);
+		background: conic-gradient(var(--progress-fill) calc(var(--value) * 1%), var(--progress-track) 0);
+		flex: none;
+	}
+
+	.progress-ring::before {
+		content: '';
+		position: absolute;
+		inset: var(--ring-stroke);
+		border-radius: inherit;
+		background: var(--bg-surface);
+	}
+
+	.progress-ring__value {
+		position: relative;
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-2xs);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-muted);
+	}
+
+	.progress-ring-sm { --ring-size: 2rem; --ring-stroke: 0.2rem; }
+	.progress-ring-lg { --ring-size: 5rem; --ring-stroke: 0.375rem; }
+	.progress-ring-lg .progress-ring__value { font-size: var(--text-sm); }
+
+	/* ── Meter — a measurement, not a promise ──────────────────────────────
+	   Progress moves toward done; a meter reports where a value SITS in a
+	   range — disk used, password strength. Different element, different
+	   meaning, and the platform ships both, so both get styled. */
+
+	.meter {
+		--meter-h: 0.375rem;
+		--meter-track: var(--bg-muted);
+		--meter-good: var(--success-solid);
+		--meter-fair: var(--warning-solid);
+		--meter-poor: var(--danger-solid);
+		appearance: none;
+		inline-size: 100%;
+		block-size: var(--meter-h);
+		border: 0;
+		border-radius: var(--radius-full);
+		background: var(--meter-track);
+		overflow: hidden;
+	}
+
+	.meter::-webkit-meter-bar { background: var(--meter-track); border: 0; border-radius: var(--radius-full); }
+	.meter::-webkit-meter-optimum-value      { background: var(--meter-good); }
+	.meter::-webkit-meter-suboptimum-value   { background: var(--meter-fair); }
+	.meter::-webkit-meter-even-less-good-value { background: var(--meter-poor); }
+	.meter::-moz-meter-bar { background: var(--meter-good); border-radius: var(--radius-full); }
+	.meter:-moz-meter-sub-optimum::-moz-meter-bar { background: var(--meter-fair); }
+	.meter:-moz-meter-sub-sub-optimum::-moz-meter-bar { background: var(--meter-poor); }
+
+	.meter-thin  { --meter-h: 2px; }
+	.meter-thick { --meter-h: 0.625rem; }
+
+	/* A meter with no judgement — disk used is a fact, not a grade. All
+	   three bands take one neutral fill. */
+	.meter-plain { --meter-good: var(--fg-default); --meter-fair: var(--fg-default); --meter-poor: var(--fg-default); }
+	.meter-accent { --meter-good: var(--accent); --meter-fair: var(--accent); --meter-poor: var(--accent); }
+
+	/* ── Progress with a label row ─────────────────────────────────────────── */
+
+	.progress-row {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2);
+	}
+
+	.progress-row__head {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: var(--space-3);
+	}
+
+	/* The name of the thing in progress is a label. */
+	.progress-row__label {
+		font-family: var(--font-label);
+		font-size: var(--text-2xs);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: var(--fg-subtle);
+	}
+
+	/* The percentage is data, so it takes the data voice. */
+	.progress-row__value {
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-xs);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-subtle);
+	}
+
+	/* Side by side: label, bar, value on one line — for a list of uploads. */
+	.progress-row-inline {
+		flex-direction: row;
+		align-items: center;
+		gap: var(--space-3);
+	}
+
+	.progress-row-inline .progress-row__head { display: contents; }
+	.progress-row-inline .progress-row__label { flex: none; min-inline-size: 6rem; }
+	.progress-row-inline .progress-row__value { flex: none; min-inline-size: 2.5rem; text-align: end; order: 1; }
+}

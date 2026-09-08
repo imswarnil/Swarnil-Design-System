@@ -1,0 +1,188 @@
+/* =============================================================================
+   45 · TOC — the table of contents
+
+   A list of the headings on this page, and where you are in them. Not
+   navigation between pages — that is .navlist — and not a sequence you are
+   meant to complete, which is .chapters. This is a map of one document.
+
+   Two decisions carry it.
+
+   THE RULE IS THE MAP. Every link sits against a hairline that runs the length
+   of the list, and the current one turns that hairline into a 2px accent rule.
+   So the indicator is the same object as the structure: nothing appears, one
+   thing changes weight. That is the house's active state — a rule, never a
+   filled pill — and it is the reason this reads at a glance in peripheral
+   vision while you are actually looking at the article.
+
+   DEPTH IS INDENT, NOT SIZE. An h3 is inset from its h2 and one step quieter,
+   but it is not smaller type. A contents list that shrinks with depth becomes
+   unreadable exactly where a long document needs it most.
+
+   The active link is [aria-current='true'], set by whatever is watching the
+   scroll — or by nothing at all, in which case the list is a perfectly good
+   set of links and the component has lost nothing it needed.
+
+   COMPOSITION WARNING
+   .toc__link spends ::before on its rule when the list is .toc-numbered, so a
+   numbered contents cannot also take .frame.
+
+   Layer: components.
+   ========================================================================== */
+
+@layer components {
+
+	.toc {
+		--toc-gap: var(--space-1);
+		--toc-rule: var(--line-subtle);
+		display: flex;
+		flex-direction: column;
+		gap: var(--toc-gap);
+		min-inline-size: 0;
+	}
+
+	.toc__head {
+		font-family: var(--font-label);
+		font-size: var(--text-2xs);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: var(--fg-faint);
+		margin: 0 0 var(--space-2);
+	}
+
+	.toc__link {
+		display: block;
+		padding-block: var(--space-1);
+		padding-inline-start: var(--space-3);
+		border-inline-start: var(--border-2) solid var(--toc-rule);
+		font-size: var(--text-sm);
+		line-height: var(--leading-snug);
+		color: var(--fg-muted);
+		text-decoration: none;
+		transition: color var(--dur-2) var(--ease-out),
+			border-color var(--dur-2) var(--ease-out);
+	}
+
+	.toc__link:hover {
+		color: var(--fg-default);
+		border-inline-start-color: var(--line-strong);
+	}
+
+	/* You are here. The rule the list is already built from takes the accent —
+	   no new object, no fill, no dot. */
+	.toc__link[aria-current='true'] {
+		color: var(--fg-accent);
+		border-inline-start-color: var(--accent);
+		font-weight: var(--weight-medium);
+	}
+
+	/* ── Depth ─────────────────────────────────────────────────────────────
+	   Indent and a step of quiet. Never a size change. */
+	.toc__link-h2 { font-weight: var(--weight-medium); color: var(--fg-default); }
+	.toc__link-h3 { padding-inline-start: var(--space-6); }
+	.toc__link-h4 { padding-inline-start: calc(var(--space-6) + var(--space-3)); color: var(--fg-subtle); }
+
+	/* ── Variants ────────────────────────────────────────────────────────── */
+
+	/* Numbered, for a document read in order — a spec, a chapter list. The
+	   counter is the numbering, so the markup carries no numerals. */
+	.toc-numbered { counter-reset: toc; }
+	.toc-numbered .toc__link { counter-increment: toc; position: relative; padding-inline-start: var(--space-8); }
+
+	.toc-numbered .toc__link::before {
+		content: counter(toc, decimal-leading-zero);
+		position: absolute;
+		inset-inline-start: var(--space-3);
+		font-family: var(--font-data);
+		font-size: var(--text-2xs);
+		font-weight: var(--weight-light);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-faint);
+	}
+
+	.toc-numbered .toc__link[aria-current='true']::before { color: var(--accent); }
+
+	/* Boxed, for a contents that sits inside the article rather than beside
+	   it — the "in this post" block under the intro. */
+	.toc-boxed {
+		padding: var(--space-5);
+		border: var(--border-hair) solid var(--line-default);
+		border-radius: var(--radius-lg);
+		background: var(--bg-sunken);
+	}
+
+	/* Inline: the contents as a wrapping row of pills, for a page whose
+	   headings are few and short. The rule becomes a full border, because a
+	   left rule on a horizontal item marks nothing. */
+	.toc-inline { flex-direction: row; flex-wrap: wrap; gap: var(--space-2); }
+
+	.toc-inline .toc__link {
+		padding: var(--space-1) var(--space-3);
+		border: var(--border-hair) solid var(--line-default);
+		border-radius: var(--radius-pill);
+		font-size: var(--text-xs);
+	}
+
+	.toc-inline .toc__link[aria-current='true'] { border-color: var(--accent); }
+	.toc-inline :is(.toc__link-h3, .toc__link-h4) { padding-inline-start: var(--space-3); }
+
+	/* Sticky, for a rail. The offset is a variable because only the page
+	   knows how tall its bar is; max-height and its own scroll keep a long
+	   contents from running past the viewport. */
+	.toc-sticky {
+		position: sticky;
+		inset-block-start: var(--toc-top, var(--space-6));
+		max-block-size: calc(100dvh - var(--toc-top, var(--space-6)) - var(--space-8));
+		overflow-y: auto;
+		scrollbar-width: thin;
+	}
+
+	/* Compact, for a sidebar that also holds other things. */
+	.toc-sm { --toc-gap: 0; }
+	.toc-sm .toc__link { font-size: var(--text-xs); padding-block: 2px; }
+
+	/* ── The read-progress rail ────────────────────────────────────────────
+	   The hairline the whole list sits against, filled to how far down the
+	   document you are. It is one element rather than a state on each link,
+	   so it moves continuously instead of stepping between headings — which
+	   is the honest picture of scrolling.
+
+	   Scroll-driven, so no listener; absent, the rail is simply empty. */
+	.toc-progress { position: relative; padding-inline-start: var(--border-2); }
+	.toc-progress .toc__link { border-inline-start-color: transparent; }
+
+	.toc-progress::before {
+		content: '';
+		position: absolute;
+		inset-block: 0;
+		inset-inline-start: 0;
+		inline-size: var(--border-2);
+		background: var(--line-subtle);
+	}
+
+	.toc-progress::after {
+		content: '';
+		position: absolute;
+		inset-block-start: 0;
+		inset-inline-start: 0;
+		inline-size: var(--border-2);
+		block-size: 100%;
+		background: var(--accent);
+		transform-origin: 50% 0;
+		scale: 1 0;
+	}
+
+	@supports (animation-timeline: scroll()) {
+		.toc-progress::after {
+			animation: toc-progress linear both;
+			animation-timeline: scroll(root block);
+		}
+	}
+
+	@keyframes toc-progress { from { scale: 1 0; } to { scale: 1 1; } }
+
+	@media (prefers-reduced-motion: reduce) {
+		.toc-progress::after { animation: none; scale: 1 1; }
+	}
+}

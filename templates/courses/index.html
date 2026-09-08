@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Courses — Swarnil Singhai</title>
+<meta name="description" content="Six courses, fifty lessons, filmed in the order the skills are actually needed." />
+<script>
+try {
+  var t = localStorage.getItem('sds-theme');
+  if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  document.documentElement.dataset.theme = t;
+} catch (e) { document.documentElement.dataset.theme = 'light'; }
+</script>
+<link rel="preload" href="/assets/fonts/inter-100-900-latin.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/fonts.css" />
+<!-- The system. To take this template, replace the next line with the CDN link:
+     https://cdn.jsdelivr.net/npm/@imswarnil/swarnil-design/dist/swarnil-design.min.css -->
+<link rel="stylesheet" href="/src/index.css" />
+<!-- Page composition only — see templates/templates.css. -->
+<link rel="stylesheet" href="/templates/templates.css" />
+<script src="/src/js/nav.js" defer></script>
+</head>
+<body class="tpl">
+<a class="skip" href="#main">Skip to content</a>
+<header class="navbar navbar-sticky navbar-blur navbar-bordered navbar-centered">
+  <button class="navbar__burger" type="button" popovertarget="drawer" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
+  <a class="navbar__brand" href="/templates/personal/index.html"><span class="dot dot-accent"></span> Swarnil</a>
+  <nav class="navbar__nav" aria-label="Main">
+    <a class="navbar__link" href="/templates/personal/index.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-home"/></svg>Home</a><a class="navbar__link" href="/templates/personal/about.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-user"/></svg>About</a><a class="navbar__link" href="/templates/video/index.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg>Video</a><a class="navbar__link" href="/templates/blog/index.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-file"/></svg>Blog</a><a class="navbar__link" href="/templates/projects/index.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>Projects</a><a class="navbar__link" href="/templates/courses/index.html" aria-current="page"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-folder"/></svg>Courses</a>
+  </nav>
+  <div class="navbar__actions">
+    <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Search"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-search"/></svg></button>
+    <a class="btn btn-primary btn-sm" href="#newsletter">Subscribe</a>
+  </div>
+  <div class="sheet" id="drawer" popover>
+    <div class="sheet__head">
+      <button class="btn btn-quiet btn-sm btn-icon" type="button" popovertarget="drawer" popovertargetaction="hide" aria-label="Close"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-x"/></svg></button>
+      <span class="navbar__brand"><span class="dot dot-accent"></span> Swarnil</span>
+    </div>
+    <div class="sheet__body">
+      <div class="sheet__group">
+        <a class="sheet__link" href="/templates/personal/index.html"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-home"/></svg>Home</a><a class="sheet__link" href="/templates/personal/about.html"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-user"/></svg>About</a><a class="sheet__link" href="/templates/video/index.html"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg>Video</a><a class="sheet__link" href="/templates/blog/index.html"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-file"/></svg>Blog</a><a class="sheet__link" href="/templates/projects/index.html"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>Projects</a><a class="sheet__link" href="/templates/courses/index.html" aria-current="page"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-folder"/></svg>Courses</a>
+      </div>
+      <div class="sheet__group">
+        <p class="sheet__label">Elsewhere</p>
+        <a class="sheet__link" href="https://youtube.com/@imswarnil" rel="noopener"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-video"/></svg>YouTube</a>
+        <a class="sheet__link" href="https://github.com/imswarnil" rel="noopener"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>GitHub</a>
+      </div>
+    </div>
+    <p class="sheet__foot">Built on the Swarnil Design System</p>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ── Hero ─────────────────────────────────────────────────────────── -->
+  <section class="section bg-mesh bg-noise pattern pattern-blueprint pattern-faint pattern-fade">
+    <div class="center center-2xl hero hero-wide">
+      <div class="fx-stagger">
+        <p class="hero__eyebrow"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-folder"/></svg> Courses</p>
+        <h1 class="hero__title">Learn the camera before the software.</h1>
+        <p class="hero__lead">Six courses, filmed in the order the skills are actually needed — light, sound, framing, then the edit, then the code that publishes it. No 40-hour marathons; every lesson is the length the idea deserves.</p>
+        <div class="hero__actions">
+          <a class="btn btn-primary btn-lg" href="#all">Browse all six</a>
+          <a class="btn btn-secondary btn-lg btn-play" href="/templates/courses/course.html"><span class="btn__disc"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span>Watch a free lesson</a>
+        </div>
+        <p class="hero__facts">
+          <span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-folder"/></svg> <strong>6</strong> courses</span>
+          <span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg> <strong>50</strong> lessons</span>
+          <span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-users"/></svg> <strong>11.4k</strong> students</span>
+          <span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-star"/></svg> <strong>4.8</strong> average</span>
+        </p>
+      </div>
+      <div class="hero__media">
+        <article class="card card-glass card-roomy">
+          <div class="card__body">
+            <p class="card__kicker">The path</p>
+            <h2 class="card__title t-h3">Where to start</h2>
+            <p class="card__excerpt">If you have never filmed anything, go in this order. If you have, skip to whichever one you are currently doing badly.</p>
+            <ol class="stepper stepper-vertical u-mt-4">
+              <li class="stepper__step" data-done><span class="stepper__node"></span><span class="stepper__label">Light</span><span class="stepper__hint">6 lessons · 1h 12m</span></li>
+              <li class="stepper__step" data-done><span class="stepper__node"></span><span class="stepper__label">Sound</span><span class="stepper__hint">5 lessons · 58m</span></li>
+              <li class="stepper__step" aria-current="step"><span class="stepper__node"></span><span class="stepper__label">Framing</span><span class="stepper__hint">4 lessons · 44m</span></li>
+              <li class="stepper__step"><span class="stepper__node"></span><span class="stepper__label">The edit</span><span class="stepper__hint">8 lessons · 1h 48m</span></li>
+              <li class="stepper__step"><span class="stepper__node"></span><span class="stepper__label">Publish</span><span class="stepper__hint">9 lessons · 2h 04m</span></li>
+            </ol>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── The track ────────────────────────────────────────────────────── -->
+  <section class="section section-tight section-line section-sunken">
+    <div class="center center-2xl stack">
+      <header class="sec sec-center"><div class="sec__text"><span class="sec__eyebrow">The order</span><h2 class="sec__title">One path, five stops</h2></div></header>
+      <ol class="track">
+        <li class="track__stop" data-done><span class="track__node"></span><span class="track__title">Light</span><span class="track__meta">6 lessons</span></li>
+        <li class="track__stop" data-done><span class="track__node"></span><span class="track__title">Sound</span><span class="track__meta">5 lessons</span></li>
+        <li class="track__stop" aria-current="step"><span class="track__node"></span><span class="track__title">Framing</span><span class="track__meta">4 lessons</span></li>
+        <li class="track__stop"><span class="track__node"></span><span class="track__title">The edit</span><span class="track__meta">8 lessons</span></li>
+        <li class="track__stop"><span class="track__node"></span><span class="track__title">Publish</span><span class="track__meta">9 lessons</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ── All courses ──────────────────────────────────────────────────── -->
+  <section class="section section-line" id="all">
+    <div class="center center-2xl">
+      <div class="browse">
+        <header class="sec sec-rule">
+          <div class="sec__text"><span class="sec__eyebrow">Catalogue</span><h2 class="sec__title">All six courses</h2></div>
+        </header>
+        <div class="tabs tabs-underline" role="tablist" aria-label="Level">
+          <button class="tab" type="button" role="tab" aria-selected="true">All <span class="tab__count">6</span></button>
+          <button class="tab" type="button" role="tab" aria-selected="false">Beginner <span class="tab__count">2</span></button>
+          <button class="tab" type="button" role="tab" aria-selected="false">Intermediate <span class="tab__count">2</span></button>
+          <button class="tab" type="button" role="tab" aria-selected="false">Advanced <span class="tab__count">2</span></button>
+          <button class="tab" type="button" role="tab" aria-selected="false">In progress <span class="tab__count">4</span></button>
+        </div>
+        <div class="filterbar">
+          <p class="filterbar__count"><strong>6</strong> courses · 50 lessons</p>
+          <div class="filterbar__actions">
+            <label class="filterbar__search"><span class="u-sr-only">Search courses</span>
+              <span class="input-icon"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-search"/></svg><input class="input input-sm" type="search" placeholder="Search courses" /></span>
+            </label>
+            <div class="viewtoggle" role="group" aria-label="View">
+              <label class="viewtoggle__opt" title="Grid"><input type="radio" name="view" value="grid" checked /><span class="u-sr-only">Grid</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-grid"/></svg></label>
+              <label class="viewtoggle__opt" title="List"><input type="radio" name="view" value="list" /><span class="u-sr-only">List</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-menu"/></svg></label>
+            </div>
+          </div>
+        </div>
+        <div class="results results-lg cq-card fx-scroll-rise">
+          <article class="card card-video card-hover-frame frame-hover">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%233f5f7c'/%3E%3Cstop offset='1' stop-color='%2312202a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">1h 12m</span><span class="card__badge"><span class="badge badge-solid">Beginner</span></span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+            <div class="card__body">
+              <p class="card__kicker">Course · 6 lessons</p>
+              <h3 class="card__title"><a class="card__link" href="/templates/courses/course.html">Lighting a talking head</a></h3>
+              <p class="card__excerpt">You own one light and a room with a wall. That is enough, and this proves it.</p>
+              <p class="card__facts"><span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-users"/></svg> 4,102</span><span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-clock"/></svg> 1h 12m</span><span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg> 6 lessons</span></p>
+            </div>
+            <div class="card__footer"><span class="card__price">₹1,499</span><span class="t-data">62% watched</span></div>
+            <span class="card__progress" style="--value: 62%"></span>
+          </article><article class="card card-video card-hover-frame frame-hover">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236b4a4a'/%3E%3Cstop offset='1' stop-color='%232a1717'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">2h 04m</span><span class="card__badge"><span class="badge badge-solid">Intermediate</span></span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+            <div class="card__body">
+              <p class="card__kicker">Course · 9 lessons</p>
+              <h3 class="card__title"><a class="card__link" href="/templates/courses/course.html">Ship a site with Ghost</a></h3>
+              <p class="card__excerpt">From an empty folder to a live site with a theme you wrote, on a domain you own.</p>
+              <p class="card__facts"><span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-users"/></svg> 2,388</span><span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-clock"/></svg> 2h 04m</span><span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg> 9 lessons</span></p>
+            </div>
+            <div class="card__footer"><span class="card__price">₹2,499</span><span class="t-data">18% watched</span></div>
+            <span class="card__progress" style="--value: 18%"></span>
+          </article><article class="card card-video card-hover-frame frame-hover">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234a6b6b'/%3E%3Cstop offset='1' stop-color='%23172a2a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">1h 48m</span><span class="card__badge"><span class="badge badge-solid">Advanced</span></span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+            <div class="card__body">
+              <p class="card__kicker">Course · 8 lessons</p>
+              <h3 class="card__title"><a class="card__link" href="/templates/courses/course.html">Prompt systems that hold up</a></h3>
+              <p class="card__excerpt">Specs, evals and the harness. Prompts that survive a model change.</p>
+              <p class="card__facts"><span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-users"/></svg> 1,940</span><span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-clock"/></svg> 1h 48m</span><span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg> 8 lessons</span></p>
+            </div>
+            <div class="card__footer"><span class="card__price">₹2,999</span><span class="t-data">0% watched</span></div>
+            <span class="card__progress" style="--value: 0%"></span>
+          </article><article class="card card-video card-hover-frame frame-hover">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237c6f3f'/%3E%3Cstop offset='1' stop-color='%232a2412'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">58m</span><span class="card__badge"><span class="badge badge-solid">Beginner</span></span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+            <div class="card__body">
+              <p class="card__kicker">Course · 5 lessons</p>
+              <h3 class="card__title"><a class="card__link" href="/templates/courses/course.html">Edit faster than you shoot</a></h3>
+              <p class="card__excerpt">The five keyboard shortcuts and the one habit that halved my edit time.</p>
+              <p class="card__facts"><span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-users"/></svg> 3,214</span><span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-clock"/></svg> 58m</span><span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg> 5 lessons</span></p>
+            </div>
+            <div class="card__footer"><span class="card__price">₹999</span><span class="t-data">100% watched</span></div>
+            <span class="card__progress" style="--value: 100%"></span>
+          </article><article class="card card-video card-hover-frame frame-hover">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234e6f5c'/%3E%3Cstop offset='1' stop-color='%23172a20'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">3h 40m</span><span class="card__badge"><span class="badge badge-solid">Intermediate</span></span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+            <div class="card__body">
+              <p class="card__kicker">Course · 12 lessons</p>
+              <h3 class="card__title"><a class="card__link" href="/templates/courses/course.html">CRM Analytics, from zero</a></h3>
+              <p class="card__excerpt">Datasets, recipes, dashboards and the joins that quietly ruin all three.</p>
+              <p class="card__facts"><span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-users"/></svg> 5,880</span><span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-clock"/></svg> 3h 40m</span><span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg> 12 lessons</span></p>
+            </div>
+            <div class="card__footer"><span class="card__price">₹3,499</span><span class="t-data">33% watched</span></div>
+            <span class="card__progress" style="--value: 33%"></span>
+          </article><article class="card card-video card-hover-frame frame-hover">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236a5a7e'/%3E%3Cstop offset='1' stop-color='%23221a2e'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">2h 36m</span><span class="card__badge"><span class="badge badge-solid">Advanced</span></span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+            <div class="card__body">
+              <p class="card__kicker">Course · 10 lessons</p>
+              <h3 class="card__title"><a class="card__link" href="/templates/courses/course.html">Design a system, not a theme</a></h3>
+              <p class="card__excerpt">Tokens, layers and the discipline to say no to a second accent colour.</p>
+              <p class="card__facts"><span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-users"/></svg> 1,204</span><span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-clock"/></svg> 2h 36m</span><span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg> 10 lessons</span></p>
+            </div>
+            <div class="card__footer"><span class="card__price">₹3,999</span><span class="t-data">0% watched</span></div>
+            <span class="card__progress" style="--value: 0%"></span>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── How a course works ───────────────────────────────────────────── -->
+  <section class="section section-line section-sunken">
+    <div class="center center-xl stack stack-lg">
+      <header class="sec sec-center">
+        <div class="sec__text"><span class="sec__eyebrow">How it works</span><h2 class="sec__title">What you get, and what you do not</h2></div>
+      </header>
+      <div class="grid-3 cq-card">
+        <article class="card card-quiet"><span class="card__pattern pattern pattern-grid pattern-fine" aria-hidden="true"></span><div class="card__body"><span class="card__icon"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-download"/></svg></span><h3 class="card__title">Yours to keep</h3><p class="card__excerpt">Buy once, watch forever, download the project files. No subscription that quietly renews.</p></div></article>
+        <article class="card card-quiet"><span class="card__pattern pattern pattern-dot pattern-fine" aria-hidden="true"></span><div class="card__body"><span class="card__icon"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-message"/></svg></span><h3 class="card__title">Questions answered</h3><p class="card__excerpt">Every lesson has a thread. I read all of them and answer most, slowly, usually on a Sunday.</p></div></article>
+        <article class="card card-quiet"><span class="card__pattern pattern pattern-cross pattern-fine" aria-hidden="true"></span><div class="card__body"><span class="card__icon"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-check"/></svg></span><h3 class="card__title">No certificate</h3><p class="card__excerpt">There is no exam and no badge. What you get is a thing you built, which is the only credential that has ever helped me.</p></div></article>
+      </div>
+      <div class="acc-group">
+        <details class="acc acc-boxed" name="faq" open>
+          <summary>Do I need the gear you use?</summary>
+          <div class="acc__body">No. Every course is filmed to be followed on a phone and a laptop. The gear pages exist because people ask, not because the courses need it.</div>
+        </details>
+        <details class="acc acc-boxed" name="faq">
+          <summary>Are the courses updated?</summary>
+          <div class="acc__body">When the thing they teach changes, yes, and you get the update for free. When it does not, they stay as they are — a re-record for the sake of a new intro helps nobody.</div>
+        </details>
+        <details class="acc acc-boxed" name="faq">
+          <summary>Refunds?</summary>
+          <div class="acc__body">Thirty days, no questions, one email. I have never asked anyone why and I am not about to start.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Pricing ──────────────────────────────────────────────────────── -->
+  <section class="section section-line" id="pricing">
+    <div class="center center-xl stack stack-lg">
+      <header class="sec sec-center"><div class="sec__text"><span class="sec__eyebrow">Pricing</span><h2 class="sec__title">Two ways in</h2><p class="sec__lead">Buy the one you need, or take all six and the ones I have not filmed yet.</p></div></header>
+      <section class="pricing pricing-flush">
+        <div class="pricing__grid">
+          <article class="plan">
+            <span class="plan__name">One course</span>
+            <p class="plan__price">₹1,499<span class="plan__period">once</span></p>
+            <p class="plan__note">Whichever one you are stuck on.</p>
+            <ul class="plan__features">
+              <li>Every lesson in that course</li>
+              <li>Project files and the finished repo</li>
+              <li>Lesson threads, answered</li>
+              <li>Free updates for that course</li>
+            </ul>
+            <a class="btn btn-outline plan__cta" href="#all">Browse courses</a>
+            <p class="plan__fine">30-day refund, one email.</p>
+          </article>
+          <article class="plan plan-featured">
+            <span class="plan__flag">Best value</span>
+            <span class="plan__name">Everything</span>
+            <p class="plan__price">₹7,999<span class="plan__period">once</span></p>
+            <p class="plan__note">All six, and every course I film next.</p>
+            <ul class="plan__features">
+              <li>All 50 lessons across six courses</li>
+              <li>Every future course, free</li>
+              <li>The gear list with my actual settings</li>
+              <li>Direct email, answered slowly and honestly</li>
+            </ul>
+            <a class="btn btn-primary plan__cta" href="#i">Take all six</a>
+            <p class="plan__fine">11,400 students so far.</p>
+          </article>
+        </div>
+        <p class="pricing__foot">Prices are in INR and include tax. Purchasing-power pricing is automatic — you will see your own currency at checkout.</p>
+      </section>
+    </div>
+  </section>
+
+</main>
+<footer class="footer footer-loose">
+  <div class="center center-2xl">
+    <div class="footer__top">
+      <div>
+        <p class="footer__brand"><span class="dot dot-accent"></span> Swarnil</p>
+        <p class="footer__note">Engineer, creator, occasional traveller. Everything here is made in the open — the site, the system it is built on, and the notes from getting both wrong first.</p>
+        <div class="footer__social">
+          <a class="btn btn-social btn-sm btn-icon" href="https://youtube.com/@imswarnil" rel="noopener" aria-label="YouTube"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-video"/></svg></a>
+          <a class="btn btn-social btn-sm btn-icon" href="https://github.com/imswarnil" rel="noopener" aria-label="GitHub"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg></a>
+          <a class="btn btn-social btn-sm btn-icon" href="#i" rel="noopener" aria-label="Instagram"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-camera"/></svg></a>
+          <a class="btn btn-social btn-sm btn-icon" href="#i" rel="noopener" aria-label="RSS"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-rss"/></svg></a>
+        </div>
+        <form class="footer__form" action="#i" onsubmit="return false">
+          <label class="u-sr-only" for="foot-mail">Email</label>
+          <input class="input input-sm" id="foot-mail" type="email" placeholder="you@studio.tv" autocomplete="email" />
+          <button class="btn btn-secondary btn-sm" type="submit">Subscribe</button>
+        </form>
+      </div>
+      <nav class="footer__col" aria-label="Make"><p class="footer__head">Make</p><a href="/templates/video/index.html">Video</a><a href="/templates/blog/index.html">Writing</a><a href="/templates/projects/index.html">Projects</a><a href="/templates/courses/index.html">Courses</a></nav>
+      <nav class="footer__col" aria-label="Elsewhere"><p class="footer__head">Elsewhere</p><a href="https://youtube.com/@imswarnil" rel="noopener">YouTube</a><a href="https://github.com/imswarnil" rel="noopener">GitHub</a><a href="https://design.imswarnil.com">Design system</a><a href="#i">Newsletter</a></nav>
+      <nav class="footer__col" aria-label="Site"><p class="footer__head">Site</p><a href="/templates/personal/about.html">About</a><a href="#i">Now</a><a href="#i">Uses</a><a href="#i">Colophon</a></nav>
+    </div>
+    <span class="footer__mark" aria-hidden="true">Swarnil</span>
+    <div class="footer__bottom">
+      <div>
+        <p class="footer__fine">© 2026 Swarnil Singhai · Built on the <a href="https://design.imswarnil.com">Swarnil Design System</a></p>
+        <p class="footer__meta"><span><strong>v2.4</strong> of this site</span><span>Deployed <strong>Sep 07</strong></span><span>Type set in <strong>Inter</strong></span></p>
+      </div>
+      <div class="stack stack-sm">
+        <nav class="footer__legal" aria-label="Legal"><a href="#i">Privacy</a><a href="#i">Licence</a><a href="#i">RSS</a><a href="#i">Sitemap</a></nav>
+        <span class="footer__rec"><span class="dot dot-sm dot-live"></span> Still rolling</span>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

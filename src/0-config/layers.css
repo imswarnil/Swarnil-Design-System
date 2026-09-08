@@ -1,0 +1,39 @@
+/* =============================================================================
+   0 · LAYERS — the cascade contract
+
+   This file must be the first thing the browser reads. A single @layer
+   statement declares the override order up front, so precedence becomes a
+   stated contract instead of an accident of import order. Declaring the names
+   here — before any of them has content — is what fixes the order; wherever a
+   rule later lands, it obeys this line.
+
+   Nine layers, lowest priority first:
+
+     reset       un-does browser defaults. Beats nothing.
+     tokens      custom properties only. Paints nothing.
+     elements    single-tag primitives — .badge, .code, .table
+     components  composed objects with parts — .card, .btn, .navbar
+     patterns    arrangements of components — .deck, .prose, .chat
+     sections    full-width page bands — .hero, .footer, .pricing
+     theme       drop-in token overrides, so a theme retints anything without
+                 !important
+     tailwind    the optional bridge. Above theme, because a utility that loses
+                 to a component is not a utility.
+     utilities   our own u-* escape hatch. Last, so it wins — including over
+                 Tailwind.
+
+   THE RULES
+
+   1. Every rule in src/ lives inside a layer. An unlayered rule beats all
+      layers and is therefore a bug. Stylelint enforces this.
+   2. A file may only reference tokens and classes from a LOWER layer.
+      scripts/audit-layers.py fails CI on a violation.
+   3. Consumer overrides live outside all layers, so a user's own stylesheet
+      always wins with zero specificity fights. That is the entire
+      customisation API — no !important, ever, on either side.
+
+   See approach.md §2.
+   ========================================================================== */
+
+@layer reset, tokens, elements, components, patterns, sections, theme, tailwind,
+	utilities;

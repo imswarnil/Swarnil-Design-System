@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Video — Swarnil Singhai</title>
+<meta name="description" content="128 episodes and 64 shorts: craft, code, AI, business and the road. Filmed in one room with one light." />
+<script>
+try {
+  var t = localStorage.getItem('sds-theme');
+  if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  document.documentElement.dataset.theme = t;
+} catch (e) { document.documentElement.dataset.theme = 'light'; }
+</script>
+<link rel="preload" href="/assets/fonts/inter-100-900-latin.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/fonts.css" />
+<!-- The system. To take this template, replace the next line with the CDN link:
+     https://cdn.jsdelivr.net/npm/@imswarnil/swarnil-design/dist/swarnil-design.min.css -->
+<link rel="stylesheet" href="/src/index.css" />
+<!-- Page composition only — see templates/templates.css. -->
+<link rel="stylesheet" href="/templates/templates.css" />
+<script src="/src/js/nav.js" defer></script>
+</head>
+<body class="tpl">
+<a class="skip" href="#main">Skip to content</a>
+<header class="navbar navbar-sticky navbar-blur navbar-bordered navbar-centered">
+  <button class="navbar__burger" type="button" popovertarget="drawer" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
+  <a class="navbar__brand" href="/templates/personal/index.html"><span class="dot dot-accent"></span> Swarnil</a>
+  <nav class="navbar__nav" aria-label="Main">
+    <a class="navbar__link" href="/templates/personal/index.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-home"/></svg>Home</a><a class="navbar__link" href="/templates/personal/about.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-user"/></svg>About</a><a class="navbar__link" href="/templates/video/index.html" aria-current="page"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg>Video</a><a class="navbar__link" href="/templates/blog/index.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-file"/></svg>Blog</a><a class="navbar__link" href="/templates/projects/index.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>Projects</a><a class="navbar__link" href="/templates/courses/index.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-folder"/></svg>Courses</a>
+  </nav>
+  <div class="navbar__actions">
+    <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Search"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-search"/></svg></button>
+    <a class="btn btn-primary btn-sm" href="#newsletter">Subscribe</a>
+  </div>
+  <div class="sheet" id="drawer" popover>
+    <div class="sheet__head">
+      <button class="btn btn-quiet btn-sm btn-icon" type="button" popovertarget="drawer" popovertargetaction="hide" aria-label="Close"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-x"/></svg></button>
+      <span class="navbar__brand"><span class="dot dot-accent"></span> Swarnil</span>
+    </div>
+    <div class="sheet__body">
+      <div class="sheet__group">
+        <a class="sheet__link" href="/templates/personal/index.html"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-home"/></svg>Home</a><a class="sheet__link" href="/templates/personal/about.html"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-user"/></svg>About</a><a class="sheet__link" href="/templates/video/index.html" aria-current="page"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg>Video</a><a class="sheet__link" href="/templates/blog/index.html"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-file"/></svg>Blog</a><a class="sheet__link" href="/templates/projects/index.html"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>Projects</a><a class="sheet__link" href="/templates/courses/index.html"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-folder"/></svg>Courses</a>
+      </div>
+      <div class="sheet__group">
+        <p class="sheet__label">Elsewhere</p>
+        <a class="sheet__link" href="https://youtube.com/@imswarnil" rel="noopener"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-video"/></svg>YouTube</a>
+        <a class="sheet__link" href="https://github.com/imswarnil" rel="noopener"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>GitHub</a>
+      </div>
+    </div>
+    <p class="sheet__foot">Built on the Swarnil Design System</p>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ── Hero — the featured video ────────────────────────────────────── -->
+  <section class="section bg-ink bg-noise pattern pattern-scan pattern-faint">
+    <div class="center center-2xl hero hero-wide">
+      <div class="fx-stagger">
+        <p class="hero__eyebrow"><span class="dot dot-sm dot-live"></span> Featured · new this week</p>
+        <h1 class="hero__title">Colour, in one block of tokens</h1>
+        <p class="hero__lead">Eight ramps, ninety-seven tones, and why dark mode is not an inversion. The episode that turned into the whole design system.</p>
+        <div class="hero__actions">
+          <a class="btn btn-primary btn-lg btn-glow btn-play" href="/templates/video/post.html"><span class="btn__disc"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span>Watch — 24:07</a>
+          <a class="btn btn-secondary btn-lg" href="#all">All 128 videos</a>
+        </div>
+        <p class="hero__facts">
+          <span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-eye"/></svg> <strong>18k</strong> views</span>
+          <span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-clock"/></svg> <strong>24:07</strong></span>
+          <span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-calendar"/></svg> Sep 04, 2026</span>
+          <span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-hash"/></svg> Episode 48</span>
+        </p>
+      </div>
+      <div class="hero__media">
+        <div class="player player-theatre frame frame-signal tpl-hero__vf">
+          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%235b6b7a'/%3E%3Cstop offset='1' stop-color='%231d232b'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="Still from episode 48" />
+          <span class="veil veil-vignette"></span>
+          <span class="veil veil-scan"></span>
+          <span class="player__frame" aria-hidden="true"></span>
+          <span class="player__tc" aria-hidden="true">TAKE 48 · 00:12:47</span>
+          <span class="player__rec" aria-hidden="true">Rec</span>
+          <a class="play play-lg" href="/templates/video/post.html" aria-label="Play episode 48"><span class="play__disc"></span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── The shelves — latest, top, shorts ────────────────────────────── -->
+  <section class="section section-line" id="shelves">
+    <div class="center center-2xl stack stack-xl">
+
+      <section class="shelf shelf-lg">
+        <header class="shelf__head">
+          <div><p class="eyebrow"><span class="dot dot-sm dot-live"></span> Fresh</p><h2 class="shelf__title">Latest uploads</h2></div>
+          <div class="shelf__nav">
+            <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Scroll left"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-left"/></svg></button>
+            <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Scroll right"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-right"/></svg></button>
+          </div>
+        </header>
+        <div class="shelf__track cq-card ix-dim">
+          <article class="shelf__item"><article class="card card-video card-hover-frame frame-hover">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237a5b4e'/%3E%3Cstop offset='1' stop-color='%232a1d17'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">24:07</span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+            <div class="card__body">
+              <p class="card__kicker">Ep. 48 · Craft</p>
+              <h3 class="card__title"><a class="card__link" href="/templates/video/post.html">Colour, in one block of tokens</a></h3>
+              <p class="card__facts"><span>18k views · 3 days ago</span></p>
+            </div>
+          </article></article><article class="shelf__item"><article class="card card-video card-hover-frame frame-hover">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234e6f5c'/%3E%3Cstop offset='1' stop-color='%23172a20'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">18:30</span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+            <div class="card__body">
+              <p class="card__kicker">Ep. 47 · Craft</p>
+              <h3 class="card__title"><a class="card__link" href="/templates/video/post.html">The frame layer, explained</a></h3>
+              <p class="card__facts"><span>31k views · 1 week ago</span></p>
+            </div>
+          </article></article><article class="shelf__item"><article class="card card-video card-hover-frame frame-hover">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236a5a7e'/%3E%3Cstop offset='1' stop-color='%23221a2e'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">31:12</span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+            <div class="card__body">
+              <p class="card__kicker">Ep. 46 · Business</p>
+              <h3 class="card__title"><a class="card__link" href="/templates/video/post.html">Why the thumbnail is the product</a></h3>
+              <p class="card__facts"><span>92k views · 2 weeks ago</span></p>
+            </div>
+          </article></article><article class="shelf__item"><article class="card card-video card-hover-frame frame-hover">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%233f5f7c'/%3E%3Cstop offset='1' stop-color='%2312202a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">22:41</span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+            <div class="card__body">
+              <p class="card__kicker">Ep. 45 · Code</p>
+              <h3 class="card__title"><a class="card__link" href="/templates/video/post.html">I rebuilt my site in one weekend</a></h3>
+              <p class="card__facts"><span>44k views · 3 weeks ago</span></p>
+            </div>
+          </article></article><article class="shelf__item"><article class="card card-video card-hover-frame frame-hover">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237c6f3f'/%3E%3Cstop offset='1' stop-color='%232a2412'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">27:55</span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+            <div class="card__body">
+              <p class="card__kicker">Ep. 44 · AI</p>
+              <h3 class="card__title"><a class="card__link" href="/templates/video/post.html">Agents that actually finish the job</a></h3>
+              <p class="card__facts"><span>61k views · 1 month ago</span></p>
+            </div>
+          </article></article><article class="shelf__item"><article class="card card-video card-hover-frame frame-hover">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234a6b6b'/%3E%3Cstop offset='1' stop-color='%23172a2a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">15:02</span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+            <div class="card__body">
+              <p class="card__kicker">Ep. 43 · Travel</p>
+              <h3 class="card__title"><a class="card__link" href="/templates/video/post.html">Ladakh, on one lens</a></h3>
+              <p class="card__facts"><span>28k views · 1 month ago</span></p>
+            </div>
+          </article></article><article class="shelf__item"><article class="card card-video card-hover-frame frame-hover">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236b4a4a'/%3E%3Cstop offset='1' stop-color='%232a1717'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">19:20</span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+            <div class="card__body">
+              <p class="card__kicker">Ep. 42 · Code</p>
+              <h3 class="card__title"><a class="card__link" href="/templates/video/post.html">The build step I finally deleted</a></h3>
+              <p class="card__facts"><span>37k views · 2 months ago</span></p>
+            </div>
+          </article></article>
+        </div>
+      </section>
+
+      <section class="shelf shelf-ranked">
+        <header class="shelf__head">
+          <h2 class="shelf__title">Most watched, all time</h2>
+          <span class="shelf__meta">Top 6 of 128</span>
+        </header>
+        <div class="shelf__track cq-card">
+          <article class="shelf__item"><article class="card card-video card-hover-frame frame-hover">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236a5a7e'/%3E%3Cstop offset='1' stop-color='%23221a2e'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">31:12</span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+            <div class="card__body">
+              <p class="card__kicker">Business</p>
+              <h3 class="card__title"><a class="card__link" href="/templates/video/post.html">Why the thumbnail is the product</a></h3>
+              <p class="card__facts"><span>892k views</span></p>
+            </div>
+          </article></article><article class="shelf__item"><article class="card card-video card-hover-frame frame-hover">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%235b6b7a'/%3E%3Cstop offset='1' stop-color='%231d232b'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">41:03</span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+            <div class="card__body">
+              <p class="card__kicker">Code</p>
+              <h3 class="card__title"><a class="card__link" href="/templates/video/post.html">Salesforce, explained to a designer</a></h3>
+              <p class="card__facts"><span>640k views</span></p>
+            </div>
+          </article></article><article class="shelf__item"><article class="card card-video card-hover-frame frame-hover">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237c6f3f'/%3E%3Cstop offset='1' stop-color='%232a2412'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">28:16</span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+            <div class="card__body">
+              <p class="card__kicker">AI</p>
+              <h3 class="card__title"><a class="card__link" href="/templates/video/post.html">I let an agent run my inbox for a week</a></h3>
+              <p class="card__facts"><span>512k views</span></p>
+            </div>
+          </article></article><article class="shelf__item"><article class="card card-video card-hover-frame frame-hover">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%238a7a63'/%3E%3Cstop offset='1' stop-color='%232e2820'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">12:44</span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+            <div class="card__body">
+              <p class="card__kicker">Craft</p>
+              <h3 class="card__title"><a class="card__link" href="/templates/video/post.html">One light. That is the whole video.</a></h3>
+              <p class="card__facts"><span>408k views</span></p>
+            </div>
+          </article></article><article class="shelf__item"><article class="card card-video card-hover-frame frame-hover">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234e6f5c'/%3E%3Cstop offset='1' stop-color='%23172a20'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">22:09</span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+            <div class="card__body">
+              <p class="card__kicker">Travel</p>
+              <h3 class="card__title"><a class="card__link" href="/templates/video/post.html">Filming alone at 4,000 metres</a></h3>
+              <p class="card__facts"><span>371k views</span></p>
+            </div>
+          </article></article><article class="shelf__item"><article class="card card-video card-hover-frame frame-hover">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%233f5f7c'/%3E%3Cstop offset='1' stop-color='%2312202a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">17:38</span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+            <div class="card__body">
+              <p class="card__kicker">Code</p>
+              <h3 class="card__title"><a class="card__link" href="/templates/video/post.html">Dark mode is not an inversion</a></h3>
+              <p class="card__facts"><span>355k views</span></p>
+            </div>
+          </article></article>
+        </div>
+      </section>
+
+      <section class="shelf shelf-tall">
+        <header class="shelf__head">
+          <div><h2 class="shelf__title">Shorts</h2><p class="t-small t-muted u-m-0">Vertical, under a minute, filmed on the same day as the long one.</p></div>
+          <span class="shelf__meta">9:16 · 64 total</span>
+        </header>
+        <div class="shelf__track cq-card">
+          <article class="shelf__item"><article class="card card-story card-tile card-hover-zoom">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 16'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236b4a4a'/%3E%3Cstop offset='1' stop-color='%232a1717'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='9' height='16' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-heavy"></span><span class="card__stamp">00:48</span><span class="card__badge"><span class="badge badge-quiet">Short</span></span></div>
+            <div class="card__body"><h3 class="card__title"><a class="card__link" href="/templates/video/short.html">The one light setup</a></h3></div>
+          </article></article><article class="shelf__item"><article class="card card-story card-tile card-hover-zoom">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 16'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%235b6b7a'/%3E%3Cstop offset='1' stop-color='%231d232b'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='9' height='16' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-heavy"></span><span class="card__stamp">00:36</span><span class="card__badge"><span class="badge badge-quiet">Short</span></span></div>
+            <div class="card__body"><h3 class="card__title"><a class="card__link" href="/templates/video/short.html">Stop centring everything</a></h3></div>
+          </article></article><article class="shelf__item"><article class="card card-story card-tile card-hover-zoom">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 16'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%238a7a63'/%3E%3Cstop offset='1' stop-color='%232e2820'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='9' height='16' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-heavy"></span><span class="card__stamp">01:02</span><span class="card__badge"><span class="badge badge-quiet">Short</span></span></div>
+            <div class="card__body"><h3 class="card__title"><a class="card__link" href="/templates/video/short.html">Why your audio sounds thin</a></h3></div>
+          </article></article><article class="shelf__item"><article class="card card-story card-tile card-hover-zoom">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 16'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234e6f5c'/%3E%3Cstop offset='1' stop-color='%23172a20'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='9' height='16' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-heavy"></span><span class="card__stamp">00:29</span><span class="card__badge"><span class="badge badge-quiet">Short</span></span></div>
+            <div class="card__body"><h3 class="card__title"><a class="card__link" href="/templates/video/short.html">Cheap tripod, good shot</a></h3></div>
+          </article></article><article class="shelf__item"><article class="card card-story card-tile card-hover-zoom">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 16'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236a5a7e'/%3E%3Cstop offset='1' stop-color='%23221a2e'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='9' height='16' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-heavy"></span><span class="card__stamp">00:54</span><span class="card__badge"><span class="badge badge-quiet">Short</span></span></div>
+            <div class="card__body"><h3 class="card__title"><a class="card__link" href="/templates/video/short.html">Read the histogram</a></h3></div>
+          </article></article><article class="shelf__item"><article class="card card-story card-tile card-hover-zoom">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 16'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%233f5f7c'/%3E%3Cstop offset='1' stop-color='%2312202a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='9' height='16' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-heavy"></span><span class="card__stamp">00:41</span><span class="card__badge"><span class="badge badge-quiet">Short</span></span></div>
+            <div class="card__body"><h3 class="card__title"><a class="card__link" href="/templates/video/short.html">Two-minute colour grade</a></h3></div>
+          </article></article><article class="shelf__item"><article class="card card-story card-tile card-hover-zoom">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 16'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234a6b6b'/%3E%3Cstop offset='1' stop-color='%23172a2a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='9' height='16' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-heavy"></span><span class="card__stamp">00:33</span><span class="card__badge"><span class="badge badge-quiet">Short</span></span></div>
+            <div class="card__body"><h3 class="card__title"><a class="card__link" href="/templates/video/short.html">Name your layers</a></h3></div>
+          </article></article><article class="shelf__item"><article class="card card-story card-tile card-hover-zoom">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 16'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237c6f3f'/%3E%3Cstop offset='1' stop-color='%232a2412'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='9' height='16' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-heavy"></span><span class="card__stamp">00:57</span><span class="card__badge"><span class="badge badge-quiet">Short</span></span></div>
+            <div class="card__body"><h3 class="card__title"><a class="card__link" href="/templates/video/short.html">The B-roll rule</a></h3></div>
+          </article></article>
+        </div>
+      </section>
+
+    </div>
+  </section>
+
+  <!-- ── Series ───────────────────────────────────────────────────────── -->
+  <section class="section section-line section-sunken">
+    <div class="center center-2xl stack stack-lg">
+      <header class="sec sec-rule">
+        <div class="sec__text"><span class="sec__eyebrow">Series</span><h2 class="sec__title">Watch them in order</h2><p class="sec__lead">Four runs of episodes that were planned as a set rather than found in the archive afterwards.</p></div>
+      </header>
+      <div class="grid-4 cq-card">
+        <article class="card card-movie card-tile card-hover-zoom veil-mono">
+          <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2 3'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237a5b4e'/%3E%3Cstop offset='1' stop-color='%232a1d17'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='2' height='3' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-grade"></span><span class="veil veil-scrim veil-heavy"></span><span class="card__badge"><span class="badge badge-solid">9 eps</span></span></div>
+          <div class="card__body"><p class="card__kicker">Craft</p><h3 class="card__title"><a class="card__link" href="#all">Build a design system</a></h3></div>
+        </article><article class="card card-movie card-tile card-hover-zoom veil-mono">
+          <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2 3'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%233f5f7c'/%3E%3Cstop offset='1' stop-color='%2312202a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='2' height='3' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-grade"></span><span class="veil veil-scrim veil-heavy"></span><span class="card__badge"><span class="badge badge-solid">6 eps</span></span></div>
+          <div class="card__body"><p class="card__kicker">Code</p><h3 class="card__title"><a class="card__link" href="#all">Ship it on a weekend</a></h3></div>
+        </article><article class="card card-movie card-tile card-hover-zoom veil-mono">
+          <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2 3'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234e6f5c'/%3E%3Cstop offset='1' stop-color='%23172a20'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='2' height='3' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-grade"></span><span class="veil veil-scrim veil-heavy"></span><span class="card__badge"><span class="badge badge-solid">8 eps</span></span></div>
+          <div class="card__body"><p class="card__kicker">Travel</p><h3 class="card__title"><a class="card__link" href="#all">Out of hand, S2</a></h3></div>
+        </article><article class="card card-movie card-tile card-hover-zoom veil-mono">
+          <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2 3'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237c6f3f'/%3E%3Cstop offset='1' stop-color='%232a2412'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='2' height='3' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-grade"></span><span class="veil veil-scrim veil-heavy"></span><span class="card__badge"><span class="badge badge-solid">5 eps</span></span></div>
+          <div class="card__body"><p class="card__kicker">AI</p><h3 class="card__title"><a class="card__link" href="#all">Agents, honestly</a></h3></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Everything, filterable ───────────────────────────────────────── -->
+  <section class="section section-line" id="all">
+    <div class="center center-2xl">
+      <div class="browse">
+        <header class="sec sec-rule">
+          <div class="sec__text"><span class="sec__eyebrow">Everything</span><h2 class="sec__title">All 128 videos</h2></div>
+        </header>
+
+        <div class="tabs tabs-underline" role="tablist" aria-label="Category">
+          <button class="tab" type="button" role="tab" aria-selected="true">All <span class="tab__count">128</span></button>
+          <button class="tab" type="button" role="tab" aria-selected="false">Craft <span class="tab__count">41</span></button>
+          <button class="tab" type="button" role="tab" aria-selected="false">Code <span class="tab__count">33</span></button>
+          <button class="tab" type="button" role="tab" aria-selected="false">AI <span class="tab__count">18</span></button>
+          <button class="tab" type="button" role="tab" aria-selected="false">Business <span class="tab__count">14</span></button>
+          <button class="tab" type="button" role="tab" aria-selected="false">Travel <span class="tab__count">22</span></button>
+        </div>
+
+        <div class="filterbar">
+          <p class="filterbar__count"><strong>10</strong> of 128 shown</p>
+          <div class="filterbar__actions">
+            <label class="filterbar__search"><span class="u-sr-only">Search videos</span>
+              <span class="input-icon"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-search"/></svg><input class="input input-sm" type="search" placeholder="Search 128 videos" /></span>
+            </label>
+            <label><span class="u-sr-only">Sort</span>
+              <select class="select select-sm">
+                <option>Newest first</option><option>Most watched</option><option>Longest</option><option>Shortest</option>
+              </select>
+            </label>
+            <div class="viewtoggle" role="group" aria-label="View">
+              <label class="viewtoggle__opt" title="Grid"><input type="radio" name="view" value="grid" checked /><span class="u-sr-only">Grid</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-grid"/></svg></label>
+              <label class="viewtoggle__opt" title="List"><input type="radio" name="view" value="list" /><span class="u-sr-only">List</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-menu"/></svg></label>
+            </div>
+          </div>
+        </div>
+
+        <div class="results results-lg cq-card fx-scroll-rise">
+          <article class="card card-video card-hover-frame frame-hover">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237a5b4e'/%3E%3Cstop offset='1' stop-color='%232a1d17'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">24:07</span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+            <div class="card__body">
+              <p class="card__kicker">Ep. 48 · Craft</p>
+              <h3 class="card__title"><a class="card__link" href="/templates/video/post.html">Colour, in one block of tokens</a></h3>
+              <p class="card__facts"><span>18k views · 3 days ago</span></p>
+            </div>
+          </article><article class="card card-video card-hover-frame frame-hover">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234e6f5c'/%3E%3Cstop offset='1' stop-color='%23172a20'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">18:30</span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+            <div class="card__body">
+              <p class="card__kicker">Ep. 47 · Craft</p>
+              <h3 class="card__title"><a class="card__link" href="/templates/video/post.html">The frame layer, explained</a></h3>
+              <p class="card__facts"><span>31k views · 1 week ago</span></p>
+            </div>
+          </article><article class="card card-video card-hover-frame frame-hover">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236a5a7e'/%3E%3Cstop offset='1' stop-color='%23221a2e'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">31:12</span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+            <div class="card__body">
+              <p class="card__kicker">Ep. 46 · Business</p>
+              <h3 class="card__title"><a class="card__link" href="/templates/video/post.html">Why the thumbnail is the product</a></h3>
+              <p class="card__facts"><span>92k views · 2 weeks ago</span></p>
+            </div>
+          </article><article class="card card-video card-hover-frame frame-hover">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%233f5f7c'/%3E%3Cstop offset='1' stop-color='%2312202a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">22:41</span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+            <div class="card__body">
+              <p class="card__kicker">Ep. 45 · Code</p>
+              <h3 class="card__title"><a class="card__link" href="/templates/video/post.html">I rebuilt my site in one weekend</a></h3>
+              <p class="card__facts"><span>44k views · 3 weeks ago</span></p>
+            </div>
+          </article><article class="card card-video card-hover-frame frame-hover">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237c6f3f'/%3E%3Cstop offset='1' stop-color='%232a2412'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">27:55</span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+            <div class="card__body">
+              <p class="card__kicker">Ep. 44 · AI</p>
+              <h3 class="card__title"><a class="card__link" href="/templates/video/post.html">Agents that actually finish the job</a></h3>
+              <p class="card__facts"><span>61k views · 1 month ago</span></p>
+            </div>
+          </article><article class="card card-video card-hover-frame frame-hover">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234a6b6b'/%3E%3Cstop offset='1' stop-color='%23172a2a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">15:02</span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+            <div class="card__body">
+              <p class="card__kicker">Ep. 43 · Travel</p>
+              <h3 class="card__title"><a class="card__link" href="/templates/video/post.html">Ladakh, on one lens</a></h3>
+              <p class="card__facts"><span>28k views · 1 month ago</span></p>
+            </div>
+          </article><article class="card card-video card-hover-frame frame-hover">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236b4a4a'/%3E%3Cstop offset='1' stop-color='%232a1717'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">19:20</span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+            <div class="card__body">
+              <p class="card__kicker">Ep. 42 · Code</p>
+              <h3 class="card__title"><a class="card__link" href="/templates/video/post.html">The build step I finally deleted</a></h3>
+              <p class="card__facts"><span>37k views · 2 months ago</span></p>
+            </div>
+          </article><article class="card card-video card-hover-frame frame-hover">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%238a7a63'/%3E%3Cstop offset='1' stop-color='%232e2820'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">12:44</span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+            <div class="card__body">
+              <p class="card__kicker">Ep. 41 · Craft</p>
+              <h3 class="card__title"><a class="card__link" href="/templates/video/post.html">One light. That is the whole video.</a></h3>
+              <p class="card__facts"><span>408k views · 2 months ago</span></p>
+            </div>
+          </article><article class="card card-video card-hover-frame frame-hover">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%235b6b7a'/%3E%3Cstop offset='1' stop-color='%231d232b'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">41:03</span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+            <div class="card__body">
+              <p class="card__kicker">Ep. 40 · Code</p>
+              <h3 class="card__title"><a class="card__link" href="/templates/video/post.html">Salesforce, explained to a designer</a></h3>
+              <p class="card__facts"><span>640k views · 3 months ago</span></p>
+            </div>
+          </article><article class="card card-video card-hover-frame frame-hover">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%233a3f4a'/%3E%3Cstop offset='1' stop-color='%2315181d'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">16:51</span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
+            <div class="card__body">
+              <p class="card__kicker">Ep. 39 · Business</p>
+              <h3 class="card__title"><a class="card__link" href="/templates/video/post.html">What a sponsor actually buys</a></h3>
+              <p class="card__facts"><span>88k views · 3 months ago</span></p>
+            </div>
+          </article>
+          <div class="results__foot">
+            <nav class="pagination" aria-label="Pages">
+              <span class="pagination__link" aria-disabled="true" aria-label="Previous page"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-left"/></svg></span>
+              <div class="pagination__pages">
+                <a class="pagination__link" href="#all" aria-current="page">1</a>
+                <a class="pagination__link" href="#all">2</a>
+                <a class="pagination__link" href="#all">3</a>
+                <span class="pagination__gap" aria-hidden="true">…</span>
+                <a class="pagination__link" href="#all">13</a>
+              </div>
+              <a class="pagination__link" href="#all" aria-label="Next page"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-right"/></svg></a>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Shorts wall — 9:16 ───────────────────────────────────────────── -->
+  <section class="section section-line section-sunken" id="shorts">
+    <div class="center center-2xl stack stack-lg">
+      <header class="sec sec-rule">
+        <div class="sec__text"><span class="sec__eyebrow">9:16</span><h2 class="sec__title">The shorts wall</h2><p class="sec__lead">Same day, same light, one idea each. They are the offcuts that turned out to be the point.</p></div>
+        <div class="sec__actions"><a class="btn btn-outline btn-sm" href="#i">All 64 shorts</a></div>
+      </header>
+      <div class="results results-sm cq-card">
+        <article class="card card-story card-tile card-hover-zoom">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 16'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236b4a4a'/%3E%3Cstop offset='1' stop-color='%232a1717'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='9' height='16' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-heavy"></span><span class="card__stamp">00:48</span><span class="card__badge"><span class="badge badge-quiet">Short</span></span></div>
+            <div class="card__body"><h3 class="card__title"><a class="card__link" href="/templates/video/short.html">The one light setup</a></h3></div>
+          </article><article class="card card-story card-tile card-hover-zoom">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 16'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%235b6b7a'/%3E%3Cstop offset='1' stop-color='%231d232b'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='9' height='16' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-heavy"></span><span class="card__stamp">00:36</span><span class="card__badge"><span class="badge badge-quiet">Short</span></span></div>
+            <div class="card__body"><h3 class="card__title"><a class="card__link" href="/templates/video/short.html">Stop centring everything</a></h3></div>
+          </article><article class="card card-story card-tile card-hover-zoom">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 16'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%238a7a63'/%3E%3Cstop offset='1' stop-color='%232e2820'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='9' height='16' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-heavy"></span><span class="card__stamp">01:02</span><span class="card__badge"><span class="badge badge-quiet">Short</span></span></div>
+            <div class="card__body"><h3 class="card__title"><a class="card__link" href="/templates/video/short.html">Why your audio sounds thin</a></h3></div>
+          </article><article class="card card-story card-tile card-hover-zoom">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 16'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234e6f5c'/%3E%3Cstop offset='1' stop-color='%23172a20'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='9' height='16' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-heavy"></span><span class="card__stamp">00:29</span><span class="card__badge"><span class="badge badge-quiet">Short</span></span></div>
+            <div class="card__body"><h3 class="card__title"><a class="card__link" href="/templates/video/short.html">Cheap tripod, good shot</a></h3></div>
+          </article><article class="card card-story card-tile card-hover-zoom">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 16'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236a5a7e'/%3E%3Cstop offset='1' stop-color='%23221a2e'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='9' height='16' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-heavy"></span><span class="card__stamp">00:54</span><span class="card__badge"><span class="badge badge-quiet">Short</span></span></div>
+            <div class="card__body"><h3 class="card__title"><a class="card__link" href="/templates/video/short.html">Read the histogram</a></h3></div>
+          </article><article class="card card-story card-tile card-hover-zoom">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 16'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%233f5f7c'/%3E%3Cstop offset='1' stop-color='%2312202a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='9' height='16' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-heavy"></span><span class="card__stamp">00:41</span><span class="card__badge"><span class="badge badge-quiet">Short</span></span></div>
+            <div class="card__body"><h3 class="card__title"><a class="card__link" href="/templates/video/short.html">Two-minute colour grade</a></h3></div>
+          </article><article class="card card-story card-tile card-hover-zoom">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 16'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234a6b6b'/%3E%3Cstop offset='1' stop-color='%23172a2a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='9' height='16' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-heavy"></span><span class="card__stamp">00:33</span><span class="card__badge"><span class="badge badge-quiet">Short</span></span></div>
+            <div class="card__body"><h3 class="card__title"><a class="card__link" href="/templates/video/short.html">Name your layers</a></h3></div>
+          </article><article class="card card-story card-tile card-hover-zoom">
+            <div class="card__media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 16'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237c6f3f'/%3E%3Cstop offset='1' stop-color='%232a2412'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='9' height='16' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /><span class="veil veil-scrim veil-heavy"></span><span class="card__stamp">00:57</span><span class="card__badge"><span class="badge badge-quiet">Short</span></span></div>
+            <div class="card__body"><h3 class="card__title"><a class="card__link" href="/templates/video/short.html">The B-roll rule</a></h3></div>
+          </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── The kit ──────────────────────────────────────────────────────── -->
+  <section class="section section-line" id="kit">
+    <div class="center center-2xl sidebar sidebar-end" style="--side-width: 22rem">
+      <div class="stack stack-lg">
+        <header class="sec">
+          <div class="sec__text"><span class="sec__eyebrow">Tools</span><h2 class="sec__title">What makes these videos</h2><p class="sec__lead">Every episode on this page was shot, lit, recorded and cut with exactly this. Nothing is sponsored.</p></div>
+        </header>
+        <ul class="kit kit-ruled">
+          <li class="kit__item">
+            <span class="kit__shot"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%235b6b7a'/%3E%3Cstop offset='1' stop-color='%231d232b'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1' height='1' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /></span>
+            <div class="kit__body">
+              <p class="kit__role">Camera</p>
+              <h3 class="kit__name"><a class="kit__link" href="#i">Sony FX3</a></h3>
+              <p class="kit__note">Full frame, no fan noise, and it does not overheat halfway through a take.</p>
+            </div>
+            <span class="kit__meta"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-external-link"/></svg></span>
+          </li><li class="kit__item">
+            <span class="kit__shot"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%233a3f4a'/%3E%3Cstop offset='1' stop-color='%2315181d'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1' height='1' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /></span>
+            <div class="kit__body">
+              <p class="kit__role">Lens</p>
+              <h3 class="kit__name"><a class="kit__link" href="#i">Sigma 24-70 f/2.8</a></h3>
+              <p class="kit__note">One lens for the whole channel. Carrying four primes up a mountain is a bigger compromise.</p>
+            </div>
+            <span class="kit__meta"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-external-link"/></svg></span>
+          </li><li class="kit__item">
+            <span class="kit__shot"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236b4a4a'/%3E%3Cstop offset='1' stop-color='%232a1717'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1' height='1' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /></span>
+            <div class="kit__body">
+              <p class="kit__role">Audio</p>
+              <h3 class="kit__name"><a class="kit__link" href="#i">Shure SM7B</a></h3>
+              <p class="kit__note">Forgiving of a bad room, which is what every room I have filmed in has been.</p>
+            </div>
+            <span class="kit__meta"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-external-link"/></svg></span>
+          </li><li class="kit__item">
+            <span class="kit__shot"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237c6f3f'/%3E%3Cstop offset='1' stop-color='%232a2412'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1' height='1' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /></span>
+            <div class="kit__body">
+              <p class="kit__role">Light</p>
+              <h3 class="kit__name"><a class="kit__link" href="#i">Aputure 120d II</a></h3>
+              <p class="kit__note">One key light, bounced. Everything else in frame is the room doing its job.</p>
+            </div>
+            <span class="kit__meta"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-external-link"/></svg></span>
+          </li><li class="kit__item">
+            <span class="kit__shot"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234a6b6b'/%3E%3Cstop offset='1' stop-color='%23172a2a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1' height='1' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /></span>
+            <div class="kit__body">
+              <p class="kit__role">Recorder</p>
+              <h3 class="kit__name"><a class="kit__link" href="#i">Zoom F3</a></h3>
+              <p class="kit__note">32-bit float, so a take is never lost to a level I set wrong at 6am.</p>
+            </div>
+            <span class="kit__meta"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-external-link"/></svg></span>
+          </li><li class="kit__item">
+            <span class="kit__shot"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%238a7a63'/%3E%3Cstop offset='1' stop-color='%232e2820'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1' height='1' fill='url(%23g)'/%3E%3C/svg%3E" alt="" /></span>
+            <div class="kit__body">
+              <p class="kit__role">Edit</p>
+              <h3 class="kit__name"><a class="kit__link" href="#i">DaVinci Resolve</a></h3>
+              <p class="kit__note">The grade and the cut are the same conversation.</p>
+            </div>
+            <span class="kit__meta"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-external-link"/></svg></span>
+          </li>
+        </ul>
+      </div>
+      <aside class="stack">
+        <article class="card card-quiet">
+          <span class="card__pattern pattern pattern-timecode" aria-hidden="true"></span>
+          <div class="card__body">
+            <p class="card__kicker">The setup</p>
+            <h3 class="card__title">One room, one light</h3>
+            <p class="card__excerpt">The whole channel is filmed in the corner of a bedroom with a bedsheet on the window. The camera is expensive; nothing else is.</p>
+            <div class="card__tags"><span class="badge badge-outline">4K 50p</span><span class="badge badge-outline">S-Log3</span><span class="badge badge-outline">32-bit float</span></div>
+          </div>
+        </article>
+        <article class="card card-inverse">
+          <div class="card__body">
+            <p class="card__kicker">Ask</p>
+            <h3 class="card__title">What should I film next?</h3>
+            <p class="card__excerpt">The last six episodes came from replies to this exact question.</p>
+          </div>
+          <div class="card__actions"><a class="btn btn-sm btn-ghost" href="#i">Send an idea</a></div>
+        </article>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ── Newsletter ───────────────────────────────────────────────────── -->
+  <section class="section section-tight section-line section-sunken" id="newsletter">
+    <div class="center center-xl">
+      <div class="cta cta-sm cta-row cta-boxed">
+        <div>
+          <p class="cta__kicker">Every Friday</p>
+          <h2 class="cta__title u-m-0">Get the episode before the algorithm does.</h2>
+          <p class="cta__fine">4,812 readers · unsubscribe in one click</p>
+        </div>
+        <form class="cta__actions cta__form form form-inline" action="#i" onsubmit="return false">
+          <label class="u-sr-only" for="nl-mail">Email</label>
+          <input class="input input-sm" id="nl-mail" type="email" placeholder="you@studio.tv" autocomplete="email" />
+          <button class="btn btn-primary btn-sm" type="submit">Subscribe</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+<footer class="footer footer-loose">
+  <div class="center center-2xl">
+    <div class="footer__top">
+      <div>
+        <p class="footer__brand"><span class="dot dot-accent"></span> Swarnil</p>
+        <p class="footer__note">Engineer, creator, occasional traveller. Everything here is made in the open — the site, the system it is built on, and the notes from getting both wrong first.</p>
+        <div class="footer__social">
+          <a class="btn btn-social btn-sm btn-icon" href="https://youtube.com/@imswarnil" rel="noopener" aria-label="YouTube"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-video"/></svg></a>
+          <a class="btn btn-social btn-sm btn-icon" href="https://github.com/imswarnil" rel="noopener" aria-label="GitHub"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg></a>
+          <a class="btn btn-social btn-sm btn-icon" href="#i" rel="noopener" aria-label="Instagram"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-camera"/></svg></a>
+          <a class="btn btn-social btn-sm btn-icon" href="#i" rel="noopener" aria-label="RSS"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-rss"/></svg></a>
+        </div>
+        <form class="footer__form" action="#i" onsubmit="return false">
+          <label class="u-sr-only" for="foot-mail">Email</label>
+          <input class="input input-sm" id="foot-mail" type="email" placeholder="you@studio.tv" autocomplete="email" />
+          <button class="btn btn-secondary btn-sm" type="submit">Subscribe</button>
+        </form>
+      </div>
+      <nav class="footer__col" aria-label="Make"><p class="footer__head">Make</p><a href="/templates/video/index.html">Video</a><a href="/templates/blog/index.html">Writing</a><a href="/templates/projects/index.html">Projects</a><a href="/templates/courses/index.html">Courses</a></nav>
+      <nav class="footer__col" aria-label="Elsewhere"><p class="footer__head">Elsewhere</p><a href="https://youtube.com/@imswarnil" rel="noopener">YouTube</a><a href="https://github.com/imswarnil" rel="noopener">GitHub</a><a href="https://design.imswarnil.com">Design system</a><a href="#i">Newsletter</a></nav>
+      <nav class="footer__col" aria-label="Site"><p class="footer__head">Site</p><a href="/templates/personal/about.html">About</a><a href="#i">Now</a><a href="#i">Uses</a><a href="#i">Colophon</a></nav>
+    </div>
+    <span class="footer__mark" aria-hidden="true">Swarnil</span>
+    <div class="footer__bottom">
+      <div>
+        <p class="footer__fine">© 2026 Swarnil Singhai · Built on the <a href="https://design.imswarnil.com">Swarnil Design System</a></p>
+        <p class="footer__meta"><span><strong>v2.4</strong> of this site</span><span>Deployed <strong>Sep 07</strong></span><span>Type set in <strong>Inter</strong></span></p>
+      </div>
+      <div class="stack stack-sm">
+        <nav class="footer__legal" aria-label="Legal"><a href="#i">Privacy</a><a href="#i">Licence</a><a href="#i">RSS</a><a href="#i">Sitemap</a></nav>
+        <span class="footer__rec"><span class="dot dot-sm dot-live"></span> Still rolling</span>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

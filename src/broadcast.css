@@ -1,0 +1,22 @@
+/* =============================================================================
+   SWARNIL DESIGN SYSTEM — THE BROADCAST BUNDLE
+
+   Everything the web bundle has, plus the creator layer: export canvases,
+   scenes, lower thirds, stream widgets, thumbnails and OG images. This is the
+   file OBS loads as a browser source and the file a screenshot renders for a
+   thumbnail. A website never needs it — import the main bundle there.
+
+       @import "@imswarnil/swarnil-design/broadcast";
+       <link rel="stylesheet" href=".../dist/swarnil-broadcast.min.css">
+
+   Docs: https://design.imswarnil.com/canvas.html
+   ========================================================================== */
+
+@import url('./0-config/index.css');
+@import url('./1-foundation/index.css');
+@import url('./2-elements/index.css');
+@import url('./3-components/index.css');
+@import url('./4-patterns/index.css');
+@import url('./5-sections/index.css');
+@import url('./7-broadcast/index.css');
+@import url('./6-utilities/index.css');

@@ -1,0 +1,106 @@
+/* =============================================================================
+   55 · SHARE, RAIL — the row under an article, the column beside it
+
+   Two editorial organs a publishing site needs once it has more than one kind
+   of post. The share row is a line of quiet actions — never a wall of brand
+   colours, because the brands' colours are not this page's accent. The rail
+   is the sticky sidebar: it sticks under the nav, scrolls itself when it is
+   taller than the viewport, and unsticks entirely on a small screen so a
+   phone never gets a frozen column.
+
+   The rail's fold is a media query on purpose. Whether a column may stick is
+   a decision about the viewport, not about the column's own width.
+
+   Layer: patterns.
+   ========================================================================== */
+
+@layer patterns {
+
+	/* ── Share ─────────────────────────────────────────────────────────────── */
+
+	.share {
+		--share-gap: var(--space-2);
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: var(--share-gap);
+		padding-block: var(--space-5);
+		border-block: var(--border-hair) solid var(--line-subtle);
+	}
+
+	.share-flush { padding-block: 0; border-block: 0; }
+	.share-center { justify-content: center; }
+
+	/* SHARE is a label. */
+	.share__label {
+		font-family: var(--font-label);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		font-size: var(--text-2xs);
+		color: var(--fg-faint);
+		margin-inline-end: var(--space-2);
+	}
+
+	/* A count beside an action — 128 shares — is data. */
+	.share__count {
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		letter-spacing: var(--tracking-data);
+		font-size: var(--text-xs);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-faint);
+		margin-inline-start: auto;
+	}
+
+	/* ── Rail ──────────────────────────────────────────────────────────────── */
+
+	.rail {
+		--rail-gap: var(--space-6);
+		--rail-top: 5rem;
+		display: flex;
+		flex-direction: column;
+		gap: var(--rail-gap);
+		align-self: start;
+	}
+
+	@media (min-width: 64rem) {
+		.rail {
+			position: sticky;
+			top: var(--rail-top);
+			max-height: calc(100dvh - var(--rail-top) - var(--space-4));
+			overflow-y: auto;
+			scrollbar-width: thin;
+			overscroll-behavior: contain;
+		}
+	}
+
+	/* A titled block inside the rail. */
+	.rail__block {
+		border: var(--border-hair) solid var(--line-default);
+		border-radius: var(--radius-card);
+		background: var(--bg-surface);
+		padding: var(--space-4) var(--space-5);
+	}
+
+	/* The ask — subscribe, sponsor — is the one block that takes the accent
+	   edge. Two would be none. */
+	.rail__block-accent { border-color: var(--line-accent); background: var(--accent-soft); }
+
+	/* No box: for a rail that is a list of links, not a set of cards. */
+	.rail__block-flush { border: 0; border-radius: 0; background: transparent; padding: 0; }
+
+	/* ON THIS PAGE is a label. */
+	.rail__title {
+		font-family: var(--font-label);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		font-size: var(--text-2xs);
+		color: var(--fg-faint);
+		margin-block-end: var(--space-3);
+		display: flex;
+		align-items: center;
+		gap: var(--space-2);
+	}
+}

@@ -1,0 +1,12 @@
+/* =============================================================================
+   8 · FRAMEWORK — the opt-in twelve-column layer
+
+   Container, row, twelve columns, six breakpoints, and the responsive display,
+   flex and spacing utilities that go with them. Not imported by the main bundle: this
+   is the second opinion, and it is opt-in on purpose.
+   ========================================================================== */
+
+@import url('./90-container.css');  /* .container, and its five steps   */
+@import url('./91-grid.css');       /* .row, .col-*, offsets, order     */
+@import url('./92-responsive.css'); /* d-* f-* j-* a-* text-*, per tier */
+@import url('./93-spacing.css');    /* p-* m-* gap-*, per tier          */
