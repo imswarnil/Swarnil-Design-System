@@ -423,6 +423,70 @@ body > .footer > * { max-width: 74rem; margin-inline: auto; }
 .shell__rail-link .icon { color: var(--fg-faint); }
 .shell__rail-link:hover .icon { color: currentcolor; }
 
+/* ── Chrome introduced by the Bulma swap ──────────────────────────────────
+   Bulma's navbar, pagination and footer carry the structure; these are the
+   few slots it has no name for. */
+
+.shell__brand {
+	font-family: var(--font-display);
+	font-weight: var(--weight-bold);
+	font-size: var(--text-lg);
+	letter-spacing: var(--tracking-tight);
+	gap: var(--space-2);
+}
+
+.shell__pager-dir {
+	display: flex;
+	align-items: center;
+	gap: var(--space-1);
+	font-family: var(--font-label);
+	font-size: var(--text-2xs);
+	font-weight: var(--weight-semibold);
+	letter-spacing: var(--tracking-label);
+	text-transform: uppercase;
+	color: var(--fg-faint);
+}
+
+.shell__pager-title { font-weight: var(--weight-semibold); color: var(--fg-default); }
+.pagination-next .shell__pager-dir { justify-content: flex-end; }
+.shell__pager :is(.pagination-previous, .pagination-next) {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: var(--space-1);
+	block-size: auto;
+	padding: var(--space-4);
+	text-align: start;
+}
+.shell__pager .pagination-next { align-items: flex-end; text-align: end; }
+
+.shell__foot { margin-block-start: var(--space-10); border-radius: var(--radius-lg); }
+
+.shell__foot-row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--space-3);
+}
+
+.shell__foot-row > p { margin: 0; }
+.shell__foot-links { display: flex; flex-wrap: wrap; gap: var(--space-4); }
+.shell__foot-links a { color: var(--fg-subtle); text-decoration: none; }
+.shell__foot-links a:hover { color: var(--fg-default); }
+
+.shell__rec {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-2);
+	font-family: var(--font-data);
+	font-size: var(--text-2xs);
+	font-weight: var(--weight-light);
+	letter-spacing: var(--tracking-label);
+	text-transform: uppercase;
+	color: var(--fg-faint);
+}
+
 /* Below a certain height there is no room for both. The contents win: an ad
    nobody can see is worth less than a table of contents somebody uses. */
 @media (height <= 46rem) {

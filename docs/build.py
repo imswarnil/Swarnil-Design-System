@@ -335,13 +335,15 @@ def demo(markup, caption):
            if caption else '')
     return f'''<figure class="demo" id="demo-{n}">
 {cap}<div class="demo__bar">
-<div class="tabs tabs-flush" role="tablist" aria-label="Example view">
-<button class="tab" type="button" role="tab" aria-selected="true" data-pane="preview">Preview</button>
-<button class="tab" type="button" role="tab" aria-selected="false" data-pane="code">HTML</button>
+<div class="tabs is-small is-boxed" role="tablist" aria-label="Example view">
+<ul>
+<li class="is-active"><button class="tab" type="button" role="tab" aria-selected="true" data-pane="preview">Preview</button></li>
+<li><button class="tab" type="button" role="tab" aria-selected="false" data-pane="code">HTML</button></li>
+</ul>
 </div>
 <div class="demo__tools">
-<button class="btn btn-quiet btn-xs" type="button" data-narrow aria-pressed="false" title="Preview at 320px">320px</button>
-<button class="btn btn-quiet btn-xs" type="button" data-copy title="Copy the HTML">Copy</button>
+<button class="button is-small is-ghost" type="button" data-narrow aria-pressed="false" title="Preview at 320px">320px</button>
+<button class="button is-small is-ghost" type="button" data-copy title="Copy the HTML">Copy</button>
 </div>
 </div>
 <div class="demo__stage" data-pane="preview"><div class="demo__inner">
@@ -419,7 +421,7 @@ def render(md):
             th = ''.join(f'<th>{inline(c)}</th>' for c in head)
             tb = ''.join('<tr>' + ''.join(f'<td>{inline(c)}</td>' for c in r) + '</tr>'
                          for r in rows)
-            out.append(f'<div class="table-wrap"><table class="table">'
+            out.append(f'<div class="table-wrap"><table class="table is-fullwidth is-striped">'
                        f'<thead><tr>{th}</tr></thead><tbody>{tb}</tbody></table></div>')
             continue
 
@@ -572,9 +574,9 @@ def primary_html(current):
     for href, label, icon in PRIMARY:
         here = ' aria-current="page"' if href == f'/{current}.html' else ''
         out.append(
-            f'<a class="navbar__link" href="{href}"{here}>'
-            f'<svg class="icon icon-sm" aria-hidden="true">'
-            f'<use href="/icons/sprite.svg#i-{icon}"/></svg>{label}</a>')
+            f'<a class="navbar-item" href="{href}"{here}>'
+            f'<span class="icon is-small"><svg class="icon icon-sm" aria-hidden="true">'
+            f'<use href="/icons/sprite.svg#i-{icon}"/></svg></span><span>{label}</span></a>')
     return ''.join(out)
 
 
@@ -601,10 +603,10 @@ def build_page(page, pages, shell):
                  f'<use href="/icons/sprite.svg#i-arrow-{"left" if dir_ == "prev" else "right"}"/></svg>')
         label = 'Previous' if dir_ == 'prev' else 'Next'
         dir_html = (f'{arrow}{label}' if dir_ == 'prev' else f'{label}{arrow}')
-        end = ' pager__item-next' if dir_ == 'next' else ''
-        return (f'<a class="pager__item{end}" href="/{p["slug"]}.html">'
-                f'<span class="pager__dir">{dir_html}</span>'
-                f'<span class="pager__title">{html.escape(p["title"])}</span></a>')
+        cls = 'pagination-next' if dir_ == 'next' else 'pagination-previous'
+        return (f'<a class="{cls}" href="/{p["slug"]}.html">'
+                f'<span class="shell__pager-dir">{dir_html}</span>'
+                f'<span class="shell__pager-title">{html.escape(p["title"])}</span></a>')
 
     # Plain token replacement, not str.format: the shell contains real
     # JavaScript, and every brace in it would otherwise need doubling.
@@ -618,11 +620,11 @@ def build_page(page, pages, shell):
         'take': take,
         'editurl': f'https://github.com/imswarnil/Swarnil-Design-System/edit/main/docs/content/{page["slug"]}.md',
         'crumbs': (
-            '<ol class="breadcrumb breadcrumb-truncate">'
+            '<ul>'
             '<li><a href="/">Home</a></li>'
-            f'<li><span>{html.escape(page.get("group", ""))}</span></li>'
-            f'<li><span aria-current="page">{html.escape(page["title"])}</span></li>'
-            '</ol>'
+            f'<li><a href="#">{html.escape(page.get("group", ""))}</a></li>'
+            f'<li class="is-active"><a href="#" aria-current="page">{html.escape(page["title"])}</a></li>'
+            '</ul>'
         ),
         'v': V,
         'styles': styles_html(),
