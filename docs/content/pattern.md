@@ -76,7 +76,7 @@ that spends its pseudo-elements. Put the pattern on a child or a parent — the
 same rule the frame page states from its side.
 
 :::demo Pattern on a child, brackets on the parent — the legal composition
-<div class="ratio ratio-photo w-md frame frame-4 u-relative u-rounded-lg u-border">
+<div class="ratio ratio-photo w-md frame u-relative u-rounded-lg u-border">
   <span class="frame__tr"></span><span class="frame__bl"></span>
   <div class="pattern pattern-timecode u-absolute u-inset-0"></div>
 </div>
@@ -156,7 +156,7 @@ Zigzag reads as motion, so it belongs on a band that is going somewhere.
 
 :::demo Two of them doing real work — a band and a card
 <div class="stack">
-  <section class="section section-tight bg-sunken pattern pattern-topo pattern-coarse pattern-fade u-rounded-lg">
+  <section class="section bg-sunken pattern pattern-topo pattern-coarse pattern-fade u-rounded-lg">
     <div class="center center-md u-text-center">
       <p class="eyebrow">Travel</p>
       <h3 class="t-h2 u-m-0">Twenty-three countries, one lens</h3>

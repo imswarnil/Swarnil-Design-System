@@ -28,7 +28,7 @@ lead: An ordered sequence with a rail through it — the one idea the build log,
       <span class="timeline__time">Jun 10</span>
       <a class="timeline__title" href="#i">Episode 12 in the edit</a>
       <p class="timeline__note">Colour pass done; the mix is waiting on the voice-over retake.</p>
-      <div class="timeline__meta"><span class="tag">Edit</span><span class="tag badge-craft">Retake</span></div>
+      <div class="timeline__meta"><span class="badge">Edit</span><span class="badge badge-craft">Retake</span></div>
     </div>
   </li>
   <li class="timeline__item" data-kind="ship">
@@ -157,8 +157,8 @@ and a tag row rather than one line.
 
 :::demo
 <ol class="timeline timeline-cards" style="max-width: 36rem">
-  <li class="timeline__item" data-done><span class="timeline__node">1</span><div class="timeline__body"><span class="timeline__time">v0.1 · Sep 05</span><span class="timeline__title">The rebuild lands</span><p class="timeline__note">Nine cascade layers declared up front; every rule in one.</p><div class="timeline__meta"><span class="tag">tokens</span><span class="tag">docs</span></div></div></li>
-  <li class="timeline__item" aria-current="step"><span class="timeline__node">2</span><div class="timeline__body"><span class="timeline__time">v0.2 · Sep 07</span><span class="timeline__title">The creator layer</span><p class="timeline__note">Backgrounds, effects, veils, and the broadcast bundle.</p><div class="timeline__meta"><span class="tag is-primary">broadcast</span></div></div></li>
+  <li class="timeline__item" data-done><span class="timeline__node">1</span><div class="timeline__body"><span class="timeline__time">v0.1 · Sep 05</span><span class="timeline__title">The rebuild lands</span><p class="timeline__note">Nine cascade layers declared up front; every rule in one.</p><div class="timeline__meta"><span class="badge">tokens</span><span class="badge">docs</span></div></div></li>
+  <li class="timeline__item" aria-current="step"><span class="timeline__node">2</span><div class="timeline__body"><span class="timeline__time">v0.2 · Sep 07</span><span class="timeline__title">The creator layer</span><p class="timeline__note">Backgrounds, effects, veils, and the broadcast bundle.</p><div class="timeline__meta"><span class="badge is-primary">broadcast</span></div></div></li>
 </ol>
 :::
 

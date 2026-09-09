@@ -19,7 +19,7 @@ learned to hide.
 :::demo
 <div class="u-flex u-items-center u-justify-between u-border u-rounded-lg u-p-3">
   <span class="t-small">start</span>
-  <span class="tag is-primary">middle</span>
+  <span class="badge is-primary">middle</span>
   <span class="t-small">end</span>
 </div>
 :::

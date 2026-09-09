@@ -12,7 +12,7 @@ lead: The plans, read across — every part a named slot in a fixed order, and e
     <p class="t-lead">Every episode is free. Members get the course, the source files and the Friday call.</p>
     <div class="pricing__toggle" role="group" aria-label="Billing period">
       <button class="button" type="button" aria-pressed="true">Monthly</button>
-      <button class="button" type="button" aria-pressed="false">Yearly <span class="tag is-success">−2 months</span></button>
+      <button class="button" type="button" aria-pressed="false">Yearly <span class="badge is-success">−2 months</span></button>
     </div>
   </header>
   <div class="pricing__grid">

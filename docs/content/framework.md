@@ -211,7 +211,7 @@ because they sit *between* them.
 <div class="stack stack-sm">
   <div class="p-2 p-md-5 u-bg-sunken u-rounded-lg u-border"><span class="t-data">p-2 p-md-5 — tight on a phone, roomy from 768px</span></div>
   <div class="d-flex f-col f-md-row gap-2 gap-md-4 p-3 u-bg-sunken u-rounded-lg u-border">
-    <span class="tag">gap-2</span><span class="tag">gap-md-4</span><span class="tag">stacked below 768px</span>
+    <span class="badge">gap-2</span><span class="badge">gap-md-4</span><span class="badge">stacked below 768px</span>
   </div>
   <div class="d-flex j-between a-center px-4 py-3 u-bg-sunken u-rounded-lg u-border">
     <span class="t-data">px-4 py-3</span>
@@ -272,7 +272,7 @@ The other half of a framework: short names, six tiers, mobile-first.
     <p class="t-h4 u-m-0">Colour, in one block of tokens</p>
     <p class="t-small t-muted u-m-0">Episode 48 · 24:07</p>
   </div>
-  <span class="tag is-primary d-none d-md-iflex">Visible from md</span>
+  <span class="badge is-primary d-none d-md-iflex">Visible from md</span>
   <button class="button is-primary is-small" type="button">Watch</button>
 </div>
 :::

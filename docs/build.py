@@ -82,7 +82,6 @@ PRIMARY = [
     ('/principles.html', 'Principles', 'bookmark'),
     ('/install.html', 'Install', 'box'),
     ('/icons.html', 'Icons', 'capture'),
-    ('/templates.html', 'Templates', 'folder'),
 ]
 
 # Nav group order. A page names its group in front matter; a group not listed
@@ -99,7 +98,6 @@ GROUPS = [
     'Collections',
     'Broadcast',
     'Utilities',
-    'Templates',
 ]
 
 # One icon per group, from the system's own sprite (Swarnil Icons). The old
@@ -600,7 +598,9 @@ def bundle_size():
 
 def build_page(page, pages, shell):
     body, toc = render(page['body'])
-    lead = (f'<p class="lead">{inline(page["lead"])}</p>' if page.get('lead') else '')
+    # Bulma's .subtitle is the standing-under-a-title paragraph; .lead was ours
+    # and went with 51-prose.css.
+    lead = (f'<p class="subtitle is-5">{inline(page["lead"])}</p>' if page.get('lead') else '')
     # The home page is not in the doc sequence, so it has no neighbours.
     slugs = [p['slug'] for p in pages]
     idx = slugs.index(page['slug']) if page['slug'] in slugs else -1
@@ -751,18 +751,11 @@ def main():
     # They link /src/index.css like the docs do, so a rebuild is visible in
     # them too. The class audit reads them from here, so a template can only
     # use a class the system (or templates/templates.css) defines.
-    if (ROOT / 'templates').is_dir():
-        shutil.copytree(ROOT / 'templates', OUT / 'templates',
-                        ignore=shutil.ignore_patterns('README.md'))
-        # They are authored against the source so they can be opened straight
-        # off disk; the copy served from the site links the compiled bundle for
-        # the same reason every other page does.
-        if not DEV:
-            for page in (OUT / 'templates').rglob('*.html'):
-                page.write_text(page.read_text()
-                                .replace('/src/index.css',
-                                         f'/dist/swarnil-design.min.css{V}')
-                                .replace('/src/js/nav.js', f'/assets/nav.js{V}'))
+    # templates/ is gone on this branch. The twelve whole-page examples were
+    # built out of .navbar, .card, .field, .footer, .chapters and .dl — six
+    # components Bulma either replaces or has no answer for — so they demoed a
+    # system that no longer exists. Rewriting twelve full pages into Bulma
+    # markup is its own job, not a side effect of this one.
 
     # The icon set is a separate repo (icons.imswarnil.com). Its built sprite
     # is vendored at docs/icons/sprite.svg so CI and a fresh clone can build

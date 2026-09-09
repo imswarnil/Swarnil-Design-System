@@ -56,9 +56,9 @@ the band and you get a 900px-wide email box.
     <p class="cta__kicker">Every Friday</p>
     <h2 class="cta__title u-m-0">One episode, one thing I learned.</h2>
     <p class="cta__body">No sponsor reads. Unsubscribe is one click and I will not ask why.</p>
-    <form class="cta__actions cta__form form form-inline" action="#i" onsubmit="return false">
+    <form class="cta__actions cta__form field is-grouped" action="#i" onsubmit="return false">
       <label class="u-sr-only" for="cta-mail">Email</label>
-      <input class="input input-sm" id="cta-mail" type="email" placeholder="you@studio.tv" />
+      <input class="input is-small" id="cta-mail" type="email" placeholder="you@studio.tv" />
       <button class="button is-primary is-small" type="submit">Subscribe</button>
     </form>
     <p class="cta__fine">4,812 readers · new issue every Friday</p>

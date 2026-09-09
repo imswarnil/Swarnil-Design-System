@@ -143,4 +143,4 @@ double the edge.
 
 If none of them fits, the answer is still one of them plus a variable — not a
 new grid. Nine primitives is the whole layout vocabulary, and every page in
-these docs and all twelve [templates](/templates.html) are built from them.
+these docs and all twelve [templates](https://bulma.io/documentation/) are built from them.

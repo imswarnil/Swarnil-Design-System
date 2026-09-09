@@ -10,14 +10,14 @@ lead: A token-first, dependency-free CSS design system. Almost monochrome, so on
   <span class="home__bg" data-hero-video="7OoSX3KbXOw" aria-hidden="true"></span>
 
   <div>
-    <p class="hero__eyebrow">MIT · v0.1 · Dependency-free CSS</p>
+    <p class="subtitle is-6">MIT · v0.1 · Dependency-free CSS</p>
     <h1 class="hero__title">Decide once.<br />Then stop <em>deciding</em>.</h1>
     <p class="hero__lead">A token-first CSS design system with no framework, no runtime and no build step. Change three variables and the whole thing rebrands — site, cards, thumbnails, end screens.</p>
     <div class="hero__actions">
       <a class="button is-primary is-medium" href="/introduction.html">Read the docs</a>
       <a class="button is-link is-medium frame frame-sm frame-hover" href="https://bulma.io/documentation/elements/button/">Browse components</a>
     </div>
-    <p class="hero__note">No framework · No runtime · No build step required</p>
+    <p class="help">No framework · No runtime · No build step required</p>
   </div>
 
   <!-- The rig. Every colour is a system token, so it themes with the page
@@ -63,49 +63,49 @@ lead: A token-first, dependency-free CSS design system. Almost monochrome, so on
 </section>
 
 <section class="band">
-  <div class="sec"><div class="sec__text">
+  <div class="sec"><div class="block">
   <p class="sec__eyebrow"><span class="home__take">TAKE 01</span>Why it exists</p>
   <h2 class="sec__title">Opinions, so you can stop having them</h2>
   <p class="sec__lead">Six decisions, made once and written down, so you are not standing at 2am asking whether this should be 16px or 20px.</p>
   </div></div>
 
   <div class="feats">
-    <article class="feat frame frame-4 frame-hover">
+    <article class="feat frame frame-hover">
       <span class="frame__tr"></span><span class="frame__bl"></span>
       <span class="feat__scan bg-scanlines fx-scan fx-delay-1" aria-hidden="true"></span>
       <h3>Token-first</h3>
       <p>Every value is a variable off a ladder. Nothing invents a number, so nothing drifts.</p>
     </article>
 
-    <article class="feat frame frame-4 frame-hover">
+    <article class="feat frame frame-hover">
       <span class="frame__tr"></span><span class="frame__bl"></span>
       <span class="feat__scan bg-scanlines fx-scan fx-delay-2" aria-hidden="true"></span>
       <h3>One rationed accent</h3>
       <p>Near-monochrome ink, so a single colour can mean <em>live</em>. Attention is budgeted, not sprayed.</p>
     </article>
 
-    <article class="feat frame frame-4 frame-hover">
+    <article class="feat frame frame-hover">
       <span class="frame__tr"></span><span class="frame__bl"></span>
       <span class="feat__scan bg-scanlines fx-scan fx-delay-3" aria-hidden="true"></span>
       <h3>The platform first</h3>
       <p>Native <code class="code">&lt;dialog&gt;</code>, <code class="code">&lt;details&gt;</code> and the Popover API. Keyboard and focus come free.</p>
     </article>
 
-    <article class="feat frame frame-4 frame-hover">
+    <article class="feat frame frame-hover">
       <span class="frame__tr"></span><span class="frame__bl"></span>
       <span class="feat__scan bg-scanlines fx-scan fx-delay-4" aria-hidden="true"></span>
       <h3>Honest motion</h3>
       <p>Under 200ms for feedback, one property at a time, and every animation off under reduced motion.</p>
     </article>
 
-    <article class="feat frame frame-4 frame-hover">
+    <article class="feat frame frame-hover">
       <span class="frame__tr"></span><span class="frame__bl"></span>
       <span class="feat__scan bg-scanlines fx-scan fx-delay-5" aria-hidden="true"></span>
       <h3>Dark is not an inversion</h3>
       <p>Surfaces lift with light, hairlines go translucent, shadow becomes elevation. One block of tokens.</p>
     </article>
 
-    <article class="feat frame frame-4 frame-hover">
+    <article class="feat frame frame-hover">
       <span class="frame__tr"></span><span class="frame__bl"></span>
       <span class="feat__scan bg-scanlines fx-scan" aria-hidden="true"></span>
       <h3>Mono means data</h3>
@@ -117,7 +117,7 @@ lead: A token-first, dependency-free CSS design system. Almost monochrome, so on
 <section class="band">
   <div class="install">
     <div>
-      <div class="sec"><div class="sec__text">
+      <div class="sec"><div class="block">
       <p class="sec__eyebrow"><span class="home__take">TAKE 02</span>Install</p>
       <h2 class="sec__title">Three lines, any stack</h2>
       <p class="sec__lead">It is CSS. Link it, or import it. There is no configuration file and nothing to compile.</p>
@@ -138,7 +138,7 @@ lead: A token-first, dependency-free CSS design system. Almost monochrome, so on
 </section>
 
 <section class="band">
-  <div class="sec"><div class="sec__text">
+  <div class="sec"><div class="block">
   <p class="sec__eyebrow"><span class="home__take">TAKE 03</span>The two voices</p>
   <h2 class="sec__title">Type that knows what it is saying</h2>
   <p class="sec__lead">Inter for display and for everything you read — including labels, which are the same face worn small and tracked. Hierarchy comes from weight, size and tracking, not from a second family. Monospace appears only where the content is data.</p>
@@ -161,7 +161,7 @@ lead: A token-first, dependency-free CSS design system. Almost monochrome, so on
 </section>
 
 <section class="band">
-  <div class="sec"><div class="sec__text">
+  <div class="sec"><div class="block">
   <p class="sec__eyebrow"><span class="home__take">TAKE 04</span>The broadcast layer</p>
   <h2 class="sec__title">The same tokens, on the stream</h2>
   <p class="sec__lead">Thumbnails, OG images, the starting-soon card, the lower third, the LIVE bug — every size in container units, so one design renders at 1280 for export and at 320 on this page. Change the accent and the channel follows.</p>
@@ -191,11 +191,11 @@ lead: A token-first, dependency-free CSS design system. Almost monochrome, so on
       </div>
     </div>
   </div>
-  <p class="u-mt-6"><a class="button is-outlined" href="/canvas.html">See the broadcast layer</a> <a class="button is-ghost" href="/templates.html">Or start from a page template</a></p>
+  <p class="u-mt-6"><a class="button is-outlined" href="/canvas.html">See the broadcast layer</a> <a class="button is-ghost" href="https://bulma.io/documentation/">Or start from a page template</a></p>
 </section>
 
 <section class="band">
-  <div class="sec"><div class="sec__text">
+  <div class="sec"><div class="block">
   <p class="sec__eyebrow"><span class="home__take">TAKE 05</span>The numbers</p>
   <h2 class="sec__title">Small enough to read in an afternoon</h2>
   <p class="sec__lead">Every figure below is measured by the build, not claimed. When one drifts, CI knows before the page does.</p>
@@ -223,7 +223,7 @@ lead: A token-first, dependency-free CSS design system. Almost monochrome, so on
 
 <section class="band">
   <div class="close-band">
-    <div class="sec"><div class="sec__text">
+    <div class="sec"><div class="block">
     <p class="sec__eyebrow"><span class="home__take">TAKE 06</span>Open source</p>
     <h2 class="sec__title">Free forever. MIT.</h2>
     </div></div>

@@ -173,7 +173,7 @@ wander for a background object that should not feel placed.
 
 :::demo
 <div class="grid-3 u-text-center">
-  <div class="u-p-8 u-rounded-lg u-border"><span class="tag badge-live fx-breathe">Waiting</span><p class="t-fine t-muted u-mt-4 u-m-0">fx-breathe</p></div>
+  <div class="u-p-8 u-rounded-lg u-border"><span class="badge badge-live fx-breathe">Waiting</span><p class="t-fine t-muted u-mt-4 u-m-0">fx-breathe</p></div>
   <div class="u-p-8 u-rounded-lg u-border"><span class="fx-swing u-iblock"><svg class="icon icon-xl" aria-hidden="true"><use href="/icons/sprite.svg#i-clapperboard"/></svg></span><p class="t-fine t-muted u-mt-4 u-m-0">fx-swing</p></div>
   <div class="u-p-8 u-rounded-lg u-border u-overflow-hidden"><span class="fx-drift u-iblock"><svg class="icon icon-xl" aria-hidden="true"><use href="/icons/sprite.svg#i-plane"/></svg></span><p class="t-fine t-muted u-mt-4 u-m-0">fx-drift</p></div>
 </div>

@@ -70,7 +70,7 @@ duration or a live badge.
     </div>
   </div>
   <div class="poster">
-    <div class="poster__corner"><span class="tag badge-live">Live</span></div>
+    <div class="poster__corner"><span class="badge badge-live">Live</span></div>
     <button class="play play-sm" type="button" aria-label="Watch live"><span class="play__disc"></span></button>
     <div class="poster__label">
       <span class="poster__eyebrow">Now</span>

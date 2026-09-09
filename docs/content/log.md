@@ -30,7 +30,7 @@ accent.
 <div style="max-width:44rem">
   <article class="release" aria-current="true">
     <div class="release__meta">
-      <span class="release__ver">v2.1.0 <span class="tag badge-live">Latest</span></span>
+      <span class="release__ver">v2.1.0 <span class="badge badge-live">Latest</span></span>
       <span class="release__date">2026-08-30</span>
     </div>
     <div class="release__body">
@@ -70,18 +70,18 @@ strip of stops.
     <span class="itinerary__chip"><b class="itinerary__num">1</b><span class="itinerary__unit">day</span></span>
     <h4 class="itinerary__title">Land in Tbilisi, walk the old town</h4>
     <p class="itinerary__note">Sulphur baths before the jet lag wins. Shot the intro on the funicular.</p>
-    <div class="itinerary__stops"><span class="tag">Abanotubani</span><span class="tag">Funicular</span></div>
+    <div class="itinerary__stops"><span class="badge">Abanotubani</span><span class="badge">Funicular</span></div>
   </li>
   <li class="itinerary__day" aria-current="date">
     <span class="itinerary__chip"><b class="itinerary__num">2</b><span class="itinerary__unit">day</span></span>
     <h4 class="itinerary__title">Kazbegi day trip</h4>
     <p class="itinerary__note">Gergeti Trinity on foot, weather permitting. Drone up only if the wind drops.</p>
-    <div class="itinerary__stops"><span class="tag">Ananuri</span><span class="tag">Stepantsminda</span><span class="tag badge-craft">Drone</span></div>
+    <div class="itinerary__stops"><span class="badge">Ananuri</span><span class="badge">Stepantsminda</span><span class="badge badge-craft">Drone</span></div>
   </li>
   <li class="itinerary__day">
     <span class="itinerary__chip"><b class="itinerary__num">3</b><span class="itinerary__unit">day</span></span>
     <h4 class="itinerary__title">Wine country, slow train back</h4>
-    <div class="itinerary__stops"><span class="tag">Sighnaghi</span><span class="tag">Telavi</span></div>
+    <div class="itinerary__stops"><span class="badge">Sighnaghi</span><span class="badge">Telavi</span></div>
   </li>
 </ol>
 :::

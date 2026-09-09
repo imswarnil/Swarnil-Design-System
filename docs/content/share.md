@@ -60,7 +60,7 @@ exactly one may be `.rail__block-accent` — the ask.
     <div class="rail__title"><svg class="icon icon-xs" aria-hidden="true"><use href="/icons/sprite.svg#i-mail"/></svg> Every Friday</div>
     <p class="t-small">One episode, one thing I learned, no sponsor reads.</p>
     <form class="stack stack-sm" action="#i" style="margin-block-start: var(--space-3)">
-      <input class="input input-sm" type="email" placeholder="you@studio.tv" aria-label="Email">
+      <input class="input is-small" type="email" placeholder="you@studio.tv" aria-label="Email">
       <button class="button is-primary is-small is-fullwidth" type="submit">Subscribe</button>
     </form>
   </div>

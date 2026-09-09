@@ -99,7 +99,7 @@ background so a wrapped line keeps its box. The corner holds a badge.
 :::demo
 <div class="player player-bar-open">
   <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237a5b4e'/%3E%3Cstop offset='1' stop-color='%232a1d17'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E" alt="" />
-  <span class="player__corner"><span class="tag badge-live">Live</span></span>
+  <span class="player__corner"><span class="badge badge-live">Live</span></span>
   <p class="player__caption"><span>Bounce the key off a wall if the softbox is too big for the room.</span></p>
   <div class="player__bar">
     <button class="player__btn" type="button" aria-label="Pause"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-pause"/></svg></button>

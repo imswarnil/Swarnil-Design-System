@@ -2,7 +2,7 @@
    2 · ELEMENTS — single-purpose, usually one tag, no internal structure
    ========================================================================== */
 
-@import url('./20-badge.css');   /* badge, chip, timecode, kbd, avatar */
+@import url('./20-badge.css');
 @import url('./22-code.css');    /* inline code, code block, tokens    */
 @import url('./23-indicator.css'); /* spinner, skeleton, progress, meter */
 @import url('./24-text.css');    /* figure, pullquote, mark, note, footnote */

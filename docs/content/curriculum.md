@@ -318,9 +318,9 @@ scroll back up to the syllabus for it is the commonest mistake in the shape.
         <button class="button is-ghost is-small" type="button" aria-label="Next lesson"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-right"/></svg></button>
       </div>
     </header>
-    <div class="tabs tabs-underline classroom__tabs" role="tablist" aria-label="Lesson">
+    <div class="tabs classroom__tabs" role="tablist" aria-label="Lesson">
       <button class="tab" type="button" role="tab" aria-selected="true">Notes</button>
-      <button class="tab" type="button" role="tab" aria-selected="false">Resources <span class="tab__count">4</span></button>
+      <button class="tab" type="button" role="tab" aria-selected="false">Resources <span class="tag is-small">4</span></button>
       <button class="tab" type="button" role="tab" aria-selected="false">Transcript</button>
     </div>
     <p class="t-small t-muted">A join is not a technique, it is a claim about the world: that one row over here corresponds to one row over there.</p>

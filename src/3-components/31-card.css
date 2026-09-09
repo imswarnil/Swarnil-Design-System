@@ -1,0 +1,702 @@
+/* =============================================================================
+   31 · CARD — one card, no twin
+
+   Parts stay the same across every variant; only the shape and the hover
+   answer change. A card gets exactly ONE hover answer — a card that both lifts
+   and brackets is a card that cannot decide what it is.
+
+   State is an attribute, never a class: [aria-current] marks the card you
+   are on, [aria-selected] the one you picked, [data-done] the one you have
+   finished. A class can lie to the accessibility tree; an attribute is it.
+
+   Layer: components.
+   ========================================================================== */
+
+@layer components {
+
+	.card {
+		--card-pad: var(--space-5);
+		--card-radius: var(--radius-card);
+		--card-bg: var(--bg-surface);
+		--card-line: var(--line-default);
+		--card-gap: var(--space-2);
+
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		background: var(--card-bg);
+		border: var(--border-hair) solid var(--card-line);
+		border-radius: var(--card-radius);
+		overflow: hidden;
+		transition: var(--t-colors), var(--t-transform), var(--t-shadow);
+	}
+
+	/* ── Parts ─────────────────────────────────────────────────────────────── */
+
+	.card__media {
+		position: relative;
+		aspect-ratio: var(--card-ratio, 16 / 9);
+		background: var(--bg-media);
+		overflow: hidden;
+		flex: none;
+	}
+
+	.card__media > img,
+	.card__media > video { width: 100%; height: 100%; object-fit: cover; transition: scale var(--dur-4) var(--ease-out); }
+
+	.card__body {
+		display: flex;
+		flex-direction: column;
+		gap: var(--card-gap);
+		padding: var(--card-pad);
+	}
+
+	.card__kicker,
+	.card__meta {
+		font-family: var(--font-label);
+		font-size: var(--text-2xs);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: var(--fg-faint);
+	}
+
+	.card__title {
+		font-family: var(--font-display);
+		font-size: var(--text-lg);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-tight);
+		line-height: var(--leading-snug);
+		color: var(--fg-default);
+		margin: 0;
+	}
+
+	.card__excerpt {
+		font-size: var(--text-sm);
+		line-height: var(--leading-relaxed);
+		color: var(--fg-muted);
+		margin: 0;
+	}
+
+	/* ── Media extras ──────────────────────────────────────────────────────── */
+
+	/* Anything laid over the image: a badge, a duration, a play button. The
+	   scrim is a hard-edged gradient rather than a blur, because a blur costs
+	   a compositor layer per card and a deck has twenty of them. */
+	.card__overlay {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-between;
+		gap: var(--space-2);
+		padding: var(--space-3);
+		background: linear-gradient(transparent 55%, var(--bg-scrim));
+		color: var(--pure-white);
+		pointer-events: none;
+	}
+
+	/* Corner-pinned marker on the media — a category, a state, a duration.
+	   Start is the default; -end and -bottom move it. */
+	.card__badge {
+		position: absolute;
+		inset-block-start: var(--space-3);
+		inset-inline-start: var(--space-3);
+		z-index: var(--z-raised);
+	}
+
+	.card__badge-end {
+		inset-inline-start: auto;
+		inset-inline-end: var(--space-3);
+	}
+
+	.card__badge-bottom {
+		inset-block-start: auto;
+		inset-block-end: var(--space-3);
+	}
+
+	/* A duration or timecode sitting on the image — data, so the data voice. */
+	.card__stamp {
+		position: absolute;
+		inset-block-end: var(--space-3);
+		inset-inline-end: var(--space-3);
+		padding: var(--space-px) var(--space-2);
+		border-radius: var(--radius-sm);
+		background: var(--bg-scrim);
+		color: var(--pure-white);
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-2xs);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+	}
+
+	/* A play control over the media — the record light's sibling. Decorative
+	   when the whole card is the link (the stretched link is the control). */
+	.card__play {
+		position: absolute;
+		inset: 0;
+		margin: auto;
+		inline-size: 3rem;
+		block-size: 3rem;
+		display: grid;
+		place-items: center;
+		border-radius: var(--radius-full);
+		background: color-mix(in oklab, var(--pure-black) 55%, transparent);
+		color: var(--pure-white);
+		backdrop-filter: blur(4px);
+		transition: scale var(--dur-2) var(--ease-out), background-color var(--dur-2) var(--ease-out);
+	}
+
+	.card:hover .card__play { scale: 1.08; background: var(--accent); }
+
+	/* ── Body extras ───────────────────────────────────────────────────────── */
+
+	/* A wrapping row of badges or chips. Uses the layout primitive's variable
+	   rather than inventing a gap. */
+	.card__tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-2);
+	}
+
+	/* Avatar + name + date. The name is a person, the date is data — which is
+	   why only one half of this is in the data voice. */
+	.card__author {
+		display: flex;
+		align-items: center;
+		gap: var(--space-3);
+	}
+
+	.card__author-name {
+		font-size: var(--text-sm);
+		font-weight: var(--weight-medium);
+		color: var(--fg-default);
+	}
+
+	.card__author-meta {
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-2xs);
+		letter-spacing: var(--tracking-data);
+		color: var(--fg-faint);
+		font-variant-numeric: tabular-nums;
+	}
+
+	/* The stat card's number: display face, tabular, so a row of them aligns. */
+	.card__stat {
+		font-family: var(--font-display);
+		font-size: var(--text-3xl);
+		font-weight: var(--weight-bold);
+		letter-spacing: var(--tracking-tighter);
+		line-height: 1;
+		font-variant-numeric: tabular-nums lining-nums;
+		color: var(--fg-default);
+	}
+
+	/* The change since last time. The direction is data, not decoration, so
+	   it lives in an attribute the markup states. */
+	.card__delta {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-1);
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-xs);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-faint);
+	}
+
+	.card__delta[data-trend='up'] { color: var(--success-fg); }
+	.card__delta[data-trend='down'] { color: var(--danger-fg); }
+	.card__delta .icon { --icon-size: 0.875rem; }
+
+	/* The link card's arrow: parked at the end, it travels on hover. */
+	.card__arrow {
+		margin-inline-start: auto;
+		flex: none;
+		color: var(--fg-faint);
+		transition: translate var(--dur-2) var(--ease-out), color var(--dur-2) var(--ease-out);
+	}
+
+	.card:hover .card__arrow { translate: var(--space-1) 0; color: var(--fg-accent); }
+
+	/* A completion mark for a lesson or a step. Empty ring until [data-done]. */
+	.card__tick {
+		display: grid;
+		place-items: center;
+		inline-size: 1.25rem;
+		block-size: 1.25rem;
+		flex: none;
+		border: var(--border-hair) solid var(--line-strong);
+		border-radius: var(--radius-full);
+		color: transparent;
+		transition: var(--t-colors);
+	}
+
+	.card__tick .icon { --icon-size: 0.75rem; }
+
+	/* ── Footer ────────────────────────────────────────────────────────────
+	   margin-block-start:auto pins it to the bottom, so cards of different
+	   text lengths in one grid still line their footers up. That is most of
+	   what makes a deck look tidy. */
+
+	.card__footer {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-3);
+		margin-block-start: auto;
+		padding: var(--space-3) var(--card-pad);
+		border-block-start: var(--border-hair) solid var(--line-subtle);
+		font-size: var(--text-sm);
+		color: var(--fg-muted);
+	}
+
+	.card__footer-plain {
+		border-block-start: 0;
+		padding-block-start: 0;
+	}
+
+	.card__actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-2);
+		padding: 0 var(--card-pad) var(--card-pad);
+		margin-block-start: auto;
+	}
+
+	/* A number that has to line up with other cards' numbers. */
+	.card__price {
+		font-family: var(--font-display);
+		font-size: var(--text-xl);
+		font-weight: var(--weight-bold);
+		font-variant-numeric: tabular-nums lining-nums;
+		letter-spacing: var(--tracking-tight);
+		color: var(--fg-default);
+	}
+
+	/* The whole card is clickable, but the <a> stays on the TITLE so the
+	   accessible name and the tab stop are right. Its ::after covers the card.
+	   One stretched link per card — a second is unreachable by keyboard. */
+	.card__link { color: inherit; text-decoration: none; }
+
+	.card__link::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: var(--z-raised);
+	}
+
+	/* Anything that must stay clickable ABOVE the stretched link — a tag, a
+	   play button, a save toggle. It sits one step over the cover. */
+	.card__above { position: relative; z-index: calc(var(--z-raised) + 1); }
+
+	/* ── Hover answers ─────────────────────────────────────────────────────── */
+
+	@media (hover: hover) and (pointer: fine) {
+		.card-hover-lift:hover {
+			translate: 0 -3px;
+			box-shadow: var(--elevation-2);
+			border-color: var(--line-strong);
+		}
+
+		.card-hover-lift:hover .card__media > img { scale: 1.03; }
+
+		/* The brackets ARE the feedback, so nothing lifts. */
+		.card-hover-frame:hover { translate: none; box-shadow: none; }
+	}
+
+	/* ── Turning the brackets on and off ───────────────────────────────────
+	   .card-hover-frame only SIZES the brackets for a card — the default 22px
+	   arms are drawn for media and swallow a card's padding.
+
+	   `frame-hover` is the switch:
+
+	       <article class="card card-hover-frame frame-hover">   on
+	       <article class="card card-hover-frame">               off
+
+	   One class added or removed, nothing else to change, and the card keeps
+	   its sizing either way so toggling it cannot shift the layout. */
+
+	.card-hover-frame {
+		--frame-size: 16px;
+		--frame-inset: 8px;
+		--frame-color: var(--accent);
+	}
+
+	/* Focus-within, so a keyboard user gets the same affordance as a mouse. */
+	.card:focus-within { border-color: var(--line-strong); }
+
+	/* ── States — attributes, never classes ────────────────────────────────
+	   Current is a 2px rule at the start edge; selected is the accent line
+	   plus the focus ring's geometry; done fills the tick. None of them is a
+	   filled pill. */
+
+	.card[aria-current='true'] {
+		--card-line: var(--line-accent);
+		box-shadow: inset var(--border-2) 0 0 0 var(--accent);
+	}
+
+	.card[aria-selected='true'] {
+		--card-line: var(--accent);
+		box-shadow: var(--accent-ring);
+	}
+
+	.card[data-done] .card__tick {
+		background: var(--accent);
+		border-color: var(--accent);
+		color: var(--fg-on-accent);
+	}
+
+	.card[data-done] .card__title { color: var(--fg-muted); }
+
+	/* ── Shape variants ────────────────────────────────────────────────────── */
+
+	.card-row { flex-direction: row; }
+	.card-row > .card__media { flex: 0 0 12rem; aspect-ratio: 1; }
+	.card-row > .card__body { flex: 1; }
+
+	/* Media on the end edge — for alternating rows in an editorial list. */
+	.card-row-reverse { flex-direction: row-reverse; }
+
+	/* Media below the words — a caption-first card. */
+	.card-media-end > .card__media { order: 1; }
+
+	.card-bare {
+		--card-bg: transparent;
+		--card-line: transparent;
+		--card-radius: 0;
+	}
+
+	.card-bare .card__body { padding-inline: 0; }
+
+	.card-flush .card__body { padding: 0; }
+	.card-compact { --card-pad: var(--space-4); --card-gap: var(--space-1); }
+	.card-compact .card__title { font-size: var(--text-base); }
+	.card-roomy   { --card-pad: var(--space-8); }
+
+	/* Media full-bleed behind the text.
+
+	   The body has to be RAISED, not merely later in the source. Both children
+	   sit in grid cell 1/1, and .card__media is positioned while .card__body
+	   is not — so the media paints in the positioned-descendants step and the
+	   body's text paints in the inline-content step, which comes first. The
+	   words end up under the picture. One position + z-index puts the body
+	   back on top, and it is not optional: without it a tile is a picture with
+	   an invisible title. */
+	.card-tile { display: grid; }
+	.card-tile > .card__media { grid-area: 1 / 1; aspect-ratio: var(--card-ratio, 3 / 4); }
+
+	.card-tile > .card__body {
+		grid-area: 1 / 1;
+		position: relative;
+		z-index: var(--z-raised);
+		justify-content: flex-end;
+		background: linear-gradient(transparent 30%, var(--bg-scrim));
+	}
+
+	/* On a tile the bottom belongs to the words, so the duration moves to the
+	   top edge rather than sitting under the title it would otherwise
+	   overlap. It is the same mark; only the corner changes. */
+	.card-tile .card__stamp { inset-block: var(--space-3) auto; }
+
+	.card-tile .card__title { color: var(--pure-white); }
+	.card-tile .card__excerpt { color: color-mix(in oklab, var(--pure-white) 80%, transparent); }
+	.card-tile .card__kicker,
+	.card-tile .card__meta { color: color-mix(in oklab, var(--pure-white) 70%, transparent); }
+
+	/* ── Emphasis variants ─────────────────────────────────────────────────── */
+
+	.card-accent  { --card-line: var(--accent); }
+	.card-quiet   { --card-bg: transparent; --card-line: var(--line-subtle); }
+	.card-raised  { box-shadow: var(--elevation-2); --card-line: transparent; }
+	.card-sunken  { --card-bg: var(--bg-sunken); --card-line: transparent; }
+
+	.card-inverse {
+		--card-bg: var(--bg-inverse);
+		--card-line: transparent;
+	}
+
+	.card-inverse .card__title { color: var(--fg-on-inverse); }
+	.card-inverse .card__excerpt,
+	.card-inverse .card__kicker,
+	.card-inverse .card__footer,
+	.card-inverse .card__meta { color: color-mix(in oklab, var(--fg-on-inverse) 65%, transparent); }
+	.card-inverse .card__footer { border-block-start-color: var(--line-inverse); }
+
+	/* ── Content types ─────────────────────────────────────────────────────
+	   One variable does the shape work: --card-ratio feeds the media's
+	   aspect-ratio, so a content type is mostly a named ratio plus which parts
+	   the recipe uses. The docs card page shows each full recipe.
+
+	     video    16:9  (the default)   __stamp for duration, __play
+	     reel      9:16                 vertical short — cap the width
+	     movie     2:3                  the poster wall
+	     square    1:1                  covers, gallery tiles
+	     post     16:9 + __author       editorial
+	     project  __tags + __footer     repo/status shape
+	     stat     __stat + __delta      the dashboard tile
+	     link     __arrow               a row that goes somewhere                 */
+
+	.card-video  { --card-ratio: 16 / 9; }
+	.card-reel   { --card-ratio: 9 / 16; max-inline-size: 15rem; }
+	/* The same 9:16 with no cap — a wall of shorts, where the GRID sets the
+	   width and the card must fill its slot. .card-reel is the loose one that
+	   has to stop itself getting silly; this one is in a column already. */
+	.card-story  { --card-ratio: 9 / 16; }
+	.card-movie  { --card-ratio: 2 / 3; }
+	.card-square { --card-ratio: 1; }
+
+	.card-stat > .card__body { gap: var(--space-3); }
+
+	/* The link card is a row: icon, words, arrow — a doc index entry. */
+	.card-link > .card__body {
+		flex-direction: row;
+		align-items: center;
+		gap: var(--space-4);
+	}
+
+	.card-link .card__title { font-size: var(--text-base); }
+	.card-link > .card__body > .icon { color: var(--fg-faint); }
+
+	/* ── Responsive ────────────────────────────────────────────────────────
+	   A container query, not a media query: a card in a 300px sidebar and a
+	   card in a 300px grid slot are the same card. Requires .cq-card on an
+	   ancestor. */
+	@container card (max-width: 26rem) {
+		.card-row,
+		.card-row-reverse { flex-direction: column; }
+		.card-row > .card__media,
+		.card-row-reverse > .card__media { flex: none; aspect-ratio: 16 / 9; }
+	}
+
+	/* ── Ghost, glass, glow, gradient ─────────────────────────────────────
+	   Four more dresses. Each is still one hover answer: the ghost fills,
+	   the glow brightens, the others keep whatever hover class they carry. */
+
+	/* Ghost: no surface until you point at it. A dashed hairline says
+	   "placeholder, add one" as much as "card". */
+	.card-ghost {
+		--card-bg: transparent;
+		--card-line: var(--line-default);
+		border-style: dashed;
+	}
+	.card-ghost:hover { --card-bg: var(--bg-surface); border-style: solid; --card-line: var(--line-strong); }
+	.card-ghost-accent { --card-line: var(--line-accent); }
+	.card-ghost-accent:hover { --card-line: var(--accent); }
+
+	/* Glass: the card on footage or on a glow. */
+	.card-glass {
+		--card-bg: var(--glass-bg);
+		--card-line: color-mix(in oklab, var(--pure-white) 25%, transparent);
+		-webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
+		backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
+		box-shadow: inset 0 1px 0 color-mix(in oklab, var(--pure-white) 35%, transparent);
+	}
+	.card-glass-dark { --card-bg: oklch(15% 0.012 275 / 0.6); color: var(--ink-50); color-scheme: dark; }
+	.card-glass-dark .card__title { color: var(--ink-50); }
+	.card-glass-dark :is(.card__excerpt, .card__kicker, .card__meta, .card__footer) { color: color-mix(in oklab, var(--ink-50) 70%, transparent); }
+
+	/* Glow: the accent ring's light behind the card. The hover answer is
+	   more light, so it must not also lift. */
+	.card-glow { --card-line: var(--line-accent); box-shadow: 0 0 0 0 var(--accent-ring), 0 12px 40px -16px var(--accent-ring); }
+
+	@media (hover: hover) and (pointer: fine) {
+		.card-glow:hover { --card-line: var(--accent); box-shadow: 0 0 0 var(--border-2) var(--accent-ring), 0 16px 48px -12px var(--accent-ring); }
+		.card-hover-glow:hover { box-shadow: 0 0 0 var(--border-2) var(--accent-ring), 0 16px 48px -12px var(--accent-ring); border-color: var(--line-accent); }
+		/* Zoom: only the media moves; the box stays put. */
+		.card-hover-zoom:hover .card__media > img { scale: 1.05; }
+	}
+
+	/* Gradient: the accent's soft wash as the ground. A featured slot. */
+	.card-gradient { --card-bg: linear-gradient(160deg, var(--accent-soft), var(--bg-surface) 70%); --card-line: var(--line-accent); }
+
+	/* ── More parts ───────────────────────────────────────────────────────── */
+
+	/* An icon at the head of the body — the feature card, the service tile. */
+	.card__icon {
+		display: inline-grid;
+		place-items: center;
+		width: 2.5rem;
+		height: 2.5rem;
+		border-radius: var(--radius-md);
+		background: var(--accent-soft);
+		color: var(--accent-soft-fg);
+		margin-block-end: var(--space-2);
+	}
+	.card__icon > .icon { --icon-size: 1.25rem; }
+
+	/* A row of facts in the data voice — lessons · 3h 40m · beginner. */
+	.card__facts {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-1) var(--space-3);
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-2xs);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-faint);
+	}
+	.card__facts > * { display: inline-flex; align-items: center; gap: var(--space-1); }
+	.card__facts .icon { --icon-size: 0.875rem; }
+
+	/* Progress along the bottom edge — the course card, the series card.
+	   The value is a custom property the host sets; the bar is the card's
+	   own edge, so it costs no height. */
+	.card__progress {
+		position: absolute;
+		inset: auto 0 0;
+		height: var(--border-3);
+		background: var(--line-subtle);
+	}
+	.card__progress::after {
+		content: '';
+		position: absolute;
+		inset: 0 auto 0 0;
+		width: var(--value, 0%);
+		background: var(--accent);
+		transition: width var(--dur-5) var(--ease-out);
+	}
+
+	/* ── .card__pattern — the texture slot ────────────────────────────────
+	   A pattern paints on ::before, and so does .frame; a card that carries
+	   both loses one of them silently. So the card takes its texture as a
+	   CHILD, the way it takes a .veil — which also means the pattern can be
+	   masked back from the words without touching the card's own background.
+
+	       <article class="card">
+	         <span class="card__pattern pattern pattern-grid" aria-hidden="true"></span>
+	         <div class="card__body"> … </div>
+	       </article>                                                        */
+	.card__pattern {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+		border-radius: inherit;
+		pointer-events: none;
+		/* Strongest at the top-left corner, gone by the time it reaches the
+		   text. A texture a reader has to see through is a texture that has
+		   stopped being decoration. */
+		mask-image: linear-gradient(155deg, black, transparent 62%);
+		opacity: 0.75;
+	}
+
+	/* The body has to sit above the texture; nothing else in the card does. */
+	.card:has(> .card__pattern) > :not(.card__pattern) { position: relative; z-index: 1; }
+
+	/* Full strength, no mask — for a card whose whole point is the ground. */
+	.card__pattern-full { mask-image: none; }
+
+	/* ── The repository card ───────────────────────────────────────────────
+	   The shape every developer already knows how to read: owner/name, one
+	   sentence, the topics, then the facts — language, stars, forks, when it
+	   last moved. The language dot takes its colour from --lang on the
+	   instance, which is the only place in the system a hue is set per item,
+	   and it is set because the hue is DATA (the language) rather than
+	   emphasis. Everything else stays monochrome.
+
+	   The facts row pins to the bottom, so a grid of repos lines up however
+	   long the descriptions run. */
+	.card-repo {
+		--card-gap: var(--space-3);
+		--lang: var(--fg-faint);
+	}
+
+	.card-repo > .card__body { flex: 1; }
+	.card-repo .card__title { font-size: var(--text-base); }
+	.card-repo .card__kicker { text-transform: none; letter-spacing: normal; font-family: var(--font-body); font-size: var(--text-sm); font-weight: var(--weight-regular); color: var(--fg-muted); display: flex; align-items: center; gap: var(--space-2); }
+	.card-repo .card__kicker strong { font-weight: var(--weight-semibold); color: var(--fg-default); }
+	.card-repo .card__facts { margin-block-start: auto; padding-block-start: var(--space-2); }
+
+	/* Language: a dot in the language's own colour, then its name. */
+	.card__lang::before {
+		content: '';
+		inline-size: 0.625rem;
+		block-size: 0.625rem;
+		border-radius: var(--radius-full);
+		background: var(--lang, var(--fg-faint));
+		flex: none;
+	}
+
+	/* The composition bar along the card's bottom edge — one segment per
+	   language, width from --value, colour from --lang. Same slot as
+	   .card__progress, so a card has one or the other, never both. */
+	.card__langs {
+		position: absolute;
+		inset: auto 0 0;
+		display: flex;
+		block-size: var(--border-3);
+		background: var(--line-subtle);
+	}
+
+	.card__langs > * { inline-size: var(--value, 0%); background: var(--lang, var(--fg-faint)); }
+
+	/* ── The product card ──────────────────────────────────────────────────
+	   A thing that costs money: the shot, the name, what it is, the rating,
+	   the price and the one control that buys it. The order is not
+	   negotiable, and the price and the control sit together at the bottom
+	   because that is the pair a reader is actually comparing across a row.
+
+	   The rating is a number, not five glyphs. Five stars is a picture of a
+	   number that a screen reader has to be told about anyway; the number and
+	   the count say more in less space and need no explanation. */
+	.card-product .card__body { gap: var(--space-2); }
+
+	.card__rating {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-1);
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-2xs);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-faint);
+	}
+
+	.card__rating > .icon { --icon-size: 0.85rem; color: var(--accent); }
+	.card__rating b { font-weight: var(--weight-semibold); color: var(--fg-default); }
+
+	/* Was — the struck price beside the real one. Struck rather than faint,
+	   because faint reads as "unimportant" and this one is the whole offer. */
+	.card__was {
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-sm);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-faint);
+		text-decoration: line-through;
+		margin-inline-start: var(--space-2);
+	}
+
+	/* The buy row: price on one side, control on the other, pinned to the
+	   bottom so a grid of products lines its buttons up. */
+	.card__buy {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-3);
+		margin-block-start: auto;
+		padding: var(--space-3) var(--card-pad) var(--card-pad);
+	}
+
+	/* Out of stock is a state, so it is an attribute. The card goes quiet and
+	   the control is disabled by the markup, not by a class. */
+	.card[data-sold] .card__media { filter: grayscale(1); opacity: 0.6; }
+	.card[data-sold] .card__price { color: var(--fg-faint); }
+
+	/* A level or a state, top-left of the body rather than on the media. */
+	.card__level {
+		align-self: flex-start;
+		font-family: var(--font-label);
+		font-size: var(--text-2xs);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: var(--fg-accent);
+	}
+}
