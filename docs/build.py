@@ -495,21 +495,24 @@ def nav_html(pages, current):
         items = sorted(groups[g], key=lambda p: (int(p.get('order', 50)), p['title']))
         open_ = any(p['slug'] == current for p in items)
         li = ''.join(
-            f'<a class="navlist__link" href="/{p["slug"]}.html"'
-            f'{" aria-current=\"page\"" if p["slug"] == current else ""}>'
-            f'{html.escape(p["title"])}</a>'
+            f'<li><a href="/{p["slug"]}.html"'
+            f'{" class=\"is-active\" aria-current=\"page\"" if p["slug"] == current else ""}>'
+            f'{html.escape(p["title"])}</a></li>'
             for p in items)
         icon = GROUP_ICONS.get(g)
         glyph = (f'<svg class="icon icon-sm" aria-hidden="true">'
                  f'<use href="/icons/sprite.svg#i-{icon}"/></svg>' if icon else '')
-        # .acc is the system's accordion and .acc-quiet is, in its own file's
-        # words, "the docs sidebar shape". The docs used to ship a private
-        # .nav__group that did the same job a step worse.
+        # BULMA BRANCH: the side nav is Bulma's .menu / .menu-label /
+        # .menu-list, kept inside a <details> so the groups still collapse —
+        # Bulma's menu has no disclosure of its own. Neither .menu-label nor
+        # .menu-list collides with anything this system defines, so these are
+        # genuinely Bulma's rules doing the work, not ours winning a cascade
+        # while wearing Bulma's names.
         parts.append(
             f'<details class="acc acc-quiet"{" open" if open_ else ""}>'
-            f'<summary title="{html.escape(g)}">{glyph}'
+            f'<summary class="menu-label" title="{html.escape(g)}">{glyph}'
             f'<span class="acc__label">{html.escape(g)}</span></summary>'
-            f'<div class="acc__body"><div class="navlist">{li}</div></div></details>')
+            f'<div class="acc__body"><ul class="menu-list">{li}</ul></div></details>')
     return ''.join(parts)
 
 

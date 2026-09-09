@@ -51,6 +51,14 @@ def css_sources():
     # The page templates' own glue — page composition the system deliberately
     # does not own. Held to the same rule: a template class must be defined.
     yield from sorted(glob.glob(str(REPO / 'templates/**/*.css'), recursive=True))
+    # The Bulma base, when it has been built. It is a real source of class
+    # definitions for any page that uses Bulma's own components, and without it
+    # every .menu-list and .is-active reads as a phantom. Compiled output, so
+    # it is a source of TRUTH here but never of style: nothing in src/ may
+    # depend on a class defined only by this file.
+    bulma = REPO / 'dist' / 'bulma-base.css'
+    if bulma.exists():
+        yield str(bulma)
 
 
 def defined_classes():
