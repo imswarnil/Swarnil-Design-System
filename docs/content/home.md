@@ -70,42 +70,42 @@ lead: A token-first, dependency-free CSS design system. Almost monochrome, so on
   </div></div>
 
   <div class="feats">
-    <article class="feat frame frame-4 frame-hover">
+    <article class="feat frame frame-hover">
       <span class="frame__tr"></span><span class="frame__bl"></span>
       <span class="feat__scan bg-scanlines fx-scan fx-delay-1" aria-hidden="true"></span>
       <h3>Token-first</h3>
       <p>Every value is a variable off a ladder. Nothing invents a number, so nothing drifts.</p>
     </article>
 
-    <article class="feat frame frame-4 frame-hover">
+    <article class="feat frame frame-hover">
       <span class="frame__tr"></span><span class="frame__bl"></span>
       <span class="feat__scan bg-scanlines fx-scan fx-delay-2" aria-hidden="true"></span>
       <h3>One rationed accent</h3>
       <p>Near-monochrome ink, so a single colour can mean <em>live</em>. Attention is budgeted, not sprayed.</p>
     </article>
 
-    <article class="feat frame frame-4 frame-hover">
+    <article class="feat frame frame-hover">
       <span class="frame__tr"></span><span class="frame__bl"></span>
       <span class="feat__scan bg-scanlines fx-scan fx-delay-3" aria-hidden="true"></span>
       <h3>The platform first</h3>
       <p>Native <code class="code">&lt;dialog&gt;</code>, <code class="code">&lt;details&gt;</code> and the Popover API. Keyboard and focus come free.</p>
     </article>
 
-    <article class="feat frame frame-4 frame-hover">
+    <article class="feat frame frame-hover">
       <span class="frame__tr"></span><span class="frame__bl"></span>
       <span class="feat__scan bg-scanlines fx-scan fx-delay-4" aria-hidden="true"></span>
       <h3>Honest motion</h3>
       <p>Under 200ms for feedback, one property at a time, and every animation off under reduced motion.</p>
     </article>
 
-    <article class="feat frame frame-4 frame-hover">
+    <article class="feat frame frame-hover">
       <span class="frame__tr"></span><span class="frame__bl"></span>
       <span class="feat__scan bg-scanlines fx-scan fx-delay-5" aria-hidden="true"></span>
       <h3>Dark is not an inversion</h3>
       <p>Surfaces lift with light, hairlines go translucent, shadow becomes elevation. One block of tokens.</p>
     </article>
 
-    <article class="feat frame frame-4 frame-hover">
+    <article class="feat frame frame-hover">
       <span class="frame__tr"></span><span class="frame__bl"></span>
       <span class="feat__scan bg-scanlines fx-scan" aria-hidden="true"></span>
       <h3>Mono means data</h3>

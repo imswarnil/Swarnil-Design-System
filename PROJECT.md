@@ -190,6 +190,27 @@ next session.
   everything it defines.
 - Documented on `/install.html` ("The Bulma base"), and as rule 1b in AGENTS.md.
 
+### 2026-09-09 (fourth) — two real bugs, found by trying Bulma and fixed here
+- ⚠️ **The class audit counted a class named in a CSS COMMENT as defined.**
+  `scripts/audit-classes.py` read each file raw, so ".frame-4 needs markup and
+  .frame does not" made `.frame-4` look defined while no selector for it existed
+  anywhere. The audit has been passing markup that renders unstyled. It now
+  strips comments before looking for definitions.
+- ⚠️ **`.frame-4` was never a rule.** Used on five pages, described in two file
+  headers and recommended in two docs pages, defined nowhere — the four corners
+  come from `.frame > .frame__tr` and `.frame__bl`, which need no marker class.
+  Removed from the markup and from the prose that recommended it. Nothing
+  changed visually, which is the proof it was doing nothing.
+- Both found while converting the site to Bulma on a branch. That work is NOT
+  merged and should not be: measured, Bulma replaces about six of this system's
+  components and has no equivalent for the rest. The conversion doubled the
+  bundle (49.6 -> 102.3 KB gzipped), deleted 17 docs pages and all twelve page
+  templates, flattened the landing page, and required restoring 281 classes
+  Bulma had never had. Branches `trying-bulma` (Bulma as a floor under the
+  system) and `bulma-experiment` (Bulma as the system) hold the evidence.
+  The rule worth keeping from it: delete a file when something REPLACES it,
+  never merely because one name collides.
+
 ### 2026-09-09 (third) — the docs shell is an app layout now
 - **Full width, no page cap.** The shell no longer caps at all; the measure
   moved onto the article and is CENTRED in its column. Leftover width split

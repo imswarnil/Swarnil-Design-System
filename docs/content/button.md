@@ -308,7 +308,7 @@ affordance as the mouse.
 :::
 
 `.btn-live` spends `::before` on its record dot and the loading state spends
-`::after` on the spinner, so neither can also take `.frame`. Use `.frame-4`
+`::after` on the spinner, so neither can also take `.frame`. Use the corner spans
 with real corner spans, or pick one.
 
 ## More sizes, and the inverse
