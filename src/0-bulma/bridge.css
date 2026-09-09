@@ -72,6 +72,12 @@
 		   palette we do not have — see PRINCIPLES, "one accent, rationed". */
 		--bulma-primary: var(--accent);
 		--bulma-link: var(--fg-link);
+		--bulma-link-h: 11deg;
+		--bulma-link-s: 77%;
+		--bulma-link-l: 54%;
+		--bulma-primary-h: 11deg;
+		--bulma-primary-s: 77%;
+		--bulma-primary-l: 54%;
 		--bulma-link-text: var(--fg-link);
 		--bulma-link-text-hover: var(--fg-link-hover);
 
@@ -89,6 +95,39 @@
 		--bulma-section-padding-desktop: var(--space-16) var(--gutter);
 		--bulma-duration: var(--dur-2);
 		--bulma-easing: var(--ease-out);
+
+		/* ── The one place the composed-variable trick does not reach ───────
+		   Some of Bulma's states are built from HSL PARTS, not from a composed
+		   colour — its selected menu item is `hsl(var(--bulma-link-h) ...)` —
+		   so there is no single variable to point at a token. The accent is
+		   restated here as HSL. It is the only hand-converted value in this
+		   file, and it is why the note at the top says "what is lost is
+		   Bulma's derived shades".
+
+		   #e4502f, which is oklch(63% 0.190 34). If --accent moves, this moves
+		   with it or every Bulma-derived state quietly stops matching.
+
+		   TWO THINGS THAT COST AN HOUR EACH, WRITTEN DOWN SO THEY DO NOT AGAIN:
+
+		   1. `11deg`, not `11`. These are registered with @property as an
+		      <angle>, so a unitless number is invalid at computed-value time
+		      and falls back to Bulma's initial value — the variable reads as
+		      set on :root while the page keeps painting Bulma blue.
+		   2. It has to be the LINK triplet, not the menu's own. Bulma declares
+		      --bulma-menu-item-selected-h inside `.menu { }`, which outranks
+		      `:root` on specificity no matter what the layer order is; the
+		      menu derives from --bulma-link-*, and THAT is at :root where an
+		      override can reach it. Set the root of the derivation, never a
+		      leaf of it. */
+		/* `11deg`, not `11`. Bulma registers this with @property as an <angle>,
+		   so a unitless number is invalid at computed-value time and silently
+		   falls back to Bulma's own initial value — the nav kept painting
+		   Bulma blue while the variable read as set on :root. A registered
+		   custom property does not forgive a missing unit the way an
+		   unregistered one does. */
+		--bulma-menu-label-color: var(--fg-faint);
+		--bulma-menu-item-radius: var(--radius-control);
+		--bulma-menu-list-border-left: var(--border-hair) solid var(--line-subtle);
 	}
 
 	/* Bulma's minireset sets `html { background-color: … }` and a body font

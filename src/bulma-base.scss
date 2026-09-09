@@ -25,8 +25,9 @@
 // Build:  npm run css:bulma
 // =============================================================================
 
-@use "bulma/sass/utilities";
-@use "bulma/sass/themes";
-@use "bulma/sass/base";
-@use "bulma/sass/grid";
-@use "bulma/sass/layout";
+// ON THIS BRANCH: ALL OF BULMA.
+// main takes base + grid + layout only, because its own components supersede
+// Bulma's and shipping both means 39 KB gzipped of CSS that loses every cascade
+// it takes part in. This branch is the other experiment — Bulma's components
+// present and used, ours kept only where they say something Bulma does not.
+@use "bulma/sass";
