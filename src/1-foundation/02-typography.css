@@ -157,6 +157,21 @@
 		text-size-adjust: 100%;
 	}
 
+	/* The ROOT carries the face, not just the body.
+
+	   `body` alone leaves `html` at the UA default, which is a serif — so the
+	   root element, the ::backdrop of every dialog, and the brief moment before
+	   body's own rule applies are all Times. Nothing inherits UP into html, so
+	   it looks harmless right until something renders against the root: a
+	   backdrop, a top-layer element, or a form control in a browser that
+	   resolves its default from the root rather than the ancestor.
+
+	   Setting it here means the face is inherited by everything, once, and
+	   `body` below only restates it because a base framework may set its own
+	   on body directly — an explicit declaration beats no declaration, so ours
+	   has to exist at the same level to win. */
+	html { font-family: var(--font-body); }
+
 	body {
 		font-family: var(--font-body);
 		font-size: var(--text-base);

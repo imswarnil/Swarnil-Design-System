@@ -74,6 +74,38 @@ body {
 /* The search results panel. .navbar__search positions the field and its icon;
    what a hit looks like is the docs' own business, because the system has no
    search component and inventing one to serve this page would be backwards. */
+/* ── .icon belongs to both systems, and that breaks Bulma's fields ────────
+   Bulma's `.control.has-icons-left` works by making `.icon.is-left` a 2.5rem
+   POSITIONING BOX pinned to the field's edge, with the glyph centred inside
+   it. Our own `.icon` sets a 1.25rem size and lives in a higher layer, so it
+   wins — and Bulma's box collapses to a 20px square in the corner while the
+   input keeps its 40px of padding waiting for it. The icon ends up outside
+   the field it is supposed to sit in.
+
+   Neither side is wrong; the name is just owned twice. The box is restored
+   here, on the composition (`.control .icon.is-left`) rather than on `.icon`,
+   so our sizing keeps applying to every icon that is not doing this job. */
+.control.has-icons-left .icon.is-left,
+.control.has-icons-right .icon.is-right {
+	position: absolute;
+	inset-block-start: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	inline-size: 2.5rem;
+	block-size: 100%;
+	pointer-events: none;
+	color: var(--fg-faint);
+	z-index: 4;
+}
+
+.control.has-icons-left .icon.is-left { inset-inline-start: 0; }
+.control.has-icons-right .icon.is-right { inset-inline-end: 0; }
+
+/* Bulma's .button lays its children out with no gap; ours had one. A dot and
+   a word touching is not a label, it is a typo. */
+.navbar .button { gap: var(--space-2); }
+
 .shell__find { flex: 0 1 18rem; }
 
 /* The same widget in the sidebar column, where it is not competing with a nav
@@ -83,7 +115,18 @@ body {
    correctly, because a bar that narrow has no room for it — and this copy is
    not in the bar. It is in the drawer, which is the ONLY search on a phone, so
    it has to say out loud that the bar's rule does not apply to it. */
-.shell__find-side { display: flex; flex: none; max-inline-size: none; }
+/* In the sidebar the field takes the column's width and no more. `flex: none`
+   was right when this was a navbar item that must not shrink; here it made a
+   262px control sit in a 240px column and hang 14px past its edge, clipping
+   the "/" hint. It is the only thing in that column, so it shrinks. */
+.shell__find-side {
+	display: flex;
+	flex: 0 1 auto;
+	inline-size: 100%;
+	max-inline-size: 100%;
+}
+
+.shell__find-side .input { inline-size: 100%; min-inline-size: 0; }
 .shell__key { position: absolute; inset-inline-end: var(--space-2); pointer-events: none; }
 .shell__find .input { padding-inline-end: var(--space-8); }
 
@@ -281,12 +324,21 @@ body {
 	padding-inline: var(--space-8);
 }
 
-/* Capped and CENTRED. The cap is typography — a 1400px line is unreadable at
-   any width — and the centring is what stops the leftover reading as the dead
-   strip this layout used to have on its right. */
+/* Capped and CENTRED, and the cap is 52rem for a reason.
+
+   It was 68rem, which is 1088px — far past any readable line length — so the
+   cap almost never engaged and the column just took whatever the grid gave it.
+   The result was a measure that JUMPED as breakpoints fired: 727px at 1280,
+   889px at 1216 (the rail drops), 912px at 960 (the sidebar drops). Narrowing
+   the window made the text column WIDER, twice, and at 960 a line ran to 912px.
+
+   52rem engages at every width above it, so the reading column is the same
+   width on a laptop and a 4K display and does not lurch when a rail leaves.
+   The leftover is centred, which is what keeps it reading as air rather than
+   as the dead strip on the right this layout used to have. */
 .shell__doc {
 	min-width: 0;
-	max-width: 68rem;
+	max-width: 52rem;
 	margin-inline: auto;
 }
 
@@ -535,8 +587,29 @@ body > .footer > * { max-width: 74rem; margin-inline: auto; }
 
 /* ── Responsive ───────────────────────────────────────────────────────────── */
 
-/* Three columns until they genuinely stop fitting, then two. */
-@media (width <= 76rem) {
+/* ── Keeping the measure still ────────────────────────────────────────────
+   THE COLUMNS FLEX SO THE TEXT DOES NOT.
+
+   With fixed 16rem/14rem side columns the reading column was whatever was left
+   over, and at a breakpoint that changed by a lot in the wrong direction:
+   727px at 1280, then 832px at 1216 once the rail dropped. Narrowing the
+   window made the text WIDER, which is the thing that reads as broken.
+
+   So the two navigation columns give ground first. Between 76 and 88rem they
+   tighten rather than the article shrinking, and the article holds 52rem from
+   1216px all the way up. What is left over goes outside the grid, where it
+   centres the page. */
+
+@media (width <= 88rem) {
+	.shell { --side-w: 13rem; --rail-w: 11rem; }
+}
+
+/* 80rem, not 76. The rail leaves at the exact width where keeping it would
+   push the article under 52rem — 13rem side + 52rem article + 11rem rail plus
+   the gutters IS 80rem — so the measure never dips on its way out. Dropping it
+   later meant three columns squeezed the article to 727px at 1280 and 806px at
+   1360, and then it sprang back to 832 the moment the rail went. */
+@media (width <= 80rem) {
 	.shell { grid-template-columns: var(--side-w) minmax(0, 1fr); }
 	.shell__rail { display: none; }
 }
