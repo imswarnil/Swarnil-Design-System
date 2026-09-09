@@ -1,10 +1,16 @@
 /* =============================================================================
    THE LANDING PAGE
 
-   Its own layout — no sidebar, no TOC, full-bleed bands. Everything below is
-   built from the system's own components and tokens, because a landing page
-   that cannot be built out of the system is an argument against the system.
+   Its own layout — no sidebar, no contents, full-bleed bands. Everything that
+   IS a component now comes from the system: the opening band is .hero, every
+   section head is .sec, the closing footer is .footer, the snippets are
+   .codeblock. What is left here is the band rhythm, the rig illustration, and
+   the three blocks that only this page has.
+
+   In @layer docs, like the rest of the site's chrome — see docs.css.
    ========================================================================== */
+
+@layer docs {
 
 .band {
 	padding-inline: var(--gutter);
@@ -15,112 +21,88 @@
 /* Each band is a section, and the rule above it is the divider — the same
    idea as the docs pages, so the two halves of the site read as one thing.
    The rule is inset to the band's own width rather than bleeding full-width,
-   which keeps it aligned with the content it separates. */
+   which keeps it aligned with the content it separates.
+
+   More space ABOVE the rule than below it: the divider opens the section that
+   follows, so it belongs to that section. Sitting exactly halfway between two
+   blocks would make it belong to neither. */
 .band + .band {
-	/* More space ABOVE the rule than below it. The divider opens the section
-	   that follows, so it belongs to that section — sitting exactly halfway
-	   between two blocks would make it belong to neither. */
-	margin-top: var(--space-16);
-	padding-top: var(--space-12);
-	border-top: 1px solid var(--line-subtle);
+	margin-block-start: var(--space-16);
+	padding-block-start: var(--space-12);
+	border-block-start: var(--border-hair) solid var(--line-subtle);
 }
 
-/* ── Hero ─────────────────────────────────────────────────────────────────── */
+/* ── Section heads ────────────────────────────────────────────────────────
+   .sec is the component. A landing page speaks one step louder than a docs
+   page, and that step is the only thing set here. */
 
-.hero {
-	position: relative;
-	display: grid;
-	grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-	gap: var(--space-12);
-	align-items: center;
+.band > .sec { display: block; }
+
+.band .sec__title {
+	font-size: var(--text-3xl);
+	font-weight: var(--weight-bold);
+	letter-spacing: var(--tracking-tighter);
+}
+
+.band .sec__lead { font-size: var(--text-lg); margin-block-start: var(--space-4); }
+
+/* Chapter kickers wear take numbers — the band sequence as a shoot log. */
+.home__take {
+	font-family: var(--font-data);
+	font-weight: var(--weight-light);
+	letter-spacing: var(--tracking-data);
+	font-variant-numeric: tabular-nums;
+	color: var(--fg-accent);
+	margin-inline-end: var(--space-2);
+}
+
+/* ── Hero ─────────────────────────────────────────────────────────────────
+   .hero is the component — grid, eyebrow, title, lead, actions, note, media.
+   Two things are this page's alone: it runs at landing-page scale, and it has
+   footage behind it. */
+
+.hero.band {
 	padding-block: var(--space-16) var(--space-10);
 	/* The band clips nothing itself; the footage is pinned to the viewport, so
 	   isolate keeps its z-index from leaking into the sections below. */
+	position: relative;
 	isolation: isolate;
 }
 
-.hero__eyebrow {
-	display: inline-flex;
-	align-items: center;
-	gap: var(--space-2);
-	font-family: var(--font-label);
-	font-size: var(--text-2xs);
-	font-weight: var(--weight-semibold);
-	letter-spacing: var(--tracking-label);
-	text-transform: uppercase;
-	color: var(--fg-faint);
-	margin: 0 0 var(--space-5);
-}
+.band .hero__title { font-size: var(--text-5xl); font-weight: var(--weight-bold); line-height: 1.04; }
+.band .hero__title em { font-style: normal; color: var(--accent); }
+.band .hero__lead { font-size: var(--text-lg); }
 
-.hero__title {
-	font-family: var(--font-display);
-	font-size: var(--text-5xl);
-	font-weight: var(--weight-bold);
-	line-height: 1.04;
-	letter-spacing: var(--tracking-tighter);
-	margin: 0;
-	text-wrap: balance;
-}
-
-.hero__title em { font-style: normal; color: var(--accent); }
-
-.hero__lead {
-	font-size: var(--text-lg);
-	line-height: var(--leading-relaxed);
-	color: var(--fg-muted);
-	max-width: 34rem;
-	margin: var(--space-5) 0 0;
-	text-wrap: pretty;
-}
-
-.hero__cta {
-	display: flex;
-	gap: var(--space-3);
-	flex-wrap: wrap;
-	margin-top: var(--space-8);
-}
-
-.hero__fine {
-	font-family: var(--font-label);
-	font-size: var(--text-2xs);
-	font-weight: var(--weight-semibold);
-	letter-spacing: var(--tracking-label);
-	text-transform: uppercase;
-	color: var(--fg-faint);
-	margin: var(--space-6) 0 0;
-}
-
-/* ── The hero ────────────────────────────────────────────────────────────────
-   Footage behind the whole band, copy left, the rig right. The band is
-   max-width'd and centred, so the video escapes it: 100vw pinned to the
-   viewport centre. Empty in the markup — docs.js injects the iframe, and never
-   under prefers-reduced-motion, so a reduced-motion visitor gets the ink
-   background and loses nothing but the movement. */
-.hero__bg {
+/* Footage behind the whole band. The band is max-width'd and centred, so the
+   video escapes it: 100vw pinned to the viewport centre. Empty in the markup —
+   docs.js injects the iframe, and never under prefers-reduced-motion, so a
+   reduced-motion visitor gets the ink background and loses nothing but the
+   movement. */
+.home__bg {
 	position: absolute;
 	inset-block: 0;
-	left: 50%;
+	inset-inline-start: 50%;
 	translate: -50% 0;
-	width: 100vw;
+	inline-size: 100vw;
 	overflow: hidden;
 	z-index: 0;
 	opacity: 0;
 	transition: opacity var(--dur-4) var(--ease-out);
 }
 
-.hero__bg[data-on] { opacity: 1; }
+.home__bg[data-on] { opacity: 1; }
 
-/* 16:9 footage across a band that is much wider than it is tall: cover by
-   height and let the sides overflow. */
-.hero__bg iframe {
+/* 16:9 footage across a band much wider than it is tall: cover by height and
+   let the sides overflow. */
+.home__bg iframe {
 	position: absolute;
-	top: 50%;
-	left: 50%;
+	inset-block-start: 50%;
+	inset-inline-start: 50%;
 	translate: -50% -50%;
-	width: 100vw;
-	height: 56.25vw;
-	min-height: 100%;
-	min-width: 177.78vh;
+	inline-size: 100vw;
+	block-size: 56.25vw;
+	min-block-size: 100%;
+	min-inline-size: 177.78vh;
 	border: 0;
 	pointer-events: none;
 }
@@ -129,7 +111,7 @@
    scrim is not optional. It reads as a deliberate grade rather than a veil:
    heaviest at the left where the words are, opening up on the right where the
    rig sits. */
-.hero__bg::after {
+.home__bg::after {
 	content: '';
 	position: absolute;
 	inset: 0;
@@ -145,8 +127,10 @@
 			var(--bg-canvas));
 }
 
-.hero__copy,
-.hero__art { position: relative; z-index: 1; }
+/* The copy and the rig ride above the footage. .home__bg is excluded by
+   name: it is a sibling of theirs, and lifting it too would put the scrim
+   back on top of the words it exists to sit behind. */
+.hero.band > :not(.home__bg) { position: relative; z-index: 1; }
 
 /* ── The rig ─────────────────────────────────────────────────────────────────
    The landing illustration. Inline, not an <img>, for one reason that matters:
@@ -154,9 +138,9 @@
    media/hero.svg hard-coded two palettes and guessed with
    prefers-color-scheme, which meant it was simply wrong for anyone who had
    picked a theme by hand. */
-.hero__art { display: grid; place-items: center; }
+.band .hero__media { display: grid; place-items: center; }
 
-.rig { width: 100%; height: auto; max-width: 27.5rem; }
+.rig { inline-size: 100%; block-size: auto; max-inline-size: 27.5rem; }
 
 .rig__plate { fill: var(--bg-surface); stroke: var(--line-default); }
 .rig__grid { stroke: var(--line-subtle); stroke-width: 1; }
@@ -165,8 +149,11 @@
 .rig__lens { fill: none; stroke: var(--line-strong); stroke-width: 1.5; }
 .rig__lens2 { fill: var(--bg-sunken); stroke: var(--line-default); }
 .rig__play { fill: var(--fg-muted); }
-.rig__card,
-.rig__btn { fill: var(--bg-surface); stroke: var(--line-default); }
+/* .rig__btn was grouped with .rig__card and then had BOTH its properties
+   overridden on the next line — a dead declaration that only looked like
+   shared intent. They are not the same object: the card is a surface, the
+   button is a solid. */
+.rig__card { fill: var(--bg-surface); stroke: var(--line-default); }
 .rig__btn { fill: var(--fg-default); stroke: none; }
 .rig__btnl { fill: var(--bg-canvas); }
 .rig__dot { fill: var(--accent); }
@@ -197,9 +184,9 @@
 .rig__scan { fill: var(--accent); opacity: 0.5; animation: rig-scan 6s var(--ease-inout) infinite; }
 
 @keyframes rig-scan {
-	0%, 100% { transform: translateY(0); opacity: 0; }
+	0%, 100% { translate: 0 0; opacity: 0; }
 	10% { opacity: 0.5; }
-	50% { transform: translateY(225px); opacity: 0.5; }
+	50% { translate: 0 225px; opacity: 0.5; }
 	60% { opacity: 0; }
 }
 
@@ -207,57 +194,33 @@
 	.rig__scan { animation: none; opacity: 0; }
 }
 
-/* ── Section heads ────────────────────────────────────────────────────────── */
+/* ── The opinions grid ────────────────────────────────────────────────────
+   Six cards, and the thing at the top of each one used to be an icon: a box,
+   an aperture, a moon. Six glyphs standing in for six sentences, which is
+   decoration pretending to be information — nobody reads "Dark is not an
+   inversion" off a crescent, and the icons were doing no work the heading
+   was not already doing better.
 
-/* Chapter kickers wear take numbers — the band sequence as a shoot log. */
-.sec__take {
-	font-family: var(--font-data);
-	font-weight: var(--weight-light);
-	letter-spacing: var(--tracking-data);
-	font-variant-numeric: tabular-nums;
-	color: var(--fg-accent);
-	margin-inline-end: var(--space-2);
-}
+   What replaces them is not another picture. It is a slit of the system's own
+   .bg-scanlines with .fx-scan falling through it: fine lines at 1px on 4, and
+   one accent line travelling down. That earns its place three times over —
+   it is the house texture rather than a borrowed glyph, it says "footage" on
+   a system built for people who make video, and it is two real classes doing
+   their real job, which is the only kind of demo a landing page should run.
 
-.sec__kicker {
-	font-family: var(--font-label);
-	font-size: var(--text-2xs);
-	font-weight: var(--weight-semibold);
-	letter-spacing: var(--tracking-label);
-	text-transform: uppercase;
-	color: var(--fg-faint);
-	margin: 0 0 var(--space-3);
-}
-
-.sec__title {
-	font-family: var(--font-display);
-	font-size: var(--text-3xl);
-	font-weight: var(--weight-bold);
-	letter-spacing: var(--tracking-tighter);
-	line-height: var(--leading-tight);
-	margin: 0;
-	text-wrap: balance;
-}
-
-.sec__lead {
-	font-size: var(--text-lg);
-	color: var(--fg-muted);
-	max-width: var(--measure-lead);
-	margin: var(--space-4) 0 0;
-}
-
-/* ── Feature grid ─────────────────────────────────────────────────────────── */
+   Both classes stop under prefers-reduced-motion on their own, and what is
+   left is a still, legible texture. */
 
 .feats {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(min(17rem, 100%), 1fr));
 	gap: var(--space-5);
-	margin-top: var(--space-8);
+	margin-block-start: var(--space-8);
 }
 
 .feat {
 	padding: var(--space-6);
-	border: 1px solid var(--line-default);
+	border: var(--border-hair) solid var(--line-default);
 	border-radius: var(--radius-card);
 	background: var(--bg-surface);
 	min-block-size: 100%;
@@ -274,18 +237,37 @@
 	.feat:hover { border-color: var(--line-strong); }
 }
 
-.feat__ico {
-	display: inline-grid;
-	place-items: center;
-	width: 2.25rem;
-	height: 2.25rem;
-	border-radius: var(--radius-md);
-	background: var(--accent-soft);
-	color: var(--accent-soft-fg);
-	margin-bottom: var(--space-4);
-}
+/* The slit. Its size and its ground are set here; the lines and the sweep are
+   .bg-scanlines and .fx-scan, untouched. --pattern-ink is the one token
+   .bg-scanlines reads, so dialing the texture down to a hairline is a single
+   custom property rather than a reimplementation of the gradient. */
+/* A SCREEN, ON THE INK GROUND.
 
-.feat__ico svg { width: 1.15rem; height: 1.15rem; }
+   The first attempt was a pale plate: --pattern-ink at --line-strong on
+   --bg-sunken. Every value in it was a real token and it was invisible — light
+   grey hairlines at 60% over a near-white surface, seventy-two pixels wide.
+   Correct and unreadable are not the same thing.
+
+   Scanlines are a LIGHT-ON-DARK phenomenon; that is the only place the eye has
+   ever seen them. So the plate takes the inverse ground, the lines are struck
+   in --fg-on-inverse, and the accent line .fx-scan sweeps down it is suddenly
+   the brightest thing on a dark field instead of a pale line on a pale one.
+   Six of them read as six little monitors, which is the whole idea.
+
+   It is also bigger — 7rem at 16:9 rather than 4.5rem. At the old size the
+   fifteen lines were a texture you had to go looking for. */
+.feat__scan {
+	display: block;
+	inline-size: 7rem;
+	aspect-ratio: 16 / 9;
+	margin-block-end: var(--space-5);
+	border-radius: var(--radius-sm);
+	background-color: var(--bg-inverse);
+	/* Half strength. At full --fg-on-inverse the 1-on-4 repeat stops being a
+	   scanline and becomes a barcode; the brief was FINE lines, and the accent
+	   sweep needs somewhere quieter to be the brightest thing. */
+	--pattern-ink: color-mix(in oklab, var(--fg-on-inverse) 50%, transparent);
+}
 
 .feat h3 {
 	font-family: var(--font-display);
@@ -310,13 +292,14 @@
 	gap: var(--space-10);
 	align-items: center;
 	padding: var(--space-10);
-	border: 1px solid var(--line-default);
+	border: var(--border-hair) solid var(--line-default);
 	border-radius: var(--radius-xl);
 	background: var(--bg-surface);
 }
 
-.install .cb { margin: 0; }
-.install .cb + .cb { margin-top: var(--space-3); }
+.install .sec { margin-block-end: 0; }
+.install .codeblock { margin: 0; }
+.install .codeblock + .codeblock { margin-block-start: var(--space-3); }
 
 /* ── Closing band ─────────────────────────────────────────────────────────── */
 
@@ -328,18 +311,11 @@
 	color: var(--fg-on-inverse);
 }
 
-.close-band /* Chapter kickers wear take numbers — the band sequence as a shoot log. */
-.sec__take {
-	font-family: var(--font-data);
-	font-weight: var(--weight-light);
-	letter-spacing: var(--tracking-data);
-	font-variant-numeric: tabular-nums;
-	color: var(--fg-accent);
-	margin-inline-end: var(--space-2);
-}
-
-.sec__kicker { color: currentcolor; opacity: 0.6; }
-.close-band .sec__title { color: currentcolor; }
+/* .sec is a flex header — title left, actions right. In the closing band
+   there are no actions and the whole thing is centred, so it is a block. */
+.close-band .sec { display: block; margin-block-end: 0; }
+.close-band :is(.sec__title, .home__take) { color: currentcolor; }
+.close-band .sec__eyebrow { color: currentcolor; opacity: 0.6; }
 
 .close-band p {
 	color: currentcolor;
@@ -348,131 +324,38 @@
 	margin: var(--space-4) auto 0;
 }
 
-.close-band .hero__cta { justify-content: center; }
+.close-band .hero__actions { justify-content: center; }
 
-/* A ghost button takes its colour from --fg-muted, which is tuned for the page
-   background — on the inverse band it lands at roughly 2:1 against near-black
-   and effectively disappears. Buttons on an inverse surface have to be told
-   what "quiet" means there. */
+/* A ghost button takes its colour from --fg-muted, which is tuned for the PAGE
+   background — on an inverse band it lands at roughly 2:1 and disappears. So
+   it has to be told what "quiet" means there.
+
+   Mixed off --fg-on-inverse, never off a literal white. --bg-inverse is dark
+   in light mode and LIGHT in dark mode — that is what "inverse" means — so a
+   hard-coded oklch(100% 0 0) is correct in exactly one of the two themes, and
+   this button spent the dark theme as white text on a near-white band. The
+   token already knows which way round the band is; the mix follows it. */
 .close-band .btn-ghost {
-	--btn-fg: oklch(100% 0 0 / 0.85);
-	--btn-line: oklch(100% 0 0 / 0.25);
+	--btn-fg: color-mix(in oklab, var(--fg-on-inverse) 85%, transparent);
+	--btn-line: color-mix(in oklab, var(--fg-on-inverse) 25%, transparent);
 	border-color: var(--btn-line);
 }
 
 .close-band .btn-ghost:hover {
-	--btn-fg: var(--ink-0);
-	--btn-bg: oklch(100% 0 0 / 0.08);
-	--btn-line: oklch(100% 0 0 / 0.45);
-}
-
-/* ── Footer ───────────────────────────────────────────────────────────────── */
-
-/* ── Footer ───────────────────────────────────────────────────────────────
-   Three strips: the brand and its line, a set of link columns, and a fine
-   print row. The columns are what stop a footer being a dead end — a reader
-   who scrolled all the way down is looking for somewhere to go next. */
-
-.home-foot {
-	margin-top: var(--space-20);
-	border-top: 1px solid var(--line-subtle);
-	background: var(--bg-sunken);
-	padding-block: var(--space-12) var(--space-8);
-}
-
-.home-foot__in {
-	max-width: 74rem;
-	margin-inline: auto;
-	padding-inline: var(--gutter);
-}
-
-.home-foot__top {
-	display: grid;
-	grid-template-columns: minmax(0, 1.4fr) repeat(auto-fit, minmax(8rem, 1fr));
-	gap: var(--space-10);
-	padding-bottom: var(--space-10);
-	border-bottom: 1px solid var(--line-subtle);
-}
-
-.home-foot__brand {
-	display: flex;
-	align-items: center;
-	gap: var(--space-2);
-	font-family: var(--font-display);
-	font-size: var(--text-lg);
-	font-weight: var(--weight-bold);
-	letter-spacing: var(--tracking-tight);
-	margin: 0;
-}
-
-.home-foot__note {
-	color: var(--fg-muted);
-	margin: var(--space-3) 0 0;
-	max-width: 26rem;
-	font-size: var(--text-sm);
-}
-
-.foot-col { display: flex; flex-direction: column; gap: var(--space-2); }
-
-.foot-col__head {
-	font-family: var(--font-label);
-	font-size: var(--text-2xs);
-	font-weight: var(--weight-semibold);
-	letter-spacing: var(--tracking-label);
-	text-transform: uppercase;
-	color: var(--fg-faint);
-	margin: 0 0 var(--space-1);
-}
-
-.foot-col a {
-	font-size: var(--text-sm);
-	color: var(--fg-muted);
-	text-decoration: none;
-	transition: color var(--dur-1) var(--ease-out);
-}
-
-.foot-col a:hover { color: var(--fg-default); }
-
-.home-foot__bottom {
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	justify-content: space-between;
-	gap: var(--space-3);
-	padding-top: var(--space-6);
-}
-
-.home-foot__fine {
-	font-size: var(--text-sm);
-	color: var(--fg-faint);
-	margin: 0;
-}
-
-/* "Still rolling" — the record dot ends the page the way the bar opened it. */
-.home-foot__rec {
-	display: inline-flex;
-	align-items: center;
-	gap: var(--space-2);
-	font-family: var(--font-data);
-	font-size: var(--text-2xs);
-	font-weight: var(--weight-light);
-	letter-spacing: var(--tracking-label);
-	font-variant-numeric: tabular-nums;
-	text-transform: uppercase;
-	color: var(--fg-faint);
-}
-
-@media (max-width: 48rem) {
-	.home-foot__top { grid-template-columns: minmax(0, 1fr); gap: var(--space-8); }
+	--btn-fg: var(--fg-on-inverse);
+	--btn-bg: color-mix(in oklab, var(--fg-on-inverse) 10%, transparent);
+	--btn-line: color-mix(in oklab, var(--fg-on-inverse) 45%, transparent);
 }
 
 /* ── Responsive ───────────────────────────────────────────────────────────── */
 
-@media (max-width: 60rem) {
-	.hero,
+@media (width <= 60rem) {
+	.hero.band,
 	.install { grid-template-columns: minmax(0, 1fr); }
-	.hero { grid-template-columns: 1fr; padding-block: var(--space-10) var(--space-8); }
-	.hero__art { display: none; }
-	.hero__title { font-size: var(--text-4xl); }
+	.hero.band { padding-block: var(--space-10) var(--space-8); }
+	.band .hero__media { display: none; }
+	.band .hero__title { font-size: var(--text-4xl); }
 	.install { padding: var(--space-6); }
+}
+
 }

@@ -121,6 +121,186 @@ Open threads worth remembering:
 Newest first. One line each: what changed, and anything that would surprise the
 next session.
 
+### 2026-09-09 (fifth) — the code block, the highlighter, and the templates
+- **New `.codeblock-night` — dark in BOTH themes**, and it is not the same as
+  `.codeblock-dark`. `-dark` is built on `--bg-inverse`, which is
+  `light-dark(near-black, near-white)`, so on a dark page it renders LIGHT.
+  `-night` reads `--ink-950`/`--ink-50` directly — absolute ramp steps, not
+  `light-dark()` pairs — so it does not move. Every fenced block and every
+  demo code pane on the site is now `-night`. Reaching past tier-2 to a ramp
+  step breaks PRINCIPLES #3; it is stated in the file and on `/code.html`,
+  because the requirement here IS "ignore the theme".
+- ⚠️ **`.codeblock-dark` was broken in the dark theme and nobody had looked.**
+  On a dark page it becomes a LIGHT slab, and it was still painting the light
+  ramp steps for syntax — pale ink on a pale ground. Every `--syn-*` in it is
+  now a `light-dark()` pair that inverts with the slab. Found by building the
+  demo that shows the two variants side by side.
+- ⚠️ **`.codeblock__pre` inherited its background and colour.** That held only
+  while nothing else in the document had an opinion about a bare `pre` —
+  and adding the Bulma base gave it one. Cascade layers arbitrate between
+  DECLARATIONS; an explicit rule in the lowest layer still beats no rule at
+  all. The component now states both. Same for `pre > code`.
+- **The highlighter is a single-pass scanner.** It was a chain of `re.sub()`
+  calls over already-escaped text, so a later pattern could match inside a span
+  an earlier one had just written — `class="tok-com"` is a word before an `=`,
+  which is exactly what the attribute rule looks for. Now one alternation per
+  language, scanned once, nothing re-read. Languages: html/xml/svg, css,
+  js/ts/json, bash/sh. Tested for escape-safety and lossless round-trip.
+- **The templates page has no iframes.** It embedded all twelve template pages
+  at once to produce twelve ~380px pictures in which nothing was legible. Now
+  twelve window-framed cards with **drawn SVG wireframes** — every fill a
+  system token, so they follow the theme — plus the description, the address
+  bar, and "Open full page" into a new tab. A wireframe is the better picture
+  as well as the cheaper one: at that size it says "hero left, media right,
+  three tiles under", which is what a reader is comparing.
+- Redundant CSS out: `.win__acts` (died when the actions moved into the card),
+  `.spec-4xl` (never used by any page), and a dead `.rig__btn` declaration that
+  was grouped with `.rig__card` and then had both its properties overridden on
+  the next line. `.shell__hit`/`.shell__empty` look dead to the audit and are
+  not — docs.js writes them; noted in the file.
+
+### 2026-09-09 (fourth) — Bulma, as the floor
+- ⚠️ **This repo now has a runtime dependency, on purpose and on request.**
+  `bulma@1.0.4` + `sass` (dev). `src/index.css` is untouched and still
+  dependency-free — that bundle remains the default and the one every sibling
+  repo consumes. The new one is `dist/swarnil-design-bulma.css`.
+- **`bulma` is the first name in the layer order**, so it is the LOWEST layer
+  in the document and loses every collision to this system — `.card`,
+  `.navbar`, `.table`, `.input`, `.hero`, `.footer`, `.breadcrumb`, `.content`,
+  `.tabs`, `.tag`, `.menu`, `.modal`, `.pagination`, `.select`, `.icon` and
+  more. Verified in the browser: `.card` paints our surface, `.input` is our
+  34px, `.table` our 14px. Bulma is the floor, never an override.
+- **What it adds**: `.container`, `.columns`/`.column`, `.grid`, `.section`,
+  `.level`, `.media` — the layout API, which is what was asked for. Compiled
+  from Bulma's Sass (utilities + themes + base + grid + layout), NOT its 691 KB
+  prebuilt file: its elements/components/form are ~39 KB gzipped that would
+  lose every cascade they took part in. One line in `src/bulma-base.scss`
+  takes all of Bulma instead.
+- **`src/0-bulma/bridge.css` themes it from our tokens** — surfaces, ink,
+  rules, the accent, the type stack, the radii, and `--bulma-column-gap` →
+  `--space-4` so a Bulma grid lines up with our spacing. It overrides Bulma's
+  COMPOSED variables, not the HSL parts it builds them from: this palette is
+  OKLCH and every token is already a `light-dark()` pair, so decomposing would
+  cost a build step and colour accuracy for nothing. Bulma follows the theme
+  toggle without knowing one exists. The bridge is one-way — nothing in `src/`
+  reads a `--bulma-*`.
+- Sizes gzipped: plain 49.4 KB, bulma 78.4 KB, docs site 65.2 → 94.2 KB.
+- The docs site now runs on the Bulma bundle, so the base is dogfooded rather
+  than merely shipped. It looks identical, which is the proof: the system wins
+  everything it defines.
+- Documented on `/install.html` ("The Bulma base"), and as rule 1b in AGENTS.md.
+
+### 2026-09-09 (third) — the docs shell is an app layout now
+- **Full width, no page cap.** The shell no longer caps at all; the measure
+  moved onto the article and is CENTRED in its column. Leftover width split
+  evenly reads as air; the same width all on one side read as the bug it was.
+  Symmetric padding measured at 320 / 390 / 480 / 640 / 900 / 961 / 1024 / 1216
+  / 1280 / 1400 / 1600 / 1920, no overflow at any of them.
+- **The side is a fixed grey strip that collapses to icons.** `--bg-sunken`,
+  flush to the window edge, sticky at full remaining height. `[data-nav=
+  'collapsed']` on `<html>` takes it to 3.5rem: twelve group glyphs, no labels,
+  no chevrons, no search, and **no scroll at all** at that width. The state is
+  written by the inline head script beside the theme, or the sidebar renders
+  wide and snaps narrow on every navigation. Clicking a glyph while collapsed
+  re-opens the side rather than toggling a group nobody can read. Below 60rem
+  the collapsed state is ignored outright — a drawer of unlabelled icons is not
+  navigation.
+- **No visible scrollbar in the side.** Seventy-six pages cannot fit a
+  viewport, so it does scroll; a permanent second scrollbar a centimetre from
+  the window edge was what made the page feel like two pages. Hidden bar,
+  contained scroll, fade while there is more below.
+- ⚠️ **The "you are here" dot was being sliced in half on every page.**
+  `.navlist__link` puts it at `inset-inline-start: -space-3`, outside its own
+  box — right in a nav with a gutter. This column has `overflow-y: auto`, which
+  establishes a scroll container that clips the INLINE axis too, so a negative
+  offset is cut at x=0. The component keeps its geometry; the column now gives
+  it `space-4` of inline padding, leaving 9px of clearance on a 6px mark.
+- Bulma was asked for and not used: this repo's README, AGENTS.md and
+  PROJECT.md all say dependency-free, and a design system whose own docs run on
+  someone else's framework has stopped being the argument it is making. The
+  layout above is the same brief built on the system.
+
+### 2026-09-09 (second) — the shell, the scroll, and the window
+- ⚠️ **The shell wasted 60–200px down the right of every page at every width.**
+  `max-width: 96rem` with a `1fr` middle column and the article capped at 46rem
+  inside it: the slack went to a column that could not use it. The shell now
+  caps at the SUM of its columns (`side + measure + rail + two gaps`), the cap
+  comes down with the column count, and the article no longer caps itself.
+  Measured 0px dead at 320 / 390 / 640 / 900 / 961 / 1024 / 1216 / 1280 / 1400 /
+  1600 / 1920, no overflow anywhere. Rail breakpoint 80rem → 76rem.
+- **Scroll chaining was most of what felt broken.** `overscroll-behavior:
+  contain` on the sidebar and the contents, so hitting the end of the nav no
+  longer hands the wheel to the article underneath. Desktop nav rows tightened
+  (touch padding kept under `pointer: coarse`), and a `[data-more]` fade marks
+  a column that is cut off instead of slicing a word in half.
+- **Scrollspy.** `docs.js` marks the contents entry for the section you are in,
+  using `[aria-current='true']` — the attribute 45-toc.css already dresses and
+  its header already said would be "set by whatever is watching the scroll". It
+  picks the last heading scrolled PAST, not the first intersecting one, or the
+  mark flickers on short sections and vanishes inside long ones. The active
+  contents entry and the current sidebar page are both scrolled into view
+  inside their own column, never by moving the page.
+- **Edit this page / Contribute moved to the rail, under the contents** — same
+  side as the thing they are about.
+- **The homepage scan plates were invisible and are now screens.** Pale
+  hairlines on a pale ground at 72px wide: every value a real token, and
+  unreadable. They take the inverse ground, `--pattern-ink` at half
+  `--fg-on-inverse`, 7rem at 16:9 — light-on-dark, which is the only way the
+  eye has ever seen a scanline.
+- **The twelve templates sit in browser windows now**, each with its own
+  address bar, and the address IS the link. A page shown inside a page needs a
+  frame that says "this is somewhere else".
+- **Breadcrumb is its own page** (`/breadcrumb.html`, Components) with anatomy
+  and accessibility notes; `navigation.md` keeps a pointer. 76 pages.
+
+### 2026-09-09 — the site compiles, the site dogfoods, and the icons come off the homepage
+- ⚠️ **The site never linked the compiled CSS.** Every page linked
+  `/src/index.css` — a three-deep `@import` chain across ~78 unminified,
+  render-blocking files — plus four more stylesheets, while `dist/*.min.css`
+  was built, copied into `site/` (2.8 MB) and linked by nothing. Production now
+  links **one** file, `assets/site.min.css`, compiled from the new entry
+  `docs/assets/site.css` by `npm run css:site`: **405 KB, 64.5 KB gzipped, 2
+  stylesheets per page** (it and fonts.css). `SDS_DEV=1` still serves the
+  source, and that is what `npm run dev` / `npm run watch` set.
+- **New: `npm run watch`** — `scripts/watch.mjs`, dependency-free (node's own
+  `fs.watch` + `http`), serves :8080 and rebuilds on save in ~250ms. Also new:
+  `npm run check` (what CI runs), `npm run clean`, and `css:web` / `css:broadcast`
+  / `css:framework` split out of the old one-liner.
+- ⚠️ **`docs/assets/docs.css` was entirely unlayered and collided with 25
+  system classes** — `.pager`, `.toc`, `.table`, `.code`, `.hero`, `.lead`,
+  `.rail`, `.sec__title`, `.navlist__link`, `.tok-*`. Unlayered beats every
+  `@layer`, so the docs were documenting overridden copies of their own
+  components. Everything in `docs/assets/` is now in `@layer docs`, which the
+  layer order appends above the system.
+- **The chrome is the system now.** The bar is `.navbar`, the side nav is
+  `.navlist` inside `.acc acc-quiet` (whose own file already called it "the docs
+  sidebar shape"), the breadcrumb is `.breadcrumb`, the contents is `.toc`, the
+  prev/next is `.pager`, the footer is `.footer`, the demo tab bar is
+  `.tabs`/`.tab`, the tool buttons are `.btn`, the search field is `.input`, the
+  body copy is `.prose`, the fenced code is `.codeblock`. `docs.css` went
+  1,377 → 703 lines and `home.css` 478 → 345; what is left is layout, the demo
+  frame and the specimens. The private `.bar`, `.barlink`, `.brand`, `.side`,
+  `.nav__*`, `.crumbs`, `.foot`, `.home-foot`, `.foot-col`, `.cb`, `.search__*`,
+  `.themebtn`, `.ghbtn`, `.demo__tab` families are gone.
+- **The homepage's six "Opinions" cards lost their icons.** Six glyphs standing
+  in for six sentences, doing no work the heading was not already doing. In
+  their place, a 16:9 plate of the system's own `.bg-scanlines` with `.fx-scan`
+  falling through it, staggered by `.fx-delay-*` — house texture instead of a
+  borrowed glyph, and two real classes doing their real job. Both stop under
+  `prefers-reduced-motion` on their own.
+- Fixed along the way: `home.css` had a **corrupt rule** (a duplicated
+  `.sec__take` block pasted into `.close-band .sec__kicker`, leaving a bare
+  `.sec__kicker` leaking to the whole page) and a duplicated footer header;
+  `.close-band .btn-ghost` hard-coded `oklch(100% 0 0)` against `--bg-inverse`,
+  so it was white-on-near-white in the dark theme — it now mixes off
+  `--fg-on-inverse`; the docs footer had no inline gutter (`.footer` is a
+  full-bleed band and deliberately carries none).
+- Production ships no `site/src/` and only the three `*.min.css` from `dist/`;
+  the twelve `templates/` pages get their `/src/index.css` rewritten to the
+  minified bundle on copy. `site/` 10 MB → 7.7 MB.
+- Gates green: `npm run lint`, `npm run audit` (0 phantom classes), `npm run
+  build`. Verified in the browser at 1566px and 390px, light and dark.
+
 ### 2026-09-08 (fourth) — the density pass, the showcase, spacing helpers, icon strokes
 - ⚠️ **Every control got smaller, and this is a systemic change.** The button
   scale was a landing-page scale: 40px default with 16px padding, 48px lg,

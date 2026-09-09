@@ -18,16 +18,35 @@ can mean something.
 
 ```bash
 npm install
-npm run dev     # build the docs, serve site/ at http://localhost:8080
-npm run build   # dist/swarnil-design{,.min}.css + dist/swarnil-broadcast{,.min}.css + site/
+npm run watch   # THE DEV LOOP — serve site/ at :8080 and rebuild on save
+npm run build   # dist/*.{css,min.css} + site/ + site/assets/site.min.css
+npm run check   # lint → build → audit → size. What CI runs.
+
+npm run dev     # one dev build, then serve. `watch` is the same plus a watcher
 npm run docs    # regenerate site/ only
+npm run css     # the four package bundles only
+npm run css:bulma # just the Bulma base + the bundle standing on it
+npm run css:site # the site's one compiled sheet only (needs site/ to exist)
 npm run lint    # stylelint over src/**/*.css — must stay at zero errors
 npm run audit   # mono-voice audit + class audit, both strict (needs a built site/)
-npm run size    # gzipped size of the minified bundle
+npm run size    # gzipped size of every bundle
+npm run clean   # rm -rf dist site
 ```
 
 Both `dist/` and `site/` are generated and gitignored. CI builds them on every
 push; Pages deploys `site/`.
+
+### Two modes, and the difference is which CSS the page links
+
+`SDS_DEV=1` (which `dev` and `watch` set) copies `src/` into `site/` and links
+it, so a saved file is visible on reload with no PostCSS run at all. Production
+links **one** file — `assets/site.min.css`, compiled from `docs/assets/site.css`
+by `npm run css:site` — and ships no `src/` at all.
+
+Do not undo that. Linking `/src/index.css` in production means the browser walks
+a three-deep `@import` chain across ~78 unminified, render-blocking files, which
+is exactly what this repo did until 2026-09-09 while the minified bundles it had
+already built sat in `site/dist/` with nothing pointing at them.
 
 ## Layout
 
@@ -35,6 +54,9 @@ push; Pages deploys `site/`.
 | --- | --- |
 | `approach.md` | the spec — what the system is. Authoritative. |
 | `src/0-config` | the `@layer` declaration. Must be read first. |
+| `src/bulma-base.scss` | the Bulma base — utilities, themes, reset and layout primitives only, compiled to `dist/bulma-base.css` |
+| `src/0-bulma/bridge.css` | points Bulma's `--bulma-*` at this system's tokens. One-way |
+| `src/bulma.css` | the bundle entry: Bulma base + bridge + the system |
 | `src/1-foundation` … `src/6-utilities` | the system, hand-authored CSS |
 | `src/7-broadcast` | the creator layer — canvases, scenes, lower thirds, stream widgets, thumbnails. Layer `sections`; sized in `cqi`; built into its own bundle by `src/broadcast.css` |
 | `templates/` | whole pages built out of the system, plus `templates.css` glue. Copied into `site/templates/` on build and audited like the docs |
@@ -52,6 +74,14 @@ push; Pages deploys `site/`.
 
 1. **Never edit `site/` or `dist/`.** Both are generated. Edit
    `docs/content/*.md`, then `npm run docs`.
+1b. **Bulma is the FIRST layer, and it is a floor, not a peer.** `src/bulma.css`
+   puts Bulma under the whole system. Because `bulma` is declared first, it
+   loses every collision to us — `.card`, `.navbar`, `.table`, `.input`,
+   `.hero`, `.footer`, `.breadcrumb` and about twenty more. Never reorder it,
+   never add a `--bulma-*` read to `src/` (the bridge is one-way, so the base
+   can be dropped without changing anything above it), and keep
+   `src/index.css` free of it — the plain bundle is the default and stays
+   dependency-free.
 2. **Every rule in `src/` lives inside a `@layer`.** An unlayered rule beats
    every layer and is therefore a bug. A file may only reference tokens and
    classes from a lower layer.
@@ -80,6 +110,18 @@ push; Pages deploys `site/`.
    title at `8cqi` is 102px on a 1280 thumbnail and 26px in a docs column.
 10. **Every component is its own module** — one concern, one file, in the layer
    folder it belongs to, with a header comment carrying the argument.
+11. **The docs site is built out of the system, and its own CSS is layered.**
+   The bar is `.navbar`, the side nav is `.navlist` inside `.acc`, the contents
+   is `.toc`, the prev/next is `.pager`, the footer is `.footer`, the body copy
+   is `.prose`, the code blocks are `.codeblock`. If the chrome needs something
+   the system has, use it; if the system does not have it, that is a finding
+   about the system, not a licence to write a private copy. Everything in
+   `docs/assets/*.css` lives in `@layer docs` — an unlayered docs rule outranks
+   every system layer, so the page documenting a component would be showing you
+   an overridden one. That is not hypothetical: this file's own chrome shipped
+   25 such collisions (`.pager`, `.toc`, `.table`, `.code`, `.hero`, `.lead`,
+   `.tok-*`, …) until 2026-09-09.
+
 
 ## House rules of the CSS
 
