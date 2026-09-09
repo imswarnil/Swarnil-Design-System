@@ -41,45 +41,54 @@ try {
 <body>
 <a class="skip" href="#main">Skip to content</a>
 
-<header class="navbar navbar-sticky navbar-blur navbar-bordered" data-nav-scroll>
-  <button class="navbar__burger" type="button" aria-expanded="false" aria-controls="sidenav" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
-
-  <a class="navbar__brand" href="/">
-    <span class="shell__mark" aria-hidden="true"></span>
-    Swarnil<span class="shell__sub">Design System</span>
-  </a>
-
-  <nav class="navbar__nav shell__primary" aria-label="Primary">
-    {primary}
-  </nav>
-
-  <div class="navbar__search shell__find">
-    <svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-search"/></svg>
-    <label class="u-sr-only" for="find">Search the docs</label>
-    <input class="input input-sm" id="find" type="search" placeholder="Search" autocomplete="off" data-search />
-    <kbd class="kbd shell__key">/</kbd>
-    <div class="shell__hits" data-search-out hidden></div>
-  </div>
-
-  <div class="navbar__actions">
-    <button class="btn btn-ghost btn-sm" type="button" data-theme-toggle aria-label="Switch theme">
-      <span class="dot dot-sm" aria-hidden="true"></span>
-      <span data-theme-label>Light</span>
+<nav class="navbar is-fixed-top" role="navigation" aria-label="Primary" data-nav-scroll>
+  <div class="navbar-brand">
+    <button class="navbar-burger" type="button" aria-expanded="false" aria-controls="sidenav" aria-label="Menu">
+      <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
     </button>
-    <a class="btn btn-secondary btn-sm" href="https://github.com/imswarnil/Swarnil-Design-System" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-star"/></svg>Star</a>
+    <a class="navbar-item shell__brand" href="/">
+      <span class="shell__mark" aria-hidden="true"></span>
+      Swarnil<span class="shell__sub">Design System</span>
+    </a>
   </div>
-</header>
+
+  <div class="navbar-menu is-active">
+    <div class="navbar-start shell__primary">
+      {primary}
+    </div>
+
+    <div class="navbar-end">
+      <div class="navbar-item shell__find">
+        <div class="control has-icons-left">
+          <label class="u-sr-only" for="find">Search the docs</label>
+          <input class="input is-small" id="find" type="search" placeholder="Search" autocomplete="off" data-search />
+          <span class="icon is-small is-left"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-search"/></svg></span>
+          <kbd class="shell__key">/</kbd>
+          <div class="shell__hits" data-search-out hidden></div>
+        </div>
+      </div>
+
+      <div class="navbar-item">
+        <div class="buttons are-small">
+          <button class="button is-ghost" type="button" data-theme-toggle aria-label="Switch theme">
+            <span class="dot dot-sm" aria-hidden="true"></span>
+            <span data-theme-label>Light</span>
+          </button>
+          <a class="button" href="https://github.com/imswarnil/Swarnil-Design-System" rel="noopener"><span class="icon is-small"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-star"/></svg></span><span>Star</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
 
 <div class="shell">
   <aside class="shell__side" id="sidenav">
     <div class="shell__side-top">
-      <div class="navbar__search shell__find shell__find-side">
-        <svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-search"/></svg>
+      <div class="control has-icons-left shell__find shell__find-side">
         <label class="u-sr-only" for="find-side">Search the docs</label>
-        <input class="input input-sm" id="find-side" type="search" placeholder="Search docs" autocomplete="off" data-search />
-        <kbd class="kbd shell__key">/</kbd>
+        <input class="input is-small" id="find-side" type="search" placeholder="Search docs" autocomplete="off" data-search />
+        <span class="icon is-small is-left"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-search"/></svg></span>
+        <kbd class="shell__key">/</kbd>
         <div class="shell__hits" data-search-out hidden></div>
       </div>
 
@@ -94,9 +103,9 @@ try {
   </aside>
 
   <main class="shell__main" id="main">
-    <article class="prose shell__doc">
+    <article class="content shell__doc">
       <div class="shell__slate">
-        <nav aria-label="Breadcrumb">{crumbs}</nav>
+        <nav class="breadcrumb is-small" aria-label="Breadcrumb">{crumbs}</nav>
         <span class="shell__take" aria-hidden="true">{take}</span>
       </div>
       <h1>{title}</h1>
@@ -104,19 +113,19 @@ try {
       {body}
     </article>
 
-    <nav class="pager shell__pager" aria-label="Pagination">{pager}</nav>
+    <nav class="pagination shell__pager" role="navigation" aria-label="Pagination">{pager}</nav>
 
-    <footer class="footer footer-compact">
-      <div class="footer__bottom">
-        <p class="footer__fine">Swarnil Design System · MIT · &copy; {year} Swarnil Singhai</p>
-        <nav class="footer__legal" aria-label="Footer">
+    <footer class="footer shell__foot">
+      <div class="content is-small shell__foot-row">
+        <p>Swarnil Design System · MIT · &copy; {year} Swarnil Singhai</p>
+        <nav class="shell__foot-links" aria-label="Footer">
           <a href="/introduction.html">Docs</a>
           <a href="/principles.html">Principles</a>
           <a href="/icons.html">Swarnil Icons</a>
           <a href="https://github.com/imswarnil/Swarnil-Design-System" rel="noopener">GitHub</a>
           <a href="{editurl}" rel="noopener">Edit this page</a>
         </nav>
-        <span class="footer__rec"><span class="dot dot-sm dot-live"></span> Still rolling</span>
+        <span class="shell__rec"><span class="dot dot-sm dot-live"></span> Still rolling</span>
       </div>
     </footer>
   </main>

@@ -81,7 +81,7 @@
     "size": "for f in site/assets/site.min.css dist/swarnil-design.min.css dist/swarnil-design-bulma.min.css dist/swarnil-broadcast.min.css dist/swarnil-framework.min.css; do [ -f \"$f\" ] || continue; printf '%-42s' $f; gzip -c $f | wc -c | awk '{printf \"gzipped: %.1f KB\\n\", $1/1024}'; done",
     "check": "npm run lint && npm run build && npm run audit && npm run size",
     "prepublishOnly": "npm run css",
-    "css:bulma": "sass --load-path=node_modules --no-source-map --quiet src/bulma-base.scss dist/bulma-base.css && postcss src/bulma.css -o dist/swarnil-design-bulma.css && postcss src/bulma.css -o dist/swarnil-design-bulma.min.css --env production"
+    "css:bulma": "sass --load-path=node_modules --no-source-map --quiet src/bulma-theme.scss dist/bulma-base.css && postcss src/bulma.css -o dist/swarnil-design-bulma.css && postcss src/bulma.css -o dist/swarnil-design-bulma.min.css --env production"
   },
   "devDependencies": {
     "cssnano": "^7.0.0",

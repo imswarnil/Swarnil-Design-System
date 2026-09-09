@@ -41,7 +41,14 @@
 		var panes = $$('[data-pane]', demo).filter(function (n) { return !n.classList.contains('tab'); });
 
 		function show(name) {
-			tabs.forEach(function (t) { t.setAttribute('aria-selected', String(t.dataset.pane === name)); });
+		tabs.forEach(function (t) {
+			var on = t.dataset.pane === name;
+			t.setAttribute('aria-selected', String(on));
+			/* Bulma marks the LI, not the control. aria-selected stays on
+			   the button because that is where the accessibility tree
+			   wants it; is-active is only the paint. */
+			if (t.parentElement.tagName === 'LI') t.parentElement.classList.toggle('is-active', on);
+		});
 			panes.forEach(function (p) { p.hidden = p.dataset.pane !== name; });
 		}
 
