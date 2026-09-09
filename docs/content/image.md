@@ -70,7 +70,7 @@ duration or a live badge.
     </div>
   </div>
   <div class="poster">
-    <div class="poster__corner"><span class="badge badge-live">Live</span></div>
+    <div class="poster__corner"><span class="tag badge-live">Live</span></div>
     <button class="play play-sm" type="button" aria-label="Watch live"><span class="play__disc"></span></button>
     <div class="poster__label">
       <span class="poster__eyebrow">Now</span>
@@ -90,7 +90,7 @@ duration or a live badge.
 ## Treatments
 
 A photograph you did not shoot is in a palette nobody chose. The
-[veils](/overlays.html) are the colour grade that fixes it, and the
+[veils](https://bulma.io/documentation/components/modal/) are the colour grade that fixes it, and the
 [interactions](/interactions.html) are what it does when you point at it.
 
 :::demo Grade, grain and scrim, then the hover answers
@@ -105,7 +105,7 @@ A photograph you did not shoot is in a palette nobody chose. The
 
 `.skeleton-media` reserves the same box the picture will fill, so the page does
 not move when it arrives. That is the whole job — see
-[Article](/content.html) for the rest of the loading set.
+[Article](https://bulma.io/documentation/elements/content/) for the rest of the loading set.
 
 :::demo
 <div class="grid-3">

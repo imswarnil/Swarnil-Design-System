@@ -60,8 +60,8 @@ rest/active toggle:
 
 :::demo
 <div class="cluster">
-  <button class="btn btn-quiet btn-icon" type="button" aria-label="Save"><svg class="icon"><use href="/icons/sprite.svg#i-heart"/></svg></button>
-  <button class="btn btn-quiet btn-icon" type="button" aria-label="Saved" aria-pressed="true"><svg class="icon icon-solid t-accent"><use href="/icons/sprite.svg#i-heart"/></svg></button>
+  <button class="button is-ghost" type="button" aria-label="Save"><svg class="icon"><use href="/icons/sprite.svg#i-heart"/></svg></button>
+  <button class="button is-ghost" type="button" aria-label="Saved" aria-pressed="true"><svg class="icon icon-solid t-accent"><use href="/icons/sprite.svg#i-heart"/></svg></button>
 </div>
 :::
 

@@ -13,8 +13,8 @@
 @import url('./02-typography.css');  /* three voices, fluid scale, text roles */
 @import url('./03-space.css');       /* the 4px ladder + widths + gutter      */
 @import url('./04-elevation.css');   /* depth that resolves per theme         */
-@import url('./05-motion.css');      /* durations, easings, reduced-motion    */
-@import url('./06-layout.css');      /* the intrinsic layout primitives       */
+@import url('./05-motion.css');
+@import url('./06-layout.css');      /* durations, easings, reduced-motion    */
 @import url('./07-pattern.css');     /* CSS-only textures                     */
 @import url('./08-a11y.css');        /* focus, skip, sr-only, forced colours  */
 @import url('./09-shape.css');       /* radii, borders, dots, z-ladder        */

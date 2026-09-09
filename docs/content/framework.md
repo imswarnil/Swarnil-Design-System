@@ -6,7 +6,7 @@ lead: The Bootstrap-shaped grid — container, row, twelve columns, six breakpoi
 ---
 
 **This system's default is the other tradition.** The primitives on
-[Grid](/grid.html) and [Page structure](/structure.html) describe the
+[Grid](/grid.html) and [Page structure](https://bulma.io/documentation/columns/basics/) describe the
 *relationship* between elements: a `.cluster` wraps when it runs out of room, a
 `.switcher` flips at a content threshold, a `.sidebar` folds when the main
 column would get too narrow. None of them is told a screen width, which is why
@@ -56,7 +56,7 @@ before you choose one.
 
 ## Container
 
-Same job as [`.center`](/structure.html) with the API you already have in your
+Same job as [`.center`](https://bulma.io/documentation/columns/basics/) with the API you already have in your
 fingers: a fixed max-width per breakpoint, and a fluid escape hatch.
 
 :::demo Each step widens at its own breakpoint and then holds
@@ -211,11 +211,11 @@ because they sit *between* them.
 <div class="stack stack-sm">
   <div class="p-2 p-md-5 u-bg-sunken u-rounded-lg u-border"><span class="t-data">p-2 p-md-5 — tight on a phone, roomy from 768px</span></div>
   <div class="d-flex f-col f-md-row gap-2 gap-md-4 p-3 u-bg-sunken u-rounded-lg u-border">
-    <span class="badge">gap-2</span><span class="badge">gap-md-4</span><span class="badge">stacked below 768px</span>
+    <span class="tag">gap-2</span><span class="tag">gap-md-4</span><span class="tag">stacked below 768px</span>
   </div>
   <div class="d-flex j-between a-center px-4 py-3 u-bg-sunken u-rounded-lg u-border">
     <span class="t-data">px-4 py-3</span>
-    <button class="btn btn-outline btn-sm ms-auto" type="button">ms-auto</button>
+    <button class="button is-outlined is-small ms-auto" type="button">ms-auto</button>
   </div>
   <div class="mx-auto p-3 u-bg-sunken u-rounded-lg u-border" style="max-width: 18rem"><span class="t-data">mx-auto</span></div>
 </div>
@@ -272,8 +272,8 @@ The other half of a framework: short names, six tiers, mobile-first.
     <p class="t-h4 u-m-0">Colour, in one block of tokens</p>
     <p class="t-small t-muted u-m-0">Episode 48 · 24:07</p>
   </div>
-  <span class="badge badge-accent d-none d-md-iflex">Visible from md</span>
-  <button class="btn btn-primary btn-sm" type="button">Watch</button>
+  <span class="tag is-primary d-none d-md-iflex">Visible from md</span>
+  <button class="button is-primary is-small" type="button">Watch</button>
 </div>
 :::
 

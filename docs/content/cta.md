@@ -16,8 +16,8 @@ title, one supporting line, one primary action, at most one quiet alternative.
   <h2 class="cta__title u-m-0">Free forever. MIT.</h2>
   <p class="cta__body">If it saves you a weekend, a star is plenty.</p>
   <div class="cta__actions">
-    <button class="btn btn-primary btn-lg" type="button">Start reading</button>
-    <button class="btn btn-ghost btn-lg" type="button">View on GitHub</button>
+    <button class="button is-primary is-medium" type="button">Start reading</button>
+    <button class="button is-ghost is-medium" type="button">View on GitHub</button>
   </div>
   <p class="cta__fine">No account, no tracking, no build step.</p>
 </div>
@@ -31,8 +31,8 @@ title, one supporting line, one primary action, at most one quiet alternative.
   <h2 class="cta__title u-m-0">Ship the thing.</h2>
   <p class="cta__body">Ink and paper flip; the ghost button is told what quiet means on near-black — without that it lands at 2:1 and disappears.</p>
   <div class="cta__actions">
-    <button class="btn btn-primary btn-lg" type="button">Get started</button>
-    <button class="btn btn-ghost btn-lg" type="button">Read the principles</button>
+    <button class="button is-primary is-medium" type="button">Get started</button>
+    <button class="button is-ghost is-medium" type="button">Read the principles</button>
   </div>
 </div>
 :::
@@ -59,7 +59,7 @@ the band and you get a 900px-wide email box.
     <form class="cta__actions cta__form form form-inline" action="#i" onsubmit="return false">
       <label class="u-sr-only" for="cta-mail">Email</label>
       <input class="input input-sm" id="cta-mail" type="email" placeholder="you@studio.tv" />
-      <button class="btn btn-primary btn-sm" type="submit">Subscribe</button>
+      <button class="button is-primary is-small" type="submit">Subscribe</button>
     </form>
     <p class="cta__fine">4,812 readers · new issue every Friday</p>
   </div>
@@ -79,8 +79,8 @@ where a centred column would add height the page has not earned.
     <p class="cta__fine">Two clients at a time, no more.</p>
   </div>
   <div class="cta__actions">
-    <button class="btn btn-primary" type="button">Start a conversation</button>
-    <button class="btn btn-ghost" type="button">About me</button>
+    <button class="button is-primary" type="button">Start a conversation</button>
+    <button class="button is-ghost" type="button">About me</button>
   </div>
 </div>
 :::

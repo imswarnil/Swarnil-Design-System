@@ -9,8 +9,8 @@ Three things look alike and are not interchangeable:
 
 | | What it is |
 | --- | --- |
-| [`.navlist`](/navigation.html) | navigation **between** pages |
-| [`.chapters`](/navigation.html) | a sequence you are meant to get through |
+| [`.navlist`](https://bulma.io/documentation/components/tabs/) | navigation **between** pages |
+| [`.chapters`](https://bulma.io/documentation/components/tabs/) | a sequence you are meant to get through |
 | `.toc` | a map of **this** document |
 
 ## The rule is the map

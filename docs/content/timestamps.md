@@ -5,7 +5,7 @@ order: 50
 lead: A list of moments in a video — in a description, a comment, a transcript, or a sentence. The timecode is data, and it always aligns.
 ---
 
-Not the same object as [`.chapters`](/navigation.html), and the difference is
+Not the same object as [`.chapters`](https://bulma.io/documentation/components/tabs/), and the difference is
 worth stating because the two look alike and behave completely differently.
 
 | | What it is |

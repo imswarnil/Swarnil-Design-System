@@ -138,9 +138,9 @@ two instead.
     <figure class="carousel__slide figure u-m-0"><img src="/assets/media/camera.jpg" alt="" /></figure>
   </div>
   <div class="carousel__nav">
-    <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Previous"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-left"/></svg></button>
+    <button class="button is-ghost is-small" type="button" aria-label="Previous"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-left"/></svg></button>
     <span class="carousel__count">1 / 40</span>
-    <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Next"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-right"/></svg></button>
+    <button class="button is-ghost is-small" type="button" aria-label="Next"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-right"/></svg></button>
   </div>
 </div>
 :::

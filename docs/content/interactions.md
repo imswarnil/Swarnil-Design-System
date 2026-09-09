@@ -38,10 +38,10 @@ twenty-first.
 <div class="stack">
   <p class="t-lead u-m-0">A row of <a class="ix-underline" href="#i">ix-underline</a>, an <a class="ix-arrow" href="#i">ix-arrow <svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-right"/></svg></a>, and a <a class="ix-color" href="#i">ix-color</a> that is grey until touched.</p>
   <div class="cluster">
-    <a class="btn btn-outline ix-underline" href="#i">ix-underline</a>
-    <a class="btn btn-ghost ix-arrow" href="#i">ix-arrow <svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-right"/></svg></a>
-    <button class="btn btn-secondary ix-glow" type="button">ix-glow</button>
-    <button class="btn btn-outline ix-scan" type="button">ix-scan</button>
+    <a class="button is-outlined ix-underline" href="#i">ix-underline</a>
+    <a class="button is-ghost ix-arrow" href="#i">ix-arrow <svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-right"/></svg></a>
+    <button class="button is-link ix-glow" type="button">ix-glow</button>
+    <button class="button is-outlined ix-scan" type="button">ix-scan</button>
   </div>
 </div>
 :::
@@ -56,8 +56,8 @@ twenty-first.
   <div class="ix-reveal u-rounded-lg u-overflow-hidden" style="position: relative">
     <img src="/assets/media/city.jpg" alt="" style="display: block; width: 100%" />
     <div class="ix-reveal__hidden glass glass-dark u-p-3 cluster cluster-sm">
-      <button class="btn btn-sm btn-primary" type="button">Play</button>
-      <button class="btn btn-sm btn-ghost" type="button">Save</button>
+      <button class="button is-small is-primary" type="button">Play</button>
+      <button class="button is-small is-ghost" type="button">Save</button>
     </div>
   </div>
 </div>

@@ -8,10 +8,10 @@ lead: The row of quiet actions under an article, and the sticky rail beside it.
 :::demo The share row
 <div class="share" style="max-width:44rem">
   <span class="share__label">Share</span>
-  <button class="btn btn-outline btn-sm" type="button"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-link"/></svg> Copy link</button>
-  <button class="btn btn-ghost btn-sm" type="button"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-mail"/></svg> Email</button>
-  <button class="btn btn-ghost btn-sm" type="button"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-message"/></svg> Message</button>
-  <button class="btn btn-ghost btn-sm" type="button"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-bookmark"/></svg> Save</button>
+  <button class="button is-outlined is-small" type="button"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-link"/></svg> Copy link</button>
+  <button class="button is-ghost is-small" type="button"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-mail"/></svg> Email</button>
+  <button class="button is-ghost is-small" type="button"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-message"/></svg> Message</button>
+  <button class="button is-ghost is-small" type="button"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-bookmark"/></svg> Save</button>
   <span class="share__count">128 shares</span>
 </div>
 :::
@@ -27,14 +27,14 @@ label is a label; the count is data.
 <div class="stack" style="max-width:44rem">
   <div class="share share-center">
     <span class="share__label">Share</span>
-    <button class="btn btn-outline btn-sm btn-pill" type="button">Copy link</button>
-    <button class="btn btn-ghost btn-sm btn-pill" type="button">Email</button>
+    <button class="button is-outlined is-small is-rounded" type="button">Copy link</button>
+    <button class="button is-ghost is-small is-rounded" type="button">Email</button>
   </div>
   <div class="share share-flush">
     <span class="share__label">Share this episode</span>
-    <button class="btn btn-icon btn-ghost btn-sm" type="button" aria-label="Copy link"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-link"/></svg></button>
-    <button class="btn btn-icon btn-ghost btn-sm" type="button" aria-label="Email"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-mail"/></svg></button>
-    <button class="btn btn-icon btn-ghost btn-sm" type="button" aria-label="Share"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-share"/></svg></button>
+    <button class="button is-ghost is-small" type="button" aria-label="Copy link"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-link"/></svg></button>
+    <button class="button is-ghost is-small" type="button" aria-label="Email"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-mail"/></svg></button>
+    <button class="button is-ghost is-small" type="button" aria-label="Share"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-share"/></svg></button>
   </div>
 </div>
 :::
@@ -61,7 +61,7 @@ exactly one may be `.rail__block-accent` — the ask.
     <p class="t-small">One episode, one thing I learned, no sponsor reads.</p>
     <form class="stack stack-sm" action="#i" style="margin-block-start: var(--space-3)">
       <input class="input input-sm" type="email" placeholder="you@studio.tv" aria-label="Email">
-      <button class="btn btn-primary btn-sm btn-block" type="submit">Subscribe</button>
+      <button class="button is-primary is-small is-fullwidth" type="submit">Subscribe</button>
     </form>
   </div>
   <div class="rail__block rail__block-flush">

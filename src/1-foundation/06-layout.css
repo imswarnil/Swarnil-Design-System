@@ -22,6 +22,12 @@
    be overridden by utilities.
    ========================================================================== */
 
+/* NOTE (Bulma branch): the .section family is gone from this file. Bulma owns
+   `.section` and a name cannot belong to two systems. Everything else here —
+   .stack, .cluster, .ratio, .switcher, .sidebar, .center, .reel, .cq — stays,
+   because Bulma has none of it. Deleting all 47 classes to resolve one
+   collision was the mistake this note exists to prevent repeating. */
+
 @layer components {
 
 	/* ── .stack — vertical rhythm ──────────────────────────────────────────
@@ -205,27 +211,6 @@
 	.ratio-portrait { --ratio: 3 / 4; }
 	.ratio-wide     { --ratio: 21 / 9; }
 	.ratio-story    { --ratio: 9 / 16; }
-
-	/* ── .section — the page band ──────────────────────────────────────────
-	   A full-width band of the page: vertical rhythm outside, a .center
-	   inside. Compose a page as sections; compose a section from the
-	   primitives above. The divider matches the docs' rule: it belongs to the
-	   section it OPENS, so the space above it exceeds the space below.
-
-	       <section class="section section-line">
-	         <div class="center"> …a stack, a grid-auto, a switcher… </div>
-	       </section>                                                        */
-
-	.section {
-		--section-pad: var(--space-16);
-		padding-block: var(--section-pad);
-	}
-
-	.section-tight { --section-pad: var(--space-10); }
-	.section-loose { --section-pad: var(--space-24); }
-	.section-line  { border-block-start: var(--border-hair) solid var(--line-subtle); }
-	.section-sunken { background: var(--bg-sunken); }
-	.section-inverse { background: var(--bg-inverse); color: var(--fg-on-inverse); }
 
 	/* ── Named containers ──────────────────────────────────────────────────
 	   A card in a 300px sidebar and a card in a 300px grid slot are the same

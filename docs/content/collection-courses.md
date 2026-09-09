@@ -16,18 +16,18 @@ six courses tells you at a glance which one you abandoned.
 :::demo Three states: in progress, not started, finished
 <div class="grid-3 cq-card">
   <article class="card card-video card-hover-frame frame-hover">
-    <div class="card__media"><img src="/assets/media/desk.jpg" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">3h 40m</span><span class="card__badge"><span class="badge badge-solid">Intermediate</span></span></div>
+    <div class="card__media"><img src="/assets/media/desk.jpg" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">3h 40m</span><span class="card__badge"><span class="tag is-primary">Intermediate</span></span></div>
     <div class="card__body"><p class="card__kicker">Course · 12 lessons</p><h4 class="card__title"><a class="card__link" href="#i">CRM Analytics, from zero</a></h4><p class="card__facts"><span><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-users"/></svg> 5,880</span><span><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-clock"/></svg> 3h 40m</span></p></div>
     <div class="card__footer"><span class="card__price">₹3,499</span><span class="t-data">33% watched</span></div>
     <span class="card__progress" style="--value: 33%"></span>
   </article>
   <article class="card card-video card-hover-frame frame-hover">
-    <div class="card__media"><img src="/assets/media/studio.jpg" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">1h 12m</span><span class="card__badge"><span class="badge badge-solid">Beginner</span></span></div>
+    <div class="card__media"><img src="/assets/media/studio.jpg" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">1h 12m</span><span class="card__badge"><span class="tag is-primary">Beginner</span></span></div>
     <div class="card__body"><p class="card__kicker">Course · 6 lessons</p><h4 class="card__title"><a class="card__link" href="#i">Lighting a talking head</a></h4><p class="card__facts"><span><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-users"/></svg> 4,102</span><span><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-clock"/></svg> 1h 12m</span></p></div>
     <div class="card__footer"><span class="card__price">₹1,499</span><span class="t-data">not started</span></div>
   </article>
   <article class="card card-video card-hover-frame frame-hover">
-    <div class="card__media"><img src="/assets/media/code.jpg" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">58m</span><span class="card__badge"><span class="badge badge-success">Finished</span></span></div>
+    <div class="card__media"><img src="/assets/media/code.jpg" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">58m</span><span class="card__badge"><span class="tag is-success">Finished</span></span></div>
     <div class="card__body"><p class="card__kicker">Course · 5 lessons</p><h4 class="card__title"><a class="card__link" href="#i">Edit faster than you shoot</a></h4><p class="card__facts"><span><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-users"/></svg> 3,214</span><span><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-clock"/></svg> 58m</span></p></div>
     <div class="card__footer"><span class="card__price">₹999</span><span class="t-data">100%</span></div>
     <span class="card__progress" style="--value: 100%"></span>

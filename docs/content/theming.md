@@ -12,8 +12,8 @@ the skill.
 
 :::demo
 <div class="stack">
-  <div class="accent-demo" data-accent="azure"><span class="t-label">azure</span><span class="cluster"><button class="btn btn-primary btn-sm" type="button">Primary</button><span class="badge badge-accent">Badge</span><span class="dot dot-accent"></span></span></div>
-  <div class="accent-demo" data-accent="iris"><span class="t-label">iris</span><span class="cluster"><button class="btn btn-primary btn-sm" type="button">Primary</button><span class="badge badge-accent">Badge</span><span class="dot dot-accent"></span></span></div>
+  <div class="accent-demo" data-accent="azure"><span class="t-label">azure</span><span class="cluster"><button class="button is-primary is-small" type="button">Primary</button><span class="tag is-primary">Badge</span><span class="dot dot-accent"></span></span></div>
+  <div class="accent-demo" data-accent="iris"><span class="t-label">iris</span><span class="cluster"><button class="button is-primary is-small" type="button">Primary</button><span class="tag is-primary">Badge</span><span class="dot dot-accent"></span></span></div>
 </div>
 :::
 
