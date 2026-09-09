@@ -21,8 +21,8 @@
    decides — which means the winner changes if a file is renumbered. Do not
    rely on it. Put the other thing on a child or a parent.
 
-   .frame-4's extra two corners are real spans, so they are never in this
-   fight — which is also why .frame-4 needs markup and .frame does not.
+   The extra two corners are real spans, so they are never in this fight —
+   which is why four corners need markup and two do not.
 
    Layer: components.
    ========================================================================== */
@@ -36,12 +36,12 @@
 
 	   That matters more than it looks: the difference between
 
-	       class="card card-hover-frame frame frame-4 frame-hover"
+	       class="card card-hover-frame frame frame-hover"
 	   and class="card card-hover-frame frame-hover"
 
 	   is whether a reader can turn the effect on and off by adding or removing
 	   ONE thing. An option you have to assemble from four classes is not really
-	   an option. Add .frame-4 and its two spans only when you want four
+	   an option. Add the two corner spans only when you want four
 	   corners instead of two. */
 
 	.frame,

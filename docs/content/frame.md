@@ -14,13 +14,13 @@ argument, and it is why these are used to mean, not to decorate.
 :::demo Two corners, or four
 <div class="cluster cluster-lg">
   <div class="box frame"></div>
-  <div class="box frame frame-4 frame-signal">
+  <div class="box frame frame-signal">
     <span class="frame__tr"></span><span class="frame__bl"></span>
   </div>
 </div>
 :::
 
-`.frame` paints two corners on its own pseudo-elements. `.frame-4` adds the other
+`.frame` paints two corners on its own pseudo-elements. Two corner spans add the other
 two, which have to be real spans because an element only has two pseudo-elements.
 
 ## Sizes and colours
@@ -43,7 +43,7 @@ close in on the thing you point at. The camera finding focus.
 
 :::demo Hover the box, or tab to the button
 <div class="cluster cluster-lg">
-  <div class="box box-lg box-label frame frame-4 frame-hover frame-signal">
+  <div class="box box-lg box-label frame frame-hover frame-signal">
     <span class="frame__tr"></span><span class="frame__bl"></span>
     Point at me
   </div>
@@ -62,9 +62,9 @@ Four decisions are inside that:
 
 :::demo Blink — the REC brackets. Dashed — the crop proposal.
 <div class="cluster cluster-lg">
-  <div class="box frame frame-4 frame-signal frame-blink"><span class="frame__tr"></span><span class="frame__bl"></span></div>
-  <div class="box frame frame-4 frame-dashed"><span class="frame__tr"></span><span class="frame__bl"></span></div>
-  <div class="box frame frame-4 frame-ink"><span class="frame__tr"></span><span class="frame__bl"></span></div>
+  <div class="box frame frame-signal frame-blink"><span class="frame__tr"></span><span class="frame__bl"></span></div>
+  <div class="box frame frame-dashed"><span class="frame__tr"></span><span class="frame__bl"></span></div>
+  <div class="box frame frame-ink"><span class="frame__tr"></span><span class="frame__bl"></span></div>
 </div>
 :::
 
@@ -84,7 +84,7 @@ specificity ties and **source order alone decides the winner**. Renumbering a
 file has silently swapped which one rendered.
 
 :::demo Pattern on a child, brackets on the parent
-<div class="box box-lg frame frame-4 u-relative">
+<div class="box box-lg frame u-relative">
   <span class="frame__tr"></span><span class="frame__bl"></span>
   <div class="pattern pattern-hatch u-absolute u-inset-0"></div>
 </div>
