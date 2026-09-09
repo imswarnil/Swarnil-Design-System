@@ -1,0 +1,37 @@
+/* =============================================================================
+   SWARNIL DESIGN SYSTEM — on the Bulma base
+
+   The same system as src/index.css, standing on Bulma instead of on nothing.
+
+       <link rel="stylesheet" href=".../dist/swarnil-design-bulma.min.css">
+   or  @import "@imswarnil/swarnil-design/bulma";
+
+   WHAT THIS BUYS
+   Bulma's layout primitives — .container, .columns/.column, .grid, .section,
+   .level, .media — under the whole of this system, themed by our tokens. A page
+   ported from Bulma keeps its layout markup and gains our components.
+
+   THE ORDER IS THE ARCHITECTURE
+   `bulma` is declared first in src/0-config/layers.css, so it sits BELOW every
+   layer of ours. Where the two define the same class — .card, .navbar, .table,
+   .input, .hero, .footer, .breadcrumb, .content, .tabs — ours wins, every time,
+   without a single specificity fight or an !important on either side. Bulma is
+   the floor: it catches what we have not built, and overrides nothing we have.
+
+   0-config still comes first of all. It declares the layer order, and that
+   declaration only binds if the browser reads it before the first layered rule
+   — which now includes Bulma's.
+
+   src/index.css remains the dependency-free bundle and remains the default.
+   This one is for people who want the Bulma layout API underneath.
+   ========================================================================== */
+
+@import url('./0-config/index.css');
+@import url('../dist/bulma-base.css') layer(bulma);
+@import url('./0-bulma/bridge.css');
+@import url('./1-foundation/index.css');
+@import url('./2-elements/index.css');
+@import url('./3-components/index.css');
+@import url('./4-patterns/index.css');
+@import url('./5-sections/index.css');
+@import url('./6-utilities/index.css');

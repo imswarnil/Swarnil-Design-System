@@ -1,7 +1,7 @@
 {
   "name": "@imswarnil/swarnil-design",
   "version": "0.1.0",
-  "description": "Swarnil Design System \u2014 a token-first, dependency-free CSS design system for people who make things: web, and the broadcast layer for thumbnails, scenes and streams. Almost monochrome, so one colour can mean something.",
+  "description": "Swarnil Design System — a token-first, dependency-free CSS design system for people who make things: web, and the broadcast layer for thumbnails, scenes and streams. Almost monochrome, so one colour can mean something.",
   "keywords": [
     "css",
     "design-system",
@@ -52,7 +52,10 @@
     "./nav": "./src/js/nav.js",
     "./framework": "./dist/swarnil-framework.css",
     "./framework/min": "./dist/swarnil-framework.min.css",
-    "./framework/src": "./src/8-framework/index.css"
+    "./framework/src": "./src/8-framework/index.css",
+    "./bulma": "./dist/swarnil-design-bulma.css",
+    "./bulma/min": "./dist/swarnil-design-bulma.min.css",
+    "./bulma/src": "./src/bulma.css"
   },
   "files": [
     "src",
@@ -62,20 +65,30 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "npm run css && npm run docs",
-    "css": "postcss src/index.css -o dist/swarnil-design.css && postcss src/index.css -o dist/swarnil-design.min.css --env production && postcss src/broadcast.css -o dist/swarnil-broadcast.css && postcss src/broadcast.css -o dist/swarnil-broadcast.min.css --env production && postcss src/framework.css -o dist/swarnil-framework.css && postcss src/framework.css -o dist/swarnil-framework.min.css --env production",
+    "css": "npm run css:web && npm run css:broadcast && npm run css:framework && npm run css:bulma",
+    "css:web": "postcss src/index.css -o dist/swarnil-design.css && postcss src/index.css -o dist/swarnil-design.min.css --env production",
+    "css:broadcast": "postcss src/broadcast.css -o dist/swarnil-broadcast.css && postcss src/broadcast.css -o dist/swarnil-broadcast.min.css --env production",
+    "css:framework": "postcss src/framework.css -o dist/swarnil-framework.css && postcss src/framework.css -o dist/swarnil-framework.min.css --env production",
+    "css:site": "postcss docs/assets/site.css -o site/assets/site.min.css --env production",
     "docs": "python3 docs/build.py",
-    "dev": "npm run docs && python3 -m http.server 8080 --directory site",
+    "build": "npm run css && npm run docs && npm run css:site",
+    "dev": "SDS_DEV=1 npm run docs && npm run serve",
+    "serve": "python3 -m http.server 8080 --directory site",
+    "watch": "SDS_DEV=1 node scripts/watch.mjs",
+    "clean": "rm -rf dist site",
     "lint": "stylelint \"src/**/*.css\"",
     "audit": "python3 scripts/audit-mono.py --strict && python3 scripts/audit-classes.py --strict",
-    "size": "for f in dist/swarnil-design.min.css dist/swarnil-broadcast.min.css dist/swarnil-framework.min.css; do printf '%s  ' $f; gzip -c $f | wc -c | awk '{printf \"gzipped: %.1f KB\\n\", $1/1024}'; done",
-    "prepublishOnly": "npm run css"
+    "size": "for f in site/assets/site.min.css dist/swarnil-design.min.css dist/swarnil-design-bulma.min.css dist/swarnil-broadcast.min.css dist/swarnil-framework.min.css; do [ -f \"$f\" ] || continue; printf '%-42s' $f; gzip -c $f | wc -c | awk '{printf \"gzipped: %.1f KB\\n\", $1/1024}'; done",
+    "check": "npm run lint && npm run build && npm run audit && npm run size",
+    "prepublishOnly": "npm run css",
+    "css:bulma": "sass --load-path=node_modules --no-source-map --quiet src/bulma-base.scss dist/bulma-base.css && postcss src/bulma.css -o dist/swarnil-design-bulma.css && postcss src/bulma.css -o dist/swarnil-design-bulma.min.css --env production"
   },
   "devDependencies": {
     "cssnano": "^7.0.0",
     "postcss": "^8.4.0",
     "postcss-cli": "^11.0.0",
     "postcss-import": "^16.0.0",
+    "sass": "^1.104.0",
     "stylelint": "^16.0.0",
     "stylelint-config-standard": "^36.0.0"
   },
@@ -87,5 +100,13 @@
       "type": "github",
       "url": "https://github.com/sponsors/imswarnil"
     }
-  ]
+  ],
+  "dependencies": {
+    "bulma": "^1.0.4"
+  },
+  "peerDependenciesMeta": {
+    "bulma": {
+      "optional": true
+    }
+  }
 }

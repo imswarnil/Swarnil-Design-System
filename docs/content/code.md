@@ -61,6 +61,45 @@ wraps long lines instead of scrolling; `.codeblock-scroll` caps the height at
 24rem. `.codeline` is the one-liner: a command with its own copy button and no
 chrome at all.
 
+### Dark, or night?
+
+Two variants, and they are not the same thing.
+
+| | Light page | Dark page |
+| --- | --- | --- |
+| `.codeblock-dark` | dark | **light** |
+| `.codeblock-night` | dark | dark |
+
+`.codeblock-dark` is built on `--bg-inverse`, which is
+`light-dark(near-black, near-white)` — the *opposite* of the page. That is what
+you want for a slab that has to contrast with whatever it sits on, and it means
+it inverts along with the theme.
+
+`.codeblock-night` does not move. It reads the ramp directly — `--ink-950` and
+`--ink-50` are absolute steps, not `light-dark()` pairs — so code looks the same
+in both themes and a reader switching theme mid-page does not watch every
+snippet flip. **Every fenced block on this site is `.codeblock-night`**, which
+is the argument for it: documentation is mostly code, and code that inverts
+under you is code you have to re-find your place in.
+
+Reaching past the tier-2 tokens to a ramp step is normally forbidden
+([PRINCIPLES](/principles.html) #3). This is the one component where the
+requirement *is* "ignore the theme", and every tier-2 token is defined to
+follow it.
+
+:::demo The same snippet in both variants — switch the theme and watch
+<div class="stack">
+  <figure class="codeblock codeblock-dark codeblock-sm">
+    <figcaption class="codeblock__head"><span class="codeblock__lang">codeblock-dark</span></figcaption>
+    <pre class="codeblock__pre"><code><span class="tok-sel">.btn</span> <span class="tok-punc">{</span> <span class="tok-prop">color</span><span class="tok-punc">:</span> <span class="tok-fn">var</span>(<span class="tok-var">--accent</span>) <span class="tok-punc">}</span></code></pre>
+  </figure>
+  <figure class="codeblock codeblock-night codeblock-sm">
+    <figcaption class="codeblock__head"><span class="codeblock__lang">codeblock-night</span></figcaption>
+    <pre class="codeblock__pre"><code><span class="tok-sel">.btn</span> <span class="tok-punc">{</span> <span class="tok-prop">color</span><span class="tok-punc">:</span> <span class="tok-fn">var</span>(<span class="tok-var">--accent</span>) <span class="tok-punc">}</span></code></pre>
+  </figure>
+</div>
+:::
+
 :::demo Wrapping, dark, and the one-line command
 <div class="stack">
   <figure class="codeblock codeblock-dark codeblock-wrap codeblock-sm">

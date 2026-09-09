@@ -17,6 +17,18 @@
      sections    full-width page bands — .hero, .footer, .pricing
      theme       drop-in token overrides, so a theme retints anything without
                  !important
+     bulma       FIRST, and below everything. The Bulma base — its reset, its
+                 CSS-variable theme and its layout primitives (.container,
+                 .columns/.column, .grid, .section, .level, .media). It is the
+                 ground this system stands on, not a peer: every collision
+                 between the two — .card, .navbar, .table, .input, .hero,
+                 .footer, .breadcrumb — resolves to OURS, because a layer
+                 declared earlier loses to every layer after it. Bulma is
+                 therefore the fallback for anything this system has not
+                 built, and never an override of anything it has.
+                 Themed by src/0-bulma/bridge.css, which points Bulma's own
+                 custom properties at this system's tokens, so Bulma follows
+                 the theme toggle without knowing the theme exists.
      tailwind    the optional bridge. Above theme, because a utility that loses
                  to a component is not a utility.
      utilities   our own u-* escape hatch. Last, so it wins — including over
@@ -35,5 +47,5 @@
    See approach.md §2.
    ========================================================================== */
 
-@layer reset, tokens, elements, components, patterns, sections, theme, tailwind,
-	utilities;
+@layer bulma, reset, tokens, elements, components, patterns, sections, theme,
+	tailwind, utilities;
