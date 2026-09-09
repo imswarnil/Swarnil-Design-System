@@ -64,6 +64,17 @@ NAME = 'Swarnil Design System'
 # with nothing pointing at them.
 DEV = os.environ.get('SDS_DEV') not in (None, '', '0')
 
+# WHICH ENTRY THE SITE IS BUILT FROM. One name, used by BOTH modes.
+#
+# This was hardcoded to 'index.css' in the dev branch of styles_html() while
+# production went through docs/assets/site.css — which on this branch imports
+# src/bulma.css, not src/index.css. So `npm run dev` served the markup of one
+# site with the stylesheet of another: Bulma classes everywhere and no Bulma
+# loaded, which looks exactly like a broken build and is impossible to debug
+# from the page. Dev and production must resolve to the same entry or dev is
+# not a preview of anything.
+CSS_ENTRY = 'index.css'
+
 # Nothing on the page is third-party; the primary nav is one list, in one place,
 # rather than pasted into both shells with the current item hard-coded in one.
 PRIMARY = [
@@ -545,7 +556,7 @@ def styles_html():
     if DEV:
         return '\n'.join([
             "<!-- DEV: the unbundled source, so a saved file needs no rebuild. -->",
-            f'<link rel="stylesheet" href="/src/index.css{V}" />',
+            f'<link rel="stylesheet" href="/src/{CSS_ENTRY}{V}" />',
             f'<link rel="stylesheet" href="/src/7-broadcast/index.css{V}" />',
             f'<link rel="stylesheet" href="/src/8-framework/index.css{V}" />',
             f'<link rel="stylesheet" href="/assets/docs.css{V}" />',
@@ -705,6 +716,13 @@ def main():
     # copying it shipped 908 KB and ~78 fetchable files for no reader.
     if DEV and (ROOT / 'src').is_dir():
         shutil.copytree(ROOT / 'src', OUT / 'src')
+        # The entry may @import out of src/ — src/bulma.css reaches for
+        # ../dist/bulma-base.css — so the compiled Bulma has to be on disk
+        # beside it or dev serves a stylesheet with a hole in it.
+        base = ROOT / 'dist' / 'bulma-base.css'
+        if base.exists():
+            (OUT / 'dist').mkdir(exist_ok=True)
+            shutil.copy(base, OUT / 'dist' / base.name)
         # The page links /src/index.css?v=… but an @import INSIDE it names its
         # children with no query at all, so the browser happily serves a cached
         # 12-frame.css behind a freshly-versioned index — including files that
@@ -721,7 +739,9 @@ def main():
     # can download the bundle. Only the minified ones: the expanded copies are
     # 1.9 MB that nothing links, and npm ships them anyway.
     if (ROOT / 'dist').is_dir():
-        (OUT / 'dist').mkdir()
+        # exist_ok: in dev the block above may already have put bulma-base.css
+        # here.
+        (OUT / 'dist').mkdir(exist_ok=True)
         for f in sorted((ROOT / 'dist').glob('*.min.css')):
             shutil.copy(f, OUT / 'dist' / f.name)
 

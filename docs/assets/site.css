@@ -37,7 +37,7 @@
    Built by `npm run css:site`. Never edit the output.
    ========================================================================== */
 
-@import url('../../src/bulma.css');
+@import url('../../src/index.css');
 @import url('../../src/7-broadcast/index.css');
 @import url('../../src/8-framework/index.css');
 @import url('./docs.css');

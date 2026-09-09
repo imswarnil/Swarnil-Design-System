@@ -14,10 +14,10 @@ JavaScript.
 
 :::demo Top is the default; below, start and end cover the edges
 <div class="cluster cluster-lg u-p-6">
-  <button class="btn btn-outline btn-icon" type="button" aria-label="Search" data-tip="Search"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-search"/></svg></button>
-  <button class="btn btn-outline btn-icon" type="button" aria-label="Settings" data-tip-below data-tip="Settings"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-settings"/></svg></button>
-  <button class="btn btn-outline btn-icon" type="button" aria-label="Record" data-tip-end data-tip="Record"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-record"/></svg></button>
-  <button class="btn btn-outline btn-icon" type="button" aria-label="Archive" data-tip-start data-tip="Archive"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-archive"/></svg></button>
+  <button class="button is-outlined" type="button" aria-label="Search" data-tip="Search"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-search"/></svg></button>
+  <button class="button is-outlined" type="button" aria-label="Settings" data-tip-below data-tip="Settings"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-settings"/></svg></button>
+  <button class="button is-outlined" type="button" aria-label="Record" data-tip-end data-tip="Record"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-record"/></svg></button>
+  <button class="button is-outlined" type="button" aria-label="Archive" data-tip-start data-tip="Archive"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-archive"/></svg></button>
 </div>
 :::
 

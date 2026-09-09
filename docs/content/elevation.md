@@ -78,7 +78,7 @@ used, so the choice is a comparison rather than a guess.
   <div class="stack stack-sm">
     <p class="t-label">3 — menus, popovers, tooltips: things that sit over the page but do not own it</p>
     <div class="cluster">
-      <button class="btn btn-outline" type="button" popovertarget="elev-pop">Open a popover</button>
+      <button class="button is-outlined" type="button" popovertarget="elev-pop">Open a popover</button>
       <div class="pop pop-sm" id="elev-pop" popover><div class="pop__body"><p class="t-small u-m-0">Step 3. Above the page, but the page is still yours — nothing dims.</p></div></div>
       <span class="tipcard tipcard-below" style="position: static; opacity: 1; translate: none">A tooltip, at the same step</span>
     </div>
@@ -89,7 +89,7 @@ used, so the choice is a comparison rather than a guess.
     <div class="u-p-6 u-bg-sunken u-rounded-lg">
       <div class="card card-raised u-mx-auto" style="max-inline-size: 26rem; box-shadow: var(--elevation-4)">
         <div class="card__body"><h4 class="card__title">Delete take 48?</h4><p class="card__excerpt">Step 4 is the top of the ladder, and the only thing that earns it is a modal — because a modal has taken the page away and has to look like it.</p></div>
-        <div class="card__actions"><button class="btn btn-ghost btn-sm" type="button">Cancel</button><button class="btn btn-danger btn-sm" type="button">Delete</button></div>
+        <div class="card__actions"><button class="button is-ghost is-small" type="button">Cancel</button><button class="button is-danger is-small" type="button">Delete</button></div>
       </div>
     </div>
   </div>

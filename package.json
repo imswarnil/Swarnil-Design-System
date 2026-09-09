@@ -52,10 +52,7 @@
     "./nav": "./src/js/nav.js",
     "./framework": "./dist/swarnil-framework.css",
     "./framework/min": "./dist/swarnil-framework.min.css",
-    "./framework/src": "./src/8-framework/index.css",
-    "./bulma": "./dist/swarnil-design-bulma.css",
-    "./bulma/min": "./dist/swarnil-design-bulma.min.css",
-    "./bulma/src": "./src/bulma.css"
+    "./framework/src": "./src/8-framework/index.css"
   },
   "files": [
     "src",
@@ -65,7 +62,7 @@
     "LICENSE"
   ],
   "scripts": {
-    "css": "npm run css:web && npm run css:broadcast && npm run css:framework && npm run css:bulma",
+    "css": "npm run css:theme && npm run css:web && npm run css:broadcast && npm run css:framework",
     "css:web": "postcss src/index.css -o dist/swarnil-design.css && postcss src/index.css -o dist/swarnil-design.min.css --env production",
     "css:broadcast": "postcss src/broadcast.css -o dist/swarnil-broadcast.css && postcss src/broadcast.css -o dist/swarnil-broadcast.min.css --env production",
     "css:framework": "postcss src/framework.css -o dist/swarnil-framework.css && postcss src/framework.css -o dist/swarnil-framework.min.css --env production",
@@ -78,10 +75,10 @@
     "clean": "rm -rf dist site",
     "lint": "stylelint \"src/**/*.css\"",
     "audit": "python3 scripts/audit-mono.py --strict && python3 scripts/audit-classes.py --strict",
-    "size": "for f in site/assets/site.min.css dist/swarnil-design.min.css dist/swarnil-design-bulma.min.css dist/swarnil-broadcast.min.css dist/swarnil-framework.min.css; do [ -f \"$f\" ] || continue; printf '%-42s' $f; gzip -c $f | wc -c | awk '{printf \"gzipped: %.1f KB\\n\", $1/1024}'; done",
+    "size": "for f in site/assets/site.min.css dist/swarnil-design.min.css dist/swarnil-broadcast.min.css dist/swarnil-framework.min.css; do [ -f \"$f\" ] || continue; printf '%-40s' $f; gzip -c $f | wc -c | awk '{printf \"gzipped: %.1f KB\\n\", $1/1024}'; done",
     "check": "npm run lint && npm run build && npm run audit && npm run size",
     "prepublishOnly": "npm run css",
-    "css:bulma": "sass --load-path=node_modules --no-source-map --quiet src/bulma-theme.scss dist/bulma-base.css && postcss src/bulma.css -o dist/swarnil-design-bulma.css && postcss src/bulma.css -o dist/swarnil-design-bulma.min.css --env production"
+    "css:theme": "sass --load-path=node_modules --no-source-map --quiet src/bulma-theme.scss dist/bulma-base.css"
   },
   "devDependencies": {
     "cssnano": "^7.0.0",

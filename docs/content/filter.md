@@ -26,7 +26,7 @@ a class can.
   <div class="facets facets-ruled">
     <div class="facets__head">
       <h3 class="facets__title">Filter</h3>
-      <button class="btn btn-link btn-xs" type="button">Clear all</button>
+      <button class="button is-ghost is-small" type="button">Clear all</button>
     </div>
     <div class="facets__active">
       <span class="chip">CSS<button class="chip__x" type="button" aria-label="Remove CSS"></button></span>
@@ -114,7 +114,7 @@ under a `.sec-rule` heading.
 
 Two radios on a sunken track. The chosen one rises to the surface with a breath
 of elevation and **no accent** — the same answer
-[`.btn-group-segmented`](/button.html) gives, because a view switch must never
+[`.btn-group-segmented`](https://bulma.io/documentation/elements/button/) gives, because a view switch must never
 compete with the page's primary action.
 
 The input is visually hidden but still focusable, which is what puts the focus

@@ -36,10 +36,10 @@ second hue amends the argument; it is not a tweak.
 
 :::demo
 <div class="cluster">
-  <span class="badge badge-live">Live</span>
-  <span class="badge">Draft</span>
-  <span class="badge badge-accent">Accent</span>
-  <span class="badge badge-success">Shipped</span>
+  <span class="tag badge-live">Live</span>
+  <span class="tag">Draft</span>
+  <span class="tag is-primary">Accent</span>
+  <span class="tag is-success">Shipped</span>
 </div>
 :::
 

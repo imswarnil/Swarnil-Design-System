@@ -47,7 +47,7 @@ close in on the thing you point at. The camera finding focus.
     <span class="frame__tr"></span><span class="frame__bl"></span>
     Point at me
   </div>
-  <button class="btn btn-outline frame frame-sm frame-hover">Tab to me</button>
+  <button class="button is-outlined frame frame-sm frame-hover">Tab to me</button>
 </div>
 :::
 

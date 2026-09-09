@@ -38,8 +38,8 @@ condensed state is worth having.
       </p>
     </div>
     <div class="masthead__actions">
-      <a class="btn btn-primary btn-sm" href="#i">Live site</a>
-      <a class="btn btn-outline btn-sm" href="#i">Source</a>
+      <a class="button is-primary is-small" href="#i">Live site</a>
+      <a class="button is-outlined is-small" href="#i">Source</a>
     </div>
   </div>
   <span class="masthead__rail" aria-hidden="true"></span>
@@ -84,7 +84,7 @@ See it working on the
         <h3 class="masthead__title">Swarnil Icons</h3>
         <p class="masthead__facts"><span><strong>96</strong> icons</span><span>24px grid</span><span>MIT</span></p>
       </div>
-      <div class="masthead__actions"><a class="btn btn-inverse btn-sm" href="#i">Source</a></div>
+      <div class="masthead__actions"><a class="button is-dark is-small" href="#i">Source</a></div>
     </div>
   </header>
   <header class="masthead masthead-lg masthead-sunken u-rounded-lg">
@@ -95,7 +95,7 @@ See it working on the
         <h3 class="masthead__title">Prompt Kit</h3>
         <p class="masthead__lead">Specs, evals and the harness that runs them.</p>
       </div>
-      <div class="masthead__actions"><a class="btn btn-outline btn-sm" href="#i">Read</a></div>
+      <div class="masthead__actions"><a class="button is-outlined is-small" href="#i">Read</a></div>
     </div>
   </header>
 </div>

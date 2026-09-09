@@ -7,21 +7,21 @@ lead: A label with a background. The status colours are chosen so none of them c
 
 :::demo Emphasis
 <div class="cluster">
-  <span class="badge">Draft</span>
-  <span class="badge badge-solid">Solid</span>
-  <span class="badge badge-outline">Outline</span>
-  <span class="badge badge-quiet">Quiet</span>
+  <span class="tag">Draft</span>
+  <span class="tag is-primary">Solid</span>
+  <span class="tag badge-outline">Outline</span>
+  <span class="tag badge-quiet">Quiet</span>
 </div>
 :::
 
 :::demo Meaning
 <div class="cluster">
-  <span class="badge badge-accent">Accent</span>
-  <span class="badge badge-craft">Craft</span>
-  <span class="badge badge-success">Shipped</span>
-  <span class="badge badge-info">Note</span>
-  <span class="badge badge-warning">Review</span>
-  <span class="badge badge-danger">Blocked</span>
+  <span class="tag is-primary">Accent</span>
+  <span class="tag badge-craft">Craft</span>
+  <span class="tag is-success">Shipped</span>
+  <span class="tag is-info">Note</span>
+  <span class="tag is-warning">Review</span>
+  <span class="tag is-danger">Blocked</span>
 </div>
 :::
 
@@ -36,9 +36,9 @@ reduced motion.
 
 :::demo
 <div class="cluster">
-  <span class="badge badge-live">Live</span>
-  <span class="badge badge-dot badge-success">Passing</span>
-  <span class="badge badge-lg">Large</span>
+  <span class="tag badge-live">Live</span>
+  <span class="tag badge-dot is-success">Passing</span>
+  <span class="tag is-medium">Large</span>
 </div>
 :::
 

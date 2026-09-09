@@ -9,14 +9,14 @@ lead: A comment thread and the box that adds to it — one level of nesting, the
 <section class="thread" style="max-width:40rem">
   <header class="thread__head">
     <h3 class="thread__count">14 <span>comments</span></h3>
-    <button class="btn btn-quiet btn-sm" type="button">Newest first</button>
+    <button class="button is-ghost is-small" type="button">Newest first</button>
   </header>
   <form class="thread__form" action="#i">
     <label class="field__label" for="th-1">Add to the thread</label>
     <textarea class="input" id="th-1" placeholder="What did you think of the episode?"></textarea>
     <div class="thread__form-row">
       <span class="thread__note">Markdown works. Be kind.</span>
-      <button class="btn btn-primary btn-sm" type="submit">Post</button>
+      <button class="button is-primary is-small" type="submit">Post</button>
     </div>
   </form>
   <ol class="thread__list">
@@ -33,7 +33,7 @@ lead: A comment thread and the box that adds to it — one level of nesting, the
           <li class="comment comment-author">
             <span class="comment__face"><span class="avatar">S</span></span>
             <div class="comment__body">
-              <div class="comment__head"><a class="comment__author" href="#i">Swarnil</a><span class="badge badge-accent">Author</span><span class="comment__time">1h ago</span></div>
+              <div class="comment__head"><a class="comment__author" href="#i">Swarnil</a><span class="tag is-primary">Author</span><span class="comment__time">1h ago</span></div>
               <div class="comment__text"><p>Ranges are episode 13 — the en dash gets its own segment.</p></div>
               <div class="comment__actions">
                 <button class="comment__action" type="button" aria-pressed="true"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-heart"/></svg> 4</button>
@@ -66,7 +66,7 @@ response*.
     <li class="comment" data-pinned>
       <span class="comment__face"><span class="avatar">S</span></span>
       <div class="comment__body">
-        <div class="comment__head"><span class="comment__author">Swarnil</span><span class="badge">Pinned</span><span class="comment__time">3d ago</span></div>
+        <div class="comment__head"><span class="comment__author">Swarnil</span><span class="tag">Pinned</span><span class="comment__time">3d ago</span></div>
         <div class="comment__text"><p>Timestamps for every chapter are in the description. Ask about the lav mic here rather than by mail — everyone gets the answer.</p></div>
       </div>
     </li>
@@ -118,7 +118,7 @@ no explanation attached.
           <textarea class="input" aria-label="Reply to Jo L." placeholder="Reply to Jo…"></textarea>
           <div class="thread__form-row">
             <span class="thread__note">Replying as Swarnil</span>
-            <span class="cluster cluster-sm"><button class="btn btn-ghost btn-sm" type="button">Cancel</button><button class="btn btn-primary btn-sm" type="submit">Reply</button></span>
+            <span class="cluster cluster-sm"><button class="button is-ghost is-small" type="button">Cancel</button><button class="button is-primary is-small" type="submit">Reply</button></span>
           </div>
         </form>
       </div>
@@ -126,7 +126,7 @@ no explanation attached.
   </ol>
   <div class="thread__form thread__form-locked">
     <span class="t-small">Sign in to join the thread.</span>
-    <a class="btn btn-outline btn-sm" href="#i">Sign in</a>
+    <a class="button is-outlined is-small" href="#i">Sign in</a>
   </div>
 </div>
 :::

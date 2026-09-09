@@ -18,7 +18,7 @@ The repository card is the shape every developer already reads fluently:
 <div class="grid-2 cq-card">
   <article class="card card-repo card-hover-lift">
     <div class="card__body">
-      <p class="card__kicker"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-book"/></svg> imswarnil / <strong>Swarnil-Design-System</strong> <span class="badge badge-outline">Public</span></p>
+      <p class="card__kicker"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-book"/></svg> imswarnil / <strong>Swarnil-Design-System</strong> <span class="tag badge-outline">Public</span></p>
       <p class="card__excerpt">Token-first, dependency-free CSS. Nine cascade layers, no runtime, no build step required to use it.</p>
       <div class="card__tags"><span class="chip">css</span><span class="chip">design-tokens</span><span class="chip">oklch</span></div>
       <p class="card__facts"><span class="card__lang" style="--lang: var(--chart-2)">CSS</span><span><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-star"/></svg> 1.2k</span><span><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-git-branch"/></svg> 84</span><span>Updated 2 hours ago</span></p>
@@ -28,7 +28,7 @@ The repository card is the shape every developer already reads fluently:
   </article>
   <article class="card card-repo card-hover-lift">
     <div class="card__body">
-      <p class="card__kicker"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-book"/></svg> imswarnil / <strong>swarnil-icons</strong> <span class="badge badge-outline">Public</span></p>
+      <p class="card__kicker"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-book"/></svg> imswarnil / <strong>swarnil-icons</strong> <span class="tag badge-outline">Public</span></p>
       <p class="card__excerpt">One sprite, 96 icons, drawn on a 24px grid so a 16px render still lands on whole pixels.</p>
       <div class="card__tags"><span class="chip">icons</span><span class="chip">svg</span></div>
       <p class="card__facts"><span class="card__lang" style="--lang: var(--chart-6)">SVG</span><span><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-star"/></svg> 410</span><span><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-git-branch"/></svg> 21</span><span>Updated 4 days ago</span></p>
@@ -60,7 +60,7 @@ reader came to use.
 :::demo `.facets` with `--lang` swatches
 <div class="w-sm">
   <div class="facets facets-boxed facets-ruled">
-    <div class="facets__head"><h3 class="facets__title">Filter</h3><button class="btn btn-link btn-xs" type="button">Clear all</button></div>
+    <div class="facets__head"><h3 class="facets__title">Filter</h3><button class="button is-ghost is-small" type="button">Clear all</button></div>
     <div class="facets__active"><span class="chip">CSS<button class="chip__x" type="button" aria-label="Remove CSS"></button></span></div>
     <details class="facets__group" open>
       <summary><span class="facets__label u-m-0">Skills</span></summary>

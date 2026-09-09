@@ -210,7 +210,7 @@ drops under the stage.
     </div>
     <div class="classroom__head">
       <div><p class="eyebrow u-mb-2">Module 1 · Lesson 3</p><h3 class="classroom__title">Joins, and where they go wrong</h3></div>
-      <div class="classroom__nav"><button class="btn btn-outline btn-sm" type="button">Previous</button><button class="btn btn-primary btn-sm" type="button">Mark done, next</button></div>
+      <div class="classroom__nav"><button class="button is-outlined is-small" type="button">Previous</button><button class="button is-primary is-small" type="button">Mark done, next</button></div>
     </div>
     <p class="t-body u-m-0">A join is a promise about cardinality. Most broken dashboards are a promise nobody checked.</p>
   </div>
@@ -314,8 +314,8 @@ scroll back up to the syllabus for it is the commonest mistake in the shape.
         <h3 class="classroom__title">Joins, and where they go wrong</h3>
       </div>
       <div class="classroom__nav">
-        <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Previous lesson"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-left"/></svg></button>
-        <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Next lesson"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-right"/></svg></button>
+        <button class="button is-ghost is-small" type="button" aria-label="Previous lesson"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-left"/></svg></button>
+        <button class="button is-ghost is-small" type="button" aria-label="Next lesson"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-right"/></svg></button>
       </div>
     </header>
     <div class="tabs tabs-underline classroom__tabs" role="tablist" aria-label="Lesson">
@@ -325,8 +325,8 @@ scroll back up to the syllabus for it is the commonest mistake in the shape.
     </div>
     <p class="t-small t-muted">A join is not a technique, it is a claim about the world: that one row over here corresponds to one row over there.</p>
     <footer class="classroom__foot">
-      <button class="btn btn-ghost btn-sm" type="button">Previous lesson</button>
-      <button class="btn btn-primary btn-sm" type="button">Mark complete and continue</button>
+      <button class="button is-ghost is-small" type="button">Previous lesson</button>
+      <button class="button is-primary is-small" type="button">Mark complete and continue</button>
     </footer>
   </div>
   <aside class="classroom__side">

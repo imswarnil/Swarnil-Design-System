@@ -23,7 +23,7 @@ indeterminate bar, which promise only that work continues.
   <span class="spinner spinner-sm"></span>
   <span class="spinner"></span>
   <span class="spinner spinner-lg spinner-accent"></span>
-  <button class="btn btn-primary" aria-busy="true" type="button">Saving</button>
+  <button class="button is-primary" aria-busy="true" type="button">Saving</button>
 </div>
 :::
 

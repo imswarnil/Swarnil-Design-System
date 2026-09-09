@@ -14,8 +14,8 @@ lead: A token-first, dependency-free CSS design system. Almost monochrome, so on
     <h1 class="hero__title">Decide once.<br />Then stop <em>deciding</em>.</h1>
     <p class="hero__lead">A token-first CSS design system with no framework, no runtime and no build step. Change three variables and the whole thing rebrands — site, cards, thumbnails, end screens.</p>
     <div class="hero__actions">
-      <a class="btn btn-primary btn-lg" href="/introduction.html">Read the docs</a>
-      <a class="btn btn-secondary btn-lg frame frame-sm frame-hover" href="/button.html">Browse components</a>
+      <a class="button is-primary is-medium" href="/introduction.html">Read the docs</a>
+      <a class="button is-link is-medium frame frame-sm frame-hover" href="https://bulma.io/documentation/elements/button/">Browse components</a>
     </div>
     <p class="hero__note">No framework · No runtime · No build step required</p>
   </div>
@@ -191,7 +191,7 @@ lead: A token-first, dependency-free CSS design system. Almost monochrome, so on
       </div>
     </div>
   </div>
-  <p class="u-mt-6"><a class="btn btn-outline" href="/canvas.html">See the broadcast layer</a> <a class="btn btn-ghost" href="/templates.html">Or start from a page template</a></p>
+  <p class="u-mt-6"><a class="button is-outlined" href="/canvas.html">See the broadcast layer</a> <a class="button is-ghost" href="/templates.html">Or start from a page template</a></p>
 </section>
 
 <section class="band">
@@ -229,8 +229,8 @@ lead: A token-first, dependency-free CSS design system. Almost monochrome, so on
     </div></div>
     <p>Built in the open, for a site that actually ships. If it saves you a weekend, a star is plenty.</p>
     <div class="hero__actions">
-      <a class="btn btn-primary btn-lg" href="/introduction.html">Start reading</a>
-      <a class="btn btn-ghost btn-lg" href="https://github.com/imswarnil/Swarnil-Design-System" rel="noopener">View on GitHub</a>
+      <a class="button is-primary is-medium" href="/introduction.html">Start reading</a>
+      <a class="button is-ghost is-medium" href="https://github.com/imswarnil/Swarnil-Design-System" rel="noopener">View on GitHub</a>
     </div>
   </div>
 </section>

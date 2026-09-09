@@ -87,7 +87,7 @@ and no results are not laid out in one narrow column.
       <span class="empty__icon"><svg class="icon icon-lg" aria-hidden="true"><use href="/icons/sprite.svg#i-search"/></svg></span>
       <p class="empty__title">Nothing matches those filters</p>
       <p class="empty__body">Try removing "Rust" — there are no repos in it yet.</p>
-      <div class="empty__actions"><button class="btn btn-outline btn-sm" type="button">Clear all filters</button></div>
+      <div class="empty__actions"><button class="button is-outlined is-small" type="button">Clear all filters</button></div>
     </div>
   </div>
 </div>

@@ -30,8 +30,8 @@ can forget to.
 
 :::demo Reload this page to catch them again
 <div class="cluster">
-  <span class="badge badge-accent fx-rise">.fx-rise</span>
-  <span class="badge badge-accent fx-fade">.fx-fade</span>
+  <span class="tag is-primary fx-rise">.fx-rise</span>
+  <span class="tag is-primary fx-fade">.fx-fade</span>
 </div>
 :::
 
@@ -51,8 +51,8 @@ animation starts.
 
 :::demo
 <div class="cluster cluster-lg">
-  <button class="btn btn-outline fx-lift" type="button">.fx-lift</button>
-  <button class="btn btn-primary fx-press" type="button">.fx-press</button>
+  <button class="button is-outlined fx-lift" type="button">.fx-lift</button>
+  <button class="button is-primary fx-press" type="button">.fx-press</button>
   <span class="dot dot-lg dot-accent fx-pulse"></span>
   <span class="spinner"></span>
 </div>
@@ -121,11 +121,11 @@ as either response or atmosphere and starts reading as lag.
 
 :::demo Feedback — under 200ms, one property, on a control
 <div class="cluster cluster-lg">
-  <button class="btn btn-primary" type="button">Press me — scale 0.98</button>
-  <button class="btn btn-outline btn-fill" type="button">Fill</button>
-  <button class="btn btn-secondary btn-lift" type="button">Lift</button>
-  <button class="btn btn-primary btn-ring" type="button">Ring</button>
-  <a class="btn btn-ghost ix-arrow" href="#i">Arrow <svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-right"/></svg></a>
+  <button class="button is-primary" type="button">Press me — scale 0.98</button>
+  <button class="button is-outlined" type="button">Fill</button>
+  <button class="button is-link" type="button">Lift</button>
+  <button class="button is-primary" type="button">Ring</button>
+  <a class="button is-ghost ix-arrow" href="#i">Arrow <svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-right"/></svg></a>
   <a class="ix-underline" href="#i">Underline</a>
 </div>
 :::
@@ -157,9 +157,9 @@ as either response or atmosphere and starts reading as lag.
 
 :::demo The two that are neither — a state that is genuinely working, and one that is genuinely live
 <div class="cluster cluster-lg">
-  <button class="btn btn-primary" type="button" aria-busy="true">Uploading</button>
+  <button class="button is-primary" type="button" aria-busy="true">Uploading</button>
   <span class="spinner"></span>
-  <span class="badge badge-live">Live</span>
+  <span class="tag badge-live">Live</span>
   <span class="avatar avatar-live">S</span>
   <span class="dot dot-live"></span>
   <div class="buffer" style="inline-size: 10rem"><span></span></div>

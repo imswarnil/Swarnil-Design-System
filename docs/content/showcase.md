@@ -22,36 +22,36 @@ not.
 
 :::demo Emphasis, across the five sizes
 <div class="stack">
-  <div class="cluster"><button class="btn btn-primary btn-xs" type="button">Record</button><button class="btn btn-secondary btn-xs" type="button">Preview</button><button class="btn btn-outline btn-xs" type="button">Export</button><button class="btn btn-soft btn-xs" type="button">Duplicate</button><button class="btn btn-ghost btn-xs" type="button">Cancel</button><button class="btn btn-quiet btn-xs" type="button">Skip</button><span class="t-fine t-muted">xs · 24px</span></div>
-  <div class="cluster"><button class="btn btn-primary btn-sm" type="button">Record</button><button class="btn btn-secondary btn-sm" type="button">Preview</button><button class="btn btn-outline btn-sm" type="button">Export</button><button class="btn btn-soft btn-sm" type="button">Duplicate</button><button class="btn btn-ghost btn-sm" type="button">Cancel</button><button class="btn btn-quiet btn-sm" type="button">Skip</button><span class="t-fine t-muted">sm · 28px</span></div>
-  <div class="cluster"><button class="btn btn-primary" type="button">Record</button><button class="btn btn-secondary" type="button">Preview</button><button class="btn btn-outline" type="button">Export</button><button class="btn btn-soft" type="button">Duplicate</button><button class="btn btn-ghost" type="button">Cancel</button><button class="btn btn-quiet" type="button">Skip</button><span class="t-fine t-muted">default · 34px</span></div>
-  <div class="cluster"><button class="btn btn-primary btn-lg" type="button">Record</button><button class="btn btn-secondary btn-lg" type="button">Preview</button><button class="btn btn-outline btn-lg" type="button">Export</button><span class="t-fine t-muted">lg · 40px</span></div>
-  <div class="cluster"><button class="btn btn-primary btn-xl" type="button">Watch the latest</button><span class="t-fine t-muted">xl · 46px — one per page, if that</span></div>
+  <div class="cluster"><button class="button is-primary is-small" type="button">Record</button><button class="button is-link is-small" type="button">Preview</button><button class="button is-outlined is-small" type="button">Export</button><button class="button is-light is-small" type="button">Duplicate</button><button class="button is-ghost is-small" type="button">Cancel</button><button class="button is-ghost is-small" type="button">Skip</button><span class="t-fine t-muted">xs · 24px</span></div>
+  <div class="cluster"><button class="button is-primary is-small" type="button">Record</button><button class="button is-link is-small" type="button">Preview</button><button class="button is-outlined is-small" type="button">Export</button><button class="button is-light is-small" type="button">Duplicate</button><button class="button is-ghost is-small" type="button">Cancel</button><button class="button is-ghost is-small" type="button">Skip</button><span class="t-fine t-muted">sm · 28px</span></div>
+  <div class="cluster"><button class="button is-primary" type="button">Record</button><button class="button is-link" type="button">Preview</button><button class="button is-outlined" type="button">Export</button><button class="button is-light" type="button">Duplicate</button><button class="button is-ghost" type="button">Cancel</button><button class="button is-ghost" type="button">Skip</button><span class="t-fine t-muted">default · 34px</span></div>
+  <div class="cluster"><button class="button is-primary is-medium" type="button">Record</button><button class="button is-link is-medium" type="button">Preview</button><button class="button is-outlined is-medium" type="button">Export</button><span class="t-fine t-muted">lg · 40px</span></div>
+  <div class="cluster"><button class="button is-primary is-large" type="button">Watch the latest</button><span class="t-fine t-muted">xl · 46px — one per page, if that</span></div>
 </div>
 :::
 
 :::demo Icons, groups, states and the reaction
 <div class="stack">
   <div class="cluster">
-    <button class="btn btn-primary btn-icon" type="button" aria-label="Record"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-record"/></svg></button>
-    <button class="btn btn-outline btn-icon" type="button" aria-label="Settings"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-settings"/></svg></button>
-    <a class="btn btn-outline btn-arrow" href="#i">Read the post <svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-right"/></svg></a>
-    <button class="btn btn-live btn-sm" type="button">Live</button>
-    <button class="btn btn-primary" type="button" aria-busy="true">Uploading</button>
-    <button class="btn btn-outline" type="button" disabled>Disabled</button>
+    <button class="button is-primary" type="button" aria-label="Record"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-record"/></svg></button>
+    <button class="button is-outlined" type="button" aria-label="Settings"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-settings"/></svg></button>
+    <a class="button is-outlined" href="#i">Read the post <svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-right"/></svg></a>
+    <button class="button is-small" type="button">Live</button>
+    <button class="button is-primary" type="button" aria-busy="true">Uploading</button>
+    <button class="button is-outlined" type="button" disabled>Disabled</button>
   </div>
   <div class="cluster">
-    <div class="btn-group" role="group" aria-label="Alignment">
-      <button class="btn btn-outline btn-sm" type="button" aria-pressed="true">Left</button>
-      <button class="btn btn-outline btn-sm" type="button" aria-pressed="false">Centre</button>
-      <button class="btn btn-outline btn-sm" type="button" aria-pressed="false">Right</button>
+    <div class="buttons has-addons" role="group" aria-label="Alignment">
+      <button class="button is-outlined is-small" type="button" aria-pressed="true">Left</button>
+      <button class="button is-outlined is-small" type="button" aria-pressed="false">Centre</button>
+      <button class="button is-outlined is-small" type="button" aria-pressed="false">Right</button>
     </div>
-    <div class="btn-group btn-group-segmented" role="group" aria-label="View">
-      <button class="btn" type="button" aria-pressed="true">Grid</button>
-      <button class="btn" type="button" aria-pressed="false">List</button>
+    <div class="buttons has-addons btn-group-segmented" role="group" aria-label="View">
+      <button class="button" type="button" aria-pressed="true">Grid</button>
+      <button class="button" type="button" aria-pressed="false">List</button>
     </div>
-    <button class="btn btn-primary btn-burst btn-toggle" type="button" aria-pressed="false" data-toggle>Subscribe<span class="btn__pop" aria-hidden="true"><span style="--a: 70deg"><svg class="icon"><use href="/icons/sprite.svg#i-bell"/></svg></span><span style="--a: 110deg"><svg class="icon"><use href="/icons/sprite.svg#i-heart"/></svg></span><span style="--a: 90deg; --d: 4rem"><svg class="icon"><use href="/icons/sprite.svg#i-star"/></svg></span></span></button>
-    <button class="btn btn-outline btn-toggle" type="button" aria-pressed="false" data-toggle><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-bookmark"/></svg> Save <span class="btn__count">1.4k</span></button>
+    <button class="button is-primary" type="button" aria-pressed="false" data-toggle>Subscribe<span class="btn__pop" aria-hidden="true"><span style="--a: 70deg"><svg class="icon"><use href="/icons/sprite.svg#i-bell"/></svg></span><span style="--a: 110deg"><svg class="icon"><use href="/icons/sprite.svg#i-heart"/></svg></span><span style="--a: 90deg; --d: 4rem"><svg class="icon"><use href="/icons/sprite.svg#i-star"/></svg></span></span></button>
+    <button class="button is-outlined" type="button" aria-pressed="false" data-toggle><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-bookmark"/></svg> Save <span class="btn__count">1.4k</span></button>
   </div>
 </div>
 :::
@@ -79,7 +79,7 @@ without either being told about the other.
         <label class="choice"><input type="radio" name="sc-vis" class="radio" /> Unlisted</label>
       </div>
       <label class="field"><span class="field__label">Email</span><input class="input" type="email" placeholder="you@studio.tv" aria-invalid="true" /><span class="field__error">That address is missing an @.</span></label>
-      <div class="form__actions"><button class="btn btn-ghost btn-sm" type="button">Cancel</button><button class="btn btn-primary btn-sm" type="submit">Publish</button></div>
+      <div class="form__actions"><button class="button is-ghost is-small" type="button">Cancel</button><button class="button is-primary is-small" type="submit">Publish</button></div>
     </div>
   </div>
 </div>
@@ -94,8 +94,8 @@ see that they are one component.
 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 gy-4 cq-card">
   <div><article class="card card-video card-hover-frame frame-hover"><div class="card__media"><img src="/assets/media/studio.jpg" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">24:07</span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-play"/></svg></span></div><div class="card__body"><p class="card__kicker">Ep. 48 · Craft</p><h4 class="card__title"><a class="card__link" href="#i">Colour, in one block of tokens</a></h4><p class="card__excerpt">Eight ramps, ninety-seven tones, and why dark mode is not an inversion.</p></div></article></div>
   <div><article class="card card-hover-lift"><div class="card__media"><img src="/assets/media/code.jpg" alt="" /><span class="veil veil-grain"></span></div><div class="card__body"><p class="card__kicker">Design systems</p><h4 class="card__title"><a class="card__link" href="#i">Decide once. Then stop deciding.</a></h4><p class="card__excerpt">Why a token-first system is the only kind that survives a rebrand.</p></div><div class="card__footer"><span>Sep 07</span><span class="t-data">8 min</span></div></article></div>
-  <div><article class="card card-repo card-hover-lift"><div class="card__body"><p class="card__kicker"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-book"/></svg> imswarnil / <strong>swarnil-icons</strong> <span class="badge badge-outline">Public</span></p><p class="card__excerpt">One sprite, 96 icons, drawn on a 24px grid.</p><div class="card__tags"><span class="chip">icons</span><span class="chip">svg</span></div><p class="card__facts"><span class="card__lang" style="--lang: var(--chart-6)">SVG</span><span><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-star"/></svg> 410</span><span>4 days ago</span></p></div><a class="card__link u-sr-only" href="#i">Open</a><span class="card__langs" aria-hidden="true"><span style="--lang: var(--chart-6); --value: 82%"></span><span style="--lang: var(--chart-1); --value: 18%"></span></span></article></div>
-  <div><article class="card card-product card-hover-lift"><div class="card__media" style="--card-ratio: 4 / 3"><img src="/assets/media/camera.jpg" alt="" /><span class="card__badge"><span class="badge badge-solid">Pick</span></span></div><div class="card__body"><p class="card__kicker">Camera</p><h4 class="card__title"><a class="card__link" href="#i">Sony FX3</a></h4><p class="card__rating"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-star"/></svg><b>4.8</b> · 1,204</p></div><div class="card__buy"><span class="card__price">₹2,40,000<span class="card__was">₹2,68,000</span></span><button class="btn btn-primary btn-sm card__above" type="button">Buy</button></div></article></div>
+  <div><article class="card card-repo card-hover-lift"><div class="card__body"><p class="card__kicker"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-book"/></svg> imswarnil / <strong>swarnil-icons</strong> <span class="tag badge-outline">Public</span></p><p class="card__excerpt">One sprite, 96 icons, drawn on a 24px grid.</p><div class="card__tags"><span class="chip">icons</span><span class="chip">svg</span></div><p class="card__facts"><span class="card__lang" style="--lang: var(--chart-6)">SVG</span><span><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-star"/></svg> 410</span><span>4 days ago</span></p></div><a class="card__link u-sr-only" href="#i">Open</a><span class="card__langs" aria-hidden="true"><span style="--lang: var(--chart-6); --value: 82%"></span><span style="--lang: var(--chart-1); --value: 18%"></span></span></article></div>
+  <div><article class="card card-product card-hover-lift"><div class="card__media" style="--card-ratio: 4 / 3"><img src="/assets/media/camera.jpg" alt="" /><span class="card__badge"><span class="tag is-primary">Pick</span></span></div><div class="card__body"><p class="card__kicker">Camera</p><h4 class="card__title"><a class="card__link" href="#i">Sony FX3</a></h4><p class="card__rating"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-star"/></svg><b>4.8</b> · 1,204</p></div><div class="card__buy"><span class="card__price">₹2,40,000<span class="card__was">₹2,68,000</span></span><button class="button is-primary is-small card__above" type="button">Buy</button></div></article></div>
   <div><article class="card card-tile card-hover-zoom veil-mono" style="--card-ratio: 4 / 5"><div class="card__media"><img src="/assets/media/peak.jpg" alt="" /><span class="veil veil-grade"></span><span class="veil veil-scrim veil-heavy"></span></div><div class="card__body"><p class="card__kicker">Travel</p><h4 class="card__title"><a class="card__link" href="#i">Ladakh, on film</a></h4></div></article></div>
   <div><article class="card card-inverse"><span class="card__pattern pattern pattern-blueprint pattern-fine" aria-hidden="true"></span><div class="card__body"><p class="card__kicker"><span class="dot dot-sm dot-live"></span> Now</p><h4 class="card__title">What I'm on this month</h4><ol class="buildlog u-mt-3"><li class="buildlog__step" data-kind="start" data-done><span class="buildlog__node"></span><a class="buildlog__link" href="#i">Design system rebuilt<span class="buildlog__date">Sep 05</span></a></li><li class="buildlog__step" aria-current="step"><span class="buildlog__node">2</span><a class="buildlog__link" href="#i">Episode 48 in the edit<span class="buildlog__date">Sep 10</span></a></li></ol></div></article></div>
 </div>
@@ -121,7 +121,7 @@ see that they are one component.
     </div>
     <div class="col-12 col-md-6">
       <div class="cluster cluster-sm">
-        <span class="badge">Draft</span><span class="badge badge-accent">Featured</span><span class="badge badge-solid">4K</span><span class="badge badge-outline">MIT</span><span class="badge badge-success">Passing</span><span class="badge badge-warning">Beta</span><span class="badge badge-danger">Failed</span><span class="badge badge-live">Live</span>
+        <span class="tag">Draft</span><span class="tag is-primary">Featured</span><span class="tag is-primary">4K</span><span class="tag badge-outline">MIT</span><span class="tag is-success">Passing</span><span class="tag is-warning">Beta</span><span class="tag is-danger">Failed</span><span class="tag badge-live">Live</span>
         <span class="chip">css<button class="chip__x" type="button" aria-label="Remove"></button></span>
         <span class="timecode">00:24:07</span><span class="kbd">⌘K</span>
         <span class="avatar-group"><span class="avatar avatar-sm">PR</span><span class="avatar avatar-sm">AM</span><span class="avatar avatar-sm">TK</span><span class="avatar-group__more">+39</span></span>
@@ -148,7 +148,7 @@ see that they are one component.
   <header class="navbar navbar-bordered u-rounded-lg">
     <a class="navbar__brand" href="#i"><span class="dot dot-accent"></span> Swarnil</a>
     <nav class="navbar__nav" aria-label="Showcase"><a class="navbar__link" href="#i" aria-current="page">Home</a><a class="navbar__link" href="#i">Video</a><a class="navbar__link" href="#i">Blog</a><a class="navbar__link" href="#i">Courses</a></nav>
-    <div class="navbar__actions"><button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Search"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-search"/></svg></button><a class="btn btn-primary btn-sm" href="#i">Subscribe</a></div>
+    <div class="navbar__actions"><button class="button is-ghost is-small" type="button" aria-label="Search"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-search"/></svg></button><a class="button is-primary is-small" href="#i">Subscribe</a></div>
   </header>
   <div class="row gy-4">
     <div class="col-12 col-lg-7">
@@ -185,7 +185,7 @@ see that they are one component.
     <div class="stack stack-sm">
       <div class="callout callout-accent"><span class="callout__icon"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-info"/></svg></span><div class="callout__body"><p class="callout__title">Before you start</p><p>Open the project files. They are deliberately dirty.</p></div></div>
       <div class="skeleton-card"><div class="skeleton skeleton-media skeleton-breathe"></div><div class="stack stack-sm u-p-4"><div class="skeleton skeleton-text skeleton-text-short skeleton-breathe"></div><div class="skeleton skeleton-title skeleton-breathe"></div></div></div>
-      <div class="cluster"><button class="btn btn-outline btn-sm" type="button" popovertarget="sc-pop">A popover</button><div class="pop pop-sm" id="sc-pop" popover><div class="pop__body"><p class="t-small u-m-0">Escape closes it. No JavaScript here.</p></div></div><button class="btn btn-outline btn-sm" type="button" data-dialog-open>A dialog</button><dialog class="dialog dialog-sm"><div class="dialog__head"><p class="dialog__title">Delete take 48?</p></div><div class="dialog__body"><p class="u-m-0">This cannot be undone.</p></div><div class="dialog__foot"><form method="dialog"><button class="btn btn-ghost btn-sm" type="submit">Cancel</button></form><button class="btn btn-danger btn-sm" type="button">Delete</button></div></dialog></div>
+      <div class="cluster"><button class="button is-outlined is-small" type="button" popovertarget="sc-pop">A popover</button><div class="pop pop-sm" id="sc-pop" popover><div class="pop__body"><p class="t-small u-m-0">Escape closes it. No JavaScript here.</p></div></div><button class="button is-outlined is-small" type="button" data-dialog-open>A dialog</button><dialog class="dialog dialog-sm"><div class="dialog__head"><p class="dialog__title">Delete take 48?</p></div><div class="dialog__body"><p class="u-m-0">This cannot be undone.</p></div><div class="dialog__foot"><form method="dialog"><button class="button is-ghost is-small" type="submit">Cancel</button></form><button class="button is-danger is-small" type="button">Delete</button></div></dialog></div>
     </div>
   </div>
 </div>
@@ -264,7 +264,7 @@ see that they are one component.
         <p class="hero__eyebrow"><span class="dot dot-sm dot-live"></span> Episode 48 is in the edit</p>
         <h2 class="hero__title u-m-0">I make things. Then I make a <em>video</em> about it.</h2>
         <p class="hero__lead">Software engineer by trade, YouTuber by habit.</p>
-        <div class="hero__actions"><button class="btn btn-primary btn-lg btn-play" type="button"><span class="btn__disc"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span>Watch the latest</button><button class="btn btn-secondary btn-lg" type="button">Read the blog</button></div>
+        <div class="hero__actions"><button class="button is-primary is-medium" type="button"><span class="btn__disc"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span>Watch the latest</button><button class="button is-link is-medium" type="button">Read the blog</button></div>
         <p class="hero__facts"><span><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg> <strong>128</strong> episodes</span><span><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-globe"/></svg> <strong>23</strong> countries</span></p>
       </div>
       <div class="hero__media"><div class="ratio u-rounded-lg u-overflow-hidden"><img src="/assets/media/desk.jpg" alt="" /></div></div>
@@ -272,7 +272,7 @@ see that they are one component.
   </section>
   <div class="cta cta-sm cta-row cta-boxed">
     <div><p class="cta__kicker">Every Friday</p><h3 class="cta__title u-m-0">One episode, one thing I learned.</h3><p class="cta__fine">4,812 readers · unsubscribe in one click</p></div>
-    <form class="cta__actions cta__form form form-inline" action="#i" onsubmit="return false"><label class="u-sr-only" for="sc-mail">Email</label><input class="input input-sm" id="sc-mail" type="email" placeholder="you@studio.tv" /><button class="btn btn-primary btn-sm" type="submit">Subscribe</button></form>
+    <form class="cta__actions cta__form form form-inline" action="#i" onsubmit="return false"><label class="u-sr-only" for="sc-mail">Email</label><input class="input input-sm" id="sc-mail" type="email" placeholder="you@studio.tv" /><button class="button is-primary is-small" type="submit">Subscribe</button></form>
   </div>
 </div>
 :::

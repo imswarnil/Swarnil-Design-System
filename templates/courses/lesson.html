@@ -30,12 +30,12 @@ try {
     <a class="navbar__link" href="/templates/personal/index.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-home"/></svg>Home</a><a class="navbar__link" href="/templates/personal/about.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-user"/></svg>About</a><a class="navbar__link" href="/templates/video/index.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg>Video</a><a class="navbar__link" href="/templates/blog/index.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-file"/></svg>Blog</a><a class="navbar__link" href="/templates/projects/index.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>Projects</a><a class="navbar__link" href="/templates/courses/index.html" aria-current="page"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-folder"/></svg>Courses</a>
   </nav>
   <div class="navbar__actions">
-    <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Search"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-search"/></svg></button>
-    <a class="btn btn-primary btn-sm" href="#newsletter">Subscribe</a>
+    <button class="button is-ghost is-small" type="button" aria-label="Search"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-search"/></svg></button>
+    <a class="button is-primary is-small" href="#newsletter">Subscribe</a>
   </div>
   <div class="sheet" id="drawer" popover>
     <div class="sheet__head">
-      <button class="btn btn-quiet btn-sm btn-icon" type="button" popovertarget="drawer" popovertargetaction="hide" aria-label="Close"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-x"/></svg></button>
+      <button class="button is-ghost is-small" type="button" popovertarget="drawer" popovertargetaction="hide" aria-label="Close"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-x"/></svg></button>
       <span class="navbar__brand"><span class="dot dot-accent"></span> Swarnil</span>
     </div>
     <div class="sheet__body">
@@ -65,7 +65,7 @@ try {
       <div class="cluster cluster-sm">
         <span class="classroom__meta">4 of 12 complete</span>
         <progress class="progress progress-thin" value="4" max="12" aria-label="Course progress" style="inline-size: 8rem"></progress>
-        <button class="btn btn-outline btn-sm" type="button"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-check"/></svg> Mark complete</button>
+        <button class="button is-outlined is-small" type="button"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-check"/></svg> Mark complete</button>
       </div>
     </div>
   </div>
@@ -102,8 +102,8 @@ try {
               <h1 class="classroom__title">Joins, and where they go wrong</h1>
             </div>
             <div class="classroom__nav">
-              <a class="btn btn-ghost btn-sm btn-icon" href="/templates/courses/lesson.html" aria-label="Previous lesson"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-left"/></svg></a>
-              <a class="btn btn-ghost btn-sm btn-icon" href="/templates/courses/lesson.html" aria-label="Next lesson"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-right"/></svg></a>
+              <a class="button is-ghost is-small" href="/templates/courses/lesson.html" aria-label="Previous lesson"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-left"/></svg></a>
+              <a class="button is-ghost is-small" href="/templates/courses/lesson.html" aria-label="Next lesson"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-right"/></svg></a>
             </div>
           </header>
 
@@ -151,8 +151,8 @@ q = <span class="tok-fn">foreach</span> q <span class="tok-fn">generate</span> <
           </section>
 
           <footer class="classroom__foot">
-            <a class="btn btn-ghost" href="/templates/courses/lesson.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-left"/></svg> Recipes and dataflows</a>
-            <button class="btn btn-primary" type="button">Mark complete and continue <svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-right"/></svg></button>
+            <a class="button is-ghost" href="/templates/courses/lesson.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-left"/></svg> Recipes and dataflows</a>
+            <button class="button is-primary" type="button">Mark complete and continue <svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-right"/></svg></button>
           </footer>
 
           <section class="thread thread-flush">
@@ -162,7 +162,7 @@ q = <span class="tok-fn">foreach</span> q <span class="tok-fn">generate</span> <
             <form class="thread__form" action="#i" onsubmit="return false">
               <label class="field__label" for="q-1">Ask about this lesson</label>
               <textarea class="input" id="q-1" rows="3" placeholder="Where did you lose me?"></textarea>
-              <div class="thread__form-row"><span class="thread__note">Timecodes become links.</span><button class="btn btn-primary btn-sm" type="submit">Ask</button></div>
+              <div class="thread__form-row"><span class="thread__note">Timecodes become links.</span><button class="button is-primary is-small" type="submit">Ask</button></div>
             </form>
             <ol class="thread__list">
               <li class="comment">
@@ -175,7 +175,7 @@ q = <span class="tok-fn">foreach</span> q <span class="tok-fn">generate</span> <
                     <li class="comment comment-author">
                       <span class="comment__face"><span class="avatar">S</span></span>
                       <div class="comment__body">
-                        <div class="comment__head"><a class="comment__author" href="#i">Swarnil</a><span class="badge badge-accent">Instructor</span><span class="comment__time">3d ago</span></div>
+                        <div class="comment__head"><a class="comment__author" href="#i">Swarnil</a><span class="tag is-primary">Instructor</span><span class="comment__time">3d ago</span></div>
                         <div class="comment__text"><p>Yes. The join type decides which rows survive, not how many times the left row is repeated. Grain is the only thing that fixes it.</p></div>
                         <div class="comment__actions"><button class="comment__action" type="button" aria-pressed="true"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-heart"/></svg> 11</button><button class="comment__action" type="button">Reply</button></div>
                       </div>
@@ -229,15 +229,15 @@ q = <span class="tok-fn">foreach</span> q <span class="tok-fn">generate</span> <
         <p class="footer__brand"><span class="dot dot-accent"></span> Swarnil</p>
         <p class="footer__note">Engineer, creator, occasional traveller. Everything here is made in the open — the site, the system it is built on, and the notes from getting both wrong first.</p>
         <div class="footer__social">
-          <a class="btn btn-social btn-sm btn-icon" href="https://youtube.com/@imswarnil" rel="noopener" aria-label="YouTube"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-video"/></svg></a>
-          <a class="btn btn-social btn-sm btn-icon" href="https://github.com/imswarnil" rel="noopener" aria-label="GitHub"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg></a>
-          <a class="btn btn-social btn-sm btn-icon" href="#i" rel="noopener" aria-label="Instagram"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-camera"/></svg></a>
-          <a class="btn btn-social btn-sm btn-icon" href="#i" rel="noopener" aria-label="RSS"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-rss"/></svg></a>
+          <a class="button is-small" href="https://youtube.com/@imswarnil" rel="noopener" aria-label="YouTube"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-video"/></svg></a>
+          <a class="button is-small" href="https://github.com/imswarnil" rel="noopener" aria-label="GitHub"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg></a>
+          <a class="button is-small" href="#i" rel="noopener" aria-label="Instagram"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-camera"/></svg></a>
+          <a class="button is-small" href="#i" rel="noopener" aria-label="RSS"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-rss"/></svg></a>
         </div>
         <form class="footer__form" action="#i" onsubmit="return false">
           <label class="u-sr-only" for="foot-mail">Email</label>
           <input class="input input-sm" id="foot-mail" type="email" placeholder="you@studio.tv" autocomplete="email" />
-          <button class="btn btn-secondary btn-sm" type="submit">Subscribe</button>
+          <button class="button is-link is-small" type="submit">Subscribe</button>
         </form>
       </div>
       <nav class="footer__col" aria-label="Make"><p class="footer__head">Make</p><a href="/templates/video/index.html">Video</a><a href="/templates/blog/index.html">Writing</a><a href="/templates/projects/index.html">Projects</a><a href="/templates/courses/index.html">Courses</a></nav>

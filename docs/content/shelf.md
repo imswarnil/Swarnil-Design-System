@@ -39,8 +39,8 @@ container reflows nothing and the row keeps its scroll position.
     </div>
     <div class="shelf__nav">
       <span class="shelf__meta">128 total</span>
-      <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Scroll left"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-left"/></svg></button>
-      <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Scroll right"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-right"/></svg></button>
+      <button class="button is-ghost is-small" type="button" aria-label="Scroll left"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-left"/></svg></button>
+      <button class="button is-ghost is-small" type="button" aria-label="Scroll right"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-right"/></svg></button>
     </div>
   </header>
   <div class="shelf__track cq-card ix-dim">

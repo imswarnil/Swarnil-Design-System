@@ -38,10 +38,10 @@ size, which is the only honest way to look at a page.
   </a>
   <div class="tplcard__body">
     <h3 class="tplcard__title">Personal homepage</h3>
-    <p class="tplcard__desc">The wide hero with the viewfinder, the what-I-make tiles on textured grounds, two <a href="/shelf.html">shelves</a> of video, the writing column, a wall of <a href="/card.html">repository cards</a>, the course track, the travel strip, and a newsletter that is deliberately small.</p>
+    <p class="tplcard__desc">The wide hero with the viewfinder, the what-I-make tiles on textured grounds, two <a href="/shelf.html">shelves</a> of video, the writing column, a wall of <a href="https://bulma.io/documentation/components/card/">repository cards</a>, the course track, the travel strip, and a newsletter that is deliberately small.</p>
     <p class="tplcard__acts">
-      <a class="btn btn-secondary btn-sm" href="/templates/personal/index.html" target="_blank" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-external-link"/></svg>Open full page</a>
-      <a class="btn btn-quiet btn-sm" href="https://github.com/imswarnil/Swarnil-Design-System/tree/main/templates/personal" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>Source</a>
+      <a class="button is-link is-small" href="/templates/personal/index.html" target="_blank" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-external-link"/></svg>Open full page</a>
+      <a class="button is-ghost is-small" href="https://github.com/imswarnil/Swarnil-Design-System/tree/main/templates/personal" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>Source</a>
     </p>
   </div>
 </article>
@@ -61,8 +61,8 @@ size, which is the only honest way to look at a page.
     <h3 class="tplcard__title">About</h3>
     <p class="tplcard__desc">A portrait hero, the short version as a definition list, the long version in prose, an <a href="/timeline.html">illustrated timeline</a> of ten years, the process as numbered steps, the credentials as seals, and the <a href="/kit.html">gear list</a>.</p>
     <p class="tplcard__acts">
-      <a class="btn btn-secondary btn-sm" href="/templates/personal/about.html" target="_blank" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-external-link"/></svg>Open full page</a>
-      <a class="btn btn-quiet btn-sm" href="https://github.com/imswarnil/Swarnil-Design-System/tree/main/templates/personal" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>Source</a>
+      <a class="button is-link is-small" href="/templates/personal/about.html" target="_blank" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-external-link"/></svg>Open full page</a>
+      <a class="button is-ghost is-small" href="https://github.com/imswarnil/Swarnil-Design-System/tree/main/templates/personal" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>Source</a>
     </p>
   </div>
 </article>
@@ -82,8 +82,8 @@ size, which is the only honest way to look at a page.
     <h3 class="tplcard__title">Video — the channel</h3>
     <p class="tplcard__desc">A featured episode as the hero, three shelves (latest, ranked, shorts), the series posters, then everything: tabs, search, sort, the <a href="/results.html">grid-or-list switch</a> and pagination. A 9:16 shorts wall, and the kit that made all of it.</p>
     <p class="tplcard__acts">
-      <a class="btn btn-secondary btn-sm" href="/templates/video/index.html" target="_blank" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-external-link"/></svg>Open full page</a>
-      <a class="btn btn-quiet btn-sm" href="https://github.com/imswarnil/Swarnil-Design-System/tree/main/templates/video" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>Source</a>
+      <a class="button is-link is-small" href="/templates/video/index.html" target="_blank" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-external-link"/></svg>Open full page</a>
+      <a class="button is-ghost is-small" href="https://github.com/imswarnil/Swarnil-Design-System/tree/main/templates/video" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>Source</a>
     </p>
   </div>
 </article>
@@ -101,10 +101,10 @@ size, which is the only honest way to look at a page.
   </a>
   <div class="tplcard__body">
     <h3 class="tplcard__title">Video — the 16:9 episode</h3>
-    <p class="tplcard__desc">The stage with chapter markers on the scrubber, the channel row, a description that opens, <a href="/navigation.html">timed chapters</a>, a transcript with clickable timecodes, the gear used in that episode, the code from it, and the thread.</p>
+    <p class="tplcard__desc">The stage with chapter markers on the scrubber, the channel row, a description that opens, <a href="https://bulma.io/documentation/components/tabs/">timed chapters</a>, a transcript with clickable timecodes, the gear used in that episode, the code from it, and the thread.</p>
     <p class="tplcard__acts">
-      <a class="btn btn-secondary btn-sm" href="/templates/video/post.html" target="_blank" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-external-link"/></svg>Open full page</a>
-      <a class="btn btn-quiet btn-sm" href="https://github.com/imswarnil/Swarnil-Design-System/tree/main/templates/video" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>Source</a>
+      <a class="button is-link is-small" href="/templates/video/post.html" target="_blank" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-external-link"/></svg>Open full page</a>
+      <a class="button is-ghost is-small" href="https://github.com/imswarnil/Swarnil-Design-System/tree/main/templates/video" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>Source</a>
     </p>
   </div>
 </article>
@@ -124,8 +124,8 @@ size, which is the only honest way to look at a page.
     <h3 class="tplcard__title">Video — the 9:16 short</h3>
     <p class="tplcard__desc">The same page in portrait: a sticky vertical stage, the words beside it, timestamps for forty-eight seconds, and a link down to the long version it was cut from.</p>
     <p class="tplcard__acts">
-      <a class="btn btn-secondary btn-sm" href="/templates/video/short.html" target="_blank" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-external-link"/></svg>Open full page</a>
-      <a class="btn btn-quiet btn-sm" href="https://github.com/imswarnil/Swarnil-Design-System/tree/main/templates/video" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>Source</a>
+      <a class="button is-link is-small" href="/templates/video/short.html" target="_blank" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-external-link"/></svg>Open full page</a>
+      <a class="button is-ghost is-small" href="https://github.com/imswarnil/Swarnil-Design-System/tree/main/templates/video" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>Source</a>
     </p>
   </div>
 </article>
@@ -145,8 +145,8 @@ size, which is the only honest way to look at a page.
     <h3 class="tplcard__title">Blog — the two-level home</h3>
     <p class="tplcard__desc">The front page (one featured post and the three latest) above the feed: a <a href="/filter.html">facet column</a> with topics, years and lengths, a filter bar with search and sort, and the results in grid or list.</p>
     <p class="tplcard__acts">
-      <a class="btn btn-secondary btn-sm" href="/templates/blog/index.html" target="_blank" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-external-link"/></svg>Open full page</a>
-      <a class="btn btn-quiet btn-sm" href="https://github.com/imswarnil/Swarnil-Design-System/tree/main/templates/blog" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>Source</a>
+      <a class="button is-link is-small" href="/templates/blog/index.html" target="_blank" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-external-link"/></svg>Open full page</a>
+      <a class="button is-ghost is-small" href="https://github.com/imswarnil/Swarnil-Design-System/tree/main/templates/blog" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>Source</a>
     </p>
   </div>
 </article>
@@ -166,8 +166,8 @@ size, which is the only honest way to look at a page.
     <h3 class="tplcard__title">Blog — the post</h3>
     <p class="tplcard__desc">The reading page: a page head, the prose column at 66ch with the share rail beside it, a pull quote, a code player, a figure, footnotes, the author, the pager and the thread.</p>
     <p class="tplcard__acts">
-      <a class="btn btn-secondary btn-sm" href="/templates/blog/post.html" target="_blank" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-external-link"/></svg>Open full page</a>
-      <a class="btn btn-quiet btn-sm" href="https://github.com/imswarnil/Swarnil-Design-System/tree/main/templates/blog" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>Source</a>
+      <a class="button is-link is-small" href="/templates/blog/post.html" target="_blank" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-external-link"/></svg>Open full page</a>
+      <a class="button is-ghost is-small" href="https://github.com/imswarnil/Swarnil-Design-System/tree/main/templates/blog" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>Source</a>
     </p>
   </div>
 </article>
@@ -187,8 +187,8 @@ size, which is the only honest way to look at a page.
     <h3 class="tplcard__title">Courses — the catalogue</h3>
     <p class="tplcard__desc">A hero carrying the path as a <a href="/timeline.html">stepper</a>, the track, six course cards with progress on their edges, how it works, the FAQ, and two <a href="/pricing.html">plans</a>.</p>
     <p class="tplcard__acts">
-      <a class="btn btn-secondary btn-sm" href="/templates/courses/index.html" target="_blank" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-external-link"/></svg>Open full page</a>
-      <a class="btn btn-quiet btn-sm" href="https://github.com/imswarnil/Swarnil-Design-System/tree/main/templates/courses" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>Source</a>
+      <a class="button is-link is-small" href="/templates/courses/index.html" target="_blank" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-external-link"/></svg>Open full page</a>
+      <a class="button is-ghost is-small" href="https://github.com/imswarnil/Swarnil-Design-System/tree/main/templates/courses" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>Source</a>
     </p>
   </div>
 </article>
@@ -208,8 +208,8 @@ size, which is the only honest way to look at a page.
     <h3 class="tplcard__title">Courses — the course</h3>
     <p class="tplcard__desc">The trailer and a sticky enrol card, the outcomes, the full <a href="/curriculum.html">curriculum</a> with a still per module, "four weeks in this order" as an illustrated timeline, the reviews and the instructor.</p>
     <p class="tplcard__acts">
-      <a class="btn btn-secondary btn-sm" href="/templates/courses/course.html" target="_blank" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-external-link"/></svg>Open full page</a>
-      <a class="btn btn-quiet btn-sm" href="https://github.com/imswarnil/Swarnil-Design-System/tree/main/templates/courses" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>Source</a>
+      <a class="button is-link is-small" href="/templates/courses/course.html" target="_blank" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-external-link"/></svg>Open full page</a>
+      <a class="button is-ghost is-small" href="https://github.com/imswarnil/Swarnil-Design-System/tree/main/templates/courses" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>Source</a>
     </p>
   </div>
 </article>
@@ -229,8 +229,8 @@ size, which is the only honest way to look at a page.
     <h3 class="tplcard__title">Courses — the lesson player</h3>
     <p class="tplcard__desc">The <a href="/curriculum.html">classroom</a>: the player, the lesson tabs, the notes, the resources, previous-and-next pinned under the stage, and the syllabus beside it — stacking under 60rem.</p>
     <p class="tplcard__acts">
-      <a class="btn btn-secondary btn-sm" href="/templates/courses/lesson.html" target="_blank" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-external-link"/></svg>Open full page</a>
-      <a class="btn btn-quiet btn-sm" href="https://github.com/imswarnil/Swarnil-Design-System/tree/main/templates/courses" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>Source</a>
+      <a class="button is-link is-small" href="/templates/courses/lesson.html" target="_blank" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-external-link"/></svg>Open full page</a>
+      <a class="button is-ghost is-small" href="https://github.com/imswarnil/Swarnil-Design-System/tree/main/templates/courses" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>Source</a>
     </p>
   </div>
 </article>
@@ -250,8 +250,8 @@ size, which is the only honest way to look at a page.
     <h3 class="tplcard__title">Projects — the portfolio</h3>
     <p class="tplcard__desc">Three case studies as posters, then all thirty-one filtered by **skill**: a sticky facet column with language swatches, search, sort, the view switch, and the stack measured rather than claimed.</p>
     <p class="tplcard__acts">
-      <a class="btn btn-secondary btn-sm" href="/templates/projects/index.html" target="_blank" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-external-link"/></svg>Open full page</a>
-      <a class="btn btn-quiet btn-sm" href="https://github.com/imswarnil/Swarnil-Design-System/tree/main/templates/projects" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>Source</a>
+      <a class="button is-link is-small" href="/templates/projects/index.html" target="_blank" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-external-link"/></svg>Open full page</a>
+      <a class="button is-ghost is-small" href="https://github.com/imswarnil/Swarnil-Design-System/tree/main/templates/projects" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>Source</a>
     </p>
   </div>
 </article>
@@ -271,8 +271,8 @@ size, which is the only honest way to look at a page.
     <h3 class="tplcard__title">Projects — the case study</h3>
     <p class="tplcard__desc">The <a href="/masthead.html">masthead</a> that pins and condenses as you scroll, the numbers, the argument in prose, the build log as an illustrated timeline, the releases, and the episode that came out of it.</p>
     <p class="tplcard__acts">
-      <a class="btn btn-secondary btn-sm" href="/templates/projects/project.html" target="_blank" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-external-link"/></svg>Open full page</a>
-      <a class="btn btn-quiet btn-sm" href="https://github.com/imswarnil/Swarnil-Design-System/tree/main/templates/projects" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>Source</a>
+      <a class="button is-link is-small" href="/templates/projects/project.html" target="_blank" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-external-link"/></svg>Open full page</a>
+      <a class="button is-ghost is-small" href="https://github.com/imswarnil/Swarnil-Design-System/tree/main/templates/projects" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg>Source</a>
     </p>
   </div>
 </article>

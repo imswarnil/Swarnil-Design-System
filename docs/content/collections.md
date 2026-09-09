@@ -19,11 +19,11 @@ rather than a rebuild.
 
 | Part | What it is | Built from |
 | --- | --- | --- |
-| **The card** | one item, at a glance | [`.card`](/card.html) + a content type |
+| **The card** | one item, at a glance | [`.card`](https://bulma.io/documentation/components/card/) + a content type |
 | **The listing** | all of them, filtered | [`.results`](/results.html) + [`.facets`](/filter.html) |
 | **The row** | a few of them, on another page | [`.shelf`](/shelf.html) or [`.deck`](/deck.html) |
-| **The detail** | one item, in full | [`page-head`](/navigation.html) + the body |
-| **The pager** | the one after this one | [`.pager`](/navigation.html) |
+| **The detail** | one item, in full | [`page-head`](https://bulma.io/documentation/components/tabs/) + the body |
+| **The pager** | the one after this one | [`.pager`](https://bulma.io/documentation/components/tabs/) |
 
 Nothing in that table is per-collection. What *is* per-collection is four
 decisions, and they are the only four you have to make.
@@ -47,7 +47,7 @@ yet — it is a page.
 **4 · What is "next"?** A lesson's next is the next lesson. An episode's next
 is the next episode. A post's next is whatever is chronologically adjacent, and
 a project's next is arbitrary — so it gets a mark rather than a number. That is
-the choice between the three [pager dresses](/navigation.html).
+the choice between the three [pager dresses](https://bulma.io/documentation/components/tabs/).
 
 ## The shape, once
 
