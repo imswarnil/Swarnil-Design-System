@@ -94,10 +94,10 @@ so a page with a sticky bar tells it where the bar ends:
   <p class="filterbar__count"><strong>9</strong> of 214 posts</p>
   <div class="filterbar__actions">
     <label class="filterbar__search"><span class="u-sr-only">Search posts</span>
-      <span class="input-icon"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-search"/></svg><input class="input input-sm" type="search" placeholder="Search 214 posts" /></span>
+      <span class=""><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-search"/></svg><input class="input is-small" type="search" placeholder="Search 214 posts" /></span>
     </label>
     <label><span class="u-sr-only">Sort</span>
-      <select class="select select-sm"><option>Newest first</option><option>Oldest first</option><option>Longest read</option></select>
+      <select class="select is-small"><option>Newest first</option><option>Oldest first</option><option>Longest read</option></select>
     </label>
     <div class="viewtoggle" role="group" aria-label="View">
       <label class="viewtoggle__opt" title="Grid"><input type="radio" name="v-demo" value="grid" checked /><span class="u-sr-only">Grid</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-grid"/></svg></label>

@@ -2,6 +2,10 @@
    3 · COMPONENTS — composed objects with named parts
    ========================================================================== */
 
+@import url('./31-card.css');
+@import url('./34-alert.css');
+@import url('./37-overlay.css');
+@import url('./39-media.css');
 @import url('./38-disclosure.css'); /* accordion, collapse             */
 @import url('./40-codeplayer.css'); /* code as a screen: TV, flat, light */
 @import url('./41-shelf.css');    /* the row you scroll sideways       */

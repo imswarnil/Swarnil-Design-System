@@ -61,10 +61,10 @@ without its scripts.
     <article class="card card-hover-lift"><div class="card__media"></div><div class="card__body"><p class="card__kicker">AI</p><h3 class="card__title"><a class="card__link" href="#i">A prompt is a spec</a></h3><p class="card__excerpt">What agents taught me about requirements.</p></div></article>
     <article class="card card-hover-lift"><div class="card__media"></div><div class="card__body"><p class="card__kicker">Travel</p><h3 class="card__title"><a class="card__link" href="#i">Ladakh, on film</a></h3><p class="card__excerpt">Fourteen photographs and the one that did not come out.</p></div></article>
     <div class="results__foot">
-      <nav class="pagination pagination-between" aria-label="Pages">
-        <span class="pagination__link" aria-disabled="true" aria-label="Previous page"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-left"/></svg></span>
-        <span class="pagination__status">Page 1 of 24</span>
-        <a class="pagination__link" href="#i" aria-label="Next page"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-right"/></svg></a>
+      <nav class="pagination" aria-label="Pages">
+        <span class="pagination-link" aria-disabled="true" aria-label="Previous page"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-left"/></svg></span>
+        <span class="pagination-ellipsis">Page 1 of 24</span>
+        <a class="pagination-link" href="#i" aria-label="Next page"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-right"/></svg></a>
       </nav>
     </div>
   </div>

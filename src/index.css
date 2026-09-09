@@ -68,6 +68,10 @@
 @import url('./2-elements/28-interaction.css');
 
 /* ── Components — same test ──────────────────────────────────────────────── */
+@import url('./3-components/31-card.css');   /* .card is ours: 69 of its 71 classes have no Bulma peer */
+@import url('./3-components/34-alert.css');  /* zero collisions with Bulma */
+@import url('./3-components/37-overlay.css');/* zero collisions with Bulma */
+@import url('./3-components/39-media.css');  /* zero collisions — Bulma's .media is a comment thread, not a player */
 @import url('./3-components/38-disclosure.css');
 @import url('./3-components/40-codeplayer.css');
 @import url('./3-components/41-shelf.css');

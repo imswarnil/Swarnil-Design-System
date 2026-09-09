@@ -65,7 +65,13 @@ def defined_classes():
     """class -> the file that defines it (first one wins)."""
     out = {}
     for f in css_sources():
-        for c in re.findall(r'\.([a-zA-Z][\w-]*)', pathlib.Path(f).read_text()):
+        # Comments are stripped FIRST. Without this, a class named in prose —
+        # ".frame-4 needs markup and .frame does not" — counts as defined, and
+        # the audit cheerfully passes a page using a class that has no rule
+        # anywhere. .frame-4 was exactly that: used in markup, described in two
+        # file headers, never once written as a selector.
+        text = re.sub(r'/\*.*?\*/', '', pathlib.Path(f).read_text(), flags=re.S)
+        for c in re.findall(r'\.([a-zA-Z][\w-]*)', text):
             out.setdefault(c, str(pathlib.Path(f).relative_to(REPO)))
     return out
 

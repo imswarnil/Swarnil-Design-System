@@ -30,8 +30,8 @@ can forget to.
 
 :::demo Reload this page to catch them again
 <div class="cluster">
-  <span class="tag is-primary fx-rise">.fx-rise</span>
-  <span class="tag is-primary fx-fade">.fx-fade</span>
+  <span class="badge is-primary fx-rise">.fx-rise</span>
+  <span class="badge is-primary fx-fade">.fx-fade</span>
 </div>
 :::
 
@@ -159,7 +159,7 @@ as either response or atmosphere and starts reading as lag.
 <div class="cluster cluster-lg">
   <button class="button is-primary" type="button" aria-busy="true">Uploading</button>
   <span class="spinner"></span>
-  <span class="tag badge-live">Live</span>
+  <span class="badge badge-live">Live</span>
   <span class="avatar avatar-live">S</span>
   <span class="dot dot-live"></span>
   <div class="buffer" style="inline-size: 10rem"><span></span></div>

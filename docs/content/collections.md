@@ -51,7 +51,7 @@ the choice between the three [pager dresses](https://bulma.io/documentation/comp
 
 ## The shape, once
 
-Every listing page in the [templates](/templates.html) is this, and only the
+Every listing page in the [templates](https://bulma.io/documentation/) is this, and only the
 four decisions above change between them.
 
 :::demo A listing, in miniature — bar, facets, results, pager
@@ -59,7 +59,7 @@ four decisions above change between them.
   <div class="filterbar">
     <p class="filterbar__count"><strong>3</strong> of 128</p>
     <div class="filterbar__actions">
-      <label><span class="u-sr-only">Sort</span><select class="select select-sm"><option>Newest first</option><option>Most watched</option></select></label>
+      <label><span class="u-sr-only">Sort</span><select class="select is-small"><option>Newest first</option><option>Most watched</option></select></label>
       <div class="viewtoggle" role="group" aria-label="View">
         <label class="viewtoggle__opt"><input type="radio" name="col-view" value="grid" checked /><span class="u-sr-only">Grid</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-grid"/></svg></label>
         <label class="viewtoggle__opt"><input type="radio" name="col-view" value="list" /><span class="u-sr-only">List</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-menu"/></svg></label>
@@ -71,10 +71,10 @@ four decisions above change between them.
     <article class="card card-video card-hover-lift"><div class="card__media"><img src="/assets/media/city.jpg" alt="" /><span class="card__stamp">18:30</span></div><div class="card__body"><p class="card__kicker">Ep. 47 · Craft</p><h4 class="card__title"><a class="card__link" href="#i">The frame layer, explained</a></h4></div></article>
     <article class="card card-video card-hover-lift"><div class="card__media"><img src="/assets/media/night.jpg" alt="" /><span class="card__stamp">31:12</span></div><div class="card__body"><p class="card__kicker">Ep. 46 · Business</p><h4 class="card__title"><a class="card__link" href="#i">Why the thumbnail is the product</a></h4></div></article>
     <div class="results__foot">
-      <nav class="pagination pagination-between" aria-label="Pages">
-        <span class="pagination__link" aria-disabled="true" aria-label="Previous"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-left"/></svg></span>
-        <span class="pagination__status">Page 1 of 43</span>
-        <a class="pagination__link" href="#i" aria-label="Next"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-right"/></svg></a>
+      <nav class="pagination" aria-label="Pages">
+        <span class="pagination-link" aria-disabled="true" aria-label="Previous"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-left"/></svg></span>
+        <span class="pagination-ellipsis">Page 1 of 43</span>
+        <a class="pagination-link" href="#i" aria-label="Next"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-right"/></svg></a>
       </nav>
     </div>
   </div>

@@ -200,10 +200,10 @@ step, which would glow.
 
 :::demo
 <div class="cluster">
-  <span class="tag is-success">Shipped</span>
-  <span class="tag is-info">Note</span>
-  <span class="tag is-warning">Review</span>
-  <span class="tag is-danger">Blocked</span>
+  <span class="badge is-success">Shipped</span>
+  <span class="badge is-info">Note</span>
+  <span class="badge is-warning">Review</span>
+  <span class="badge is-danger">Blocked</span>
 </div>
 <div class="stack stack-sm u-mt-4">
   <div class="alert alert-success"><span class="alert__body">Deployed in 4.2s.</span></div>
@@ -222,12 +222,12 @@ follows a single change. Six presets ship:
 
 :::demo Each strip is the same markup under a different preset
 <div class="stack">
-  <div class="accent-demo"><span class="t-label">signal</span><span class="cluster"><button class="button is-primary is-small" type="button">Primary</button><button class="button is-light is-small" type="button">Soft</button><span class="tag is-primary">Badge</span><span class="dot dot-accent"></span></span></div>
-  <div class="accent-demo" data-accent="azure"><span class="t-label">azure</span><span class="cluster"><button class="button is-primary is-small" type="button">Primary</button><button class="button is-light is-small" type="button">Soft</button><span class="tag is-primary">Badge</span><span class="dot dot-accent"></span></span></div>
-  <div class="accent-demo" data-accent="iris"><span class="t-label">iris</span><span class="cluster"><button class="button is-primary is-small" type="button">Primary</button><button class="button is-light is-small" type="button">Soft</button><span class="tag is-primary">Badge</span><span class="dot dot-accent"></span></span></div>
-  <div class="accent-demo" data-accent="teal"><span class="t-label">teal</span><span class="cluster"><button class="button is-primary is-small" type="button">Primary</button><button class="button is-light is-small" type="button">Soft</button><span class="tag is-primary">Badge</span><span class="dot dot-accent"></span></span></div>
-  <div class="accent-demo" data-accent="mint"><span class="t-label">mint</span><span class="cluster"><button class="button is-primary is-small" type="button">Primary</button><button class="button is-light is-small" type="button">Soft</button><span class="tag is-primary">Badge</span><span class="dot dot-accent"></span></span></div>
-  <div class="accent-demo" data-accent="craft"><span class="t-label">craft</span><span class="cluster"><button class="button is-primary is-small" type="button">Primary</button><button class="button is-light is-small" type="button">Soft</button><span class="tag is-primary">Badge</span><span class="dot dot-accent"></span></span></div>
+  <div class="accent-demo"><span class="t-label">signal</span><span class="cluster"><button class="button is-primary is-small" type="button">Primary</button><button class="button is-light is-small" type="button">Soft</button><span class="badge is-primary">Badge</span><span class="dot dot-accent"></span></span></div>
+  <div class="accent-demo" data-accent="azure"><span class="t-label">azure</span><span class="cluster"><button class="button is-primary is-small" type="button">Primary</button><button class="button is-light is-small" type="button">Soft</button><span class="badge is-primary">Badge</span><span class="dot dot-accent"></span></span></div>
+  <div class="accent-demo" data-accent="iris"><span class="t-label">iris</span><span class="cluster"><button class="button is-primary is-small" type="button">Primary</button><button class="button is-light is-small" type="button">Soft</button><span class="badge is-primary">Badge</span><span class="dot dot-accent"></span></span></div>
+  <div class="accent-demo" data-accent="teal"><span class="t-label">teal</span><span class="cluster"><button class="button is-primary is-small" type="button">Primary</button><button class="button is-light is-small" type="button">Soft</button><span class="badge is-primary">Badge</span><span class="dot dot-accent"></span></span></div>
+  <div class="accent-demo" data-accent="mint"><span class="t-label">mint</span><span class="cluster"><button class="button is-primary is-small" type="button">Primary</button><button class="button is-light is-small" type="button">Soft</button><span class="badge is-primary">Badge</span><span class="dot dot-accent"></span></span></div>
+  <div class="accent-demo" data-accent="craft"><span class="t-label">craft</span><span class="cluster"><button class="button is-primary is-small" type="button">Primary</button><button class="button is-light is-small" type="button">Soft</button><span class="badge is-primary">Badge</span><span class="dot dot-accent"></span></span></div>
 </div>
 :::
 
@@ -251,12 +251,12 @@ of its colour — which is the most common way a chart lies.
 
 :::demo
 <div class="cluster">
-  <span class="tag badge-dot chart-1">Series 1</span>
-  <span class="tag badge-dot chart-2">Series 2</span>
-  <span class="tag badge-dot chart-3">Series 3</span>
-  <span class="tag badge-dot chart-4">Series 4</span>
-  <span class="tag badge-dot chart-5">Series 5</span>
-  <span class="tag badge-dot chart-6">Series 6</span>
+  <span class="badge badge-dot chart-1">Series 1</span>
+  <span class="badge badge-dot chart-2">Series 2</span>
+  <span class="badge badge-dot chart-3">Series 3</span>
+  <span class="badge badge-dot chart-4">Series 4</span>
+  <span class="badge badge-dot chart-5">Series 5</span>
+  <span class="badge badge-dot chart-6">Series 6</span>
 </div>
 :::
 
