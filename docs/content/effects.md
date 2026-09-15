@@ -36,14 +36,14 @@ the first box.
 
 :::demo
 <div class="cluster">
-  <span class="tr-colors u-p-3 u-border u-rounded bg-surface">tr-colors</span>
-  <span class="tr-transform u-p-3 u-border u-rounded ix-raise">tr-transform</span>
-  <span class="tr-shadow u-p-3 u-border u-rounded">tr-shadow</span>
-  <span class="tr-opacity u-p-3 u-border u-rounded">tr-opacity</span>
-  <span class="tr-size u-p-3 u-border u-rounded">tr-size</span>
-  <span class="tr-all u-p-3 u-border u-rounded">tr-all</span>
-  <span class="tr-colors tr-fast u-p-3 u-border u-rounded">tr-fast</span>
-  <span class="tr-colors tr-slow u-p-3 u-border u-rounded">tr-slow</span>
+  <span class="tr-colors p-3 hairline rounded-md bg-surface">tr-colors</span>
+  <span class="tr-transform p-3 hairline rounded-md ix-raise">tr-transform</span>
+  <span class="tr-shadow p-3 hairline rounded-md">tr-shadow</span>
+  <span class="tr-opacity p-3 hairline rounded-md">tr-opacity</span>
+  <span class="tr-size p-3 hairline rounded-md">tr-size</span>
+  <span class="tr-all p-3 hairline rounded-md">tr-all</span>
+  <span class="tr-colors tr-fast p-3 hairline rounded-md">tr-fast</span>
+  <span class="tr-colors tr-slow p-3 hairline rounded-md">tr-slow</span>
 </div>
 :::
 
@@ -54,25 +54,25 @@ delay and the last frame after, so nothing flashes and nothing snaps back.
 
 :::demo
 <div class="grid-auto grid-auto-sm">
-  <div class="fx-blur-in u-p-4 u-border u-rounded t-label">blur-in</div>
-  <div class="fx-scale-in u-p-4 u-border u-rounded t-label">scale-in</div>
-  <div class="fx-pop u-p-4 u-border u-rounded t-label">pop</div>
-  <div class="fx-slide-start u-p-4 u-border u-rounded t-label">slide-start</div>
-  <div class="fx-slide-end u-p-4 u-border u-rounded t-label">slide-end</div>
-  <div class="fx-drop u-p-4 u-border u-rounded t-label">drop</div>
-  <div class="fx-wipe u-p-4 u-border u-rounded t-label bg-accent">wipe</div>
+  <div class="fx-blur-in p-4 hairline rounded-md t-label">blur-in</div>
+  <div class="fx-scale-in p-4 hairline rounded-md t-label">scale-in</div>
+  <div class="fx-pop p-4 hairline rounded-md t-label">pop</div>
+  <div class="fx-slide-start p-4 hairline rounded-md t-label">slide-start</div>
+  <div class="fx-slide-end p-4 hairline rounded-md t-label">slide-end</div>
+  <div class="fx-drop p-4 hairline rounded-md t-label">drop</div>
+  <div class="fx-wipe p-4 hairline rounded-md t-label bg-accent">wipe</div>
 </div>
 :::
 
 :::demo Choreography — delays by hand, or a slow stagger for a list
 <div class="grid-2">
   <div class="stack stack-sm">
-    <p class="fx-rise u-m-0 t-h3">Rolling…</p>
-    <p class="fx-rise fx-delay-1 u-m-0 t-muted">one beat</p>
-    <p class="fx-rise fx-delay-2 u-m-0 t-muted">two</p>
-    <p class="fx-rise fx-delay-3 u-m-0 t-muted">three</p>
-    <p class="fx-rise fx-delay-4 u-m-0 t-muted">four</p>
-    <p class="fx-rise fx-delay-5 u-m-0 t-muted">five</p>
+    <p class="fx-rise m-0 t-h3">Rolling…</p>
+    <p class="fx-rise fx-delay-1 m-0 t-muted">one beat</p>
+    <p class="fx-rise fx-delay-2 m-0 t-muted">two</p>
+    <p class="fx-rise fx-delay-3 m-0 t-muted">three</p>
+    <p class="fx-rise fx-delay-4 m-0 t-muted">four</p>
+    <p class="fx-rise fx-delay-5 m-0 t-muted">five</p>
   </div>
   <ul class="list fx-stagger-slow">
     <li class="list__item">Camera</li>
@@ -106,7 +106,7 @@ The title card that was just typed. Set `--chars` to the length; the caret
 sits on the last letter.
 
 :::demo
-<p class="t-h2 u-m-0"><span class="fx-type" style="--chars: 22">Rolling in five, four…</span></p>
+<p class="t-h2 m-0"><span class="fx-type" style="--chars: 22">Rolling in five, four…</span></p>
 :::
 
 ## Scroll-driven
@@ -118,15 +118,15 @@ state, which is the right fallback.
 
 :::demo
 <div class="grid-auto grid-auto-sm">
-  <div class="fx-scroll-rise u-p-4 u-border u-rounded t-label">scroll-rise</div>
-  <div class="fx-scroll-fade u-p-4 u-border u-rounded t-label">scroll-fade</div>
-  <div class="fx-scroll-scale u-p-4 u-border u-rounded t-label">scroll-scale</div>
-  <div class="fx-scroll-wipe u-p-4 u-border u-rounded t-label bg-accent">scroll-wipe</div>
+  <div class="fx-scroll-rise p-4 hairline rounded-md t-label">scroll-rise</div>
+  <div class="fx-scroll-fade p-4 hairline rounded-md t-label">scroll-fade</div>
+  <div class="fx-scroll-scale p-4 hairline rounded-md t-label">scroll-scale</div>
+  <div class="fx-scroll-wipe p-4 hairline rounded-md t-label bg-accent">scroll-wipe</div>
 </div>
 :::
 
 :::demo Parallax — the picture drifts more slowly than the page
-<div class="fx-parallax ratio ratio-wide u-rounded-lg u-overflow-hidden" style="--parallax: 8%">
+<div class="fx-parallax ratio ratio-wide rounded-lg overflow-hidden" style="--parallax: 8%">
   <div class="bg-aurora pattern pattern-grid" style="height: 130%; margin-top: -15%"></div>
 </div>
 :::
@@ -147,7 +147,7 @@ only on a hero, a poster or a scene. Never on a control.
 
 :::demo Float, shimmer, beacon
 <div class="cluster cluster-lg">
-  <span class="fx-float u-p-4 u-border u-rounded-lg u-shadow-2 t-label">float</span>
+  <span class="fx-float p-4 hairline rounded-lg shadow-2 t-label">float</span>
   <span class="fx-shimmer t-h1">Shimmer</span>
   <span class="fx-beacon dot dot-lg dot-accent"></span>
 </div>
@@ -172,10 +172,10 @@ for a hanging sign or a badge on a ribbon. `fx-drift` is a slow horizontal
 wander for a background object that should not feel placed.
 
 :::demo
-<div class="grid-3 u-text-center">
-  <div class="u-p-8 u-rounded-lg u-border"><span class="badge badge-live fx-breathe">Waiting</span><p class="t-fine t-muted u-mt-4 u-m-0">fx-breathe</p></div>
-  <div class="u-p-8 u-rounded-lg u-border"><span class="fx-swing u-iblock"><svg class="icon icon-xl" aria-hidden="true"><use href="/icons/sprite.svg#i-clapperboard"/></svg></span><p class="t-fine t-muted u-mt-4 u-m-0">fx-swing</p></div>
-  <div class="u-p-8 u-rounded-lg u-border u-overflow-hidden"><span class="fx-drift u-iblock"><svg class="icon icon-xl" aria-hidden="true"><use href="/icons/sprite.svg#i-plane"/></svg></span><p class="t-fine t-muted u-mt-4 u-m-0">fx-drift</p></div>
+<div class="grid-3 text-center">
+  <div class="p-(--space-8) rounded-lg hairline"><span class="badge badge-live fx-breathe">Waiting</span><p class="t-fine t-muted mt-4 m-0">fx-breathe</p></div>
+  <div class="p-(--space-8) rounded-lg hairline"><span class="fx-swing inline-block"><svg class="icon icon-xl" aria-hidden="true"><use href="/icons/sprite.svg#i-clapperboard"/></svg></span><p class="t-fine t-muted mt-4 m-0">fx-swing</p></div>
+  <div class="p-(--space-8) rounded-lg hairline overflow-hidden"><span class="fx-drift inline-block"><svg class="icon icon-xl" aria-hidden="true"><use href="/icons/sprite.svg#i-plane"/></svg></span><p class="t-fine t-muted mt-4 m-0">fx-drift</p></div>
 </div>
 :::
 

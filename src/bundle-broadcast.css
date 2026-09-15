@@ -1,0 +1,22 @@
+/* =============================================================================
+   THE PREBUILT BROADCAST BUNDLE
+
+   Everything the web bundle has, plus the creator layer: export canvases,
+   scenes, lower thirds, stream widgets, thumbnails and OG images. This is the
+   file OBS loads as a browser source and the file a screenshot renders for a
+   thumbnail.
+
+   Compiled to dist/swarnil-broadcast.css. A website never needs it — link the
+   web bundle there.
+
+   ⚠️ ONE IMPORT OF `./broadcast.css`, NOT A HAND-COPIED LIST OF DIRECTORIES.
+   This file used to restate the whole system directory by directory, which was
+   the same thing right up until the system gained a dependency the list did
+   not name. Then the bundle promised "everything the web bundle has" and
+   quietly shipped without it. One import, so there is one answer to what the
+   web bundle is.
+   ========================================================================== */
+
+@import "tailwindcss";
+@import "./broadcast.css";
+@import "./0-config/safelist.css";

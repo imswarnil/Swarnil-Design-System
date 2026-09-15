@@ -10,7 +10,7 @@ interchangeable:
 
 | | What it is | When |
 | --- | --- | --- |
-| [`.reel`](/grid.html) | the primitive — a snap strip, no chrome | anything, inside anything |
+| `.reel` | the primitive — a snap strip, no chrome | anything, inside anything |
 | [`.carousel`](/carousel.html) | a slideshow — one thing at a time, dots, arrows | a hero, a gallery |
 | `.shelf` | a **catalogue row** — a heading and many items, several visible | a listing page |
 
@@ -39,8 +39,8 @@ container reflows nothing and the row keeps its scroll position.
     </div>
     <div class="shelf__nav">
       <span class="shelf__meta">128 total</span>
-      <button class="button is-ghost is-small" type="button" aria-label="Scroll left"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-left"/></svg></button>
-      <button class="button is-ghost is-small" type="button" aria-label="Scroll right"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-right"/></svg></button>
+      <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Scroll left"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-left"/></svg></button>
+      <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Scroll right"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-right"/></svg></button>
     </div>
   </header>
   <div class="shelf__track cq-card ix-dim">

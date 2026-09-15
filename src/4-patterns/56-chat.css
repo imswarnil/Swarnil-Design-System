@@ -12,7 +12,7 @@
    Layer: patterns.
    ========================================================================== */
 
-@layer patterns {
+@layer utilities.sds.patterns {
 
 	.chat {
 		--chat-gap: var(--space-5);

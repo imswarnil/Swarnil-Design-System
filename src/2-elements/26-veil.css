@@ -27,7 +27,7 @@
    Layer: elements.
    ========================================================================== */
 
-@layer tokens {
+@layer base {
 	:root {
 		/* How dark a scrim gets at its heavy end. */
 		--veil-scrim: color-mix(in oklab, var(--pure-black) 72%, transparent);
@@ -37,7 +37,7 @@
 	}
 }
 
-@layer elements {
+@layer utilities.sds.elements {
 
 	.veil {
 		position: absolute;

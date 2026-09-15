@@ -9,44 +9,40 @@ the current state and the session log. This file is the rules, which rarely
 change; `approach.md` is the full spec. Update `PROJECT.md`'s log before you
 finish a session.
 
-Swarnil Design System is a token-first, dependency-free CSS design system.
-Plain CSS custom properties and classes, nine cascade layers, no framework, no
-runtime, no build step required to *use* it. Almost monochrome, so one colour
+Swarnil Design System is a token-first design system built on **Tailwind CSS 4**
+and **daisyUI**. Tailwind is the floor, daisyUI is the component set, and this
+repo is the design that sits on top of both. Almost monochrome, so one colour
 can mean something.
 
 ## Commands
 
 ```bash
 npm install
-npm run watch   # THE DEV LOOP — serve site/ at :8080 and rebuild on save
-npm run build   # dist/*.{css,min.css} + site/ + site/assets/site.min.css
+npm run dev     # build, then serve site/ at :8080
+npm run build   # dist/ (the package) + site/ (the docs). What you want 90% of the time.
 npm run check   # lint → build → audit → size. What CI runs.
 
-npm run dev     # one dev build, then serve. `watch` is the same plus a watcher
-npm run docs    # regenerate site/ only
-npm run css     # the four package bundles only
-npm run css:bulma # just the Bulma base + the bundle standing on it
-npm run css:site # the site's one compiled sheet only (needs site/ to exist)
+npm run css     # dist/ only — the two prebuilt bundles, plain and minified
+npm run docs    # site/ only — build.py, then Tailwind over docs/assets/site.css
 npm run lint    # stylelint over src/**/*.css — must stay at zero errors
 npm run audit   # mono-voice audit + class audit, both strict (needs a built site/)
-npm run size    # gzipped size of every bundle
+npm run size    # gzipped size of every shipped stylesheet
 npm run clean   # rm -rf dist site
 ```
 
 Both `dist/` and `site/` are generated and gitignored. CI builds them on every
 push; Pages deploys `site/`.
 
-### Two modes, and the difference is which CSS the page links
+### There is one mode, and every page links one file
 
-`SDS_DEV=1` (which `dev` and `watch` set) copies `src/` into `site/` and links
-it, so a saved file is visible on reload with no PostCSS run at all. Production
-links **one** file — `assets/site.min.css`, compiled from `docs/assets/site.css`
-by `npm run css:site` — and ships no `src/` at all.
+`assets/site.min.css`, compiled from `docs/assets/site.css` by `npm run docs`.
 
-Do not undo that. Linking `/src/index.css` in production means the browser walks
-a three-deep `@import` chain across ~78 unminified, render-blocking files, which
-is exactly what this repo did until 2026-09-09 while the minified bundles it had
-already built sat in `site/dist/` with nothing pointing at them.
+There used to be a dev mode that copied `src/` into `site/` and linked
+`/src/index.css` so a saved file showed up without a build. That stopped being
+possible the moment the system needed a compiler: `@plugin`, `@theme` and
+`@utility` are Tailwind directives, not CSS, and a browser handed them renders
+an unstyled page. Do not try to bring it back — run `npm run docs`, which takes
+about a second.
 
 ## Layout
 
@@ -54,15 +50,17 @@ already built sat in `site/dist/` with nothing pointing at them.
 | --- | --- |
 | `approach.md` | the spec — what the system is. Authoritative. |
 | `src/0-config` | the `@layer` declaration. Must be read first. |
-| `src/bulma-base.scss` | the Bulma base — utilities, themes, reset and layout primitives only, compiled to `dist/bulma-base.css` |
-| `src/0-bulma/bridge.css` | points Bulma's `--bulma-*` at this system's tokens. One-way |
-| `src/bulma.css` | the bundle entry: Bulma base + bridge + the system |
+| `src/0-config/theme.css` | **the token bridge** — every token as a Tailwind `@theme` entry, so `--bg-surface` is also `bg-surface` |
+| `src/0-config/safelist.css` | which utilities the PREBUILT bundles ship. Not used by the source entry |
+| `src/0-daisy/bridge.css` | daisyUI's own knobs (radii, border, depth), pointed at this system's tokens. One-way |
+| `src/index.css` | **the library entry** — daisyUI, the config, then everything this repo writes. Does NOT import Tailwind |
+| `src/bundle.css` | the prebuilt entry — Tailwind + `index.css` + the safelist → `dist/swarnil-design.css` |
 | `src/1-foundation` … `src/6-utilities` | the system, hand-authored CSS |
 | `src/7-broadcast` | the creator layer — canvases, scenes, lower thirds, stream widgets, thumbnails. Layer `sections`; sized in `cqi`; built into its own bundle by `src/broadcast.css` |
-| `templates/` | whole pages built out of the system, plus `templates.css` glue. Copied into `site/templates/` on build and audited like the docs |
 | `src/js/nav.js` | optional, additive; only sets attributes CSS already reads |
 | `docs/content/*.md` | **the source of the docs** — one markdown file per page |
 | `docs/templates/` | the page shells (`page.html`, `home.html`) |
+| `docs/assets/site.css` | the docs' Tailwind entry → `site/assets/site.min.css`. A build entry; nothing links it |
 | `docs/assets/` | docs chrome (`docs.css`, `docs.js`, `home.css`), fonts, favicon |
 | `docs/icons/sprite.svg` | vendored from `../icons.imswarnil.com`; refreshed on build when that repo is beside this one |
 | `docs/build.py` | the generator: markdown + `:::demo` blocks → `site/` |
@@ -74,14 +72,43 @@ already built sat in `site/dist/` with nothing pointing at them.
 
 1. **Never edit `site/` or `dist/`.** Both are generated. Edit
    `docs/content/*.md`, then `npm run docs`.
-1b. **Bulma is the FIRST layer, and it is a floor, not a peer.** `src/bulma.css`
-   puts Bulma under the whole system. Because `bulma` is declared first, it
-   loses every collision to us — `.card`, `.navbar`, `.table`, `.input`,
-   `.hero`, `.footer`, `.breadcrumb` and about twenty more. Never reorder it,
-   never add a `--bulma-*` read to `src/` (the bridge is one-way, so the base
-   can be dropped without changing anything above it), and keep
-   `src/index.css` free of it — the plain bundle is the default and stays
-   dependency-free.
+1b. **Three tiers: Tailwind, then daisyUI, then this repo.** `src/index.css`
+   is the library entry and it deliberately does NOT import Tailwind — that is
+   what lets a consumer who already runs Tailwind avoid getting it twice.
+   `src/bundle.css` is the prebuilt entry and does import it.
+
+   **The layer order is not a flat list, and it cannot be.** Tailwind declares
+   `theme, base, components, utilities` and we do not get to change it. daisyUI
+   does not use `components` — it nests its components *inside* `utilities`,
+   which is what makes `class="btn bg-red-500"` work, because a rule written
+   directly in a layer beats every sub-layer nested in it. So this system goes
+   in the same place, one step later:
+
+       @layer utilities { @layer sds { @layer elements, components, patterns,
+                                       sections, theme; } }
+
+   `.btn` → ours. `.btn.bg-red-500` → the utility. `.drawer` → daisyUI's.
+   Never write `@layer utilities { … }` directly; use `@utility` for a real
+   utility, or `utilities.sds.<layer>` for a component. Our reset and tokens go
+   in `base`, unlayered, so they land after preflight.
+
+1c. **A name can only belong to one system, and the cascade does not settle it.**
+   Layer order decides `.hero` vs `.hero`. It decides nothing about
+   `.hero > *`, which is daisyUI stacking every child of a hero into one grid
+   cell — and we have no competing rule, so it applied and the landing page
+   rendered with the illustration on top of the headline. Twenty other
+   components had the same shape waiting.
+
+   The fix is not a reset per descendant. It is `exclude` in the `@plugin`
+   block: the thirty components this repo builds are not compiled into daisyUI
+   at all. **Build a component whose name daisyUI also uses, and add it to that
+   list the same day.**
+
+   Watch the *utility* namespaces too. `.bg-canvas` was ours and is now
+   Tailwind's, generated from `--color-canvas`; a hand-written `.bg-*` cannot
+   win, because Tailwind's sits directly in `utilities`. Anything that pairs a
+   ground with its ink is `surface-*` instead.
+
 2. **Every rule in `src/` lives inside a `@layer`.** An unlayered rule beats
    every layer and is therefore a bug. A file may only reference tokens and
    classes from a lower layer.
@@ -116,11 +143,12 @@ already built sat in `site/dist/` with nothing pointing at them.
    is `.prose`, the code blocks are `.codeblock`. If the chrome needs something
    the system has, use it; if the system does not have it, that is a finding
    about the system, not a licence to write a private copy. Everything in
-   `docs/assets/*.css` lives in `@layer docs` — an unlayered docs rule outranks
-   every system layer, so the page documenting a component would be showing you
-   an overridden one. That is not hypothetical: this file's own chrome shipped
-   25 such collisions (`.pager`, `.toc`, `.table`, `.code`, `.hero`, `.lead`,
-   `.tok-*`, …) until 2026-09-09.
+   `docs/assets/*.css` lives in `@layer utilities.sds.docs` — one step above
+   the system, so the chrome can position a component, and still below
+   Tailwind's utilities, so `md:grid-cols-3` on a docs page wins. Unlayered
+   docs CSS outranks *everything*, including utilities; this file's own chrome
+   was unlayered for most of the repo's life and shipped 25 collisions
+   (`.pager`, `.toc`, `.table`, `.code`, `.hero`, `.lead`, `.tok-*`, …).
 
 
 ## House rules of the CSS

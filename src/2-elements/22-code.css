@@ -18,7 +18,7 @@
    Layer: elements.
    ========================================================================== */
 
-@layer elements {
+@layer utilities.sds.elements {
 
 	.code {
 		font-family: var(--font-mono);
@@ -55,9 +55,6 @@
 		gap: var(--space-3);
 		padding: var(--space-2) var(--space-2) var(--space-2) var(--space-3);
 		border-block-end: var(--border-hair) solid var(--code-line);
-		/* Transparent by default, so the head is part of the same slab. A
-		   dress that wants to lift it says so. */
-		background: var(--code-head-bg, transparent);
 	}
 
 	.codeblock__lang {
@@ -101,35 +98,17 @@
 	.codeblock__copy:hover { background: var(--hover-wash); color: var(--code-fg); }
 	.codeblock__copy[data-copied] { color: var(--fg-accent); border-color: currentcolor; }
 
-	/* background and color are stated, not inherited. The block's ground is
-	   painted by .codeblock and this element used to just sit on it — which
-	   works only for as long as nothing else in the document has an opinion
-	   about a bare `pre`. Something does: a CSS reset, a prose stylesheet or a
-	   base framework will set `pre { background }`, and an explicit
-	   declaration in ANY layer beats no declaration at all — cascade layers
-	   arbitrate between declarations, and there is nothing here to arbitrate
-	   with. So the component says what it means. */
 	.codeblock__pre {
 		margin: 0;
 		padding: var(--code-pad);
 		overflow-x: auto;
-		background: transparent;
-		color: var(--code-fg);
 		font-family: var(--font-mono);
 		font-size: var(--text-sm);
 		line-height: 1.7;
 		tab-size: 2;
 	}
 
-	.codeblock__pre > code {
-		display: block;
-		counter-reset: ln;
-		background: none;
-		border: 0;
-		padding: 0;
-		font-size: inherit;
-		color: inherit;
-	}
+	.codeblock__pre > code { display: block; counter-reset: ln; }
 
 	.codeblock-wrap .codeblock__pre { white-space: pre-wrap; overflow-wrap: anywhere; }
 	.codeblock-sm .codeblock__pre { font-size: var(--text-xs); }
@@ -196,62 +175,8 @@
 	/* On the forced-dark block the page's light-dark() branch is the wrong
 	   one, so the palette is remapped to the light ramp steps rather than
 	   every .tok-* being restated. Eight lines, and the highlighting is
-	   correct on a dark slab in a light page.
-
-	   AND ON A LIGHT SLAB IN A DARK PAGE, which the first version of this
-	   block got wrong. --bg-inverse is light-dark(dark, light), so on a dark
-	   page this variant is a LIGHT slab — and it was still painting the light
-	   ramp steps onto it, which is pale ink on a pale ground. The remap has to
-	   invert with the slab it is remapping for, so every step below is itself
-	   a light-dark() pair, read in the same order as the ground: the light
-	   value belongs to the light PAGE, where the slab is dark. */
+	   correct on a dark slab in a light page. */
 	.codeblock-dark {
-		--syn-structure: light-dark(var(--ink-100), var(--ink-800));
-		--syn-key:  light-dark(var(--signal-300), var(--signal-700));
-		--syn-str:  light-dark(var(--teal-300), var(--teal-700));
-		--syn-num:  light-dark(var(--craft-300), var(--craft-700));
-		--syn-fn:   light-dark(var(--azure-300), var(--azure-700));
-		--syn-var:  light-dark(var(--iris-300), var(--iris-700));
-		--syn-com:  var(--code-muted);
-		--syn-punc: var(--code-muted);
-	}
-	.codeblock-dark .codeblock__ln[data-hl] { background: color-mix(in oklab, var(--accent) 18%, transparent); }
-	.codeblock-dark .codeblock__ln[data-diff='add'] { background: color-mix(in oklab, var(--success-solid) 22%, transparent); color: var(--code-fg); }
-	.codeblock-dark .codeblock__ln[data-diff='del'] { background: color-mix(in oklab, var(--danger-solid) 22%, transparent); color: var(--code-fg); }
-
-	/* ── .codeblock-night — dark in BOTH themes ────────────────────────────
-	   Not the same thing as .codeblock-dark, and the difference is the whole
-	   reason this exists.
-
-	   .codeblock-dark is built on --bg-inverse, which is
-	   light-dark(near-black, near-white) — the OPPOSITE of the page. That is
-	   right when you want a slab that contrasts with whatever it sits on, and
-	   it means that on a dark page .codeblock-dark renders LIGHT.
-
-	   A documentation site usually wants the other thing: code that looks the
-	   same everywhere, so a reader who switches theme mid-page does not watch
-	   every snippet invert. So this variant reaches past the semantic tokens
-	   to the ramp itself — --ink-1000 and --ink-50 are absolute steps, not
-	   light-dark() pairs, and therefore do not move.
-
-	   Reaching for a ramp step is normally forbidden (PRINCIPLES #3:
-	   components read tier-2 tokens only). This is the one place the rule has
-	   to bend, because the requirement IS "ignore the theme", and every tier-2
-	   token is defined to follow it. Stated here rather than done quietly. */
-
-	.codeblock-night {
-		/* 950, not 1000. --bg-canvas in the dark theme IS --ink-1000, so a slab
-		   painted 1000 is the same colour as the page behind it and the block
-		   dissolves — a hairline border is not enough to hold an edge that has
-		   no contrast on either side of it. One step up the ramp separates the
-		   slab from a dark page and is still unambiguously dark on a light one,
-		   which is the entire requirement. */
-		--code-bg: var(--ink-950);
-		--code-fg: var(--ink-50);
-		--code-line: oklch(100% 0 0 / 0.14);
-		--code-muted: oklch(100% 0 0 / 0.44);
-
-		/* The light ramp steps, which read on near-black in either theme. */
 		--syn-structure: var(--ink-100);
 		--syn-key:  var(--signal-300);
 		--syn-str:  var(--teal-300);
@@ -260,18 +185,10 @@
 		--syn-var:  var(--iris-300);
 		--syn-com:  var(--code-muted);
 		--syn-punc: var(--code-muted);
-
-		/* The head sits on the same slab rather than a separate surface: one
-		   object, not a card with a lid. */
-		--code-head-bg: oklch(100% 0 0 / 0.04);
 	}
-
-	.codeblock-night .codeblock__copy { color: var(--code-muted); border-color: var(--code-line); }
-	.codeblock-night .codeblock__copy:hover { background: oklch(100% 0 0 / 0.1); color: var(--code-fg); }
-	.codeblock-night .codeblock__copy[data-copied] { color: var(--accent); border-color: currentcolor; }
-	.codeblock-night .codeblock__ln[data-hl] { background: color-mix(in oklab, var(--accent) 18%, transparent); }
-	.codeblock-night .codeblock__ln[data-diff='add'] { background: color-mix(in oklab, var(--success-solid) 22%, transparent); color: var(--code-fg); }
-	.codeblock-night .codeblock__ln[data-diff='del'] { background: color-mix(in oklab, var(--danger-solid) 22%, transparent); color: var(--code-fg); }
+	.codeblock-dark .codeblock__ln[data-hl] { background: color-mix(in oklab, var(--accent) 18%, transparent); }
+	.codeblock-dark .codeblock__ln[data-diff='add'] { background: color-mix(in oklab, var(--success-solid) 22%, transparent); color: var(--code-fg); }
+	.codeblock-dark .codeblock__ln[data-diff='del'] { background: color-mix(in oklab, var(--danger-solid) 22%, transparent); color: var(--code-fg); }
 
 	/* ── .codeline — a one-liner with its own copy button ──────────────────
 	   `npm run build` in a paragraph, or a share link. The code scrolls

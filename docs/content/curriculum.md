@@ -209,10 +209,10 @@ drops under the stage.
       <div class="player__bar"><button class="player__btn" type="button" aria-label="Play"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></button><span class="player__time">04:12</span><div class="player__rail" role="slider" aria-label="Seek" aria-valuemin="0" aria-valuemax="1144" aria-valuenow="252" tabindex="0"><div class="player__buffered" style="--value: 61%"></div><div class="player__played" style="--value: 22%"></div></div><span class="player__time">19:04</span></div>
     </div>
     <div class="classroom__head">
-      <div><p class="eyebrow u-mb-2">Module 1 · Lesson 3</p><h3 class="classroom__title">Joins, and where they go wrong</h3></div>
-      <div class="classroom__nav"><button class="button is-outlined is-small" type="button">Previous</button><button class="button is-primary is-small" type="button">Mark done, next</button></div>
+      <div><p class="eyebrow mb-2">Module 1 · Lesson 3</p><h3 class="classroom__title">Joins, and where they go wrong</h3></div>
+      <div class="classroom__nav"><button class="btn btn-outline btn-sm" type="button">Previous</button><button class="btn btn-primary btn-sm" type="button">Mark done, next</button></div>
     </div>
-    <p class="t-body u-m-0">A join is a promise about cardinality. Most broken dashboards are a promise nobody checked.</p>
+    <p class="t-body m-0">A join is a promise about cardinality. Most broken dashboards are a promise nobody checked.</p>
   </div>
   <aside class="classroom__side">
     <section class="curriculum curriculum-scroll" style="--curriculum-max: 22rem">
@@ -307,26 +307,26 @@ scroll back up to the syllabus for it is the commonest mistake in the shape.
 :::demo `.classroom__tabs`, `.classroom__foot` and `.classroom__meta`
 <div class="classroom" style="--classroom-side: 15rem">
   <div class="classroom__stage">
-    <div class="ratio ratio-wide u-rounded-lg u-overflow-hidden pattern pattern-scan u-border"></div>
+    <div class="ratio ratio-wide rounded-lg overflow-hidden pattern pattern-scan hairline"></div>
     <header class="classroom__head">
       <div>
         <p class="classroom__meta">Module 01 · Lesson 3 of 12</p>
         <h3 class="classroom__title">Joins, and where they go wrong</h3>
       </div>
       <div class="classroom__nav">
-        <button class="button is-ghost is-small" type="button" aria-label="Previous lesson"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-left"/></svg></button>
-        <button class="button is-ghost is-small" type="button" aria-label="Next lesson"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-right"/></svg></button>
+        <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Previous lesson"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-left"/></svg></button>
+        <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Next lesson"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-right"/></svg></button>
       </div>
     </header>
-    <div class="tabs classroom__tabs" role="tablist" aria-label="Lesson">
+    <div class="tabs tabs-underline classroom__tabs" role="tablist" aria-label="Lesson">
       <button class="tab" type="button" role="tab" aria-selected="true">Notes</button>
-      <button class="tab" type="button" role="tab" aria-selected="false">Resources <span class="tag is-small">4</span></button>
+      <button class="tab" type="button" role="tab" aria-selected="false">Resources <span class="tab__count">4</span></button>
       <button class="tab" type="button" role="tab" aria-selected="false">Transcript</button>
     </div>
     <p class="t-small t-muted">A join is not a technique, it is a claim about the world: that one row over here corresponds to one row over there.</p>
     <footer class="classroom__foot">
-      <button class="button is-ghost is-small" type="button">Previous lesson</button>
-      <button class="button is-primary is-small" type="button">Mark complete and continue</button>
+      <button class="btn btn-ghost btn-sm" type="button">Previous lesson</button>
+      <button class="btn btn-primary btn-sm" type="button">Mark complete and continue</button>
     </footer>
   </div>
   <aside class="classroom__side">

@@ -19,7 +19,7 @@
    which component renders inside it.
    ========================================================================== */
 
-@layer patterns {
+@layer utilities.sds.patterns {
 
 	.kit {
 		--kit-shot: 4.5rem;

@@ -8,7 +8,7 @@
    Layer: elements for the base, utilities for .u-sr-only so it always wins.
    ========================================================================== */
 
-@layer elements {
+@layer utilities.sds.elements {
 
 	/* :focus-visible, never :focus — so a mouse click does not leave a ring
 	   behind but a Tab press does. That distinction is the whole reason
@@ -47,7 +47,7 @@
 	}
 }
 
-@layer utilities {
+@layer utilities.sds.utilities {
 
 	/* Visually hidden, still announced. clip-path rather than display:none,
 	   which would remove it from the accessibility tree entirely. */

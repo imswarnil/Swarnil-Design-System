@@ -8,7 +8,7 @@ lead: A label with a background. The status colours are chosen so none of them c
 :::demo Emphasis
 <div class="cluster">
   <span class="badge">Draft</span>
-  <span class="badge is-primary">Solid</span>
+  <span class="badge badge-solid">Solid</span>
   <span class="badge badge-outline">Outline</span>
   <span class="badge badge-quiet">Quiet</span>
 </div>
@@ -16,12 +16,12 @@ lead: A label with a background. The status colours are chosen so none of them c
 
 :::demo Meaning
 <div class="cluster">
-  <span class="badge is-primary">Accent</span>
+  <span class="badge badge-accent">Accent</span>
   <span class="badge badge-craft">Craft</span>
-  <span class="badge is-success">Shipped</span>
-  <span class="badge is-info">Note</span>
-  <span class="badge is-warning">Review</span>
-  <span class="badge is-danger">Blocked</span>
+  <span class="badge badge-success">Shipped</span>
+  <span class="badge badge-info">Note</span>
+  <span class="badge badge-warning">Review</span>
+  <span class="badge badge-danger">Blocked</span>
 </div>
 :::
 
@@ -37,8 +37,8 @@ reduced motion.
 :::demo
 <div class="cluster">
   <span class="badge badge-live">Live</span>
-  <span class="badge badge-dot is-success">Passing</span>
-  <span class="badge is-medium">Large</span>
+  <span class="badge badge-dot badge-success">Passing</span>
+  <span class="badge badge-lg">Large</span>
 </div>
 :::
 
@@ -117,7 +117,7 @@ An avatar cannot be both `avatar-live` and carry a status: both are the one
 video that jumps to the moment. The playing one is `aria-current`.
 
 :::demo
-<p class="u-m-0">
+<p class="m-0">
   <button class="timecode timecode-link" type="button">00:00</button> Intro ·
   <button class="timecode timecode-link" type="button" aria-current="true">02:14</button> The key light ·
   <button class="timecode timecode-link" type="button">09:47</button> Fill and rim ·

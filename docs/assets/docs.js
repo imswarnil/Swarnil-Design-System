@@ -37,18 +37,11 @@
 	/* ── Demo: preview / code tabs ───────────────────────────────────────── */
 
 	$$('.demo').forEach(function (demo) {
-		var tabs = $$('.tab', demo);
-		var panes = $$('[data-pane]', demo).filter(function (n) { return !n.classList.contains('tab'); });
+		var tabs = $$('.demo__tab', demo);
+		var panes = $$('[data-pane]', demo).filter(function (n) { return !n.classList.contains('demo__tab'); });
 
 		function show(name) {
-		tabs.forEach(function (t) {
-			var on = t.dataset.pane === name;
-			t.setAttribute('aria-selected', String(on));
-			/* Bulma marks the LI, not the control. aria-selected stays on
-			   the button because that is where the accessibility tree
-			   wants it; is-active is only the paint. */
-			if (t.parentElement.tagName === 'LI') t.parentElement.classList.toggle('is-active', on);
-		});
+			tabs.forEach(function (t) { t.setAttribute('aria-selected', String(t.dataset.pane === name)); });
 			panes.forEach(function (p) { p.hidden = p.dataset.pane !== name; });
 		}
 
@@ -118,7 +111,7 @@
 		/* Most specific first. A .codeplayer copy button lives INSIDE a .demo
 		   when it is being demonstrated, and closest('.demo') would hand back the
 		   demo's own source pane instead of the block the reader clicked. */
-		var root = btn.closest('.codeplayer') || btn.closest('.codeblock') || btn.closest('.demo');
+		var root = btn.closest('.codeplayer') || btn.closest('.cb') || btn.closest('.demo');
 		var code = root && root.querySelector('code');
 		if (!code) return;
 		var done = function () {
@@ -134,56 +127,13 @@
 
 	/* ── Burger ──────────────────────────────────────────────────────────── */
 
-	var burger = $('.navbar__burger');
-	var side = $('.shell__side');
+	var burger = $('.bar__burger');
+	var side = $('.side');
 	if (burger && side) {
 		burger.addEventListener('click', function () {
 			var open = burger.getAttribute('aria-expanded') === 'true';
 			burger.setAttribute('aria-expanded', String(!open));
 			if (open) { delete side.dataset.open; } else { side.dataset.open = ''; }
-		});
-	}
-
-	/* ── Collapse the side ───────────────────────────────────────────────────
-	   Three states in one attribute on <html>: absent is expanded, 'collapsed'
-	   is the icon strip, and below 60rem the stylesheet ignores it entirely
-	   because a drawer of unlabelled icons is not navigation.
-
-	   The initial value is written by the inline script in <head>, so the
-	   width is correct on the first frame. This only toggles it. */
-
-	function setNav(collapsed) {
-		if (collapsed) { document.documentElement.dataset.nav = 'collapsed'; }
-		else { delete document.documentElement.dataset.nav; }
-		try { localStorage.setItem('sds-nav', collapsed ? 'collapsed' : 'open'); } catch (e) {}
-		var btn = $('[data-nav-collapse]');
-		if (btn) {
-			btn.setAttribute('aria-expanded', String(!collapsed));
-			btn.setAttribute('aria-label', collapsed ? 'Expand the navigation' : 'Collapse the navigation');
-		}
-	}
-
-	setNav(document.documentElement.dataset.nav === 'collapsed');
-
-	var collapseBtn = $('[data-nav-collapse]');
-	if (collapseBtn) {
-		collapseBtn.addEventListener('click', function () {
-			setNav(document.documentElement.dataset.nav !== 'collapsed');
-		});
-	}
-
-	/* Clicking a group icon while collapsed re-opens the side rather than
-	   toggling a <details> whose contents nobody can see. preventDefault is on
-	   the summary, which is what actually owns the open/close. */
-	var sideNav = $('.shell__nav');
-	if (sideNav) {
-		sideNav.addEventListener('click', function (e) {
-			if (document.documentElement.dataset.nav !== 'collapsed') return;
-			var sum = e.target.closest('summary');
-			if (!sum) return;
-			e.preventDefault();
-			setNav(false);
-			sum.parentElement.open = true;
 		});
 	}
 
@@ -202,7 +152,7 @@
 	};
 
 	var searches = $$('[data-search]').map(function (input) {
-		var out = input.closest('.navbar__search').querySelector('[data-search-out]');
+		var out = input.closest('.search').querySelector('[data-search-out]');
 		if (!out) return null;
 
 		var close = function () { out.hidden = true; out.innerHTML = ''; };
@@ -217,9 +167,9 @@
 				out.hidden = false;
 				out.innerHTML = hits.length
 					? hits.map(function (r) {
-						return '<a class="shell__hit" href="' + r.u + '"><b>' + r.t + '</b><span>' + r.g + '</span></a>';
+						return '<a class="search__hit" href="' + r.u + '"><b>' + r.t + '</b><span>' + r.g + '</span></a>';
 					}).join('')
-					: '<p class="shell__empty">Nothing matches &ldquo;' + q.replace(/[<>&]/g, '') + '&rdquo;</p>';
+					: '<p class="search__empty">Nothing matches &ldquo;' + q.replace(/[<>&]/g, '') + '&rdquo;</p>';
 			});
 		});
 
@@ -240,100 +190,6 @@
 			}
 		});
 	}
-
-	/* ── Scrollspy ───────────────────────────────────────────────────────────
-	   Marks the contents entry for the section you are actually reading.
-
-	   The attribute is [aria-current='true'] and nothing else: 45-toc.css
-	   already dresses that state (the hairline the list is built from turns
-	   accent) and its header says outright that it is "set by whatever is
-	   watching the scroll". This is that. No class, no second source of truth,
-	   and with this file absent the contents is still a working list of links.
-
-	   WHY NOT `isIntersecting`. The obvious version marks a heading when it
-	   enters the viewport, which breaks in both directions: several headings
-	   are on screen at once on a short section, and NONE is on screen when you
-	   are in the middle of a long one, so the mark flickers and then vanishes.
-	   What a reader means by "where am I" is the last heading they scrolled
-	   PAST — so the observer only records each heading's position, and the
-	   choice is made by walking the list. */
-
-	var tocLinks = $$('.toc__link');
-	if (tocLinks.length && 'IntersectionObserver' in window) {
-		var heads = tocLinks
-			.map(function (a) { return document.getElementById(decodeURIComponent(a.hash.slice(1))); })
-			.filter(Boolean);
-
-		var current = null;
-		function mark() {
-			/* The last heading whose top has passed the reading line — a little
-			   below the sticky bar, so a heading counts once it is comfortably
-			   on screen rather than the instant it touches the bar. */
-			var line = 140;
-			var found = heads[0];
-			for (var i = 0; i < heads.length; i++) {
-				if (heads[i].getBoundingClientRect().top <= line) found = heads[i];
-			}
-			/* At the very bottom the last section may be too short to ever reach
-			   the line, and it would otherwise be unreachable. */
-			if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) {
-				found = heads[heads.length - 1];
-			}
-			if (found === current) return;
-			current = found;
-			tocLinks.forEach(function (a) {
-				var on = decodeURIComponent(a.hash.slice(1)) === found.id;
-				if (on) { a.setAttribute('aria-current', 'true'); } else { a.removeAttribute('aria-current'); }
-			});
-			keepVisible(found && $('.toc__link[aria-current]'), $('.shell__pin > .toc'));
-		}
-
-		/* One observer, purely as a cheap "something moved" signal — it fires
-		   on the frames that matter instead of on every scroll event. */
-		var io = new IntersectionObserver(mark, { rootMargin: '-140px 0px 0px 0px', threshold: [0, 1] });
-		heads.forEach(function (h) { io.observe(h); });
-
-		var ticking = false;
-		window.addEventListener('scroll', function () {
-			if (ticking) return;
-			ticking = true;
-			requestAnimationFrame(function () { ticking = false; mark(); });
-		}, { passive: true });
-
-		mark();
-	}
-
-	/* Scroll a marked item into view INSIDE its own scrolling column, without
-	   moving the page. scrollIntoView() would scroll every ancestor including
-	   the document, which on load would jump the reader away from the top of
-	   the article they just opened. */
-	function keepVisible(el, box) {
-		if (!el || !box) return;
-		var e = el.getBoundingClientRect();
-		var b = box.getBoundingClientRect();
-		if (e.top < b.top) { box.scrollTop -= b.top - e.top + 16; }
-		else if (e.bottom > b.bottom) { box.scrollTop += e.bottom - b.bottom + 16; }
-	}
-
-	/* The current page is the 30th of 75 in a column that shows about a dozen.
-	   Opening a docs page with its own entry scrolled out of sight is the nav
-	   telling you nothing about where you are. */
-	keepVisible($('.navlist__link[aria-current="page"]'), $('.shell__side'));
-
-	/* [data-more] means "this box is cut off below", and the stylesheet fades
-	   its last few pixels when it is set. A contents list clipped dead through
-	   the middle of a word reads as a bug; the same list fading out reads as a
-	   list that continues. The attribute is removed at the end of the scroll,
-	   so the final item is never dimmed for no reason. */
-	$$('.shell__side, .shell__pin > .toc').forEach(function (box) {
-		var update = function () {
-			var more = box.scrollTop + box.clientHeight < box.scrollHeight - 2;
-			if (more) { box.dataset.more = ''; } else { delete box.dataset.more; }
-		};
-		box.addEventListener('scroll', update, { passive: true });
-		new ResizeObserver(update).observe(box);
-		update();
-	});
 
 	/* ── Hero background video ───────────────────────────────────────────────
 	   The iframe is BUILT HERE rather than sitting in the markup, for three

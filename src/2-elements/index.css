@@ -2,11 +2,12 @@
    2 · ELEMENTS — single-purpose, usually one tag, no internal structure
    ========================================================================== */
 
-@import url('./20-badge.css');
-@import url('./22-code.css');    /* inline code, code block, tokens    */
-@import url('./23-indicator.css'); /* spinner, skeleton, progress, meter */
-@import url('./24-text.css');    /* figure, pullquote, mark, note, footnote */
-@import url('./25-effect.css');  /* transitions, interactions, entrances, ambient */
-@import url('./26-veil.css');    /* scrims, grades, grain, glass — over footage */
-@import url('./27-linkcard.css'); /* the bookmark card and the source list */
-@import url('./28-interaction.css'); /* ix-* — the hover and focus answers */
+@import "./20-badge.css";   /* badge, chip, timecode, kbd, avatar */
+@import "./21-table.css";   /* table + numeric columns            */
+@import "./22-code.css";    /* inline code, code block, tokens    */
+@import "./23-indicator.css"; /* spinner, skeleton, progress, meter */
+@import "./24-text.css";    /* figure, pullquote, mark, note, footnote */
+@import "./25-effect.css";  /* transitions, interactions, entrances, ambient */
+@import "./26-veil.css";    /* scrims, grades, grain, glass — over footage */
+@import "./27-linkcard.css"; /* the bookmark card and the source list */
+@import "./28-interaction.css"; /* ix-* — the hover and focus answers */
