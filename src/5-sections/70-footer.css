@@ -1,0 +1,242 @@
+/* =============================================================================
+   70 · FOOTER — the last section, not an afterthought
+
+   Three strips: identity, columns of somewhere-to-go-next, and the fine print.
+   A reader who scrolled this far is LOOKING for a next step; a footer without
+   links is a dead end wearing a copyright line.
+
+   Layer: sections.
+   ========================================================================== */
+
+@layer utilities.sds.sections {
+
+	.footer {
+		--footer-pad: var(--space-12);
+		border-block-start: var(--border-hair) solid var(--line-subtle);
+		background: var(--bg-sunken);
+		padding-block: var(--footer-pad) var(--space-8);
+	}
+
+	.footer__top {
+		display: grid;
+		grid-template-columns: minmax(0, 1.4fr) repeat(auto-fit, minmax(8rem, 1fr));
+		gap: var(--space-10);
+		padding-block-end: var(--space-10);
+		border-block-end: var(--border-hair) solid var(--line-subtle);
+	}
+
+	.footer__brand {
+		display: flex;
+		align-items: center;
+		gap: var(--space-2);
+		font-family: var(--font-display);
+		font-size: var(--text-lg);
+		font-weight: var(--weight-bold);
+		letter-spacing: var(--tracking-tight);
+		margin: 0;
+	}
+
+	.footer__note {
+		color: var(--fg-muted);
+		font-size: var(--text-sm);
+		max-inline-size: 26rem;
+		margin: var(--space-3) 0 0;
+	}
+
+	.footer__col {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2);
+	}
+
+	.footer__head {
+		font-family: var(--font-label);
+		font-size: var(--text-2xs);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: var(--fg-faint);
+		margin: 0 0 var(--space-1);
+	}
+
+	.footer__col a {
+		font-size: var(--text-sm);
+		color: var(--fg-muted);
+		text-decoration: none;
+		transition: color var(--dur-1) var(--ease-out);
+	}
+
+	.footer__col a:hover { color: var(--fg-default); }
+
+	.footer__bottom {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-3);
+		padding-block-start: var(--space-6);
+	}
+
+	.footer__fine {
+		font-size: var(--text-sm);
+		color: var(--fg-faint);
+		margin: 0;
+	}
+
+	/* The sign-off: the record dot, still rolling. */
+	.footer__rec {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-2);
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-2xs);
+		letter-spacing: var(--tracking-label);
+		font-variant-numeric: tabular-nums;
+		text-transform: uppercase;
+		color: var(--fg-faint);
+	}
+
+	/* ── More parts ────────────────────────────────────────────────────────
+	   A footer is where a site says what else it is. These are the pieces
+	   that answer that without turning the band into a second homepage. */
+
+	/* A row of icon-only links — the platforms. Buttons, so the tap target is
+	   the system's, not whatever the icon happens to measure. */
+	.footer__social {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-2);
+		margin-block-start: var(--space-5);
+	}
+
+	/* The subscribe box, footer-sized. The band already made the argument, so
+	   this is a field and a button and nothing else. */
+	.footer__form {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-2);
+		margin-block-start: var(--space-4);
+		max-inline-size: 22rem;
+	}
+
+	.footer__form > .input { flex: 1 1 10rem; min-inline-size: 0; }
+
+	/* Key and value, in the data voice — version, licence, build. The fine
+	   print a maker actually wants: facts, not a paragraph. */
+	.footer__meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-1) var(--space-4);
+		margin: var(--space-4) 0 0;
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-2xs);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-faint);
+	}
+
+	.footer__meta > * { display: inline-flex; align-items: center; gap: var(--space-2); }
+	.footer__meta strong { font-weight: var(--weight-medium); color: var(--fg-muted); }
+
+	/* The small print's own links — privacy, RSS, colophon. A row, not a
+	   column, because nobody scans four legal links vertically. */
+	.footer__legal {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-2) var(--space-4);
+		font-size: var(--text-xs);
+	}
+
+	.footer__legal a {
+		color: var(--fg-faint);
+		text-decoration: none;
+		transition: color var(--dur-1) var(--ease-out);
+	}
+
+	.footer__legal a:hover { color: var(--fg-default); }
+
+	/* The wordmark as a closing frame: oversized, low contrast, clipped by the
+	   band's own edge. It is decoration, so it is aria-hidden in the markup —
+	   the accessible name is already in .footer__brand at the top. */
+	.footer__mark {
+		display: block;
+		margin-block-start: var(--space-8);
+		font-family: var(--font-display);
+		font-size: clamp(2.75rem, 11vw, 8rem);
+		font-weight: var(--weight-bold);
+		letter-spacing: var(--tracking-tighter);
+		line-height: 0.82;
+		color: transparent;
+		-webkit-text-stroke: 1px var(--line-default);
+		user-select: none;
+		overflow: hidden;
+	}
+
+	/* Filled instead of outlined, for a footer that carries a ground. */
+	.footer__mark-solid {
+		-webkit-text-stroke: 0;
+		color: color-mix(in oklab, var(--fg-default) 7%, transparent);
+	}
+
+	/* ── Variants ──────────────────────────────────────────────────────────── */
+
+	.footer-minimal { background: transparent; }
+	.footer-minimal .footer__top { display: none; }
+
+	/* Tighter, for a tool or a docs site where the footer is a formality. */
+	.footer-compact {
+		--footer-pad: var(--space-8);
+		padding-block-end: var(--space-6);
+	}
+
+	.footer-compact .footer__top { gap: var(--space-6); padding-block-end: var(--space-6); }
+
+	/* One centred column — the one-pager's footer. */
+	.footer-center { text-align: center; }
+	.footer-center .footer__top { grid-template-columns: minmax(0, 1fr); justify-items: center; }
+	.footer-center .footer__note { margin-inline: auto; }
+	.footer-center :is(.footer__col, .footer__social, .footer__legal, .footer__meta) { align-items: center; justify-content: center; }
+	.footer-center .footer__bottom { justify-content: center; }
+	.footer-center .footer__mark { text-align: center; }
+
+	/* Roomier: the closing band of a site with a lot behind it. */
+	.footer-loose { --footer-pad: var(--space-20); }
+	.footer-loose .footer__top { gap: var(--space-12); padding-block-end: var(--space-12); }
+
+	/* The dark close. It sets its own ground, so anything reading a page
+	   token inside it is told what "quiet" means here. */
+	.footer-inverse {
+		background: var(--bg-inverse);
+		color: var(--fg-on-inverse);
+		border-block-start-color: transparent;
+	}
+
+	.footer-inverse :is(.footer__top, .footer__bottom) { border-color: var(--line-inverse); }
+	.footer-inverse :is(.footer__note, .footer__col a, .footer__legal a) { color: color-mix(in oklab, var(--fg-on-inverse) 68%, transparent); }
+	.footer-inverse :is(.footer__col a:hover, .footer__legal a:hover) { color: var(--fg-on-inverse); }
+	.footer-inverse :is(.footer__head, .footer__fine, .footer__rec, .footer__meta) { color: color-mix(in oklab, var(--fg-on-inverse) 50%, transparent); }
+	.footer-inverse .footer__meta strong { color: color-mix(in oklab, var(--fg-on-inverse) 80%, transparent); }
+	.footer-inverse .footer__mark { -webkit-text-stroke-color: color-mix(in oklab, var(--fg-on-inverse) 22%, transparent); }
+	.footer-inverse .footer__mark-solid { color: color-mix(in oklab, var(--fg-on-inverse) 10%, transparent); }
+
+	/* A ground on the footer is a bg-* class, which lives in the ELEMENTS
+	   layer and would lose to this file's `background` in `sections`. Handing
+	   the property back is one line — the same trick .canvas needs. */
+	.footer[class*='bg-'] { background: revert-layer; }
+
+	/* ── Responsive ────────────────────────────────────────────────────────
+	   Two steps, not one: a footer that goes from four columns straight to
+	   one wastes a tablet. */
+	@media (width < 64rem) {
+		.footer__top { grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); }
+		.footer__top > :first-child { grid-column: 1 / -1; }
+	}
+
+	@media (width < 40rem) {
+		.footer__top { grid-template-columns: minmax(0, 1fr); gap: var(--space-8); }
+		.footer__bottom { flex-direction: column; align-items: flex-start; }
+		.footer-center .footer__bottom { align-items: center; }
+	}
+}

@@ -232,7 +232,7 @@ because the reader deciding whether to click is the reader who needs it.
         <span class="ad__brand"><span class="dot"></span> lensmarket.io · in stock</span>
         <span class="ad__price">₹2,40,000</span>
       </span>
-      <span class="ad__cta"><span class="button is-primary is-small">View</span></span>
+      <span class="ad__cta"><span class="btn btn-primary btn-sm">View</span></span>
     </a>
     <a class="ad__unit" href="#i">
       <span class="ad__thumb"><img src="/assets/media/studio.jpg" alt="" /></span>
@@ -241,7 +241,7 @@ because the reader deciding whether to click is the reader who needs it.
         <span class="ad__brand"><span class="dot"></span> setup.tools</span>
         <span class="ad__price">₹52,000</span>
       </span>
-      <span class="ad__cta"><span class="button is-outlined is-small">View</span></span>
+      <span class="ad__cta"><span class="btn btn-outline btn-sm">View</span></span>
     </a>
     <p class="ad__disclosure">These are affiliate links. They cost you nothing and they have never decided what goes on this list.</p>
   </div>

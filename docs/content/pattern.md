@@ -13,17 +13,17 @@ them. Toggle the theme on this page and watch them re-ink themselves.
 
 :::demo
 <div class="grid-auto grid-auto-sm">
-  <div class="ratio ratio-photo u-rounded-lg u-border pattern pattern-grid"></div>
-  <div class="ratio ratio-photo u-rounded-lg u-border pattern pattern-dot"></div>
-  <div class="ratio ratio-photo u-rounded-lg u-border pattern pattern-line"></div>
-  <div class="ratio ratio-photo u-rounded-lg u-border pattern pattern-scan"></div>
-  <div class="ratio ratio-photo u-rounded-lg u-border pattern pattern-hatch"></div>
-  <div class="ratio ratio-photo u-rounded-lg u-border pattern pattern-halftone"></div>
-  <div class="ratio ratio-photo u-rounded-lg u-border pattern pattern-timecode"></div>
-  <div class="ratio ratio-photo u-rounded-lg u-border pattern pattern-cross"></div>
-  <div class="ratio ratio-photo u-rounded-lg u-border pattern pattern-checker pattern-faint"></div>
-  <div class="ratio ratio-photo u-rounded-lg u-border pattern pattern-blueprint"></div>
-  <div class="ratio ratio-photo u-rounded-lg u-border pattern pattern-grid pattern-fade"></div>
+  <div class="ratio ratio-photo rounded-lg hairline pattern pattern-grid"></div>
+  <div class="ratio ratio-photo rounded-lg hairline pattern pattern-dot"></div>
+  <div class="ratio ratio-photo rounded-lg hairline pattern pattern-line"></div>
+  <div class="ratio ratio-photo rounded-lg hairline pattern pattern-scan"></div>
+  <div class="ratio ratio-photo rounded-lg hairline pattern pattern-hatch"></div>
+  <div class="ratio ratio-photo rounded-lg hairline pattern pattern-halftone"></div>
+  <div class="ratio ratio-photo rounded-lg hairline pattern pattern-timecode"></div>
+  <div class="ratio ratio-photo rounded-lg hairline pattern pattern-cross"></div>
+  <div class="ratio ratio-photo rounded-lg hairline pattern pattern-checker pattern-faint"></div>
+  <div class="ratio ratio-photo rounded-lg hairline pattern pattern-blueprint"></div>
+  <div class="ratio ratio-photo rounded-lg hairline pattern pattern-grid pattern-fade"></div>
 </div>
 :::
 
@@ -34,10 +34,10 @@ a token — never a new pattern:
 
 :::demo One texture, four controls
 <div class="grid-auto grid-auto-sm">
-  <div class="ratio ratio-photo u-rounded-lg u-border pattern pattern-grid pattern-fine"></div>
-  <div class="ratio ratio-photo u-rounded-lg u-border pattern pattern-grid"></div>
-  <div class="ratio ratio-photo u-rounded-lg u-border pattern pattern-grid pattern-coarse"></div>
-  <div class="ratio ratio-photo u-rounded-lg u-border pattern pattern-grid pattern-strong"></div>
+  <div class="ratio ratio-photo rounded-lg hairline pattern pattern-grid pattern-fine"></div>
+  <div class="ratio ratio-photo rounded-lg hairline pattern pattern-grid"></div>
+  <div class="ratio ratio-photo rounded-lg hairline pattern pattern-grid pattern-coarse"></div>
+  <div class="ratio ratio-photo rounded-lg hairline pattern pattern-grid pattern-strong"></div>
 </div>
 :::
 
@@ -76,9 +76,9 @@ that spends its pseudo-elements. Put the pattern on a child or a parent — the
 same rule the frame page states from its side.
 
 :::demo Pattern on a child, brackets on the parent — the legal composition
-<div class="ratio ratio-photo w-md frame u-relative u-rounded-lg u-border">
+<div class="ratio ratio-photo w-md frame relative rounded-lg hairline">
   <span class="frame__tr"></span><span class="frame__bl"></span>
-  <div class="pattern pattern-timecode u-absolute u-inset-0"></div>
+  <div class="pattern pattern-timecode absolute inset-0"></div>
 </div>
 :::
 
@@ -97,8 +97,8 @@ Dots and rules — the system's punctuation marks.
     <span class="dot dot-success"></span>
     <span class="dot dot-danger"></span>
   </div>
-  <hr class="rule u-m-0" />
-  <hr class="rule rule-accent u-m-0" />
+  <hr class="rule m-0" />
+  <hr class="rule rule-accent m-0" />
   <div class="rule-label">Take two</div>
 </div>
 :::
@@ -119,9 +119,9 @@ preview owes you nothing between you and the component.
 
 :::demo `pattern-wave`, `pattern-brick`, `pattern-zigzag`
 <div class="grid-3">
-  <div class="pattern pattern-wave u-p-8 u-rounded-lg u-border"><span class="t-data">wave</span></div>
-  <div class="pattern pattern-brick u-p-8 u-rounded-lg u-border"><span class="t-data">brick</span></div>
-  <div class="pattern pattern-zigzag pattern-fine u-p-8 u-rounded-lg u-border"><span class="t-data">zigzag</span></div>
+  <div class="pattern pattern-wave p-(--space-8) rounded-lg hairline"><span class="t-data">wave</span></div>
+  <div class="pattern pattern-brick p-(--space-8) rounded-lg hairline"><span class="t-data">brick</span></div>
+  <div class="pattern pattern-zigzag pattern-fine p-(--space-8) rounded-lg hairline"><span class="t-data">zigzag</span></div>
 </div>
 :::
 
@@ -134,11 +134,11 @@ Zigzag reads as motion, so it belongs on a band that is going somewhere.
 
 :::demo
 <div class="grid-auto grid-auto-sm">
-  <div class="pattern pattern-triangle pattern-faint u-p-8 u-rounded-lg u-border"><span class="t-data">triangle</span></div>
-  <div class="pattern pattern-carbon u-p-8 u-rounded-lg u-border"><span class="t-data">carbon</span></div>
-  <div class="pattern pattern-topo pattern-coarse u-p-8 u-rounded-lg u-border"><span class="t-data">topo</span></div>
-  <div class="pattern pattern-moire u-p-8 u-rounded-lg u-border"><span class="t-data">moiré</span></div>
-  <div class="pattern pattern-diamond pattern-faint u-p-8 u-rounded-lg u-border"><span class="t-data">diamond</span></div>
+  <div class="pattern pattern-triangle pattern-faint p-(--space-8) rounded-lg hairline"><span class="t-data">triangle</span></div>
+  <div class="pattern pattern-carbon p-(--space-8) rounded-lg hairline"><span class="t-data">carbon</span></div>
+  <div class="pattern pattern-topo pattern-coarse p-(--space-8) rounded-lg hairline"><span class="t-data">topo</span></div>
+  <div class="pattern pattern-moire p-(--space-8) rounded-lg hairline"><span class="t-data">moiré</span></div>
+  <div class="pattern pattern-diamond pattern-faint p-(--space-8) rounded-lg hairline"><span class="t-data">diamond</span></div>
 </div>
 :::
 
@@ -156,10 +156,10 @@ Zigzag reads as motion, so it belongs on a band that is going somewhere.
 
 :::demo Two of them doing real work — a band and a card
 <div class="stack">
-  <section class="section bg-sunken pattern pattern-topo pattern-coarse pattern-fade u-rounded-lg">
-    <div class="center center-md u-text-center">
+  <section class="section section-tight bg-sunken pattern pattern-topo pattern-coarse pattern-fade rounded-lg">
+    <div class="center center-md text-center">
       <p class="eyebrow">Travel</p>
-      <h3 class="t-h2 u-m-0">Twenty-three countries, one lens</h3>
+      <h3 class="t-h2 m-0">Twenty-three countries, one lens</h3>
     </div>
   </section>
   <div class="grid-2 cq-card">
@@ -192,10 +192,10 @@ looking wrong.
 
 :::demo `.notch`, `.notch-sm`, `.notch-lg`, and one corner only
 <div class="cluster cluster-lg">
-  <div class="notch u-p-5 u-bg-sunken u-border"><span class="t-data">notch</span></div>
-  <div class="notch notch-sm u-p-5 u-bg-sunken u-border"><span class="t-data">notch-sm</span></div>
-  <div class="notch notch-lg u-p-6 u-bg-sunken u-border"><span class="t-data">notch-lg</span></div>
-  <div class="notch notch-end u-p-5 u-bg-inverse"><span class="t-data">notch-end</span></div>
+  <div class="notch p-5 bg-sunken hairline"><span class="t-data">notch</span></div>
+  <div class="notch notch-sm p-5 bg-sunken hairline"><span class="t-data">notch-sm</span></div>
+  <div class="notch notch-lg p-6 bg-sunken hairline"><span class="t-data">notch-lg</span></div>
+  <div class="notch notch-end p-5 surface-inverse"><span class="t-data">notch-end</span></div>
 </div>
 :::
 

@@ -23,7 +23,7 @@
    Layer: elements.
    ========================================================================== */
 
-@layer elements {
+@layer utilities.sds.elements {
 
 	/* ── .linkcard — the destination, previewed ────────────────────────── */
 

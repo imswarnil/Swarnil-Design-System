@@ -13,7 +13,7 @@
    Layer: components.
    ========================================================================== */
 
-@layer components {
+@layer utilities.sds.components {
 
 	.alert {
 		--alert-bg: var(--bg-sunken);

@@ -1,0 +1,21 @@
+/* =============================================================================
+   THE PREBUILT WEB BUNDLE — Tailwind, daisyUI and this system, in one file
+
+   Compiled to dist/swarnil-design.css by `npm run build`. This is the entry
+   for people who want a `<link>` and nothing else: no Tailwind install, no
+   config file, no build step.
+
+   Three lines, and each one is load-bearing:
+
+     tailwindcss   the engine. Only the prebuilt bundles import it — the
+                   library entry deliberately does not, so a consumer who
+                   already runs Tailwind does not get it twice.
+     ./index.css   the system: daisyUI, the tokens, and everything this repo
+                   paints. See src/0-config/layers.css for the cascade order.
+     ./0-config/safelist.css
+                   which utilities a file nobody can scan is allowed to have.
+   ========================================================================== */
+
+@import "tailwindcss";
+@import "./index.css";
+@import "./0-config/safelist.css";

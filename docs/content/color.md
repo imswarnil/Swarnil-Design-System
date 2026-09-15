@@ -200,12 +200,12 @@ step, which would glow.
 
 :::demo
 <div class="cluster">
-  <span class="badge is-success">Shipped</span>
-  <span class="badge is-info">Note</span>
-  <span class="badge is-warning">Review</span>
-  <span class="badge is-danger">Blocked</span>
+  <span class="badge badge-success">Shipped</span>
+  <span class="badge badge-info">Note</span>
+  <span class="badge badge-warning">Review</span>
+  <span class="badge badge-danger">Blocked</span>
 </div>
-<div class="stack stack-sm u-mt-4">
+<div class="stack stack-sm mt-4">
   <div class="alert alert-success"><span class="alert__body">Deployed in 4.2s.</span></div>
   <div class="alert alert-danger"><span class="alert__body">The build failed — three tests are red in <code class="code">card.spec.ts</code>.</span></div>
 </div>
@@ -222,12 +222,12 @@ follows a single change. Six presets ship:
 
 :::demo Each strip is the same markup under a different preset
 <div class="stack">
-  <div class="accent-demo"><span class="t-label">signal</span><span class="cluster"><button class="button is-primary is-small" type="button">Primary</button><button class="button is-light is-small" type="button">Soft</button><span class="badge is-primary">Badge</span><span class="dot dot-accent"></span></span></div>
-  <div class="accent-demo" data-accent="azure"><span class="t-label">azure</span><span class="cluster"><button class="button is-primary is-small" type="button">Primary</button><button class="button is-light is-small" type="button">Soft</button><span class="badge is-primary">Badge</span><span class="dot dot-accent"></span></span></div>
-  <div class="accent-demo" data-accent="iris"><span class="t-label">iris</span><span class="cluster"><button class="button is-primary is-small" type="button">Primary</button><button class="button is-light is-small" type="button">Soft</button><span class="badge is-primary">Badge</span><span class="dot dot-accent"></span></span></div>
-  <div class="accent-demo" data-accent="teal"><span class="t-label">teal</span><span class="cluster"><button class="button is-primary is-small" type="button">Primary</button><button class="button is-light is-small" type="button">Soft</button><span class="badge is-primary">Badge</span><span class="dot dot-accent"></span></span></div>
-  <div class="accent-demo" data-accent="mint"><span class="t-label">mint</span><span class="cluster"><button class="button is-primary is-small" type="button">Primary</button><button class="button is-light is-small" type="button">Soft</button><span class="badge is-primary">Badge</span><span class="dot dot-accent"></span></span></div>
-  <div class="accent-demo" data-accent="craft"><span class="t-label">craft</span><span class="cluster"><button class="button is-primary is-small" type="button">Primary</button><button class="button is-light is-small" type="button">Soft</button><span class="badge is-primary">Badge</span><span class="dot dot-accent"></span></span></div>
+  <div class="accent-demo"><span class="t-label">signal</span><span class="cluster"><button class="btn btn-primary btn-sm" type="button">Primary</button><button class="btn btn-soft btn-sm" type="button">Soft</button><span class="badge badge-accent">Badge</span><span class="dot dot-accent"></span></span></div>
+  <div class="accent-demo" data-accent="azure"><span class="t-label">azure</span><span class="cluster"><button class="btn btn-primary btn-sm" type="button">Primary</button><button class="btn btn-soft btn-sm" type="button">Soft</button><span class="badge badge-accent">Badge</span><span class="dot dot-accent"></span></span></div>
+  <div class="accent-demo" data-accent="iris"><span class="t-label">iris</span><span class="cluster"><button class="btn btn-primary btn-sm" type="button">Primary</button><button class="btn btn-soft btn-sm" type="button">Soft</button><span class="badge badge-accent">Badge</span><span class="dot dot-accent"></span></span></div>
+  <div class="accent-demo" data-accent="teal"><span class="t-label">teal</span><span class="cluster"><button class="btn btn-primary btn-sm" type="button">Primary</button><button class="btn btn-soft btn-sm" type="button">Soft</button><span class="badge badge-accent">Badge</span><span class="dot dot-accent"></span></span></div>
+  <div class="accent-demo" data-accent="mint"><span class="t-label">mint</span><span class="cluster"><button class="btn btn-primary btn-sm" type="button">Primary</button><button class="btn btn-soft btn-sm" type="button">Soft</button><span class="badge badge-accent">Badge</span><span class="dot dot-accent"></span></span></div>
+  <div class="accent-demo" data-accent="craft"><span class="t-label">craft</span><span class="cluster"><button class="btn btn-primary btn-sm" type="button">Primary</button><button class="btn btn-soft btn-sm" type="button">Soft</button><span class="badge badge-accent">Badge</span><span class="dot dot-accent"></span></span></div>
 </div>
 :::
 

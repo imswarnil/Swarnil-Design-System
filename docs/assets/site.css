@@ -1,44 +1,46 @@
 /* =============================================================================
-   THE DOCS SITE'S ONE STYLESHEET
+   THE DOCS SITE'S ONE STYLESHEET — a BUILD ENTRY, not a served file
 
-   This is a BUILD ENTRY, not a hand-authored file. postcss-import inlines
-   everything below into a single compiled sheet, and cssnano minifies it in
-   production. That is the whole reason it exists.
+   Tailwind compiles this into site/assets/site.min.css. Nothing links the file
+   you are reading.
 
-   Before this, every page linked five stylesheets and one of them was
-   /src/index.css — the unbundled source. A browser reading that follows a
-   three-deep @import chain across roughly seventy-eight files, every one of
-   them blocking, every one of them unminified, and the minified bundles in
-   dist/ that the build had already produced were shipped to the site and
-   never linked by anything. The system compiled; the site simply did not use
-   the compilation.
+   ── ORDER IS THE CASCADE, SO IT IS NOT NEGOTIABLE ─────────────────────────
+     tailwindcss     the engine: preflight, the theme machinery, the utilities.
+     src/index.css   the system — daisyUI, the tokens, and everything this repo
+                     paints. See src/0-config/layers.css for the three-tier
+                     argument behind that order.
+     7-broadcast     the creator layer. The docs demo it, so the site needs it;
+                     a consumer takes it as its own bundle instead.
+     docs.css        the site's own chrome — the bar, the shell, the demo
+     home.css        blocks, the landing page. Layered LAST of ours, see below.
 
-   ORDER IS THE CASCADE, so it is not negotiable:
+   ── WHY THE CHROME IS LAYERED AT ALL ──────────────────────────────────────
+   docs.css was unlayered for most of this repo's life, and an unlayered rule
+   beats every layer there is — including Tailwind's utilities. So the docs'
+   own `.hero`, `.table`, `.code` and `.lead` quietly outranked the system on
+   the very pages that documented them, and `md:grid-cols-3` on a docs page
+   would have lost to a chrome rule it had never heard of.
 
-     0-config first          it declares the @layer order, and that declaration
-                             only binds if the browser reads it before the
-                             first layered rule (src/0-config/layers.css)
-     the Bulma base          `bulma`, the FIRST layer and therefore the lowest.
-                             Its reset, its themed custom properties and its
-                             layout primitives. Every class both it and this
-                             system define resolves to ours, because a layer
-                             declared earlier loses to every layer after it.
-                             src/bulma.css is index.css with that base under it
-     the system              layers reset → utilities
-     the two optional layers broadcast and framework, which consumers take as
-                             separate bundles and the docs need because they
-                             demo them. Imported as LAYER directories, not as
-                             src/broadcast.css and src/framework.css — those
-                             are standalone bundles that each restate the whole
-                             system, and linking all three shipped it 3 times.
-     @layer docs last        the site's own chrome, appended to the layer order
-                             and therefore above every system layer
-
-   Built by `npm run css:site`. Never edit the output.
+   `utilities.sds.docs` puts the chrome exactly one step above the system —
+   high enough to position a component, low enough that a Tailwind utility
+   still wins. Which is the whole point of a utility.
    ========================================================================== */
 
-@import url('../../src/index.css');
-@import url('../../src/7-broadcast/index.css');
-@import url('../../src/8-framework/index.css');
-@import url('./docs.css');
-@import url('./home.css');
+@import "tailwindcss";
+@import "../../src/index.css";
+@import "../../src/7-broadcast/index.css";
+
+/* Scanned for class names, so the site ships the utilities its own pages use
+   and not one more. This is why the docs site does not import the safelist:
+   it is a Tailwind project like any other, and it has its own markup to read. */
+@source "../";
+
+/* Append `docs` to the system's sub-layer order, after `theme`. */
+@layer utilities {
+	@layer sds {
+		@layer docs;
+	}
+}
+
+@import "./docs.css";
+@import "./home.css";

@@ -238,7 +238,7 @@ landing on top of each other.
 
 The list of moments under the video is its own component — see
 [Timestamps](/timestamps.html) for the timecode list, and
-[Navigation](https://bulma.io/documentation/components/tabs/) for `.chapters`, which is the video's own
+[Navigation](/navigation.html) for `.chapters`, which is the video's own
 authored structure rather than a list of moments.
 
 ## Properties

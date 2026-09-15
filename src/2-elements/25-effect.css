@@ -26,7 +26,7 @@
    Layer: elements.
    ========================================================================== */
 
-@layer elements {
+@layer utilities.sds.elements {
 
 	/* ── Transitions — how a change feels ──────────────────────────────────
 	   Named bundles from the motion tokens, so a component states WHICH

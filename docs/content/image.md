@@ -17,12 +17,12 @@ class.
 
 :::demo The five named ratios. Nothing here has loaded yet — and nothing moves when it does.
 <div class="grid-3">
-  <div class="ratio u-bg-sunken u-rounded-lg u-border u-p-3"><span class="t-data">ratio · 16 / 9</span></div>
-  <div class="ratio ratio-photo u-bg-sunken u-rounded-lg u-border u-p-3"><span class="t-data">ratio-photo · 4 / 3</span></div>
-  <div class="ratio ratio-square u-bg-sunken u-rounded-lg u-border u-p-3"><span class="t-data">ratio-square · 1</span></div>
-  <div class="ratio ratio-portrait u-bg-sunken u-rounded-lg u-border u-p-3"><span class="t-data">ratio-portrait · 3 / 4</span></div>
-  <div class="ratio ratio-wide u-bg-sunken u-rounded-lg u-border u-p-3"><span class="t-data">ratio-wide · 21 / 9</span></div>
-  <div class="ratio ratio-story u-bg-sunken u-rounded-lg u-border u-p-3"><span class="t-data">ratio-story · 9 / 16</span></div>
+  <div class="ratio bg-sunken rounded-lg hairline p-3"><span class="t-data">ratio · 16 / 9</span></div>
+  <div class="ratio ratio-photo bg-sunken rounded-lg hairline p-3"><span class="t-data">ratio-photo · 4 / 3</span></div>
+  <div class="ratio ratio-square bg-sunken rounded-lg hairline p-3"><span class="t-data">ratio-square · 1</span></div>
+  <div class="ratio ratio-portrait bg-sunken rounded-lg hairline p-3"><span class="t-data">ratio-portrait · 3 / 4</span></div>
+  <div class="ratio ratio-wide bg-sunken rounded-lg hairline p-3"><span class="t-data">ratio-wide · 21 / 9</span></div>
+  <div class="ratio ratio-story bg-sunken rounded-lg hairline p-3"><span class="t-data">ratio-story · 9 / 16</span></div>
 </div>
 :::
 
@@ -43,11 +43,11 @@ from its picture.
 
 :::demo
 <div class="grid-2">
-  <figure class="figure u-m-0">
+  <figure class="figure m-0">
     <img src="/assets/media/peak.jpg" alt="A ridge line at altitude" />
     <figcaption class="figure__caption">Ladakh, 4,200m. One lens, no tripod.</figcaption>
   </figure>
-  <figure class="figure figure-center u-m-0">
+  <figure class="figure figure-center m-0">
     <img src="/assets/media/camera.jpg" alt="The camera on a desk" />
     <figcaption class="figure__caption">`figure-center` centres the caption under a narrower image.</figcaption>
   </figure>
@@ -90,14 +90,14 @@ duration or a live badge.
 ## Treatments
 
 A photograph you did not shoot is in a palette nobody chose. The
-[veils](https://bulma.io/documentation/components/modal/) are the colour grade that fixes it, and the
+[veils](/overlays.html) are the colour grade that fixes it, and the
 [interactions](/interactions.html) are what it does when you point at it.
 
 :::demo Grade, grain and scrim, then the hover answers
 <div class="grid-3">
-  <figure class="figure u-m-0 u-rounded-lg u-overflow-hidden"><img src="/assets/media/coast.jpg" alt="" /><figcaption class="figure__caption">untouched</figcaption></figure>
+  <figure class="figure m-0 rounded-lg overflow-hidden"><img src="/assets/media/coast.jpg" alt="" /><figcaption class="figure__caption">untouched</figcaption></figure>
   <div class="poster veil-mono"><img src="/assets/media/coast.jpg" alt="" /><span class="veil veil-grade"></span><span class="veil veil-scrim"></span><span class="poster__label"><span class="poster__eyebrow">graded</span><span class="poster__title">mono + grade + scrim</span></span></div>
-  <figure class="figure u-m-0 ix-zoom u-rounded-lg u-overflow-hidden"><img src="/assets/media/coast.jpg" alt="" /><figcaption class="figure__caption">ix-zoom — point at it</figcaption></figure>
+  <figure class="figure m-0 ix-zoom rounded-lg overflow-hidden"><img src="/assets/media/coast.jpg" alt="" /><figcaption class="figure__caption">ix-zoom — point at it</figcaption></figure>
 </div>
 :::
 
@@ -105,13 +105,13 @@ A photograph you did not shoot is in a palette nobody chose. The
 
 `.skeleton-media` reserves the same box the picture will fill, so the page does
 not move when it arrives. That is the whole job — see
-[Article](https://bulma.io/documentation/elements/content/) for the rest of the loading set.
+[Article](/content.html) for the rest of the loading set.
 
 :::demo
 <div class="grid-3">
   <div class="skeleton skeleton-media skeleton-breathe"></div>
   <div class="skeleton skeleton-media"></div>
-  <figure class="figure u-m-0 u-rounded-lg u-overflow-hidden"><img src="/assets/media/city.jpg" alt="" loading="lazy" /></figure>
+  <figure class="figure m-0 rounded-lg overflow-hidden"><img src="/assets/media/city.jpg" alt="" loading="lazy" /></figure>
 </div>
 :::
 
