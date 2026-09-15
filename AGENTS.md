@@ -19,6 +19,7 @@ can mean something.
 ```bash
 npm install
 npm run dev     # build, then serve site/ at :8080
+npm run stop    # stop that server and free :8080 — safe to run when nothing is up
 npm run build   # dist/ (the package) + site/ (the docs). What you want 90% of the time.
 npm run check   # lint → build → audit → size. What CI runs.
 

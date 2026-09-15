@@ -28,6 +28,9 @@
         remove the lock, so Ctrl-C leaves nothing behind either.
 
    Usage:  node scripts/serve.mjs [--port 8080] [--dir site] [--open]
+
+   To stop one you are not sitting in front of, see scripts/stop.mjs
+   (`npm run stop`) — it reads the same lock file.
    ========================================================================== */
 
 import { createServer } from 'node:http';

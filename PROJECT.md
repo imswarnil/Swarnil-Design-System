@@ -105,6 +105,23 @@ Newest first. What changed, and anything that would surprise the next session.
 Trimmed on 2026-09-14 to the last three sessions — everything before that is in
 git history, which is where a log of finished work belongs.
 
+### 2026-09-15 — `npm run stop`
+
+`scripts/serve.mjs` could reclaim its own port on the way up; there was no way
+down except Ctrl-C in the terminal that owned it. `scripts/stop.mjs` is that
+way: it SIGTERMs the pid in `.dev-server.pid`, escalates to SIGKILL after a
+second, clears the lock, and then *proves* the port is free by binding it.
+
+It keeps serve.mjs's rule — kill our own, never a stranger's. A port held by a
+process we did not start is named (`lsof` + `ps`) and left alone with exit 1;
+`--force` is you overriding that. Exit 0 whenever the port ends up free, so
+stopping something already stopped is not an error.
+
+- ⚠️ **Probe the port the way the server binds it.** The first version bound
+  `127.0.0.1` and reported `:8124` free while a wildcard-IPv6 listener still
+  held it — the exact lie the script exists to prevent. `listen(port)` with no
+  host, same as serve.mjs.
+
 ### 2026-09-14 — Bulma out, Tailwind and daisyUI in, and the repo cut back to what matters
 
 **The stack changed.** Bulma was reverted in full (`src/` restored from
