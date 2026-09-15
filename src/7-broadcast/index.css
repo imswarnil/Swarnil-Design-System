@@ -16,8 +16,8 @@
    Layer: sections — full-frame compositions, above every component they use.
    ========================================================================== */
 
-@import url('./80-canvas.css');     /* the export stages and their safe areas */
-@import url('./81-scene.css');      /* title, starting soon, BRB, outro, live */
-@import url('./82-lowerthird.css'); /* the name plate, four ways              */
-@import url('./83-stream.css');     /* cam, bug, alert, chat, goal, countdown */
-@import url('./84-thumb.css');      /* the thumbnail and the OG image         */
+@import "./80-canvas.css";     /* the export stages and their safe areas */
+@import "./81-scene.css";      /* title, starting soon, BRB, outro, live */
+@import "./82-lowerthird.css"; /* the name plate, four ways              */
+@import "./83-stream.css";     /* cam, bug, alert, chat, goal, countdown */
+@import "./84-thumb.css";      /* the thumbnail and the OG image         */

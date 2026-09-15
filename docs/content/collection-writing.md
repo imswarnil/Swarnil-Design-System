@@ -61,13 +61,13 @@ actually uses — *how old* and *how long* — are the only two on the card.
 ## The featured one
 
 A blog front page usually wants one post larger than the rest. That is
-[`.card-tile`](https://bulma.io/documentation/components/card/) — media behind the words — and it is the only card
+[`.card-tile`](/card.html) — media behind the words — and it is the only card
 on the page allowed to be it.
 
 :::demo The front page shape: one featured, three latest
 <div class="grid-2" style="--grid-gap: var(--space-8)">
   <article class="card card-tile card-hover-lift" style="--card-ratio: 16 / 10">
-    <div class="card__media veil-mono"><img src="/assets/media/night.jpg" alt="" /><span class="veil veil-grade"></span><span class="veil veil-scrim veil-heavy"></span><span class="card__badge"><span class="badge is-primary">Featured</span></span></div>
+    <div class="card__media veil-mono"><img src="/assets/media/night.jpg" alt="" /><span class="veil veil-grade"></span><span class="veil veil-scrim veil-heavy"></span><span class="card__badge"><span class="badge badge-solid">Featured</span></span></div>
     <div class="card__body"><p class="card__kicker">Design systems · 8 min</p><h3 class="card__title t-h3"><a class="card__link" href="#i">Decide once. Then stop deciding.</a></h3><p class="card__excerpt">Why a token-first system is the only kind that survives a rebrand.</p></div>
   </article>
   <div class="stack stack-sm cq-card">
@@ -92,7 +92,7 @@ it is a facet that makes the column look busy and filters nothing.
 
 The [prose column](/typography.html) at 66ch, the
 [share rail](/share.html) beside it, and everything on the
-[Article](https://bulma.io/documentation/elements/content/) page available inside it. `.pager` — the plain one —
+[Article](/content.html) page available inside it. `.pager` — the plain one —
 because a post's "next" is chronological and needs no picture to explain
 itself.
 

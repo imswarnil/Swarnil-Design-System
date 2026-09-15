@@ -19,7 +19,7 @@
    Layer: sections.
    ========================================================================== */
 
-@layer sections {
+@layer utilities.sds.sections {
 
 	.lowerthird {
 		--lt-inset: 5cqi;

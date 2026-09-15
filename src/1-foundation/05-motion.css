@@ -16,7 +16,7 @@
    Layer: tokens.
    ========================================================================== */
 
-@layer tokens {
+@layer base {
 	:root {
 		--dur-1: 60ms;    /* a colour change you should not notice */
 		--dur-2: 120ms;   /* hover, focus */
@@ -24,10 +24,14 @@
 		--dur-4: 320ms;   /* something entering the page */
 		--dur-5: 480ms;   /* a full-width panel; the slowest thing allowed */
 
-		--ease-out:       cubic-bezier(0.22, 1, 0.36, 1);
-		--ease-inout:     cubic-bezier(0.65, 0, 0.35, 1);
-		--ease-snap:      cubic-bezier(0.2, 0, 0, 1);
-		--ease-overshoot: cubic-bezier(0.34, 1.56, 0.64, 1);
+		/* THE CURVES LIVE IN src/0-config/theme.css. `--ease-*` is Tailwind's
+		   namespace, so declaring them there is what makes `ease-snap` and
+		   `ease-overshoot` real utilities.
+
+		   The DURATIONS stay here, and that is not an oversight: they are
+		   re-declared to 1ms inside a prefers-reduced-motion query below, and
+		   `@theme` holds no conditionals. A token that has to change under a
+		   media query cannot live in the theme block. */
 
 		/* Named bundles, so a component transitions the right set without
 		   listing four properties and accidentally including `all`. */
@@ -76,7 +80,7 @@
    state reachable if an animation never runs, and everything quiet under
    reduced motion because the duration tokens collapse to 1ms. */
 
-@layer elements {
+@layer utilities.sds.elements {
 
 	/* Entrances. `both` keeps the first frame, so nothing flashes unstyled. */
 	.fx-rise { animation: fx-rise var(--dur-4) var(--ease-out) both; }

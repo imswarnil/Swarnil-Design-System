@@ -38,27 +38,27 @@ EXPECT_UNUSED_PREFIX = ('kg-',)      # Ghost editor output classes
 
 
 def css_sources():
-    """The system, plus the docs site's own chrome.
+    """Every stylesheet that can legitimately define a class the markup uses.
 
-    The chrome is included so a class used only by the docs is not reported as
-    undefined — but it is still held to the same rule, because the docs are the
-    system's loudest example of itself.
+    THE BUILT SITE STYLESHEET IS THE IMPORTANT ONE. Since this system moved to
+    Tailwind, most classes on a docs page — `flex`, `bg-sunken`, `md:col-span-6`,
+    `font-semibold` — exist only in Tailwind's OUTPUT. They are generated from
+    the markup at build time and appear in no file under src/. Reading src/
+    alone reported 52 of them as phantoms, which is the audit being wrong rather
+    than the pages.
+
+    So the compiled site/assets/site.min.css is read as a source of TRUTH about
+    what is defined. It is never a source of style: nothing in src/ may depend
+    on a class that only Tailwind or daisyUI defines.
     """
     for f in sorted(glob.glob(str(REPO / 'src/**/*.css'), recursive=True)):
         if not any(s in f for s in SKIP_LAYERS):
             yield f
     yield from sorted(glob.glob(str(REPO / 'docs/assets/*.css'), recursive=True))
-    # The page templates' own glue — page composition the system deliberately
-    # does not own. Held to the same rule: a template class must be defined.
-    yield from sorted(glob.glob(str(REPO / 'templates/**/*.css'), recursive=True))
-    # The Bulma base, when it has been built. It is a real source of class
-    # definitions for any page that uses Bulma's own components, and without it
-    # every .menu-list and .is-active reads as a phantom. Compiled output, so
-    # it is a source of TRUTH here but never of style: nothing in src/ may
-    # depend on a class defined only by this file.
-    bulma = REPO / 'dist' / 'bulma-base.css'
-    if bulma.exists():
-        yield str(bulma)
+
+    built = REPO / 'site' / 'assets' / 'site.min.css'
+    if built.exists():
+        yield str(built)
 
 
 def defined_classes():
@@ -71,8 +71,13 @@ def defined_classes():
         # anywhere. .frame-4 was exactly that: used in markup, described in two
         # file headers, never once written as a selector.
         text = re.sub(r'/\*.*?\*/', '', pathlib.Path(f).read_text(), flags=re.S)
-        for c in re.findall(r'\.([a-zA-Z][\w-]*)', text):
-            out.setdefault(c, str(pathlib.Path(f).relative_to(REPO)))
+        # A class name in CSS may be ESCAPED, and Tailwind's mostly are:
+        # `md:col-span-6` is written `.md\:col-span-6`, `p-(--space-8)` is
+        # `.p-\(--space-8\)`. Matching only [\w-] stops at the backslash and
+        # reports every variant and every arbitrary value as a phantom.
+        for c in re.findall(r'\.((?:[\w-]|\\.)+)', text):
+            out.setdefault(re.sub(r'\\(.)', r'\1', c),
+                           str(pathlib.Path(f).relative_to(REPO)))
     return out
 
 

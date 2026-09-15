@@ -21,7 +21,7 @@
    Layer: elements.
    ========================================================================== */
 
-@layer elements {
+@layer utilities.sds.elements {
 
 	/* ── Spinner ───────────────────────────────────────────────────────────
 	   A ring with a gap, rotating. currentColor, so it inherits the text it

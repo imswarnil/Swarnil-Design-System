@@ -24,7 +24,7 @@
    Layer: components.
    ========================================================================== */
 
-@layer components {
+@layer utilities.sds.components {
 
 	/* ── .facets — the filter column ──────────────────────────────────────── */
 

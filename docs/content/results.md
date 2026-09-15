@@ -51,8 +51,8 @@ without its scripts.
     <p class="filterbar__count"><strong>3</strong> of 214</p>
     <div class="filterbar__actions">
       <div class="viewtoggle" role="group" aria-label="View">
-        <label class="viewtoggle__opt" title="Grid"><input type="radio" name="v-live" value="grid" checked /><span class="u-sr-only">Grid</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-grid"/></svg></label>
-        <label class="viewtoggle__opt" title="List"><input type="radio" name="v-live" value="list" /><span class="u-sr-only">List</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-menu"/></svg></label>
+        <label class="viewtoggle__opt" title="Grid"><input type="radio" name="v-live" value="grid" checked /><span class="sr-only">Grid</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-grid"/></svg></label>
+        <label class="viewtoggle__opt" title="List"><input type="radio" name="v-live" value="list" /><span class="sr-only">List</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-menu"/></svg></label>
       </div>
     </div>
   </div>
@@ -61,10 +61,10 @@ without its scripts.
     <article class="card card-hover-lift"><div class="card__media"></div><div class="card__body"><p class="card__kicker">AI</p><h3 class="card__title"><a class="card__link" href="#i">A prompt is a spec</a></h3><p class="card__excerpt">What agents taught me about requirements.</p></div></article>
     <article class="card card-hover-lift"><div class="card__media"></div><div class="card__body"><p class="card__kicker">Travel</p><h3 class="card__title"><a class="card__link" href="#i">Ladakh, on film</a></h3><p class="card__excerpt">Fourteen photographs and the one that did not come out.</p></div></article>
     <div class="results__foot">
-      <nav class="pagination" aria-label="Pages">
-        <span class="pagination-link" aria-disabled="true" aria-label="Previous page"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-left"/></svg></span>
-        <span class="pagination-ellipsis">Page 1 of 24</span>
-        <a class="pagination-link" href="#i" aria-label="Next page"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-right"/></svg></a>
+      <nav class="pagination pagination-between" aria-label="Pages">
+        <span class="pagination__link" aria-disabled="true" aria-label="Previous page"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-left"/></svg></span>
+        <span class="pagination__status">Page 1 of 24</span>
+        <a class="pagination__link" href="#i" aria-label="Next page"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-right"/></svg></a>
       </nav>
     </div>
   </div>
@@ -87,7 +87,7 @@ and no results are not laid out in one narrow column.
       <span class="empty__icon"><svg class="icon icon-lg" aria-hidden="true"><use href="/icons/sprite.svg#i-search"/></svg></span>
       <p class="empty__title">Nothing matches those filters</p>
       <p class="empty__body">Try removing "Rust" — there are no repos in it yet.</p>
-      <div class="empty__actions"><button class="button is-outlined is-small" type="button">Clear all filters</button></div>
+      <div class="empty__actions"><button class="btn btn-outline btn-sm" type="button">Clear all filters</button></div>
     </div>
   </div>
 </div>

@@ -22,14 +22,14 @@ fills set their text colour too.
 
 :::demo
 <div class="grid-auto grid-auto-sm">
-  <div class="ratio ratio-photo u-rounded-lg u-border bg-canvas u-p-3"><span class="t-label">canvas</span></div>
-  <div class="ratio ratio-photo u-rounded-lg u-border bg-surface u-p-3"><span class="t-label">surface</span></div>
-  <div class="ratio ratio-photo u-rounded-lg u-border bg-sunken u-p-3"><span class="t-label">sunken</span></div>
-  <div class="ratio ratio-photo u-rounded-lg u-border bg-muted u-p-3"><span class="t-label">muted</span></div>
-  <div class="ratio ratio-photo u-rounded-lg u-border bg-media u-p-3"><span class="t-label">media</span></div>
-  <div class="ratio ratio-photo u-rounded-lg bg-inverse u-p-3"><span class="t-label" style="color: inherit">inverse</span></div>
-  <div class="ratio ratio-photo u-rounded-lg bg-accent u-p-3"><span class="t-label" style="color: inherit">accent</span></div>
-  <div class="ratio ratio-photo u-rounded-lg bg-accent-soft u-p-3"><span class="t-label" style="color: inherit">accent-soft</span></div>
+  <div class="ratio ratio-photo rounded-lg hairline bg-canvas p-3"><span class="t-label">canvas</span></div>
+  <div class="ratio ratio-photo rounded-lg hairline bg-surface p-3"><span class="t-label">surface</span></div>
+  <div class="ratio ratio-photo rounded-lg hairline bg-sunken p-3"><span class="t-label">sunken</span></div>
+  <div class="ratio ratio-photo rounded-lg hairline bg-muted p-3"><span class="t-label">muted</span></div>
+  <div class="ratio ratio-photo rounded-lg hairline bg-media p-3"><span class="t-label">media</span></div>
+  <div class="ratio ratio-photo rounded-lg bg-inverse p-3"><span class="t-label" style="color: inherit">inverse</span></div>
+  <div class="ratio ratio-photo rounded-lg bg-accent p-3"><span class="t-label" style="color: inherit">accent</span></div>
+  <div class="ratio ratio-photo rounded-lg bg-accent-soft p-3"><span class="t-label" style="color: inherit">accent-soft</span></div>
 </div>
 :::
 
@@ -41,14 +41,14 @@ The corner, end and centre variants are named positions.
 
 :::demo
 <div class="grid-auto grid-auto-sm">
-  <div class="ratio ratio-photo u-rounded-lg u-border bg-glow"></div>
-  <div class="ratio ratio-photo u-rounded-lg u-border bg-glow bg-glow-corner"></div>
-  <div class="ratio ratio-photo u-rounded-lg u-border bg-glow bg-glow-end"></div>
-  <div class="ratio ratio-photo u-rounded-lg u-border bg-glow bg-glow-centre"></div>
-  <div class="ratio ratio-photo u-rounded-lg u-border bg-glow-craft"></div>
-  <div class="ratio ratio-photo u-rounded-lg u-border bg-glow bg-strong"></div>
-  <div class="ratio ratio-photo u-rounded-lg u-border bg-glow bg-faint"></div>
-  <div class="ratio ratio-photo u-rounded-lg u-border bg-glow bg-drift"></div>
+  <div class="ratio ratio-photo rounded-lg hairline bg-glow"></div>
+  <div class="ratio ratio-photo rounded-lg hairline bg-glow bg-glow-corner"></div>
+  <div class="ratio ratio-photo rounded-lg hairline bg-glow bg-glow-end"></div>
+  <div class="ratio ratio-photo rounded-lg hairline bg-glow bg-glow-centre"></div>
+  <div class="ratio ratio-photo rounded-lg hairline bg-glow-craft"></div>
+  <div class="ratio ratio-photo rounded-lg hairline bg-glow bg-strong"></div>
+  <div class="ratio ratio-photo rounded-lg hairline bg-glow bg-faint"></div>
+  <div class="ratio ratio-photo rounded-lg hairline bg-glow bg-drift"></div>
 </div>
 :::
 
@@ -65,9 +65,9 @@ stage light from above and commits to the dark room, like the player does.
 
 :::demo
 <div class="grid-3">
-  <div class="ratio ratio-photo u-rounded-lg u-border bg-aurora"></div>
-  <div class="ratio ratio-photo u-rounded-lg u-border bg-mesh"></div>
-  <div class="ratio ratio-photo u-rounded-lg bg-spot"></div>
+  <div class="ratio ratio-photo rounded-lg hairline bg-aurora"></div>
+  <div class="ratio ratio-photo rounded-lg hairline bg-mesh"></div>
+  <div class="ratio ratio-photo rounded-lg bg-spot"></div>
 </div>
 :::
 
@@ -75,10 +75,10 @@ stage light from above and commits to the dark room, like the player does.
 
 :::demo
 <div class="grid-auto grid-auto-sm">
-  <div class="ratio ratio-photo u-rounded-lg bg-vignette"></div>
-  <div class="ratio ratio-photo u-rounded-lg u-border bg-fade-down"></div>
-  <div class="ratio ratio-photo u-rounded-lg u-border bg-fade-up"></div>
-  <div class="ratio ratio-photo u-rounded-lg bg-ink"></div>
+  <div class="ratio ratio-photo rounded-lg bg-vignette"></div>
+  <div class="ratio ratio-photo rounded-lg hairline bg-fade-down"></div>
+  <div class="ratio ratio-photo rounded-lg hairline bg-fade-up"></div>
+  <div class="ratio ratio-photo rounded-lg bg-ink"></div>
 </div>
 :::
 
@@ -90,8 +90,8 @@ top of another `bg-*` instead of replacing it.
 
 :::demo Grain alone, and grain on a glow
 <div class="grid-2">
-  <div class="ratio ratio-photo u-rounded-lg u-border bg-noise"></div>
-  <div class="ratio ratio-photo u-rounded-lg u-border bg-glow bg-noise"></div>
+  <div class="ratio ratio-photo rounded-lg hairline bg-noise"></div>
+  <div class="ratio ratio-photo rounded-lg hairline bg-glow bg-noise"></div>
 </div>
 :::
 
@@ -101,11 +101,11 @@ A band with a glow, a pattern and a frame — three layers, three slots, no
 conflict.
 
 :::demo
-<section class="bg-glow bg-noise pattern pattern-grid pattern-fade u-rounded-lg u-border" style="padding: var(--space-10)">
+<section class="bg-glow bg-noise pattern pattern-grid pattern-fade rounded-lg hairline" style="padding: var(--space-10)">
   <div class="frame frame-sm" style="padding: var(--space-6)">
     <span class="frame__tr"></span><span class="frame__bl"></span>
-    <p class="eyebrow u-mb-3">Episode 48</p>
-    <h3 class="t-h2 u-m-0">Light, lines, and a frame — on one element each.</h3>
+    <p class="eyebrow mb-3">Episode 48</p>
+    <h3 class="t-h2 m-0">Light, lines, and a frame — on one element each.</h3>
   </div>
 </section>
 :::
@@ -132,23 +132,23 @@ expects a `bg-*` underneath and composes with it, because they animate a
 position or a rotation rather than painting a second background over the first.
 
 :::demo `.bg-scanlines` over ink — the tape, running
-<div class="bg-ink bg-scanlines u-p-8 u-rounded-lg">
-  <p class="t-h3 u-m-0">Take 48</p>
-  <p class="t-small u-mt-2 u-m-0">The moving version of <code class="code">pattern-scan</code>, for a hero that should read as footage.</p>
+<div class="bg-ink bg-scanlines p-(--space-8) rounded-lg">
+  <p class="t-h3 m-0">Take 48</p>
+  <p class="t-small mt-2 m-0">The moving version of <code class="code">pattern-scan</code>, for a hero that should read as footage.</p>
 </div>
 :::
 
 :::demo `.bg-beams` — a slow sweep, as if something off camera is turning
-<div class="bg-sunken bg-beams u-p-8 u-rounded-lg u-border">
-  <p class="t-h3 u-m-0">Forty seconds a turn</p>
-  <p class="t-small t-muted u-mt-2 u-m-0">One conic gradient on <code class="code">::after</code>, one rotation. It sets <code class="code">isolation: isolate</code>, so the beams stay inside the box.</p>
+<div class="bg-sunken bg-beams p-(--space-8) rounded-lg hairline">
+  <p class="t-h3 m-0">Forty seconds a turn</p>
+  <p class="t-small t-muted mt-2 m-0">One conic gradient on <code class="code">::after</code>, one rotation. It sets <code class="code">isolation: isolate</code>, so the beams stay inside the box.</p>
 </div>
 :::
 
 :::demo `.bg-graph` — the blueprint under a page that is being drawn
-<div class="bg-canvas bg-graph u-p-8 u-rounded-lg u-border">
-  <p class="t-h3 u-m-0">Still being built</p>
-  <p class="t-small t-muted u-mt-2 u-m-0">Paints on the element like every other ground, so it still composes with a <code class="code">.pattern</code> on <code class="code">::before</code>.</p>
+<div class="bg-canvas bg-graph p-(--space-8) rounded-lg hairline">
+  <p class="t-h3 m-0">Still being built</p>
+  <p class="t-small t-muted mt-2 m-0">Paints on the element like every other ground, so it still composes with a <code class="code">.pattern</code> on <code class="code">::before</code>.</p>
 </div>
 :::
 
@@ -170,8 +170,8 @@ out that it does not have one is by **looking at the band**, not at the file.
 
 :::demo Both of these are grain over a dark slab — and both needed a pair rule to be
 <div class="grid-2">
-  <div class="bg-ink bg-noise u-p-6 u-rounded-lg"><span class="t-data">bg-ink · bg-noise</span></div>
-  <div class="bg-spot bg-noise u-p-6 u-rounded-lg"><span class="t-data">bg-spot · bg-noise</span></div>
+  <div class="bg-ink bg-noise p-6 rounded-lg"><span class="t-data">bg-ink · bg-noise</span></div>
+  <div class="bg-spot bg-noise p-6 rounded-lg"><span class="t-data">bg-spot · bg-noise</span></div>
 </div>
 :::
 

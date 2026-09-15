@@ -28,7 +28,7 @@
    Layer: elements.
    ========================================================================== */
 
-@layer elements {
+@layer utilities.sds.elements {
 
 	/* ── Interactions — the hover answers ──────────────────────────────────
 	   Each is one property. Guarded: a touch screen has no hover and no way

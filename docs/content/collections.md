@@ -19,11 +19,11 @@ rather than a rebuild.
 
 | Part | What it is | Built from |
 | --- | --- | --- |
-| **The card** | one item, at a glance | [`.card`](https://bulma.io/documentation/components/card/) + a content type |
+| **The card** | one item, at a glance | [`.card`](/card.html) + a content type |
 | **The listing** | all of them, filtered | [`.results`](/results.html) + [`.facets`](/filter.html) |
 | **The row** | a few of them, on another page | [`.shelf`](/shelf.html) or [`.deck`](/deck.html) |
-| **The detail** | one item, in full | [`page-head`](https://bulma.io/documentation/components/tabs/) + the body |
-| **The pager** | the one after this one | [`.pager`](https://bulma.io/documentation/components/tabs/) |
+| **The detail** | one item, in full | [`page-head`](/navigation.html) + the body |
+| **The pager** | the one after this one | [`.pager`](/navigation.html) |
 
 Nothing in that table is per-collection. What *is* per-collection is four
 decisions, and they are the only four you have to make.
@@ -47,11 +47,11 @@ yet — it is a page.
 **4 · What is "next"?** A lesson's next is the next lesson. An episode's next
 is the next episode. A post's next is whatever is chronologically adjacent, and
 a project's next is arbitrary — so it gets a mark rather than a number. That is
-the choice between the three [pager dresses](https://bulma.io/documentation/components/tabs/).
+the choice between the three [pager dresses](/navigation.html).
 
 ## The shape, once
 
-Every listing page in the [templates](https://bulma.io/documentation/) is this, and only the
+Every listing page built on this system is the same shape, and only the
 four decisions above change between them.
 
 :::demo A listing, in miniature — bar, facets, results, pager
@@ -59,10 +59,10 @@ four decisions above change between them.
   <div class="filterbar">
     <p class="filterbar__count"><strong>3</strong> of 128</p>
     <div class="filterbar__actions">
-      <label><span class="u-sr-only">Sort</span><select class="select is-small"><option>Newest first</option><option>Most watched</option></select></label>
+      <label><span class="sr-only">Sort</span><select class="select select-sm"><option>Newest first</option><option>Most watched</option></select></label>
       <div class="viewtoggle" role="group" aria-label="View">
-        <label class="viewtoggle__opt"><input type="radio" name="col-view" value="grid" checked /><span class="u-sr-only">Grid</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-grid"/></svg></label>
-        <label class="viewtoggle__opt"><input type="radio" name="col-view" value="list" /><span class="u-sr-only">List</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-menu"/></svg></label>
+        <label class="viewtoggle__opt"><input type="radio" name="col-view" value="grid" checked /><span class="sr-only">Grid</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-grid"/></svg></label>
+        <label class="viewtoggle__opt"><input type="radio" name="col-view" value="list" /><span class="sr-only">List</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-menu"/></svg></label>
       </div>
     </div>
   </div>
@@ -71,10 +71,10 @@ four decisions above change between them.
     <article class="card card-video card-hover-lift"><div class="card__media"><img src="/assets/media/city.jpg" alt="" /><span class="card__stamp">18:30</span></div><div class="card__body"><p class="card__kicker">Ep. 47 · Craft</p><h4 class="card__title"><a class="card__link" href="#i">The frame layer, explained</a></h4></div></article>
     <article class="card card-video card-hover-lift"><div class="card__media"><img src="/assets/media/night.jpg" alt="" /><span class="card__stamp">31:12</span></div><div class="card__body"><p class="card__kicker">Ep. 46 · Business</p><h4 class="card__title"><a class="card__link" href="#i">Why the thumbnail is the product</a></h4></div></article>
     <div class="results__foot">
-      <nav class="pagination" aria-label="Pages">
-        <span class="pagination-link" aria-disabled="true" aria-label="Previous"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-left"/></svg></span>
-        <span class="pagination-ellipsis">Page 1 of 43</span>
-        <a class="pagination-link" href="#i" aria-label="Next"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-right"/></svg></a>
+      <nav class="pagination pagination-between" aria-label="Pages">
+        <span class="pagination__link" aria-disabled="true" aria-label="Previous"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-left"/></svg></span>
+        <span class="pagination__status">Page 1 of 43</span>
+        <a class="pagination__link" href="#i" aria-label="Next"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-right"/></svg></a>
       </nav>
     </div>
   </div>

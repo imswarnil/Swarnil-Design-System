@@ -26,83 +26,98 @@ try {
      with. Mono and latin-ext load on demand from fonts.css. -->
 <link rel="preload" href="/assets/fonts/inter-100-900-latin.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="/assets/fonts.css{v}" />
-{styles}
-{scripts}
+
+<!-- ONE STYLESHEET. Tailwind, daisyUI, the system, the broadcast layer and
+     this site's own chrome, compiled together by `npm run docs`.
+
+     Every page used to link /src/index.css straight to the browser, which
+     worked right up until the system became a Tailwind project: `@plugin`,
+     `@theme` and `@utility` are compiler directives, not CSS, and a browser
+     handed them renders an unstyled page. The source is compiled now, and
+     docs/assets/site.css is the entry that does it. -->
+<link rel="stylesheet" href="/assets/site.min.css{v}" />
+
+<!-- The broadcast layer is a separate bundle for consumers; the docs load it
+     so the Broadcast pages can demo it. -->
+<!-- Same for the opt-in twelve-column framework layer. -->
+<script src="/assets/nav.js{v}" defer></script>
+<script src="/assets/docs.js{v}" defer></script>
 </head>
 
 <body>
 <a class="skip" href="#main">Skip to content</a>
 
-<nav class="navbar is-fixed-top" role="navigation" aria-label="Primary" data-nav-scroll>
-  <div class="navbar-brand">
-    <a class="navbar-item shell__brand" href="/">
-      <span class="shell__mark" aria-hidden="true"></span>
-      Swarnil<span class="shell__sub">Design System</span>
-    </a>
-  </div>
+<header class="bar">
+  <a class="brand" href="/">
+    <span class="brand__mark" aria-hidden="true"></span>
+    <span class="brand__name">Swarnil</span>
+    <span class="brand__sub">Design System</span>
+  </a>
 
-  <div class="navbar-menu is-active">
-    <div class="navbar-start shell__primary">
-      {primary}
-    </div>
+  <nav class="bar__nav" aria-label="Primary">
+    <a class="barlink" href="/introduction.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-file"/></svg>Docs</a>
+    <a class="barlink" href="/principles.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-bookmark"/></svg>Principles</a>
+    <a class="barlink" href="/install.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-box"/></svg>Install</a>
+    <a class="barlink" href="/icons.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-capture"/></svg>Icons</a>
+  </nav>
 
-    <div class="navbar-end navbar-item">
-    <button class="button is-small is-ghost" type="button" data-theme-toggle aria-label="Switch theme">
-      <span class="dot dot-sm" aria-hidden="true"></span>
-      <span data-theme-label>Light</span>
+  <div class="bar__end">
+    <button class="themebtn" type="button" data-theme-toggle aria-label="Switch theme">
+      <span class="themebtn__dot" aria-hidden="true"></span>
+      <span class="themebtn__label" data-theme-label>Light</span>
     </button>
-    <a class="button is-small" href="https://github.com/imswarnil/Swarnil-Design-System" rel="noopener"><span class="icon is-small"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-star"/></svg></span><span>Star</span></a>
-    </div>
+    <a class="ghbtn ghbtn-sm" href="https://github.com/imswarnil/Swarnil-Design-System" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-star"/></svg>Star</a>
   </div>
-</nav>
+</header>
 
 <main id="main">
 {body}
 </main>
 
-<footer class="footer">
-  <div class="shell__foot-top">
-    <div>
-      <p class="shell__foot-brand"><span class="shell__mark" aria-hidden="true"></span> Swarnil Design System</p>
-      <p class="shell__foot-note">Almost monochrome, so one colour can mean something. Token-first, dependency-free, and MIT — use it in anything.</p>
+<footer class="home-foot">
+  <div class="home-foot__in">
+    <div class="home-foot__top">
+      <div>
+        <p class="home-foot__brand"><span class="brand__mark" aria-hidden="true"></span> Swarnil Design System</p>
+        <p class="home-foot__note">Almost monochrome, so one colour can mean something. Token-first, dependency-free, and MIT — use it in anything.</p>
+      </div>
+
+      <nav class="foot-col" aria-label="Foundation">
+        <p class="foot-col__head">Foundation</p>
+        <a href="/color.html">Colour</a>
+        <a href="/typography.html">Typography</a>
+        <a href="/frame.html">Frames</a>
+      </nav>
+
+      <nav class="foot-col" aria-label="Components">
+        <p class="foot-col__head">Components</p>
+        <a href="/button.html">Button</a>
+        <a href="/card.html">Card</a>
+        <a href="/navbar.html">Navbar</a>
+        <a href="/badge.html">Badge</a>
+      </nav>
+
+      <nav class="foot-col" aria-label="Broadcast">
+        <p class="foot-col__head">Broadcast</p>
+        <a href="/canvas.html">Canvas</a>
+        <a href="/thumbnail.html">Thumbnail</a>
+        <a href="/scene.html">Scenes</a>
+      </nav>
+
+      <nav class="foot-col" aria-label="Project">
+        <p class="foot-col__head">Project</p>
+        <a href="/introduction.html">Introduction</a>
+        <a href="/principles.html">Principles</a>
+        <a href="/install.html">Install</a>
+        <a href="/icons.html">Swarnil Icons</a>
+        <a href="https://github.com/imswarnil/Swarnil-Design-System" rel="noopener">GitHub</a>
+      </nav>
     </div>
 
-    <nav class="shell__foot-col" aria-label="Foundation">
-      <p class="shell__foot-head">Foundation</p>
-      <a href="/color.html">Colour</a>
-      <a href="/typography.html">Typography</a>
-      <a href="/frame.html">Frames</a>
-    </nav>
-
-    <nav class="shell__foot-col" aria-label="Components">
-      <p class="shell__foot-head">Components</p>
-      <a href="https://bulma.io/documentation/elements/button/">Button</a>
-      <a href="https://bulma.io/documentation/components/card/">Card</a>
-      <a href="https://bulma.io/documentation/components/navbar/">Navbar</a>
-      <a href="/badge.html">Badge</a>
-    </nav>
-
-    <nav class="shell__foot-col" aria-label="Broadcast">
-      <p class="shell__foot-head">Broadcast</p>
-      <a href="/canvas.html">Canvas</a>
-      <a href="/thumbnail.html">Thumbnail</a>
-      <a href="/scene.html">Scenes</a>
-      <a href="https://bulma.io/documentation/">Templates</a>
-    </nav>
-
-    <nav class="shell__foot-col" aria-label="Project">
-      <p class="shell__foot-head">Project</p>
-      <a href="/introduction.html">Introduction</a>
-      <a href="/principles.html">Principles</a>
-      <a href="/install.html">Install</a>
-      <a href="/icons.html">Swarnil Icons</a>
-      <a href="https://github.com/imswarnil/Swarnil-Design-System" rel="noopener">GitHub</a>
-    </nav>
-  </div>
-
-  <div class="shell__foot-row">
-    <p class="shell__foot-fine">MIT &middot; &copy; {year} Swarnil Singhai</p>
-    <span class="shell__rec"><span class="dot dot-sm dot-live"></span> Still rolling</span>
+    <div class="home-foot__bottom">
+      <p class="home-foot__fine">MIT &middot; &copy; {year} Swarnil Singhai</p>
+      <span class="home-foot__rec"><span class="dot dot-sm dot-live"></span> Still rolling</span>
+    </div>
   </div>
 </footer>
 </body>

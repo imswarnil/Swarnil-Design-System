@@ -1,0 +1,879 @@
+/* =============================================================================
+   33 · NAV — tabs, breadcrumb, pagination, chapters, navlist, pager, and the
+   two headers that open a page and a section
+
+   ── THE HOUSE ACTIVE STATE ────────────────────────────────────────────────
+   Everything in this system marks "you are here" the same way:
+
+       a dot, or a 2px rule   ·   semibold   ·   the accent colour
+
+   Never a filled pill. A reader learns the idea once and then recognises it
+   in the tabs, the side nav, the navbar, the drawer and the chapter list
+   without being taught again. The dot is the default; the rule is for the
+   places where a dot has nowhere to sit — under a page number, beside a
+   chapter heading, along the edge of a segment.
+
+   A filled pill is loud, and it competes with the accent for the one job the
+   accent has.
+
+   State is expressed with [aria-current] and [aria-selected] — the same facts
+   the accessibility tree reads, so the visual state and the announced state
+   cannot disagree.
+
+   The chapter list is called .chapters rather than .toc because the docs
+   chrome already owns .toc for its timeline, and an unlayered rule beats a
+   layered one — the two would bleed into each other on every docs page.
+
+   COMPOSITION WARNING
+   .tab spends ::before on its dot and ::after on its rule; .pagination__link
+   and .chapters__link spend ::after. None of them can take .frame.
+
+   Layer: components.
+   ========================================================================== */
+
+@layer utilities.sds.components {
+
+	/* ── Tabs ────────────────────────────────────────────────────────────── */
+
+	.tabs {
+		--tabs-gap: var(--space-1);
+		display: flex;
+		gap: var(--tabs-gap);
+		border-block-end: var(--border-hair) solid var(--line-subtle);
+		/* Seven tabs on a phone scroll sideways rather than wrapping into two
+		   rows or pushing the page wide. The scrollbar is hidden because the
+		   row's own edge fade is the affordance; the keyboard still reaches
+		   every tab. */
+		overflow-x: auto;
+		scrollbar-width: none;
+		scroll-snap-type: inline proximity;
+	}
+
+	.tabs::-webkit-scrollbar { display: none; }
+	.tabs > .tab { flex: none; white-space: nowrap; scroll-snap-align: start; }
+
+	.tab {
+		--tab-pad: var(--space-4);
+		position: relative;
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-2);
+		padding: var(--space-2) var(--tab-pad);
+		font-family: inherit;
+		font-size: var(--text-sm);
+		font-weight: var(--weight-medium);
+		color: var(--fg-subtle);
+		background: none;
+		border: 0;
+		text-decoration: none;
+		white-space: nowrap;
+		cursor: pointer;
+		transition: color var(--dur-2) var(--ease-out);
+	}
+
+	.tab:hover { color: var(--fg-default); }
+
+	.tab[disabled],
+	.tab[aria-disabled='true'] {
+		opacity: 0.5;
+		cursor: not-allowed;
+		pointer-events: none;
+	}
+
+	/* THE HOUSE ACTIVE STATE — see the note at the top of this file. A tab
+	   panel uses aria-selected; a tab that is really a link between pages
+	   uses aria-current, and both get the same mark. */
+	.tab[aria-selected='true'],
+	.tab[aria-current='page'] {
+		color: var(--fg-accent);
+		font-weight: var(--weight-semibold);
+	}
+
+	.tab[aria-selected='true']::before,
+	.tab[aria-current='page']::before {
+		content: '';
+		inline-size: var(--dot-sm);
+		block-size: var(--dot-sm);
+		border-radius: var(--radius-full);
+		background: var(--accent);
+		flex: none;
+	}
+
+	.tab__icon { flex: none; color: var(--fg-subtle); }
+	.tab:hover .tab__icon,
+	.tab[aria-selected='true'] .tab__icon,
+	.tab[aria-current='page'] .tab__icon { color: currentcolor; }
+
+	/* A count is data: light, tracked, tabular — it sits beside the label
+	   without pretending to be part of it. */
+	.tab__count {
+		font-family: var(--font-data);
+		font-size: var(--text-xs);
+		font-weight: var(--weight-light);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-faint);
+	}
+
+	.tabs-flush { border-block-end: 0; }
+
+	/* The rule instead of the dot — for a tab strip that sits directly on a
+	   hairline, where the rule can land ON the line and read as one mark. */
+	.tabs-underline .tab[aria-selected='true']::before,
+	.tabs-underline .tab[aria-current='page']::before { display: none; }
+
+	.tabs-underline .tab[aria-selected='true']::after,
+	.tabs-underline .tab[aria-current='page']::after {
+		content: '';
+		position: absolute;
+		inset-inline: var(--tab-pad);
+		inset-block-end: calc(var(--border-hair) * -1);
+		block-size: var(--border-2);
+		border-radius: var(--radius-full);
+		background: var(--accent);
+	}
+
+	/* Segmented: one bordered track, equal segments, and the rule lives
+	   inside the segment's bottom edge. No fill — a filled segment is a pill
+	   with corners. */
+	.tabs-segmented {
+		--tabs-gap: 0;
+		padding: var(--space-1);
+		border: var(--border-hair) solid var(--line-default);
+		border-radius: var(--radius-control);
+	}
+
+	.tabs-segmented .tab {
+		flex: 1 1 0;
+		justify-content: center;
+		border-radius: var(--radius-sm);
+	}
+
+	.tabs-segmented .tab:hover { background: var(--hover-wash); }
+	.tabs-segmented .tab[aria-selected='true']::before { display: none; }
+
+	.tabs-segmented .tab[aria-selected='true']::after {
+		content: '';
+		position: absolute;
+		inset-inline: var(--space-3);
+		inset-block-end: 0;
+		block-size: var(--border-2);
+		border-radius: var(--radius-full);
+		background: var(--accent);
+	}
+
+	.tabs-vertical {
+		flex-direction: column;
+		align-items: stretch;
+		border-block-end: 0;
+	}
+
+	.tabs-vertical .tab { justify-content: flex-start; }
+
+	/* Vertical + underline: the rule turns to stand along the start edge. */
+	.tabs-vertical.tabs-underline { border-inline-start: var(--border-hair) solid var(--line-subtle); }
+
+	.tabs-vertical.tabs-underline .tab[aria-selected='true']::after,
+	.tabs-vertical.tabs-underline .tab[aria-current='page']::after {
+		inset: var(--space-2) auto var(--space-2) calc(var(--border-hair) * -1);
+		inline-size: var(--border-2);
+		block-size: auto;
+	}
+
+	/* ── Breadcrumb ──────────────────────────────────────────────────────── */
+
+	.breadcrumb {
+		--crumb-max: 12rem;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--space-2);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		font-size: var(--text-sm);
+		color: var(--fg-subtle);
+	}
+
+	.breadcrumb li { display: inline-flex; align-items: center; gap: var(--space-2); }
+	.breadcrumb a { display: inline-flex; align-items: center; gap: var(--space-2); color: inherit; text-decoration: none; }
+	.breadcrumb a:hover { color: var(--fg-default); }
+	.breadcrumb li + li::before { content: '/'; color: var(--fg-faint); }
+	.breadcrumb [aria-current='page'] { color: var(--fg-default); }
+	.breadcrumb__icon { flex: none; color: var(--fg-faint); }
+	.breadcrumb-chevron li + li::before { content: '\203A'; }
+
+	/* Long titles get a fixed budget and an ellipsis rather than a wrap. */
+	.breadcrumb-truncate li > * {
+		display: block;
+		max-inline-size: var(--crumb-max);
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	/* Collapse: a narrow container keeps the root, an ellipsis, and the last
+	   two crumbs. The breadcrumb is its own query container, so this works
+	   in a sidebar or a card as well as across a page. */
+	.breadcrumb-collapse { container-type: inline-size; }
+	.breadcrumb .breadcrumb__more { display: none; }
+
+	@container (max-width: 28rem) {
+		.breadcrumb-collapse li:not(:first-child, :nth-last-child(-n + 2), .breadcrumb__more) { display: none; }
+		.breadcrumb-collapse .breadcrumb__more { display: inline-flex; }
+	}
+
+	/* ── Pagination — numbered pages for an archive ─────────────────────── */
+
+	.pagination {
+		--pagination-h: 2.5rem;
+		--pagination-gap: var(--space-1);
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		gap: var(--space-2);
+	}
+
+	.pagination-between { justify-content: space-between; }
+	.pagination-sm { --pagination-h: 2rem; font-size: var(--text-xs); }
+	.pagination__pages { display: flex; align-items: center; gap: var(--pagination-gap); }
+
+	.pagination__link {
+		position: relative;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: var(--space-2);
+		min-inline-size: var(--pagination-h);
+		block-size: var(--pagination-h);
+		padding-inline: var(--space-2);
+		border: 0;
+		border-radius: var(--radius-control);
+		background: none;
+		font-family: inherit;
+		font-size: var(--text-sm);
+		font-weight: var(--weight-medium);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-muted);
+		text-decoration: none;
+		cursor: pointer;
+		transition: var(--t-colors);
+	}
+
+	.pagination__link:hover { color: var(--fg-default); background: var(--hover-wash); }
+
+	.pagination__link[aria-disabled='true'],
+	.pagination__link[disabled] {
+		opacity: 0.4;
+		cursor: not-allowed;
+		pointer-events: none;
+	}
+
+	/* The current page: semibold, accent, and a rule beneath the number. A
+	   dot has nowhere to sit inside a square, so this is the rule's case. */
+	.pagination__link[aria-current='page'] {
+		color: var(--fg-accent);
+		font-weight: var(--weight-semibold);
+	}
+
+	.pagination__link[aria-current='page']::after {
+		content: '';
+		position: absolute;
+		inset-inline: var(--space-2);
+		inset-block-end: var(--space-1);
+		block-size: var(--border-2);
+		border-radius: var(--radius-full);
+		background: var(--accent);
+	}
+
+	.pagination__gap {
+		display: inline-grid;
+		place-items: center;
+		min-inline-size: var(--pagination-h);
+		block-size: var(--pagination-h);
+		color: var(--fg-faint);
+	}
+
+	/* "2 / 12" — a readout, so the data voice. */
+	.pagination__status {
+		font-family: var(--font-data);
+		font-size: var(--text-xs);
+		font-weight: var(--weight-light);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-subtle);
+		padding-inline: var(--space-2);
+	}
+
+	/* ── Chapters — the table of contents ────────────────────────────────
+	   A hairline rail; the current heading gets the 2px rule laid over it.
+	   Nested lists drop their own rail and indent, so one rule runs the full
+	   height and the h3s read as parts of the h2 above. */
+
+	.chapters {
+		--chapters-indent: var(--space-4);
+		--chapters-top: var(--space-6);
+		font-size: var(--text-sm);
+	}
+
+	.chapters-sticky {
+		position: sticky;
+		inset-block-start: var(--chapters-top);
+		max-block-size: calc(100dvh - var(--chapters-top) * 2);
+		overflow-y: auto;
+		overscroll-behavior: contain;
+	}
+
+	.chapters__title {
+		display: block;
+		margin-block-end: var(--space-3);
+		font-family: var(--font-label);
+		font-size: var(--text-2xs);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: var(--fg-faint);
+	}
+
+	.chapters__list {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		border-inline-start: var(--border-hair) solid var(--line-default);
+	}
+
+	.chapters__list .chapters__list { border-inline-start: 0; }
+
+	.chapters__link {
+		display: block;
+		padding-block: var(--space-1);
+		padding-inline-start: var(--chapters-indent);
+		margin-inline-start: calc(var(--border-hair) * -1);
+		border-inline-start: var(--border-2) solid transparent;
+		color: var(--fg-muted);
+		line-height: var(--leading-snug);
+		text-decoration: none;
+		transition: color var(--dur-1) var(--ease-out);
+	}
+
+	.chapters__link:hover { color: var(--fg-default); }
+
+	.chapters__link[aria-current='true'],
+	.chapters__link[aria-current='location'] {
+		border-inline-start-color: var(--accent);
+		color: var(--fg-default);
+		font-weight: var(--weight-semibold);
+	}
+
+	.chapters__list .chapters__list .chapters__link {
+		padding-inline-start: calc(var(--chapters-indent) * 2);
+		font-size: var(--text-xs);
+	}
+
+	/* ── Navlist — the side navigation ───────────────────────────────────── */
+
+	.navlist { display: flex; flex-direction: column; }
+
+	.navlist__label {
+		padding: var(--space-4) var(--space-3) var(--space-2);
+		font-family: var(--font-label);
+		font-size: var(--text-2xs);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: var(--fg-faint);
+	}
+
+	.navlist__link {
+		position: relative;
+		display: flex;
+		align-items: center;
+		gap: var(--space-2);
+		padding: var(--space-2) var(--space-3);
+		font-size: var(--text-sm);
+		color: var(--fg-muted);
+		text-decoration: none;
+		transition: color var(--dur-1) var(--ease-out);
+	}
+
+	.navlist__link:hover { color: var(--fg-default); }
+	.navlist__icon { flex: none; color: var(--fg-faint); }
+
+	.navlist__count {
+		margin-inline-start: auto;
+		font-family: var(--font-data);
+		font-size: var(--text-xs);
+		font-weight: var(--weight-light);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-faint);
+	}
+
+	.navlist__link[aria-current='page'] {
+		color: var(--fg-default);
+		font-weight: var(--weight-semibold);
+	}
+
+	.navlist__link[aria-current='page'] .navlist__icon { color: currentcolor; }
+
+	/* The dot: this system's mark for "you are here". It hangs in the
+	   gutter so the label column stays aligned. */
+	.navlist__link[aria-current='page']::before {
+		content: '';
+		position: absolute;
+		inset-inline-start: calc(var(--space-3) * -1);
+		inset-block-start: 50%;
+		width: var(--dot-sm);
+		height: var(--dot-sm);
+		border-radius: var(--radius-full);
+		background: var(--accent);
+		translate: -50% -50%;
+	}
+
+	/* ── Pager — previous · next, with titles, for a sequence ───────────── */
+
+	.pager {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(14rem, 100%), 1fr));
+		gap: var(--space-4);
+	}
+
+	.pager__item {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-1);
+		padding: var(--space-4);
+		border: var(--border-hair) solid var(--line-default);
+		border-radius: var(--radius-lg);
+		text-decoration: none;
+		color: inherit;
+		transition: border-color var(--dur-2) var(--ease-out);
+	}
+
+	.pager__item:hover { border-color: var(--line-strong); }
+	.pager__item-next { text-align: end; }
+
+	/* A lone "next" still sits at the end, where the reader's hand goes. */
+	.pager__item-next:only-child { grid-column-end: -1; }
+
+	.pager__dir {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-1);
+		font-family: var(--font-label);
+		font-size: var(--text-2xs);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: var(--fg-faint);
+	}
+
+	.pager__item-next .pager__dir { justify-content: flex-end; }
+	.pager__title { font-weight: var(--weight-semibold); }
+
+	/* ── Pager dresses — what "next" means depends on what you are in ──────
+	   The plain pager is two links. A course, a series and a project all need
+	   the same two links to carry one more thing each, and they are not the
+	   same thing: a lesson needs its NUMBER, an episode needs its STILL, a
+	   project needs its MARK. So three dresses, one component.
+
+	   The parts are shared; only which of them a dress uses changes. */
+
+	/* A still beside the words — the episode pager. Fixed width so previous
+	   and next are the same size whatever their titles run to. */
+	.pager__thumb {
+		inline-size: 5.5rem;
+		aspect-ratio: 16 / 9;
+		flex: none;
+		overflow: hidden;
+		border-radius: var(--radius-sm);
+		background: var(--bg-media);
+	}
+
+	.pager__thumb > img { inline-size: 100%; block-size: 100%; object-fit: cover; display: block; }
+
+	/* The lesson number, or S02E04. Data, and monospaced by figure rather
+	   than by face — this is the data voice, not code. */
+	.pager__no {
+		font-family: var(--font-data);
+		font-size: var(--text-2xs);
+		font-weight: var(--weight-light);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		text-transform: uppercase;
+		color: var(--fg-accent);
+	}
+
+	/* Media dress: the still leads on previous, and follows on next, so the
+	   two items mirror each other across the gap the way the arrows do. */
+	.pager-media .pager__item {
+		flex-direction: row;
+		align-items: center;
+		gap: var(--space-4);
+	}
+
+	.pager-media .pager__item-next { flex-direction: row-reverse; }
+	.pager-media .pager__body { display: flex; flex-direction: column; gap: var(--space-1); min-inline-size: 0; }
+
+	/* Course dress: quiet, numbered, and the two items share one border so
+	   they read as one control rather than two cards. */
+	.pager-course { gap: 0; }
+
+	.pager-course .pager__item {
+		border-radius: 0;
+		border-inline-start-width: 0;
+	}
+
+	.pager-course .pager__item:first-child {
+		border-inline-start-width: var(--border-hair);
+		border-start-start-radius: var(--radius-lg);
+		border-end-start-radius: var(--radius-lg);
+	}
+
+	.pager-course .pager__item:last-child {
+		border-start-end-radius: var(--radius-lg);
+		border-end-end-radius: var(--radius-lg);
+	}
+
+	/* Series dress: the still, and the episode code above the title. For a
+	   web series, where "next" is an instalment rather than a page. */
+	.pager-series .pager__item {
+		flex-direction: row;
+		align-items: center;
+		gap: var(--space-4);
+		padding: var(--space-3);
+		background: var(--bg-sunken);
+		border-color: transparent;
+	}
+
+	.pager-series .pager__item:hover { border-color: var(--line-accent); background: var(--bg-surface); }
+	.pager-series .pager__item-next { flex-direction: row-reverse; }
+	.pager-series .pager__thumb { inline-size: 7rem; }
+	.pager-series .pager__body { display: flex; flex-direction: column; gap: var(--space-1); min-inline-size: 0; }
+	.pager-series .pager__title { font-size: var(--text-sm); }
+
+	@media (width < 40rem) {
+		.pager-media .pager__item-next,
+		.pager-series .pager__item-next { flex-direction: row; }
+		.pager-course .pager__item {
+			border-inline-start-width: var(--border-hair);
+			border-radius: var(--radius-lg);
+		}
+	}
+
+	.pager__meta {
+		font-family: var(--font-data);
+		font-size: var(--text-xs);
+		font-weight: var(--weight-light);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-subtle);
+	}
+
+	/* ── Section header — a band's opening line ──────────────────────────
+	   Eyebrow, title, one optional lead, and the ONE action a band is allowed
+	   — "View all". Bottom-aligned so the title's baseline and the action's
+	   sit on the same line whatever the eyebrow does above. */
+
+	.sec {
+		--sec-gap: var(--space-8);
+		display: flex;
+		flex-wrap: wrap;
+		align-items: flex-end;
+		justify-content: space-between;
+		gap: var(--space-3) var(--space-6);
+		margin-block-end: var(--sec-gap);
+	}
+
+	.sec-rule {
+		padding-block-end: var(--space-4);
+		border-block-end: var(--border-hair) solid var(--line-default);
+	}
+
+	.sec-center {
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+	}
+
+	.sec__text { min-inline-size: 0; }
+
+	.sec__eyebrow {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-2);
+		margin-block-end: var(--space-2);
+		font-family: var(--font-label);
+		font-size: var(--text-2xs);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: var(--fg-faint);
+	}
+
+	.sec__title {
+		margin: 0;
+		font-family: var(--font-display);
+		font-size: var(--text-2xl);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-tight);
+		line-height: var(--leading-tight);
+		text-wrap: balance;
+	}
+
+	.sec__lead {
+		margin: var(--space-2) 0 0;
+		max-inline-size: var(--measure-lead);
+		color: var(--fg-muted);
+		line-height: var(--leading-relaxed);
+	}
+
+	.sec-center .sec__lead { margin-inline: auto; }
+
+	.sec__actions {
+		display: flex;
+		flex: none;
+		align-items: center;
+		gap: var(--space-3);
+	}
+
+	.sec__more {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-2);
+		font-family: var(--font-label);
+		font-size: var(--text-xs);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: var(--fg-subtle);
+		text-decoration: none;
+		white-space: nowrap;
+		transition: color var(--dur-2) var(--ease-out);
+	}
+
+	.sec__more:hover { color: var(--fg-default); }
+	.sec__more .icon { transition: translate var(--dur-2) var(--ease-out); }
+	.sec__more:hover .icon { translate: var(--space-1) 0; }
+
+	/* ── Page header — the top of a collection index ─────────────────────
+	   A hero states; a page head just labels. Eyebrow, display title, one
+	   lead, then a quiet meta slate in the data voice and the actions. */
+
+	.page-head {
+		--page-head-pad: var(--space-12) var(--space-10);
+		padding-block: var(--page-head-pad);
+		border-block-end: var(--border-hair) solid var(--line-default);
+	}
+
+	.page-head-sm { --page-head-pad: var(--space-8) var(--space-6); }
+	.page-head-flush { border-block-end: 0; }
+	.page-head-center { text-align: center; }
+
+	.page-head__eyebrow {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-2);
+		margin-block-end: var(--space-4);
+		font-family: var(--font-label);
+		font-size: var(--text-2xs);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: var(--fg-accent);
+	}
+
+	.page-head__title {
+		margin: 0;
+		max-inline-size: 16ch;
+		font-family: var(--font-display);
+		font-size: var(--text-5xl);
+		font-weight: var(--weight-bold);
+		letter-spacing: var(--tracking-tighter);
+		line-height: var(--leading-tight);
+		text-wrap: balance;
+	}
+
+	.page-head-sm .page-head__title { font-size: var(--text-3xl); }
+
+	.page-head__lead {
+		margin: var(--space-4) 0 0;
+		max-inline-size: var(--measure-lead);
+		font-size: var(--text-lg);
+		line-height: var(--leading-relaxed);
+		color: var(--fg-muted);
+	}
+
+	.page-head-sm .page-head__lead { margin-block-start: var(--space-3); font-size: var(--text-base); }
+
+	.page-head-center .page-head__title,
+	.page-head-center .page-head__lead { margin-inline: auto; }
+
+	/* The meta slate: count, date, feed — data, bottom of the head, quiet. */
+	.page-head__meta {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--space-2) var(--space-3);
+		margin-block-start: var(--space-8);
+		font-family: var(--font-data);
+		font-size: var(--text-xs);
+		font-weight: var(--weight-light);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-subtle);
+	}
+
+	.page-head-sm .page-head__meta { margin-block-start: var(--space-5); }
+	.page-head-center .page-head__meta { justify-content: center; }
+	.page-head__meta > * + *::before { content: '\B7'; margin-inline-end: var(--space-3); color: var(--fg-faint); }
+	.page-head__meta b { font-weight: var(--weight-regular); color: var(--fg-default); }
+
+	.page-head__actions {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--space-3);
+		margin-block-start: var(--space-6);
+	}
+
+	.page-head-center .page-head__actions { justify-content: center; }
+
+	/* Split: copy left, a block of standing facts right. The facts are a
+	   reference table, not a lead — scanned, not read — so they get their
+	   own column rather than a place under the lead. One column below 56rem
+	   because two columns of small print on a phone is worse than either. */
+	.page-head-split {
+		display: grid;
+		gap: var(--space-8);
+		align-items: start;
+	}
+
+	.page-head__main { min-inline-size: 0; }
+
+	@media (min-width: 56rem) {
+		.page-head-split {
+			grid-template-columns: minmax(0, 1fr) minmax(0, 19rem);
+			gap: var(--space-12);
+		}
+
+		/* Optically aligned to the title, not the eyebrow — the facts are
+		   answering the title. */
+		.page-head__aside { padding-block-start: var(--space-6); }
+	}
+
+	.page-head__facts {
+		display: grid;
+		gap: var(--space-3);
+		margin: 0;
+	}
+
+	.page-head__fact {
+		display: flex;
+		align-items: flex-start;
+		gap: var(--space-3);
+		font-size: var(--text-sm);
+	}
+
+	.page-head__fact > .icon { flex: none; margin-block-start: var(--space-px); color: var(--fg-faint); }
+	.page-head__fact > div { min-inline-size: 0; }
+
+	.page-head__fact dt {
+		font-family: var(--font-label);
+		font-size: var(--text-2xs);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		color: var(--fg-faint);
+	}
+
+	.page-head__fact dd { margin: 0; color: var(--fg-default); }
+
+	/* ── Chapters, continued ─────────────────────────────────────────────── */
+
+	/* Numbered: the counter is data, so the data voice, hung in the gutter. */
+	.chapters-numbered .chapters__list { counter-reset: chapter; }
+	.chapters-numbered .chapters__list > li { counter-increment: chapter; }
+	.chapters-numbered .chapters__list > li > .chapters__link { display: flex; gap: var(--space-2); }
+	.chapters-numbered .chapters__list > li > .chapters__link::before {
+		content: counter(chapter, decimal-leading-zero);
+		flex: none;
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-2xs);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-faint);
+		padding-block-start: 0.2em;
+	}
+
+	/* Progress: how far down the article you are, as a fill along the rail.
+	   The host sets --progress from scroll; the rail does the rest. */
+	.chapters-progress { --progress: 0%; position: relative; }
+	.chapters-progress .chapters__list { position: relative; }
+	.chapters-progress > .chapters__list::after {
+		content: '';
+		position: absolute;
+		inset-block-start: 0;
+		inset-inline-start: calc(var(--border-hair) * -1);
+		width: var(--border-2);
+		height: var(--progress);
+		background: var(--accent);
+		transition: height var(--dur-3) var(--ease-out);
+	}
+
+	/* Boxed: a surface, for a rail that is not inside a card already. */
+	.chapters-boxed {
+		padding: var(--space-4) var(--space-5);
+		border: var(--border-hair) solid var(--line-default);
+		border-radius: var(--radius-card);
+		background: var(--bg-surface);
+	}
+
+	/* Horizontal: the contents as a scrolling row of pills, for a phone or
+	   a page that has no rail. The current one takes the 2px rule below. */
+	.chapters-h .chapters__list {
+		display: flex;
+		gap: var(--space-1);
+		border-inline-start: 0;
+		overflow-x: auto;
+		scrollbar-width: none;
+		padding-block-end: var(--space-1);
+		border-block-end: var(--border-hair) solid var(--line-subtle);
+	}
+	.chapters-h .chapters__list::-webkit-scrollbar { display: none; }
+	.chapters-h .chapters__list > li { flex: none; }
+	.chapters-h .chapters__link { padding: var(--space-2) var(--space-3); white-space: nowrap; border-radius: var(--radius-sm); }
+	.chapters-h .chapters__link[aria-current='true'],
+	.chapters-h .chapters__link[aria-current='location'] { box-shadow: inset 0 calc(var(--border-2) * -1) 0 0 var(--accent); }
+
+	/* Timed: a video's chapters. Each link is a timecode and a title in two
+	   aligned columns; the timecode is data, tabular, so the column is
+	   straight; the playing chapter carries the rule and the accent. */
+	.chapters-timed .chapters__link {
+		display: grid;
+		grid-template-columns: auto minmax(0, 1fr);
+		gap: var(--space-3);
+		align-items: baseline;
+	}
+	.chapters__time {
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-2xs);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-faint);
+		min-width: 3.5em;
+	}
+	.chapters-timed .chapters__link[aria-current='true'] .chapters__time { color: var(--accent); }
+	.chapters__count {
+		margin-inline-start: auto;
+		font-family: var(--font-data);
+		font-weight: var(--weight-light);
+		font-size: var(--text-2xs);
+		letter-spacing: var(--tracking-data);
+		font-variant-numeric: tabular-nums;
+		color: var(--fg-faint);
+	}
+}

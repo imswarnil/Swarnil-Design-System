@@ -21,13 +21,16 @@
    decides — which means the winner changes if a file is renumbered. Do not
    rely on it. Put the other thing on a child or a parent.
 
-   .frame-4's extra two corners are real spans, so they are never in this
-   fight — which is also why .frame-4 needs markup and .frame does not.
+   A four-corner variant was described here for a long time and never built:
+   no rule, no `.frame__tl`/`.frame__br` spans, and five docs pages carrying a
+   `.frame-4` that did nothing at all. Removed 2026-09-14 rather than
+   implemented, because two corners is the house style and the third and
+   fourth were only ever in the comment.
 
    Layer: components.
    ========================================================================== */
 
-@layer components {
+@layer utilities.sds.components {
 
 	/* ── Corner brackets ───────────────────────────────────────────────────── */
 
@@ -36,13 +39,12 @@
 
 	   That matters more than it looks: the difference between
 
-	       class="card card-hover-frame frame frame-4 frame-hover"
+	       class="card card-hover-frame frame frame-hover"
 	   and class="card card-hover-frame frame-hover"
 
 	   is whether a reader can turn the effect on and off by adding or removing
 	   ONE thing. An option you have to assemble from four classes is not really
-	   an option. Add .frame-4 and its two spans only when you want four
-	   corners instead of two. */
+	   an option. */
 
 	.frame,
 	.frame-hover {

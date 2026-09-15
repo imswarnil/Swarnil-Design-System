@@ -8,23 +8,13 @@
    Layer: tokens.
    ========================================================================== */
 
-@layer tokens {
+@layer base {
 	:root {
-		--radius-none: 0;
-		--radius-xs:   2px;
-		--radius-sm:   4px;
-		--radius-md:   6px;
-		--radius-lg:   10px;
-		--radius-xl:   16px;
-		--radius-2xl:  24px;
-		--radius-full: 9999px;
-		--radius-pill: var(--radius-full);   /* the name the theme reads */
-
-		/* Named for a job, so the shape of every card changes in one edit. */
-		--radius-card:    var(--radius-lg);
-		--radius-control: var(--radius-md);
-		--radius-media:   var(--radius-lg);
-		--radius-sheet:   var(--radius-2xl);
+		/* THE RADIUS LADDER LIVES IN src/0-config/theme.css.
+		   `--radius-*` is Tailwind's own theme namespace, so declaring it
+		   there is what makes `rounded-card` and `rounded-control` real
+		   utilities. Declaring it in both places would be two homes for one
+		   number; aliasing one to the other would be a circle. */
 
 		--border-hair: 1px;
 		--border-1:    1px;
@@ -50,7 +40,7 @@
 	}
 }
 
-@layer elements {
+@layer utilities.sds.elements {
 	/* A dot. The system's smallest mark, and the one it uses for "active",
 	   "live" and the brand — one idea, used consistently. */
 	.dot {

@@ -39,7 +39,7 @@
    Layer: components.
    ========================================================================== */
 
-@layer components {
+@layer utilities.sds.components {
 
 	.codeplayer {
 		/* The four locals every variant remaps. Everything below reads these

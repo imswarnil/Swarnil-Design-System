@@ -32,11 +32,11 @@ token.
 
 :::demo The same face, four ways
 <div class="stack stack-sm">
-  <p class="spec-display spec-2xl u-m-0">Inter sets the headlines</p>
-  <p class="u-m-0">Inter sets everything you actually read, in sentences like this one.</p>
-  <p class="t-label u-m-0">A label · Inter, semibold, uppercase</p>
-  <p class="t-data u-m-0">00:12:47 · 1280 × 720 · v2.1.0</p>
-  <p class="t-mono u-m-0">const accent = "oklch(63% 0.19 34)";</p>
+  <p class="spec-display spec-2xl m-0">Inter sets the headlines</p>
+  <p class="m-0">Inter sets everything you actually read, in sentences like this one.</p>
+  <p class="t-label m-0">A label · Inter, semibold, uppercase</p>
+  <p class="t-data m-0">00:12:47 · 1280 × 720 · v2.1.0</p>
+  <p class="t-mono m-0">const accent = "oklch(63% 0.19 34)";</p>
 </div>
 :::
 
@@ -93,16 +93,16 @@ typeface:
 :::demo Both columns are Inter. Only the right one has tabular figures.
 <div class="grid-2">
   <div class="stack stack-sm">
-    <p class="t-label u-m-0">Proportional</p>
-    <p class="u-m-0">00:11:07</p>
-    <p class="u-m-0">01:48:32</p>
-    <p class="u-m-0">11:09:14</p>
+    <p class="t-label m-0">Proportional</p>
+    <p class="m-0">00:11:07</p>
+    <p class="m-0">01:48:32</p>
+    <p class="m-0">11:09:14</p>
   </div>
   <div class="stack stack-sm">
-    <p class="t-label u-m-0">Tabular</p>
-    <p class="t-data t-data-strong u-m-0">00:11:07</p>
-    <p class="t-data t-data-strong u-m-0">01:48:32</p>
-    <p class="t-data t-data-strong u-m-0">11:09:14</p>
+    <p class="t-label m-0">Tabular</p>
+    <p class="t-data t-data-strong m-0">00:11:07</p>
+    <p class="t-data t-data-strong m-0">01:48:32</p>
+    <p class="t-data t-data-strong m-0">11:09:14</p>
   </div>
 </div>
 :::
@@ -125,14 +125,14 @@ to the box it lives in.
 
 :::demo
 <div class="stack stack-sm">
-  <p class="t-h1 u-m-0">Heading 1 · 4xl</p>
-  <p class="t-h2 u-m-0">Heading 2 · 3xl</p>
-  <p class="t-h3 u-m-0">Heading 3 · 2xl</p>
-  <p class="t-h4 u-m-0">Heading 4 · xl</p>
-  <p class="t-lead u-m-0">Lead · lg — the sentence that sells the page.</p>
-  <p class="u-m-0">Body · base. The size everything else is measured against.</p>
-  <p class="t-small u-m-0">Small · sm — captions and secondary detail.</p>
-  <p class="t-fine u-m-0">Fine · xs — legal, footnotes, the small print.</p>
+  <p class="t-h1 m-0">Heading 1 · 4xl</p>
+  <p class="t-h2 m-0">Heading 2 · 3xl</p>
+  <p class="t-h3 m-0">Heading 3 · 2xl</p>
+  <p class="t-h4 m-0">Heading 4 · xl</p>
+  <p class="t-lead m-0">Lead · lg — the sentence that sells the page.</p>
+  <p class="m-0">Body · base. The size everything else is measured against.</p>
+  <p class="t-small m-0">Small · sm — captions and secondary detail.</p>
+  <p class="t-fine m-0">Fine · xs — legal, footnotes, the small print.</p>
 </div>
 :::
 
@@ -167,10 +167,10 @@ Everything below is a class. None of it needs an inline style.
 
 :::demo
 <div class="stack stack-sm">
-  <p class="t-tabular u-m-0">Tabular — 0123456789 · columns align</p>
-  <p class="t-oldstyle u-m-0">Old-style — 0123456789 · numbers inside prose</p>
-  <p class="t-lining u-m-0">Lining — 0123456789 · all cap height</p>
-  <p class="t-stat u-m-0">1,284</p>
+  <p class="t-tabular m-0">Tabular — 0123456789 · columns align</p>
+  <p class="t-oldstyle m-0">Old-style — 0123456789 · numbers inside prose</p>
+  <p class="t-lining m-0">Lining — 0123456789 · all cap height</p>
+  <p class="t-stat m-0">1,284</p>
 </div>
 :::
 
@@ -185,9 +185,9 @@ or the other.
 
 :::demo
 <div class="stack">
-  <p class="t-balance u-m-0 w-md"><b>.t-balance</b> — evens out the line lengths of a heading so the last line is never one orphaned word</p>
-  <p class="t-truncate u-m-0 w-md"><b>.t-truncate</b> — one line, then an ellipsis, however long the text actually runs on</p>
-  <p class="t-clamp-2 u-m-0 w-md"><b>.t-clamp-2</b> — clamps to exactly two lines and then stops, which is what a card excerpt wants, because a card in a grid has to be the same height as the card beside it</p>
+  <p class="t-balance m-0 w-md"><b>.t-balance</b> — evens out the line lengths of a heading so the last line is never one orphaned word</p>
+  <p class="t-truncate m-0 w-md"><b>.t-truncate</b> — one line, then an ellipsis, however long the text actually runs on</p>
+  <p class="t-clamp-2 m-0 w-md"><b>.t-clamp-2</b> — clamps to exactly two lines and then stops, which is what a card excerpt wants, because a card in a grid has to be the same height as the card beside it</p>
 </div>
 :::
 
@@ -243,7 +243,7 @@ and hyphens into the margin so the left edge of the text block reads straight.
 ## Drop cap
 
 :::demo
-<p class="t-dropcap prose u-m-0">Typography is the craft of making language visible, and most of it is invisible when it works. The drop cap is one of the few devices that announces itself, which is why it belongs at the start of a piece and nowhere else.</p>
+<p class="t-dropcap prose m-0">Typography is the craft of making language visible, and most of it is invisible when it works. The drop cap is one of the few devices that announces itself, which is why it belongs at the start of a piece and nowhere else.</p>
 :::
 
 `float` plus `line-height: 0.8` is what seats it on the baseline of the third

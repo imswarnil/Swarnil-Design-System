@@ -14,7 +14,7 @@
    Layer: tokens.
    ========================================================================== */
 
-@layer tokens {
+@layer base {
 	:root {
 		--elevation-0: none;
 
@@ -36,15 +36,15 @@
 
 		/* The letterbox glow under a video, which is a different idea from
 		   elevation: it is light coming OUT of the media, not falling on it. */
-		--shadow-media: 0 24px 64px -24px oklch(63% 0.19 34 / 0.28);
 
 		--focus-ring: 0 0 0 2px var(--bg-canvas), 0 0 0 4px var(--accent);
 
 		/* The names theme.imswarnil.com reads. Aliases, not a second ladder. */
-		--shadow-1: var(--elevation-1);
-		--shadow-2: var(--elevation-2);
-		--shadow-3: var(--elevation-3);
-		--shadow-4: var(--elevation-4);
+		/* `--shadow-1` … `--shadow-4` and `--shadow-media` moved to
+		   src/0-config/theme.css — `--shadow-*` is Tailwind's namespace, so
+		   declaring them there is what makes `shadow-2` a utility. They were
+		   already aliases of the `--elevation-*` names above, which stay here
+		   and remain the ones components read. */
 		--ring-focus: var(--focus-ring);
 	}
 }

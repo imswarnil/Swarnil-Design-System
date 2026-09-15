@@ -50,7 +50,7 @@ Icons inherit `currentColor` — colour the text, the icon follows. Beside text,
 centre instead of floating:
 
 :::demo
-<p class="u-m-0">Recorded <svg class="icon icon-sm icon-inline"><use href="/icons/sprite.svg#i-record"/></svg> live from <span class="t-accent"><svg class="icon icon-sm icon-inline"><use href="/icons/sprite.svg#i-camera"/></svg> the studio</span>.</p>
+<p class="m-0">Recorded <svg class="icon icon-sm icon-inline"><use href="/icons/sprite.svg#i-record"/></svg> live from <span class="t-accent"><svg class="icon icon-sm icon-inline"><use href="/icons/sprite.svg#i-camera"/></svg> the studio</span>.</p>
 :::
 
 ## Solid, for active states
@@ -60,8 +60,8 @@ rest/active toggle:
 
 :::demo
 <div class="cluster">
-  <button class="button is-ghost" type="button" aria-label="Save"><svg class="icon"><use href="/icons/sprite.svg#i-heart"/></svg></button>
-  <button class="button is-ghost" type="button" aria-label="Saved" aria-pressed="true"><svg class="icon icon-solid t-accent"><use href="/icons/sprite.svg#i-heart"/></svg></button>
+  <button class="btn btn-quiet btn-icon" type="button" aria-label="Save"><svg class="icon"><use href="/icons/sprite.svg#i-heart"/></svg></button>
+  <button class="btn btn-quiet btn-icon" type="button" aria-label="Saved" aria-pressed="true"><svg class="icon icon-solid t-accent"><use href="/icons/sprite.svg#i-heart"/></svg></button>
 </div>
 :::
 

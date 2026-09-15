@@ -30,8 +30,8 @@ can forget to.
 
 :::demo Reload this page to catch them again
 <div class="cluster">
-  <span class="badge is-primary fx-rise">.fx-rise</span>
-  <span class="badge is-primary fx-fade">.fx-fade</span>
+  <span class="badge badge-accent fx-rise">.fx-rise</span>
+  <span class="badge badge-accent fx-fade">.fx-fade</span>
 </div>
 :::
 
@@ -51,8 +51,8 @@ animation starts.
 
 :::demo
 <div class="cluster cluster-lg">
-  <button class="button is-outlined fx-lift" type="button">.fx-lift</button>
-  <button class="button is-primary fx-press" type="button">.fx-press</button>
+  <button class="btn btn-outline fx-lift" type="button">.fx-lift</button>
+  <button class="btn btn-primary fx-press" type="button">.fx-press</button>
   <span class="dot dot-lg dot-accent fx-pulse"></span>
   <span class="spinner"></span>
 </div>
@@ -66,8 +66,8 @@ in the finger: scale 0.97, 60ms, done.
 
 :::demo Reload to catch the tracking-in
 <div class="stack">
-  <p class="t-h3 fx-tracking-in u-m-0">The title card settles</p>
-  <p class="t-mono u-m-0 fx-caret">$ npm run build</p>
+  <p class="t-h3 fx-tracking-in m-0">The title card settles</p>
+  <p class="t-mono m-0 fx-caret">$ npm run build</p>
 </div>
 :::
 
@@ -121,11 +121,11 @@ as either response or atmosphere and starts reading as lag.
 
 :::demo Feedback — under 200ms, one property, on a control
 <div class="cluster cluster-lg">
-  <button class="button is-primary" type="button">Press me — scale 0.98</button>
-  <button class="button is-outlined" type="button">Fill</button>
-  <button class="button is-link" type="button">Lift</button>
-  <button class="button is-primary" type="button">Ring</button>
-  <a class="button is-ghost ix-arrow" href="#i">Arrow <svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-right"/></svg></a>
+  <button class="btn btn-primary" type="button">Press me — scale 0.98</button>
+  <button class="btn btn-outline btn-fill" type="button">Fill</button>
+  <button class="btn btn-secondary btn-lift" type="button">Lift</button>
+  <button class="btn btn-primary btn-ring" type="button">Ring</button>
+  <a class="btn btn-ghost ix-arrow" href="#i">Arrow <svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-right"/></svg></a>
   <a class="ix-underline" href="#i">Underline</a>
 </div>
 :::
@@ -140,24 +140,24 @@ as either response or atmosphere and starts reading as lag.
 
 :::demo On footage — the scan, the shine, the reveal, the grade
 <div class="grid-2">
-  <figure class="figure u-m-0 ix-scan u-rounded-lg"><img src="/assets/media/studio.jpg" alt="" /><figcaption class="figure__caption">ix-scan</figcaption></figure>
-  <figure class="figure u-m-0 ix-shine u-rounded-lg"><img src="/assets/media/coast.jpg" alt="" /><figcaption class="figure__caption">ix-shine</figcaption></figure>
-  <figure class="figure u-m-0 ix-color u-rounded-lg"><img src="/assets/media/peak.jpg" alt="" /><figcaption class="figure__caption">ix-color — grey until touched</figcaption></figure>
-  <div class="ix-reveal u-rounded-lg u-overflow-hidden"><img src="/assets/media/night.jpg" alt="" style="display:block;width:100%" /><div class="ix-reveal__hidden u-p-4" style="background: var(--bg-scrim); color: var(--pure-white)"><span class="t-small">ix-reveal — the caption arrives on hover</span></div></div>
+  <figure class="figure m-0 ix-scan rounded-lg"><img src="/assets/media/studio.jpg" alt="" /><figcaption class="figure__caption">ix-scan</figcaption></figure>
+  <figure class="figure m-0 ix-shine rounded-lg"><img src="/assets/media/coast.jpg" alt="" /><figcaption class="figure__caption">ix-shine</figcaption></figure>
+  <figure class="figure m-0 ix-color rounded-lg"><img src="/assets/media/peak.jpg" alt="" /><figcaption class="figure__caption">ix-color — grey until touched</figcaption></figure>
+  <div class="ix-reveal rounded-lg overflow-hidden"><img src="/assets/media/night.jpg" alt="" style="display:block;width:100%" /><div class="ix-reveal__hidden p-4" style="background: var(--bg-scrim); color: var(--pure-white)"><span class="t-small">ix-reveal — the caption arrives on hover</span></div></div>
 </div>
 :::
 
 :::demo Ambient — over six seconds, and off under reduced motion
 <div class="grid-3">
-  <div class="bg-ink bg-scanlines u-p-6 u-rounded-lg"><span class="t-data">bg-scanlines</span></div>
-  <div class="bg-sunken bg-beams u-p-6 u-rounded-lg u-border"><span class="t-data">bg-beams</span></div>
-  <div class="u-p-6 u-rounded-lg u-border u-text-center"><span class="fx-float u-iblock"><svg class="icon icon-xl" aria-hidden="true"><use href="/icons/sprite.svg#i-camera"/></svg></span><br /><span class="t-data">fx-float</span></div>
+  <div class="bg-ink bg-scanlines p-6 rounded-lg"><span class="t-data">bg-scanlines</span></div>
+  <div class="bg-sunken bg-beams p-6 rounded-lg hairline"><span class="t-data">bg-beams</span></div>
+  <div class="p-6 rounded-lg hairline text-center"><span class="fx-float inline-block"><svg class="icon icon-xl" aria-hidden="true"><use href="/icons/sprite.svg#i-camera"/></svg></span><br /><span class="t-data">fx-float</span></div>
 </div>
 :::
 
 :::demo The two that are neither — a state that is genuinely working, and one that is genuinely live
 <div class="cluster cluster-lg">
-  <button class="button is-primary" type="button" aria-busy="true">Uploading</button>
+  <button class="btn btn-primary" type="button" aria-busy="true">Uploading</button>
   <span class="spinner"></span>
   <span class="badge badge-live">Live</span>
   <span class="avatar avatar-live">S</span>

@@ -12,7 +12,7 @@
    Layer: tokens.
    ========================================================================== */
 
-@layer tokens {
+@layer base {
 	:root {
 		--space-0:  0;
 		--space-px: 1px;
@@ -39,11 +39,22 @@
 		   window (see 06-layout's .cq-*). Custom properties cannot be used
 		   inside @media, so these are documentation-as-tokens: the canonical
 		   values, written once, referenced by comment at every use site. */
-		--bp-sm:  30rem;    /* 480px  · phone landscape */
-		--bp-md:  48rem;    /* 768px  · tablet — navs collapse below this */
-		--bp-lg:  64rem;    /* 1024px · laptop — sidebars appear */
-		--bp-xl:  80rem;    /* 1280px · desktop — content max reached */
-		--bp-2xl: 96rem;    /* 1536px · wide — gutters grow, content does not */
+		/* Read back from `--breakpoint-*` in 0-config/theme.css, which is where
+		   Tailwind's `sm:` … `2xl:` variants take their numbers from. Two
+		   copies of a breakpoint is how a component ends up collapsing at a
+		   different width than the utility next to it.
+
+		   These names stay because the docs and a few components read them,
+		   and because `--bp-md` says "the page breakpoint" where
+		   `--breakpoint-md` says "Tailwind's md". They are the same number.
+		   A MEDIA QUERY CANNOT READ EITHER OF THEM — `var()` is not resolvable
+		   in a media query — so a hand-written `@media` still spells the
+		   number out, and that is the one place the value is repeated. */
+		--bp-sm:  var(--breakpoint-sm);    /* 480px  · phone landscape */
+		--bp-md:  var(--breakpoint-md);    /* 768px  · tablet — navs collapse below this */
+		--bp-lg:  var(--breakpoint-lg);    /* 1024px · laptop — sidebars appear */
+		--bp-xl:  var(--breakpoint-xl);    /* 1280px · desktop — content max reached */
+		--bp-2xl: var(--breakpoint-2xl);   /* 1536px · wide — gutters grow, content does not */
 
 		--width-xs:   20rem;
 		--width-sm:   30rem;

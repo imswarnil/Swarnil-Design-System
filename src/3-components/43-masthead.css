@@ -29,7 +29,7 @@
    Layer: components.
    ========================================================================== */
 
-@layer components {
+@layer utilities.sds.components {
 
 	.masthead {
 		--masthead-top: 0px;

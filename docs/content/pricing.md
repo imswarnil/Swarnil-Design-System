@@ -11,8 +11,8 @@ lead: The plans, read across — every part a named slot in a fixed order, and e
     <h2>Join the channel</h2>
     <p class="t-lead">Every episode is free. Members get the course, the source files and the Friday call.</p>
     <div class="pricing__toggle" role="group" aria-label="Billing period">
-      <button class="button" type="button" aria-pressed="true">Monthly</button>
-      <button class="button" type="button" aria-pressed="false">Yearly <span class="badge is-success">−2 months</span></button>
+      <button class="btn" type="button" aria-pressed="true">Monthly</button>
+      <button class="btn" type="button" aria-pressed="false">Yearly <span class="badge badge-success">−2 months</span></button>
     </div>
   </header>
   <div class="pricing__grid">
@@ -27,7 +27,7 @@ lead: The plans, read across — every part a named slot in a fixed order, and e
         <li data-off>Source files</li>
         <li data-off>The Friday call</li>
       </ul>
-      <a class="button is-outlined plan__cta" href="#i">Subscribe free</a>
+      <a class="btn btn-outline plan__cta" href="#i">Subscribe free</a>
     </article>
     <article class="plan plan-featured">
       <span class="plan__flag">Most popular</span>
@@ -41,7 +41,7 @@ lead: The plans, read across — every part a named slot in a fixed order, and e
         <li>Source files and LUTs</li>
         <li data-off>The Friday call</li>
       </ul>
-      <a class="button is-primary plan__cta" href="#i">Become a member</a>
+      <a class="btn btn-primary plan__cta" href="#i">Become a member</a>
       <span class="plan__fine"><span data-monthly>Cancel any time.</span><span data-yearly>Billed once a year.</span></span>
     </article>
     <article class="plan">
@@ -54,7 +54,7 @@ lead: The plans, read across — every part a named slot in a fixed order, and e
         <li>The Friday call</li>
         <li>Project reviews</li>
       </ul>
-      <a class="button is-link plan__cta" href="#i">Talk to me</a>
+      <a class="btn btn-secondary plan__cta" href="#i">Talk to me</a>
     </article>
   </div>
   <p class="pricing__foot">Prices in USD. Students and non-profits: mail me, there is a rate.</p>
@@ -88,7 +88,7 @@ absence you can see beats a list you have to diff against the next card.
       <li>Lifetime updates</li>
       <li data-off>Project review</li>
     </ul>
-    <a class="button is-outlined plan__cta" href="#i">Buy the course</a>
+    <a class="btn btn-outline plan__cta" href="#i">Buy the course</a>
   </article>
   <article class="plan plan-featured">
     <span class="plan__flag">Best value</span>
@@ -99,7 +99,7 @@ absence you can see beats a list you have to diff against the next card.
       <li>Lifetime updates</li>
       <li>One project review</li>
     </ul>
-    <a class="button is-primary plan__cta" href="#i">Buy with review</a>
+    <a class="btn btn-primary plan__cta" href="#i">Buy with review</a>
   </article>
 </div>
 :::
@@ -115,15 +115,15 @@ of script — a price switch is state, and state is not CSS's to invent.
 <section class="pricing pricing-flush" data-period="yearly">
   <header class="pricing__head">
     <div class="pricing__toggle" role="group" aria-label="Billing period">
-      <button class="button" type="button" aria-pressed="false">Monthly</button>
-      <button class="button" type="button" aria-pressed="true">Yearly</button>
+      <button class="btn" type="button" aria-pressed="false">Monthly</button>
+      <button class="btn" type="button" aria-pressed="true">Yearly</button>
     </div>
   </header>
   <div class="pricing__grid" style="max-width:20rem">
     <article class="plan">
       <span class="plan__name">Member</span>
       <p class="plan__price"><span data-monthly>$9</span><span data-yearly>$90</span><span class="plan__period"><span data-monthly>/month</span><span data-yearly>/year</span></span></p>
-      <a class="button is-primary plan__cta" href="#i">Become a member</a>
+      <a class="btn btn-primary plan__cta" href="#i">Become a member</a>
     </article>
   </div>
 </section>

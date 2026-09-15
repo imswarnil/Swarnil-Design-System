@@ -138,14 +138,14 @@ on the right, a ticker along the bottom. The widgets inside are the
       <div class="scene__side">
         <div class="scene__cam pattern pattern-dot"></div>
         <div class="chatbox">
-          <p class="chatbox__msg u-m-0"><span class="chatbox__badge"></span><span class="chatbox__who">ravi_k</span><span class="chatbox__text">what font is that?</span></p>
-          <p class="chatbox__msg u-m-0"><span class="chatbox__who chatbox__who-mod">mod_anu</span><span class="chatbox__text">Inter, everywhere</span></p>
-          <p class="chatbox__msg u-m-0"><span class="chatbox__who">devi</span><span class="chatbox__text">the frame thing is so good</span></p>
+          <p class="chatbox__msg m-0"><span class="chatbox__badge"></span><span class="chatbox__who">ravi_k</span><span class="chatbox__text">what font is that?</span></p>
+          <p class="chatbox__msg m-0"><span class="chatbox__who chatbox__who-mod">mod_anu</span><span class="chatbox__text">Inter, everywhere</span></p>
+          <p class="chatbox__msg m-0"><span class="chatbox__who">devi</span><span class="chatbox__text">the frame thing is so good</span></p>
         </div>
       </div>
     </div>
     <div class="scene__foot">
-      <div class="ticker u-w-full"><span class="ticker__label">Now</span><div class="marquee"><div class="marquee__run"><span>Building the thumbnail system</span><span class="ticker__sep">·</span><span>Q&amp;A at the hour</span><span class="ticker__sep">·</span><span>VOD up tonight</span></div><div class="marquee__run" aria-hidden="true"><span>Building the thumbnail system</span><span class="ticker__sep">·</span><span>Q&amp;A at the hour</span><span class="ticker__sep">·</span><span>VOD up tonight</span></div></div></div>
+      <div class="ticker w-full"><span class="ticker__label">Now</span><div class="marquee"><div class="marquee__run"><span>Building the thumbnail system</span><span class="ticker__sep">·</span><span>Q&amp;A at the hour</span><span class="ticker__sep">·</span><span>VOD up tonight</span></div><div class="marquee__run" aria-hidden="true"><span>Building the thumbnail system</span><span class="ticker__sep">·</span><span>Q&amp;A at the hour</span><span class="ticker__sep">·</span><span>VOD up tonight</span></div></div></div>
     </div>
   </div>
 </div>

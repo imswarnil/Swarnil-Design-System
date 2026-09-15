@@ -1,101 +1,70 @@
 /* =============================================================================
-   SWARNIL DESIGN SYSTEM — Bulma is the system, this repo is its design
+   SWARNIL DESIGN SYSTEM — the library entry
 
-   There is one entry on this branch, and this is it. Bulma is not underneath
-   the system; Bulma IS the components, and this repo is their design:
-   Bulma's components are the components, compiled with this system's own
-   values by src/bulma-theme.scss, and what remains from src/ is the part
-   Bulma has no answer for.
+   Tailwind + daisyUI + this repo's design, in that order. See
+   src/0-config/layers.css for why that order is what it is.
 
-   WHAT WAS DROPPED, AND WHY EACH ONE
-   A component of ours and a component of Bulma cannot both be `.card`. Ours
-   sits in a higher layer and would win every time, so keeping it means Bulma's
-   never renders and the experiment answers nothing. These are the files whose
-   whole job Bulma also does:
+   ── THIS FILE DOES NOT IMPORT TAILWIND ────────────────────────────────────
+   That is deliberate, and it is what makes the package usable two ways.
 
-     30-button.css   -> .button          34-alert.css  -> .notification/.message
-     31-card.css     -> .card            35-navbar.css -> .navbar
-     32-field.css    -> .field/.input    36-menu.css   -> .menu/.dropdown
-     33-nav.css      -> .tabs .breadcrumb .pagination   37-overlay.css -> .modal
-     21-table.css    -> .table           39-media.css  -> .media
-     51-prose.css    -> .content         60-hero.css   -> .hero
-     70-footer.css   -> .footer          06-layout.css -> .columns/.container
+   A consumer who already runs Tailwind writes:
 
-   WHAT WAS KEPT, AND WHY
-   Everything Bulma has never had. This is the honest measure of what this
-   system is FOR, and it is most of it: the frame layer, the veils, the
-   effects, the interaction dresses, the code block and its syntax palette,
-   the badge, the indicator, the shelf, the filter, the masthead, the ad slot,
-   the contents, the timestamps, and the whole of 4-patterns — deck, timeline,
-   curriculum, thread, log, share, chat, kit, results. Bulma is a UI kit for
-   applications; none of this is application furniture.
+       @import "tailwindcss";
+       @import "@imswarnil/swarnil-design";
 
-   0-config still comes first: it declares the layer order, and that only binds
-   if the browser reads it before the first layered rule — Bulma's included.
+   …and their utilities are generated from THEIR markup, so they pay for the
+   classes they use and no others. If this file imported Tailwind itself, that
+   consumer would get it twice.
+
+   A consumer who does not want a build step links `dist/swarnil-design.css`,
+   which is src/bundle.css compiled — the same source with Tailwind on top of
+   it and a stated set of utilities baked in.
+
+   0-config MUST come first. It declares the sub-layer order, and that
+   declaration only binds if the browser reads it before the first layered rule.
+
+   Docs: https://design.imswarnil.com
    ========================================================================== */
 
-@import url('./0-config/index.css');
+/* ── daisyUI, minus the thirty components this repo builds itself ──────────
+   `themes: false` turns off daisyUI's own light/dark. That is a correctness
+   requirement, not a preference — see src/0-daisy/bridge.css.
 
-/* Bulma, wearing this system's hues, radii, type and timing. */
-@import url('../dist/bulma-base.css') layer(bulma);
-@import url('./0-bulma/bridge.css');
+   `exclude` is the more interesting half, and it exists because THE CASCADE
+   ALONE DOES NOT SETTLE A COLLISION. The layer order guarantees our `.hero`
+   beats daisyUI's `.hero`. It guarantees nothing about
 
-/* ── Foundation ───────────────────────────────────────────────────────────
-   The tokens stay: the bridge reads them, and so does everything below.
-   06-layout.css is out — .columns/.container/.grid are Bulma's job now. */
-@import url('./1-foundation/00-reset.css');
-@import url('./1-foundation/01-color.css');
-@import url('./1-foundation/02-typography.css');
-@import url('./1-foundation/03-space.css');
-@import url('./1-foundation/04-elevation.css');
-@import url('./1-foundation/05-motion.css');
-@import url('./1-foundation/06-layout.css');   /* minus .section — Bulma owns that */
-@import url('./1-foundation/07-pattern.css');
-@import url('./1-foundation/08-a11y.css');
-@import url('./1-foundation/09-shape.css');
-@import url('./1-foundation/10-frame.css');
-@import url('./1-foundation/11-icon.css');
-@import url('./1-foundation/12-background.css');
+       .hero > * { grid-column-start: 1; grid-row-start: 1 }
 
-/* ── Elements — the ones Bulma has no answer for ─────────────────────────── */
-@import url('./2-elements/20-badge.css');
-@import url('./2-elements/22-code.css');
-@import url('./2-elements/23-indicator.css');
-@import url('./2-elements/24-text.css');
-@import url('./2-elements/25-effect.css');
-@import url('./2-elements/26-veil.css');
-@import url('./2-elements/27-linkcard.css');
-@import url('./2-elements/28-interaction.css');
+   which is daisyUI stacking every child of a hero into one grid cell. We have
+   no competing rule for `.hero > *`, so it applied — and the landing page's
+   two-column hero rendered with the illustration on top of the headline. The
+   same shape was waiting in twenty other places: `.stack > *`, `.toast > *`,
+   `.footer > :not(script, style, template)`, `.card figure`, `.timeline > li`,
+   `.menu .dropdown-content`, `.table :where(...)`.
 
-/* ── Components — same test ──────────────────────────────────────────────── */
-@import url('./3-components/31-card.css');   /* .card is ours: 69 of its 71 classes have no Bulma peer */
-@import url('./3-components/34-alert.css');  /* zero collisions with Bulma */
-@import url('./3-components/37-overlay.css');/* zero collisions with Bulma */
-@import url('./3-components/39-media.css');  /* zero collisions — Bulma's .media is a comment thread, not a player */
-@import url('./3-components/38-disclosure.css');
-@import url('./3-components/40-codeplayer.css');
-@import url('./3-components/41-shelf.css');
-@import url('./3-components/42-filter.css');
-@import url('./3-components/43-masthead.css');
-@import url('./3-components/44-ad.css');
-@import url('./3-components/45-toc.css');
-@import url('./3-components/46-timestamps.css');
+   Chasing those one by one means a reset for every descendant daisyUI names,
+   forever, and a silent regression every time it names a new one. So we simply
+   do not ship the components we already build. Thirty names, gone from
+   daisyUI's output entirely: no collision to arbitrate, no leak to reset, and
+   a smaller bundle.
 
-/* ── Patterns — Bulma has none of these ─────────────────────────────────
-   Listed one by one rather than through the index, because 51-prose.css is
-   the exception: long-form body copy is Bulma's .content on this branch. */
-@import url('./4-patterns/50-deck.css');
-@import url('./4-patterns/51-timeline.css');
-@import url('./4-patterns/52-curriculum.css');
-@import url('./4-patterns/53-thread.css');
-@import url('./4-patterns/54-log.css');
-@import url('./4-patterns/55-share.css');
-@import url('./4-patterns/56-chat.css');
-@import url('./4-patterns/57-kit.css');
-@import url('./4-patterns/58-results.css');
+   WHAT REMAINS IS THE POINT OF HAVING daisyUI AT ALL — thirty-one components
+   this repo never built: drawer, swap, range, rating, toggle, checkbox, modal,
+   dropdown, breadcrumbs, dock, diff, calendar, mask, fab, validator and the
+   rest. Build one of them here and it belongs in the exclude list the same
+   day. */
+@plugin "daisyui" {
+	themes: false;
+	exclude: alert, avatar, badge, button, card, carousel, chat, collapse, countdown, fieldset, footer, hero, input, kbd, list, loading, menu, navbar, progress, radio, range, select, skeleton, stack, stat, steps, tab, table, timeline, toast;
+}
 
-/* ── Sections — hero and footer are Bulma's; these are not ───────────────── */
-@import url('./5-sections/62-stats.css');
-@import url('./5-sections/64-pricing.css');
-@import url('./5-sections/68-cta.css');
-@import url('./6-utilities/index.css');
+@import "./0-config/index.css";   /* layer order, @theme, @property      */
+@import "./0-daisy/bridge.css";   /* daisyUI's knobs, from our tokens    */
+@import "./1-foundation/index.css";
+@import "./2-elements/index.css";
+@import "./3-components/index.css";
+@import "./4-patterns/index.css";
+@import "./5-sections/index.css";
+@import "./6-utilities/index.css";  /* @utility — the few Tailwind lacks   */
+@import "./8-framework/index.css";  /* @utility — the page column and row  */

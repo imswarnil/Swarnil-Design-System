@@ -29,7 +29,7 @@ and an optional description, end sits after and is pushed to the far edge.
 <ul class="list w-lg">
   <li><a class="list__item" href="#i"><span class="list__lead"><span class="avatar avatar-sm">P</span></span><span class="list__body"><span class="list__title">Priya Nair</span><span class="list__desc">Left a comment on take 47</span></span><span class="list__end"><span class="list__meta">2m</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-right"/></svg></span></a></li>
   <li><a class="list__item" href="#i"><span class="list__lead"><span class="avatar avatar-sm">M</span></span><span class="list__body"><span class="list__title">Marco Ruiz</span><span class="list__desc">Subscribed to the course</span></span><span class="list__end"><span class="list__meta">1h</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-right"/></svg></span></a></li>
-  <li><a class="list__item" href="#i"><span class="list__lead"><span class="avatar avatar-sm">A</span></span><span class="list__body"><span class="list__title">Aisha Bello</span><span class="list__desc">Shared episode 12</span></span><span class="list__end"><span class="badge is-primary">New</span></span></a></li>
+  <li><a class="list__item" href="#i"><span class="list__lead"><span class="avatar avatar-sm">A</span></span><span class="list__body"><span class="list__title">Aisha Bello</span><span class="list__desc">Shared episode 12</span></span><span class="list__end"><span class="badge badge-accent">New</span></span></a></li>
 </ul>
 :::
 

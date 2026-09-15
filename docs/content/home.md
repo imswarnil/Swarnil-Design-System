@@ -1,28 +1,28 @@
 ---
 title: The design system for people who make things
 layout: home
-lead: A token-first, dependency-free CSS design system. Almost monochrome, so one colour can mean something.
+lead: A token-first design system on Tailwind CSS 4 and daisyUI. Almost monochrome, so one colour can mean something.
 ---
 
 <section class="band hero">
   <!-- Full-bleed footage behind the whole band. The id lives here and nowhere
        else; docs.js builds the iframe and skips it under reduced motion. -->
-  <span class="home__bg" data-hero-video="7OoSX3KbXOw" aria-hidden="true"></span>
+  <span class="hero__bg" data-hero-video="7OoSX3KbXOw" aria-hidden="true"></span>
 
-  <div>
-    <p class="subtitle is-6">MIT · v0.1 · Dependency-free CSS</p>
+  <div class="hero__copy">
+    <p class="hero__eyebrow">MIT · v0.2 · Tailwind 4 · daisyUI</p>
     <h1 class="hero__title">Decide once.<br />Then stop <em>deciding</em>.</h1>
-    <p class="hero__lead">A token-first CSS design system with no framework, no runtime and no build step. Change three variables and the whole thing rebrands — site, cards, thumbnails, end screens.</p>
-    <div class="hero__actions">
-      <a class="button is-primary is-medium" href="/introduction.html">Read the docs</a>
-      <a class="button is-link is-medium frame frame-sm frame-hover" href="https://bulma.io/documentation/elements/button/">Browse components</a>
+    <p class="hero__lead">A design system built on Tailwind 4 and daisyUI, with a token layer of its own on top. Change three variables and the whole thing rebrands — site, cards, thumbnails, end screens.</p>
+    <div class="hero__cta">
+      <a class="btn btn-primary btn-lg" href="/introduction.html">Read the docs</a>
+      <a class="btn btn-secondary btn-lg frame frame-sm frame-hover" href="/button.html">Browse components</a>
     </div>
-    <p class="help">No framework · No runtime · No build step required</p>
+    <p class="hero__fine">Tailwind 4 · daisyUI · No build step required</p>
   </div>
 
   <!-- The rig. Every colour is a system token, so it themes with the page
        instead of guessing at prefers-color-scheme like the old media/hero.svg. -->
-  <div class="hero__media" aria-hidden="true">
+  <div class="hero__art" aria-hidden="true">
     <svg class="rig" viewBox="0 0 440 500" fill="none" xmlns="http://www.w3.org/2000/svg">
       <!-- viewfinder -->
       <rect class="rig__plate" x="20" y="18" width="400" height="228" rx="14" />
@@ -63,51 +63,49 @@ lead: A token-first, dependency-free CSS design system. Almost monochrome, so on
 </section>
 
 <section class="band">
-  <div class="sec"><div class="block">
-  <p class="sec__eyebrow"><span class="home__take">TAKE 01</span>Why it exists</p>
+  <p class="sec__kicker"><span class="sec__take">TAKE 01</span>Why it exists</p>
   <h2 class="sec__title">Opinions, so you can stop having them</h2>
   <p class="sec__lead">Six decisions, made once and written down, so you are not standing at 2am asking whether this should be 16px or 20px.</p>
-  </div></div>
 
   <div class="feats">
     <article class="feat frame frame-hover">
       <span class="frame__tr"></span><span class="frame__bl"></span>
-      <span class="feat__scan bg-scanlines fx-scan fx-delay-1" aria-hidden="true"></span>
+      <span class="feat__ico"><svg class="icon"><use href="/icons/sprite.svg#i-box"/></svg></span>
       <h3>Token-first</h3>
       <p>Every value is a variable off a ladder. Nothing invents a number, so nothing drifts.</p>
     </article>
 
     <article class="feat frame frame-hover">
       <span class="frame__tr"></span><span class="frame__bl"></span>
-      <span class="feat__scan bg-scanlines fx-scan fx-delay-2" aria-hidden="true"></span>
+      <span class="feat__ico"><svg class="icon"><use href="/icons/sprite.svg#i-aperture"/></svg></span>
       <h3>One rationed accent</h3>
       <p>Near-monochrome ink, so a single colour can mean <em>live</em>. Attention is budgeted, not sprayed.</p>
     </article>
 
     <article class="feat frame frame-hover">
       <span class="frame__tr"></span><span class="frame__bl"></span>
-      <span class="feat__scan bg-scanlines fx-scan fx-delay-3" aria-hidden="true"></span>
+      <span class="feat__ico"><svg class="icon"><use href="/icons/sprite.svg#i-browser"/></svg></span>
       <h3>The platform first</h3>
       <p>Native <code class="code">&lt;dialog&gt;</code>, <code class="code">&lt;details&gt;</code> and the Popover API. Keyboard and focus come free.</p>
     </article>
 
     <article class="feat frame frame-hover">
       <span class="frame__tr"></span><span class="frame__bl"></span>
-      <span class="feat__scan bg-scanlines fx-scan fx-delay-4" aria-hidden="true"></span>
+      <span class="feat__ico"><svg class="icon"><use href="/icons/sprite.svg#i-activity"/></svg></span>
       <h3>Honest motion</h3>
       <p>Under 200ms for feedback, one property at a time, and every animation off under reduced motion.</p>
     </article>
 
     <article class="feat frame frame-hover">
       <span class="frame__tr"></span><span class="frame__bl"></span>
-      <span class="feat__scan bg-scanlines fx-scan fx-delay-5" aria-hidden="true"></span>
+      <span class="feat__ico"><svg class="icon"><use href="/icons/sprite.svg#i-moon"/></svg></span>
       <h3>Dark is not an inversion</h3>
       <p>Surfaces lift with light, hairlines go translucent, shadow becomes elevation. One block of tokens.</p>
     </article>
 
     <article class="feat frame frame-hover">
       <span class="frame__tr"></span><span class="frame__bl"></span>
-      <span class="feat__scan bg-scanlines fx-scan" aria-hidden="true"></span>
+      <span class="feat__ico"><svg class="icon"><use href="/icons/sprite.svg#i-type"/></svg></span>
       <h3>Mono means data</h3>
       <p>Timecodes, counts, dimensions, code. Never a sentence — and CI fails the build if that slips.</p>
     </article>
@@ -117,11 +115,9 @@ lead: A token-first, dependency-free CSS design system. Almost monochrome, so on
 <section class="band">
   <div class="install">
     <div>
-      <div class="sec"><div class="block">
-      <p class="sec__eyebrow"><span class="home__take">TAKE 02</span>Install</p>
+      <p class="sec__kicker"><span class="sec__take">TAKE 02</span>Install</p>
       <h2 class="sec__title">Three lines, any stack</h2>
       <p class="sec__lead">It is CSS. Link it, or import it. There is no configuration file and nothing to compile.</p>
-      </div></div>
     </div>
     <div>
 
@@ -138,34 +134,30 @@ lead: A token-first, dependency-free CSS design system. Almost monochrome, so on
 </section>
 
 <section class="band">
-  <div class="sec"><div class="block">
-  <p class="sec__eyebrow"><span class="home__take">TAKE 03</span>The two voices</p>
+  <p class="sec__kicker"><span class="sec__take">TAKE 03</span>The two voices</p>
   <h2 class="sec__title">Type that knows what it is saying</h2>
   <p class="sec__lead">Inter for display and for everything you read — including labels, which are the same face worn small and tracked. Hierarchy comes from weight, size and tracking, not from a second family. Monospace appears only where the content is data.</p>
-  </div></div>
 
   <div class="feats">
     <article class="feat">
-      <p class="t-label u-m-0 u-mb-2">A label · Inter</p>
-      <p class="t-small u-m-0">Uppercase and tracked is what makes a label read as a label. The monospace was never doing that work.</p>
+      <p class="t-label m-0 mb-2">A label · Inter</p>
+      <p class="t-small m-0">Uppercase and tracked is what makes a label read as a label. The monospace was never doing that work.</p>
     </article>
     <article class="feat">
-      <p class="t-data u-m-0 u-mb-2">TAKE 47 · 00:12:47</p>
-      <p class="t-small u-m-0">A timecode is data, so it takes the mono voice. This is the only kind of thing that does.</p>
+      <p class="t-data m-0 mb-2">TAKE 47 · 00:12:47</p>
+      <p class="t-small m-0">A timecode is data, so it takes the mono voice. This is the only kind of thing that does.</p>
     </article>
     <article class="feat">
-      <p class="spec-display spec-xl u-m-0 u-mb-2">Inter, at 600</p>
-      <p class="t-small u-m-0">Headlines, numbers, the mark. Tight tracking that closes further as it grows.</p>
+      <p class="spec-display spec-xl m-0 mb-2">Inter, at 600</p>
+      <p class="t-small m-0">Headlines, numbers, the mark. Tight tracking that closes further as it grows.</p>
     </article>
   </div>
 </section>
 
 <section class="band">
-  <div class="sec"><div class="block">
-  <p class="sec__eyebrow"><span class="home__take">TAKE 04</span>The broadcast layer</p>
+  <p class="sec__kicker"><span class="sec__take">TAKE 04</span>The broadcast layer</p>
   <h2 class="sec__title">The same tokens, on the stream</h2>
   <p class="sec__lead">Thumbnails, OG images, the starting-soon card, the lower third, the LIVE bug — every size in container units, so one design renders at 1280 for export and at 320 on this page. Change the accent and the channel follows.</p>
-  </div></div>
 
   <div class="feats">
     <div class="canvas canvas-yt">
@@ -191,15 +183,13 @@ lead: A token-first, dependency-free CSS design system. Almost monochrome, so on
       </div>
     </div>
   </div>
-  <p class="u-mt-6"><a class="button is-outlined" href="/canvas.html">See the broadcast layer</a> <a class="button is-ghost" href="https://bulma.io/documentation/">Or start from a page template</a></p>
+  <p class="mt-6"><a class="btn btn-outline" href="/canvas.html">See the broadcast layer</a> <a class="btn btn-ghost" href="/templates.html">Or start from a page template</a></p>
 </section>
 
 <section class="band">
-  <div class="sec"><div class="block">
-  <p class="sec__eyebrow"><span class="home__take">TAKE 05</span>The numbers</p>
+  <p class="sec__kicker"><span class="sec__take">TAKE 05</span>The numbers</p>
   <h2 class="sec__title">Small enough to read in an afternoon</h2>
   <p class="sec__lead">Every figure below is measured by the build, not claimed. When one drifts, CI knows before the page does.</p>
-  </div></div>
 
   <div class="stats">
     <div class="stats__item">
@@ -223,14 +213,12 @@ lead: A token-first, dependency-free CSS design system. Almost monochrome, so on
 
 <section class="band">
   <div class="close-band">
-    <div class="sec"><div class="block">
-    <p class="sec__eyebrow"><span class="home__take">TAKE 06</span>Open source</p>
+    <p class="sec__kicker"><span class="sec__take">TAKE 06</span>Open source</p>
     <h2 class="sec__title">Free forever. MIT.</h2>
-    </div></div>
     <p>Built in the open, for a site that actually ships. If it saves you a weekend, a star is plenty.</p>
-    <div class="hero__actions">
-      <a class="button is-primary is-medium" href="/introduction.html">Start reading</a>
-      <a class="button is-ghost is-medium" href="https://github.com/imswarnil/Swarnil-Design-System" rel="noopener">View on GitHub</a>
+    <div class="hero__cta">
+      <a class="btn btn-primary btn-lg" href="/introduction.html">Start reading</a>
+      <a class="btn btn-ghost btn-lg" href="https://github.com/imswarnil/Swarnil-Design-System" rel="noopener">View on GitHub</a>
     </div>
   </div>
 </section>

@@ -1,0 +1,346 @@
+/* =============================================================================
+   0 · THEME — this system's tokens, as Tailwind's theme
+
+   `@theme` is Tailwind 4's token API. Every variable declared here does two
+   things at once: it lands on `:root` like any custom property, AND Tailwind
+   generates the matching utilities from it. `--color-canvas` here is what
+   makes `bg-canvas`, `text-canvas`, `border-canvas` and `ring-canvas` exist,
+   with every variant (`hover:`, `md:`, `dark:`) for free.
+
+   That is the whole reason this file exists. The alternative — hand-writing a
+   `.u-bg-canvas` — gives you one class with no variants and no arbitrary-value
+   support, which is a worse version of a thing Tailwind already does.
+
+   ── TWO KINDS OF ENTRY, AND THE DIFFERENCE MATTERS ────────────────────────
+
+   ALIAS. Where our name and Tailwind's namespace differ, this file only
+   points one at the other and the declaration stays where it always was:
+
+       --color-canvas: var(--bg-canvas);      ← 01-color.css still owns it
+
+   CANONICAL. Where our name IS Tailwind's namespace — `--radius-*`,
+   `--text-*`, `--font-*`, `--leading-*`, `--tracking-*`, `--ease-*`,
+   `--shadow-*` — an alias would be circular (`--radius-card: var(--radius-card)`),
+   so THIS FILE IS THE DECLARATION SITE and the old `:root` block is gone from
+   the foundation file, which now carries a pointer here. One name, one home.
+
+   ── WHAT IS DELIBERATELY NOT TAKEN OVER ───────────────────────────────────
+
+   THE NUMERIC SPACING SCALE. `--space-1` … `--space-6` match Tailwind's
+   `0.25rem × n` exactly, but `--space-8` and up are fluid `clamp()`s. Mapping
+   them onto `--spacing-8` would make `p-8` fluid while `p-7`, `p-9` and `p-14`
+   stayed arithmetic — one ladder with two rules, which is worse than either.
+   Tailwind's scale is left alone. Our ladder is reachable two ways: components
+   read `var(--space-12)` as they always have, and a consumer writes
+   `p-(--space-12)`, which is Tailwind's own shorthand for the same thing.
+
+   TAILWIND'S COLOUR PALETTE. `bg-red-500` still works. The palette is a
+   utility, not a design decision — the same argument this system already makes
+   for its own tier-1 ramps — and deleting it would break the first thing
+   anyone tries. What tier 2 rations is what COMPONENTS may read, and that rule
+   is unchanged: a component reads `--fg-muted`, never `--ink-700`.
+
+   Layer: `theme`, Tailwind's own and the lowest there is. Paints nothing.
+   ========================================================================== */
+
+@theme {
+	/* ═══ COLOUR ════════════════════════════════════════════════════════════
+	   Aliases. 01-color.css owns every value; this only gives each one a
+	   utility. Both tiers are exposed, because a utility IS the escape hatch —
+	   but tier 2 is still the only thing a component may read. */
+
+	/* ── Tier 2 · surface ───────────────────────────────────────────────── */
+	--color-canvas:  var(--bg-canvas);
+	--color-surface: var(--bg-surface);
+	--color-raised:  var(--bg-raised);
+	--color-overlay: var(--bg-overlay);
+	--color-sunken:  var(--bg-sunken);
+	--color-muted:   var(--bg-muted);
+	--color-inverse: var(--bg-inverse);
+	--color-media:   var(--bg-media);
+	--color-scrim:   var(--bg-scrim);
+
+	/* ── Tier 2 · foreground ────────────────────────────────────────────── */
+	--color-fg:            var(--fg-default);
+	--color-fg-muted:      var(--fg-muted);
+	--color-fg-subtle:     var(--fg-subtle);
+	--color-fg-faint:      var(--fg-faint);
+	--color-fg-disabled:   var(--fg-disabled);
+	--color-fg-on-inverse: var(--fg-on-inverse);
+	--color-fg-on-accent:  var(--fg-on-accent);
+	--color-fg-accent:     var(--fg-accent);
+	--color-fg-link:       var(--fg-link);
+	--color-fg-link-hover: var(--fg-link-hover);
+
+	/* ── Tier 2 · line ──────────────────────────────────────────────────── */
+	--color-line:         var(--line-default);
+	--color-line-subtle:  var(--line-subtle);
+	--color-line-strong:  var(--line-strong);
+	--color-line-inverse: var(--line-inverse);
+	--color-line-accent:  var(--line-accent);
+
+	/* ── Tier 2 · the one accent ────────────────────────────────────────── */
+	--color-accent:          var(--accent);
+	--color-accent-hover:    var(--accent-hover);
+	--color-accent-press:    var(--accent-press);
+	--color-accent-soft:     var(--accent-soft);
+	--color-accent-soft-fg:  var(--accent-soft-fg);
+	--color-accent-ring:     var(--accent-ring);
+
+	/* ── Tier 2 · the quieter second voice ──────────────────────────────── */
+	--color-craft:      var(--craft);
+	--color-craft-soft: var(--craft-soft);
+	--color-craft-fg:   var(--craft-fg);
+
+	/* ── Tier 2 · status, four tones each ───────────────────────────────── */
+	--color-success-bg:    var(--success-bg);
+	--color-success-fg:    var(--success-fg);
+	--color-success-line:  var(--success-line);
+	--color-success:       var(--success-solid);
+
+	--color-info-bg:    var(--info-bg);
+	--color-info-fg:    var(--info-fg);
+	--color-info-line:  var(--info-line);
+	--color-info:       var(--info-solid);
+
+	--color-warning-bg:    var(--warning-bg);
+	--color-warning-fg:    var(--warning-fg);
+	--color-warning-line:  var(--warning-line);
+	--color-warning:       var(--warning-solid);
+
+	--color-danger-bg:    var(--danger-bg);
+	--color-danger-fg:    var(--danger-fg);
+	--color-danger-line:  var(--danger-line);
+	--color-danger:       var(--danger-solid);
+
+	/* ── Tier 2 · interaction and data ──────────────────────────────────── */
+	--color-hover-wash: var(--hover-wash);
+	--color-press-wash: var(--press-wash);
+
+	--color-chart-1: var(--chart-1);
+	--color-chart-2: var(--chart-2);
+	--color-chart-3: var(--chart-3);
+	--color-chart-4: var(--chart-4);
+	--color-chart-5: var(--chart-5);
+	--color-chart-6: var(--chart-6);
+
+	/* ── Tier 1 · the ramps ─────────────────────────────────────────────────
+	   Eleven steps of ink and eight hues, on one shared lightness ladder. A
+	   COMPONENT MAY NOT READ THESE — see PRINCIPLES #3. They are here so a
+	   consumer building something this system has not built can reach the
+	   palette without hard-coding a hex. */
+	--color-ink-0:    var(--ink-0);
+	--color-ink-25:   var(--ink-25);
+	--color-ink-50:   var(--ink-50);
+	--color-ink-100:  var(--ink-100);
+	--color-ink-200:  var(--ink-200);
+	--color-ink-300:  var(--ink-300);
+	--color-ink-400:  var(--ink-400);
+	--color-ink-500:  var(--ink-500);
+	--color-ink-600:  var(--ink-600);
+	--color-ink-700:  var(--ink-700);
+	--color-ink-800:  var(--ink-800);
+	--color-ink-900:  var(--ink-900);
+	--color-ink-950:  var(--ink-950);
+	--color-ink-1000: var(--ink-1000);
+
+	--color-signal-50:  var(--signal-50);
+	--color-signal-100: var(--signal-100);
+	--color-signal-200: var(--signal-200);
+	--color-signal-300: var(--signal-300);
+	--color-signal-400: var(--signal-400);
+	--color-signal-500: var(--signal-500);
+	--color-signal-600: var(--signal-600);
+	--color-signal-700: var(--signal-700);
+	--color-signal-800: var(--signal-800);
+	--color-signal-900: var(--signal-900);
+	--color-signal-950: var(--signal-950);
+
+	/* ── daisyUI's eleven slots ─────────────────────────────────────────────
+	   daisyUI names its theme colours `--color-*`, which is Tailwind's own
+	   namespace — so declaring them HERE means one definition serves both:
+	   `.btn-primary` (daisyUI) and `bg-primary` (Tailwind) are the same
+	   accent, and there is no second copy to drift out of step.
+
+	   `themes: false` in the entry turns off daisyUI's own light/dark, because
+	   its selector `[data-theme="light"]` outranks a plain `:root` and would
+	   win every colour on a site that sets `data-theme` for its own toggle.
+	   Everything below is one of ours, and ours are `light-dark()` pairs — so
+	   daisyUI follows the theme with no `data-theme` value to keep in step. */
+	--color-base-100:     var(--bg-canvas);
+	--color-base-200:     var(--bg-sunken);
+	--color-base-300:     var(--bg-muted);
+	--color-base-content: var(--fg-default);
+
+	/* This system rations itself to ONE accent, so `primary` and daisyUI's own
+	   `accent` slot are the same colour rather than pretending to a palette
+	   that does not exist. `secondary` is the craft tone — the quieter second
+	   voice — which is the only other hue tier 2 promotes. */
+	--color-primary:           var(--accent);
+	--color-primary-content:   var(--fg-on-accent);
+	--color-secondary:         var(--craft);
+	--color-secondary-content: var(--fg-on-accent);
+	--color-accent-content:    var(--fg-on-accent);
+	--color-neutral:           var(--bg-inverse);
+	--color-neutral-content:   var(--fg-on-inverse);
+
+	/* daisyUI spells danger `error`. Same token, both names, so `.alert-error`
+	   and `bg-danger` cannot disagree. */
+	--color-error:             var(--danger-solid);
+	--color-info-content:      var(--fg-on-accent);
+	--color-success-content:   var(--fg-on-accent);
+	--color-warning-content:   var(--fg-on-accent);
+	--color-error-content:     var(--fg-on-accent);
+
+	/* ═══ TYPE — CANONICAL ══════════════════════════════════════════════════
+	   Declared here, not in 02-typography.css, because `--font-*`, `--text-*`,
+	   `--leading-*` and `--tracking-*` are Tailwind's namespaces already and an
+	   alias would point at itself. 02-typography.css keeps the argument and the
+	   element rules; this keeps the numbers.
+
+	   Tailwind's own type scale is cleared first. Overriding `--text-lg`
+	   without clearing leaves Tailwind's paired `--text-lg--line-height`
+	   standing, so `text-lg` would take our size and Tailwind's leading — a
+	   pair from two different systems. Leading is this system's own axis and
+	   is set with `leading-*`, deliberately, so no size carries one. */
+	--text-*: initial;
+	--text-3xs:  0.625rem;    /* 10px · the floor. Data, and only data */
+	--text-2xs:  0.6875rem;   /* 11px */
+	--text-xs:   0.75rem;     /* 12px */
+	--text-sm:   0.875rem;    /* 14px */
+	--text-base: 1rem;        /* 16px */
+	--text-md:   1.0625rem;   /* 17px · long-form body */
+	--text-lg:   1.125rem;    /* 18px */
+	--text-xl:   1.25rem;     /* 20px */
+	--text-2xl:  clamp(1.375rem, 1.24rem + 0.60vw, 1.75rem);
+	--text-3xl:  clamp(1.625rem, 1.36rem + 1.18vw, 2.375rem);
+	--text-4xl:  clamp(2rem,     1.55rem + 2.00vw, 3.25rem);
+	--text-5xl:  clamp(2.5rem,   1.70rem + 3.55vw, 4.75rem);
+	--text-6xl:  clamp(3rem,     1.75rem + 5.55vw, 6.5rem);
+
+	/* Two families, four voices. Inter does display and body alike; mono
+	   appears only where the content is data — house rule 4, and
+	   scripts/audit-mono.py fails the build when it slips. */
+	--font-*: initial;
+	--font-body:    'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+	--font-display: var(--font-body);
+	--font-label:   var(--font-body);
+	--font-data:    var(--font-body);
+	--font-mono:    'IBM Plex Mono', ui-monospace, 'SF Mono', 'Cascadia Mono', monospace;
+	--font-slate:   var(--font-mono);
+	--font-sans:    var(--font-body);   /* so Tailwind's own `font-sans` is ours */
+
+	--leading-*: initial;
+	--leading-flat:    1;
+	--leading-tight:   1.1;
+	--leading-snug:    1.25;
+	--leading-normal:  1.5;
+	--leading-relaxed: 1.65;   /* the reading default */
+	--leading-loose:   1.85;
+
+	--tracking-*: initial;
+	--tracking-tighter: -0.035em;
+	--tracking-tight:   -0.02em;
+	--tracking-normal:  0em;
+	--tracking-wide:    0.02em;
+	--tracking-data:    0.05em;   /* Inter, small, numeric */
+	--tracking-label:   0.14em;   /* Inter, small, uppercase — the slate voice */
+	--tracking-widest:  0.16em;
+	--tracking-slate:   var(--tracking-label);
+
+	/* Weight is an alias: our name is `--weight-*`, Tailwind's namespace is
+	   `--font-weight-*`, so there is no circle to avoid. */
+	--font-weight-light:     var(--weight-light);
+	--font-weight-normal:    var(--weight-regular);
+	--font-weight-medium:    var(--weight-medium);
+	--font-weight-semibold:  var(--weight-semibold);
+	--font-weight-bold:      var(--weight-bold);
+
+	/* ═══ SHAPE — CANONICAL ═════════════════════════════════════════════════
+	   `--radius-*` is Tailwind's namespace and ours. Declared here; removed
+	   from 09-shape.css, which keeps borders, dots, z-index and the notch. */
+	--radius-*: initial;
+	--radius-none: 0;
+	--radius-xs:   2px;
+	--radius-sm:   4px;
+	--radius-md:   6px;
+	--radius-lg:   10px;
+	--radius-xl:   16px;
+	--radius-2xl:  24px;
+	--radius-full: 9999px;
+	--radius-pill: var(--radius-full);
+
+	/* Named for a job, so the shape of every card changes in one edit. */
+	--radius-card:    var(--radius-lg);
+	--radius-control: var(--radius-md);
+	--radius-media:   var(--radius-lg);
+	--radius-sheet:   var(--radius-2xl);
+
+	/* ═══ ELEVATION — CANONICAL ═════════════════════════════════════════════
+	   `--shadow-1` … `--shadow-4` were already aliases of `--elevation-*` in
+	   04-elevation.css; they move here so `shadow-2` is a real utility. The
+	   `--elevation-*` names stay where they are and remain what components
+	   read. */
+	--shadow-*: initial;
+	--shadow-1: var(--elevation-1);
+	--shadow-2: var(--elevation-2);
+	--shadow-3: var(--elevation-3);
+	--shadow-4: var(--elevation-4);
+	--shadow-media: 0 24px 64px -24px oklch(63% 0.19 34 / 0.28);
+
+	/* ═══ MOTION — CANONICAL ════════════════════════════════════════════════
+	   `--ease-*` is Tailwind's namespace. The durations stay in 05-motion.css
+	   because they are re-declared to 1ms under prefers-reduced-motion, which
+	   is a MEDIA QUERY — and `@theme` holds no conditionals. */
+	--ease-*: initial;
+	--ease-out:       cubic-bezier(0.22, 1, 0.36, 1);
+	--ease-inout:     cubic-bezier(0.65, 0, 0.35, 1);
+	--ease-in-out:    var(--ease-inout);   /* Tailwind's spelling of the same curve */
+	--ease-snap:      cubic-bezier(0.2, 0, 0, 1);
+	--ease-overshoot: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+	/* ═══ LAYOUT — ALIASES ══════════════════════════════════════════════════ */
+
+	/* ⚠️ THE BREAKPOINTS ARE LITERALS, AND THEY HAVE TO BE.
+	   These were `var(--bp-md)` for about ten minutes, which compiled without
+	   a word of complaint into
+
+	       @media (width >= var(--bp-md)) { … }
+
+	   and `var()` IS NOT LEGAL IN A MEDIA QUERY. The browser drops the whole
+	   block, so every `md:`, `lg:` and `xl:` rule in the bundle silently did
+	   nothing — a two-column layout that was one column at every width, with
+	   the correct CSS sitting right there in the file.
+
+	   A media query is evaluated before the cascade exists; there is no element
+	   to resolve a custom property against. So the numbers live here, and
+	   03-space.css's `--bp-*` read back from them. One number, and the one that
+	   a media query can actually use is the one that is written down. */
+	--breakpoint-*: initial;
+	--breakpoint-sm:  30rem;    /* 480px  · phone landscape */
+	--breakpoint-md:  48rem;    /* 768px  · tablet — navs collapse below this */
+	--breakpoint-lg:  64rem;    /* 1024px · laptop — sidebars appear */
+	--breakpoint-xl:  80rem;    /* 1280px · desktop — content max reached */
+	--breakpoint-2xl: 96rem;    /* 1536px · wide — gutters grow, content does not */
+
+	/* `--width-*` → `max-w-*`. The measures a page is allowed to be. */
+	--container-xs:  var(--width-xs);
+	--container-sm:  var(--width-sm);
+	--container-md:  var(--width-md);
+	--container-lg:  var(--width-lg);
+	--container-xl:  var(--width-xl);
+	--container-2xl: var(--width-2xl);
+
+	/* The reading measures, so `max-w-prose` is this system's prose and not
+	   Tailwind's 65ch guess. */
+	--container-prose:   var(--measure-prose);
+	--container-lead:    var(--measure-lead);
+	--container-ui:      var(--measure-ui);
+	--container-narrow:  var(--measure-narrow);
+
+	/* The one spacing name worth taking over: the page gutter is a decision,
+	   not a step on a ladder, so `px-gutter` should exist. Everything else on
+	   the ladder is reached with `p-(--space-12)`. */
+	--spacing-gutter: var(--gutter);
+	--spacing-tap:    var(--tap-min);
+}

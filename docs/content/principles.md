@@ -38,8 +38,8 @@ second hue amends the argument; it is not a tweak.
 <div class="cluster">
   <span class="badge badge-live">Live</span>
   <span class="badge">Draft</span>
-  <span class="badge is-primary">Accent</span>
-  <span class="badge is-success">Shipped</span>
+  <span class="badge badge-accent">Accent</span>
+  <span class="badge badge-success">Shipped</span>
 </div>
 :::
 

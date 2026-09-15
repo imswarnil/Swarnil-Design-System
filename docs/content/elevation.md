@@ -50,13 +50,13 @@ used, so the choice is a comparison rather than a guess.
     <p class="t-label">0 — flush content</p>
     <div class="grid-2 cq-card">
       <article class="card"><div class="card__body"><h4 class="card__title">In a list</h4><p class="card__excerpt">A card in a feed sits on the page. It has a hairline; it does not float.</p></div></article>
-      <div class="u-p-5 u-bg-sunken u-rounded-lg"><span class="t-small t-muted">A sunken panel is a hole, not a lift. Depth downward needs no shadow at all.</span></div>
+      <div class="p-5 bg-sunken rounded-lg"><span class="t-small t-muted">A sunken panel is a hole, not a lift. Depth downward needs no shadow at all.</span></div>
     </div>
   </div>
 
   <div class="stack stack-sm">
     <p class="t-label">1 — a resting card that must separate from a busy ground</p>
-    <div class="bg-sunken bg-graph u-p-6 u-rounded-lg">
+    <div class="bg-sunken bg-graph p-6 rounded-lg">
       <div class="grid-2 cq-card">
         <article class="card card-raised"><div class="card__body"><h4 class="card__title">On a texture</h4><p class="card__excerpt">Against a patterned band the hairline disappears, so the card borrows one step.</p></div></article>
         <article class="card"><div class="card__body"><h4 class="card__title">Without it</h4><p class="card__excerpt">The same card with no elevation — legible, but it reads as part of the band.</p></div></article>
@@ -69,8 +69,8 @@ used, so the choice is a comparison rather than a guess.
     <div class="cluster cluster-lg">
       <article class="card card-hover-lift w-sm"><div class="card__body"><h4 class="card__title">Point at me</h4><p class="card__excerpt">Rest is a hairline; hover is step 2. The change is the affordance.</p></div></article>
       <div class="viewtoggle" role="group" aria-label="View">
-        <label class="viewtoggle__opt"><input type="radio" name="e-view" value="grid" checked /><span class="u-sr-only">Grid</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-grid"/></svg></label>
-        <label class="viewtoggle__opt"><input type="radio" name="e-view" value="list" /><span class="u-sr-only">List</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-menu"/></svg></label>
+        <label class="viewtoggle__opt"><input type="radio" name="e-view" value="grid" checked /><span class="sr-only">Grid</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-grid"/></svg></label>
+        <label class="viewtoggle__opt"><input type="radio" name="e-view" value="list" /><span class="sr-only">List</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-menu"/></svg></label>
       </div>
     </div>
   </div>
@@ -78,18 +78,18 @@ used, so the choice is a comparison rather than a guess.
   <div class="stack stack-sm">
     <p class="t-label">3 — menus, popovers, tooltips: things that sit over the page but do not own it</p>
     <div class="cluster">
-      <button class="button is-outlined" type="button" popovertarget="elev-pop">Open a popover</button>
-      <div class="pop pop-sm" id="elev-pop" popover><div class="pop__body"><p class="t-small u-m-0">Step 3. Above the page, but the page is still yours — nothing dims.</p></div></div>
+      <button class="btn btn-outline" type="button" popovertarget="elev-pop">Open a popover</button>
+      <div class="pop pop-sm" id="elev-pop" popover><div class="pop__body"><p class="t-small m-0">Step 3. Above the page, but the page is still yours — nothing dims.</p></div></div>
       <span class="tipcard tipcard-below" style="position: static; opacity: 1; translate: none">A tooltip, at the same step</span>
     </div>
   </div>
 
   <div class="stack stack-sm">
     <p class="t-label">4 — the dialog, which does own the page</p>
-    <div class="u-p-6 u-bg-sunken u-rounded-lg">
-      <div class="card card-raised u-mx-auto" style="max-inline-size: 26rem; box-shadow: var(--elevation-4)">
+    <div class="p-6 bg-sunken rounded-lg">
+      <div class="card card-raised mx-auto" style="max-inline-size: 26rem; box-shadow: var(--elevation-4)">
         <div class="card__body"><h4 class="card__title">Delete take 48?</h4><p class="card__excerpt">Step 4 is the top of the ladder, and the only thing that earns it is a modal — because a modal has taken the page away and has to look like it.</p></div>
-        <div class="card__actions"><button class="button is-ghost is-small" type="button">Cancel</button><button class="button is-danger is-small" type="button">Delete</button></div>
+        <div class="card__actions"><button class="btn btn-ghost btn-sm" type="button">Cancel</button><button class="btn btn-danger btn-sm" type="button">Delete</button></div>
       </div>
     </div>
   </div>
