@@ -29,6 +29,7 @@ git clone https://github.com/imswarnil/Swarnil-Design-System
 cd swarnil-design
 npm install
 npm run dev        # http://localhost:8080
+npm run stop       # stop it and free the port again
 ```
 
 ## Adding or changing a component
