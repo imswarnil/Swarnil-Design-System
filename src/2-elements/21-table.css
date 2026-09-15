@@ -11,12 +11,7 @@
    cannot fit must SCROLL or STACK — the page never scrolls sideways.
 
    .dl is the same argument applied to a spec sheet: the term is a label, the
-   value is a sentence. .steps is a list that counts, for guides and
-   curricula; the count is data, the done state is [data-done].
-
-   COMPOSITION WARNING
-   .steps spends ::before on the counter; .table-stack spends td::before on
-   the stacked label.
+   value is a sentence.
 
    Layer: elements.
    ========================================================================== */
@@ -234,56 +229,4 @@
 		.dl-lined > dt { border-block-end: 0; padding-block-end: 0; }
 	}
 
-	/* ── .steps — a list that counts ───────────────────────────────────── */
-
-	.steps {
-		--step-size: 1.8rem;
-		--step-gap: var(--space-6);
-		counter-reset: step;
-		list-style: none;
-		display: flex;
-		flex-direction: column;
-		margin: 0;
-		padding: 0;
-	}
-
-	.steps > li {
-		counter-increment: step;
-		position: relative;
-		margin-inline-start: calc(var(--step-size) / 2);
-		padding: 0 0 var(--step-gap) calc(var(--step-size) / 2 + var(--space-4));
-		border-inline-start: var(--border-hair) solid var(--line-default);
-	}
-
-	.steps > li:last-child { border-inline-start-color: transparent; padding-block-end: 0; }
-
-	/* The counter is data. */
-	.steps > li::before {
-		content: counter(step, decimal-leading-zero);
-		position: absolute;
-		inset-inline-start: calc(var(--step-size) / -2);
-		inset-block-start: 0;
-		display: grid;
-		place-items: center;
-		width: var(--step-size);
-		height: var(--step-size);
-		border: var(--border-hair) solid var(--line-default);
-		border-radius: var(--radius-full);
-		background: var(--bg-surface);
-		font-family: var(--font-data);
-		font-weight: var(--weight-light);
-		font-size: var(--text-2xs);
-		letter-spacing: var(--tracking-data);
-		font-variant-numeric: tabular-nums;
-		color: var(--fg-subtle);
-	}
-
-	.steps > li[data-done] { border-inline-start-color: var(--accent); }
-	.steps > li[data-done]::before { content: '✓'; border-color: var(--accent); background: var(--accent); color: var(--fg-on-accent); }
-	.steps > li[aria-current='step']::before { border-color: var(--accent); color: var(--accent); box-shadow: var(--accent-ring); }
-
-	.steps__title { display: block; font-weight: var(--weight-semibold); color: var(--fg-default); line-height: var(--step-size); }
-	.steps__body { display: block; margin-block-start: var(--space-1); font-size: var(--text-sm); color: var(--fg-muted); }
-
-	.steps-compact { --step-gap: var(--space-3); --step-size: 1.5rem; }
 }
