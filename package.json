@@ -82,7 +82,8 @@
     "check": "npm run lint && npm run build && npm run audit && npm run size",
     "clean": "rm -rf dist site",
     "prepublishOnly": "npm run css",
-    "serve": "node scripts/serve.mjs"
+    "serve": "node scripts/serve.mjs",
+    "stop": "node scripts/stop.mjs"
   },
   "dependencies": {
     "daisyui": "^5.7.32"

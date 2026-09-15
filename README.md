@@ -97,6 +97,7 @@ Then rebrand in one rule, outside every layer:
 ```bash
 npm install
 npm run dev      # http://localhost:8080
+npm run stop     # stop it and free the port
 npm run build    # dist/ + site/
 npm run lint     # stylelint, zero errors
 npm run audit    # mono-voice + class audits
