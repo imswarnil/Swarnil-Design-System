@@ -30,7 +30,7 @@
    Layer: patterns.
    ========================================================================== */
 
-@layer patterns {
+@layer utilities.sds.patterns {
 
 	.timeline {
 		--timeline-node: 1.45rem;

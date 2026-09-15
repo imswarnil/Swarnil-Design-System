@@ -36,7 +36,7 @@ twenty-first.
 
 :::demo On text and links
 <div class="stack">
-  <p class="t-lead u-m-0">A row of <a class="ix-underline" href="#i">ix-underline</a>, an <a class="ix-arrow" href="#i">ix-arrow <svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-right"/></svg></a>, and a <a class="ix-color" href="#i">ix-color</a> that is grey until touched.</p>
+  <p class="t-lead m-0">A row of <a class="ix-underline" href="#i">ix-underline</a>, an <a class="ix-arrow" href="#i">ix-arrow <svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-right"/></svg></a>, and a <a class="ix-color" href="#i">ix-color</a> that is grey until touched.</p>
   <div class="cluster">
     <a class="btn btn-outline ix-underline" href="#i">ix-underline</a>
     <a class="btn btn-ghost ix-arrow" href="#i">ix-arrow <svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-right"/></svg></a>
@@ -48,14 +48,14 @@ twenty-first.
 
 :::demo On footage — where most of them belong
 <div class="grid-3">
-  <figure class="figure u-m-0 ix-zoom u-rounded-lg u-overflow-hidden"><img src="/assets/media/road.jpg" alt="" /><figcaption class="figure__caption">ix-zoom — only the picture moves</figcaption></figure>
-  <figure class="figure u-m-0 ix-shine u-rounded-lg u-overflow-hidden"><img src="/assets/media/coast.jpg" alt="" /><figcaption class="figure__caption">ix-shine — a light passes across</figcaption></figure>
-  <figure class="figure u-m-0 ix-scan u-rounded-lg u-overflow-hidden"><img src="/assets/media/studio.jpg" alt="" /><figcaption class="figure__caption">ix-scan — the tape head passes over</figcaption></figure>
-  <figure class="figure u-m-0 ix-color u-rounded-lg u-overflow-hidden"><img src="/assets/media/peak.jpg" alt="" /><figcaption class="figure__caption">ix-color — grey until touched</figcaption></figure>
-  <figure class="figure u-m-0 ix-scan ix-scan-light u-rounded-lg u-overflow-hidden"><img src="/assets/media/night.jpg" alt="" /><figcaption class="figure__caption">ix-scan-light — over dark footage</figcaption></figure>
-  <div class="ix-reveal u-rounded-lg u-overflow-hidden" style="position: relative">
+  <figure class="figure m-0 ix-zoom rounded-lg overflow-hidden"><img src="/assets/media/road.jpg" alt="" /><figcaption class="figure__caption">ix-zoom — only the picture moves</figcaption></figure>
+  <figure class="figure m-0 ix-shine rounded-lg overflow-hidden"><img src="/assets/media/coast.jpg" alt="" /><figcaption class="figure__caption">ix-shine — a light passes across</figcaption></figure>
+  <figure class="figure m-0 ix-scan rounded-lg overflow-hidden"><img src="/assets/media/studio.jpg" alt="" /><figcaption class="figure__caption">ix-scan — the tape head passes over</figcaption></figure>
+  <figure class="figure m-0 ix-color rounded-lg overflow-hidden"><img src="/assets/media/peak.jpg" alt="" /><figcaption class="figure__caption">ix-color — grey until touched</figcaption></figure>
+  <figure class="figure m-0 ix-scan ix-scan-light rounded-lg overflow-hidden"><img src="/assets/media/night.jpg" alt="" /><figcaption class="figure__caption">ix-scan-light — over dark footage</figcaption></figure>
+  <div class="ix-reveal rounded-lg overflow-hidden" style="position: relative">
     <img src="/assets/media/city.jpg" alt="" style="display: block; width: 100%" />
-    <div class="ix-reveal__hidden glass glass-dark u-p-3 cluster cluster-sm">
+    <div class="ix-reveal__hidden glass glass-dark p-3 cluster cluster-sm">
       <button class="btn btn-sm btn-primary" type="button">Play</button>
       <button class="btn btn-sm btn-ghost" type="button">Save</button>
     </div>
@@ -65,10 +65,10 @@ twenty-first.
 
 :::demo On a group — the siblings step back when one is chosen
 <div class="grid-4 ix-dim">
-  <figure class="figure u-m-0 u-rounded-lg u-overflow-hidden"><img src="/assets/media/desk.jpg" alt="" /></figure>
-  <figure class="figure u-m-0 u-rounded-lg u-overflow-hidden"><img src="/assets/media/camera.jpg" alt="" /></figure>
-  <figure class="figure u-m-0 u-rounded-lg u-overflow-hidden"><img src="/assets/media/studio.jpg" alt="" /></figure>
-  <figure class="figure u-m-0 u-rounded-lg u-overflow-hidden"><img src="/assets/media/code.jpg" alt="" /></figure>
+  <figure class="figure m-0 rounded-lg overflow-hidden"><img src="/assets/media/desk.jpg" alt="" /></figure>
+  <figure class="figure m-0 rounded-lg overflow-hidden"><img src="/assets/media/camera.jpg" alt="" /></figure>
+  <figure class="figure m-0 rounded-lg overflow-hidden"><img src="/assets/media/studio.jpg" alt="" /></figure>
+  <figure class="figure m-0 rounded-lg overflow-hidden"><img src="/assets/media/code.jpg" alt="" /></figure>
 </div>
 :::
 

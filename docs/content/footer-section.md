@@ -11,7 +11,7 @@ without links is a dead end wearing a copyright line.
 ## The full footer
 
 :::demo
-<footer class="footer u-rounded-lg">
+<footer class="footer rounded-lg">
   <div class="center">
     <div class="footer__top">
       <div>
@@ -32,7 +32,7 @@ without links is a dead end wearing a copyright line.
 ## Minimal
 
 :::demo For a one-pager or a tool
-<footer class="footer footer-minimal u-rounded-lg">
+<footer class="footer footer-minimal rounded-lg">
   <div class="center">
     <div class="footer__bottom">
       <p class="footer__fine">MIT · © 2026</p>
@@ -50,7 +50,7 @@ wordmark is decoration, so it is `aria-hidden`: the accessible name is already
 in `.footer__brand` at the top.
 
 :::demo Every part, on the dark close
-<footer class="footer footer-inverse u-rounded-lg">
+<footer class="footer footer-inverse rounded-lg">
   <div class="center">
     <div class="footer__top">
       <div>
@@ -62,7 +62,7 @@ in `.footer__brand` at the top.
           <a class="btn btn-social btn-sm btn-icon" href="#i" aria-label="RSS"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-rss"/></svg></a>
         </div>
         <form class="footer__form" action="#i" onsubmit="return false">
-          <label class="u-sr-only" for="f-mail">Email</label>
+          <label class="sr-only" for="f-mail">Email</label>
           <input class="input input-sm" id="f-mail" type="email" placeholder="you@studio.tv" />
           <button class="btn btn-secondary btn-sm" type="submit">Subscribe</button>
         </form>
@@ -89,7 +89,7 @@ in `.footer__brand` at the top.
 ## Centred, and compact
 
 :::demo `.footer-center` with `.footer-compact` and the solid wordmark
-<footer class="footer footer-center footer-compact u-rounded-lg">
+<footer class="footer footer-center footer-compact rounded-lg">
   <div class="center">
     <div class="footer__top">
       <div>

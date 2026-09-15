@@ -55,7 +55,7 @@
    Layer: components.
    ========================================================================== */
 
-@layer components {
+@layer utilities.sds.components {
 
 	.ad {
 		--ad-h: 15.625rem;              /* 250px — the medium rectangle       */

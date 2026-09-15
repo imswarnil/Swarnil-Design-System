@@ -18,3 +18,6 @@ dist/
 
 # docs/ is SOURCE and is committed. site/ is the built output.
 site/
+
+# The dev server's lock, so it can reclaim its own port after a crash.
+.dev-server.pid

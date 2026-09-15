@@ -22,7 +22,7 @@
    Layer: sections.
    ========================================================================== */
 
-@layer sections {
+@layer utilities.sds.sections {
 
 	.canvas {
 		--canvas-ratio: 16 / 9;

@@ -8,7 +8,7 @@
    Layer: reset — the lowest. It beats nothing, which is the point.
    ========================================================================== */
 
-@layer reset {
+@layer base {
 
 	*, *::before, *::after { box-sizing: border-box; }
 

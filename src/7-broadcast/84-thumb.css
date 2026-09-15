@@ -27,7 +27,7 @@
    Layer: sections.
    ========================================================================== */
 
-@layer sections {
+@layer utilities.sds.sections {
 
 	.thumb {
 		--thumb-pad: 6cqi;

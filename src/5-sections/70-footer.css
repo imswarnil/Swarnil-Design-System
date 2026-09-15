@@ -8,7 +8,7 @@
    Layer: sections.
    ========================================================================== */
 
-@layer sections {
+@layer utilities.sds.sections {
 
 	.footer {
 		--footer-pad: var(--space-12);

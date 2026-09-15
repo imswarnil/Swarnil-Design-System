@@ -50,7 +50,7 @@ Icons inherit `currentColor` — colour the text, the icon follows. Beside text,
 centre instead of floating:
 
 :::demo
-<p class="u-m-0">Recorded <svg class="icon icon-sm icon-inline"><use href="/icons/sprite.svg#i-record"/></svg> live from <span class="t-accent"><svg class="icon icon-sm icon-inline"><use href="/icons/sprite.svg#i-camera"/></svg> the studio</span>.</p>
+<p class="m-0">Recorded <svg class="icon icon-sm icon-inline"><use href="/icons/sprite.svg#i-record"/></svg> live from <span class="t-accent"><svg class="icon icon-sm icon-inline"><use href="/icons/sprite.svg#i-camera"/></svg> the studio</span>.</p>
 :::
 
 ## Solid, for active states

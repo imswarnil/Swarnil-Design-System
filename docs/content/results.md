@@ -51,8 +51,8 @@ without its scripts.
     <p class="filterbar__count"><strong>3</strong> of 214</p>
     <div class="filterbar__actions">
       <div class="viewtoggle" role="group" aria-label="View">
-        <label class="viewtoggle__opt" title="Grid"><input type="radio" name="v-live" value="grid" checked /><span class="u-sr-only">Grid</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-grid"/></svg></label>
-        <label class="viewtoggle__opt" title="List"><input type="radio" name="v-live" value="list" /><span class="u-sr-only">List</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-menu"/></svg></label>
+        <label class="viewtoggle__opt" title="Grid"><input type="radio" name="v-live" value="grid" checked /><span class="sr-only">Grid</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-grid"/></svg></label>
+        <label class="viewtoggle__opt" title="List"><input type="radio" name="v-live" value="list" /><span class="sr-only">List</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-menu"/></svg></label>
       </div>
     </div>
   </div>

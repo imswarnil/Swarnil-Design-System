@@ -66,10 +66,10 @@ the middle instead of the start.
 :::demo
 <div class="carousel carousel-peek carousel-center">
   <div class="carousel__track">
-    <div class="carousel__slide"><div class="card"><div class="card__body"><p class="t-label">Course</p><p class="u-semibold">Lighting for one-person crews</p></div></div></div>
-    <div class="carousel__slide"><div class="card"><div class="card__body"><p class="t-label">Course</p><p class="u-semibold">Audio that does not need fixing</p></div></div></div>
-    <div class="carousel__slide"><div class="card"><div class="card__body"><p class="t-label">Course</p><p class="u-semibold">Thumbnails people click</p></div></div></div>
-    <div class="carousel__slide"><div class="card"><div class="card__body"><p class="t-label">Course</p><p class="u-semibold">Editing to the beat</p></div></div></div>
+    <div class="carousel__slide"><div class="card"><div class="card__body"><p class="t-label">Course</p><p class="font-semibold">Lighting for one-person crews</p></div></div></div>
+    <div class="carousel__slide"><div class="card"><div class="card__body"><p class="t-label">Course</p><p class="font-semibold">Audio that does not need fixing</p></div></div></div>
+    <div class="carousel__slide"><div class="card"><div class="card__body"><p class="t-label">Course</p><p class="font-semibold">Thumbnails people click</p></div></div></div>
+    <div class="carousel__slide"><div class="card"><div class="card__body"><p class="t-label">Course</p><p class="font-semibold">Editing to the beat</p></div></div></div>
   </div>
 </div>
 :::
@@ -81,11 +81,11 @@ Five more, each answering a question the first three do not.
 :::demo `.carousel-3` with `.carousel-free` — a browse, not a step-through
 <div class="carousel carousel-3 carousel-free">
   <div class="carousel__track">
-    <figure class="carousel__slide figure u-m-0"><img src="/assets/media/coast.jpg" alt="" /></figure>
-    <figure class="carousel__slide figure u-m-0"><img src="/assets/media/peak.jpg" alt="" /></figure>
-    <figure class="carousel__slide figure u-m-0"><img src="/assets/media/city.jpg" alt="" /></figure>
-    <figure class="carousel__slide figure u-m-0"><img src="/assets/media/road.jpg" alt="" /></figure>
-    <figure class="carousel__slide figure u-m-0"><img src="/assets/media/night.jpg" alt="" /></figure>
+    <figure class="carousel__slide figure m-0"><img src="/assets/media/coast.jpg" alt="" /></figure>
+    <figure class="carousel__slide figure m-0"><img src="/assets/media/peak.jpg" alt="" /></figure>
+    <figure class="carousel__slide figure m-0"><img src="/assets/media/city.jpg" alt="" /></figure>
+    <figure class="carousel__slide figure m-0"><img src="/assets/media/road.jpg" alt="" /></figure>
+    <figure class="carousel__slide figure m-0"><img src="/assets/media/night.jpg" alt="" /></figure>
   </div>
 </div>
 :::
@@ -97,11 +97,11 @@ width, so it stays two-up or three-up at every size until it stops fitting.
 :::demo `.carousel-tall` — a rail of 9:16
 <div class="carousel carousel-tall">
   <div class="carousel__track">
-    <div class="carousel__slide ratio ratio-story u-rounded-lg u-overflow-hidden"><img src="/assets/media/portrait.jpg" alt="" /></div>
-    <div class="carousel__slide ratio ratio-story u-rounded-lg u-overflow-hidden"><img src="/assets/media/night.jpg" alt="" /></div>
-    <div class="carousel__slide ratio ratio-story u-rounded-lg u-overflow-hidden"><img src="/assets/media/peak.jpg" alt="" /></div>
-    <div class="carousel__slide ratio ratio-story u-rounded-lg u-overflow-hidden"><img src="/assets/media/coast.jpg" alt="" /></div>
-    <div class="carousel__slide ratio ratio-story u-rounded-lg u-overflow-hidden"><img src="/assets/media/city.jpg" alt="" /></div>
+    <div class="carousel__slide ratio ratio-story rounded-lg overflow-hidden"><img src="/assets/media/portrait.jpg" alt="" /></div>
+    <div class="carousel__slide ratio ratio-story rounded-lg overflow-hidden"><img src="/assets/media/night.jpg" alt="" /></div>
+    <div class="carousel__slide ratio ratio-story rounded-lg overflow-hidden"><img src="/assets/media/peak.jpg" alt="" /></div>
+    <div class="carousel__slide ratio ratio-story rounded-lg overflow-hidden"><img src="/assets/media/coast.jpg" alt="" /></div>
+    <div class="carousel__slide ratio ratio-story rounded-lg overflow-hidden"><img src="/assets/media/city.jpg" alt="" /></div>
   </div>
 </div>
 :::
@@ -115,10 +115,10 @@ two instead.
 :::demo Thumbnails: the picture tells you which one you are going to
 <div class="carousel carousel-full">
   <div class="carousel__track">
-    <figure class="carousel__slide figure u-m-0" id="cg-1"><img src="/assets/media/coast.jpg" alt="" /><figcaption class="figure__caption">Day 1 — the coast road</figcaption></figure>
-    <figure class="carousel__slide figure u-m-0" id="cg-2"><img src="/assets/media/road.jpg" alt="" /><figcaption class="figure__caption">Day 3 — inland</figcaption></figure>
-    <figure class="carousel__slide figure u-m-0" id="cg-3"><img src="/assets/media/city.jpg" alt="" /><figcaption class="figure__caption">Day 6 — the city at dusk</figcaption></figure>
-    <figure class="carousel__slide figure u-m-0" id="cg-4"><img src="/assets/media/night.jpg" alt="" /><figcaption class="figure__caption">Day 6 — and after dark</figcaption></figure>
+    <figure class="carousel__slide figure m-0" id="cg-1"><img src="/assets/media/coast.jpg" alt="" /><figcaption class="figure__caption">Day 1 — the coast road</figcaption></figure>
+    <figure class="carousel__slide figure m-0" id="cg-2"><img src="/assets/media/road.jpg" alt="" /><figcaption class="figure__caption">Day 3 — inland</figcaption></figure>
+    <figure class="carousel__slide figure m-0" id="cg-3"><img src="/assets/media/city.jpg" alt="" /><figcaption class="figure__caption">Day 6 — the city at dusk</figcaption></figure>
+    <figure class="carousel__slide figure m-0" id="cg-4"><img src="/assets/media/night.jpg" alt="" /><figcaption class="figure__caption">Day 6 — and after dark</figcaption></figure>
   </div>
   <div class="carousel__thumbs">
     <a class="carousel__thumb" href="#cg-1" aria-current="true" aria-label="Day 1"><img src="/assets/media/coast.jpg" alt="" /></a>
@@ -132,10 +132,10 @@ two instead.
 :::demo A count, between the two arrows — for a rail of forty
 <div class="carousel carousel-peek">
   <div class="carousel__track">
-    <figure class="carousel__slide figure u-m-0"><img src="/assets/media/desk.jpg" alt="" /></figure>
-    <figure class="carousel__slide figure u-m-0"><img src="/assets/media/studio.jpg" alt="" /></figure>
-    <figure class="carousel__slide figure u-m-0"><img src="/assets/media/code.jpg" alt="" /></figure>
-    <figure class="carousel__slide figure u-m-0"><img src="/assets/media/camera.jpg" alt="" /></figure>
+    <figure class="carousel__slide figure m-0"><img src="/assets/media/desk.jpg" alt="" /></figure>
+    <figure class="carousel__slide figure m-0"><img src="/assets/media/studio.jpg" alt="" /></figure>
+    <figure class="carousel__slide figure m-0"><img src="/assets/media/code.jpg" alt="" /></figure>
+    <figure class="carousel__slide figure m-0"><img src="/assets/media/camera.jpg" alt="" /></figure>
   </div>
   <div class="carousel__nav">
     <button class="btn btn-ghost btn-sm btn-icon" type="button" aria-label="Previous"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-left"/></svg></button>

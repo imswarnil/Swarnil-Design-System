@@ -22,115 +22,110 @@ try {
   if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   document.documentElement.dataset.theme = t;
 } catch (e) { document.documentElement.dataset.theme = 'light'; }
-/* The nav's collapsed state, for the same reason and in the same breath as the
-   theme: set after paint, the sidebar renders at 16rem and snaps to 3.5rem in
-   front of you on every single navigation. */
-try {
-  if (localStorage.getItem('sds-nav') === 'collapsed') document.documentElement.dataset.nav = 'collapsed';
-} catch (e) {}
 </script>
 
 <!-- Self-hosted, variable, latin-only preload: the one face every page paints
      with. Mono and latin-ext load on demand from fonts.css. -->
 <link rel="preload" href="/assets/fonts/inter-100-900-latin.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="/assets/fonts.css{v}" />
-{styles}
-{scripts}
+
+<!-- ONE STYLESHEET. Tailwind, daisyUI, the system, the broadcast layer and
+     this site's own chrome, compiled together by `npm run docs`.
+
+     Every page used to link /src/index.css straight to the browser, which
+     worked right up until the system became a Tailwind project: `@plugin`,
+     `@theme` and `@utility` are compiler directives, not CSS, and a browser
+     handed them renders an unstyled page. The source is compiled now, and
+     docs/assets/site.css is the entry that does it. -->
+<link rel="stylesheet" href="/assets/site.min.css{v}" />
+<script src="/assets/docs.js{v}" defer></script>
+<script src="/assets/nav.js{v}" defer></script>
 </head>
 
 <body>
 <a class="skip" href="#main">Skip to content</a>
 
-<header class="navbar navbar-sticky navbar-blur navbar-bordered" data-nav-scroll>
-  <button class="navbar__burger" type="button" aria-expanded="false" aria-controls="sidenav" aria-label="Menu">
+<header class="bar">
+  <a class="brand" href="/index.html">
+    <span class="brand__mark" aria-hidden="true"></span>
+    <span class="brand__name">Swarnil</span>
+    <span class="brand__sub">Design System</span>
+  </a>
+
+  <nav class="bar__nav" aria-label="Primary">
+    <a class="barlink" href="/introduction.html" aria-current="page"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-file"/></svg>Docs</a>
+    <a class="barlink" href="/principles.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-bookmark"/></svg>Principles</a>
+    <a class="barlink" href="/install.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-box"/></svg>Install</a>
+    <a class="barlink" href="/icons.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-capture"/></svg>Icons</a>
+  </nav>
+
+  <button class="bar__burger" type="button" aria-expanded="false" aria-controls="sidenav" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
 
-  <a class="navbar__brand" href="/">
-    <span class="shell__mark" aria-hidden="true"></span>
-    Swarnil<span class="shell__sub">Design System</span>
-  </a>
-
-  <nav class="navbar__nav shell__primary" aria-label="Primary">
-    {primary}
-  </nav>
-
-  <div class="navbar__search shell__find">
-    <svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-search"/></svg>
-    <label class="u-sr-only" for="find">Search the docs</label>
-    <input class="input input-sm" id="find" type="search" placeholder="Search" autocomplete="off" data-search />
-    <kbd class="kbd shell__key">/</kbd>
-    <div class="shell__hits" data-search-out hidden></div>
-  </div>
-
-  <div class="navbar__actions">
-    <button class="btn btn-ghost btn-sm" type="button" data-theme-toggle aria-label="Switch theme">
-      <span class="dot dot-sm" aria-hidden="true"></span>
-      <span data-theme-label>Light</span>
+  <div class="bar__end">
+    <label class="search">
+      <span class="sr-only">Search the docs</span>
+      <input class="search__input" type="search" placeholder="Search" autocomplete="off" data-search />
+      <kbd class="search__key">/</kbd>
+      <div class="search__out" data-search-out hidden></div>
+    </label>
+    <button class="themebtn" type="button" data-theme-toggle aria-label="Switch theme">
+      <span class="themebtn__dot" aria-hidden="true"></span>
+      <span class="themebtn__label" data-theme-label>Light</span>
     </button>
-    <a class="btn btn-secondary btn-sm" href="https://github.com/imswarnil/Swarnil-Design-System" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-star"/></svg>Star</a>
+    <a class="ghbtn ghbtn-sm" href="https://github.com/imswarnil/Swarnil-Design-System" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-star"/></svg>Star</a>
   </div>
 </header>
 
 <div class="shell">
-  <aside class="shell__side" id="sidenav">
-    <div class="shell__side-top">
-      <div class="navbar__search shell__find shell__find-side">
-        <svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-search"/></svg>
-        <label class="u-sr-only" for="find-side">Search the docs</label>
-        <input class="input input-sm" id="find-side" type="search" placeholder="Search docs" autocomplete="off" data-search />
-        <kbd class="kbd shell__key">/</kbd>
-        <div class="shell__hits" data-search-out hidden></div>
-      </div>
-
-      <button class="shell__collapse" type="button" data-nav-collapse aria-expanded="true" aria-controls="sidenav" aria-label="Collapse the navigation">
-        <svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-left"/></svg>
-      </button>
-    </div>
-
-    <nav class="shell__nav" aria-label="Documentation">
+  <aside class="side" id="sidenav">
+    <label class="search search-side">
+      <span class="sr-only">Search the docs</span>
+      <input class="search__input" type="search" placeholder="Search docs" autocomplete="off" data-search />
+      <kbd class="search__key">/</kbd>
+      <div class="search__out" data-search-out hidden></div>
+    </label>
+    <nav class="nav" aria-label="Documentation">
       {nav}
     </nav>
+    <div class="side__foot">
+      <a class="side__foot-link" href="{editurl}" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-edit"/></svg>Edit this page</a>
+      <a class="side__foot-link" href="https://github.com/imswarnil/Swarnil-Design-System/blob/main/CONTRIBUTING.md" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-heart"/></svg>Contribute</a>
+    </div>
   </aside>
 
-  <main class="shell__main" id="main">
-    <article class="prose shell__doc">
-      <div class="shell__slate">
-        <nav aria-label="Breadcrumb">{crumbs}</nav>
-        <span class="shell__take" aria-hidden="true">{take}</span>
+  <main class="main" id="main">
+    <article class="doc">
+      <div class="doc__slate">
+        <nav class="crumbs" aria-label="Breadcrumb">{crumbs}</nav>
+        <span class="doc__take" aria-hidden="true">{take}</span>
       </div>
-      <h1>{title}</h1>
+      <h1 class="doc__title">{title}</h1>
       {lead}
       {body}
+      <nav class="pager" aria-label="Pagination">{pager}</nav>
     </article>
-
-    <nav class="pager shell__pager" aria-label="Pagination">{pager}</nav>
-
-    <footer class="footer footer-compact">
-      <div class="footer__bottom">
-        <p class="footer__fine">Swarnil Design System · MIT · &copy; {year} Swarnil Singhai</p>
-        <nav class="footer__legal" aria-label="Footer">
+    <footer class="foot">
+      <p>Swarnil Design System · MIT · &copy; {year} Swarnil Singhai</p>
+      <p class="foot__note">Almost monochrome, so one colour can mean something.</p>
+      <div class="foot__row">
+        <nav class="foot__links" aria-label="Footer">
           <a href="/introduction.html">Docs</a>
           <a href="/principles.html">Principles</a>
           <a href="/icons.html">Swarnil Icons</a>
           <a href="https://github.com/imswarnil/Swarnil-Design-System" rel="noopener">GitHub</a>
           <a href="{editurl}" rel="noopener">Edit this page</a>
         </nav>
-        <span class="footer__rec"><span class="dot dot-sm dot-live"></span> Still rolling</span>
+        <span class="foot__rec"><span class="dot dot-sm dot-live"></span> Still rolling</span>
       </div>
     </footer>
   </main>
 
-  <div class="shell__rail">
-    <div class="shell__pin">
+  <div class="rail">
+    <div class="rail__pin">
       {toc}
-
-      <div class="shell__rail-foot">
-        <a class="shell__rail-link" href="{editurl}" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-edit"/></svg>Edit this page</a>
-        <a class="shell__rail-link" href="https://github.com/imswarnil/Swarnil-Design-System/blob/main/CONTRIBUTING.md" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-heart"/></svg>Contribute</a>
-      </div>
-
-      <aside class="ad ad-rect" data-ad-state="idle">
+      <aside class="ad ad-rect rail__ad" data-ad-state="idle">
         <p class="ad__label">Sponsored<button class="ad__close" type="button" aria-label="Hide this ad"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-x"/></svg></button></p>
         <div class="ad__slot"><p class="ad__note">The system&#39;s own <a href="/ad.html">ad slot</a>, reserving its height before anything loads.</p></div>
       </aside>

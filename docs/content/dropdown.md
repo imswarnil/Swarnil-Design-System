@@ -50,7 +50,7 @@ The avatar is the trigger; the panel leads with identity, and the destructive
 action sits last, after a separator, unaccented:
 
 :::demo
-<div class="u-flex u-justify-end">
+<div class="flex justify-end">
   <button class="avatar avatar-sm" type="button" popovertarget="dd-acct" aria-label="Account">S</button>
   <div class="menu menu-end" id="dd-acct" popover>
     <p class="menu__label">swarnil@studio</p>
@@ -95,19 +95,19 @@ there is no JavaScript on this page making any of it work.
   <button class="btn btn-outline" type="button" popovertarget="pop-b">Below <svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-chevron-down"/></svg></button>
   <div class="pop pop-arrow" id="pop-b" popover>
     <div class="pop__head"><p class="pop__title">Share this take</p><button class="pop__close" type="button" popovertarget="pop-b" popovertargetaction="hide" aria-label="Close"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-x"/></svg></button></div>
-    <div class="pop__body"><p class="t-small u-m-0">Anyone with the link can watch it before it is public.</p></div>
+    <div class="pop__body"><p class="t-small m-0">Anyone with the link can watch it before it is public.</p></div>
     <div class="pop__foot"><button class="btn btn-ghost btn-sm" type="button" popovertarget="pop-b" popovertargetaction="hide">Cancel</button><button class="btn btn-primary btn-sm" type="button">Copy link</button></div>
   </div>
 
   <button class="btn btn-outline" type="button" popovertarget="pop-a">Above</button>
   <div class="pop pop-above pop-sm" id="pop-a" popover>
-    <div class="pop__body"><p class="t-small u-m-0">A small one, above the trigger.</p></div>
+    <div class="pop__body"><p class="t-small m-0">A small one, above the trigger.</p></div>
   </div>
 
   <button class="btn btn-outline" type="button" popovertarget="pop-e">End</button>
   <div class="pop pop-end pop-align-start" id="pop-e" popover>
     <div class="pop__head"><p class="pop__title">Aligned to the start edge</p></div>
-    <div class="pop__body"><p class="t-small u-m-0"><code class="code">pop-start</code>, <code class="code">pop-end</code>, <code class="code">pop-above</code> pick the side; <code class="code">pop-align-start</code> and <code class="code">pop-align-end</code> pick which edge lines up.</p></div>
+    <div class="pop__body"><p class="t-small m-0"><code class="code">pop-start</code>, <code class="code">pop-end</code>, <code class="code">pop-above</code> pick the side; <code class="code">pop-align-start</code> and <code class="code">pop-align-end</code> pick which edge lines up.</p></div>
   </div>
 
   <button class="btn btn-outline" type="button" popovertarget="pop-l">Large</button>
