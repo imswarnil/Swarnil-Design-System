@@ -30,7 +30,7 @@
    Layer: patterns.
    ========================================================================== */
 
-@layer patterns {
+@layer utilities.sds.patterns {
 
 	.results {
 		--results-col: 20rem;

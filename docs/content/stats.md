@@ -50,18 +50,18 @@ on one baseline. `stats__delta` is the change, in the data voice, coloured by
 <div class="stats">
   <div class="stats__item">
     <svg class="icon stats__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-users"/></svg>
-    <span class="stats__value"><span class="fx-count" style="--fx-target: 42" aria-hidden="true"></span><span class="u-sr-only">42</span><span class="stats__unit">k</span></span>
+    <span class="stats__value"><span class="fx-count" style="--fx-target: 42" aria-hidden="true"></span><span class="sr-only">42</span><span class="stats__unit">k</span></span>
     <span class="stats__label">Subscribers</span>
     <span class="stats__delta" data-trend="up"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-up"/></svg> 12% this month</span>
   </div>
   <div class="stats__item">
     <svg class="icon stats__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-clock"/></svg>
-    <span class="stats__value"><span class="fx-count" style="--fx-target: 6" aria-hidden="true"></span><span class="u-sr-only">6</span><span class="stats__unit">min</span></span>
+    <span class="stats__value"><span class="fx-count" style="--fx-target: 6" aria-hidden="true"></span><span class="sr-only">6</span><span class="stats__unit">min</span></span>
     <span class="stats__label">Average watch time</span>
     <span class="stats__delta" data-trend="down"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-down"/></svg> 0:40</span>
   </div>
   <div class="stats__item">
-    <span class="stats__value">$<span class="fx-count" style="--fx-target: 1200" aria-hidden="true"></span><span class="u-sr-only">1200</span></span>
+    <span class="stats__value">$<span class="fx-count" style="--fx-target: 1200" aria-hidden="true"></span><span class="sr-only">1200</span></span>
     <span class="stats__label">Course revenue</span>
     <span class="stats__note">last 30 days</span>
   </div>

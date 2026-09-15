@@ -20,8 +20,9 @@ argument, and it is why these are used to mean, not to decorate.
 </div>
 :::
 
-`.frame` paints two corners on its own pseudo-elements. Two corner spans add the other
-two, which have to be real spans because an element only has two pseudo-elements.
+`.frame` paints two corners on its own pseudo-elements. `.frame__tr` and
+`.frame__bl` add the other two, which have to be real spans because an element
+only has two pseudo-elements.
 
 ## Sizes and colours
 
@@ -84,16 +85,16 @@ specificity ties and **source order alone decides the winner**. Renumbering a
 file has silently swapped which one rendered.
 
 :::demo Pattern on a child, brackets on the parent
-<div class="box box-lg frame u-relative">
+<div class="box box-lg frame relative">
   <span class="frame__tr"></span><span class="frame__bl"></span>
-  <div class="pattern pattern-hatch u-absolute u-inset-0"></div>
+  <div class="pattern pattern-hatch absolute inset-0"></div>
 </div>
 :::
 
 ## The viewfinder
 
 :::demo
-<div class="vf ratio ratio-photo u-border u-rounded-lg w-md">
+<div class="vf ratio ratio-photo hairline rounded-lg w-md">
   <span class="vf__tc">TAKE 47 · 00:12:47</span>
   <span class="vf__rec">REC</span>
   <span class="vf__dims">1280 × 720 · 16:9</span>

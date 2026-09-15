@@ -33,7 +33,7 @@ a class can.
       <span class="chip">Active<button class="chip__x" type="button" aria-label="Remove Active"></button></span>
     </div>
     <details class="facets__group" open>
-      <summary><span class="facets__label u-m-0">Skills</span></summary>
+      <summary><span class="facets__label m-0">Skills</span></summary>
       <ul class="facets__list">
         <li><label class="facets__opt"><input type="checkbox" checked /><span class="facets__swatch" style="--lang: var(--chart-2)"></span><span>CSS</span><span class="facets__count">18</span></label></li>
         <li><label class="facets__opt"><input type="checkbox" /><span class="facets__swatch" style="--lang: var(--chart-1)"></span><span>TypeScript</span><span class="facets__count">14</span></label></li>
@@ -42,7 +42,7 @@ a class can.
       </ul>
     </details>
     <details class="facets__group">
-      <summary><span class="facets__label u-m-0">Status</span></summary>
+      <summary><span class="facets__label m-0">Status</span></summary>
       <ul class="facets__list">
         <li><label class="facets__opt"><input type="checkbox" checked /><span>Active</span><span class="facets__count">14</span></label></li>
         <li><label class="facets__opt"><input type="checkbox" /><span>Archived</span><span class="facets__count">5</span></label></li>
@@ -93,15 +93,15 @@ so a page with a sticky bar tells it where the bar ends:
 <div class="filterbar">
   <p class="filterbar__count"><strong>9</strong> of 214 posts</p>
   <div class="filterbar__actions">
-    <label class="filterbar__search"><span class="u-sr-only">Search posts</span>
+    <label class="filterbar__search"><span class="sr-only">Search posts</span>
       <span class="input-icon"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-search"/></svg><input class="input input-sm" type="search" placeholder="Search 214 posts" /></span>
     </label>
-    <label><span class="u-sr-only">Sort</span>
+    <label><span class="sr-only">Sort</span>
       <select class="select select-sm"><option>Newest first</option><option>Oldest first</option><option>Longest read</option></select>
     </label>
     <div class="viewtoggle" role="group" aria-label="View">
-      <label class="viewtoggle__opt" title="Grid"><input type="radio" name="v-demo" value="grid" checked /><span class="u-sr-only">Grid</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-grid"/></svg></label>
-      <label class="viewtoggle__opt" title="List"><input type="radio" name="v-demo" value="list" /><span class="u-sr-only">List</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-menu"/></svg></label>
+      <label class="viewtoggle__opt" title="Grid"><input type="radio" name="v-demo" value="grid" checked /><span class="sr-only">Grid</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-grid"/></svg></label>
+      <label class="viewtoggle__opt" title="List"><input type="radio" name="v-demo" value="list" /><span class="sr-only">List</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-menu"/></svg></label>
     </div>
   </div>
 </div>
@@ -122,8 +122,8 @@ ring on the label.
 
 :::demo On its own
 <div class="viewtoggle" role="group" aria-label="View">
-  <label class="viewtoggle__opt" title="Grid"><input type="radio" name="v-solo" value="grid" checked /><span class="u-sr-only">Grid</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-grid"/></svg></label>
-  <label class="viewtoggle__opt" title="List"><input type="radio" name="v-solo" value="list" /><span class="u-sr-only">List</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-menu"/></svg></label>
+  <label class="viewtoggle__opt" title="Grid"><input type="radio" name="v-solo" value="grid" checked /><span class="sr-only">Grid</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-grid"/></svg></label>
+  <label class="viewtoggle__opt" title="List"><input type="radio" name="v-solo" value="list" /><span class="sr-only">List</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-menu"/></svg></label>
 </div>
 :::
 

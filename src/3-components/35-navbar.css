@@ -16,7 +16,7 @@
    Layer: components.
    ========================================================================== */
 
-@layer components {
+@layer utilities.sds.components {
 
 	.navbar {
 		--navbar-h: 3.5rem;

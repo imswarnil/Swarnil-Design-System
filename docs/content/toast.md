@@ -10,7 +10,7 @@ lead: An alert that arrives — placements, stacking, the timer, and the interru
 <div class="toaster" id="toast-demo-1" popover aria-live="polite">
   <div class="alert alert-success toast">
     <svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-check"/></svg>
-    <div class="alert__content"><p class="alert__title u-m-0">Take 47 exported</p><p class="alert__body u-m-0">4.2s · 1080p.</p></div>
+    <div class="alert__content"><p class="alert__title m-0">Take 47 exported</p><p class="alert__body m-0">4.2s · 1080p.</p></div>
   </div>
 </div>
 :::
@@ -33,11 +33,11 @@ mixed toasts reads as one stack.
 
 :::demo Shown in the flow with toaster-static
 <div class="toaster toaster-static w-md">
-  <div class="alert alert-success toast"><svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-check"/></svg><div class="alert__content"><p class="alert__body u-m-0">Take 47 exported — 4.2s.</p></div></div>
-  <div class="alert alert-info toast"><svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-info"/></svg><div class="alert__content"><p class="alert__body u-m-0">Rendering continues in the background.</p></div></div>
-  <div class="alert alert-warning toast"><svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-alert"/></svg><div class="alert__content"><p class="alert__body u-m-0">Storage at 91%.</p></div></div>
-  <div class="alert alert-danger toast" role="alert"><svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-alert"/></svg><div class="alert__content"><p class="alert__body u-m-0">Export failed — the disk is full. Clear space and retry.</p></div></div>
-  <div class="alert toast"><div class="alert__content"><p class="alert__body u-m-0">Draft saved.</p></div></div>
+  <div class="alert alert-success toast"><svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-check"/></svg><div class="alert__content"><p class="alert__body m-0">Take 47 exported — 4.2s.</p></div></div>
+  <div class="alert alert-info toast"><svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-info"/></svg><div class="alert__content"><p class="alert__body m-0">Rendering continues in the background.</p></div></div>
+  <div class="alert alert-warning toast"><svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-alert"/></svg><div class="alert__content"><p class="alert__body m-0">Storage at 91%.</p></div></div>
+  <div class="alert alert-danger toast" role="alert"><svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-alert"/></svg><div class="alert__content"><p class="alert__body m-0">Export failed — the disk is full. Clear space and retry.</p></div></div>
+  <div class="alert toast"><div class="alert__content"><p class="alert__body m-0">Draft saved.</p></div></div>
 </div>
 :::
 
@@ -49,12 +49,12 @@ alert's own close button.
 :::demo
 <div class="toaster toaster-static w-md">
   <div class="alert toast">
-    <div class="alert__content"><p class="alert__body u-m-0">Take 46 moved to the bin.</p><div class="alert__actions"><button class="btn btn-link btn-sm" type="button">Undo</button></div></div>
+    <div class="alert__content"><p class="alert__body m-0">Take 46 moved to the bin.</p><div class="alert__actions"><button class="btn btn-link btn-sm" type="button">Undo</button></div></div>
     <button class="btn btn-quiet btn-icon btn-sm alert__close" type="button" aria-label="Dismiss"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-x"/></svg></button>
   </div>
   <div class="alert alert-info toast">
     <svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-download"/></svg>
-    <div class="alert__content"><p class="alert__title u-m-0">Render finished</p><div class="alert__actions"><a class="btn btn-outline btn-sm" href="#i">Open in Exports</a><button class="btn btn-quiet btn-sm" type="button">Later</button></div></div>
+    <div class="alert__content"><p class="alert__title m-0">Render finished</p><div class="alert__actions"><a class="btn btn-outline btn-sm" href="#i">Open in Exports</a><button class="btn btn-quiet btn-sm" type="button">Later</button></div></div>
     <button class="btn btn-quiet btn-icon btn-sm alert__close" type="button" aria-label="Dismiss"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-x"/></svg></button>
   </div>
 </div>
@@ -68,8 +68,8 @@ but it answers "how long do I have?" without a number. Reload to catch it.
 
 :::demo Five seconds, and a slow ten
 <div class="toaster toaster-static w-md">
-  <div class="alert alert-success toast" data-timer><svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-check"/></svg><div class="alert__content"><p class="alert__body u-m-0">Published to members.</p></div></div>
-  <div class="alert toast" data-timer style="--toast-dur: 10s"><div class="alert__content"><p class="alert__body u-m-0">Ten seconds — for a message with a link in it.</p></div></div>
+  <div class="alert alert-success toast" data-timer><svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-check"/></svg><div class="alert__content"><p class="alert__body m-0">Published to members.</p></div></div>
+  <div class="alert toast" data-timer style="--toast-dur: 10s"><div class="alert__content"><p class="alert__body m-0">Ten seconds — for a message with a link in it.</p></div></div>
 </div>
 :::
 
@@ -84,9 +84,9 @@ the stack at three — a fourth arriving means the first should already be gone.
 
 :::demo Three, the ceiling
 <div class="toaster toaster-static w-md">
-  <div class="alert toast"><div class="alert__content"><p class="alert__body u-m-0">Take 45 uploaded.</p></div></div>
-  <div class="alert toast"><div class="alert__content"><p class="alert__body u-m-0">Take 46 uploaded.</p></div></div>
-  <div class="alert alert-success toast"><svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-check"/></svg><div class="alert__content"><p class="alert__body u-m-0">All three transcoded.</p></div></div>
+  <div class="alert toast"><div class="alert__content"><p class="alert__body m-0">Take 45 uploaded.</p></div></div>
+  <div class="alert toast"><div class="alert__content"><p class="alert__body m-0">Take 46 uploaded.</p></div></div>
+  <div class="alert alert-success toast"><svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-check"/></svg><div class="alert__content"><p class="alert__body m-0">All three transcoded.</p></div></div>
 </div>
 :::
 
@@ -103,10 +103,10 @@ corner.
   <button class="btn btn-outline btn-sm" type="button" popovertarget="toast-pl-3">Top end</button>
   <button class="btn btn-outline btn-sm" type="button" popovertarget="toast-pl-4">Top centre</button>
 </div>
-<div class="toaster" id="toast-pl-1" popover aria-live="polite"><div class="alert toast"><div class="alert__content"><p class="alert__body u-m-0">Bottom end — the default.</p></div></div></div>
-<div class="toaster toaster-start" id="toast-pl-2" popover aria-live="polite"><div class="alert toast"><div class="alert__content"><p class="alert__body u-m-0">Bottom start.</p></div></div></div>
-<div class="toaster toaster-top" id="toast-pl-3" popover aria-live="polite"><div class="alert toast"><div class="alert__content"><p class="alert__body u-m-0">Top end — answers an action at the top of the screen.</p></div></div></div>
-<div class="toaster toaster-top toaster-center" id="toast-pl-4" popover aria-live="polite"><div class="alert toast"><div class="alert__content"><p class="alert__body u-m-0">Top centre.</p></div></div></div>
+<div class="toaster" id="toast-pl-1" popover aria-live="polite"><div class="alert toast"><div class="alert__content"><p class="alert__body m-0">Bottom end — the default.</p></div></div></div>
+<div class="toaster toaster-start" id="toast-pl-2" popover aria-live="polite"><div class="alert toast"><div class="alert__content"><p class="alert__body m-0">Bottom start.</p></div></div></div>
+<div class="toaster toaster-top" id="toast-pl-3" popover aria-live="polite"><div class="alert toast"><div class="alert__content"><p class="alert__body m-0">Top end — answers an action at the top of the screen.</p></div></div></div>
+<div class="toaster toaster-top toaster-center" id="toast-pl-4" popover aria-live="polite"><div class="alert toast"><div class="alert__content"><p class="alert__body m-0">Top centre.</p></div></div></div>
 :::
 
 | Class | Corner |

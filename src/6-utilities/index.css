@@ -1,151 +1,134 @@
 /* =============================================================================
-   6 · UTILITIES — the escape hatch, and it always wins
+   6 · UTILITIES — the handful Tailwind does not have
 
-   Every utility is a token with a class name and nothing more. They sit in the
-   LAST cascade layer, so a utility beats a component — which is the only
-   reason to have utilities at all. A utility that loses an argument to a
-   component is just a class.
+   THIS FILE USED TO BE 151 LINES OF `.u-*` CLASSES. Almost all of it was a
+   worse copy of something Tailwind already ships:
 
-   Values come from tier-2 tokens only. A utility with a raw value in it is a
-   magic number that has learned to hide.
+       .u-flex   .u-grid   .u-hidden        → flex  grid  hidden
+       .u-gap-4  .u-p-6    .u-mt-3          → gap-4  p-6  mt-3
+       .u-text-center      .u-semibold      → text-center  font-semibold
+       .u-fg-muted         .u-bg-surface    → text-fg-muted  bg-surface
+       .u-rounded-lg       .u-shadow-2      → rounded-lg  shadow-2
+       .u-measure          .u-w-full        → max-w-prose  w-full
+       .u-sr-only                           → sr-only
 
-   Naming: u- prefix, so a utility is visibly an override at the call site and
-   nobody mistakes one for a component class.
+   Worse in a way that matters: a hand-written class has no variants. There is
+   no `md:u-flex` and no `hover:u-bg-surface`, because generating those is the
+   compiler's job and there was no compiler. Every name above now comes from
+   Tailwind, driven by this system's own tokens through 0-config/theme.css, so
+   `bg-surface` is the same value it always was and `md:hover:bg-surface` now
+   exists as well.
+
+   ── WHAT IS ACTUALLY LEFT ─────────────────────────────────────────────────
+   Two kinds of thing, and both are declared with `@utility` rather than as a
+   plain class. That is the whole point: `@utility` registers a REAL Tailwind
+   utility, so it lands directly in the `utilities` layer beside Tailwind's own
+   and takes every variant for free.
+
+     1. THE SURFACE PAIRS. A ground and the ink that reads on it, in one class.
+        Tailwind's `bg-inverse` sets a background and nothing else, which on an
+        inverting surface leaves the text at whatever the page ink was — black
+        on near-black in dark mode. The pair has to be one decision.
+
+     2. THE COMPOSITES. A hairline that already knows the line colour; a "stop
+        moving" switch. Nothing exotic, just the few places where two
+        declarations always travel together.
+
+   Layer: `utilities`, Tailwind's own — because that is what `@utility` means.
    ========================================================================== */
 
-@layer utilities {
+/* ── The surface pairs ──────────────────────────────────────────────────────
+   Named `surface-*` and not `bg-*` on purpose. `bg-*` is Tailwind's colour
+   namespace and a rule of ours cannot win there — see the note in
+   12-background.css for the hour that cost. `surface-` says the right thing
+   anyway: this is not a colour, it is a ground with its own ink. */
 
-	/* ── Display & flow ────────────────────────────────────────────────────── */
-	.u-block   { display: block; }
-	.u-inline  { display: inline; }
-	.u-iblock  { display: inline-block; }
-	.u-flex    { display: flex; }
-	.u-iflex   { display: inline-flex; }
-	.u-grid    { display: grid; }
-	.u-hidden  { display: none; }
-	.u-contents { display: contents; }
+@utility surface-canvas {
+	background-color: var(--bg-canvas);
+	color: var(--fg-default);
+}
 
-	.u-wrap    { flex-wrap: wrap; }
-	.u-nowrap  { flex-wrap: nowrap; white-space: nowrap; }
-	.u-col     { flex-direction: column; }
-	.u-row     { flex-direction: row; }
-	.u-grow    { flex-grow: 1; }
-	.u-none    { flex: none; }
+@utility surface-raised {
+	background-color: var(--bg-surface);
+	color: var(--fg-default);
+}
 
-	.u-items-start  { align-items: flex-start; }
-	.u-items-center { align-items: center; }
-	.u-items-end    { align-items: flex-end; }
-	.u-items-base   { align-items: baseline; }
+@utility surface-sunken {
+	background-color: var(--bg-sunken);
+	color: var(--fg-default);
+}
 
-	.u-justify-start   { justify-content: flex-start; }
-	.u-justify-center  { justify-content: center; }
-	.u-justify-end     { justify-content: flex-end; }
-	.u-justify-between { justify-content: space-between; }
+@utility surface-inverse {
+	background-color: var(--bg-inverse);
+	color: var(--fg-on-inverse);
+}
 
-	/* ── Gap · the 4px ladder ──────────────────────────────────────────────── */
-	.u-gap-1 { gap: var(--space-1); }
-	.u-gap-2 { gap: var(--space-2); }
-	.u-gap-3 { gap: var(--space-3); }
-	.u-gap-4 { gap: var(--space-4); }
-	.u-gap-5 { gap: var(--space-5); }
-	.u-gap-6 { gap: var(--space-6); }
-	.u-gap-8 { gap: var(--space-8); }
+@utility surface-accent {
+	background-color: var(--accent);
+	color: var(--fg-on-accent);
+}
 
-	/* ── Margin & padding ──────────────────────────────────────────────────── */
-	.u-m-0  { margin: 0; }
-	.u-mt-0 { margin-block-start: 0; }
-	.u-mt-1 { margin-block-start: var(--space-1); }
-	.u-mt-2 { margin-block-start: var(--space-2); }
-	.u-mt-3 { margin-block-start: var(--space-3); }
-	.u-mt-4 { margin-block-start: var(--space-4); }
-	.u-mt-6 { margin-block-start: var(--space-6); }
-	.u-mt-8 { margin-block-start: var(--space-8); }
-	.u-mb-0 { margin-block-end: 0; }
-	.u-mb-2 { margin-block-end: var(--space-2); }
-	.u-mb-3 { margin-block-end: var(--space-3); }
-	.u-mb-4 { margin-block-end: var(--space-4); }
-	.u-mb-6 { margin-block-end: var(--space-6); }
-	.u-mb-8 { margin-block-end: var(--space-8); }
-	.u-mx-auto { margin-inline: auto; }
+@utility surface-soft {
+	background-color: var(--accent-soft);
+	color: var(--accent-soft-fg);
+}
 
-	.u-p-0 { padding: 0; }
-	.u-p-2 { padding: var(--space-2); }
-	.u-p-3 { padding: var(--space-3); }
-	.u-p-4 { padding: var(--space-4); }
-	.u-p-5 { padding: var(--space-5); }
-	.u-p-6 { padding: var(--space-6); }
-	.u-p-8 { padding: var(--space-8); }
+/* ── The composites ───────────────────────────────────────────────────────── */
 
-	/* ── Type ──────────────────────────────────────────────────────────────── */
-	.u-text-left   { text-align: start; }
-	.u-text-center { text-align: center; }
-	.u-text-right  { text-align: end; }
+/* A hairline in the system's own line colour. `border border-line` is two
+   classes for one hairline, and the width and the colour are never chosen
+   independently here. */
+@utility hairline {
+	border: var(--border-hair) solid var(--line-default);
+}
 
-	.u-2xs  { font-size: var(--text-2xs); }
-	.u-xs   { font-size: var(--text-xs); }
-	.u-sm   { font-size: var(--text-sm); }
-	.u-base { font-size: var(--text-base); }
-	.u-lg   { font-size: var(--text-lg); }
-	.u-xl   { font-size: var(--text-xl); }
+@utility hairline-t {
+	border-block-start: var(--border-hair) solid var(--line-default);
+}
 
-	.u-regular  { font-weight: var(--weight-regular); }
-	.u-medium   { font-weight: var(--weight-medium); }
-	.u-semibold { font-weight: var(--weight-semibold); }
-	.u-bold     { font-weight: var(--weight-bold); }
+@utility hairline-b {
+	border-block-end: var(--border-hair) solid var(--line-default);
+}
 
-	.u-display { font-family: var(--font-display); }
-	.u-body    { font-family: var(--font-body); }
+@utility hairline-s {
+	border-inline-start: var(--border-hair) solid var(--line-default);
+}
 
-	/* ── Colour · tier 2 only ──────────────────────────────────────────────── */
-	.u-fg         { color: var(--fg-default); }
-	.u-fg-muted   { color: var(--fg-muted); }
-	.u-fg-subtle  { color: var(--fg-subtle); }
-	.u-fg-faint   { color: var(--fg-faint); }
-	.u-fg-accent  { color: var(--fg-accent); }
+@utility hairline-e {
+	border-inline-end: var(--border-hair) solid var(--line-default);
+}
 
-	.u-bg-canvas  { background: var(--bg-canvas); }
-	.u-bg-surface { background: var(--bg-surface); }
-	.u-bg-sunken  { background: var(--bg-sunken); }
-	.u-bg-muted   { background: var(--bg-muted); }
-	.u-bg-inverse { background: var(--bg-inverse); color: var(--fg-on-inverse); }
-	.u-bg-accent  { background: var(--accent); color: var(--fg-on-accent); }
-	.u-bg-soft    { background: var(--accent-soft); color: var(--accent-soft-fg); }
+/* The reading measures already exist as `max-w-prose` and friends, from
+   `--container-*` in theme.css. This is the one that does not: a column that
+   is centred as well as capped, which is two properties that always travel
+   together on a page column. */
+@utility measure {
+	max-width: var(--measure-prose);
+	margin-inline: auto;
+}
 
-	/* ── Border & shape ────────────────────────────────────────────────────── */
-	.u-border    { border: var(--border-hair) solid var(--line-default); }
-	.u-border-t  { border-block-start: var(--border-hair) solid var(--line-default); }
-	.u-border-b  { border-block-end: var(--border-hair) solid var(--line-default); }
-	.u-border-subtle { border-color: var(--line-subtle); }
-	.u-border-accent { border-color: var(--accent); }
-	.u-border-0  { border: 0; }
+@utility measure-lead {
+	max-width: var(--measure-lead);
+	margin-inline: auto;
+}
 
-	.u-rounded-sm   { border-radius: var(--radius-sm); }
-	.u-rounded      { border-radius: var(--radius-md); }
-	.u-rounded-lg   { border-radius: var(--radius-lg); }
-	.u-rounded-xl   { border-radius: var(--radius-xl); }
-	.u-rounded-full { border-radius: var(--radius-full); }
-	.u-rounded-none { border-radius: 0; }
+@utility measure-ui {
+	max-width: var(--measure-ui);
+	margin-inline: auto;
+}
 
-	.u-shadow-1 { box-shadow: var(--elevation-1); }
-	.u-shadow-2 { box-shadow: var(--elevation-2); }
-	.u-shadow-3 { box-shadow: var(--elevation-3); }
-	.u-shadow-0 { box-shadow: none; }
+@utility measure-narrow {
+	max-width: var(--measure-narrow);
+	margin-inline: auto;
+}
 
-	/* ── Size & position ───────────────────────────────────────────────────── */
-	.u-w-full  { width: 100%; }
-	.u-h-full  { height: 100%; }
-	.u-relative { position: relative; }
-	.u-absolute { position: absolute; }
-	.u-sticky   { position: sticky; }
-	.u-inset-0  { inset: 0; }
-
-	.u-overflow-hidden { overflow: hidden; }
-	.u-overflow-auto   { overflow: auto; }
-
-	.u-measure       { max-width: var(--measure-prose); }
-	.u-measure-lead  { max-width: var(--measure-lead); }
-	.u-measure-ui    { max-width: var(--measure-ui); }
-
-	/* ── State ─────────────────────────────────────────────────────────────── */
-	.u-no-motion * { animation: none !important; transition: none !important; }
+/* Stop everything inside from moving. For a screenshot, a print sheet, or a
+   preview pane where motion is noise rather than feedback. `!important` is
+   the one place this system allows it: the whole job of the class is to
+   overrule declarations it cannot see. */
+@utility no-motion {
+	& * {
+		animation: none !important;
+		transition: none !important;
+	}
 }

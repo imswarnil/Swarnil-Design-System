@@ -29,7 +29,7 @@
    Layer: components.
    ========================================================================== */
 
-@layer components {
+@layer utilities.sds.components {
 
 	.toc {
 		--toc-gap: var(--space-1);

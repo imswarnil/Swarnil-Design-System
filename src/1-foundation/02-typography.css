@@ -54,7 +54,7 @@
    Layer: tokens for the variables, elements for base tags and text roles.
    ========================================================================== */
 
-@layer tokens {
+@layer base {
 	:root {
 		/* ── Families ──────────────────────────────────────────────────────
 		   --font-display, --font-label and --font-data are all ALIASES of the
@@ -66,69 +66,20 @@
 
 		   Re-point --font-display on its own to reintroduce a display face
 		   without touching anything else. */
-		--font-body: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-		--font-display: var(--font-body);
-		--font-label: var(--font-body);
-		--font-data: var(--font-body);
-		--font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', 'Cascadia Mono', monospace;
+		/* THE FACES, THE SIZES, THE LEADING AND THE TRACKING LIVE IN
+		   src/0-config/theme.css.
 
-		/* The Ghost theme (theme.imswarnil.com) reads the system under the
-		   older name: its code face is --font-slate and its label tracking is
-		   --tracking-slate. Kept as aliases so the theme keeps rendering
-		   through a `file:` install of this package; nothing in src/ reads
-		   them. See scripts/audit-mono.py for why mono has no other job. */
-		--font-slate: var(--font-mono);
+		   `--font-*`, `--text-*`, `--leading-*` and `--tracking-*` are all
+		   Tailwind theme namespaces already, so declaring them there is what
+		   makes `font-data`, `text-2xl`, `leading-relaxed` and
+		   `tracking-label` real utilities with every variant. An alias back
+		   to here would be a variable pointing at itself.
 
-		/* ── Scale ─────────────────────────────────────────────────────────
-		   Fluid via clamp() FROM 2xl UP, fixed below.
+		   What stays in this file is the ARGUMENT — the two voices, why mono
+		   means data, why h6 is a label — and the element rules below, which
+		   are the part that paints. `--weight-*` stays because it is NOT a
+		   Tailwind namespace (`--font-weight-*` is), so theme.css aliases it. */
 
-		   lg and xl are what UI copy is set in, and UI copy has to fit inside
-		   a component, not inside a page. A size that drifts with the viewport
-		   is being decided by something with no relationship to the box it
-		   lives in. Fluid type earns its keep on headlines only. */
-		--text-3xs:  0.625rem;    /* 10px · the floor. Data, and only data */
-		--text-2xs:  0.6875rem;   /* 11px */
-		--text-xs:   0.75rem;     /* 12px */
-		--text-sm:   0.875rem;    /* 14px */
-		--text-base: 1rem;        /* 16px */
-		--text-md:   1.0625rem;   /* 17px · long-form body */
-		--text-lg:   1.125rem;    /* 18px */
-		--text-xl:   1.25rem;     /* 20px */
-		--text-2xl:  clamp(1.375rem, 1.24rem + 0.60vw, 1.75rem);
-		--text-3xl:  clamp(1.625rem, 1.36rem + 1.18vw, 2.375rem);
-		--text-4xl:  clamp(2rem,     1.55rem + 2.00vw, 3.25rem);
-		--text-5xl:  clamp(2.5rem,   1.70rem + 3.55vw, 4.75rem);
-		--text-6xl:  clamp(3rem,     1.75rem + 5.55vw, 6.5rem);
-
-		/* ── Line height ───────────────────────────────────────────────────
-		   Display sits tight, body sits open. Line height is a RATIO, so a
-		   large size needs a smaller one — a headline at 1.65 falls apart. */
-		--leading-flat:    1;
-		--leading-tight:   1.1;
-		--leading-snug:    1.25;
-		--leading-normal:  1.5;
-		--leading-relaxed: 1.65;   /* the reading default */
-		--leading-loose:   1.85;
-
-		/* ── Tracking ──────────────────────────────────────────────────────
-		   Display tightens as it grows, because the gaps between letters grow
-		   with the size while the eye's tolerance for them does not.
-
-		   Small text goes the other way: at 11px the counters close up, so
-		   opening the tracking is what keeps it legible. That is the whole
-		   trick behind the label and data voices. */
-		--tracking-tighter: -0.035em;
-		--tracking-tight:   -0.02em;
-		--tracking-normal:  0;
-		--tracking-wide:    0.02em;
-		--tracking-data:    0.05em;   /* Inter, small, numeric */
-		--tracking-label:   0.14em;   /* Inter, small, uppercase — the theme's slate voice */
-		--tracking-widest:  0.16em;
-		--tracking-slate:   var(--tracking-label);   /* alias the theme reads */
-
-		/* ── Weight ────────────────────────────────────────────────────────
-		   Five. Light exists only for the data voice, where the job is to
-		   recede — a timecode should be legible and quiet at the same time. */
 		--weight-light:    300;
 		--weight-regular:  400;
 		--weight-medium:   500;
@@ -149,7 +100,7 @@
 	}
 }
 
-@layer elements {
+@layer utilities.sds.elements {
 
 	html {
 		font-size: 100%;

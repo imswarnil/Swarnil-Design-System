@@ -10,7 +10,7 @@ interchangeable:
 
 | | What it is | When |
 | --- | --- | --- |
-| [`.reel`](/grid.html) | the primitive — a snap strip, no chrome | anything, inside anything |
+| `.reel` | the primitive — a snap strip, no chrome | anything, inside anything |
 | [`.carousel`](/carousel.html) | a slideshow — one thing at a time, dots, arrows | a hero, a gallery |
 | `.shelf` | a **catalogue row** — a heading and many items, several visible | a listing page |
 

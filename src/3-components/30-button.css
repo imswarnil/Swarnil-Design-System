@@ -18,7 +18,7 @@
    Layer: components.
    ========================================================================== */
 
-@layer components {
+@layer utilities.sds.components {
 
 	/* ── Density ───────────────────────────────────────────────────────────
 	   These five numbers set the feel of the whole system, because a button

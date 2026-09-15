@@ -1,10 +1,14 @@
 {
   "name": "@imswarnil/swarnil-design",
-  "version": "0.1.0",
-  "description": "Swarnil Design System — a token-first, dependency-free CSS design system for people who make things: web, and the broadcast layer for thumbnails, scenes and streams. Almost monochrome, so one colour can mean something.",
+  "version": "0.2.0",
+  "description": "A token-first design system built on Tailwind CSS 4 and daisyUI. Almost monochrome, so one colour can mean something — plus a broadcast layer for thumbnails, scenes and streams.",
   "keywords": [
     "css",
     "design-system",
+    "tailwind",
+    "tailwindcss",
+    "tailwind-plugin",
+    "daisyui",
     "ui-kit",
     "tokens",
     "design-tokens",
@@ -33,67 +37,22 @@
   ],
   "style": "dist/swarnil-design.css",
   "main": "dist/swarnil-design.css",
-  "exports": {
-    ".": "./dist/swarnil-design.css",
-    "./css": "./dist/swarnil-design.css",
-    "./min": "./dist/swarnil-design.min.css",
-    "./config": "./src/0-config/index.css",
-    "./foundation": "./src/1-foundation/index.css",
-    "./elements": "./src/2-elements/index.css",
-    "./components": "./src/3-components/index.css",
-    "./utilities": "./src/6-utilities/index.css",
-    "./src/*": "./src/*",
-    "./package.json": "./package.json",
-    "./patterns": "./src/4-patterns/index.css",
-    "./sections": "./src/5-sections/index.css",
-    "./broadcast": "./dist/swarnil-broadcast.css",
-    "./broadcast/min": "./dist/swarnil-broadcast.min.css",
-    "./broadcast/src": "./src/7-broadcast/index.css",
-    "./nav": "./src/js/nav.js",
-    "./framework": "./dist/swarnil-framework.css",
-    "./framework/min": "./dist/swarnil-framework.min.css",
-    "./framework/src": "./src/8-framework/index.css",
-    "./bulma": "./dist/swarnil-design-bulma.css",
-    "./bulma/min": "./dist/swarnil-design-bulma.min.css",
-    "./bulma/src": "./src/bulma.css"
-  },
   "files": [
     "src",
     "dist",
     "templates",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "CHANGELOG.md"
   ],
-  "scripts": {
-    "css": "npm run css:web && npm run css:broadcast && npm run css:framework && npm run css:bulma",
-    "css:web": "postcss src/index.css -o dist/swarnil-design.css && postcss src/index.css -o dist/swarnil-design.min.css --env production",
-    "css:broadcast": "postcss src/broadcast.css -o dist/swarnil-broadcast.css && postcss src/broadcast.css -o dist/swarnil-broadcast.min.css --env production",
-    "css:framework": "postcss src/framework.css -o dist/swarnil-framework.css && postcss src/framework.css -o dist/swarnil-framework.min.css --env production",
-    "css:site": "postcss docs/assets/site.css -o site/assets/site.min.css --env production",
-    "docs": "python3 docs/build.py",
-    "build": "npm run css && npm run docs && npm run css:site",
-    "dev": "SDS_DEV=1 npm run docs && npm run serve",
-    "serve": "python3 -m http.server 8080 --directory site",
-    "watch": "SDS_DEV=1 node scripts/watch.mjs",
-    "clean": "rm -rf dist site",
-    "lint": "stylelint \"src/**/*.css\"",
-    "audit": "python3 scripts/audit-mono.py --strict && python3 scripts/audit-classes.py --strict",
-    "size": "for f in site/assets/site.min.css dist/swarnil-design.min.css dist/swarnil-design-bulma.min.css dist/swarnil-broadcast.min.css dist/swarnil-framework.min.css; do [ -f \"$f\" ] || continue; printf '%-42s' $f; gzip -c $f | wc -c | awk '{printf \"gzipped: %.1f KB\\n\", $1/1024}'; done",
-    "check": "npm run lint && npm run build && npm run audit && npm run size",
-    "prepublishOnly": "npm run css",
-    "css:bulma": "sass --load-path=node_modules --no-source-map --quiet src/bulma-base.scss dist/bulma-base.css && postcss src/bulma.css -o dist/swarnil-design-bulma.css && postcss src/bulma.css -o dist/swarnil-design-bulma.min.css --env production"
-  },
   "devDependencies": {
-    "cssnano": "^7.0.0",
-    "postcss": "^8.4.0",
-    "postcss-cli": "^11.0.0",
-    "postcss-import": "^16.0.0",
-    "sass": "^1.104.0",
+    "@tailwindcss/cli": "^4.3.3",
     "stylelint": "^16.0.0",
-    "stylelint-config-standard": "^36.0.0"
+    "stylelint-config-standard": "^36.0.0",
+    "tailwindcss": "^4.3.3"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "funding": [
     {
@@ -101,12 +60,35 @@
       "url": "https://github.com/sponsors/imswarnil"
     }
   ],
-  "dependencies": {
-    "bulma": "^1.0.4"
+  "exports": {
+    ".": "./src/index.css",
+    "./broadcast": "./src/broadcast.css",
+    "./css": "./dist/swarnil-design.css",
+    "./css/min": "./dist/swarnil-design.min.css",
+    "./broadcast/css": "./dist/swarnil-broadcast.css",
+    "./broadcast/css/min": "./dist/swarnil-broadcast.min.css",
+    "./theme": "./src/0-config/theme.css",
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
   },
-  "peerDependenciesMeta": {
-    "bulma": {
-      "optional": true
-    }
+  "scripts": {
+    "build": "npm run css && npm run docs",
+    "css": "tailwindcss -i src/bundle.css -o dist/swarnil-design.css && tailwindcss -i src/bundle.css -o dist/swarnil-design.min.css --minify && tailwindcss -i src/bundle-broadcast.css -o dist/swarnil-broadcast.css && tailwindcss -i src/bundle-broadcast.css -o dist/swarnil-broadcast.min.css --minify",
+    "docs": "python3 docs/build.py && tailwindcss -i docs/assets/site.css -o site/assets/site.min.css --minify",
+    "dev": "npm run build && node scripts/serve.mjs",
+    "lint": "stylelint \"src/**/*.css\"",
+    "audit": "python3 scripts/audit-mono.py --strict && python3 scripts/audit-classes.py --strict",
+    "size": "node scripts/size.mjs",
+    "check": "npm run lint && npm run build && npm run audit && npm run size",
+    "clean": "rm -rf dist site",
+    "prepublishOnly": "npm run css",
+    "serve": "node scripts/serve.mjs",
+    "stop": "node scripts/stop.mjs"
+  },
+  "dependencies": {
+    "daisyui": "^5.7.32"
+  },
+  "peerDependencies": {
+    "tailwindcss": "^4.3.0"
   }
 }

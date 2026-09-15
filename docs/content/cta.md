@@ -13,7 +13,7 @@ title, one supporting line, one primary action, at most one quiet alternative.
 :::demo
 <div class="cta cta-boxed">
   <p class="cta__kicker">Open source</p>
-  <h2 class="cta__title u-m-0">Free forever. MIT.</h2>
+  <h2 class="cta__title m-0">Free forever. MIT.</h2>
   <p class="cta__body">If it saves you a weekend, a star is plenty.</p>
   <div class="cta__actions">
     <button class="btn btn-primary btn-lg" type="button">Start reading</button>
@@ -28,7 +28,7 @@ title, one supporting line, one primary action, at most one quiet alternative.
 :::demo
 <div class="cta cta-inverse">
   <p class="cta__kicker">The last band</p>
-  <h2 class="cta__title u-m-0">Ship the thing.</h2>
+  <h2 class="cta__title m-0">Ship the thing.</h2>
   <p class="cta__body">Ink and paper flip; the ghost button is told what quiet means on near-black — without that it lands at 2:1 and disappears.</p>
   <div class="cta__actions">
     <button class="btn btn-primary btn-lg" type="button">Get started</button>
@@ -54,10 +54,10 @@ the band and you get a 900px-wide email box.
 <div class="center center-md">
   <div class="cta cta-sm cta-boxed">
     <p class="cta__kicker">Every Friday</p>
-    <h2 class="cta__title u-m-0">One episode, one thing I learned.</h2>
+    <h2 class="cta__title m-0">One episode, one thing I learned.</h2>
     <p class="cta__body">No sponsor reads. Unsubscribe is one click and I will not ask why.</p>
     <form class="cta__actions cta__form form form-inline" action="#i" onsubmit="return false">
-      <label class="u-sr-only" for="cta-mail">Email</label>
+      <label class="sr-only" for="cta-mail">Email</label>
       <input class="input input-sm" id="cta-mail" type="email" placeholder="you@studio.tv" />
       <button class="btn btn-primary btn-sm" type="submit">Subscribe</button>
     </form>
@@ -75,7 +75,7 @@ where a centred column would add height the page has not earned.
 <div class="cta cta-sm cta-row cta-boxed">
   <div>
     <p class="cta__kicker">Available from November</p>
-    <h2 class="cta__title u-m-0">Need one of these, but for you?</h2>
+    <h2 class="cta__title m-0">Need one of these, but for you?</h2>
     <p class="cta__fine">Two clients at a time, no more.</p>
   </div>
   <div class="cta__actions">
