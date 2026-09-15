@@ -1,10 +1,10 @@
 /* =============================================================================
-   38 · DISCLOSURE — accordion, collapse, list group, carousel, marquee
+   38 · DISCLOSURE — accordion, list group, carousel, marquee
 
    Things that open, close, cycle and slide. Every one rides a platform
    behaviour instead of a script (PRINCIPLES #4):
 
-     accordion, collapse   <details>/<summary> — keyboard toggling, state
+     accordion             <details>/<summary> — keyboard toggling, state
                            exposure and find-in-page auto-expansion come free.
                            Chrome even searches CLOSED details and opens the
                            one with the match; nobody reimplements that.
@@ -165,69 +165,6 @@
 
 	.acc-group > .acc:last-child { border-block-end: 0; }
 
-	/* ── .collapse — one inline disclosure ─────────────────────────────────
-	   "Show transcript", "More options": a toggle that reads as a link, not a
-	   panel, and reveals a block beneath. The accordion is a list; this is a
-	   single sentence that can open. */
-
-	.collapse > summary {
-		display: inline-flex;
-		align-items: center;
-		gap: var(--space-2);
-		list-style: none;
-		cursor: pointer;
-		font-size: var(--text-sm);
-		font-weight: var(--weight-medium);
-		color: var(--fg-link);
-		transition: color var(--dur-2) var(--ease-out);
-	}
-
-	.collapse > summary::-webkit-details-marker { display: none; }
-	.collapse > summary:hover { color: var(--fg-link-hover); }
-
-	.collapse > summary::after {
-		content: '';
-		inline-size: 0.35rem;
-		block-size: 0.35rem;
-		border-inline-end: var(--border-2) solid currentcolor;
-		border-block-end: var(--border-2) solid currentcolor;
-		rotate: 45deg;
-		translate: 0 -2px;
-		flex: none;
-		transition: rotate var(--dur-3) var(--ease-out), translate var(--dur-3) var(--ease-out);
-	}
-
-	.collapse[open] > summary::after { rotate: 225deg; translate: 0 1px; }
-
-	/* The summary can carry two labels; the closed one hides when open. */
-	.collapse[open] > summary .collapse__closed { display: none; }
-	.collapse:not([open]) > summary .collapse__open { display: none; }
-
-	.collapse__body {
-		margin-block-start: var(--space-3);
-		color: var(--fg-muted);
-		font-size: var(--text-sm);
-		line-height: var(--leading-relaxed);
-	}
-
-	/* Boxed body — the revealed block sits on the sunken surface. */
-	.collapse-boxed .collapse__body {
-		padding: var(--space-4);
-		border-radius: var(--radius-lg);
-		background: var(--bg-sunken);
-	}
-
-	@supports (interpolate-size: allow-keywords) {
-		.collapse::details-content {
-			block-size: 0;
-			overflow-y: clip;
-			transition:
-				block-size var(--dur-3) var(--ease-out),
-				content-visibility var(--dur-3) allow-discrete;
-		}
-
-		.collapse[open]::details-content { block-size: auto; }
-	}
 
 	/* ── .list — the list group ────────────────────────────────────────────
 	   Stacked rows on one surface. A row is a link, a button or a plain div;

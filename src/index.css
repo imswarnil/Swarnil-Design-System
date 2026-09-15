@@ -53,7 +53,13 @@
    this repo never built: drawer, swap, range, rating, toggle, checkbox, modal,
    dropdown, breadcrumbs, dock, diff, calendar, mask, fab, validator and the
    rest. Build one of them here and it belongs in the exclude list the same
-   day. */
+   day.
+
+   `collapse` and `steps` are the two names that run the other way. This repo
+   built both, and on 2026-09-15 deleted both — no page used either, and the
+   audit calls a family at zero a component nobody knows about. They stay
+   excluded rather than handed back to daisyUI: nothing asked for them, so
+   the honest bundle is one where the name simply does not exist. */
 @plugin "daisyui" {
 	themes: false;
 	exclude: alert, avatar, badge, button, card, carousel, chat, collapse, countdown, fieldset, footer, hero, input, kbd, list, loading, menu, navbar, progress, radio, range, select, skeleton, stack, stat, steps, tab, table, timeline, toast;

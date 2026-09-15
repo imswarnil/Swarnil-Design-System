@@ -1,5 +1,5 @@
 /* =============================================================================
-   24 · TEXT — figure, pull quote, mark, note, callout, footnote, term
+   24 · TEXT — figure, pull quote, note, callout, footnote, term
 
    The typographic atoms: things made of type and a rule, nothing more. They
    have no behaviour and no JS, and they drop straight into an editor's output
@@ -100,20 +100,6 @@
 	.pullquote-craft { --pullquote-line: var(--craft); }
 	.pullquote-quiet { --pullquote-line: var(--line-default); }
 
-	/* ── .mark — the static highlight ──────────────────────────────────────── */
-
-	.mark {
-		--mark-bg: var(--accent-soft);
-		--mark-fg: var(--accent-soft-fg);
-		background: var(--mark-bg);
-		color: var(--mark-fg);
-		padding-inline: 0.14em;
-		border-radius: var(--radius-xs);
-		box-decoration-break: clone;
-	}
-
-	.mark-craft   { --mark-bg: var(--craft-soft); --mark-fg: var(--craft-fg); }
-	.mark-neutral { --mark-bg: var(--bg-muted); --mark-fg: var(--fg-default); }
 
 	/* ── .note — an aside that is not an alert ─────────────────────────────
 	   A margin note, a caveat, a correction. A rule, not a box: it steps the
