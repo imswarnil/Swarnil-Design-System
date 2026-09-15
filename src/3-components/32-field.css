@@ -22,7 +22,7 @@
    Layer: components.
    ========================================================================== */
 
-@layer components {
+@layer utilities.sds.components {
 
 	/* ── .field — the unit ─────────────────────────────────────────────────── */
 

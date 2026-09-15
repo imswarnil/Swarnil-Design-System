@@ -21,7 +21,7 @@
    Layer: elements.
    ========================================================================== */
 
-@layer elements {
+@layer utilities.sds.elements {
 
 	.table {
 		--table-pad: var(--space-3);

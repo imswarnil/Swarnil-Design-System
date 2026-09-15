@@ -106,7 +106,7 @@ class becomes there.
 <div class="grid-2 cq-card">
   <div class="skeleton-card">
     <div class="skeleton skeleton-media skeleton-breathe"></div>
-    <div class="stack stack-sm u-p-4">
+    <div class="stack stack-sm p-4">
       <div class="skeleton skeleton-text skeleton-text-short skeleton-breathe"></div>
       <div class="skeleton skeleton-title skeleton-breathe"></div>
       <div class="skeleton skeleton-text skeleton-breathe"></div>
@@ -177,7 +177,7 @@ video that needs sound to make sense needs a control, not an autoplay.
 
 :::demo
 <figure class="figure">
-  <div class="ratio ratio-wide u-rounded-lg u-overflow-hidden">
+  <div class="ratio ratio-wide rounded-lg overflow-hidden">
     <video src="/assets/media/loop.mp4" poster="/assets/media/loop.jpg" muted loop playsinline autoplay></video>
   </div>
   <figcaption class="figure__caption">Eight seconds, muted, on a loop. The poster is what it is before the file arrives.</figcaption>
@@ -194,10 +194,10 @@ carousel is a `.reel`: a scroll-snap strip with no JavaScript at all.
 
 :::demo Drag it, or use the arrow keys
 <div class="reel" style="--reel-item: 15rem">
-  <figure class="figure u-m-0"><img src="/assets/media/coast.jpg" alt="Coast" /><figcaption class="figure__caption">Day 1 — the coast road</figcaption></figure>
-  <figure class="figure u-m-0"><img src="/assets/media/road.jpg" alt="Road" /><figcaption class="figure__caption">Day 3 — inland</figcaption></figure>
-  <figure class="figure u-m-0"><img src="/assets/media/city.jpg" alt="City" /><figcaption class="figure__caption">Day 6 — the city at dusk</figcaption></figure>
-  <figure class="figure u-m-0"><img src="/assets/media/night.jpg" alt="Night" /><figcaption class="figure__caption">Day 6 — and after dark</figcaption></figure>
+  <figure class="figure m-0"><img src="/assets/media/coast.jpg" alt="Coast" /><figcaption class="figure__caption">Day 1 — the coast road</figcaption></figure>
+  <figure class="figure m-0"><img src="/assets/media/road.jpg" alt="Road" /><figcaption class="figure__caption">Day 3 — inland</figcaption></figure>
+  <figure class="figure m-0"><img src="/assets/media/city.jpg" alt="City" /><figcaption class="figure__caption">Day 6 — the city at dusk</figcaption></figure>
+  <figure class="figure m-0"><img src="/assets/media/night.jpg" alt="Night" /><figcaption class="figure__caption">Day 6 — and after dark</figcaption></figure>
 </div>
 :::
 
@@ -327,7 +327,7 @@ column on purpose.
   <a class="linkcard" href="#i">
     <div class="linkcard__body">
       <p class="linkcard__title">Swarnil Design System — the documentation</p>
-      <p class="linkcard__desc">Token-first, dependency-free CSS. Nine cascade layers, no runtime, and no build step required to use it.</p>
+      <p class="linkcard__desc">Token-first CSS on Tailwind 4 and daisyUI. One link, no runtime, and no build step required to use it.</p>
       <p class="linkcard__meta"><span class="dot dot-accent linkcard__icon"></span> design.imswarnil.com</p>
     </div>
     <div class="linkcard__media"><img src="/assets/media/code.jpg" alt="" /></div>

@@ -71,16 +71,16 @@ opaque version for a busy scene.
 <div class="grid-2">
   <div class="canvas canvas-sq bg-ink" style="display: grid; align-content: end; padding: 4cqi">
     <div class="chatbox">
-      <p class="chatbox__msg u-m-0"><span class="chatbox__who">ravi_k</span><span class="chatbox__text">what font is that?</span></p>
-      <p class="chatbox__msg u-m-0"><span class="chatbox__badge"></span><span class="chatbox__who chatbox__who-mod">mod_anu</span><span class="chatbox__text">Inter, everywhere. Labels are the same face, small and tracked.</span></p>
-      <p class="chatbox__msg u-m-0"><span class="chatbox__who">devi</span><span class="chatbox__text">the frame thing is so good</span></p>
-      <p class="chatbox__msg u-m-0"><span class="chatbox__who">kabir</span><span class="chatbox__text">is the theme on github?</span></p>
+      <p class="chatbox__msg m-0"><span class="chatbox__who">ravi_k</span><span class="chatbox__text">what font is that?</span></p>
+      <p class="chatbox__msg m-0"><span class="chatbox__badge"></span><span class="chatbox__who chatbox__who-mod">mod_anu</span><span class="chatbox__text">Inter, everywhere. Labels are the same face, small and tracked.</span></p>
+      <p class="chatbox__msg m-0"><span class="chatbox__who">devi</span><span class="chatbox__text">the frame thing is so good</span></p>
+      <p class="chatbox__msg m-0"><span class="chatbox__who">kabir</span><span class="chatbox__text">is the theme on github?</span></p>
     </div>
   </div>
   <div class="canvas canvas-sq bg-ink" style="display: grid; align-content: end; padding: 4cqi">
     <div class="chatbox chatbox-flat">
-      <p class="chatbox__msg u-m-0"><span class="chatbox__who">ravi_k</span><span class="chatbox__text">flat version</span></p>
-      <p class="chatbox__msg u-m-0"><span class="chatbox__who">devi</span><span class="chatbox__text">for a busy background</span></p>
+      <p class="chatbox__msg m-0"><span class="chatbox__who">ravi_k</span><span class="chatbox__text">flat version</span></p>
+      <p class="chatbox__msg m-0"><span class="chatbox__who">devi</span><span class="chatbox__text">for a busy background</span></p>
     </div>
   </div>
 </div>

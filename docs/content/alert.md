@@ -9,8 +9,8 @@ lead: A message with a status — what happened, then what to do. Colour is neve
 <div class="alert w-lg" role="status">
   <svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-info"/></svg>
   <div class="alert__content">
-    <p class="alert__title u-m-0">Draft saved</p>
-    <p class="alert__body u-m-0">Episode 47 is safe. Publishing is still one click away.</p>
+    <p class="alert__title m-0">Draft saved</p>
+    <p class="alert__body m-0">Episode 47 is safe. Publishing is still one click away.</p>
   </div>
 </div>
 :::
@@ -29,12 +29,12 @@ danger alert that reads as *live* is a bug.
 
 :::demo Success, info, warning, danger, accent, neutral
 <div class="stack stack-sm w-lg">
-  <div class="alert alert-success" role="status"><svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-check"/></svg><div class="alert__content"><p class="alert__title u-m-0">Take 47 exported</p><p class="alert__body u-m-0">4.2s · 1080p · 212 MB.</p></div></div>
-  <div class="alert alert-info" role="status"><svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-info"/></svg><div class="alert__content"><p class="alert__title u-m-0">Rendering in the background</p><p class="alert__body u-m-0">You can keep editing; the file lands in Exports.</p></div></div>
-  <div class="alert alert-warning" role="status"><svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-alert"/></svg><div class="alert__content"><p class="alert__title u-m-0">Audio peaks at −0.2 dB</p><p class="alert__body u-m-0">Two sections will clip on a phone speaker. Normalise before publishing.</p></div></div>
-  <div class="alert alert-danger" role="alert"><svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-alert"/></svg><div class="alert__content"><p class="alert__title u-m-0">Export failed</p><p class="alert__body u-m-0">The disk is full. Clear 2 GB and retry — the render is cached.</p></div></div>
-  <div class="alert alert-accent" role="status"><svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-live"/></svg><div class="alert__content"><p class="alert__title u-m-0">You are live</p><p class="alert__body u-m-0">1,204 watching. The stream key rotates when you end.</p></div></div>
-  <div class="alert" role="status"><div class="alert__content"><p class="alert__body u-m-0">A neutral note with no icon and no title — a body is enough.</p></div></div>
+  <div class="alert alert-success" role="status"><svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-check"/></svg><div class="alert__content"><p class="alert__title m-0">Take 47 exported</p><p class="alert__body m-0">4.2s · 1080p · 212 MB.</p></div></div>
+  <div class="alert alert-info" role="status"><svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-info"/></svg><div class="alert__content"><p class="alert__title m-0">Rendering in the background</p><p class="alert__body m-0">You can keep editing; the file lands in Exports.</p></div></div>
+  <div class="alert alert-warning" role="status"><svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-alert"/></svg><div class="alert__content"><p class="alert__title m-0">Audio peaks at −0.2 dB</p><p class="alert__body m-0">Two sections will clip on a phone speaker. Normalise before publishing.</p></div></div>
+  <div class="alert alert-danger" role="alert"><svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-alert"/></svg><div class="alert__content"><p class="alert__title m-0">Export failed</p><p class="alert__body m-0">The disk is full. Clear 2 GB and retry — the render is cached.</p></div></div>
+  <div class="alert alert-accent" role="status"><svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-live"/></svg><div class="alert__content"><p class="alert__title m-0">You are live</p><p class="alert__body m-0">1,204 watching. The stream key rotates when you end.</p></div></div>
+  <div class="alert" role="status"><div class="alert__content"><p class="alert__body m-0">A neutral note with no icon and no title — a body is enough.</p></div></div>
 </div>
 :::
 
@@ -45,9 +45,9 @@ takes the alert's own colour, so the status is visible without a second token.
 
 :::demo Body only · title only · icon and body
 <div class="stack stack-sm w-lg">
-  <div class="alert alert-info"><div class="alert__content"><p class="alert__body u-m-0">Captions are generated after upload; edit them in the transcript tab.</p></div></div>
-  <div class="alert alert-success"><div class="alert__content"><p class="alert__title u-m-0">Published to members</p></div></div>
-  <div class="alert alert-warning"><svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-clock"/></svg><div class="alert__content"><p class="alert__body u-m-0">Scheduled for 09:00 — the thumbnail is still the placeholder.</p></div></div>
+  <div class="alert alert-info"><div class="alert__content"><p class="alert__body m-0">Captions are generated after upload; edit them in the transcript tab.</p></div></div>
+  <div class="alert alert-success"><div class="alert__content"><p class="alert__title m-0">Published to members</p></div></div>
+  <div class="alert alert-warning"><svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-clock"/></svg><div class="alert__content"><p class="alert__body m-0">Scheduled for 09:00 — the thumbnail is still the placeholder.</p></div></div>
 </div>
 :::
 
@@ -61,16 +61,16 @@ inside an alert competes with the page's one primary.
   <div class="alert alert-danger" role="alert">
     <svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-alert"/></svg>
     <div class="alert__content">
-      <p class="alert__title u-m-0">Upload interrupted at 62%</p>
-      <p class="alert__body u-m-0">The connection dropped. The first 62% is kept.</p>
+      <p class="alert__title m-0">Upload interrupted at 62%</p>
+      <p class="alert__body m-0">The connection dropped. The first 62% is kept.</p>
       <div class="alert__actions"><button class="btn btn-danger-outline btn-sm" type="button">Resume upload</button><button class="btn btn-quiet btn-sm" type="button">Discard</button></div>
     </div>
   </div>
   <div class="alert alert-info">
     <svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-download"/></svg>
     <div class="alert__content">
-      <p class="alert__title u-m-0">Theme 2.1 is available</p>
-      <p class="alert__body u-m-0">Container queries in the card, and the new footer.</p>
+      <p class="alert__title m-0">Theme 2.1 is available</p>
+      <p class="alert__body m-0">Container queries in the card, and the new footer.</p>
       <div class="alert__actions"><a class="btn btn-link btn-sm" href="#i">Read the changelog</a></div>
     </div>
   </div>
@@ -87,11 +87,11 @@ never a fake close that only hides.
 <div class="stack stack-sm w-lg">
   <div class="alert alert-success" role="status">
     <svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-check"/></svg>
-    <div class="alert__content"><p class="alert__title u-m-0">Comment posted</p><p class="alert__body u-m-0">Viewers see it after the next refresh.</p></div>
+    <div class="alert__content"><p class="alert__title m-0">Comment posted</p><p class="alert__body m-0">Viewers see it after the next refresh.</p></div>
     <button class="btn btn-quiet btn-icon btn-sm alert__close" type="button" aria-label="Dismiss"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-x"/></svg></button>
   </div>
   <div class="alert">
-    <div class="alert__content"><p class="alert__body u-m-0">Tip: press <kbd class="kbd">K</kbd> to pause the preview.</p></div>
+    <div class="alert__content"><p class="alert__body m-0">Tip: press <kbd class="kbd">K</kbd> to pause the preview.</p></div>
     <button class="btn btn-quiet btn-icon btn-sm alert__close" type="button" aria-label="Dismiss"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-x"/></svg></button>
   </div>
 </div>
@@ -109,12 +109,12 @@ default is enough.
 
 :::demo
 <div class="stack stack-sm w-lg">
-  <div class="alert alert-solid alert-danger" role="alert"><svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-alert"/></svg><div class="alert__content"><p class="alert__title u-m-0">Stream key leaked</p><p class="alert__body u-m-0">Rotate it now. Anyone with the old key can go live as you.</p></div></div>
-  <div class="alert alert-solid alert-success"><svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-check"/></svg><div class="alert__content"><p class="alert__body u-m-0">All 14 lessons transcoded.</p></div></div>
-  <div class="alert alert-solid alert-warning"><div class="alert__content"><p class="alert__body u-m-0">Storage at 91%.</p></div></div>
-  <div class="alert alert-solid alert-info"><div class="alert__content"><p class="alert__body u-m-0">Maintenance at 02:00 UTC.</p></div></div>
-  <div class="alert alert-solid alert-accent"><div class="alert__content"><p class="alert__body u-m-0">On air.</p></div></div>
-  <div class="alert alert-solid"><div class="alert__content"><p class="alert__body u-m-0">Neutral solid — ink on paper.</p></div></div>
+  <div class="alert alert-solid alert-danger" role="alert"><svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-alert"/></svg><div class="alert__content"><p class="alert__title m-0">Stream key leaked</p><p class="alert__body m-0">Rotate it now. Anyone with the old key can go live as you.</p></div></div>
+  <div class="alert alert-solid alert-success"><svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-check"/></svg><div class="alert__content"><p class="alert__body m-0">All 14 lessons transcoded.</p></div></div>
+  <div class="alert alert-solid alert-warning"><div class="alert__content"><p class="alert__body m-0">Storage at 91%.</p></div></div>
+  <div class="alert alert-solid alert-info"><div class="alert__content"><p class="alert__body m-0">Maintenance at 02:00 UTC.</p></div></div>
+  <div class="alert alert-solid alert-accent"><div class="alert__content"><p class="alert__body m-0">On air.</p></div></div>
+  <div class="alert alert-solid"><div class="alert__content"><p class="alert__body m-0">Neutral solid — ink on paper.</p></div></div>
 </div>
 :::
 
@@ -125,8 +125,8 @@ small one — a field hint, a line inside a card, a caption under a form.
 
 :::demo
 <div class="stack stack-sm w-lg">
-  <div class="alert alert-quiet alert-info"><svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-info"/></svg><div class="alert__content"><p class="alert__body u-m-0">Members-only posts are hidden from search engines by default.</p></div></div>
-  <div class="alert alert-quiet alert-warning"><div class="alert__content"><p class="alert__title u-m-0">Unsaved changes</p><p class="alert__body u-m-0">Leaving this page discards the new thumbnail.</p></div></div>
+  <div class="alert alert-quiet alert-info"><svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-info"/></svg><div class="alert__content"><p class="alert__body m-0">Members-only posts are hidden from search engines by default.</p></div></div>
+  <div class="alert alert-quiet alert-warning"><div class="alert__content"><p class="alert__title m-0">Unsaved changes</p><p class="alert__body m-0">Leaving this page discards the new thumbnail.</p></div></div>
   <div class="alert alert-inline alert-danger"><svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-circle-alert"/></svg><div class="alert__content">Slug already used by <b>ep-47-the-frame-layer</b>.</div></div>
   <div class="alert alert-inline alert-success"><svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-check"/></svg><div class="alert__content">Slug available.</div></div>
   <div class="alert alert-inline"><div class="alert__content">A neutral inline note.</div></div>
@@ -142,7 +142,7 @@ one component.
 :::demo
 <div class="stack stack-sm">
   <div class="alert alert-banner alert-warning" role="status"><svg class="icon alert__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-clock"/></svg><div class="alert__content">Uploads pause for maintenance tonight, 02:00–02:30 UTC.</div></div>
-  <div class="alert alert-banner alert-solid alert-accent"><div class="alert__content"><b>Live now:</b> The frame layer, explained — <a href="#i" class="u-fg">join the stream</a></div><button class="btn btn-quiet btn-icon btn-sm alert__close" type="button" aria-label="Dismiss"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-x"/></svg></button></div>
+  <div class="alert alert-banner alert-solid alert-accent"><div class="alert__content"><b>Live now:</b> The frame layer, explained — <a href="#i" class="text-fg">join the stream</a></div><button class="btn btn-quiet btn-icon btn-sm alert__close" type="button" aria-label="Dismiss"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-x"/></svg></button></div>
   <div class="alert alert-banner"><div class="alert__content">Season 2 pre-orders open on Friday.</div></div>
 </div>
 :::

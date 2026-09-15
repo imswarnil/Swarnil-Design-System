@@ -7,7 +7,7 @@
    Layer: sections — full-width page bands.
    ========================================================================== */
 
-@layer sections {
+@layer utilities.sds.sections {
 
 	.hero {
 		--hero-gap: var(--space-12);

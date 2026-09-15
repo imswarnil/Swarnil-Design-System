@@ -47,9 +47,9 @@ The two rules that fall out of the table:
 
 :::demo Bands with the divider that belongs to the section it opens
 <div>
-  <section class="section section-tight"><p class="t-label u-m-0">Hero band</p></section>
-  <section class="section section-tight section-line section-sunken"><p class="t-label u-m-0">Sunken band</p></section>
-  <section class="section section-tight section-line"><p class="t-label u-m-0">Closing band</p></section>
+  <section class="section section-tight"><p class="t-label m-0">Hero band</p></section>
+  <section class="section section-tight section-line section-sunken"><p class="t-label m-0">Sunken band</p></section>
+  <section class="section section-tight section-line"><p class="t-label m-0">Closing band</p></section>
 </div>
 :::
 
@@ -63,15 +63,15 @@ reaching for a raw `display: flex` in a style attribute means one of these was
 the answer.
 
 :::demo `.stack` — a column. Space goes BETWEEN children, never at the edges.
-<div class="stack u-p-4 u-bg-sunken u-rounded-lg">
-  <div class="u-p-3 u-bg-surface u-rounded u-border"><span class="t-data">one</span></div>
-  <div class="u-p-3 u-bg-surface u-rounded u-border"><span class="t-data">two</span></div>
-  <div class="u-p-3 u-bg-surface u-rounded u-border"><span class="t-data">three</span></div>
+<div class="stack p-4 bg-sunken rounded-lg">
+  <div class="p-3 bg-surface rounded-md hairline"><span class="t-data">one</span></div>
+  <div class="p-3 bg-surface rounded-md hairline"><span class="t-data">two</span></div>
+  <div class="p-3 bg-surface rounded-md hairline"><span class="t-data">three</span></div>
 </div>
 :::
 
 :::demo `.cluster` — a row that wraps by itself, at any width, without being told where
-<div class="cluster u-p-4 u-bg-sunken u-rounded-lg">
+<div class="cluster p-4 bg-sunken rounded-lg">
   <span class="badge">badge</span><span class="badge badge-outline">badge</span>
   <button class="btn btn-outline btn-sm" type="button">a button</button>
   <span class="chip">a chip</span><span class="chip">another</span>
@@ -81,25 +81,25 @@ the answer.
 
 :::demo `.cluster-between` and `.cluster-end` — the same row, pushed apart or to the end
 <div class="stack">
-  <div class="cluster cluster-between u-p-4 u-bg-sunken u-rounded-lg"><span class="t-data">title</span><button class="btn btn-ghost btn-sm" type="button">action</button></div>
-  <div class="cluster cluster-end u-p-4 u-bg-sunken u-rounded-lg"><button class="btn btn-ghost btn-sm" type="button">Cancel</button><button class="btn btn-primary btn-sm" type="button">Save</button></div>
+  <div class="cluster cluster-between p-4 bg-sunken rounded-lg"><span class="t-data">title</span><button class="btn btn-ghost btn-sm" type="button">action</button></div>
+  <div class="cluster cluster-end p-4 bg-sunken rounded-lg"><button class="btn btn-ghost btn-sm" type="button">Cancel</button><button class="btn btn-primary btn-sm" type="button">Save</button></div>
 </div>
 :::
 
 :::demo `.grid-auto` — as many columns as fit. The browser decides the count; you only say the minimum.
-<div class="grid-auto u-p-4 u-bg-sunken u-rounded-lg" style="--col: 9rem">
-  <div class="u-p-4 u-bg-surface u-rounded u-border"><span class="t-data">1</span></div>
-  <div class="u-p-4 u-bg-surface u-rounded u-border"><span class="t-data">2</span></div>
-  <div class="u-p-4 u-bg-surface u-rounded u-border"><span class="t-data">3</span></div>
-  <div class="u-p-4 u-bg-surface u-rounded u-border"><span class="t-data">4</span></div>
-  <div class="u-p-4 u-bg-surface u-rounded u-border"><span class="t-data">5</span></div>
+<div class="grid-auto p-4 bg-sunken rounded-lg" style="--col: 9rem">
+  <div class="p-4 bg-surface rounded-md hairline"><span class="t-data">1</span></div>
+  <div class="p-4 bg-surface rounded-md hairline"><span class="t-data">2</span></div>
+  <div class="p-4 bg-surface rounded-md hairline"><span class="t-data">3</span></div>
+  <div class="p-4 bg-surface rounded-md hairline"><span class="t-data">4</span></div>
+  <div class="p-4 bg-surface rounded-md hairline"><span class="t-data">5</span></div>
 </div>
 :::
 
 :::demo `.sidebar` — a fixed-ish column beside a flexible one. It wraps on CONTENT, not on a breakpoint.
-<div class="sidebar u-p-4 u-bg-sunken u-rounded-lg" style="--side-width: 12rem">
-  <div class="u-p-4 u-bg-surface u-rounded u-border"><span class="t-data">side · 12rem</span></div>
-  <div class="u-p-4 u-bg-surface u-rounded u-border"><span class="t-data">main · takes the rest, and pushes the side below when it would drop under 55%</span></div>
+<div class="sidebar p-4 bg-sunken rounded-lg" style="--side-width: 12rem">
+  <div class="p-4 bg-surface rounded-md hairline"><span class="t-data">side · 12rem</span></div>
+  <div class="p-4 bg-surface rounded-md hairline"><span class="t-data">main · takes the rest, and pushes the side below when it would drop under 55%</span></div>
 </div>
 :::
 
@@ -120,7 +120,7 @@ An arrangement inside an arrangement is normal and expected — a `.stack` of
 `.cluster`s is most of every page ever built here.
 
 :::demo A real section, in full: band → column → stack → cluster → grid
-<section class="section section-tight section-sunken u-rounded-lg">
+<section class="section section-tight section-sunken rounded-lg">
   <div class="center center-md stack stack-lg">
     <header class="sec">
       <div class="sec__text"><span class="sec__eyebrow">The four layers</span><h3 class="sec__title">Band, column, arrangement, content</h3></div>
@@ -148,11 +148,11 @@ wants `center-2xl`. A page of sentences never does.
 
 :::demo
 <div class="stack">
-  <div class="center center-sm u-border u-rounded u-p-3"><span class="t-data">center-sm · 30rem</span></div>
-  <div class="center center-md u-border u-rounded u-p-3"><span class="t-data">center-md · 45rem</span></div>
-  <div class="center u-border u-rounded u-p-3"><span class="t-data">center · 60rem</span></div>
-  <div class="center center-xl u-border u-rounded u-p-3"><span class="t-data">center-xl · 75rem</span></div>
-  <div class="center center-2xl u-border u-rounded u-p-3"><span class="t-data">center-2xl · 90rem</span></div>
+  <div class="center center-sm hairline rounded-md p-3"><span class="t-data">center-sm · 30rem</span></div>
+  <div class="center center-md hairline rounded-md p-3"><span class="t-data">center-md · 45rem</span></div>
+  <div class="center hairline rounded-md p-3"><span class="t-data">center · 60rem</span></div>
+  <div class="center center-xl hairline rounded-md p-3"><span class="t-data">center-xl · 75rem</span></div>
+  <div class="center center-2xl hairline rounded-md p-3"><span class="t-data">center-2xl · 90rem</span></div>
 </div>
 :::
 

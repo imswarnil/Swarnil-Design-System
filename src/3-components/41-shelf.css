@@ -29,7 +29,7 @@
    Layer: components.
    ========================================================================== */
 
-@layer components {
+@layer utilities.sds.components {
 
 	.shelf {
 		--shelf-item: 17rem;

@@ -205,7 +205,7 @@ step, which would glow.
   <span class="badge badge-warning">Review</span>
   <span class="badge badge-danger">Blocked</span>
 </div>
-<div class="stack stack-sm u-mt-4">
+<div class="stack stack-sm mt-4">
   <div class="alert alert-success"><span class="alert__body">Deployed in 4.2s.</span></div>
   <div class="alert alert-danger"><span class="alert__body">The build failed — three tests are red in <code class="code">card.spec.ts</code>.</span></div>
 </div>

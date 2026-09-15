@@ -21,7 +21,7 @@
    Layer: patterns.
    ========================================================================== */
 
-@layer patterns {
+@layer utilities.sds.patterns {
 	/* ── Rhythm, restated ─────────────────────────────────────────────────
 	   The base rule lives in typography (elements layer). A component placed
 	   in the column — .pullquote, .note, .codeplayer — carries `margin: 0`

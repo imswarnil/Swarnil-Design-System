@@ -19,7 +19,7 @@ is how a navbar becomes the file nobody wants to touch.
 ## The bar
 
 :::demo
-<header class="navbar navbar-bordered u-border u-rounded-lg">
+<header class="navbar navbar-bordered hairline rounded-lg">
   <a class="navbar__brand" href="#i"><span class="dot dot-accent"></span> Swarnil</a>
   <nav class="navbar__nav" aria-label="Main">
     <a class="navbar__link" href="#i" aria-current="page">Watch</a>
@@ -43,7 +43,7 @@ An icon is optional and inherits the link's colour and size, so a nav with icons
 and a nav without are the same component — not two.
 
 :::demo
-<header class="navbar navbar-bordered u-border u-rounded-lg">
+<header class="navbar navbar-bordered hairline rounded-lg">
   <a class="navbar__brand" href="#i"><span class="dot dot-accent"></span> Swarnil</a>
   <nav class="navbar__nav" aria-label="Main">
     <a class="navbar__link" href="#i" aria-current="page"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-play"/></svg>Watch</a>
@@ -68,7 +68,7 @@ a dropdown on one item, a mega panel on another, both opened by the platform's
 popover and closed by Escape without a line of JavaScript.
 
 :::demo Click "Watch" for a dropdown, "Learn" for the mega panel
-<header class="navbar navbar-bordered u-rounded-lg">
+<header class="navbar navbar-bordered rounded-lg">
   <a class="navbar__brand" href="#i"><span class="dot dot-accent"></span> Swarnil</a>
   <nav class="navbar__nav" aria-label="Main">
     <a class="navbar__link" href="#i" aria-current="page">Home</a>
@@ -122,7 +122,7 @@ reader are reading the **same** attribute. There is no `.is-open` class that
 can disagree with the accessibility tree.
 
 :::demo `.navbar-burger` keeps the burger at every width, so it is visible here. Click it.
-<header class="navbar navbar-burger navbar-bordered u-rounded-lg">
+<header class="navbar navbar-burger navbar-bordered rounded-lg">
   <button class="navbar__burger" type="button" popovertarget="nb-drawer" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
   <a class="navbar__brand" href="#i"><span class="dot dot-accent"></span> Swarnil</a>
   <div class="navbar__actions"><a class="btn btn-primary btn-sm" href="#i">Subscribe</a></div>
@@ -169,7 +169,7 @@ click-outside are free, and it slides using `@starting-style` rather than a
 class the JavaScript has to add and remove.
 
 :::demo Open it, then press Escape or click outside
-<header class="navbar navbar-bordered u-border u-rounded-lg">
+<header class="navbar navbar-bordered hairline rounded-lg">
   <button class="navbar__burger" type="button" popovertarget="demo-sheet" aria-expanded="false" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
@@ -222,7 +222,7 @@ this system uses container queries.
 | `navbar-hide-on-scroll` | hides going down, returns going up |
 
 :::demo Inverse and tall
-<header class="navbar navbar-inverse navbar-tall u-rounded-lg">
+<header class="navbar navbar-inverse navbar-tall rounded-lg">
   <a class="navbar__brand" href="#i"><span class="dot dot-accent"></span> Swarnil</a>
   <nav class="navbar__nav" aria-label="Main">
     <a class="navbar__link" href="#i" aria-current="page">Watch</a>

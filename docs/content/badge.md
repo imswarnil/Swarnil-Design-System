@@ -117,7 +117,7 @@ An avatar cannot be both `avatar-live` and carry a status: both are the one
 video that jumps to the moment. The playing one is `aria-current`.
 
 :::demo
-<p class="u-m-0">
+<p class="m-0">
   <button class="timecode timecode-link" type="button">00:00</button> Intro ·
   <button class="timecode timecode-link" type="button" aria-current="true">02:14</button> The key light ·
   <button class="timecode timecode-link" type="button">09:47</button> Fill and rim ·

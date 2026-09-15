@@ -39,7 +39,7 @@
    Layer: tokens. Paints nothing; defines what exists.
    ========================================================================== */
 
-@layer tokens {
+@layer base {
 
 	/* ═══ TIER 1 · PRIMITIVES ═══════════════════════════════════════════════
 	   Positions on a ladder. They carry no meaning and NO COMPONENT MAY NAME

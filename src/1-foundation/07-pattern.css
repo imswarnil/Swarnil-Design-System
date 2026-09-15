@@ -15,7 +15,7 @@
    Layer: components.
    ========================================================================== */
 
-@layer components {
+@layer utilities.sds.components {
 
 	.pattern {
 		--pattern-size: 1.5rem;

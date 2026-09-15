@@ -51,7 +51,7 @@ the choice between the three [pager dresses](/navigation.html).
 
 ## The shape, once
 
-Every listing page in the [templates](/templates.html) is this, and only the
+Every listing page built on this system is the same shape, and only the
 four decisions above change between them.
 
 :::demo A listing, in miniature — bar, facets, results, pager
@@ -59,10 +59,10 @@ four decisions above change between them.
   <div class="filterbar">
     <p class="filterbar__count"><strong>3</strong> of 128</p>
     <div class="filterbar__actions">
-      <label><span class="u-sr-only">Sort</span><select class="select select-sm"><option>Newest first</option><option>Most watched</option></select></label>
+      <label><span class="sr-only">Sort</span><select class="select select-sm"><option>Newest first</option><option>Most watched</option></select></label>
       <div class="viewtoggle" role="group" aria-label="View">
-        <label class="viewtoggle__opt"><input type="radio" name="col-view" value="grid" checked /><span class="u-sr-only">Grid</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-grid"/></svg></label>
-        <label class="viewtoggle__opt"><input type="radio" name="col-view" value="list" /><span class="u-sr-only">List</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-menu"/></svg></label>
+        <label class="viewtoggle__opt"><input type="radio" name="col-view" value="grid" checked /><span class="sr-only">Grid</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-grid"/></svg></label>
+        <label class="viewtoggle__opt"><input type="radio" name="col-view" value="list" /><span class="sr-only">List</span><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-menu"/></svg></label>
       </div>
     </div>
   </div>

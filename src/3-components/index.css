@@ -2,20 +2,20 @@
    3 · COMPONENTS — composed objects with named parts
    ========================================================================== */
 
-@import url('./30-button.css');
-@import url('./31-card.css');
-@import url('./32-field.css');
-@import url('./33-nav.css');
-@import url('./34-alert.css');
-@import url('./35-navbar.css');   /* the bar itself                    */
-@import url('./36-menu.css');     /* dropdown, mega panel, drawer      */
-@import url('./37-overlay.css');  /* dialog, tooltip                   */
-@import url('./38-disclosure.css'); /* accordion, collapse             */
-@import url('./39-media.css');    /* player, play, poster, episode     */
-@import url('./40-codeplayer.css'); /* code as a screen: TV, flat, light */
-@import url('./41-shelf.css');    /* the row you scroll sideways       */
-@import url('./42-filter.css');   /* facets, the bar, the view switch  */
-@import url('./43-masthead.css'); /* one project, held at the top      */
-@import url('./44-ad.css');       /* the paid slot, made honest        */
-@import url('./45-toc.css');      /* the table of contents             */
-@import url('./46-timestamps.css'); /* the timecodes under a video     */
+@import "./30-button.css";
+@import "./31-card.css";
+@import "./32-field.css";
+@import "./33-nav.css";
+@import "./34-alert.css";
+@import "./35-navbar.css";   /* the bar itself                    */
+@import "./36-menu.css";     /* dropdown, mega panel, drawer      */
+@import "./37-overlay.css";  /* dialog, tooltip                   */
+@import "./38-disclosure.css"; /* accordion, collapse             */
+@import "./39-media.css";    /* player, play, poster, episode     */
+@import "./40-codeplayer.css"; /* code as a screen: TV, flat, light */
+@import "./41-shelf.css";    /* the row you scroll sideways       */
+@import "./42-filter.css";   /* facets, the bar, the view switch  */
+@import "./43-masthead.css"; /* one project, held at the top      */
+@import "./44-ad.css";       /* the paid slot, made honest        */
+@import "./45-toc.css";      /* the table of contents             */
+@import "./46-timestamps.css"; /* the timecodes under a video     */

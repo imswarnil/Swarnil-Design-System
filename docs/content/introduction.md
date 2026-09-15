@@ -35,7 +35,7 @@ reads from. Change three variables and every surface I own rebrands at once.
 
 ## What I was actually after
 
-<div class="grid-3 u-mt-6">
+<div class="grid-3 mt-6">
   <article class="card card-hover-frame frame frame-hover">
     <span class="frame__tr"></span><span class="frame__bl"></span>
     <div class="card__body">
@@ -68,7 +68,7 @@ reads from. Change three variables and every surface I own rebrands at once.
     <div class="card__body">
       <p class="card__kicker">Constraint</p>
       <h3 class="card__title">Nothing to install</h3>
-      <p class="card__excerpt">One <code class="code">&lt;link&gt;</code>. No framework, no runtime, no build step, no npm tree that rots in eight months. If it can render HTML, it can use this.</p>
+      <p class="card__excerpt">One <code class="code">&lt;link&gt;</code> to the prebuilt bundle and there is nothing to install — Tailwind and daisyUI are already compiled into it. Run Tailwind yourself instead and the same source generates only the utilities your own markup uses.</p>
     </div>
   </article>
 
@@ -93,46 +93,55 @@ reads from. Change three variables and every surface I own rebrands at once.
 
 ## How it fits together
 
-Nine cascade layers, bottom to top. A file may only reach *down* — which is why
-nothing here ever needs `!important` to win an argument.
+Three tiers, and the order is the whole argument. **Tailwind** is the floor —
+the reset, the theme variables and every utility. **daisyUI** is the component
+set, covering everything a UI kit ships that this system has not built. **This
+system** sits on top: it wins every name it shares with daisyUI, and still
+loses to a Tailwind utility.
 
-<div class="stack u-mt-6">
-<svg class="layers" viewBox="0 0 640 240" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Nine cascade layers, from config at the base up to utilities at the top. Each layer may only reference the layers below it.">
+<div class="stack mt-6">
+<svg class="layers" viewBox="0 0 640 200" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Four bands, bottom to top: Tailwind theme and base, daisyUI components, this system's elements through sections, and Tailwind utilities on top.">
   <g>
-    <rect class="layers__base" x="8" y="196" width="624" height="34" rx="8" />
-    <text class="layers__n" x="26" y="217">0</text>
-    <text class="layers__t" x="52" y="217">config — the @layer declaration itself</text>
-    <text class="layers__w" x="612" y="217">widest reach</text>
+    <rect class="layers__base" x="8" y="156" width="624" height="34" rx="8" />
+    <text class="layers__n" x="26" y="177">1</text>
+    <text class="layers__t" x="52" y="177">tailwind — preflight, the theme, the tokens</text>
+    <text class="layers__w" x="612" y="177">widest reach</text>
   </g>
   <g>
-    <rect class="layers__l" x="42" y="158" width="556" height="34" rx="8" />
-    <text class="layers__n" x="60" y="179">1</text>
-    <text class="layers__t" x="86" y="179">foundation — colour, type, space, motion, frame</text>
+    <rect class="layers__l" x="42" y="118" width="556" height="34" rx="8" />
+    <text class="layers__n" x="60" y="139">2</text>
+    <text class="layers__t" x="86" y="139">daisyUI — drawer, range, rating, modal, toggle…</text>
   </g>
   <g>
-    <rect class="layers__l" x="76" y="120" width="488" height="34" rx="8" />
-    <text class="layers__n" x="94" y="141">2</text>
-    <text class="layers__t" x="120" y="141">elements — badge, table, code, indicator</text>
+    <rect class="layers__l" x="76" y="80" width="488" height="34" rx="8" />
+    <text class="layers__n" x="94" y="101">3</text>
+    <text class="layers__t" x="120" y="101">this system — elements, components, patterns, sections</text>
   </g>
   <g>
-    <rect class="layers__l" x="110" y="82" width="420" height="34" rx="8" />
-    <text class="layers__n" x="128" y="103">3</text>
-    <text class="layers__t" x="154" y="103">components — button, card, field, nav</text>
+    <rect class="layers__top" x="110" y="42" width="420" height="34" rx="8" />
+    <text class="layers__nt" x="128" y="63">4</text>
+    <text class="layers__tt" x="154" y="63">tailwind utilities — last word, smallest job</text>
   </g>
-  <g>
-    <rect class="layers__l" x="144" y="44" width="352" height="34" rx="8" />
-    <text class="layers__n" x="162" y="65">4·5</text>
-    <text class="layers__t" x="196" y="65">patterns and sections</text>
-  </g>
-  <g>
-    <rect class="layers__top" x="178" y="6" width="284" height="34" rx="8" />
-    <text class="layers__nt" x="196" y="27">6</text>
-    <text class="layers__tt" x="222" y="27">utilities — last word, smallest job</text>
-  </g>
-  <path class="layers__arrow" d="M622 186V50" />
-  <path class="layers__arrow" d="M618 58l4-8 4 8" />
+  <path class="layers__arrow" d="M622 146V52" />
+  <path class="layers__arrow" d="M618 60l4-8 4 8" />
 </svg>
 </div>
+
+The fourth band is the one worth explaining. daisyUI does not put its
+components in Tailwind's `components` layer — it nests them *inside*
+`utilities`, and per the cascade spec a rule written directly in a layer beats
+every sub-layer nested in it. That is what makes `class="btn bg-red-500"` do
+what you expect. This system goes in the same place, one step later, so:
+
+| you write | you get |
+| --- | --- |
+| `btn` | **ours** — this system's button |
+| `btn bg-red-500` | **the utility** — because a utility that loses to a component is not a utility |
+| `drawer`, `range`, `rating` | **daisyUI's** — this system never built one |
+
+Nothing here ever needs `!important` to win an argument, and the thirty
+components both systems name are simply not shipped twice: daisyUI is compiled
+with them excluded.
 
 ## What is opinionated about it
 
@@ -153,10 +162,10 @@ The type system is one face you read and one you do not.
 
 :::demo
 <div class="stack stack-sm">
-  <p class="spec-display spec-2xl u-m-0">Inter sets the headlines</p>
-  <p class="t-muted u-m-0">…and everything you actually read, including labels — the same face worn small, uppercase and tracked.</p>
-  <p class="t-label u-m-0 u-mt-4">A label, in Inter</p>
-  <p class="t-data u-m-0">TAKE 47 · 00:12:47</p>
+  <p class="spec-display spec-2xl m-0">Inter sets the headlines</p>
+  <p class="t-muted m-0">…and everything you actually read, including labels — the same face worn small, uppercase and tracked.</p>
+  <p class="t-label m-0 mt-4">A label, in Inter</p>
+  <p class="t-data m-0">TAKE 47 · 00:12:47</p>
 </div>
 :::
 

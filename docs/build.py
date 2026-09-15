@@ -53,27 +53,6 @@ OUT = pathlib.Path(os.environ.get('SDS_OUT') or ROOT / 'site')
 SITE = 'https://design.imswarnil.com'
 NAME = 'Swarnil Design System'
 
-# SDS_DEV=1 serves the SOURCE: site/src/ is copied whole and the page links
-# src/index.css, so a saved file shows up on reload with no rebuild.
-#
-# Without it the page links ONE compiled, minified sheet — assets/site.min.css,
-# produced by `npm run css:site` from docs/assets/site.css. This is the whole
-# point of the flag. The production site used to link /src/index.css too, which
-# meant every visitor followed a three-deep @import chain across ~78 unminified
-# files while the minified bundles the build had already made sat in site/dist/
-# with nothing pointing at them.
-DEV = os.environ.get('SDS_DEV') not in (None, '', '0')
-
-# Nothing on the page is third-party; the primary nav is one list, in one place,
-# rather than pasted into both shells with the current item hard-coded in one.
-PRIMARY = [
-    ('/introduction.html', 'Docs', 'file'),
-    ('/principles.html', 'Principles', 'bookmark'),
-    ('/install.html', 'Install', 'box'),
-    ('/icons.html', 'Icons', 'capture'),
-    ('/templates.html', 'Templates', 'folder'),
-]
-
 # Nav group order. A page names its group in front matter; a group not listed
 # here sorts to the end, so adding one is never a silent disappearance.
 GROUPS = [
@@ -119,7 +98,7 @@ def stamp():
     you debug the wrong thing. This changes exactly when the assets change.
     """
     newest = 0.0
-    for root in (ROOT / 'src', ASSETS, ROOT / 'dist'):
+    for root in (ROOT / 'src', ASSETS):
         if root.is_dir():
             for f in root.rglob('*'):
                 if f.is_file():
@@ -183,140 +162,51 @@ def slug(s):
 
 
 # ───────────────────────────────────────────────────────────── code colouring
-#
-# ONE PASS, ONE REGEX, PER LANGUAGE.
-#
-# The previous version was a chain of re.sub() calls over already-escaped text:
-# colour the comments, then the tags, then the attributes. Each pass ran over
-# the output of the one before it, so a later pattern could match inside a span
-# an earlier one had just inserted — `class="tok-com"` is a word followed by an
-# `=`, which is exactly what the attribute rule looks for. It mostly got away
-# with it because the patterns were narrow, and it would have kept getting away
-# with it right up until a snippet contained the wrong thing.
-#
-# Here each language is a single alternation, scanned once, left to right.
-# Nothing the scanner emits is ever looked at again, so a rule cannot match its
-# own output. Text between matches is escaped and passed through; the matched
-# text is escaped and wrapped. The scanner therefore cannot introduce markup,
-# only spans — which is the property that makes it safe to run on raw source.
-#
-# Rules are (token, pattern, inner). `inner` names a capture group when only
-# part of the match should be coloured — a CSS property is matched with its
-# leading indent so it can be anchored to the start of a line, but the indent
-# is not part of the token.
-#
-# The classes are the system's own .tok-* from 2-elements/22-code.css; the
-# colours are its --syn-* palette. Nothing here invents a colour.
-
-def _scan(rules, code):
-    """Colour `code` in one pass. Returns escaped HTML.
-
-    A rule may wrap part of its pattern in a group named `<token>_i` when only
-    that part should be coloured — a CSS property is matched together with its
-    leading indent so it can be anchored to the start of a line, but the indent
-    is not the token. The group is named rather than numbered because the rules
-    are concatenated into one regex, which renumbers every group.
-    """
-    rx = re.compile('|'.join(f'(?P<{tok}>{pat})' for tok, pat in rules), re.S | re.M)
-
-    out, pos = [], 0
-    for m in rx.finditer(code):
-        tok = m.lastgroup
-        # lastgroup is the innermost group that matched; an `_i` group means
-        # the rule it belongs to is the real token.
-        if tok.endswith('_i'):
-            tok = tok[:-2]
-        out.append(html.escape(code[pos:m.start()]))
-        part = m.group(f'{tok}_i') if f'{tok}_i' in rx.groupindex else None
-        if part is not None:
-            whole = m.group(tok)
-            out.append(html.escape(whole[:whole.index(part)]))
-            out.append(f'<span class="tok-{tok}">{html.escape(part)}</span>')
-        else:
-            out.append(f'<span class="tok-{tok}">{html.escape(m.group(tok))}</span>')
-        pos = m.end()
-    out.append(html.escape(code[pos:]))
-    return ''.join(out)
-
-
-# Order is precedence only for matches starting at the SAME offset; otherwise
-# the leftmost match wins, which is what you want. Comments and strings come
-# first in every language so their contents are never re-read as code.
-
-HTML_RULES = [
-    ('com',  r'<!--.*?-->'),
-    ('key',  r'<!DOCTYPE[^>]*>'),
-    ('str',  r'"[^"\n]*"|\'[^\'\n]*\''),
-    # The tag name, and only directly after a `<` — so `a < b` in prose is
-    # never a tag. The angle bracket is matched separately and FIRST (it is
-    # one character to the left), which is what leaves `/a` reachable here on
-    # a closing tag: `</` as a single punc token would swallow the slash and
-    # strand the name a character further on, out of the lookbehind's reach.
-    ('tag',  r'(?<=<)(?P<tag_i>/?[A-Za-z][\w-]*)'),
-    # an attribute is a name immediately before an `=`
-    ('attr', r'[A-Za-z_:][\w:.-]*(?==)'),
-    ('punc', r'[<>]|/(?=>)'),
+HTML_TOK = [
+    (re.compile(r'(&lt;!--.*?--&gt;)', re.S), 'com'),
+    (re.compile(r'(&lt;/?)([\w-]+)'), None),          # handled specially
+    (re.compile(r'([\w-]+)(=)(&quot;[^&]*?&quot;)'), None),
 ]
 
-CSS_RULES = [
-    ('com',  r'/\*.*?\*/'),
-    ('str',  r'"[^"\n]*"|\'[^\'\n]*\''),
-    ('var',  r'--[\w-]+'),
-    ('key',  r'@[\w-]+'),                       # at-rules read as keywords
-    # a declaration: indent, then the property, then a colon
-    ('prop', r'^[ \t]*(?P<prop_i>[a-z-]{2,})(?=\s*:)'),
-    ('fn',   r'[\w-]+(?=\()'),
-    # a selector is what sits before a `{` on its own line
-    ('sel',  r'^[ \t]*(?P<sel_i>[^\n{}();]+?)(?=\s*\{)'),
-    ('num',  r'(?<![\w.-])-?\d*\.?\d+(?:px|rem|em|ch|cqi|cqb|vw|vh|dvh|deg|ms|s|fr|%)?(?![\w-])'),
-    ('punc', r'[{};:,]'),
-]
 
-JS_KEYWORDS = (
-    'const|let|var|function|return|if|else|for|while|of|in|new|class|extends|'
-    'import|export|from|default|await|async|try|catch|finally|throw|typeof|'
-    'instanceof|delete|void|this|super|null|undefined|true|false|break|continue'
-)
+def colour_html(escaped):
+    """Light syntax colouring for the HTML pane. Operates on already-escaped
+    text so it can never introduce markup, only spans."""
+    s = re.sub(r'(&lt;!--.*?--&gt;)', r'<span class="tok-com">\1</span>', escaped, flags=re.S)
+    s = re.sub(r'(&lt;/?)([\w-]+)', r'\1<span class="tok-tag">\2</span>', s)
+    s = re.sub(r'([\w-]+)(=)(&quot;.*?&quot;)',
+               r'<span class="tok-attr">\1</span>\2<span class="tok-str">\3</span>', s)
+    return s
 
-JS_RULES = [
-    ('com',  r'//[^\n]*|/\*.*?\*/'),
-    ('str',  r'"[^"\n]*"|\'[^\'\n]*\'|`[^`]*`'),
-    ('key',  rf'\b(?:{JS_KEYWORDS})\b'),
-    ('fn',   r'[A-Za-z_$][\w$]*(?=\s*\()'),
-    ('num',  r'(?<![\w.])-?\d*\.?\d+(?![\w.])'),
-    ('punc', r'=>|[{}();,]'),
-]
 
-SH_RULES = [
-    ('com',  r'#[^\n]*'),
-    ('str',  r'"[^"\n]*"|\'[^\'\n]*\''),
-    # the command is the first word of a line, or the first after a pipe
-    ('fn',   r'(?:^|\|[ \t]*)(?P<fn_i>[a-z][\w./-]*)'),
-    ('key',  r'(?<=\s)--?[\w-]+'),             # flags
-    ('num',  r'(?<![\w.-])\d+(?![\w-])'),
-]
-
-LANGS = {
-    'html': HTML_RULES, 'htm': HTML_RULES, 'xml': HTML_RULES, 'svg': HTML_RULES,
-    'css': CSS_RULES,
-    'js': JS_RULES, 'javascript': JS_RULES, 'json': JS_RULES, 'ts': JS_RULES,
-    'bash': SH_RULES, 'sh': SH_RULES, 'shell': SH_RULES, 'console': SH_RULES,
-}
+def colour_css(escaped):
+    s = re.sub(r'(/\*.*?\*/)', r'<span class="tok-com">\1</span>', escaped, flags=re.S)
+    s = re.sub(r'(--[\w-]+)', r'<span class="tok-var">\1</span>', s)
+    s = re.sub(r'^([^\n{};]+)(\s*\{)', r'<span class="tok-sel">\1</span>\2', s, flags=re.M)
+    # property names — start of a declaration, lowercase-dash, before a colon
+    s = re.sub(r'(?m)^(\s*)([a-z-]{2,})(\s*:)', r'\1<span class="tok-key">\2</span>\3', s)
+    # numbers with their units
+    s = re.sub(r'(?<![\w-])(\d+(?:\.\d+)?(?:px|rem|em|ch|vw|vh|s|ms|deg|%)?)(?![\w-])',
+               r'<span class="tok-num">\1</span>', s)
+    return s
 
 
 def colour(code, lang):
-    """Colour a snippet, or escape it unchanged if the language is unknown."""
-    rules = LANGS.get((lang or '').lower())
-    return _scan(rules, code) if rules else html.escape(code)
+    esc = html.escape(code)
+    if lang in ('html', 'htm'):
+        return colour_html(esc)
+    if lang in ('css',):
+        return colour_css(esc)
+    return esc
 
 
 def codeblock(code, lang, copy=True):
-    btn = ('<button class="codeblock__copy" type="button" data-copy>Copy</button>'
+    btn = ('<button class="cb__copy" type="button" data-copy>Copy</button>'
            if copy else '')
-    return (f'<figure class="codeblock codeblock-night">'
-            f'<figcaption class="codeblock__head">'
-            f'<span class="codeblock__lang">{html.escape(lang or "text")}</span>{btn}'
-            f'</figcaption><pre class="codeblock__pre"><code>{colour(code, lang)}</code></pre></figure>')
+    return (f'<figure class="cb"><figcaption class="cb__head">'
+            f'<span class="cb__dots" aria-hidden="true"><span></span><span></span><span></span></span>'
+            f'<span class="cb__lang">{html.escape(lang or "text")}</span>{btn}'
+            f'</figcaption><pre class="cb__pre"><code>{colour(code, lang)}</code></pre></figure>')
 
 
 # ──────────────────────────────────────────────────────────── the demo block
@@ -335,19 +225,19 @@ def demo(markup, caption):
            if caption else '')
     return f'''<figure class="demo" id="demo-{n}">
 {cap}<div class="demo__bar">
-<div class="tabs tabs-flush" role="tablist" aria-label="Example view">
-<button class="tab" type="button" role="tab" aria-selected="true" data-pane="preview">Preview</button>
-<button class="tab" type="button" role="tab" aria-selected="false" data-pane="code">HTML</button>
+<div class="demo__tabs" role="tablist" aria-label="Example view">
+<button class="demo__tab" type="button" role="tab" aria-selected="true" data-pane="preview">Preview</button>
+<button class="demo__tab" type="button" role="tab" aria-selected="false" data-pane="code">HTML</button>
 </div>
 <div class="demo__tools">
-<button class="btn btn-quiet btn-xs" type="button" data-narrow aria-pressed="false" title="Preview at 320px">320px</button>
-<button class="btn btn-quiet btn-xs" type="button" data-copy title="Copy the HTML">Copy</button>
+<button class="demo__tool" type="button" data-narrow aria-pressed="false" title="Preview at 320px">320px</button>
+<button class="demo__tool" type="button" data-copy title="Copy the HTML">Copy</button>
 </div>
 </div>
 <div class="demo__stage" data-pane="preview"><div class="demo__inner">
 {markup}
 </div></div>
-<div class="demo__code codeblock codeblock-night" data-pane="code" hidden><pre class="codeblock__pre"><code>{colour(markup.strip(), 'html')}</code></pre></div>
+<div class="demo__code" data-pane="code" hidden><pre class="cb__pre"><code>{colour(markup.strip(), 'html')}</code></pre></div>
 </figure>'''
 
 
@@ -404,7 +294,7 @@ def render(md):
 
         # ── horizontal rule
         if s in ('---', '***', '___'):
-            out.append('<hr />')
+            out.append('<hr class="rule" />')
             i += 1
             continue
 
@@ -429,7 +319,7 @@ def render(md):
             while i < n and lines[i].strip().startswith('>'):
                 body.append(lines[i].strip().lstrip('>').strip())
                 i += 1
-            out.append(f'<blockquote>{inline(" ".join(body))}</blockquote>')
+            out.append(f'<blockquote class="quote">{inline(" ".join(body))}</blockquote>')
             continue
 
         # ── list
@@ -461,7 +351,7 @@ def render(md):
                 break
             tag = 'ol' if ordered else 'ul'
             li = ''.join(f'<li>{inline(t)}</li>' for t in items)
-            out.append(f'<{tag}>{li}</{tag}>')
+            out.append(f'<{tag} class="list">{li}</{tag}>')
             continue
 
         # ── raw html block: trusted, passed straight through
@@ -495,21 +385,16 @@ def nav_html(pages, current):
         items = sorted(groups[g], key=lambda p: (int(p.get('order', 50)), p['title']))
         open_ = any(p['slug'] == current for p in items)
         li = ''.join(
-            f'<a class="navlist__link" href="/{p["slug"]}.html"'
-            f'{" aria-current=\"page\"" if p["slug"] == current else ""}>'
-            f'{html.escape(p["title"])}</a>'
+            f'<a class="nav__link" href="/{p["slug"]}.html"'
+            f'{" aria-current=\"page\"" if p["slug"] == current else ""}>{html.escape(p["title"])}</a>'
             for p in items)
         icon = GROUP_ICONS.get(g)
-        glyph = (f'<svg class="icon icon-sm" aria-hidden="true">'
+        glyph = (f'<svg class="icon nav__icon" aria-hidden="true">'
                  f'<use href="/icons/sprite.svg#i-{icon}"/></svg>' if icon else '')
-        # .acc is the system's accordion and .acc-quiet is, in its own file's
-        # words, "the docs sidebar shape". The docs used to ship a private
-        # .nav__group that did the same job a step worse.
         parts.append(
-            f'<details class="acc acc-quiet"{" open" if open_ else ""}>'
-            f'<summary title="{html.escape(g)}">{glyph}'
-            f'<span class="acc__label">{html.escape(g)}</span></summary>'
-            f'<div class="acc__body"><div class="navlist">{li}</div></div></details>')
+            f'<details class="nav__group"{" open" if open_ else ""}>'
+            f'<summary class="nav__title">{glyph}<span class="nav__label">{html.escape(g)}</span></summary>'
+            f'<div class="nav__links">{li}</div></details>')
     return ''.join(parts)
 
 
@@ -528,51 +413,6 @@ def toc_html(toc):
     return ('<nav class="toc" aria-label="On this page">'
             '<p class="toc__head">On this page</p>'
             f'{li}</nav>')
-
-
-def styles_html():
-    """What the <head> links, and it is not the same in both modes.
-
-    Production: one file. Development: the source tree, so an edit to a file in
-    src/ is visible on reload without running a build at all — which is the only
-    thing the @import waterfall was ever good for, and it belongs in dev only.
-    """
-    if DEV:
-        return '\n'.join([
-            "<!-- DEV: the unbundled source, so a saved file needs no rebuild. -->",
-            f'<link rel="stylesheet" href="/src/index.css{V}" />',
-            f'<link rel="stylesheet" href="/src/7-broadcast/index.css{V}" />',
-            f'<link rel="stylesheet" href="/src/8-framework/index.css{V}" />',
-            f'<link rel="stylesheet" href="/assets/docs.css{V}" />',
-            f'<link rel="stylesheet" href="/assets/home.css{V}" />',
-        ])
-    return ('<!-- The system, its two optional layers and the site chrome, '
-            'compiled and minified into one file. -->\n'
-            f'<link rel="stylesheet" href="/assets/site.min.css{V}" />')
-
-
-def scripts_html():
-    """Two files, both deferred, both optional.
-
-    nav.js is the system's own — it mirrors popover state onto aria-expanded and
-    writes the bar's scroll attributes. docs.js is the site's.
-    """
-    return '\n'.join([
-        f'<script src="/assets/nav.js{V}" defer></script>',
-        f'<script src="/assets/docs.js{V}" defer></script>',
-    ])
-
-
-def primary_html(current):
-    """The bar's own nav. `current` is a slug, or None on the home page."""
-    out = []
-    for href, label, icon in PRIMARY:
-        here = ' aria-current="page"' if href == f'/{current}.html' else ''
-        out.append(
-            f'<a class="navbar__link" href="{href}"{here}>'
-            f'<svg class="icon icon-sm" aria-hidden="true">'
-            f'<use href="/icons/sprite.svg#i-{icon}"/></svg>{label}</a>')
-    return ''.join(out)
 
 
 def bundle_size():
@@ -598,8 +438,7 @@ def build_page(page, pages, shell):
                  f'<use href="/icons/sprite.svg#i-arrow-{"left" if dir_ == "prev" else "right"}"/></svg>')
         label = 'Previous' if dir_ == 'prev' else 'Next'
         dir_html = (f'{arrow}{label}' if dir_ == 'prev' else f'{label}{arrow}')
-        end = ' pager__item-next' if dir_ == 'next' else ''
-        return (f'<a class="pager__item{end}" href="/{p["slug"]}.html">'
+        return (f'<a class="pager__item pager__item--{dir_}" href="/{p["slug"]}.html">'
                 f'<span class="pager__dir">{dir_html}</span>'
                 f'<span class="pager__title">{html.escape(p["title"])}</span></a>')
 
@@ -615,16 +454,13 @@ def build_page(page, pages, shell):
         'take': take,
         'editurl': f'https://github.com/imswarnil/Swarnil-Design-System/edit/main/docs/content/{page["slug"]}.md',
         'crumbs': (
-            '<ol class="breadcrumb breadcrumb-truncate">'
-            '<li><a href="/">Home</a></li>'
-            f'<li><span>{html.escape(page.get("group", ""))}</span></li>'
-            f'<li><span aria-current="page">{html.escape(page["title"])}</span></li>'
-            '</ol>'
+            '<a class="crumbs__link" href="/">Home</a>'
+            f'<span class="crumbs__sep" aria-hidden="true">/</span>'
+            f'<span class="crumbs__link">{html.escape(page.get("group", ""))}</span>'
+            f'<span class="crumbs__sep" aria-hidden="true">/</span>'
+            f'<span class="crumbs__here" aria-current="page">{html.escape(page["title"])}</span>'
         ),
         'v': V,
-        'styles': styles_html(),
-        'scripts': scripts_html(),
-        'primary': primary_html(page['slug'] if page['layout'] != 'home' else None),
         'nav': nav_html(pages, page['slug']),
         'toc': toc_html(toc),
         'lead': lead,
@@ -681,63 +517,31 @@ def main():
     elif docs:
         shutil.copy(OUT / f'{docs[0]["slug"]}.html', OUT / 'index.html')
 
-    # ── Assets ────────────────────────────────────────────────────────────
-    # site.css is a BUILD ENTRY, not something the browser should ever fetch;
-    # docs.css and home.css are its inputs and are only served in dev. The
-    # compiled site.min.css is written into site/assets/ by `npm run css:site`
-    # AFTER this runs, so it is not copied from here — it is not in docs/.
-    ignore = shutil.ignore_patterns('site.css') if not DEV else shutil.ignore_patterns()
-    shutil.copytree(ASSETS, OUT / 'assets', ignore=ignore)
-    if not DEV:
-        for f in ('docs.css', 'home.css'):
-            (OUT / 'assets' / f).unlink(missing_ok=True)
+    # Assets the browser needs.
+    #
+    # site.css and the two files it pulls in are BUILD ENTRIES, not served
+    # files — `npm run docs` compiles them into assets/site.min.css with
+    # Tailwind, and that one file is what every page links. Copying the source
+    # as well would ship a stylesheet full of `@plugin` and `@theme` that no
+    # browser can read, which is exactly the bug this replaced.
+    #
+    # The SOURCE TREE is not copied either. It was, so a page could link
+    # /src/index.css and see an edit without a rebuild; that stopped being
+    # possible the moment the system needed a compiler, and copying it shipped
+    # ~900 KB and 80 fetchable files that nothing referenced.
+    shutil.copytree(ASSETS, OUT / 'assets',
+                    ignore=shutil.ignore_patterns('site.css', 'docs.css', 'home.css'))
 
-    # nav.js is the system's, but the site serves it from one place with
-    # everything else it loads, so /src/ does not have to exist in production.
+    # nav.js is the system's own, but the site serves everything it loads from
+    # one place, so /src/ does not have to exist in production.
     shutil.copy(ROOT / 'src' / 'js' / 'nav.js', OUT / 'assets' / 'nav.js')
 
-    # The source tree is a DEV convenience. In production nothing links it, and
-    # copying it shipped 908 KB and ~78 fetchable files for no reader.
-    if DEV and (ROOT / 'src').is_dir():
-        shutil.copytree(ROOT / 'src', OUT / 'src')
-        # The page links /src/index.css?v=… but an @import INSIDE it names its
-        # children with no query at all, so the browser happily serves a cached
-        # 12-frame.css behind a freshly-versioned index — including files that
-        # no longer exist. Stamp the version onto every @import in the COPY
-        # (never the source) so a rebuild is actually visible.
-        for css in (OUT / 'src').rglob('*.css'):
-            text = css.read_text()
-            stamped = re.sub(r"@import url\('(\./[^']+\.css)'\)",
-                             lambda m: f"@import url('{m.group(1)}{V}')", text)
-            if stamped != text:
-                css.write_text(stamped)
-
     # dist/ is published so /install.html can point at a real file and a reader
-    # can download the bundle. Only the minified ones: the expanded copies are
-    # 1.9 MB that nothing links, and npm ships them anyway.
+    # can see the bundle they are about to link.
     if (ROOT / 'dist').is_dir():
-        (OUT / 'dist').mkdir()
-        for f in sorted((ROOT / 'dist').glob('*.min.css')):
+        (OUT / 'dist').mkdir(exist_ok=True)
+        for f in sorted((ROOT / 'dist').glob('*.css')):
             shutil.copy(f, OUT / 'dist' / f.name)
-
-    # The page templates are whole pages built out of the system — a personal
-    # homepage, a blog. They are copied as-is so they can be opened, viewed at
-    # any width and saved from the site; the docs' Templates page frames them.
-    # They link /src/index.css like the docs do, so a rebuild is visible in
-    # them too. The class audit reads them from here, so a template can only
-    # use a class the system (or templates/templates.css) defines.
-    if (ROOT / 'templates').is_dir():
-        shutil.copytree(ROOT / 'templates', OUT / 'templates',
-                        ignore=shutil.ignore_patterns('README.md'))
-        # They are authored against the source so they can be opened straight
-        # off disk; the copy served from the site links the compiled bundle for
-        # the same reason every other page does.
-        if not DEV:
-            for page in (OUT / 'templates').rglob('*.html'):
-                page.write_text(page.read_text()
-                                .replace('/src/index.css',
-                                         f'/dist/swarnil-design.min.css{V}')
-                                .replace('/src/js/nav.js', f'/assets/nav.js{V}'))
 
     # The icon set is a separate repo (icons.imswarnil.com). Its built sprite
     # is vendored at docs/icons/sprite.svg so CI and a fresh clone can build

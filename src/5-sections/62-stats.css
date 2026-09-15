@@ -8,7 +8,7 @@
    Layer: sections.
    ========================================================================== */
 
-@layer sections {
+@layer utilities.sds.sections {
 
 	.stats {
 		--stats-col: 11rem;

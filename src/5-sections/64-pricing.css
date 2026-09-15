@@ -20,7 +20,7 @@
    Layer: sections.
    ========================================================================== */
 
-@layer sections {
+@layer utilities.sds.sections {
 
 	.pricing {
 		--pricing-col: 17rem;

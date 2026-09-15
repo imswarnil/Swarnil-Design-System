@@ -163,11 +163,11 @@ photograph and not over a swatch.
 :::demo Four dresses, over the same frame
 <div class="poster" style="--ratio: 21 / 9">
   <img src="/assets/media/desk.jpg" alt="" />
-  <div class="cluster cluster-center u-p-6" style="position: absolute; inset: 0; align-content: center">
-    <span class="glass u-p-4 u-rounded-lg">glass</span>
-    <span class="glass glass-dark u-p-4 u-rounded-lg">glass-dark</span>
-    <span class="glass glass-light u-p-4 u-rounded-lg">glass-light</span>
-    <span class="glass glass-flat u-p-4 u-rounded-lg">glass-flat</span>
+  <div class="cluster cluster-center p-6" style="position: absolute; inset: 0; align-content: center">
+    <span class="glass p-4 rounded-lg">glass</span>
+    <span class="glass glass-dark p-4 rounded-lg">glass-dark</span>
+    <span class="glass glass-light p-4 rounded-lg">glass-light</span>
+    <span class="glass glass-flat p-4 rounded-lg">glass-flat</span>
     <span class="glass glass-pill glass-sm">glass-pill</span>
   </div>
 </div>
@@ -183,7 +183,7 @@ fully, for a tag over a thumbnail.
 - A veil is a **child**, so it never competes for a pseudo-element. `.frame`
   needs both of its; `.pattern` needs one. A veil needs neither.
 - The parent must be positioned. `.poster`, `.card__media` and `.player`
-  already are; a bare `<div>` needs `u-relative`.
+  already are; a bare `<div>` needs `relative`.
 - Veils are `pointer-events: none`, so a link under one still works.
 - `veil-mono` is a filter on the parent, not a layer.
 - Everything here is built from tokens, so a veil follows a theme change and a

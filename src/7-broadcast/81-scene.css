@@ -17,7 +17,7 @@
    Layer: sections.
    ========================================================================== */
 
-@layer sections {
+@layer utilities.sds.sections {
 
 	.scene {
 		--scene-pad: 5cqi;

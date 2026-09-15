@@ -40,7 +40,7 @@ space is about the page.
 
 ## Using it
 
-Utilities (`u-gap-4`, `u-p-5`, `u-mt-8`), primitive knobs (`--stack-gap`,
+Utilities (`gap-4`, `p-5`, `mt-(--space-8)`), primitive knobs (`--stack-gap`,
 `--grid-gap`, `--section-pad`), or the tokens directly in your own CSS. All
 three are the same ladder — nothing invents a gap outside it, and
 `--gutter` handles the page edge on its own.

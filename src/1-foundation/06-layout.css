@@ -22,7 +22,7 @@
    be overridden by utilities.
    ========================================================================== */
 
-@layer components {
+@layer utilities.sds.components {
 
 	/* ── .stack — vertical rhythm ──────────────────────────────────────────
 	   The owl: space goes BETWEEN children, never on the first or last, so a

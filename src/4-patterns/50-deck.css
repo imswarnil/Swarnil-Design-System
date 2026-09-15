@@ -9,7 +9,7 @@
    Layer: patterns — arrangements of components.
    ========================================================================== */
 
-@layer patterns {
+@layer utilities.sds.patterns {
 
 	.deck {
 		--deck-col: 17rem;

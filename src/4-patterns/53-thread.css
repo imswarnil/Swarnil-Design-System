@@ -19,7 +19,7 @@
    Layer: patterns.
    ========================================================================== */
 
-@layer patterns {
+@layer utilities.sds.patterns {
 
 	.thread {
 		--thread-gap: var(--space-6);

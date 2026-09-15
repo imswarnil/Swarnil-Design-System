@@ -18,7 +18,7 @@
    Layer: elements.
    ========================================================================== */
 
-@layer elements {
+@layer utilities.sds.elements {
 
 	/* ── .figure — an image that owns its caption ──────────────────────────── */
 

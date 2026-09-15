@@ -13,7 +13,7 @@ JavaScript.
 ## Placements
 
 :::demo Top is the default; below, start and end cover the edges
-<div class="cluster cluster-lg u-p-6">
+<div class="cluster cluster-lg p-6">
   <button class="btn btn-outline btn-icon" type="button" aria-label="Search" data-tip="Search"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-search"/></svg></button>
   <button class="btn btn-outline btn-icon" type="button" aria-label="Settings" data-tip-below data-tip="Settings"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-settings"/></svg></button>
   <button class="btn btn-outline btn-icon" type="button" aria-label="Record" data-tip-end data-tip="Record"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-record"/></svg></button>
@@ -31,7 +31,7 @@ holds a real element, so it can carry markup, and `:focus-within` keeps it open
 while a keyboard user reads it.
 
 :::demo Hover the term
-<p class="u-m-0">The whole system is
+<p class="m-0">The whole system is
   <span class="tip-anchor"><a href="#i" class="t-accent">token-first</a>
     <span class="tipcard"><b>Token-first</b> — every value is a variable off a ladder. Change three and the whole site rebrands: site, player, thumbnails.</span>
   </span>

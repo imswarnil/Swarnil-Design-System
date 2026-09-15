@@ -19,6 +19,25 @@
 		"no-duplicate-selectors": null,
 		"number-max-precision": 10,
 		"hue-degree-notation": "number",
-		"selector-not-notation": null
+		"selector-not-notation": null,
+		"at-rule-no-unknown": [
+			true,
+			{
+				"ignoreAtRules": [
+					"theme",
+					"plugin",
+					"source",
+					"utility",
+					"variant",
+					"custom-variant",
+					"apply",
+					"reference",
+					"config",
+					"tailwind"
+				]
+			}
+		],
+		"import-notation": null,
+		"no-invalid-position-at-import-rule": null
 	}
 }

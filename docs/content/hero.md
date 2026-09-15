@@ -14,17 +14,17 @@ actions, a fine-print note.
 :::demo
 <div class="hero">
   <div>
-    <p class="hero__eyebrow">MIT · Dependency-free</p>
-    <h2 class="hero__title u-m-0">Decide once.<br />Then stop <em>deciding</em>.</h2>
+    <p class="hero__eyebrow">MIT · Tailwind 4</p>
+    <h2 class="hero__title m-0">Decide once.<br />Then stop <em>deciding</em>.</h2>
     <p class="hero__lead">Change three variables and the whole thing rebrands.</p>
     <div class="hero__actions">
       <button class="btn btn-primary btn-lg" type="button">Read the docs</button>
       <button class="btn btn-outline btn-lg" type="button">Components</button>
     </div>
-    <p class="hero__note">No framework · No runtime</p>
+    <p class="hero__note">Tailwind 4 · daisyUI</p>
   </div>
   <div class="hero__media">
-    <div class="vf ratio ratio-photo u-border u-rounded-lg">
+    <div class="vf ratio ratio-photo hairline rounded-lg">
       <span class="vf__tc">TAKE 47 · 00:12:47</span>
       <span class="vf__rec">REC</span>
       <span class="vf__dims">1280 × 720</span>
@@ -42,7 +42,7 @@ own opening shot.
 <div class="hero hero-centre">
   <div>
     <p class="hero__eyebrow">v1.0</p>
-    <h2 class="hero__title u-m-0">The system ships</h2>
+    <h2 class="hero__title m-0">The system ships</h2>
     <p class="hero__lead">Everything below this line is under semver now.</p>
     <div class="hero__actions"><button class="btn btn-primary btn-lg" type="button">Changelog</button></div>
   </div>
@@ -65,7 +65,7 @@ as the same page twice.
 <div class="hero hero-wide">
   <div>
     <p class="hero__eyebrow"><span class="dot dot-sm dot-live"></span> Featured · new this week</p>
-    <h2 class="hero__title u-m-0">Colour, in one block of tokens</h2>
+    <h2 class="hero__title m-0">Colour, in one block of tokens</h2>
     <p class="hero__lead">Eight ramps, ninety-seven tones, and why dark mode is not an inversion.</p>
     <div class="hero__actions">
       <button class="btn btn-primary btn-lg btn-play" type="button"><span class="btn__disc"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg></span>Watch — 24:07</button>
@@ -78,7 +78,7 @@ as the same page twice.
     </p>
   </div>
   <div class="hero__media">
-    <div class="ratio ratio-wide u-rounded-lg u-overflow-hidden pattern pattern-scan u-border"></div>
+    <div class="ratio ratio-wide rounded-lg overflow-hidden pattern pattern-scan hairline"></div>
   </div>
 </div>
 :::
@@ -89,10 +89,10 @@ the data voice, and tabular figures so two heroes line up.
 
 :::demo `.hero-media-start` — the alternate band
 <div class="hero hero-media-start">
-  <div class="hero__media"><div class="ratio ratio-photo u-rounded-lg u-overflow-hidden pattern pattern-halftone u-border"></div></div>
+  <div class="hero__media"><div class="ratio ratio-photo rounded-lg overflow-hidden pattern pattern-halftone hairline"></div></div>
   <div>
     <p class="hero__eyebrow">About</p>
-    <h2 class="hero__title u-m-0">I explain things I had to learn twice.</h2>
+    <h2 class="hero__title m-0">I explain things I had to learn twice.</h2>
     <p class="hero__lead">Salesforce engineer, YouTuber, and a fairly stubborn believer that anything worth understanding can be explained in twenty minutes.</p>
     <div class="hero__actions"><button class="btn btn-primary" type="button">How I work</button></div>
   </div>

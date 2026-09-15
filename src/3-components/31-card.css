@@ -12,7 +12,7 @@
    Layer: components.
    ========================================================================== */
 
-@layer components {
+@layer utilities.sds.components {
 
 	.card {
 		--card-pad: var(--space-5);

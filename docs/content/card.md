@@ -429,8 +429,8 @@ with more of it. Gradient is the featured slot.
 <div class="grid-2">
   <article class="card card-ghost"><div class="card__body"><span class="card__icon"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-plus"/></svg></span><h3 class="card__title">Add a lesson</h3><p class="card__excerpt">Drop a video here, or paste a link.</p></div></article>
   <article class="card card-ghost card-ghost-accent"><div class="card__body"><h3 class="card__title">Ghost, accent</h3><p class="card__excerpt">The hairline takes the accent.</p></div></article>
-  <div class="bg-aurora pattern pattern-grid u-rounded-lg u-p-4"><article class="card card-glass"><div class="card__body"><p class="card__kicker">Glass</p><h3 class="card__title">On a glow</h3><p class="card__excerpt">Follows the theme.</p></div></article></div>
-  <div class="bg-ink u-rounded-lg u-p-4"><article class="card card-glass card-glass-dark"><div class="card__body"><p class="card__kicker">Glass, dark</p><h3 class="card__title">On footage</h3><p class="card__excerpt">Always dark.</p></div></article></div>
+  <div class="bg-aurora pattern pattern-grid rounded-lg p-4"><article class="card card-glass"><div class="card__body"><p class="card__kicker">Glass</p><h3 class="card__title">On a glow</h3><p class="card__excerpt">Follows the theme.</p></div></article></div>
+  <div class="bg-ink rounded-lg p-4"><article class="card card-glass card-glass-dark"><div class="card__body"><p class="card__kicker">Glass, dark</p><h3 class="card__title">On footage</h3><p class="card__excerpt">Always dark.</p></div></article></div>
   <article class="card card-glow"><div class="card__body"><p class="card__kicker">Glow</p><h3 class="card__title">The lit card</h3><p class="card__excerpt">Hover for more light.</p></div></article>
   <article class="card card-gradient"><div class="card__body"><p class="card__kicker">Gradient</p><h3 class="card__title">The featured slot</h3><p class="card__excerpt">The accent's soft wash as the ground.</p></div></article>
 </div>
@@ -515,11 +515,11 @@ hue is **data** (the language), not emphasis. Everything else stays monochrome.
   <article class="card card-repo card-hover-lift">
     <div class="card__body">
       <p class="card__kicker"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-book"/></svg> imswarnil / <strong>Swarnil-Design-System</strong> <span class="badge badge-outline">Public</span></p>
-      <p class="card__excerpt">Token-first, dependency-free CSS. Nine cascade layers, no runtime, no build step required to use it.</p>
+      <p class="card__excerpt">Token-first CSS on Tailwind 4 and daisyUI. One link, no runtime, no build step required to use it.</p>
       <div class="card__tags"><span class="chip">css</span><span class="chip">design-tokens</span><span class="chip">oklch</span></div>
       <p class="card__facts"><span class="card__lang" style="--lang: var(--chart-2)">CSS</span><span><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-star"/></svg> 1.2k</span><span><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-git-branch"/></svg> 84</span><span>Updated 2 hours ago</span></p>
     </div>
-    <a class="card__link u-sr-only" href="#i">Open Swarnil-Design-System</a>
+    <a class="card__link sr-only" href="#i">Open Swarnil-Design-System</a>
     <span class="card__langs" aria-hidden="true"><span style="--lang: var(--chart-2); --value: 78%"></span><span style="--lang: var(--chart-4); --value: 16%"></span><span style="--lang: var(--chart-1); --value: 6%"></span></span>
   </article>
   <article class="card card-repo card-hover-lift">
@@ -529,7 +529,7 @@ hue is **data** (the language), not emphasis. Everything else stays monochrome.
       <div class="card__tags"><span class="chip">icons</span><span class="chip">svg</span></div>
       <p class="card__facts"><span class="card__lang" style="--lang: var(--chart-6)">SVG</span><span><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-star"/></svg> 410</span><span><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-git-branch"/></svg> 21</span><span>Updated 4 days ago</span></p>
     </div>
-    <a class="card__link u-sr-only" href="#i">Open swarnil-icons</a>
+    <a class="card__link sr-only" href="#i">Open swarnil-icons</a>
     <span class="card__langs" aria-hidden="true"><span style="--lang: var(--chart-6); --value: 82%"></span><span style="--lang: var(--chart-1); --value: 18%"></span></span>
   </article>
 </div>

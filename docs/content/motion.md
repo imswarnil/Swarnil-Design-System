@@ -66,8 +66,8 @@ in the finger: scale 0.97, 60ms, done.
 
 :::demo Reload to catch the tracking-in
 <div class="stack">
-  <p class="t-h3 fx-tracking-in u-m-0">The title card settles</p>
-  <p class="t-mono u-m-0 fx-caret">$ npm run build</p>
+  <p class="t-h3 fx-tracking-in m-0">The title card settles</p>
+  <p class="t-mono m-0 fx-caret">$ npm run build</p>
 </div>
 :::
 
@@ -140,18 +140,18 @@ as either response or atmosphere and starts reading as lag.
 
 :::demo On footage — the scan, the shine, the reveal, the grade
 <div class="grid-2">
-  <figure class="figure u-m-0 ix-scan u-rounded-lg"><img src="/assets/media/studio.jpg" alt="" /><figcaption class="figure__caption">ix-scan</figcaption></figure>
-  <figure class="figure u-m-0 ix-shine u-rounded-lg"><img src="/assets/media/coast.jpg" alt="" /><figcaption class="figure__caption">ix-shine</figcaption></figure>
-  <figure class="figure u-m-0 ix-color u-rounded-lg"><img src="/assets/media/peak.jpg" alt="" /><figcaption class="figure__caption">ix-color — grey until touched</figcaption></figure>
-  <div class="ix-reveal u-rounded-lg u-overflow-hidden"><img src="/assets/media/night.jpg" alt="" style="display:block;width:100%" /><div class="ix-reveal__hidden u-p-4" style="background: var(--bg-scrim); color: var(--pure-white)"><span class="t-small">ix-reveal — the caption arrives on hover</span></div></div>
+  <figure class="figure m-0 ix-scan rounded-lg"><img src="/assets/media/studio.jpg" alt="" /><figcaption class="figure__caption">ix-scan</figcaption></figure>
+  <figure class="figure m-0 ix-shine rounded-lg"><img src="/assets/media/coast.jpg" alt="" /><figcaption class="figure__caption">ix-shine</figcaption></figure>
+  <figure class="figure m-0 ix-color rounded-lg"><img src="/assets/media/peak.jpg" alt="" /><figcaption class="figure__caption">ix-color — grey until touched</figcaption></figure>
+  <div class="ix-reveal rounded-lg overflow-hidden"><img src="/assets/media/night.jpg" alt="" style="display:block;width:100%" /><div class="ix-reveal__hidden p-4" style="background: var(--bg-scrim); color: var(--pure-white)"><span class="t-small">ix-reveal — the caption arrives on hover</span></div></div>
 </div>
 :::
 
 :::demo Ambient — over six seconds, and off under reduced motion
 <div class="grid-3">
-  <div class="bg-ink bg-scanlines u-p-6 u-rounded-lg"><span class="t-data">bg-scanlines</span></div>
-  <div class="bg-sunken bg-beams u-p-6 u-rounded-lg u-border"><span class="t-data">bg-beams</span></div>
-  <div class="u-p-6 u-rounded-lg u-border u-text-center"><span class="fx-float u-iblock"><svg class="icon icon-xl" aria-hidden="true"><use href="/icons/sprite.svg#i-camera"/></svg></span><br /><span class="t-data">fx-float</span></div>
+  <div class="bg-ink bg-scanlines p-6 rounded-lg"><span class="t-data">bg-scanlines</span></div>
+  <div class="bg-sunken bg-beams p-6 rounded-lg hairline"><span class="t-data">bg-beams</span></div>
+  <div class="p-6 rounded-lg hairline text-center"><span class="fx-float inline-block"><svg class="icon icon-xl" aria-hidden="true"><use href="/icons/sprite.svg#i-camera"/></svg></span><br /><span class="t-data">fx-float</span></div>
 </div>
 :::
 

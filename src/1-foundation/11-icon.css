@@ -8,7 +8,7 @@
    Layer: elements.
    ========================================================================== */
 
-@layer elements {
+@layer utilities.sds.elements {
 	.icon {
 		--icon-size: 1.25rem;
 		width: var(--icon-size);

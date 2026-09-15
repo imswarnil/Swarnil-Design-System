@@ -95,7 +95,54 @@ script per tablist, and the panel that shows is yours to wire with `aria-control
 
 ## Breadcrumb
 
-Moved to its own page — see **[Breadcrumb](/breadcrumb.html)**.
+An `<ol>` inside a `<nav>`; the leaf is unlinked and carries `aria-current="page"`.
+
+:::demo
+<nav aria-label="Breadcrumb">
+  <ol class="breadcrumb">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#courses">Courses</a></li>
+    <li><a href="#course">Lighting a talking head</a></li>
+    <li aria-current="page">Lesson 3</li>
+  </ol>
+</nav>
+:::
+
+:::demo With icons and the chevron separator
+<nav aria-label="Breadcrumb">
+  <ol class="breadcrumb breadcrumb-chevron">
+    <li><a href="#home"><svg class="icon icon-sm breadcrumb__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-camera"/></svg> Studio</a></li>
+    <li><a href="#folder"><svg class="icon icon-sm breadcrumb__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-folder"/></svg> Season 2</a></li>
+    <li aria-current="page"><svg class="icon icon-sm breadcrumb__icon" aria-hidden="true"><use href="/icons/sprite.svg#i-file"/></svg> Episode 7 — colour grade</li>
+  </ol>
+</nav>
+:::
+
+:::demo Truncated — long titles get a budget and an ellipsis
+<nav aria-label="Breadcrumb">
+  <ol class="breadcrumb breadcrumb-truncate" style="--crumb-max: 10rem">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#series">The over-produced answer to a simple question</a></li>
+    <li aria-current="page">Part 4: why the second camera was a mistake</li>
+  </ol>
+</nav>
+:::
+
+:::demo Collapsed — press 320px: the root, an ellipsis, and the last two survive
+<nav aria-label="Breadcrumb">
+  <ol class="breadcrumb breadcrumb-collapse">
+    <li><a href="#home">Home</a></li>
+    <li class="breadcrumb__more" aria-hidden="true">…</li>
+    <li><a href="#courses">Courses</a></li>
+    <li><a href="#course">Lighting a talking head</a></li>
+    <li><a href="#module">Module 2</a></li>
+    <li aria-current="page">Lesson 3</li>
+  </ol>
+</nav>
+:::
+
+The breadcrumb is its own query container, so the collapse works in a card or a
+sidebar as well as across a page, without a media query.
 
 ## Pagination
 
@@ -248,7 +295,7 @@ label column stays aligned whichever item is current.
 </div>
 :::
 
-`.sidebar` is the [layout](/grid.html) primitive; the navlist has no opinion about
+`.sidebar` is the layout primitive; the navlist has no opinion about
 where it sits. Inside an accordion it becomes a collapsible group — see
 [Accordion](/accordion.html).
 

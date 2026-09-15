@@ -19,11 +19,11 @@ The repository card is the shape every developer already reads fluently:
   <article class="card card-repo card-hover-lift">
     <div class="card__body">
       <p class="card__kicker"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-book"/></svg> imswarnil / <strong>Swarnil-Design-System</strong> <span class="badge badge-outline">Public</span></p>
-      <p class="card__excerpt">Token-first, dependency-free CSS. Nine cascade layers, no runtime, no build step required to use it.</p>
+      <p class="card__excerpt">Token-first CSS on Tailwind 4 and daisyUI. One link, no runtime, no build step required to use it.</p>
       <div class="card__tags"><span class="chip">css</span><span class="chip">design-tokens</span><span class="chip">oklch</span></div>
       <p class="card__facts"><span class="card__lang" style="--lang: var(--chart-2)">CSS</span><span><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-star"/></svg> 1.2k</span><span><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-git-branch"/></svg> 84</span><span>Updated 2 hours ago</span></p>
     </div>
-    <a class="card__link u-sr-only" href="#i">Open the design system</a>
+    <a class="card__link sr-only" href="#i">Open the design system</a>
     <span class="card__langs" aria-hidden="true"><span style="--lang: var(--chart-2); --value: 78%"></span><span style="--lang: var(--chart-4); --value: 16%"></span><span style="--lang: var(--chart-1); --value: 6%"></span></span>
   </article>
   <article class="card card-repo card-hover-lift">
@@ -33,7 +33,7 @@ The repository card is the shape every developer already reads fluently:
       <div class="card__tags"><span class="chip">icons</span><span class="chip">svg</span></div>
       <p class="card__facts"><span class="card__lang" style="--lang: var(--chart-6)">SVG</span><span><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-star"/></svg> 410</span><span><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-git-branch"/></svg> 21</span><span>Updated 4 days ago</span></p>
     </div>
-    <a class="card__link u-sr-only" href="#i">Open the icon set</a>
+    <a class="card__link sr-only" href="#i">Open the icon set</a>
     <span class="card__langs" aria-hidden="true"><span style="--lang: var(--chart-6); --value: 82%"></span><span style="--lang: var(--chart-1); --value: 18%"></span></span>
   </article>
 </div>
@@ -63,7 +63,7 @@ reader came to use.
     <div class="facets__head"><h3 class="facets__title">Filter</h3><button class="btn btn-link btn-xs" type="button">Clear all</button></div>
     <div class="facets__active"><span class="chip">CSS<button class="chip__x" type="button" aria-label="Remove CSS"></button></span></div>
     <details class="facets__group" open>
-      <summary><span class="facets__label u-m-0">Skills</span></summary>
+      <summary><span class="facets__label m-0">Skills</span></summary>
       <ul class="facets__list">
         <li><label class="facets__opt"><input type="checkbox" checked /><span class="facets__swatch" style="--lang: var(--chart-2)"></span><span>CSS</span><span class="facets__count">18</span></label></li>
         <li><label class="facets__opt"><input type="checkbox" /><span class="facets__swatch" style="--lang: var(--chart-1)"></span><span>TypeScript</span><span class="facets__count">14</span></label></li>
@@ -73,7 +73,7 @@ reader came to use.
       </ul>
     </details>
     <details class="facets__group" open>
-      <summary><span class="facets__label u-m-0">Status</span></summary>
+      <summary><span class="facets__label m-0">Status</span></summary>
       <ul class="facets__list">
         <li><label class="facets__opt"><input type="checkbox" checked /><span>Active</span><span class="facets__count">14</span></label></li>
         <li><label class="facets__opt"><input type="checkbox" /><span>Archived</span><span class="facets__count">5</span></label></li>
