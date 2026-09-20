@@ -23,8 +23,7 @@ So I made this. One set of decisions, written down, that everything I build
 reads from. Change three variables and every surface I own rebrands at once.
 
 :::demo The system, in one card
-<article class="card card-hover-frame frame frame-hover w-md">
-  <span class="frame__tr"></span><span class="frame__bl"></span>
+<article class="card w-md">
   <div class="card__body">
     <p class="card__meta">Hover it, or tab to it</p>
     <h3 class="card__title">The viewfinder finds it</h3>
@@ -36,8 +35,7 @@ reads from. Change three variables and every surface I own rebrands at once.
 ## What I was actually after
 
 <div class="grid-3 mt-6">
-  <article class="card card-hover-frame frame frame-hover">
-    <span class="frame__tr"></span><span class="frame__bl"></span>
+  <article class="card">
     <div class="card__body">
       <p class="card__kicker">Mission</p>
       <h3 class="card__title">Decide once</h3>
@@ -45,8 +43,7 @@ reads from. Change three variables and every surface I own rebrands at once.
     </div>
   </article>
 
-  <article class="card card-hover-frame frame frame-hover">
-    <span class="frame__tr"></span><span class="frame__bl"></span>
+  <article class="card">
     <div class="card__body">
       <p class="card__kicker">Ideology</p>
       <h3 class="card__title">Consistency is the feature</h3>
@@ -54,8 +51,7 @@ reads from. Change three variables and every surface I own rebrands at once.
     </div>
   </article>
 
-  <article class="card card-hover-frame frame frame-hover">
-    <span class="frame__tr"></span><span class="frame__bl"></span>
+  <article class="card">
     <div class="card__body">
       <p class="card__kicker">Who it's for</p>
       <h3 class="card__title">People who make things</h3>
@@ -63,8 +59,7 @@ reads from. Change three variables and every surface I own rebrands at once.
     </div>
   </article>
 
-  <article class="card card-hover-frame frame frame-hover">
-    <span class="frame__tr"></span><span class="frame__bl"></span>
+  <article class="card">
     <div class="card__body">
       <p class="card__kicker">Constraint</p>
       <h3 class="card__title">Nothing to install</h3>
@@ -72,8 +67,7 @@ reads from. Change three variables and every surface I own rebrands at once.
     </div>
   </article>
 
-  <article class="card card-hover-frame frame frame-hover">
-    <span class="frame__tr"></span><span class="frame__bl"></span>
+  <article class="card">
     <div class="card__body">
       <p class="card__kicker">Character</p>
       <h3 class="card__title">It looks like a camera</h3>
@@ -81,8 +75,7 @@ reads from. Change three variables and every surface I own rebrands at once.
     </div>
   </article>
 
-  <article class="card card-hover-frame frame frame-hover">
-    <span class="frame__tr"></span><span class="frame__bl"></span>
+  <article class="card">
     <div class="card__body">
       <p class="card__kicker">Discipline</p>
       <h3 class="card__title">Responsive, not "mobile too"</h3>

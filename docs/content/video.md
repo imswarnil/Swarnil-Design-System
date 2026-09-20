@@ -209,7 +209,7 @@ Everything above is chrome around a rectangle. Put a `<video>` in it and
 nothing changes except that the rectangle now moves.
 
 :::demo A real clip, in the full viewfinder dress
-<div class="player player-bar-open frame frame-signal" style="--frame-color: var(--accent)">
+<div class="player player-bar-open" style="--frame-color: var(--accent)">
   <video src="/assets/media/loop.mp4" poster="/assets/media/loop.jpg" muted loop playsinline autoplay></video>
   <span class="veil veil-vignette"></span>
   <span class="player__frame" aria-hidden="true"></span>

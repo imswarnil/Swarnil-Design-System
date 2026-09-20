@@ -15,7 +15,7 @@ lead: A token-first design system on Tailwind CSS 4 and daisyUI. Almost monochro
     <p class="hero__lead">A design system built on Tailwind 4 and daisyUI, with a token layer of its own on top. Change three variables and the whole thing rebrands — site, cards, thumbnails, end screens.</p>
     <div class="hero__cta">
       <a class="btn btn-primary btn-lg" href="/introduction.html">Read the docs</a>
-      <a class="btn btn-secondary btn-lg frame frame-sm frame-hover" href="/button.html">Browse components</a>
+      <a class="btn btn-secondary btn-lg" href="/button.html">Browse components</a>
     </div>
     <p class="hero__fine">Tailwind 4 · daisyUI · No build step required</p>
   </div>
@@ -68,43 +68,37 @@ lead: A token-first design system on Tailwind CSS 4 and daisyUI. Almost monochro
   <p class="sec__lead">Six decisions, made once and written down, so you are not standing at 2am asking whether this should be 16px or 20px.</p>
 
   <div class="feats">
-    <article class="feat frame frame-hover">
-      <span class="frame__tr"></span><span class="frame__bl"></span>
+    <article class="feat">
       <span class="feat__ico"><svg class="icon"><use href="/icons/sprite.svg#i-box"/></svg></span>
       <h3>Token-first</h3>
       <p>Every value is a variable off a ladder. Nothing invents a number, so nothing drifts.</p>
     </article>
 
-    <article class="feat frame frame-hover">
-      <span class="frame__tr"></span><span class="frame__bl"></span>
+    <article class="feat">
       <span class="feat__ico"><svg class="icon"><use href="/icons/sprite.svg#i-aperture"/></svg></span>
       <h3>One rationed accent</h3>
       <p>Near-monochrome ink, so a single colour can mean <em>live</em>. Attention is budgeted, not sprayed.</p>
     </article>
 
-    <article class="feat frame frame-hover">
-      <span class="frame__tr"></span><span class="frame__bl"></span>
+    <article class="feat">
       <span class="feat__ico"><svg class="icon"><use href="/icons/sprite.svg#i-browser"/></svg></span>
       <h3>The platform first</h3>
       <p>Native <code class="code">&lt;dialog&gt;</code>, <code class="code">&lt;details&gt;</code> and the Popover API. Keyboard and focus come free.</p>
     </article>
 
-    <article class="feat frame frame-hover">
-      <span class="frame__tr"></span><span class="frame__bl"></span>
+    <article class="feat">
       <span class="feat__ico"><svg class="icon"><use href="/icons/sprite.svg#i-activity"/></svg></span>
       <h3>Honest motion</h3>
       <p>Under 200ms for feedback, one property at a time, and every animation off under reduced motion.</p>
     </article>
 
-    <article class="feat frame frame-hover">
-      <span class="frame__tr"></span><span class="frame__bl"></span>
+    <article class="feat">
       <span class="feat__ico"><svg class="icon"><use href="/icons/sprite.svg#i-moon"/></svg></span>
       <h3>Dark is not an inversion</h3>
       <p>Surfaces lift with light, hairlines go translucent, shadow becomes elevation. One block of tokens.</p>
     </article>
 
-    <article class="feat frame frame-hover">
-      <span class="frame__tr"></span><span class="frame__bl"></span>
+    <article class="feat">
       <span class="feat__ico"><svg class="icon"><use href="/icons/sprite.svg#i-type"/></svg></span>
       <h3>Mono means data</h3>
       <p>Timecodes, counts, dimensions, code. Never a sentence — and CI fails the build if that slips.</p>

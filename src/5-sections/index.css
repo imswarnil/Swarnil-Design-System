@@ -3,6 +3,7 @@
    ========================================================================== */
 
 @import "./60-hero.css";
+@import "./61-intro.css";     /* the personal hero — a first screen about a person */
 @import "./62-stats.css";
 @import "./64-pricing.css";   /* the plans, one featured                 */
 @import "./68-cta.css";
