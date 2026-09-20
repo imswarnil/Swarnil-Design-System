@@ -59,11 +59,7 @@ actions, a fine-print note.
     <p class="hero__note">Tailwind 4 · daisyUI</p>
   </div>
   <div class="hero__media">
-    <div class="vf ratio ratio-photo hairline rounded-lg">
-      <span class="vf__tc">TAKE 47 · 00:12:47</span>
-      <span class="vf__rec">REC</span>
-      <span class="vf__dims">1280 × 720</span>
-    </div>
+    <div class="ratio ratio-photo rounded-lg bg-sunken"></div>
   </div>
 </div>
 :::

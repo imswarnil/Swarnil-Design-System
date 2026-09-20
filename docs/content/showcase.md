@@ -75,8 +75,8 @@ without either being told about the other.
     <div class="form">
       <label class="field"><span class="field__label">Description</span><textarea class="input" rows="3" placeholder="What did this miss?"></textarea></label>
       <div class="field"><span class="field__label">Visibility</span>
-        <label class="choice"><input type="radio" name="sc-vis" class="radio" checked /> Public</label>
-        <label class="choice"><input type="radio" name="sc-vis" class="radio" /> Unlisted</label>
+        <label class="choice"><input type="radio" name="sc-vis" class="check" checked /> Public</label>
+        <label class="choice"><input type="radio" name="sc-vis" class="check" /> Unlisted</label>
       </div>
       <label class="field"><span class="field__label">Email</span><input class="input" type="email" placeholder="you@studio.tv" aria-invalid="true" /><span class="field__error">That address is missing an @.</span></label>
       <div class="form__actions"><button class="btn btn-ghost btn-sm" type="button">Cancel</button><button class="btn btn-primary btn-sm" type="submit">Publish</button></div>

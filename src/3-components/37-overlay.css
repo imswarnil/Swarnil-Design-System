@@ -24,8 +24,8 @@
    36-menu.css, and a settings drawer is the same object as the nav drawer.
 
    COMPOSITION WARNING
-   [data-tip] spends ::after, .pop-arrow spends ::before. Neither can take
-   .frame or the [aria-busy] spinner.
+   [data-tip] spends ::after, .pop-arrow spends ::before. Neither can also
+   take a .pattern or the [aria-busy] spinner.
 
    Layer: components.
    ========================================================================== */
