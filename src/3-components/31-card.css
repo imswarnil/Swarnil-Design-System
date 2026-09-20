@@ -342,27 +342,6 @@
 		}
 
 		.card-hover-lift:hover .card__media > img { scale: 1.03; }
-
-		/* The brackets ARE the feedback, so nothing lifts. */
-		.card-hover-frame:hover { translate: none; box-shadow: none; }
-	}
-
-	/* ── Turning the brackets on and off ───────────────────────────────────
-	   .card-hover-frame only SIZES the brackets for a card — the default 22px
-	   arms are drawn for media and swallow a card's padding.
-
-	   `frame-hover` is the switch:
-
-	       <article class="card card-hover-frame frame-hover">   on
-	       <article class="card card-hover-frame">               off
-
-	   One class added or removed, nothing else to change, and the card keeps
-	   its sizing either way so toggling it cannot shift the layout. */
-
-	.card-hover-frame {
-		--frame-size: 16px;
-		--frame-inset: 8px;
-		--frame-color: var(--accent);
 	}
 
 	/* Focus-within, so a keyboard user gets the same affordance as a mouse.

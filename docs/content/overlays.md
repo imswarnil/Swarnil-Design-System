@@ -39,7 +39,7 @@ Here is the whole idea in one comparison. Same photograph, same caption, one
 `.veil` is an absolutely-positioned **child** that fills its positioned parent
 and lets pointer events through; the variant decides what that layer paints.
 Because it is an element and not a pseudo, it never fights
-[`.frame`](/frame.html) or [`.pattern`](/pattern.html), and any number of them
+[`.frame`](/card.html) or [`.pattern`](/pattern.html), and any number of them
 stack in source order.
 
 ## Scrims — where the darkness is

@@ -302,8 +302,8 @@ affordance as the mouse.
 
 :::demo
 <div class="cluster">
-  <button class="btn btn-primary frame frame-sm frame-hover" type="button">Record</button>
-  <button class="btn btn-outline frame frame-sm frame-hover frame-ink" type="button">Preview</button>
+  <button class="btn btn-primary" type="button">Record</button>
+  <button class="btn btn-outline" type="button">Preview</button>
 </div>
 :::
 

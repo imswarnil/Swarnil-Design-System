@@ -281,4 +281,4 @@ Three things change in dark beyond the obvious flip:
 - **Accent text steps down one.** A 500 vermilion on near-black blooms at text
   sizes; 400 reads clean. Fills stay at 500, because a large area does not bloom.
 - **Hairlines go translucent**, not grey, so they survive over an image.
-- **Depth is light, not shadow.** See [elevation](/frame.html).
+- **Depth is light, not shadow.** See [elevation](/card.html).

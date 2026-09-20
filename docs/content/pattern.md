@@ -76,8 +76,7 @@ that spends its pseudo-elements. Put the pattern on a child or a parent — the
 same rule the frame page states from its side.
 
 :::demo Pattern on a child, brackets on the parent — the legal composition
-<div class="ratio ratio-photo w-md frame relative rounded-lg hairline">
-  <span class="frame__tr"></span><span class="frame__bl"></span>
+<div class="ratio ratio-photo w-md relative rounded-lg hairline">
   <div class="pattern pattern-timecode absolute inset-0"></div>
 </div>
 :::

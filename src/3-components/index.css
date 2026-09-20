@@ -19,3 +19,6 @@
 @import "./44-ad.css";       /* the paid slot, made honest        */
 @import "./45-toc.css";      /* the table of contents             */
 @import "./46-timestamps.css"; /* the timecodes under a video     */
+@import "./47-avatar.css";     /* a face, or the letter standing in for one */
+@import "./48-tooltip.css";    /* the label an icon-only control still owes  */
+@import "./49-social.css";     /* the accounts row, at three sizes           */

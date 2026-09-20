@@ -134,7 +134,7 @@ as either response or atmosphere and starts reading as lag.
 <div class="grid-3 cq-card">
   <article class="card card-hover-lift"><div class="card__media"><img src="/assets/media/desk.jpg" alt="" /></div><div class="card__body"><h4 class="card__title">Lift</h4><p class="card__excerpt">Rest to hover is one rung of elevation.</p></div></article>
   <article class="card card-hover-zoom"><div class="card__media"><img src="/assets/media/city.jpg" alt="" /></div><div class="card__body"><h4 class="card__title">Zoom</h4><p class="card__excerpt">Only the picture moves; the box stays put.</p></div></article>
-  <article class="card card-hover-frame frame-hover"><div class="card__media"><img src="/assets/media/road.jpg" alt="" /></div><div class="card__body"><h4 class="card__title">Frame</h4><p class="card__excerpt">The brackets ARE the feedback, so nothing lifts.</p></div></article>
+  <article class="card"><div class="card__media"><img src="/assets/media/road.jpg" alt="" /></div><div class="card__body"><h4 class="card__title">Frame</h4><p class="card__excerpt">The brackets ARE the feedback, so nothing lifts.</p></div></article>
 </div>
 :::
 
