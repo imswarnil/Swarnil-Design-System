@@ -58,7 +58,7 @@ disagree.
 
 ## Data, not labels
 
-The badge is a label, so it is Inter. The count inside it is data, so it is mono.
+The badge is a label, so it is Geist. The count inside it is data, so it is mono.
 That one example is the whole typography rule.
 
 :::demo

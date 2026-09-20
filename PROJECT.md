@@ -17,7 +17,8 @@ instead of a survey of the tree.
 Swarnil Design System — a token-first design system built on **Tailwind CSS 4**
 and **daisyUI**. Tailwind is the floor, daisyUI is the component set, and this
 repo is the design that sits on top of both. Almost monochrome, so one colour
-can mean something. Published to `design.imswarnil.com` and to npm as
+can mean something. Set in **Geist**, **Geist Mono** and **Geist Pixel** since
+2026-09-19. Published to `design.imswarnil.com` and to npm as
 `@imswarnil/swarnil-design`.
 
 The concept, in Swarnil's words: **consistency across everything he makes.**
@@ -83,6 +84,24 @@ audits, both strict), `npm run build`.
 
 Nothing is queued — ask. Open threads worth remembering:
 
+- **The numeric spacing ladder is still the old one.** The 2026-09-19 rebuild
+  retuned type, radius and layout but left `--space-*` at `0.25rem × n`, so the
+  four new `--gap-*` names and the ladder are two rhythms living side by side.
+  That is honest and documented, but it is a decision that should be revisited
+  deliberately, not drifted into.
+- **`--font-pixel` has no audit.** `audit-mono.py` fails the build when mono
+  escapes code; nothing yet fails it when the Pixel face escapes a mark. The
+  rule is written down in `02-typography.css` and enforced by nobody.
+- **THE RE-CUT IS IN PROGRESS.** Every component is being brought to the eight
+  rules in `docs/content/house-style.md`, one at a time, and the progress table
+  at the bottom of that page is the record. Done: navbar + dropdown,
+  navigation, shell, card. **Next: panel/alert, field/form, badge/chip, table,
+  button.** Surfaces first — they are what make the difference visible — then
+  controls, then the sections.
+- **No audit stops the docs chrome taking a system class name.** `.rail` cost a
+  session's debugging. `audit-classes.py` already knows every class the system
+  defines; failing when `docs/assets/*.css` redefines one would be a few lines.
+
 - **The branch name lies.** `bulma-experiment` holds the Tailwind work.
 - **`@utility` classes must be safelisted for the prebuilt bundles.** They are
   compiled like any Tailwind utility, so nothing *uses* them in a library build
@@ -104,6 +123,148 @@ Nothing is queued — ask. Open threads worth remembering:
 Newest first. What changed, and anything that would surprise the next session.
 Trimmed on 2026-09-14 to the last three sessions — everything before that is in
 git history, which is where a log of finished work belongs.
+
+### 2026-09-20 — Navbar dropdowns, real template pages, and the house style the re-cut is measured against
+
+**The navbar has dropdowns, and the panel IS the sidebar.** Not styled to
+match it — `.navbar__panel` holds a real `.navlist`, the same component the
+side navigation is built from, so the rows, icons, counts, hover and active
+dot have one definition and two positions. Built on `<details>` like the
+sidebar groups, so click and keyboard come from the platform; `src/js/nav.js`
+adds only outside-click and Escape, and the component works without it.
+
+**Templates are real pages now.** `site/t/{landing,article,collection,app}.html`,
+each linking the same `site.min.css` the docs run on and containing **no CSS of
+its own**. `/templates.html` is a generated gallery; `docs/pages/` holds the
+bodies and `docs/pages/_shell.html` wraps them. Thumbnails are drawn wireframes
+in system tokens — the previous version embedded twelve iframes at 380px and
+produced twelve pictures in which nothing was legible.
+
+**`.shell` is a real component** (`src/4-patterns/59-shell.css`). Last session
+added `--bar-h`, `--side-w` and `--rail-w` with nothing reading them, which was
+a gap. Bar, nav column, content, rail; the nav's top offset and its max-height
+are both derived from `--bar-h`. The rail drops at 64rem and the nav survives
+to 48rem, in that order, because a contents list is an aid and the navigation
+is the way out of the page.
+
+**Two bugs worth the write-up:**
+
+- ⚠️ **`.rail` was a NAME COLLISION.** The docs chrome used `.rail`, which is
+  also a system component — the sticky share rail in `55-share.css` — and above
+  64rem that sets `position: sticky`. The chrome never set `position`, so it
+  inherited it: two nested sticky boxes, the outer pinned, the inner with
+  nothing left to travel through. The contents list sat 216px down the viewport
+  and never moved, which looks exactly like sticky being broken rather than
+  like a name collision. Renamed to `.docrail`. **The chrome may not use a name
+  the system owns** — worth an audit rule.
+- **The contents scroll-spy never existed.** Now in `docs.js`, and deliberately
+  built on none of the three obvious things: no `IntersectionObserver` (answers
+  "did a heading cross a line", which gets the top and bottom of a page wrong),
+  no `requestAnimationFrame` (suspended in a background tab, so it stops
+  silently and works the instant you look at it), and no cached offsets (a demo
+  reflow or a font swap moves every heading and fires no `resize`).
+
+**Page actions moved to the rail.** Edit this page and Contribute now sit under
+the contents list rather than in the sidebar footer: they are actions on THIS
+page, and the rail is where this page's own controls live. The sidebar is now
+purely the way to other pages.
+
+**The house style is written down** — `docs/content/house-style.md`, eight
+rules. The system had tokens and components before it had a LOOK, and tokens do
+not say whether a card has a border or a fill. Two systems with identical
+tokens can look nothing alike, and that gap is why the Aspect-inspired theme in
+`~/Swarnil/theme/` read as resolved while this site did not.
+
+**The card is re-cut against it** — the first component of a full pass:
+
+- `--bg-surface` + a hairline → `--bg-sunken`, **no border**. A card filled
+  with `--bg-surface` on `--bg-canvas` is the same colour as the page in light
+  mode, which is why it needed a line to exist at all. A tone edge reads as a
+  surface; a line reads as a box drawn on top of one.
+- `--card-border: 0` rather than `border: none`, so a variant turns the border
+  back on with one number. Six rules depend on that.
+- **Hover changes colour and nothing else.** `.card-hover` is the house answer.
+  `.card-hover-lift` is kept because it is public, marked off-style, and used
+  by nothing in this repo.
+
+### 2026-09-19 — Geist, an Aspect-shaped foundation, and a way into the docs that is not the sidebar
+
+**The face changed.** Inter and IBM Plex Mono are gone; the system is set in
+**Geist**, **Geist Mono** and **Geist Pixel**, all three from Vercel's official
+package under the SIL OFL, self-hosted in `docs/assets/fonts/` with `OFL.txt`
+beside them. Three variable/static files, 300 KB total.
+
+The argument for the swap is one line of CSS: `.t-mono` now carries **no size
+correction at all**. Plex needed `0.9375em` to sit level with Inter because
+they came from two different hands; Geist Mono is drawn against Geist and
+shares its x-height, so inline code inside a sentence stops announcing a seam.
+On a site where a third of every page is code set in prose, that is the whole
+case. `--font-pixel` is new and is a MARK, not a voice — the lockup, a take, an
+error number, the index letters — forbidden in running text and below 24px.
+Three of the five Pixel cuts ship (Square, Circle, Line), each a separate
+FAMILY so nothing can ask for "Pixel bold" and get a synthesised smear.
+
+**The type scale is flat now, and that is deliberate.** `--text-2xl/3xl/4xl`
+were fluid clamps topping out at 52px; they are fixed at 22 / 25 / 28. A docs
+site and an editorial theme are both UI before they are posters, and a scale
+whose h1 reaches 52px spends its top three steps on moments that happen once a
+page if ever. Only `5xl` and `6xl` stay fluid, and they are display-only. A
+heading now reads as a heading by WEIGHT and TRACKING, which is what the
+typography page always claimed and the scale did not support.
+
+**New token families**, all canonical in `src/0-config/theme.css`:
+
+- `--heading-1` … `--heading-6` — six names for six jobs, so a component asks
+  for a heading LEVEL and never for a number of pixels. Not a Tailwind
+  namespace on purpose: there should be no `text-heading-3` utility inviting
+  an h2 to wear an h3's size.
+- `--bar-h`, `--side-w`, `--rail-w`, `--side-pad` — the system ships an
+  application SHELL now, not just a page. The sidebar is sticky below the bar,
+  so its offset and its max-height are both derived from `--bar-h`; hard-code
+  either and a taller bar pushes the last nav item under the fold.
+- `--width-read` / `--width-wide` / `--width-media` (700 / 1100 / 1300px) — an
+  article uses all three, and 1300 is the ceiling because past it a 16:9 image
+  stops being a picture and becomes a wall.
+- `--gap-hair` / `--gap-tight` / `--gap-snug` / `--gap-block` in `03-space.css`
+  — the four gaps a 4px ladder cannot express. **Named, not numbered**: a
+  `--space-1.5` would invite a `--space-2.5` next week and the ladder would
+  stop being a ladder. The list is closed.
+- `--radius-card` is 14px (was 10px) and `--radius-control` is 10px. A control
+  inside a card with the same radius as the card looks stuck to it.
+
+⚠️ **The numeric `--space-*` ladder was NOT renumbered.** It is still
+`0.25rem × n`, and every one of the ~70 component files still reads it. That
+was the one change with no way to verify it short of eyeballing 74 pages.
+
+**The docs site got a second way in.** The sidebar only helps a reader who
+already knows the name of the thing:
+
+- **`/components.html`** — every component as a card, with a name filter,
+  group chips and an A–Z ⇄ by-group order switch. The grid is generated in
+  `build.py` from the SAME front matter the sidebar reads, so it cannot go
+  stale: add a page with `group: Components` and its card appears on the next
+  build with no edit anywhere. The token is `{{index:Group,Group}}`, expanded
+  in `build_page` because only that function can see `pages`.
+- **`/templates.html`** — whole pages, named by the sections they are made of.
+  No new CSS in any of them; if a template needs something the system lacks,
+  that is a missing component.
+- **`/contribute.html`** — the four gates, what the system will take, and what
+  it will not. The sidebar footer's Contribute link now points here instead of
+  at CONTRIBUTING.md on GitHub.
+
+**The top bar is generated, not hard-coded.** Principles, Install and Icons are
+out of it; Docs, Components, Templates and Contribute are in. `bar_nav_html()`
+computes the active item — Docs is the fallback, so the bar always has exactly
+one item lit. A bar with none reads as broken and a bar with two reads as a
+bug. Both shells (`page.html`, `home.html`) now take `{barnav}`, so the two
+cannot drift.
+
+**The dot is the only active mark.** It already was in the sidebar; the top bar
+already had it too. Verified rather than added — the two rules now agree, and
+nothing on the site says "you are here" in a second language.
+
+All four gates green: lint clean, build clean, mono audit clean (14 data uses,
+all allowlisted), web bundle **82.0 KB** gzipped.
 
 ### 2026-09-15 — `npm run stop`
 

@@ -37,7 +37,7 @@ ALLOW = {
     # count must mean something. That is code, and nothing else.
     #
     # Timecodes, counts and dimensions are NOT on this list any more. They are
-    # set in Inter with tabular figures, which aligns just as well — see the
+    # set in Geist with tabular figures, which aligns just as well — see the
     # note at the top of 02-typography.css.
     'src/1-foundation/02-typography.css': {
         '.t-mono',   # the code helper itself
@@ -70,6 +70,11 @@ ALLOW = {
         '.code',      # inline code in prose
         '.cb__lang',  # a language name
         '.cb__pre',   # a code block
+        # The URL in the template gallery's fake address bar. A path is a
+        # literal — you read `/t/landing.html` character by character, and it
+        # has to look like the string it is rather than like a phrase. Same
+        # argument as .codeblock__file, which is also a path.
+        '.tplcard__url',
     },
 }
 

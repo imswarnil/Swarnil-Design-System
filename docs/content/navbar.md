@@ -37,6 +37,91 @@ is how a navbar becomes the file nobody wants to touch.
 The active link is marked with **a dot**, not a filled pill. A filled pill is
 loud, and it competes with the accent for the one job the accent has.
 
+## Dropdowns — the panel is the sidebar
+
+A bar item that opens a panel, and **the panel holds a real `.navlist`** — the
+same component the side navigation is built from. Not styled to match it: it
+*is* it. The rows, the icons, the counts, the hover and the active dot have one
+definition and two positions.
+
+It is built on `<details>`, the same disclosure the sidebar groups use, which
+buys the interaction from the platform: click to toggle, keyboard operable,
+works with JavaScript off.
+
+:::demo A bar with two dropdowns
+<header class="navbar navbar-bordered hairline rounded-lg">
+  <a class="navbar__brand" href="#i"><span class="dot dot-accent"></span> Swarnil</a>
+  <nav class="navbar__nav" aria-label="Main">
+    <a class="navbar__link" href="#i" aria-current="page">Watch</a>
+
+    <details class="navbar__item">
+      <summary class="navbar__link navbar__disclosure">Learn</summary>
+      <div class="navbar__panel">
+        <nav class="navlist">
+          <span class="navlist__label">Courses</span>
+          <a class="navlist__link" href="#i"><svg class="icon icon-sm navlist__icon"><use href="/icons/sprite.svg#i-play"/></svg>Getting started<span class="navlist__count">12</span></a>
+          <a class="navlist__link" href="#i"><svg class="icon icon-sm navlist__icon"><use href="/icons/sprite.svg#i-box"/></svg>Components<span class="navlist__count">26</span></a>
+          <a class="navlist__link" href="#i"><svg class="icon icon-sm navlist__icon"><use href="/icons/sprite.svg#i-aperture"/></svg>Tokens<span class="navlist__count">8</span></a>
+        </nav>
+      </div>
+    </details>
+
+    <details class="navbar__item">
+      <summary class="navbar__link navbar__disclosure">Build</summary>
+      <div class="navbar__panel navbar__panel-wide">
+        <nav class="navlist">
+          <span class="navlist__label">Foundation</span>
+          <a class="navlist__link" href="#i"><svg class="icon icon-sm navlist__icon"><use href="/icons/sprite.svg#i-type"/></svg>Typography</a>
+          <a class="navlist__link" href="#i"><svg class="icon icon-sm navlist__icon"><use href="/icons/sprite.svg#i-aperture"/></svg>Colour</a>
+          <a class="navlist__link" href="#i"><svg class="icon icon-sm navlist__icon"><use href="/icons/sprite.svg#i-crop"/></svg>Spacing</a>
+        </nav>
+        <nav class="navlist">
+          <span class="navlist__label">Patterns</span>
+          <a class="navlist__link" href="#i"><svg class="icon icon-sm navlist__icon"><use href="/icons/sprite.svg#i-scan"/></svg>Deck</a>
+          <a class="navlist__link" href="#i"><svg class="icon icon-sm navlist__icon"><use href="/icons/sprite.svg#i-live"/></svg>Log</a>
+          <a class="navlist__link" href="#i"><svg class="icon icon-sm navlist__icon"><use href="/icons/sprite.svg#i-playlist"/></svg>Timeline</a>
+        </nav>
+        <div class="navbar__panel-foot">
+          <span>26 components</span>
+          <a class="link" href="/components.html">See all</a>
+        </div>
+      </div>
+    </details>
+
+    <a class="navbar__link" href="#i">Travel</a>
+  </nav>
+  <div class="navbar__actions">
+    <button class="btn btn-primary btn-sm" type="button">Subscribe</button>
+  </div>
+</header>
+:::
+
+| Class | Job |
+| --- | --- |
+| `.navbar__item` | the `<details>` — positioning context |
+| `.navbar__disclosure` | the `<summary>`, with the drawn chevron |
+| `.navbar__panel` | the surface |
+| `.navbar__panel-end` | aligned to the right edge, for the last items |
+| `.navbar__panel-wide` | two columns of navlist |
+| `.navbar__panel-wide-3` | three |
+| `.navbar__panel-foot` | the strip along the bottom |
+
+**Why `<details>` and not a popover.** A popover gets Escape, light-dismiss and
+the top layer from the platform — but positioning one under its trigger needs
+CSS anchor positioning, which is not evenly supported yet. `<details>` gets the
+toggle and the keyboard for free today, and `src/js/nav.js` adds the two things
+it does not do: close on outside click, and close on Escape with focus
+returned. **Both are optional** — leave the file out and the dropdown still
+opens, closes and tabs correctly.
+
+**Only one opens at a time.** Two open panels in one bar is a state nobody
+asked for and a layout that overlaps itself.
+
+The panel animates in with `@starting-style`, which is the one mechanism that
+can transition an element out of `display: none` without JavaScript — and a
+`<details>` panel has no "opening" class to hook onto, because it does not
+exist until it is open.
+
 ## With icons
 
 An icon is optional and inherits the link's colour and size, so a nav with icons

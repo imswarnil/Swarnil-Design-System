@@ -1,0 +1,181 @@
+/* =============================================================================
+   59 · SHELL — the application layout
+
+   A bar across the top, a navigation column, a content column, and an optional
+   rail. It is the shape a documentation site, an admin panel and a reader all
+   take, and it is the one layout in this system that owns the WHOLE VIEWPORT
+   rather than a band inside a page.
+
+   ── WHY THIS IS A PATTERN AND NOT A LAYOUT PRIMITIVE ──────────────────────
+   `.sidebar` in 06-layout is a primitive: two columns, no opinion about what
+   goes in them. This has opinions. It knows the bar is sticky, that the nav
+   column scrolls independently under it, that the rail disappears before the
+   nav does, and that the nav collapses to a rail of icons before it becomes a
+   drawer. Those are four decisions, and a primitive should have none.
+
+   ── THE ONE NUMBER EVERYTHING IS DERIVED FROM ─────────────────────────────
+   `--bar-h`. The nav column's top offset is it, and the nav column's height is
+   `100dvh` minus it. Hard-code either and a taller bar silently pushes the
+   last nav item under the fold — which is the bug this token exists to make
+   impossible.
+
+   ── THE RAIL GOES FIRST ───────────────────────────────────────────────────
+   Two breakpoints, and the order is deliberate. A contents list is an aid; the
+   navigation is the way out of the page. So the rail is dropped at `lg` and
+   the nav survives to `md`, where it becomes a drawer rather than vanishing.
+
+       <div class="shell">
+         <header class="shell__bar">   … navbar …            </header>
+         <aside  class="shell__nav">   … navlist …           </aside>
+         <main   class="shell__main">  …                     </main>
+         <aside  class="shell__rail">  … toc …               </aside>
+       </div>
+
+   Layer: patterns.
+   ========================================================================== */
+
+@layer utilities.sds.patterns {
+
+	.shell {
+		--shell-nav: var(--side-w);
+		--shell-rail: 15rem;
+		--shell-gap: var(--space-8);
+
+		display: grid;
+		grid-template-columns: var(--shell-nav) minmax(0, 1fr) var(--shell-rail);
+		grid-template-rows: auto 1fr;
+		min-block-size: 100dvh;
+	}
+
+	/* The bar spans every column and is the only row-one child, so adding or
+	   removing a rail never changes the bar's markup. */
+	.shell__bar {
+		grid-column: 1 / -1;
+		grid-row: 1;
+		position: sticky;
+		inset-block-start: 0;
+		z-index: var(--z-nav);
+	}
+
+	.shell__nav,
+	.shell__main,
+	.shell__rail { grid-row: 2; }
+
+	.shell__nav {
+		position: sticky;
+		inset-block-start: var(--bar-h);
+		align-self: start;
+		max-block-size: calc(100dvh - var(--bar-h));
+		padding-block: var(--space-6);
+		padding-inline: var(--side-pad);
+		border-inline-end: var(--border-hair) solid var(--line-subtle);
+		overflow-y: auto;
+		overscroll-behavior: contain;
+		scrollbar-width: thin;
+	}
+
+	/* The navlist's active dot hangs in a gutter OUTSIDE the link, and this
+	   column scrolls — which clips horizontally as well as vertically. So the
+	   list is inset by the width of that gutter, or the dot is half a dot. */
+	.shell__nav .navlist { padding-inline-start: var(--space-3); }
+
+	.shell__main {
+		min-inline-size: 0;
+		padding: var(--space-10) var(--shell-gap) var(--space-16);
+	}
+
+	.shell__rail {
+		position: sticky;
+		inset-block-start: var(--bar-h);
+		align-self: start;
+		max-block-size: calc(100dvh - var(--bar-h));
+		padding-block: var(--space-10);
+		padding-inline-end: var(--gutter);
+		overflow-y: auto;
+		scrollbar-width: thin;
+	}
+
+	/* ── Variants ──────────────────────────────────────────────────────────── */
+
+	/* No rail. One class instead of a second grid declaration in the page. */
+	.shell-flush { grid-template-columns: var(--shell-nav) minmax(0, 1fr); }
+	.shell-flush .shell__rail { display: none; }
+
+	/* The nav column, collapsed to icons. The navlist labels go, the icons
+	   stay, and the content column gains the difference — which is the point:
+	   a rail is not a hidden sidebar, it is a narrower one. */
+	.shell-rail {
+		--shell-nav: var(--rail-w);
+	}
+
+	.shell-rail .shell__nav { padding-inline: var(--space-2); }
+	.shell-rail .navlist__label,
+	.shell-rail .navlist__count { display: none; }
+
+	.shell-rail .navlist__link {
+		justify-content: center;
+		padding-inline: 0;
+	}
+
+	/* The label is hidden, not removed — a screen reader still needs it, and
+	   an icon with no accessible name is a button that says nothing. */
+	.shell-rail .navlist__link > span:not([class]) {
+		position: absolute;
+		inline-size: 1px;
+		block-size: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+	}
+
+	/* The active dot has nowhere to hang in a rail — the gutter it lives in is
+	   gone — so it moves under the icon. */
+	.shell-rail .navlist__link[aria-current='page']::before {
+		inset-inline-start: 50%;
+		inset-block-start: auto;
+		inset-block-end: 0.125rem;
+		translate: -50% 0;
+	}
+
+	/* ── Responsive ────────────────────────────────────────────────────────
+	   A media query is correct here for the same reason it is correct in the
+	   navbar: this is a PAGE-level layout, and how much of it fits is a
+	   property of the window, not of a container. */
+
+	@media (width < 64rem) {
+		.shell,
+		.shell-flush { grid-template-columns: var(--shell-nav) minmax(0, 1fr); }
+		.shell__rail { display: none; }
+	}
+
+	@media (width < 48rem) {
+		.shell,
+		.shell-flush,
+		.shell-rail { grid-template-columns: minmax(0, 1fr); }
+
+		/* Off-canvas, and opened by whatever sets [data-open] — the burger in
+		   the bar, usually. Left closed it costs nothing and is not in the
+		   tab order. */
+		.shell__nav {
+			position: fixed;
+			inset-block: var(--bar-h) 0;
+			inset-inline-start: 0;
+			z-index: var(--z-dropdown);
+			inline-size: min(18rem, 84vw);
+			max-block-size: none;
+			background: var(--bg-canvas);
+			box-shadow: var(--elevation-4);
+			translate: -102% 0;
+			visibility: hidden;
+			transition:
+				translate var(--dur-4) var(--ease-out),
+				visibility var(--dur-4);
+		}
+
+		.shell[data-open] .shell__nav {
+			translate: 0 0;
+			visibility: visible;
+		}
+
+		.shell__main { padding-inline: var(--gutter); }
+	}
+}

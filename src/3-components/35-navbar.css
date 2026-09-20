@@ -122,6 +122,142 @@
 	/* An icon already occupies the leading slot, so the dot moves to the end. */
 	.navbar__link:has(.icon)[aria-current='page']::before { content: none; }
 
+	/* ── Dropdown ──────────────────────────────────────────────────────────
+	   A bar item that opens a panel, and THE PANEL IS THE SIDEBAR.
+
+	   Not "styled like the sidebar" — it holds a real `.navlist`, the same
+	   component the side navigation is built from. So the rows, the icons,
+	   the counts, the hover and the active dot are not four values copied
+	   into a second place where they can drift; there is one definition and
+	   two positions for it.
+
+	   Built on <details>, which is the same disclosure the side navigation
+	   uses, and which buys the whole interaction from the platform: click to
+	   toggle, keyboard operable, works with JavaScript off. `src/js/nav.js`
+	   adds outside-click and Escape, and the component is complete without it.
+
+	       <details class="navbar__item">
+	         <summary class="navbar__link navbar__disclosure">Learn</summary>
+	         <div class="navbar__panel">
+	           <nav class="navlist"> … </nav>
+	         </div>
+	       </details>
+	   ------------------------------------------------------------------- */
+
+	.navbar__item {
+		position: relative;
+		display: inline-flex;
+	}
+
+	/* A <summary> is a list-item box by default, which puts a triangle in
+	   front of the label and refuses to lay out as a flex row. */
+	.navbar__disclosure {
+		list-style: none;
+		cursor: pointer;
+		user-select: none;
+	}
+
+	.navbar__disclosure::-webkit-details-marker { display: none; }
+
+	/* The chevron is drawn, not shipped: two borders rotated. An icon file
+	   for a 6px mark is a request nobody should pay for. */
+	.navbar__disclosure::after {
+		content: '';
+		inline-size: 0.3rem;
+		block-size: 0.3rem;
+		border-inline-end: 1.5px solid currentcolor;
+		border-block-end: 1.5px solid currentcolor;
+		rotate: 45deg;
+		translate: 0 -1px;
+		flex: none;
+		opacity: 0.6;
+		transition: rotate var(--dur-2) var(--ease-out);
+	}
+
+	.navbar__item[open] > .navbar__disclosure {
+		color: var(--fg-default);
+	}
+
+	.navbar__item[open] > .navbar__disclosure::after {
+		rotate: -135deg;
+		translate: 0 1px;
+	}
+
+	/* The panel. A surface at elevation, aligned to the START of its item —
+	   a dropdown that centres itself under a 4-character label hangs off the
+	   left edge of the bar on the first item. */
+	.navbar__panel {
+		position: absolute;
+		inset-block-start: calc(100% + var(--space-2));
+		inset-inline-start: 0;
+		z-index: var(--z-dropdown);
+		inline-size: max-content;
+		min-inline-size: 13rem;
+		max-inline-size: min(22rem, calc(100vw - var(--gutter) * 2));
+		padding: var(--space-2);
+		background: var(--bg-overlay);
+		border: var(--border-hair) solid var(--line-subtle);
+		border-radius: var(--radius-card);
+		box-shadow: var(--elevation-3);
+	}
+
+	/* Opening animation, and the reason it is `@starting-style` rather than a
+	   class: <details> has no "opening" state to hook a class onto, and the
+	   panel is display:none until it does. This is the one mechanism that can
+	   animate an element out of display:none without JavaScript. */
+	@media (prefers-reduced-motion: no-preference) {
+		.navbar__panel {
+			transition:
+				opacity var(--dur-2) var(--ease-out),
+				translate var(--dur-2) var(--ease-out);
+		}
+
+		@starting-style {
+			.navbar__item[open] > .navbar__panel {
+				opacity: 0;
+				translate: 0 -0.25rem;
+			}
+		}
+	}
+
+	/* Aligned to the end instead — for the last items in a bar, where a
+	   start-aligned panel would run off the right edge. */
+	.navbar__panel-end {
+		inset-inline-start: auto;
+		inset-inline-end: 0;
+	}
+
+	/* Two or three columns of navlist, for a bar item that fronts a whole
+	   section rather than five links. Collapses to one column when there is
+	   not room, which is a container decision and so a container query. */
+	.navbar__panel-wide {
+		inline-size: max-content;
+		max-inline-size: min(44rem, calc(100vw - var(--gutter) * 2));
+		display: grid;
+		gap: var(--space-4);
+		grid-template-columns: repeat(var(--navbar-panel-cols, 2), minmax(11rem, 1fr));
+	}
+
+	.navbar__panel-wide-3 { --navbar-panel-cols: 3; }
+
+	@media (width < 48rem) {
+		.navbar__panel-wide { --navbar-panel-cols: 1; }
+	}
+
+	/* A footer strip inside a panel — "see all", a count, a CTA. */
+	.navbar__panel-foot {
+		grid-column: 1 / -1;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-3);
+		margin-block-start: var(--space-1);
+		padding: var(--space-3) var(--space-3) var(--space-2);
+		border-block-start: var(--border-hair) solid var(--line-subtle);
+		font-size: var(--text-xs);
+		color: var(--fg-subtle);
+	}
+
 	/* ── Variants ──────────────────────────────────────────────────────────── */
 
 	.navbar-sticky {
@@ -224,6 +360,7 @@
 	@media (width < 48rem) {
 		.navbar__burger { display: flex; }
 		.navbar__nav { display: none; }
+		.navbar__item { display: none; }
 		.navbar__search { display: none; }
 		.navbar-centered { display: flex; }
 	}

@@ -14,21 +14,46 @@
 
 @layer utilities.sds.components {
 
+	/* ── RE-CUT 2026-09-20 against the house style ─────────────────────────
+	   Three changes, and all three are rule 1: A SURFACE IS A FILL, NOT AN
+	   OUTLINE.
+
+	     was  --bg-surface + a hairline all the way round
+	     now  --bg-sunken, and no border at all
+
+	   A card on `--bg-canvas` filled with `--bg-surface` is the same colour as
+	   the page in light mode, which is why it needed a border to exist at all.
+	   Stepping DOWN to `--bg-sunken` gives it an edge made of tone, and a tone
+	   edge reads as a surface where a line reads as a box drawn on top of one.
+
+	   `--card-line` survives as a token because `.card-bordered` still needs
+	   it, and because a card ON a sunken section has to step somewhere — see
+	   the variants.
+
+	   The transition lost `--t-transform` and `--t-shadow`: rule 7, hover
+	   changes colour and nothing else. Nothing here lifts any more. */
 	.card {
 		--card-pad: var(--space-5);
 		--card-radius: var(--radius-card);
-		--card-bg: var(--bg-surface);
-		--card-line: var(--line-default);
+		--card-bg: var(--bg-sunken);
+		--card-line: var(--line-subtle);
 		--card-gap: var(--space-2);
+
+		/* Zero, not `none`: the border still EXISTS at zero width, so a
+		   variant or a state turns it on by setting one number and does not
+		   have to restate the style and the colour as well. Six rules below
+		   depend on that — `.card-bordered`, `.card-quiet`, `.card-accent`,
+		   and the three aria states. */
+		--card-border: 0;
 
 		position: relative;
 		display: flex;
 		flex-direction: column;
 		background: var(--card-bg);
-		border: var(--border-hair) solid var(--card-line);
+		border: var(--card-border) solid var(--card-line);
 		border-radius: var(--card-radius);
 		overflow: hidden;
-		transition: var(--t-colors), var(--t-transform), var(--t-shadow);
+		transition: var(--t-colors);
 	}
 
 	/* ── Parts ─────────────────────────────────────────────────────────────── */
@@ -295,11 +320,25 @@
 
 	/* ── Hover answers ─────────────────────────────────────────────────────── */
 
+	/* ── Hover answers ─────────────────────────────────────────────────────
+	   HOUSE RULE 7: hover changes colour and nothing else. No lift, no
+	   shadow, no scale. A grid of twelve cards that each rise under the
+	   cursor is a page of twitching rectangles, and each one is animating a
+	   claim about its own importance that it cannot back up.
+
+	   `.card-hover` is the house answer: the surface steps one shade. That is
+	   enough to say "this responds", and it costs no layout. */
+
 	@media (hover: hover) and (pointer: fine) {
+		.card-hover:hover { --card-bg: var(--bg-muted); }
+		.card-hover:hover .card__title { color: var(--fg-link-hover); }
+
+		/* ⚠️ OFF THE HOUSE STYLE, kept because it is a PUBLIC class and
+		   removing it would break consumers silently. Nothing in this repo
+		   uses it any more. Prefer `.card-hover`. */
 		.card-hover-lift:hover {
 			translate: 0 -3px;
 			box-shadow: var(--elevation-2);
-			border-color: var(--line-strong);
 		}
 
 		.card-hover-lift:hover .card__media > img { scale: 1.03; }
@@ -326,8 +365,10 @@
 		--frame-color: var(--accent);
 	}
 
-	/* Focus-within, so a keyboard user gets the same affordance as a mouse. */
-	.card:focus-within { border-color: var(--line-strong); }
+	/* Focus-within, so a keyboard user gets the same affordance as a mouse.
+	   A RING rather than a border colour: the card has no border to tint any
+	   more, and a ring works the same whether one is switched on or not. */
+	.card:focus-within { box-shadow: 0 0 0 var(--border-2) var(--accent-ring); }
 
 	/* ── States — attributes, never classes ────────────────────────────────
 	   Current is a 2px rule at the start edge; selected is the accent line
@@ -335,11 +376,11 @@
 	   filled pill. */
 
 	.card[aria-current='true'] {
-		--card-line: var(--line-accent);
 		box-shadow: inset var(--border-2) 0 0 0 var(--accent);
 	}
 
 	.card[aria-selected='true'] {
+		--card-border: var(--border-hair);
 		--card-line: var(--accent);
 		box-shadow: var(--accent-ring);
 	}
@@ -409,10 +450,16 @@
 
 	/* ── Emphasis variants ─────────────────────────────────────────────────── */
 
-	.card-accent  { --card-line: var(--accent); }
-	.card-quiet   { --card-bg: transparent; --card-line: var(--line-subtle); }
-	.card-raised  { box-shadow: var(--elevation-2); --card-line: transparent; }
-	.card-sunken  { --card-bg: var(--bg-sunken); --card-line: transparent; }
+	/* The way back to an outlined card, for the two cases a fill cannot do:
+	   a card sitting ON a sunken section (where it would be the same tone as
+	   its background), and a card that has to read as a container rather than
+	   as a surface — a form, a table wrapper. */
+	.card-bordered { --card-border: var(--border-hair); --card-bg: var(--bg-surface); }
+
+	.card-accent  { --card-border: var(--border-hair); --card-line: var(--accent); }
+	.card-quiet   { --card-bg: transparent; --card-border: var(--border-hair); }
+	.card-raised  { --card-bg: var(--bg-surface); box-shadow: var(--elevation-2); }
+	.card-sunken  { --card-bg: var(--bg-sunken); }
 
 	.card-inverse {
 		--card-bg: var(--bg-inverse);
