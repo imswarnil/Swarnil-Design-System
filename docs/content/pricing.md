@@ -5,6 +5,12 @@ order: 50
 lead: The plans, read across — every part a named slot in a fixed order, and exactly one plan featured.
 ---
 
+
+<p><a class="btn btn-primary" href="/t/pricing-section.html">Open the pricing section
+<svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-right"/></svg></a></p>
+
+Full width, on the real stylesheet, with nothing else on the page.
+
 :::demo Three plans, one featured, a monthly/yearly toggle
 <section class="pricing pricing-flush" data-period="monthly">
   <header class="pricing__head">

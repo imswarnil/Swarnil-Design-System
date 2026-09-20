@@ -5,6 +5,41 @@ order: 50
 lead: One claim, one supporting line, at most two actions.
 ---
 
+
+## The personal hero
+
+`60-hero.css` is the hero for a **product**. `61-intro.css` is the hero for a
+**person**, and the difference is that every line of it is a claim a reader can
+check: a role, an employer, a place, an intention.
+
+<p><a class="btn btn-primary" href="/t/hero-personal.html">Open the personal hero
+<svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-right"/></svg></a>
+<a class="btn btn-outline" href="/t/sections.html">All five variants</a></p>
+
+It opens as a real page — full width, resizable, themeable, and with the
+picture as a placeholder. Drop an `<img>` into `.intro__frame` and nothing else
+changes.
+
+| Part | Is |
+| --- | --- |
+| `.intro__wash` | the mesh, the loop and the grain |
+| `.intro__ticker` | five phrases on a rolling reel, in the pixel face |
+| `.intro__facts` | role at employer · place — one line, bullet-separated |
+| `.intro__aim` | what they are working towards, kept apart from the facts |
+| `.intro__frame` | the picture, shadowed, that a player replaces in place |
+| `.intro__rail` | the control column **on** the frame's edge |
+
+The control column straddles the picture's right border — half on, half off.
+Beside it, the two read as separate objects; overlapping, they read as one.
+
+| Variant | Is |
+| --- | --- |
+| `.intro-center` | no picture, words centred |
+| `.intro-flip` | picture left, words right |
+| `.intro-panel` | picture fills the section, words on a blurred panel |
+| `.intro-inverse` | the same split on the inverse surface |
+| `.intro-bare` | no wash, no picture, no box |
+
 A hero with three messages is a section pretending to be a page. The parts
 enforce the ration: eyebrow, title (one `em` of accent allowed), lead, two
 actions, a fine-print note.
