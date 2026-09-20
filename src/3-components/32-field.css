@@ -1,743 +1,606 @@
 /* =============================================================================
-   32 · FIELD — label, control, hint, error, and the form that holds them
+   32 · FIELD — rebuilt from the Ghost theme, 2026-09-20
 
-   Native controls only. The browser already knows how to be a checkbox, a
-   select, a slider, a file picker; the job here is to make each one look like
-   it belongs, not to rebuild it. A rebuilt control loses keyboard behaviour,
-   form association and assistive-tech support in one move, and every one of
-   those is harder to put back than a border was to draw.
+   The previous file was 743 lines of bordered controls and it was wrong in
+   one way that mattered: a control was a BOX YOU DRAW. Aspect's is a WELL YOU
+   DROP INTO, and that single difference is most of why its forms read as one
+   object and these did not.
 
-   The field is the unit: label + control + hint-or-error, one column that
-   knows about itself. Every control is exactly as tall as a button of the same
-   size, so a field and a submit sit on one line without shimming. State is
-   read from the attribute the screen reader is already reading —
-   [aria-invalid], :user-invalid, [disabled], [readonly], :checked — so the
-   visual and the announced state can never disagree.
+   Ported from content/themes/aspect/assets/css/base/forms.css. Its numbers,
+   its shapes, its states:
 
-   COMPOSITION WARNING
-   .field__error spends ::before on its "!" disc, .switch spends ::after on its
-   thumb and .field-float positions its own label. None of them can also take
-   .frame.
+     control   48px tall · 12/20 padding · NO BORDER · 24px radius
+               · --color-background-100 · 14px medium
+     form      a bordered CARD: 1px, --radius-6, 30px padding, 20px gap
+     label     14px medium, block, pulled tight to its control
+     check     20px square on --color-background-200, no border; checked
+               fills with --color-contrast and the tick is the page colour
+     select    the same well, with a drawn chevron 20px from the end
+     phone     below 540px the text grows to 1.025rem — under 16px iOS
+               zooms the page on focus, and that is the real reason
+
+   ── WHY THE FORM IS THE THING WITH THE BORDER ─────────────────────────────
+   Exactly one edge is drawn, and it is the OUTER one. The controls inside are
+   fills. That is what makes a form read as a single object holding several
+   things, rather than as several boxes that happen to be near each other —
+   and it is the inversion of what this file used to do.
 
    Layer: components.
    ========================================================================== */
 
 @layer utilities.sds.components {
 
-	/* ── .field — the unit ─────────────────────────────────────────────────── */
+	/* ── The form ──────────────────────────────────────────────────────────── */
 
-	.field {
-		--field-gap: var(--space-2);
+	.form {
 		display: flex;
 		flex-direction: column;
-		gap: var(--field-gap);
-		min-width: 0;
+		align-items: flex-start;
+		gap: var(--spacing-8);
+		inline-size: 100%;
+		padding: var(--spacing-9);
+		border: var(--border-hair) solid var(--color-border);
+		border-radius: var(--radius-6);
+	}
+
+	/* A form laid out by the page rather than by itself — inside a card, a
+	   hero, a bar. The border and the padding go; the rhythm stays. */
+	.form-bare { padding: 0; border: 0; border-radius: 0; }
+
+	.form-inline {
+		flex-direction: row;
+		flex-wrap: wrap;
+		align-items: flex-end;
+		gap: var(--spacing-6);
+	}
+
+	.form-row {
+		display: grid;
+		gap: var(--spacing-6) var(--spacing-7);
+		grid-template-columns: repeat(auto-fit, minmax(min(13rem, 100%), 1fr));
+		inline-size: 100%;
+	}
+
+	.form__actions {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--spacing-6);
+		inline-size: 100%;
+	}
+
+	/* ── The field ─────────────────────────────────────────────────────────
+	   A label, a control, and the line under it that explains or complains.
+	   `gap` is small on purpose: a label belongs to its control, and a label
+	   floating midway between two controls belongs to neither. */
+
+	.field {
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-4);
+		inline-size: 100%;
+		min-inline-size: 0;
 	}
 
 	.field__label {
-		font-size: var(--text-sm);
-		font-weight: var(--weight-medium);
-		color: var(--fg-default);
+		display: block;
+		color: var(--color-contrast);
+		font-size: var(--font-small);
+		font-weight: var(--font-weight-medium);
 	}
 
-	/* Optional marks itself; required does not. Most fields are required, so
-	   an asterisk on each is noise and the exception is what gets the word. */
 	.field__label[data-optional]::after {
-		content: ' optional';
-		font-weight: var(--weight-regular);
-		color: var(--fg-faint);
+		content: ' ' attr(data-optional);
+		color: var(--color-mute);
+		font-weight: var(--font-weight-regular);
 	}
 
-	.field__hint { font-size: var(--text-xs); color: var(--fg-subtle); }
-
-	/* role="alert" on the element itself; this only styles it. The disc means
-	   the error is never carried by colour alone. */
+	.field__hint,
 	.field__error {
-		display: flex;
-		align-items: flex-start;
-		gap: var(--space-2);
-		font-size: var(--text-xs);
-		color: var(--danger-fg);
+		font-size: var(--font-x-small);
+		line-height: var(--leading-snug);
 	}
 
-	.field__error::before {
-		content: '!';
-		display: inline-grid;
-		place-items: center;
-		width: 1rem;
-		height: 1rem;
-		flex: none;
-		border-radius: var(--radius-full);
-		background: var(--danger-solid);
-		color: var(--fg-on-accent);
-		font-family: var(--font-label);
-		font-size: var(--text-3xs);
-		font-weight: var(--weight-bold);
-		line-height: 1;
-	}
+	.field__hint  { color: var(--color-secondary); }
+	.field__error { color: var(--color-error); font-weight: var(--font-weight-medium); }
 
-	/* A running count is data: "112 / 160". */
+	/* Shown only when the control is actually invalid, so the markup can
+	   carry the message permanently and the form stays quiet until it is
+	   earned. `:user-invalid` waits for the reader to have finished. */
+	.field:not(:has(:user-invalid, [aria-invalid='true'])) .field__error { display: none; }
+
 	.field__count {
-		font-family: var(--font-data);
-		font-weight: var(--weight-light);
-		font-size: var(--text-xs);
-		letter-spacing: var(--tracking-data);
-		font-variant-numeric: tabular-nums;
-		color: var(--fg-faint);
 		margin-inline-start: auto;
+		font-family: var(--font-family-body);
+		font-size: var(--font-x-small);
+		font-variant-numeric: tabular-nums;
+		letter-spacing: var(--tracking-data);
+		color: var(--color-mute);
 	}
 
-	/* A hint and an error never show together — when the field is invalid
-	   the error has taken the hint's line. */
-	.field:has([aria-invalid='true'], :user-invalid) > .field__hint { display: none; }
+	.field__foot {
+		display: flex;
+		align-items: baseline;
+		gap: var(--spacing-6);
+		inline-size: 100%;
+	}
 
-	/* Label beside the control instead of above it — a settings row. */
 	.field-inline {
-		--field-label-w: 10rem;
 		flex-direction: row;
 		align-items: center;
-		gap: var(--space-4);
+		gap: var(--spacing-6);
 	}
 
-	.field-inline > .field__label { flex: 0 0 var(--field-label-w); }
-	.field-inline > .input,
-	.field-inline > .select { flex: 1 1 auto; width: auto; }
+	.field-inline .field__label { flex: none; }
 
-	/* Size cascades through the field, so one class on the wrapper resizes
-	   every control inside it. --field-h is inherited on purpose; the control
-	   reads it with a fallback rather than declaring its own default. */
-	.field-sm, .form-sm { --field-h: 1.75rem; --field-text: var(--text-xs); }
-	.field-lg, .form-lg { --field-h: 2.5rem; --field-text: var(--text-sm); }
+	/* ── The control ───────────────────────────────────────────────────────
+	   NO BORDER. The fill is the control: `--color-background-100` at rest,
+	   `-200` on hover, `-200` and an outline on focus. Everything the border
+	   used to carry, the tone carries.
 
-	/* ── .input — text, email, number, date, search, file, textarea ────────── */
+	   The radius is half the height, so it is a true pill and stays one when
+	   a size variant changes the height. */
 
-	/* ── RE-CUT 2026-09-20 on Aspect's model ───────────────────────────────
-	   THE INPUT HAS NO BORDER. It is a filled pill on
-	   `--color-background-100`, 48px tall, 24px radius.
-
-	   That is the change, and it is the reason Aspect's forms look like one
-	   thing. A bordered input is a box you have to draw; a filled one is a
-	   WELL you drop into, and a well needs no line because the tone already
-	   says where it starts and stops. It also means an input and a button
-	   sitting side by side are two fills rather than a fill and an outline,
-	   which is what made this system's forms look assembled from two kits.
-
-	   Everything that used to be carried by the border colour is now carried
-	   by the FILL:
-
-	     rest      --color-background-100
-	     hover     --color-background-200
-	     focus     an outline, offset, plus the fill stepping up
-	     readonly  the fill drops back and the text greys
-	     invalid   the fill tints, and the outline turns on at rest
-
-	   `--input-line` survives for `.input-bordered`, which is the way back
-	   for a control that genuinely has to read as a container — a table cell
-	   editor, a control on an already-filled surface. */
-	.input {
-		--input-h: var(--field-h, var(--input--min-height));
+	.input,
+	.select,
+	.textarea {
+		--input-h: var(--input--min-height);
 		--input-bg: var(--color-background-100);
 		--input-bg-hover: var(--color-background-200);
 		--input-line: transparent;
-		--input-pad: var(--input--padding-h);
-		--input-radius: calc(var(--input--min-height) * 0.5);
 
 		display: block;
-		width: 100%;
-		min-height: var(--input-h);
+		inline-size: 100%;
+		min-block-size: var(--input-h);
 		padding-block: var(--input--padding-v);
-		padding-inline: var(--input-pad);
+		padding-inline: var(--input--padding-h);
 		appearance: none;
-		background: var(--input-bg);
 		border: var(--border-hair) solid var(--input-line);
-		border-radius: var(--input-radius);
+		border-radius: calc(var(--input-h) * 0.5);
+		background-color: var(--input-bg);
 		color: var(--color-contrast);
 		font-family: var(--font-family-body);
-		font-size: var(--field-text, var(--font-small));
+		font-size: var(--font-small);
 		font-weight: var(--font-weight-medium);
-		transition: var(--t-colors);
+		line-height: 1.5;
+		transition: background-color var(--dur-2) var(--ease-out),
+			border-color var(--dur-2) var(--ease-out);
 	}
 
-	.input::placeholder { color: var(--color-mute); font-weight: var(--font-weight-regular); }
-	.input:hover { background: var(--input-bg-hover); }
+	.input::placeholder,
+	.textarea::placeholder {
+		color: var(--color-mute);
+		font-weight: var(--font-weight-regular);
+	}
 
-	.input[readonly] {
+	.input:hover,
+	.select:hover,
+	.textarea:hover { background-color: var(--input-bg-hover); }
+
+	/* Focus is an OUTLINE with an offset, not an inset ring. On a filled
+	   control a box-shadow ring is drawn on top of the fill and the two
+	   fight; an outline sits outside the border box with daylight between
+	   them, follows the radius for free, and survives a clipping parent. */
+	.input:focus-visible,
+	.select:focus-visible,
+	.textarea:focus-visible {
+		outline: var(--border-2) solid var(--color-accent);
+		outline-offset: var(--spacing-3);
+		background-color: var(--color-background-200);
+	}
+
+	.input[readonly],
+	.textarea[readonly] {
 		--input-bg: transparent;
 		--input-bg-hover: transparent;
 		--input-line: var(--color-border);
 		color: var(--color-secondary);
 	}
 
-	.input[disabled] { opacity: 0.5; cursor: not-allowed; }
+	.input[disabled],
+	.select[disabled],
+	.textarea[disabled] { opacity: 0.5; cursor: not-allowed; }
 
-	/* The way back to an outlined control, for the two cases a fill cannot
-	   do: a control ON an already-filled surface, and one that has to read as
-	   a container rather than as a well. */
-	.input-bordered {
+	/* Invalid, and only once the reader has finished with it. */
+	.input:user-invalid,
+	.input[aria-invalid='true'],
+	.textarea:user-invalid {
+		--input-bg: color-mix(in oklab, var(--color-error) 10%, var(--color-background-100));
+		--input-bg-hover: color-mix(in oklab, var(--color-error) 14%, var(--color-background-100));
+		--input-line: color-mix(in oklab, var(--color-error) 45%, transparent);
+	}
+
+	.input:user-invalid:focus-visible,
+	.textarea:user-invalid:focus-visible { outline-color: var(--color-error); }
+
+	/* A textarea is the one control that is not a pill — a 24px radius on a
+	   140px box bows its sides. */
+	.textarea {
+		min-block-size: 8.75rem;
+		border-radius: var(--radius-4);
+		resize: vertical;
+	}
+
+	/* The chevron is drawn into the background, so the select needs no
+	   wrapper and no icon element. Room is made for it on the end. */
+	.select {
+		cursor: pointer;
+		padding-inline-end: calc(var(--input--padding-h) * 2);
+		background-image: url('data:image/svg+xml,%3csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"%3e%3cpath fill="none" stroke="%23808080" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m2 5 6 6 6-6"/%3e%3c/svg%3e');
+		background-repeat: no-repeat;
+		background-position: calc(100% - var(--input--padding-h)) 50%;
+		background-size: 10px;
+	}
+
+	/* ── Sizes ─────────────────────────────────────────────────────────────── */
+
+	.input-sm, .select-sm, .textarea-sm, .form-sm .input, .form-sm .select {
+		--input-h: 2.25rem;
+		padding-block: var(--spacing-4);
+		padding-inline: var(--spacing-7);
+		font-size: var(--font-x-small);
+	}
+
+	.input-lg, .select-lg, .textarea-lg, .form-lg .input, .form-lg .select {
+		--input-h: 3.5rem;
+		padding-inline: var(--spacing-9);
+		font-size: var(--font-base);
+	}
+
+	/* ── Bordered, the way back ────────────────────────────────────────────
+	   For a control ON an already-filled surface — inside a card, a panel, a
+	   table cell — where a fill would be the same tone as its ground. */
+
+	.input-bordered,
+	.select-bordered,
+	.textarea-bordered {
 		--input-bg: transparent;
 		--input-bg-hover: transparent;
 		--input-line: var(--color-border);
 	}
 
-	.input-bordered:hover { --input-line: var(--color-background-300); }
+	.input-bordered:hover,
+	.select-bordered:hover { --input-line: var(--color-background-300); }
 
-	/* A textarea is the one control that is not a pill — a 24px radius on a
-	   140px-tall box bows its sides. */
-	.textarea { --input-radius: var(--radius-4); min-block-size: 8rem; resize: vertical; }
+	/* ── Icon inside a control ─────────────────────────────────────────────── */
 
-	/* Text entry focuses on click as well as on Tab, so the ring is the
-	   border itself rather than an outline that would sit outside the box. */
-	/* ── Focus, Aspect's way ───────────────────────────────────────────────
-	   An OUTLINE with an offset, not an inset ring.
-
-	   The difference matters on a filled control. A `box-shadow` ring is
-	   drawn inside the element's own box, so on an input whose background is
-	   `--color-background-200` the ring sits ON the fill and the two fight.
-	   An outline is drawn outside the border box and `outline-offset` puts
-	   daylight between them, so the control keeps its shape and the focus
-	   mark is unambiguous — and it follows the border-radius for free.
-
-	   It also survives `overflow: hidden` on a parent, which an inset ring on
-	   an input inside an `.input-group` does not. */
-	.input:focus-visible,
-	.select:focus-visible,
-	.textarea:focus-visible {
-		outline: var(--border-2) solid var(--color-accent);
-		outline-offset: var(--spacing-3);   /* Aspect's 3px, and it needs the gap */
-		--input-line: var(--color-accent);
-		box-shadow: none;
-	}
-
-	/* The resting fill steps up a shade on focus as well, so the control is
-	   marked even where an outline is suppressed (forced colours, print). */
-	.input:focus-visible { background: var(--color-background-200); }
-
-	/* Style the ARIA, not a class — the attribute is the same fact the screen
-	   reader is reading, so they cannot disagree. :user-invalid is the
-	   browser's own verdict after the user has touched the control, so
-	   `required` and `pattern` light up with no script at all. */
-	.input[aria-invalid='true'],
-	.input:user-invalid {
-		--input-line: var(--danger-solid);
-	}
-
-	.input[aria-invalid='true']:focus-visible,
-	.input:user-invalid:focus-visible {
-		box-shadow: 0 0 0 3px var(--danger-line);
-	}
-
-	.input-sm { --input-h: 1.75rem; font-size: var(--text-xs); }
-	.input-lg { --input-h: 2.5rem; font-size: var(--text-sm); }
-
-	textarea.input {
-		height: auto;
-		min-height: 6rem;
-		padding-block: var(--space-3);
-		line-height: var(--leading-normal);
-		resize: vertical;
-	}
-
-	/* The native file input, its button dressed as a small outline button.
-	   The text beside it ("No file chosen") is the browser's and stays so. */
-	.input[type='file'] {
-		padding-inline-start: var(--space-1);
-		line-height: calc(var(--input-h) - var(--border-hair) * 2);
-		color: var(--fg-subtle);
-		cursor: pointer;
-	}
-
-	.input[type='file']::file-selector-button {
-		height: calc(var(--input-h) - var(--space-2));
-		margin-inline-end: var(--space-3);
-		padding-inline: var(--space-3);
-		border: var(--border-hair) solid var(--line-default);
-		border-radius: var(--radius-sm);
-		background: var(--bg-surface);
-		color: var(--fg-default);
-		font: inherit;
-		font-size: var(--text-xs);
-		font-weight: var(--weight-medium);
-		cursor: pointer;
-		transition: var(--t-colors);
-	}
-
-	.input[type='file']:hover::file-selector-button { border-color: var(--line-strong); background: var(--hover-wash); }
-
-	/* ── .input-icon — a glyph riding inside the control ───────────────────── */
-
-	.input-icon {
-		--input-icon-inset: 2.5rem;
-		position: relative;
-		display: block;
-	}
-
+	.input-icon { position: relative; display: flex; align-items: center; inline-size: 100%; }
 	.input-icon > .icon {
 		position: absolute;
-		inset-inline-start: var(--space-3);
-		top: 50%;
-		translate: 0 -50%;
-		color: var(--fg-faint);
+		inset-inline-start: var(--input--padding-h);
+		--icon-size: 1rem;
+		color: var(--color-mute);
 		pointer-events: none;
 	}
+	.input-icon > .input { padding-inline-start: calc(var(--input--padding-h) * 2 + 0.5rem); }
+	.input-icon:focus-within > .icon { color: var(--color-contrast); }
 
-	.input-icon > .input { padding-inline-start: var(--input-icon-inset); }
-
-	.input-icon-end > .icon { inset-inline-start: auto; inset-inline-end: var(--space-3); }
-	.input-icon-end > .input { padding-inline-start: var(--input-pad); padding-inline-end: var(--input-icon-inset); }
-
-	/* ── .input-group — things welded to the control's edge ────────────────── */
+	/* ── Input group ───────────────────────────────────────────────────────
+	   A control and a button as one pill. The seam is the gap between two
+	   fills, not a shared border — there are no borders to share. */
 
 	.input-group {
 		display: flex;
 		align-items: stretch;
-		min-width: 0;
+		gap: var(--spacing-2);
+		inline-size: 100%;
+		min-inline-size: 0;
 	}
 
 	.input-group > .input,
-	.input-group > .select { flex: 1 1 auto; min-width: 0; width: auto; }
+	.input-group > .select { flex: 1 1 auto; min-inline-size: 0; }
+	.input-group > .btn { flex: none; }
 
-	/* Every child loses its radius, then the two ends get theirs back.
-	   Adjacent borders overlap by one hair so the seam reads as one line. */
-	.input-group > * { border-radius: 0; }
-	.input-group > .btn { --btn-radius: 0; --btn-line: var(--line-default); }
-	.input-group > * + * { margin-inline-start: calc(var(--border-hair) * -1); }
-
-	.input-group > :first-child { border-start-start-radius: var(--radius-control); border-end-start-radius: var(--radius-control); }
-	.input-group > :last-child  { border-start-end-radius: var(--radius-control); border-end-end-radius: var(--radius-control); }
-	.input-group > .btn:first-child { --btn-radius: var(--radius-control) 0 0 var(--radius-control); }
-	.input-group > .btn:last-child  { --btn-radius: 0 var(--radius-control) var(--radius-control) 0; }
-
-	/* The focused control rises above its neighbours so its ring is whole. */
-	.input-group > :focus-visible { position: relative; z-index: var(--z-raised); }
-
-	/* A prefix or suffix: "https://", "€", "/ mo". Units are data. */
 	.input-group__text {
 		display: inline-flex;
 		align-items: center;
-		padding-inline: var(--space-3);
-		border: var(--border-hair) solid var(--line-default);
-		background: var(--bg-sunken);
-		color: var(--fg-subtle);
-		font-family: var(--font-data);
-		font-weight: var(--weight-light);
-		font-size: var(--text-xs);
-		letter-spacing: var(--tracking-data);
-		font-variant-numeric: tabular-nums;
+		padding-inline: var(--input--padding-h);
+		border-radius: calc(var(--input--min-height) * 0.5);
+		background: var(--color-background-200);
+		color: var(--color-secondary);
+		font-size: var(--font-small);
 		white-space: nowrap;
 	}
 
-	/* ── .select — the native element, dressed on the outside only ─────────
-	   The popup list stays the platform's, which is what makes it work on
-	   every OS and with every assistive tech. The chevron is a data-URI so it
-	   costs no request; it is a mid grey that reads on both themes because a
-	   data-URI cannot read a custom property. */
+	/* ── Inset — the subscribe shape ───────────────────────────────────────
+	   The button sits INSIDE the control's pill, 5px in on three sides. It
+	   is the shape Aspect uses for every subscribe form, and it is the right
+	   one whenever the button is the field's only possible action: an email
+	   box with a Subscribe button beside it is two objects; with the button
+	   inside it, it is one control that submits.
 
-	.select {
-		--input-h: var(--field-h, 2.125rem);
-		--input-line: var(--line-default);
-		appearance: none;
-		inline-size: 100%;
-		block-size: var(--input-h);
-		padding-inline: var(--space-3) var(--space-8);
-		background:
-			url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23808291' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")
-			no-repeat right var(--space-3) center / 1rem,
-			var(--bg-surface);
-		border: var(--border-hair) solid var(--input-line);
-		border-radius: var(--radius-control);
-		color: var(--fg-default);
-		font-size: var(--field-text, var(--text-sm));
-		cursor: pointer;
-		transition: var(--t-colors), var(--t-shadow);
-	}
-
-	.select:hover { --input-line: var(--line-strong); }
-	.select[disabled] { opacity: 0.5; cursor: not-allowed; }
-
-	.select[aria-invalid='true'],
-	.select:user-invalid { --input-line: var(--danger-solid); }
-
-	/* A listbox shows its options in the box; the chevron would lie. */
-	.select[multiple],
-	.select[size] { block-size: auto; padding-inline-end: var(--space-3); background-image: none; }
-
-	.select[multiple] > option,
-	.select[size] > option { padding: var(--space-1) var(--space-2); border-radius: var(--radius-xs); }
-
-	.select-sm { --input-h: 2rem; font-size: var(--text-xs); }
-	.select-lg { --input-h: 3rem; font-size: var(--text-base); }
-
-	/* ── .check, .radio — accent-color is the whole implementation ─────────
-	   No custom sprite, no pseudo-element, and the keyboard behaviour stays
-	   exactly as the platform ships it. */
-
-	.check,
-	.radio {
-		width: 1.05rem;
-		height: 1.05rem;
-		accent-color: var(--accent);
-		flex: none;
-		cursor: pointer;
-	}
-
-	.check[disabled],
-	.radio[disabled] { cursor: not-allowed; opacity: 0.5; }
-
-	/* The label that wraps a check, radio or switch. The whole line is the
-	   hit target because the input is inside it. */
-	.choice {
-		display: flex;
-		align-items: center;
-		gap: var(--space-3);
-		font-size: var(--text-sm);
-		color: var(--fg-muted);
-		cursor: pointer;
-	}
-
-	.choice:has(:disabled) { color: var(--fg-disabled); cursor: not-allowed; }
-
-	/* Multi-line choice copy: a title and a description under it. */
-	.choice-top { align-items: flex-start; }
-	.choice-top > .check,
-	.choice-top > .radio,
-	.choice-top > .switch { margin-block-start: 0.15em; }
-
-	.choice__desc {
-		display: block;
-		font-size: var(--text-xs);
-		color: var(--fg-subtle);
-	}
-
-	/* The whole tile is the control. The input stays real and visible to a
-	   screen reader; only its box becomes part of a card. */
-	.choice-card {
-		padding: var(--space-4);
-		border: var(--border-hair) solid var(--line-default);
-		border-radius: var(--radius-control);
-		background: var(--bg-surface);
-		transition: var(--t-colors);
-	}
-
-	.choice-card:hover { border-color: var(--line-strong); }
-
-	.choice-card:has(:checked) {
-		border-color: var(--accent);
-		background: var(--accent-soft);
-		color: var(--accent-soft-fg);
-	}
-
-	.choice-card:has(:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
-	.choice-card:has(:focus-visible) > :focus-visible { outline: none; }
-
-	/* ── .switch — a checkbox wearing a thumb ───────────────────────────────
-	   For a setting that takes effect immediately; a checkbox is for a value
-	   that is submitted. The input is still the checkbox; only its box is
-	   drawn here, so form association and Space-to-toggle come free. */
-
-	.switch {
-		--switch-h: 1.5rem;
-		--switch-w: 2.5rem;
-		--switch-pad: var(--space-1);
-		appearance: none;
+	   The padding-end on the input is what keeps the text from running under
+	   the button — 9rem covers "Subscribe" at every size this ships. */
+	.input-group-inset {
 		position: relative;
-		flex: none;
-		width: var(--switch-w);
-		height: var(--switch-h);
-		margin: 0;
-		border-radius: var(--radius-full);
-		background: var(--line-strong);
-		cursor: pointer;
-		transition: var(--t-colors);
+		gap: 0;
+		display: block;
 	}
 
-	.switch::after {
+	.input-group-inset > .input { padding-inline-end: 9rem; }
+
+	.input-group-inset > .btn {
+		position: absolute;
+		inset-block: 5px;
+		inset-inline-end: 5px;
+		z-index: 1;
+		min-block-size: auto;
+		padding-block: 0;
+	}
+
+	@media (width < 33.75rem) {
+		/* No room to inset at this width — the button drops below and the
+		   control goes back to being a plain pill. */
+		.input-group-inset > .input { padding-inline-end: var(--input--padding-h); }
+		.input-group-inset > .btn {
+			position: static;
+			inline-size: 100%;
+			min-block-size: var(--button--min-height);
+			margin-block-start: var(--spacing-6);
+		}
+	}
+
+	/* Joined — one continuous pill, for a search box or a unit field, where
+	   the two really are one control. */
+	.input-group-joined { gap: 0; }
+	.input-group-joined > * { border-radius: 0; }
+	.input-group-joined > :first-child {
+		border-start-start-radius: calc(var(--input--min-height) * 0.5);
+		border-end-start-radius: calc(var(--input--min-height) * 0.5);
+	}
+	.input-group-joined > :last-child {
+		border-start-end-radius: calc(var(--input--min-height) * 0.5);
+		border-end-end-radius: calc(var(--input--min-height) * 0.5);
+	}
+	.input-group-joined > .btn { --btn-radius: inherit; }
+	.input-group > :focus-visible { position: relative; z-index: var(--z-raised); }
+
+	/* ── Checkbox and radio ────────────────────────────────────────────────
+	   20px, filled, no border. Checked fills with the ink colour and the
+	   mark is drawn in the PAGE colour — so the control inverts rather than
+	   growing a tick, which is why it reads at this size. */
+
+	.check {
+		position: relative;
+		display: inline-block;
+		inline-size: 1.25rem;
+		block-size: 1.25rem;
+		flex: none;
+		margin: 0;
+		padding: 0;
+		appearance: none;
+		border: 0;
+		border-radius: var(--radius-1);
+		background-color: var(--color-background-200);
+		vertical-align: -0.325em;
+		outline-offset: var(--spacing-3);
+		cursor: pointer;
+		transition: background-color var(--dur-1) var(--ease-out);
+	}
+
+	.check:hover { background-color: var(--color-background-300); }
+	.check[type='radio'] { border-radius: var(--radius-full); }
+
+	.check::before {
 		content: '';
 		position: absolute;
-		top: var(--switch-pad);
-		inset-inline-start: var(--switch-pad);
-		width: calc(var(--switch-h) - var(--switch-pad) * 2);
-		height: calc(var(--switch-h) - var(--switch-pad) * 2);
-		border-radius: var(--radius-full);
-		background: var(--pure-white, var(--bg-surface));
-		box-shadow: var(--elevation-1);
-		transition: var(--t-transform);
+		inset-block-start: 50%;
+		inset-inline-start: 50%;
+		inline-size: var(--font-x-small);
+		block-size: var(--font-x-small);
+		background-color: var(--color-background);
+		opacity: 0;
+		translate: -50% -50%;
+		transition: opacity var(--dur-1) var(--ease-out);
+		mask-image: url("data:image/svg+xml;utf8,<svg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M13.3333 4L5.99996 11.3333L2.66663 8' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+		mask-size: 100% 100%;
 	}
 
-	.switch:hover { background: var(--fg-subtle); }
-	.switch:checked { background: var(--accent); }
-	.switch:checked::after { translate: calc(var(--switch-w) - var(--switch-h)) 0; }
-	.switch:focus-visible { border-radius: var(--radius-full); }
+	.check[type='radio']::before {
+		inline-size: 0.375rem;
+		block-size: 0.375rem;
+		border-radius: var(--radius-full);
+		mask-image: none;
+	}
+
+	.check:checked { background-color: var(--color-contrast); }
+	.check:checked::before { opacity: 1; }
+	.check:indeterminate { background-color: var(--color-contrast); }
+	.check:indeterminate::before {
+		opacity: 1;
+		block-size: 2px;
+		inline-size: 0.625rem;
+		border-radius: 2px;
+		mask-image: none;
+	}
+	.check[disabled] { opacity: 0.5; cursor: not-allowed; }
+
+	/* The row a check sits in: the control, then the label it belongs to. */
+	.choice {
+		display: flex;
+		align-items: flex-start;
+		gap: var(--spacing-6);
+		font-size: var(--font-small);
+		cursor: pointer;
+	}
+
+	.choice > .check { margin-block-start: 0.125rem; }
+	.choice__text { color: var(--color-contrast); }
+	.choice__hint { display: block; color: var(--color-secondary); font-size: var(--font-x-small); }
+
+	/* ── Switch ────────────────────────────────────────────────────────────
+	   The same idea lying down: a well with a knob that travels. Not a
+	   checkbox wearing a costume — a switch means "on now", a checkbox means
+	   "include this when I submit", and the two are not interchangeable. */
+
+	.switch {
+		position: relative;
+		display: inline-block;
+		inline-size: 2.5rem;
+		block-size: 1.375rem;
+		flex: none;
+		margin: 0;
+		appearance: none;
+		border: 0;
+		border-radius: var(--radius-full);
+		background-color: var(--color-background-300);
+		outline-offset: var(--spacing-3);
+		cursor: pointer;
+		transition: background-color var(--dur-2) var(--ease-out);
+	}
+
+	.switch::before {
+		content: '';
+		position: absolute;
+		inset-block-start: 50%;
+		inset-inline-start: 0.1875rem;
+		inline-size: 1rem;
+		block-size: 1rem;
+		border-radius: var(--radius-full);
+		background-color: var(--color-background);
+		translate: 0 -50%;
+		transition: translate var(--dur-2) var(--ease-out);
+	}
+
+	.switch:checked { background-color: var(--color-accent); }
+	.switch:checked::before { translate: 1.125rem -50%; }
 	.switch[disabled] { opacity: 0.5; cursor: not-allowed; }
+	.switch-sm { inline-size: 2rem; block-size: 1.125rem; }
+	.switch-sm::before { inline-size: 0.8125rem; block-size: 0.8125rem; }
+	.switch-sm:checked::before { translate: 0.875rem -50%; }
 
-	.switch-sm { --switch-h: 1.25rem; --switch-w: 2.125rem; --switch-pad: 0.125rem; }
-
-	/* ── .range — the accent fills to the thumb ────────────────────────────
-	   Set --value inline (or from an input listener) for the filled track;
-	   without it the track is half-filled, which is honest for a default of
-	   50 and wrong for anything else, so set it. */
+	/* ── Range ─────────────────────────────────────────────────────────────── */
 
 	.range {
-		--range-track: var(--border-3);
-		--range-thumb: 1.05rem;
-		--value: 50%;
+		inline-size: 100%;
+		block-size: 1.25rem;
 		appearance: none;
-		width: 100%;
-		height: var(--field-h, 2.5rem);
-		margin: 0;
 		background: transparent;
 		cursor: pointer;
 	}
 
 	.range::-webkit-slider-runnable-track {
-		height: var(--range-track);
+		block-size: 0.375rem;
 		border-radius: var(--radius-full);
-		background: linear-gradient(to right, var(--accent) var(--value), var(--line-default) var(--value));
+		background: var(--color-background-300);
 	}
 
 	.range::-moz-range-track {
-		height: var(--range-track);
+		block-size: 0.375rem;
 		border-radius: var(--radius-full);
-		background: var(--line-default);
+		background: var(--color-background-300);
 	}
-
-	.range::-moz-range-progress { height: var(--range-track); border-radius: var(--radius-full); background: var(--accent); }
 
 	.range::-webkit-slider-thumb {
 		appearance: none;
-		width: var(--range-thumb);
-		height: var(--range-thumb);
-		margin-top: calc((var(--range-track) - var(--range-thumb)) / 2);
+		margin-block-start: -0.3125rem;
+		inline-size: 1rem;
+		block-size: 1rem;
+		border: 0;
 		border-radius: var(--radius-full);
-		background: var(--bg-canvas);
-		border: var(--border-2) solid var(--accent);
-		box-shadow: var(--elevation-1);
-		transition: var(--t-transform);
+		background: var(--color-accent);
 	}
 
 	.range::-moz-range-thumb {
-		width: var(--range-thumb);
-		height: var(--range-thumb);
+		inline-size: 1rem;
+		block-size: 1rem;
+		border: 0;
 		border-radius: var(--radius-full);
-		background: var(--bg-canvas);
-		border: var(--border-2) solid var(--accent);
-		box-shadow: var(--elevation-1);
+		background: var(--color-accent);
 	}
 
-	.range:active::-webkit-slider-thumb { scale: 1.15; }
-	.range:focus-visible { outline: none; }
-	.range:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px var(--accent-ring); }
-	.range:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 3px var(--accent-ring); }
-	.range[disabled] { opacity: 0.5; cursor: not-allowed; }
+	.range:focus-visible { outline: var(--border-2) solid var(--color-accent); outline-offset: var(--spacing-3); }
 
-	/* The two numbers under a slider: "00:00 … 14:22". Data. */
 	.range-scale {
 		display: flex;
 		justify-content: space-between;
-		font-family: var(--font-data);
-		font-weight: var(--weight-light);
-		font-size: var(--text-2xs);
-		letter-spacing: var(--tracking-data);
+		font-size: var(--font-x-small);
 		font-variant-numeric: tabular-nums;
-		color: var(--fg-faint);
+		color: var(--color-mute);
 	}
 
-	/* ── .field-float — the label rests where the value will be ─────────────
-	   <label class="field field-float"><input class="input" placeholder=" " />
-	   <span class="field__label">Email</span></label>
-	   The placeholder must be a single space: :placeholder-shown is what tells
-	   an empty control from a filled one, and it needs a placeholder to show.
-	   Only the label's position and colour move; its size and case snap, which
-	   at 120ms reads as one motion. */
-
-	.field-float { display: block; position: relative; }
-
-	.field-float > .input,
-	.field-float > .select {
-		padding-block: 1.3rem 0.3rem;
-		height: auto;
-		min-height: 3rem;
-	}
-
-	.field-float > textarea.input { min-height: 6rem; }
-
-	.field-float > .field__label {
-		position: absolute;
-		inset-inline-start: var(--space-3);
-		top: 0.45rem;
-		font-family: var(--font-label);
-		font-size: var(--text-2xs);
-		font-weight: var(--weight-semibold);
-		letter-spacing: var(--tracking-label);
-		text-transform: uppercase;
-		color: var(--fg-subtle);
-		pointer-events: none;
-		transition: translate var(--dur-2) var(--ease-out), var(--t-colors);
-	}
-
-	/* Resting: empty and unfocused, so the label wears the placeholder's
-	   clothes and sits on the value line. */
-	.field-float > :placeholder-shown:not(:focus) ~ .field__label {
-		translate: 0 0.6rem;
-		font-family: var(--font-body);
-		font-size: var(--text-sm);
-		font-weight: var(--weight-regular);
-		letter-spacing: normal;
-		text-transform: none;
-		color: var(--fg-faint);
-	}
-
-	.field-float > :focus ~ .field__label { color: var(--accent); }
-	.field-float > :is([aria-invalid='true'], :user-invalid) ~ .field__label { color: var(--danger-fg); }
-
-	/* ── .fieldset — a real <fieldset>, its legend in the label voice ──────── */
+	/* ── Fieldset ──────────────────────────────────────────────────────────── */
 
 	.fieldset {
-		--fieldset-gap: var(--space-4);
 		display: flex;
 		flex-direction: column;
-		gap: var(--fieldset-gap);
-		min-width: 0;
-		padding: 0;
+		gap: var(--spacing-6);
+		inline-size: 100%;
 		margin: 0;
+		padding: 0;
 		border: 0;
 	}
 
-	/* A legend is not a flex item, so the gap does not reach it. */
 	.fieldset > legend {
 		padding: 0;
-		margin-block-end: var(--space-3);
-		font-family: var(--font-label);
-		font-size: var(--text-2xs);
-		font-weight: var(--weight-semibold);
-		letter-spacing: var(--tracking-label);
-		text-transform: uppercase;
-		color: var(--fg-subtle);
+		color: var(--color-contrast);
+		font-size: var(--font-small);
+		font-weight: var(--font-weight-semibold);
 	}
 
-	.fieldset[disabled] { opacity: 0.5; }
-
-	/* Bordered: a group that reads as a panel. */
 	.fieldset-boxed {
-		padding: var(--space-5);
-		border: var(--border-hair) solid var(--line-default);
-		border-radius: var(--radius-card);
+		padding: var(--spacing-8);
+		border: var(--border-hair) solid var(--color-border);
+		border-radius: var(--radius-4);
 	}
 
-	.fieldset-boxed > legend { padding-inline: var(--space-2); margin-inline-start: calc(var(--space-2) * -1); margin-block-end: 0; }
+	/* ── Floating label ────────────────────────────────────────────────────
+	   The label rides inside the control until there is something in it. A
+	   pill has room for this in a way a 34px box did not. */
 
-	/* ── .form — fields in a column, rows that pair, actions at the end ─────── */
+	.field-float { position: relative; display: block; inline-size: 100%; }
 
-	.form {
-		--form-gap: var(--space-5);
-		display: flex;
-		flex-direction: column;
-		gap: var(--form-gap);
-		min-width: 0;
+	.field-float > .input {
+		padding-block-start: calc(var(--input--padding-v) + 0.5rem);
+		padding-block-end: calc(var(--input--padding-v) - 0.25rem);
 	}
 
-	/* Side-by-side fields that stack when there is no room. auto-fit against
-	   a minimum does the stacking with no query: below two minimums the row
-	   collapses to one column by arithmetic. Lower --form-row-min for a
-	   three-up row. */
-	.form-row {
-		--form-row-min: 12rem;
-		display: grid;
-		gap: var(--form-gap, var(--space-5));
-		grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--form-row-min)), 1fr));
-		align-items: start;
-	}
-
-	.form-row-3 { --form-row-min: 8rem; }
-
-	/* Everything on one line: a filter bar, the subscribe form. Labels stay
-	   above their controls; the row aligns on the control's bottom edge. */
-	.form-inline {
-		flex-direction: row;
-		flex-wrap: wrap;
-		align-items: flex-end;
-		gap: var(--space-3);
-	}
-
-	.form-inline > .field { flex: 1 1 10rem; }
-	.form-inline > .btn { flex: none; }
-
-	/* Primary first, on the reading edge. */
-	.form__actions {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		gap: var(--space-2);
-	}
-
-	.form__actions-end { justify-content: flex-end; }
-
-	/* A hairline between groups of a long form. */
-	.form__divider { height: 0; margin: 0; border: 0; border-block-start: var(--border-hair) solid var(--line-subtle); }
-
-	/* ── .field__pop — the marks that answer a keystroke ───────────────────
-	   A subscribe field, a comment box, a search: the moment somebody starts
-	   typing, a small spray of marks leaves the field. It is the same idea as
-	   .btn-burst and it is here for the same reason — the one moment on a
-	   creator's page where a flourish is the point rather than a distraction.
-
-	   It fires on `:not(:placeholder-shown)`, which is CSS's way of asking
-	   "has anyone typed anything", so the field needs a `placeholder` in the
-	   markup for the selector to have anything to test. That is not a hack:
-	   a field with no placeholder has no empty state to detect.
-
-	       <label class="field">
-	         <span class="field__label">Email</span>
-	         <input class="input" type="email" placeholder="you@studio.tv" />
-	         <span class="field__pop" aria-hidden="true">
-	           <span style="--a: 60deg">…</span> …
-	         </span>
-	       </label>
-
-	   aria-hidden and pointer-events:none, because these are confetti. The
-	   field works identically with the whole block deleted. */
-	.field { position: relative; }
-
-	.field__pop {
+	.field-float > .field__label {
 		position: absolute;
 		inset-block-start: 50%;
-		inset-inline-end: var(--space-4);
-		inline-size: 0;
-		block-size: 0;
+		inset-inline-start: var(--input--padding-h);
+		color: var(--color-mute);
+		font-weight: var(--font-weight-regular);
+		translate: 0 -50%;
 		pointer-events: none;
+		transition: translate var(--dur-2) var(--ease-out),
+			font-size var(--dur-2) var(--ease-out),
+			color var(--dur-2) var(--ease-out);
 	}
 
-	.field__pop > * {
-		position: absolute;
-		display: grid;
-		place-items: center;
-		inline-size: 1.4rem;
-		block-size: 1.4rem;
-		margin: -0.7rem 0 0 -0.7rem;
-		border-radius: var(--radius-full);
-		background: var(--bg-surface);
-		color: var(--fg-accent);
-		box-shadow: var(--elevation-2);
-		opacity: 0;
-		scale: 0.4;
+	.field-float > .input:focus-visible + .field__label,
+	.field-float > .input:not(:placeholder-shown) + .field__label {
+		translate: 0 -1.35rem;
+		font-size: var(--font-x-small);
+		font-weight: var(--font-weight-medium);
+		color: var(--color-secondary);
 	}
 
-	.field__pop > * > .icon { --icon-size: 0.8rem; }
+	/* ── The alert a form answers with ─────────────────────────────────────── */
 
-	.field:has(.input:not(:placeholder-shown)) .field__pop > * {
-		animation: field-pop var(--dur-5) var(--ease-overshoot) both;
-	}
+	.form-alert { font-size: var(--font-small); }
+	.form-alert:not(.is-shown) { display: none; }
+	.form-alert .success { color: var(--color-success); }
+	.form-alert .error { color: var(--color-error); }
 
-	.field__pop > :nth-child(2) { animation-delay: 50ms; }
-	.field__pop > :nth-child(3) { animation-delay: 100ms; }
-	.field__pop > :nth-child(4) { animation-delay: 150ms; }
+	/* ── On a phone ────────────────────────────────────────────────────────
+	   1.025rem, and the reason is not taste: below 16px iOS Safari ZOOMS THE
+	   PAGE when a control takes focus, and the reader is left scrolled
+	   sideways in a form. Every full-width button too — a 120px button in a
+	   column of full-width fields is the odd one out. */
 
-	@keyframes field-pop {
-		0%   { opacity: 0; scale: 0.4; translate: 0 0; }
-		30%  { opacity: 1; scale: 1; }
-		100% { opacity: 0; scale: 0.7; translate: calc(cos(var(--a, 0deg)) * var(--d, 2.6rem)) calc(sin(var(--a, 0deg)) * var(--d, 2.6rem) * -1); }
-	}
+	@media (width < 33.75rem) {
+		.input,
+		.select,
+		.textarea {
+			padding-block: var(--spacing-5);
+			font-size: 1.025rem;
+		}
 
-	@media (prefers-reduced-motion: reduce) {
-		.field:has(.input:not(:placeholder-shown)) .field__pop > * { animation: none; }
+		.form .btn,
+		.form__actions .btn { inline-size: 100%; }
+		.form { padding-inline: var(--layout--padding); }
+		.input-group { flex-wrap: wrap; }
+		.input-group > .btn { inline-size: 100%; }
 	}
 }

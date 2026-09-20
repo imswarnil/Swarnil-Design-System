@@ -21,13 +21,3 @@
    be *drawn* rather than faded in. Registered because a conic or linear
    gradient stop cannot interpolate from a plain custom property. */
 @property --draw      { syntax: '<percentage>'; inherits: false; initial-value: 0%; }
-
-/* The intro's frame ratio. `aspect-ratio` is not animatable, so the shape
-   change when the picture becomes the film would jump. Registered with a
-   syntax the browser can interpolate, the frame TWEENS between its two
-   layouts and everything beside it re-flows continuously. */
-@property --intro-ratio {
-	syntax: '<number>';
-	inherits: true;
-	initial-value: 1;
-}
