@@ -52,6 +52,18 @@
 	--color-white: #fff;
 	--color-black: #000;
 
+	/* The surface names, as Tailwind utilities. `bg-canvas`, `bg-sunken`,
+	   `bg-muted` and `text-fg` are used across the documentation, and a
+	   utility only exists if a `--color-*` entry generates it — so these are
+	   aliases of the tokens above rather than a second set of values. */
+	--color-canvas:  var(--color-background);
+	--color-surface: var(--color-background);
+	--color-sunken:  var(--color-background-100);
+	--color-muted:   var(--color-background-200);
+	--color-media:   var(--color-background-200);
+	--color-inverse: var(--color-contrast);
+	--color-fg:      var(--color-contrast);
+
 	/* The accent, and the ink that reads on it. Ghost feeds Aspect this as
 	   `--ghost-accent-color`; here it is the system's one rationed colour and
 	   `data-accent` on <html> still repoints it. */
@@ -129,7 +141,11 @@
 	   dense end is finer than a 4px grid can be (2 and 6 both matter in a
 	   control), and the loose end jumps because a section gap is not four
 	   steps up from a chip's padding, it is a different KIND of distance. */
-	--spacing-*: initial;
+	/* Tailwind derives its whole numeric scale (`p-4`, `m-0`, `inset-0`,
+	   `gap-2`) from this one value. Clearing the namespace without it took
+	   `m-0` and `inset-0` out of the build entirely — which is how the class
+	   audit found this. Aspect's named steps sit alongside it below. */
+	--spacing: 0.25rem;
 	--spacing-1:  0.125rem;
 	--spacing-2:  0.25rem;
 	--spacing-3:  0.375rem;
@@ -144,7 +160,9 @@
 	--vertical-rhythm: 1.5rem;
 
 	/* ═══ RADIUS — NUMBERED, NOT NAMED ══════════════════════════════════════ */
-	--radius-*: initial;
+	/* Aspect's numbered radii, plus the t-shirt names Tailwind generates
+	   `rounded-*` from. Clearing the namespace removed `rounded-lg` and
+	   `rounded-md` from the build; both are used across the docs. */
 	--radius-1: 6px;
 	--radius-2: 8px;
 	--radius-3: 10px;
@@ -152,6 +170,11 @@
 	--radius-5: 16px;
 	--radius-6: clamp(16px, 1rem + 1.25vw, 30px);
 	--radius-full: 9999px;
+	--radius-sm: 4px;
+	--radius-md: var(--radius-1);
+	--radius-lg: var(--radius-3);
+	--radius-xl: var(--radius-5);
+	--radius-2xl: 24px;
 
 	/* ═══ LAYOUT ════════════════════════════════════════════════════════════ */
 	--layout--padding: clamp(16px, 0.7rem + 1.25vw, 30px);

@@ -71,11 +71,11 @@ Knobs: `--pattern-size`, `--pattern-angle`.
 ## The composition warning
 
 Every pattern paints on `::before`, and an element has exactly one. A pattern
-therefore **cannot share an element** with `.frame`, `.vf`, or anything else
-that spends its pseudo-elements. Put the pattern on a child or a parent — the
-same rule the frame page states from its side.
+therefore **cannot share an element** with anything else that spends its
+pseudo-elements — `.btn-live`'s record dot, an `[aria-busy]` spinner, a
+`.pop-arrow`. Put the pattern on a child or a parent.
 
-:::demo Pattern on a child, brackets on the parent — the legal composition
+:::demo Pattern on a child, the box on the parent — the legal composition
 <div class="ratio ratio-photo w-md relative rounded-lg hairline">
   <div class="pattern pattern-timecode absolute inset-0"></div>
 </div>

@@ -12,8 +12,8 @@
 
    COMPOSITION WARNING
    .btn-live spends ::before on its record dot and [aria-busy] spends ::after
-   on the spinner, so neither can also take .frame (which needs both). Use
-   .frame's corner spans, or pick one.
+   on the spinner, so a button already wearing either cannot also take a
+   .pattern. Pick one.
 
    Layer: components.
    ========================================================================== */
