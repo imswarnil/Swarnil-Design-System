@@ -12,15 +12,15 @@ difficulty. Everything else follows from it.
 
 :::demo `.card-video` — 16:9, a duration stamp, a play mark
 <div class="grid-3 cq-card">
-  <article class="card card-video card-hover-frame frame-hover">
+  <article class="card card-video">
     <div class="card__media"><img src="/assets/media/studio.jpg" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">24:07</span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
     <div class="card__body"><p class="card__kicker">Ep. 48 · Craft</p><h4 class="card__title"><a class="card__link" href="#i">Colour, in one block of tokens</a></h4><p class="card__facts"><span>18k views · 3 days ago</span></p></div>
   </article>
-  <article class="card card-video card-hover-frame frame-hover">
+  <article class="card card-video">
     <div class="card__media"><img src="/assets/media/city.jpg" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">18:30</span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
     <div class="card__body"><p class="card__kicker">Ep. 47 · Craft</p><h4 class="card__title"><a class="card__link" href="#i">The frame layer, explained</a></h4><p class="card__facts"><span>31k views · 1 week ago</span></p></div>
   </article>
-  <article class="card card-video card-hover-frame frame-hover">
+  <article class="card card-video">
     <div class="card__media"><img src="/assets/media/night.jpg" alt="" /><span class="veil veil-scrim veil-light"></span><span class="card__stamp">31:12</span><span class="card__play" aria-hidden="true"><svg class="icon icon-sm"><use href="/icons/sprite.svg#i-play"/></svg></span></div>
     <div class="card__body"><p class="card__kicker">Ep. 46 · Business</p><h4 class="card__title"><a class="card__link" href="#i">Why the thumbnail is the product</a></h4><p class="card__facts"><span>92k views · 2 weeks ago</span></p></div>
   </article>

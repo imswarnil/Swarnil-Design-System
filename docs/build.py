@@ -422,6 +422,11 @@ PAGE_TEMPLATES = [
      'A filterable index: facet column, order tabs, a results grid and pagination. The '
      'shape this site\'s own Components page takes.',
      ['Navbar', 'Page header', 'Filter & facets', 'Results', 'Card', 'Pagination']),
+    ('sections', 'Sections',
+     'Every section the system ships, in the order a page would use them, one after '
+     'another on one page \u2014 the personal hero, the product hero, stats, cards, a '
+     'carousel, pricing and a call to action.',
+     ['Intro', 'Hero', 'Stats', 'Card', 'Carousel', 'Pricing', 'CTA', 'Footer', 'Social']),
     ('app', 'Application shell',
      'Bar, navigation column, content and rail, on the .shell pattern — every metric '
      'derived from --bar-h so the four regions cannot disagree.',
@@ -470,6 +475,16 @@ def wireframe(kind):
             '<rect x="103" y="32" width="47" height="30" rx="3" fill="var(--bg-muted)"/>'
             '<rect x="50" y="68" width="47" height="30" rx="3" fill="var(--bg-muted)"/>'
             '<rect x="103" y="68" width="47" height="30" rx="3" fill="var(--bg-muted)"/>'),
+        'sections': (
+            '<rect x="10" y="18" width="140" height="30" rx="3" fill="var(--bg-muted)"/>'
+            '<rect x="16" y="24" width="40" height="5" rx="2" fill="var(--accent)"/>'
+            '<rect x="16" y="33" width="58" height="4" rx="2" fill="var(--fg-faint)"/>'
+            '<rect x="112" y="22" width="32" height="22" rx="2" fill="var(--bg-sunken)"/>'
+            '<rect x="10" y="54" width="140" height="10" rx="2" fill="var(--bg-sunken)"/>'
+            '<rect x="10" y="70" width="43" height="14" rx="3" fill="var(--bg-muted)"/>'
+            '<rect x="59" y="70" width="43" height="14" rx="3" fill="var(--bg-muted)"/>'
+            '<rect x="108" y="70" width="42" height="14" rx="3" fill="var(--bg-muted)"/>'
+            '<rect x="10" y="90" width="140" height="8" rx="2" fill="var(--bg-muted)"/>'),
         'app': (
             '<rect x="0" y="14" width="34" height="86" fill="var(--bg-sunken)"/>'
             '<rect x="6" y="22" width="22" height="3" rx="1.5" fill="var(--accent)"/>'

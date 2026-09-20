@@ -102,8 +102,7 @@ conflict.
 
 :::demo
 <section class="bg-glow bg-noise pattern pattern-grid pattern-fade rounded-lg hairline" style="padding: var(--space-10)">
-  <div class="frame frame-sm" style="padding: var(--space-6)">
-    <span class="frame__tr"></span><span class="frame__bl"></span>
+  <div class="" style="padding: var(--space-6)">
     <p class="eyebrow mb-3">Episode 48</p>
     <h3 class="t-h2 m-0">Light, lines, and a frame — on one element each.</h3>
   </div>

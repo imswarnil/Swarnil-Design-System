@@ -353,28 +353,44 @@ of what makes a deck look tidy. `card__footer-plain` drops the rule;
 
 ## Hover answers
 
-One hover answer per card: `card-hover-lift` **or** `card-hover-frame frame-hover`,
-never both. A card that lifts and brackets is a card that cannot decide what
-it is.
+**House rule 7: hover changes colour and nothing else.** No lift, no shadow,
+no scale. A grid of twelve cards that each rise under the cursor is a page of
+twitching rectangles, and every one of them is animating a claim about its own
+importance that it cannot back up.
 
-:::demo Lift, and the camcorder frame — one class to toggle each
+`card-hover` is the answer: the surface steps one shade, and the title takes
+the link-hover colour. It costs no layout, so it cannot cause a reflow, and it
+reads the same on a phone where there is no hover at all.
+
+:::demo The house hover
 <div class="cluster cluster-top">
-  <article class="card card-hover-lift w-sm">
+  <article class="card card-hover w-sm">
     <div class="card__media pattern pattern-dot"></div>
     <div class="card__body">
-      <p class="card__kicker">Lift</p>
-      <h3 class="card__title"><a class="card__link" href="#i">Rises three pixels</a></h3>
+      <p class="card__kicker">Hover, or tab to it</p>
+      <h3 class="card__title"><a class="card__link" href="#i">The surface steps up</a></h3>
+      <p class="card__excerpt">One shade, and the title colours. Nothing moves.</p>
     </div>
   </article>
-  <article class="card card-hover-frame frame-hover w-sm">
+  <article class="card w-sm">
+    <div class="card__media pattern pattern-line"></div>
     <div class="card__body">
-      <p class="card__kicker">Hover, or tab to it</p>
-      <h3 class="card__title"><a class="card__link" href="#i">The viewfinder finds it</a></h3>
-      <p class="card__excerpt">Brackets close in; nothing lifts.</p>
+      <p class="card__kicker">No hover</p>
+      <h3 class="card__title"><a class="card__link" href="#i">A card that is not a link</a></h3>
+      <p class="card__excerpt">If the whole card is not clickable, it should not respond as if it were.</p>
     </div>
   </article>
 </div>
 :::
+
+`card-hover-lift` still exists and still lifts. It is **off the house style**,
+kept only because it is a public class and removing it would break consumers
+silently. Nothing in this repo uses it.
+
+⚠️ **The camcorder brackets are gone.** `card-hover-frame`, `frame-hover` and
+the whole `.frame` layer were deleted on 2026-09-20 — the corner marks were
+the one piece of this system that decorated rather than communicated, and they
+appeared on cards that had nothing to do with a camera.
 
 ## Emphasis
 
@@ -474,18 +490,18 @@ a custom property the host sets.
 ## The texture slot
 
 A [pattern](/pattern.html) paints on `::before`, and so does
-[`.frame`](/frame.html); a card carrying both loses one of them silently. So the
+[`.frame`](/card.html); a card carrying both loses one of them silently. So the
 card takes its texture as a **child**, the way it takes a [veil](/overlays.html)
 — which also means the pattern can be masked back from the words without
 touching the card's own background.
 
 :::demo `.card__pattern` composes with any `pattern-*`
 <div class="grid-3 cq-card">
-  <article class="card card-link card-hover-frame frame-hover">
+  <article class="card card-link">
     <span class="card__pattern pattern pattern-grid" aria-hidden="true"></span>
     <div class="card__body"><span class="card__icon"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-code"/></svg></span><div><h3 class="card__title"><a class="card__link" href="#i">Code</a></h3><p class="card__excerpt">A grid, faded back before it reaches the words.</p></div><svg class="icon icon-sm card__arrow" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-right"/></svg></div>
   </article>
-  <article class="card card-link card-hover-frame frame-hover">
+  <article class="card card-link">
     <span class="card__pattern pattern pattern-scan" aria-hidden="true"></span>
     <div class="card__body"><span class="card__icon"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-video"/></svg></span><div><h3 class="card__title"><a class="card__link" href="#i">Video</a></h3><p class="card__excerpt">Scanlines — the tape, on a card.</p></div><svg class="icon icon-sm card__arrow" aria-hidden="true"><use href="/icons/sprite.svg#i-arrow-right"/></svg></div>
   </article>

@@ -18,6 +18,5 @@
 @import "./07-pattern.css";     /* CSS-only textures                     */
 @import "./08-a11y.css";        /* focus, skip, sr-only, forced colours  */
 @import "./09-shape.css";       /* radii, borders, dots, z-ladder        */
-@import "./10-frame.css";       /* brackets, viewfinder, window chrome   */
 @import "./11-icon.css";        /* icon grid, sizes, alignment           */
 @import "./12-background.css";  /* glows, aurora, spot, grain — the ground  */
