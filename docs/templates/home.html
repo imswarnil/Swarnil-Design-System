@@ -22,9 +22,10 @@ try {
 } catch (e) { document.documentElement.dataset.theme = 'light'; }
 </script>
 
-<!-- Self-hosted, variable, latin-only preload: the one face every page paints
-     with. Mono and latin-ext load on demand from fonts.css. -->
-<link rel="preload" href="/assets/fonts/inter-100-900-latin.woff2" as="font" type="font/woff2" crossorigin />
+<!-- Self-hosted and variable: one file covers 100–900, so the 300 data voice
+     and the 700 headline are the same download. Mono and the three Pixel cuts
+     load on demand from fonts.css. -->
+<link rel="preload" href="/assets/fonts/geist-variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="/assets/fonts.css{v}" />
 
 <!-- ONE STYLESHEET. Tailwind, daisyUI, the system, the broadcast layer and
@@ -54,12 +55,7 @@ try {
     <span class="brand__sub">Design System</span>
   </a>
 
-  <nav class="bar__nav" aria-label="Primary">
-    <a class="barlink" href="/introduction.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-file"/></svg>Docs</a>
-    <a class="barlink" href="/principles.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-bookmark"/></svg>Principles</a>
-    <a class="barlink" href="/install.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-box"/></svg>Install</a>
-    <a class="barlink" href="/icons.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-capture"/></svg>Icons</a>
-  </nav>
+  <nav class="bar__nav" aria-label="Primary">{barnav}</nav>
 
   <div class="bar__end">
     <button class="themebtn" type="button" data-theme-toggle aria-label="Switch theme">

@@ -13,3 +13,4 @@
 @import "./56-chat.css";   /* the transcript — human and machine       */
 @import "./57-kit.css";        /* the gear list — what I actually use      */
 @import "./58-results.css";    /* a collection body, in grid or in list    */
+@import "./59-shell.css";      /* bar + nav + content + rail — the app layout */

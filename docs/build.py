@@ -398,6 +398,210 @@ def nav_html(pages, current):
     return ''.join(parts)
 
 
+# The top bar's four destinations. `match` is the set of slugs that light the
+# item up — a section, not a page, because "Docs" is current on all seventy of
+# them. Kept here rather than in the template so the active state is computed
+# once and cannot drift between the two shells.
+# ── Templates ──────────────────────────────────────────────────────────────
+# Whole pages, built from the system and served from site/t/. They are real
+# pages, not pictures of pages: same stylesheet, same components, no <style>
+# block anywhere in them. The gallery on /templates.html is generated from
+# this list, so a template cannot be in one place and missing from the other.
+PAGES_DIR = DOCS / 'pages'
+
+PAGE_TEMPLATES = [
+    ('landing', 'Landing page',
+     'Hero, stats, a card grid, pricing, a call to action and a footer — the shape a '
+     'project page takes when it has one thing to say and a table to prove it.',
+     ['Navbar', 'Hero', 'Stats', 'Card', 'Pricing', 'CTA', 'Footer']),
+    ('article', 'Article',
+     'A reading column at --width-read with a contents rail beside it, a masthead above, '
+     'a share row and a related shelf under.',
+     ['Navbar', 'Masthead', 'Article', 'Table of contents', 'Share', 'Card']),
+    ('collection', 'Collection',
+     'A filterable index: facet column, order tabs, a results grid and pagination. The '
+     'shape this site\'s own Components page takes.',
+     ['Navbar', 'Page header', 'Filter & facets', 'Results', 'Card', 'Pagination']),
+    ('app', 'Application shell',
+     'Bar, navigation column, content and rail, on the .shell pattern — every metric '
+     'derived from --bar-h so the four regions cannot disagree.',
+     ['Shell', 'Navbar', 'Navigation', 'Stats', 'Alert', 'Table', 'Build log']),
+]
+
+
+def wireframe(kind):
+    """A drawn thumbnail, in system tokens so it follows the theme.
+
+    NOT an iframe of the page. Twelve iframes at 380px produced twelve
+    pictures in which nothing was legible — the previous version of this page
+    did exactly that. At thumbnail size a wireframe communicates MORE than a
+    screenshot does: "bar, nav left, cards right" is the thing a reader is
+    comparing, and it survives being 320px wide.
+    """
+    bar = '<rect x="0" y="0" width="160" height="10" rx="2" fill="var(--bg-muted)"/>'
+    parts = {
+        'landing': (
+            '<rect x="10" y="18" width="62" height="8" rx="2" fill="var(--fg-faint)"/>'
+            '<rect x="10" y="30" width="46" height="4" rx="2" fill="var(--line-strong)"/>'
+            '<rect x="10" y="38" width="30" height="7" rx="3" fill="var(--accent)"/>'
+            '<rect x="88" y="18" width="62" height="34" rx="3" fill="var(--bg-muted)"/>'
+            '<rect x="10" y="58" width="140" height="12" rx="2" fill="var(--bg-sunken)"/>'
+            '<rect x="10" y="76" width="43" height="24" rx="3" fill="var(--bg-muted)"/>'
+            '<rect x="59" y="76" width="43" height="24" rx="3" fill="var(--bg-muted)"/>'
+            '<rect x="108" y="76" width="42" height="24" rx="3" fill="var(--bg-muted)"/>'),
+        'article': (
+            '<rect x="10" y="18" width="86" height="7" rx="2" fill="var(--fg-faint)"/>'
+            '<rect x="10" y="30" width="96" height="3" rx="1.5" fill="var(--line-strong)"/>'
+            '<rect x="10" y="38" width="96" height="3" rx="1.5" fill="var(--line-strong)"/>'
+            '<rect x="10" y="46" width="72" height="3" rx="1.5" fill="var(--line-strong)"/>'
+            '<rect x="10" y="56" width="96" height="22" rx="3" fill="var(--bg-muted)"/>'
+            '<rect x="10" y="84" width="96" height="3" rx="1.5" fill="var(--line-strong)"/>'
+            '<rect x="10" y="92" width="60" height="3" rx="1.5" fill="var(--line-strong)"/>'
+            '<rect x="118" y="18" width="32" height="3" rx="1.5" fill="var(--accent)"/>'
+            '<rect x="118" y="26" width="32" height="3" rx="1.5" fill="var(--line-default)"/>'
+            '<rect x="118" y="34" width="26" height="3" rx="1.5" fill="var(--line-default)"/>'),
+        'collection': (
+            '<rect x="10" y="18" width="54" height="7" rx="2" fill="var(--fg-faint)"/>'
+            '<rect x="10" y="32" width="34" height="68" rx="3" fill="var(--bg-sunken)"/>'
+            '<rect x="14" y="38" width="22" height="3" rx="1.5" fill="var(--accent)"/>'
+            '<rect x="14" y="46" width="26" height="3" rx="1.5" fill="var(--line-default)"/>'
+            '<rect x="14" y="54" width="20" height="3" rx="1.5" fill="var(--line-default)"/>'
+            '<rect x="50" y="32" width="47" height="30" rx="3" fill="var(--bg-muted)"/>'
+            '<rect x="103" y="32" width="47" height="30" rx="3" fill="var(--bg-muted)"/>'
+            '<rect x="50" y="68" width="47" height="30" rx="3" fill="var(--bg-muted)"/>'
+            '<rect x="103" y="68" width="47" height="30" rx="3" fill="var(--bg-muted)"/>'),
+        'app': (
+            '<rect x="0" y="14" width="34" height="86" fill="var(--bg-sunken)"/>'
+            '<rect x="6" y="22" width="22" height="3" rx="1.5" fill="var(--accent)"/>'
+            '<rect x="6" y="30" width="22" height="3" rx="1.5" fill="var(--line-default)"/>'
+            '<rect x="6" y="38" width="18" height="3" rx="1.5" fill="var(--line-default)"/>'
+            '<rect x="6" y="50" width="22" height="3" rx="1.5" fill="var(--line-default)"/>'
+            '<rect x="42" y="22" width="48" height="6" rx="2" fill="var(--fg-faint)"/>'
+            '<rect x="42" y="34" width="80" height="16" rx="3" fill="var(--bg-muted)"/>'
+            '<rect x="42" y="56" width="80" height="44" rx="3" fill="var(--bg-muted)"/>'
+            '<rect x="130" y="22" width="24" height="3" rx="1.5" fill="var(--accent)"/>'
+            '<rect x="130" y="30" width="24" height="3" rx="1.5" fill="var(--line-default)"/>'),
+    }
+    return (f'<svg class="tplcard__wire" viewBox="0 0 160 100" role="img" '
+            f'aria-label="Wireframe of the {kind} template">'
+            f'<rect x="0" y="0" width="160" height="100" fill="var(--bg-canvas)"/>'
+            f'{bar}{parts.get(kind, "")}</svg>')
+
+
+def templates_html():
+    cards = []
+    for slug, title, blurb, uses in PAGE_TEMPLATES:
+        chips = ''.join(f'<span class="tplcard__use">{html.escape(u)}</span>' for u in uses)
+        cards.append(
+            f'<article class="tplcard">'
+            f'<a class="tplcard__shot" href="/t/{slug}.html">'
+            f'<span class="tplcard__chrome" aria-hidden="true">'
+            f'<span></span><span></span><span></span>'
+            f'<span class="tplcard__url">/t/{slug}.html</span></span>'
+            f'{wireframe(slug)}</a>'
+            f'<div class="tplcard__body">'
+            f'<h3 class="tplcard__title"><a href="/t/{slug}.html">{html.escape(title)}</a></h3>'
+            f'<p class="tplcard__lead">{html.escape(blurb)}</p>'
+            f'<div class="tplcard__uses">{chips}</div>'
+            f'<a class="btn btn-outline btn-sm" href="/t/{slug}.html">Open full page</a>'
+            f'</div></article>')
+    return f'<div class="tplgrid">{"".join(cards)}</div>'
+
+
+BAR_NAV = [
+    ('Docs', '/introduction.html', 'file', None),
+    ('Components', '/components.html', 'box', {'components'}),
+    ('Templates', '/templates.html', 'folder', {'templates'}),
+    ('Contribute', '/contribute.html', 'heart', {'contribute'}),
+]
+
+
+def bar_nav_html(current):
+    """The primary bar, with the active item marked.
+
+    `Docs` is the fallback: anything that is not one of the three named pages
+    is documentation, so the bar always has exactly one item lit. A bar with
+    nothing current reads as broken, and a bar with two reads as a bug.
+    """
+    named = {s for _, _, _, m in BAR_NAV if m for s in m}
+    out = []
+    for label, href, icon, match in BAR_NAV:
+        on = (current in match) if match else (current not in named)
+        out.append(
+            f'<a class="barlink" href="{href}"'
+            f'{" aria-current=\"page\"" if on else ""}>'
+            f'<svg class="icon icon-sm" aria-hidden="true">'
+            f'<use href="/icons/sprite.svg#i-{icon}"/></svg>{label}</a>')
+    return ''.join(out)
+
+
+def index_html(pages, groups):
+    """The card index that `{{index:Group,Group}}` expands to.
+
+    A documentation site that only has a sidebar makes you already know the
+    name of the thing you are looking for. This is the other way in: every
+    component on one page, as a card with its one-line lead, filterable by
+    name and re-orderable into a flat A–Z list.
+
+    The data is the SAME front matter the sidebar is built from — there is no
+    second list to keep in step, which is the only reason this can be trusted
+    to stay complete. Add a page with `group: Components` and its card appears
+    here on the next build, with no edit to this file or to components.md.
+    """
+    wanted = [g.strip() for g in groups.split(',') if g.strip()]
+    items = [p for p in pages if p.get('group') in wanted]
+    items.sort(key=lambda p: p['title'].lower())
+
+    if not items:
+        return ''
+
+    cards = []
+    for it in items:
+        lead = it.get('lead', '')
+        # The first sentence is the card's job; the rest belongs on the page.
+        short = lead.split('. ')[0].rstrip('.') + '.' if lead else ''
+        cards.append(
+            f'<a class="xcard" href="/{it["slug"]}.html" '
+            f'data-name="{html.escape(it["title"].lower())}" '
+            f'data-group="{html.escape(it.get("group", ""))}" '
+            f'data-letter="{html.escape(it["title"][0].upper())}">'
+            f'<span class="xcard__letter" aria-hidden="true">'
+            f'{html.escape(it["title"][0].upper())}</span>'
+            f'<span class="xcard__body">'
+            f'<span class="xcard__title">{html.escape(it["title"])}</span>'
+            f'<span class="xcard__lead">{html.escape(short)}</span>'
+            f'</span>'
+            f'<span class="xcard__group">{html.escape(it.get("group", ""))}</span>'
+            f'</a>')
+
+    chips = ''
+    if len(wanted) > 1:
+        chips = ''.join(
+            f'<button class="xchip" type="button" data-index-group="{html.escape(g)}">'
+            f'{html.escape(g)}</button>' for g in wanted)
+        chips = (f'<button class="xchip is-on" type="button" data-index-group="all">All</button>'
+                 f'{chips}')
+
+    return (
+        '<div class="xindex" data-index>'
+        '<div class="xindex__bar">'
+        '<label class="xindex__search">'
+        '<svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-search"/></svg>'
+        '<span class="sr-only">Filter components by name</span>'
+        '<input type="search" placeholder="Filter by name…" autocomplete="off" data-index-search>'
+        '</label>'
+        f'<div class="xindex__chips">{chips}</div>'
+        '<div class="xindex__sort" role="group" aria-label="Order">'
+        '<button class="xchip is-on" type="button" data-index-sort="az">A–Z</button>'
+        '<button class="xchip" type="button" data-index-sort="group">By group</button>'
+        '</div>'
+        f'<p class="xindex__count" data-index-count>{len(items)} components</p>'
+        '</div>'
+        f'<div class="xindex__grid" data-index-grid>{"".join(cards)}</div>'
+        '<p class="xindex__empty" data-index-empty hidden>Nothing matches that name.</p>'
+        '</div>')
+
+
 def toc_html(toc):
     """The table of contents: a heading and a list of links.
 
@@ -424,6 +628,14 @@ def bundle_size():
 
 def build_page(page, pages, shell):
     body, toc = render(page['body'])
+
+    # `{{index:Components}}` in a page becomes the generated card index. Done
+    # here rather than in render() because only this function can see `pages`.
+    for m in set(re.findall(r'\{\{index:([^}]+)\}\}', body)):
+        body = body.replace('{{index:' + m + '}}', index_html(pages, m))
+
+    if '{{templates}}' in body:
+        body = body.replace('{{templates}}', templates_html())
     lead = (f'<p class="lead">{inline(page["lead"])}</p>' if page.get('lead') else '')
     # The home page is not in the doc sequence, so it has no neighbours.
     slugs = [p['slug'] for p in pages]
@@ -462,6 +674,7 @@ def build_page(page, pages, shell):
         ),
         'v': V,
         'nav': nav_html(pages, page['slug']),
+        'barnav': bar_nav_html(page['slug']),
         'toc': toc_html(toc),
         'lead': lead,
         'body': body,
@@ -560,6 +773,31 @@ def main():
     else:
         print('  warning: docs/icons/sprite.svg missing — icons will not render')
 
+    # ── The template pages ────────────────────────────────────────────────
+    # Real pages, wrapped in a shell that adds only a "back to templates" bar.
+    # They link the SAME site.min.css the docs run on, which is the whole
+    # point: a template is the system arranged, not a mock-up with its own CSS.
+    tpl_shell = (PAGES_DIR / '_shell.html').read_text()
+    (OUT / 't').mkdir(exist_ok=True)
+    built = 0
+    for slug, title, blurb, uses in PAGE_TEMPLATES:
+        src = PAGES_DIR / f'{slug}.html'
+        if not src.exists():
+            print(f'  warning: docs/pages/{slug}.html missing — listed but not built')
+            continue
+        out = tpl_shell
+        for k, v in {
+            'title': html.escape(title),
+            'name': NAME,
+            'blurb': html.escape(blurb),
+            'uses': html.escape(' · '.join(uses)),
+            'body': src.read_text(),
+            'v': V,
+        }.items():
+            out = out.replace('{' + k + '}', v)
+        (OUT / 't' / f'{slug}.html').write_text(out)
+        built += 1
+
     (OUT / '.nojekyll').write_text('')
     (OUT / 'CNAME').write_text(SITE.split('//')[1] + '\n')
     (OUT / 'robots.txt').write_text(f'User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n')
@@ -572,7 +810,8 @@ def main():
         [{'t': p['title'], 'g': p['group'], 'u': f'/{p["slug"]}.html', 'd': p['lead']}
          for p in docs], separators=(',', ':')))
 
-    print(f'built {len(docs)} doc pages{" + home" if home else ""} -> site/')
+    print(f'built {len(docs)} doc pages{" + home" if home else ""}'
+          f' + {built} templates -> site/')
 
 
 if __name__ == '__main__':

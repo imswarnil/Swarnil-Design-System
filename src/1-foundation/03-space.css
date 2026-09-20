@@ -32,6 +32,25 @@
 		/* Page gutters grow with the viewport; content width does not. */
 		--gutter: clamp(1rem, 0.6rem + 1.8vw, 2.5rem);
 
+		/* ── THE FOUR HALF-STEPS ───────────────────────────────────────────
+		   The ladder above is a 4px grid, and a 4px grid cannot express the
+		   four gaps that a dense UI actually needs: the hairline between two
+		   stacked rows, the gap inside a chip, the gap between an icon and
+		   its label, and the step between a section's heading and its body.
+
+		   They are NOT numbered, deliberately. `--space-1.5` would invite a
+		   `--space-2.5` next week and the ladder would stop being a ladder.
+		   Named for the job, four of them, and the list is closed. */
+		--gap-hair:  0.125rem;   /*  2px · stacked rows, nothing else */
+		--gap-tight: 0.375rem;   /*  6px · inside a chip or a badge */
+		--gap-snug:  0.625rem;   /* 10px · an icon and its label */
+		--gap-block: 1.875rem;   /* 30px · a section head and its content */
+
+		/* The distance between two SECTIONS of a page. Fluid, because the
+		   whole point of a section gap is that it is the largest rhythm on
+		   the page and it should grow with the window. */
+		--gap-section: clamp(3.75rem, 2.9rem + 3.8vw, 5rem);   /* 60 → 80 */
+
 		/* ── Breakpoints — PAGE layout only ────────────────────────────────
 		   Five, and the contract matters more than the numbers: a media query
 		   may only decide PAGE topology — a sidebar appearing, a nav

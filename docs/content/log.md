@@ -35,7 +35,7 @@ accent.
     </div>
     <div class="release__body">
       <h3 class="release__title">The data voice</h3>
-      <p>Timecodes, counts and dimensions leave monospace for Inter with tabular figures. Mono is code only, and CI now fails on anything else.</p>
+      <p>Timecodes, counts and dimensions leave monospace for Geist with tabular figures. Mono is code only, and CI now fails on anything else.</p>
     </div>
   </article>
   <article class="release">

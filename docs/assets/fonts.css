@@ -1,81 +1,88 @@
 /* =============================================================================
-   SELF-HOSTED FONTS — two families, because display is not a third face
+   FONTS — three families, self-hosted, SIL OFL
 
-   Inter sets display, body, labels and data alike; --font-display is an alias
-   of --font-body, so a headline and a paragraph come from the same bytes and
-   differ only by weight, size and tracking. Nothing here ships Space Grotesk.
+   Geist (Vercel, v1.8.0) replaced Inter + IBM Plex Mono on 2026-09-19. All
+   three faces come from the one official package, under the SIL Open Font
+   Licence 1.1 — OFL.txt sits beside the files in this folder.
 
-   Inter ships as a VARIABLE font: one file per subset covers every weight, so
-   the 300 data voice and the 700 headline are the same download. Plex Mono
-   ships as two statics, and appears only on code. Latin + latin-ext only.
+     Geist          --font-sans     display, body, labels, data
+     Geist Mono     --font-mono     code, and only code
+     Geist Pixel    --font-pixel    the mark, the take, the 404 — never a
+                                    sentence, and never below 24px
 
-   Self-hosted because a third-party font is a render dependency on someone
-   else's uptime, a privacy leak (every visit pings Google), and — since
-   browsers partitioned cache by site — not even a cache win any more. The
-   files live here, versioned with everything else.
+   ── WHY ONE FAMILY DOES DISPLAY AND BODY ──────────────────────────────────
+   Unchanged from the Inter argument: a second family changes the FLAVOUR of a
+   headline without changing what it communicates, and costs another file on
+   the critical path, another FOUT to sequence, and a headline whose metrics
+   no longer match the paragraph under it. Size and tracking make a headline.
 
-   font-display: swap — text renders in the metric-close system stack and
+   ── WHY PIXEL IS A THIRD FACE ANYWAY ──────────────────────────────────────
+   Because it is not a voice, it is a MARK. It appears where the system is
+   signing its own name — the brand lockup, the section "take", an error
+   number — and never in running text. Three of the five Pixel cuts ship here
+   (Square, Circle, Line); Grid and Triangle are in the package if a display
+   moment ever needs them.
+
+   ── VARIABLE, SO WEIGHT IS FREE ───────────────────────────────────────────
+   Geist and Geist Mono ship as one variable file each, 100–900. The 300 data
+   voice and the 700 headline are the same download, so `--weight-*` can be
+   used without counting requests.
+
+   `font-display: swap` — text paints in the metric-close system stack and
    swaps when the face arrives.
    ========================================================================== */
 
-/* IBM Plex Mono · 400 · latin-ext */
+/* ── Geist · 100–900 · upright ──────────────────────────────────────────── */
 @font-face {
-  font-family: 'IBM Plex Mono';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('/assets/fonts/ibmplexmono-400-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+	font-family: 'Geist';
+	font-style: normal;
+	font-weight: 100 900;
+	font-display: swap;
+	src: url('/assets/fonts/geist-variable.woff2') format('woff2-variations');
 }
 
-/* IBM Plex Mono · 400 · latin */
+/* ── Geist · 100–900 · italic ───────────────────────────────────────────── */
 @font-face {
-  font-family: 'IBM Plex Mono';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('/assets/fonts/ibmplexmono-400-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+	font-family: 'Geist';
+	font-style: italic;
+	font-weight: 100 900;
+	font-display: swap;
+	src: url('/assets/fonts/geist-italic-variable.woff2') format('woff2-variations');
 }
 
-/* IBM Plex Mono · 500 · latin-ext */
+/* ── Geist Mono · 100–900 ───────────────────────────────────────────────── */
 @font-face {
-  font-family: 'IBM Plex Mono';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url('/assets/fonts/ibmplexmono-500-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+	font-family: 'Geist Mono';
+	font-style: normal;
+	font-weight: 100 900;
+	font-display: swap;
+	src: url('/assets/fonts/geist-mono-variable.woff2') format('woff2-variations');
 }
 
-/* IBM Plex Mono · 500 · latin */
+/* ── Geist Pixel · three cuts ─────────────────────────────────────────────
+   Not a weight axis — three different DRAWINGS of the same alphabet. They are
+   separate families on purpose, so nothing can ask for "Geist Pixel bold" and
+   silently get a synthesised smear of a bitmap face. */
 @font-face {
-  font-family: 'IBM Plex Mono';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url('/assets/fonts/ibmplexmono-500-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+	font-family: 'Geist Pixel Square';
+	font-style: normal;
+	font-weight: 400;
+	font-display: block;   /* a mark that swaps in late looks broken */
+	src: url('/assets/fonts/geist-pixel-square.woff2') format('woff2');
 }
 
-/* Inter · 100-900 · latin-ext */
 @font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url('/assets/fonts/inter-100-900-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+	font-family: 'Geist Pixel Circle';
+	font-style: normal;
+	font-weight: 400;
+	font-display: block;
+	src: url('/assets/fonts/geist-pixel-circle.woff2') format('woff2');
 }
 
-/* Inter · 100-900 · latin */
 @font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url('/assets/fonts/inter-100-900-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+	font-family: 'Geist Pixel Line';
+	font-style: normal;
+	font-weight: 400;
+	font-display: block;
+	src: url('/assets/fonts/geist-pixel-line.woff2') format('woff2');
 }
-
-
