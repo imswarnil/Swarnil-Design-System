@@ -771,6 +771,10 @@ def main():
     # nav.js is the system's own, but the site serves everything it loads from
     # one place, so /src/ does not have to exist in production.
     shutil.copy(ROOT / 'src' / 'js' / 'nav.js', OUT / 'assets' / 'nav.js')
+    # Copied from src/ rather than kept in docs/assets/, for the same reason
+    # nav.js is: two copies of a script are two scripts, and the one the site
+    # serves is the one that quietly stops matching the one that ships.
+    shutil.copy(ROOT / 'src' / 'js' / 'intro.js', OUT / 'assets' / 'intro.js')
 
     # dist/ is published so /install.html can point at a real file and a reader
     # can see the bundle they are about to link.

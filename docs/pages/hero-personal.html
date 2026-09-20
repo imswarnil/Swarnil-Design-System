@@ -1,11 +1,10 @@
 <!-- ═══ THE PERSONAL HERO, ON ITS OWN ══════════════════════════════════════
      One section, nothing else — the page a docs link opens so you can see it
-     at full width, resize it, switch the theme and read the source. The
-     picture is a placeholder; drop an <img> into .intro__frame and nothing
-     else changes. -->
+     at full width, resize it, switch the theme and press play. The picture is
+     a placeholder; drop an <img> into .intro__still and nothing else changes. -->
 
 <div class="center" style="padding-block: var(--spacing-9)">
-    <div class="intro">
+    <div class="intro" data-video="ecOkmTD7KhU">
       <div class="intro__wash" aria-hidden="true">
         <div class="intro__mask"><div class="intro__mesh"></div></div>
         <div class="intro__grain"></div>
@@ -65,10 +64,13 @@
         </div>
 
         <div class="intro__media">
-          <figure class="intro__frame pattern pattern-dot"></figure>
+          <figure class="intro__frame">
+            <div class="intro__still pattern pattern-dot"></div>
+            <div class="intro__stage"></div>
+          </figure>
 
           <div class="intro__rail">
-            <button class="intro__play" type="button" aria-label="Watch video" data-tip="Watch video" data-tip-place="start">
+            <button class="intro__play" type="button" aria-label="Watch video" data-tip="Watch video" data-tip-place="start" data-label-watch="Watch video" data-label-close="Close video">
               <svg class="icon icon-play" aria-hidden="true"><use href="/icons/sprite.svg#i-play"/></svg>
               <svg class="icon icon-close" aria-hidden="true"><use href="/icons/sprite.svg#i-x"/></svg>
             </button>

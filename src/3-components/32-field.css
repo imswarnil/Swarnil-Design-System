@@ -111,27 +111,79 @@
 
 	/* ── .input — text, email, number, date, search, file, textarea ────────── */
 
+	/* ── RE-CUT 2026-09-20 on Aspect's model ───────────────────────────────
+	   THE INPUT HAS NO BORDER. It is a filled pill on
+	   `--color-background-100`, 48px tall, 24px radius.
+
+	   That is the change, and it is the reason Aspect's forms look like one
+	   thing. A bordered input is a box you have to draw; a filled one is a
+	   WELL you drop into, and a well needs no line because the tone already
+	   says where it starts and stops. It also means an input and a button
+	   sitting side by side are two fills rather than a fill and an outline,
+	   which is what made this system's forms look assembled from two kits.
+
+	   Everything that used to be carried by the border colour is now carried
+	   by the FILL:
+
+	     rest      --color-background-100
+	     hover     --color-background-200
+	     focus     an outline, offset, plus the fill stepping up
+	     readonly  the fill drops back and the text greys
+	     invalid   the fill tints, and the outline turns on at rest
+
+	   `--input-line` survives for `.input-bordered`, which is the way back
+	   for a control that genuinely has to read as a container — a table cell
+	   editor, a control on an already-filled surface. */
 	.input {
-		--input-h: var(--field-h, 2.125rem);
-		--input-bg: var(--bg-surface);
-		--input-line: var(--line-default);
-		--input-pad: var(--space-3);
+		--input-h: var(--field-h, var(--input--min-height));
+		--input-bg: var(--color-background-100);
+		--input-bg-hover: var(--color-background-200);
+		--input-line: transparent;
+		--input-pad: var(--input--padding-h);
+		--input-radius: calc(var(--input--min-height) * 0.5);
+
+		display: block;
 		width: 100%;
-		height: var(--input-h);
+		min-height: var(--input-h);
+		padding-block: var(--input--padding-v);
 		padding-inline: var(--input-pad);
+		appearance: none;
 		background: var(--input-bg);
 		border: var(--border-hair) solid var(--input-line);
-		border-radius: var(--radius-control);
-		color: var(--fg-default);
-		font-size: var(--field-text, var(--text-sm));
-		transition: var(--t-colors), var(--t-shadow);
+		border-radius: var(--input-radius);
+		color: var(--color-contrast);
+		font-family: var(--font-family-body);
+		font-size: var(--field-text, var(--font-small));
+		font-weight: var(--font-weight-medium);
+		transition: var(--t-colors);
 	}
 
-	.input::placeholder { color: var(--fg-faint); }
-	.input:hover { --input-line: var(--line-strong); }
-	.input[readonly] { --input-bg: var(--bg-sunken); }
-	.input[readonly]:hover { --input-line: var(--line-default); }
+	.input::placeholder { color: var(--color-mute); font-weight: var(--font-weight-regular); }
+	.input:hover { background: var(--input-bg-hover); }
+
+	.input[readonly] {
+		--input-bg: transparent;
+		--input-bg-hover: transparent;
+		--input-line: var(--color-border);
+		color: var(--color-secondary);
+	}
+
 	.input[disabled] { opacity: 0.5; cursor: not-allowed; }
+
+	/* The way back to an outlined control, for the two cases a fill cannot
+	   do: a control ON an already-filled surface, and one that has to read as
+	   a container rather than as a well. */
+	.input-bordered {
+		--input-bg: transparent;
+		--input-bg-hover: transparent;
+		--input-line: var(--color-border);
+	}
+
+	.input-bordered:hover { --input-line: var(--color-background-300); }
+
+	/* A textarea is the one control that is not a pill — a 24px radius on a
+	   140px-tall box bows its sides. */
+	.textarea { --input-radius: var(--radius-4); min-block-size: 8rem; resize: vertical; }
 
 	/* Text entry focuses on click as well as on Tab, so the ring is the
 	   border itself rather than an outline that would sit outside the box. */
@@ -151,14 +203,14 @@
 	.select:focus-visible,
 	.textarea:focus-visible {
 		outline: var(--border-2) solid var(--color-accent);
-		outline-offset: var(--spacing-3);
+		outline-offset: var(--spacing-3);   /* Aspect's 3px, and it needs the gap */
 		--input-line: var(--color-accent);
 		box-shadow: none;
 	}
 
 	/* The resting fill steps up a shade on focus as well, so the control is
 	   marked even where an outline is suppressed (forced colours, print). */
-	.input:focus-visible { background: var(--color-background-100); }
+	.input:focus-visible { background: var(--color-background-200); }
 
 	/* Style the ARIA, not a class — the attribute is the same fact the screen
 	   reader is reading, so they cannot disagree. :user-invalid is the
