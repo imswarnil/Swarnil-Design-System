@@ -39,35 +39,69 @@
 
 	   The 44px touch minimum is enforced separately, below, so shrinking the
 	   visual size never shrinks the target. */
+	/* ── RE-CUT 2026-09-20 on Aspect's model ───────────────────────────────
+	   Three changes, and the first is the one you see:
+
+	   THE BUTTON IS A PILL. `calc(var(--button--min-height) * 0.5)` — the
+	   radius is always half the height, so it is fully round at every size
+	   and stays round when a variant changes the height. A fixed 10px radius
+	   on a 40px button and on a 32px button are two different shapes; half
+	   the height is one shape at every scale.
+
+	   THE HEIGHT IS 40px, not 34. Aspect's buttons are bigger than most
+	   systems', and that is why its bars and cards feel unhurried. A 34px
+	   button next to a 48px input is the thing that made this system's forms
+	   look assembled from two kits.
+
+	   THE PADDING IS GENEROUS: 20px each side. A pill with tight padding
+	   reads as a tag, not a button.
+
+	   Every knob is now `--button--*`, declared in 0-config/theme.css with
+	   the rest of the component variables, so the whole set is visible in
+	   one place. The old `--btn-*` names are aliased at the end of this file
+	   and go when the last consumer does. */
 	.btn {
-		--btn-h: 2.125rem;
-		--btn-pad: var(--space-3);
-		--btn-radius: var(--radius-control);
+		--btn-h: var(--button--min-height);
+		--btn-pad: var(--button--padding-h);
+		--btn-radius: calc(var(--button--min-height) * 0.5);
 		--btn-bg: transparent;
-		--btn-fg: var(--fg-default);
+		--btn-fg: var(--color-contrast);
 		--btn-line: transparent;
-		--btn-gap: var(--space-2);
+		--btn-gap: var(--spacing-3);
 
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
 		gap: var(--btn-gap);
-		height: var(--btn-h);
+		min-height: var(--btn-h);
+		padding-block: var(--button--padding-v);
 		padding-inline: var(--btn-pad);
 		border: var(--border-hair) solid var(--btn-line);
 		border-radius: var(--btn-radius);
 		background: var(--btn-bg);
 		color: var(--btn-fg);
-		font-family: var(--font-body);
-		font-size: var(--text-sm);
-		font-weight: var(--weight-medium);
-		line-height: 1;
+		font-family: var(--font-family-button);
+		font-size: var(--button--font-size);
+		font-weight: var(--button--font-weight);
+		line-height: 1.5;
 		text-decoration: none;
 		white-space: nowrap;
 		cursor: pointer;
 		position: relative;
-		transition: var(--t-colors), var(--t-transform);
+		transition: var(--t-colors), opacity var(--dur-2) var(--ease-out);
 	}
+
+	/* An icon-only button is the one that is NOT a pill: a circle of text in
+	   a round button has nowhere to sit, so Aspect squares it off to
+	   `--radius-2` and lets `.btn-round` ask for the circle explicitly. */
+	.btn-icon {
+		--btn-radius: var(--radius-2);
+		--btn-pad: var(--spacing-4);
+		min-inline-size: var(--btn-h);
+		padding-inline: var(--spacing-4);
+	}
+
+	.btn-round { --btn-radius: var(--radius-full); }
 
 	/* A coarse pointer needs 44px however small the design says — which is
 	   what makes the compact scale above safe. The visual size shrinks; the
@@ -78,7 +112,11 @@
 		.btn-icon { min-width: var(--tap-min); }
 	}
 
-	.btn:active { scale: 0.98; }
+	/* Press is an OPACITY change, not a scale. House rule 7: nothing in this
+	   system moves under a pointer. A button that shrinks when pressed also
+	   shifts every button beside it by a subpixel, and on a toolbar that
+	   reads as the row breathing. */
+	.btn:active { opacity: 0.8; }
 
 	.btn[disabled],
 	.btn[aria-disabled='true'] {

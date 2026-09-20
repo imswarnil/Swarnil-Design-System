@@ -328,10 +328,56 @@
 		margin: 0;
 		border-radius: var(--radius-media);
 		background: var(--color-background-200);
-		box-shadow: var(--shadow-4);
+		box-shadow: var(--intro-shadow);
 		overflow: hidden;
-		aspect-ratio: var(--intro-ratio, 4 / 5);
+		aspect-ratio: var(--intro-ratio, 1);
+
+		/* THE FRAME CANNOT BE TRANSITIONED BY CSS ALONE. Pressing play swaps
+		   its aspect-ratio, and `aspect-ratio` is not an animatable property
+		   — the rectangle would jump. So the shape change is tweened on the
+		   element's own `--intro-ratio` through a registered property (see
+		   0-config/properties.css) and the layout follows it continuously. */
+		transition: box-shadow var(--dur-4) var(--ease-out);
 	}
+
+	/* The shadow falls DOWN AND LEFT, not straight down. A picture lit from
+	   the upper right throws its shadow to the lower left, and that is where
+	   the wash's brightest radial sits — so the light in the section and the
+	   light on the frame agree. A centred shadow under a picture beside a
+	   directional wash reads as two light sources. */
+	.intro {
+		--intro-shadow:
+			-18px 28px 48px -24px color-mix(in oklab, var(--color-black) 38%, transparent),
+			-4px 8px 16px -10px color-mix(in oklab, var(--color-black) 24%, transparent);
+	}
+
+	/* ── Playing ───────────────────────────────────────────────────────────
+	   The picture becomes the film IN PLACE: the frame widens to 16/9 where
+	   it stands, the still fades out under the player, and the control
+	   travels to the corner as the way back. Nothing opens, nothing
+	   navigates, and nothing is fetched from a video host until play. */
+	.intro[data-playing] .intro__frame {
+		--intro-ratio: 1.7778;   /* 16 / 9, as a number the property can tween */
+		box-shadow:
+			-24px 36px 64px -28px color-mix(in oklab, var(--color-black) 46%, transparent),
+			-6px 10px 20px -12px color-mix(in oklab, var(--color-black) 28%, transparent);
+	}
+
+	/* The still and the stage are the same rectangle; only one is opaque. */
+	.intro__still,
+	.intro__stage {
+		position: absolute;
+		inset: 0;
+		inline-size: 100%;
+		block-size: 100%;
+	}
+
+	.intro__still { transition: opacity var(--dur-3) var(--ease-out); }
+	.intro__stage { opacity: 0; transition: opacity var(--dur-3) var(--ease-out) var(--dur-2); }
+	.intro__stage > iframe { inline-size: 100%; block-size: 100%; border: 0; display: block; }
+
+	.intro[data-playing] .intro__still { opacity: 0; }
+	.intro[data-playing] .intro__stage { opacity: 1; }
 
 	/* On load, once. The picture settles up into place and the words arrive
 	   behind it. `backwards` fill so nothing flashes at its end position
@@ -467,7 +513,7 @@
 		gap: clamp(1.5rem, 4cqi, 2.5rem);
 	}
 
-	.intro-portrait .intro__media { order: -1; --intro-ratio: 3 / 2; inline-size: 100%; }
+	.intro-portrait .intro__media { order: -1; --intro-ratio: 1.5; inline-size: 100%; }
 	.intro-portrait .intro__copy { max-inline-size: var(--measure-prose); }
 
 	/* ── Panel ─────────────────────────────────────────────────────────────
@@ -488,7 +534,7 @@
 	}
 
 	.intro-panel .intro__frame {
-		--intro-ratio: auto;
+		aspect-ratio: auto;
 		block-size: 100%;
 		border-radius: 0;
 	}
@@ -565,10 +611,13 @@
 	/* ── Ratio ─────────────────────────────────────────────────────────────
 	   The picture's shape, as a modifier. `--intro-ratio` is read by the
 	   frame, so these are the four worth naming rather than a free number. */
-	.intro-square   { --intro-ratio: 1; }
-	.intro-portrait-media { --intro-ratio: 3 / 4; }
-	.intro-wide     { --intro-ratio: 3 / 2; }
-	.intro-cinema   { --intro-ratio: 16 / 9; }
+	/* Square is the DEFAULT — a square picture beside a column of words is
+	   the one ratio that balances at every width without the two fighting
+	   for height. These four are the alternatives worth naming. */
+	.intro-portrait-media { --intro-ratio: 0.8; }    /* 4 / 5 */
+	.intro-tall     { --intro-ratio: 0.75; }   /* 3 / 4  */
+	.intro-wide     { --intro-ratio: 1.5; }    /* 3 / 2  */
+	.intro-cinema   { --intro-ratio: 1.7778; } /* 16 / 9 */
 
 	/* ── Responsive ────────────────────────────────────────────────────────
 	   A container query, because the section is a container: it recomposes
@@ -580,7 +629,7 @@
 			grid-template-columns: minmax(0, 1fr);
 			gap: clamp(1.5rem, 5cqi, 2.5rem);
 		}
-		.intro__media { --intro-ratio: 3 / 2; order: -1; }
+		.intro__media { --intro-ratio: 1.5; order: -1; }
 		.intro__title { font-size: clamp(var(--text-3xl), 9cqi, var(--text-5xl)); }
 	}
 
