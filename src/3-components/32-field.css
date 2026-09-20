@@ -135,12 +135,30 @@
 
 	/* Text entry focuses on click as well as on Tab, so the ring is the
 	   border itself rather than an outline that would sit outside the box. */
+	/* ── Focus, Aspect's way ───────────────────────────────────────────────
+	   An OUTLINE with an offset, not an inset ring.
+
+	   The difference matters on a filled control. A `box-shadow` ring is
+	   drawn inside the element's own box, so on an input whose background is
+	   `--color-background-200` the ring sits ON the fill and the two fight.
+	   An outline is drawn outside the border box and `outline-offset` puts
+	   daylight between them, so the control keeps its shape and the focus
+	   mark is unambiguous — and it follows the border-radius for free.
+
+	   It also survives `overflow: hidden` on a parent, which an inset ring on
+	   an input inside an `.input-group` does not. */
 	.input:focus-visible,
-	.select:focus-visible {
-		outline: none;
-		--input-line: var(--accent);
-		box-shadow: 0 0 0 3px var(--accent-ring);
+	.select:focus-visible,
+	.textarea:focus-visible {
+		outline: var(--border-2) solid var(--color-accent);
+		outline-offset: var(--spacing-3);
+		--input-line: var(--color-accent);
+		box-shadow: none;
 	}
+
+	/* The resting fill steps up a shade on focus as well, so the control is
+	   marked even where an outline is suppressed (forced colours, print). */
+	.input:focus-visible { background: var(--color-background-100); }
 
 	/* Style the ARIA, not a class — the attribute is the same fact the screen
 	   reader is reading, so they cannot disagree. :user-invalid is the

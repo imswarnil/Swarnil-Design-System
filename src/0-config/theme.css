@@ -1,433 +1,500 @@
 /* =============================================================================
-   0 · THEME — this system's tokens, as Tailwind's theme
+   0 · THE TOKEN LAYER — rebuilt on Aspect's architecture, 2026-09-20
 
-   `@theme` is Tailwind 4's token API. Every variable declared here does two
-   things at once: it lands on `:root` like any custom property, AND Tailwind
-   generates the matching utilities from it. `--color-canvas` here is what
-   makes `bg-canvas`, `text-canvas`, `border-canvas` and `ring-canvas` exist,
-   with every variant (`hover:`, `md:`, `dark:`) for free.
+   Aspect's variable layer is the model, and its three ideas are the ones this
+   file adopts:
 
-   That is the whole reason this file exists. The alternative — hand-writing a
-   `.u-bg-canvas` — gives you one class with no variants and no arbitrary-value
-   support, which is a worse version of a thing Tailwind already does.
+     1. A SMALL FLAT COLOUR SET. Not two tiers — eight greys and four status
+        colours, named for what they ARE on the page: contrast, background,
+        background-100/200/300, border, foreground, secondary, mute.
+     2. COMPONENT-SCOPED VARIABLES, double-dashed: `--button--padding-v`,
+        `--navbar--height`, `--avatar--size`. Every component exposes its own
+        knobs under its own name, so theming one never means editing its rules.
+     3. NUMBERED LADDERS. `--spacing-1…11`, `--radius-1…6`. A step is a step;
+        it does not also claim to know what it is for.
 
-   ── TWO KINDS OF ENTRY, AND THE DIFFERENCE MATTERS ────────────────────────
+   ── THE ONE PLACE THIS DOES NOT COPY ASPECT ───────────────────────────────
+   Aspect ships TWO complete colour tables, one per scheme, in hex, maintained
+   by hand. Here each colour is declared ONCE with `light-dark()` and oklch.
+   Same names, same structure, same eight greys — half the file, no second
+   table to drift, and a ramp whose steps are perceptually even.
 
-   ALIAS. Where our name and Tailwind's namespace differ, this file only
-   points one at the other and the declaration stays where it always was:
+   That is what "inspired by" has to mean to be worth doing: take the
+   architecture, write it the way it would be written today.
 
-       --color-canvas: var(--bg-canvas);      ← 01-color.css still owns it
-
-   CANONICAL. Where our name IS Tailwind's namespace — `--radius-*`,
-   `--text-*`, `--font-*`, `--leading-*`, `--tracking-*`, `--ease-*`,
-   `--shadow-*` — an alias would be circular (`--radius-card: var(--radius-card)`),
-   so THIS FILE IS THE DECLARATION SITE and the old `:root` block is gone from
-   the foundation file, which now carries a pointer here. One name, one home.
-
-   ── WHAT IS DELIBERATELY NOT TAKEN OVER ───────────────────────────────────
-
-   THE NUMERIC SPACING SCALE. `--space-1` … `--space-6` match Tailwind's
-   `0.25rem × n` exactly, but `--space-8` and up are fluid `clamp()`s. Mapping
-   them onto `--spacing-8` would make `p-8` fluid while `p-7`, `p-9` and `p-14`
-   stayed arithmetic — one ladder with two rules, which is worse than either.
-   Tailwind's scale is left alone. Our ladder is reachable two ways: components
-   read `var(--space-12)` as they always have, and a consumer writes
-   `p-(--space-12)`, which is Tailwind's own shorthand for the same thing.
-
-   TAILWIND'S COLOUR PALETTE. `bg-red-500` still works. The palette is a
-   utility, not a design decision — the same argument this system already makes
-   for its own tier-1 ramps — and deleting it would break the first thing
-   anyone tries. What tier 2 rations is what COMPONENTS may read, and that rule
-   is unchanged: a component reads `--fg-muted`, never `--ink-700`.
-
-   Layer: `theme`, Tailwind's own and the lowest there is. Paints nothing.
+   ── THE ALIASES AT THE BOTTOM ─────────────────────────────────────────────
+   Forty-five component files still read the previous names (`--fg-muted`,
+   `--bg-canvas`, `--space-4`). They are mapped onto the new tokens at the end
+   of this file, one line each, and they are DEPRECATED: each component drops
+   its aliases as it is re-cut, and the block shrinks to nothing. Nothing new
+   may use them.
    ========================================================================== */
 
 @theme {
+
 	/* ═══ COLOUR ════════════════════════════════════════════════════════════
-	   Aliases. 01-color.css owns every value; this only gives each one a
-	   utility. Both tiers are exposed, because a utility IS the escape hatch —
-	   but tier 2 is still the only thing a component may read. */
+	   Eight greys and four states. The ramp underneath is oklch on one shared
+	   lightness ladder, so `--color-background-200` is the same perceptual
+	   step away from -100 as -300 is from -200 — which is the thing a hex
+	   table cannot promise and the reason this is not a hex table. */
 
-	/* ── Tier 2 · surface ───────────────────────────────────────────────── */
-	--color-canvas:  var(--bg-canvas);
-	--color-surface: var(--bg-surface);
-	--color-raised:  var(--bg-raised);
-	--color-overlay: var(--bg-overlay);
-	--color-sunken:  var(--bg-sunken);
-	--color-muted:   var(--bg-muted);
-	--color-inverse: var(--bg-inverse);
-	--color-media:   var(--bg-media);
-	--color-scrim:   var(--bg-scrim);
+	--color-contrast:       light-dark(oklch(23% 0.016 275), oklch(99.2% 0.002 275));
+	--color-background:     light-dark(oklch(99.2% 0.002 275), oklch(12.5% 0.012 275));
+	--color-background-100: light-dark(oklch(96.6% 0.004 275), oklch(17.5% 0.014 275));
+	--color-background-200: light-dark(oklch(94.0% 0.005 275), oklch(23.0% 0.016 275));
+	--color-background-300: light-dark(oklch(89.0% 0.007 275), oklch(30.5% 0.018 275));
+	--color-border:         light-dark(oklch(89.0% 0.007 275), oklch(100% 0 0 / 0.14));
+	--color-overlay:        light-dark(oklch(12.5% 0.012 275 / 0.5), oklch(12.5% 0.012 275 / 0.7));
+	--color-foreground:     light-dark(oklch(39.0% 0.020 275), oklch(82.0% 0.009 275));
+	--color-secondary:      light-dark(oklch(48.0% 0.020 275), oklch(71.0% 0.013 275));
+	--color-mute:           light-dark(oklch(71.0% 0.013 275), oklch(48.0% 0.020 275));
 
-	/* ── Tier 2 · foreground ────────────────────────────────────────────── */
-	--color-fg:            var(--fg-default);
-	--color-fg-muted:      var(--fg-muted);
-	--color-fg-subtle:     var(--fg-subtle);
-	--color-fg-faint:      var(--fg-faint);
-	--color-fg-disabled:   var(--fg-disabled);
-	--color-fg-on-inverse: var(--fg-on-inverse);
-	--color-fg-on-accent:  var(--fg-on-accent);
-	--color-fg-accent:     var(--fg-accent);
-	--color-fg-link:       var(--fg-link);
-	--color-fg-link-hover: var(--fg-link-hover);
+	--color-white: #fff;
+	--color-black: #000;
 
-	/* ── Tier 2 · line ──────────────────────────────────────────────────── */
-	--color-line:         var(--line-default);
-	--color-line-subtle:  var(--line-subtle);
-	--color-line-strong:  var(--line-strong);
-	--color-line-inverse: var(--line-inverse);
-	--color-line-accent:  var(--line-accent);
+	/* The accent, and the ink that reads on it. Ghost feeds Aspect this as
+	   `--ghost-accent-color`; here it is the system's one rationed colour and
+	   `data-accent` on <html> still repoints it. */
+	--color-accent:            light-dark(oklch(63% 0.190 34), oklch(71% 0.158 34));
+	--color-accent-hover:      light-dark(oklch(56% 0.180 34), oklch(79% 0.118 34));
+	--color-accent-soft:       light-dark(oklch(96.5% 0.020 34), oklch(63% 0.19 34 / 0.16));
+	--color-accent-soft-fg:    light-dark(oklch(47% 0.155 34), oklch(86% 0.078 34));
+	--color-accent-foreground: #fff;
 
-	/* ── Tier 2 · the one accent ────────────────────────────────────────── */
-	--color-accent:          var(--accent);
-	--color-accent-hover:    var(--accent-hover);
-	--color-accent-press:    var(--accent-press);
-	--color-accent-soft:     var(--accent-soft);
-	--color-accent-soft-fg:  var(--accent-soft-fg);
-	--color-accent-ring:     var(--accent-ring);
+	--color-success: light-dark(oklch(46% 0.100 155), oklch(82% 0.105 155));
+	--color-error:   light-dark(oklch(45% 0.160 15),  oklch(82% 0.090 15));
+	--color-warning: light-dark(oklch(48% 0.085 78),  oklch(82% 0.110 78));
+	--color-info:    light-dark(oklch(46% 0.130 240), oklch(82% 0.090 240));
 
-	/* ── Tier 2 · the quieter second voice ──────────────────────────────── */
-	--color-craft:      var(--craft);
-	--color-craft-soft: var(--craft-soft);
-	--color-craft-fg:   var(--craft-fg);
+	/* ═══ TYPE ══════════════════════════════════════════════════════════════
+	   Aspect's three families and its three named sizes. Everything between
+	   x-small and large is a heading, and headings are named by LEVEL. */
 
-	/* ── Tier 2 · status, four tones each ───────────────────────────────── */
-	--color-success-bg:    var(--success-bg);
-	--color-success-fg:    var(--success-fg);
-	--color-success-line:  var(--success-line);
-	--color-success:       var(--success-solid);
-
-	--color-info-bg:    var(--info-bg);
-	--color-info-fg:    var(--info-fg);
-	--color-info-line:  var(--info-line);
-	--color-info:       var(--info-solid);
-
-	--color-warning-bg:    var(--warning-bg);
-	--color-warning-fg:    var(--warning-fg);
-	--color-warning-line:  var(--warning-line);
-	--color-warning:       var(--warning-solid);
-
-	--color-danger-bg:    var(--danger-bg);
-	--color-danger-fg:    var(--danger-fg);
-	--color-danger-line:  var(--danger-line);
-	--color-danger:       var(--danger-solid);
-
-	/* ── Tier 2 · interaction and data ──────────────────────────────────── */
-	--color-hover-wash: var(--hover-wash);
-	--color-press-wash: var(--press-wash);
-
-	--color-chart-1: var(--chart-1);
-	--color-chart-2: var(--chart-2);
-	--color-chart-3: var(--chart-3);
-	--color-chart-4: var(--chart-4);
-	--color-chart-5: var(--chart-5);
-	--color-chart-6: var(--chart-6);
-
-	/* ── Tier 1 · the ramps ─────────────────────────────────────────────────
-	   Eleven steps of ink and eight hues, on one shared lightness ladder. A
-	   COMPONENT MAY NOT READ THESE — see PRINCIPLES #3. They are here so a
-	   consumer building something this system has not built can reach the
-	   palette without hard-coding a hex. */
-	--color-ink-0:    var(--ink-0);
-	--color-ink-25:   var(--ink-25);
-	--color-ink-50:   var(--ink-50);
-	--color-ink-100:  var(--ink-100);
-	--color-ink-200:  var(--ink-200);
-	--color-ink-300:  var(--ink-300);
-	--color-ink-400:  var(--ink-400);
-	--color-ink-500:  var(--ink-500);
-	--color-ink-600:  var(--ink-600);
-	--color-ink-700:  var(--ink-700);
-	--color-ink-800:  var(--ink-800);
-	--color-ink-900:  var(--ink-900);
-	--color-ink-950:  var(--ink-950);
-	--color-ink-1000: var(--ink-1000);
-
-	--color-signal-50:  var(--signal-50);
-	--color-signal-100: var(--signal-100);
-	--color-signal-200: var(--signal-200);
-	--color-signal-300: var(--signal-300);
-	--color-signal-400: var(--signal-400);
-	--color-signal-500: var(--signal-500);
-	--color-signal-600: var(--signal-600);
-	--color-signal-700: var(--signal-700);
-	--color-signal-800: var(--signal-800);
-	--color-signal-900: var(--signal-900);
-	--color-signal-950: var(--signal-950);
-
-	/* ── daisyUI's eleven slots ─────────────────────────────────────────────
-	   daisyUI names its theme colours `--color-*`, which is Tailwind's own
-	   namespace — so declaring them HERE means one definition serves both:
-	   `.btn-primary` (daisyUI) and `bg-primary` (Tailwind) are the same
-	   accent, and there is no second copy to drift out of step.
-
-	   `themes: false` in the entry turns off daisyUI's own light/dark, because
-	   its selector `[data-theme="light"]` outranks a plain `:root` and would
-	   win every colour on a site that sets `data-theme` for its own toggle.
-	   Everything below is one of ours, and ours are `light-dark()` pairs — so
-	   daisyUI follows the theme with no `data-theme` value to keep in step. */
-	--color-base-100:     var(--bg-canvas);
-	--color-base-200:     var(--bg-sunken);
-	--color-base-300:     var(--bg-muted);
-	--color-base-content: var(--fg-default);
-
-	/* This system rations itself to ONE accent, so `primary` and daisyUI's own
-	   `accent` slot are the same colour rather than pretending to a palette
-	   that does not exist. `secondary` is the craft tone — the quieter second
-	   voice — which is the only other hue tier 2 promotes. */
-	--color-primary:           var(--accent);
-	--color-primary-content:   var(--fg-on-accent);
-	--color-secondary:         var(--craft);
-	--color-secondary-content: var(--fg-on-accent);
-	--color-accent-content:    var(--fg-on-accent);
-	--color-neutral:           var(--bg-inverse);
-	--color-neutral-content:   var(--fg-on-inverse);
-
-	/* daisyUI spells danger `error`. Same token, both names, so `.alert-error`
-	   and `bg-danger` cannot disagree. */
-	--color-error:             var(--danger-solid);
-	--color-info-content:      var(--fg-on-accent);
-	--color-success-content:   var(--fg-on-accent);
-	--color-warning-content:   var(--fg-on-accent);
-	--color-error-content:     var(--fg-on-accent);
-
-	/* ═══ TYPE — CANONICAL ══════════════════════════════════════════════════
-	   Declared here, not in 02-typography.css, because `--font-*`, `--text-*`,
-	   `--leading-*` and `--tracking-*` are Tailwind's namespaces already and an
-	   alias would point at itself. 02-typography.css keeps the argument and the
-	   element rules; this keeps the numbers.
-
-	   Tailwind's own type scale is cleared first. Overriding `--text-lg`
-	   without clearing leaves Tailwind's paired `--text-lg--line-height`
-	   standing, so `text-lg` would take our size and Tailwind's leading — a
-	   pair from two different systems. Leading is this system's own axis and
-	   is set with `leading-*`, deliberately, so no size carries one. */
-	/* ── THE RAMP ─────────────────────────────────────────────────────────
-	   Flat on purpose, and flattened deliberately in the 2026-09 rebuild.
-	   A documentation site and an editorial theme are both UI before they are
-	   posters: the range that actually gets used every day is 11px to 28px,
-	   and a scale whose h1 jumps to 52px spends its top three steps on
-	   moments that occur once a page, if ever.
-
-	   So 2xl/3xl/4xl are now fixed and close together — 22 / 25 / 28 — which
-	   is what makes a heading read as a heading by WEIGHT and TRACKING rather
-	   than by size. 5xl and 6xl stay fluid and are the only display sizes;
-	   they are for a landing hero and nothing else. */
-	--text-*: initial;
-	--text-3xs:  0.625rem;    /* 10px · the floor. Data, and only data */
-	--text-2xs:  0.6875rem;   /* 11px */
-	--text-xs:   0.75rem;     /* 12px */
-	--text-sm:   0.875rem;    /* 14px · the UI default: meta, nav, buttons */
-	--text-base: 1rem;        /* 16px */
-	--text-md:   1.0625rem;   /* 17px · long-form body */
-	--text-lg:   1.125rem;    /* 18px */
-	--text-xl:   1.25rem;     /* 20px */
-	--text-2xl:  1.375rem;    /* 22px */
-	--text-3xl:  1.5625rem;   /* 25px */
-	--text-4xl:  1.75rem;     /* 28px · the largest size the UI ever needs */
-	--text-5xl:  clamp(2rem,  1.60rem + 1.80vw, 2.75rem);   /* 32 → 44 · display */
-	--text-6xl:  clamp(2.5rem, 1.90rem + 2.80vw, 3.75rem);  /* 40 → 60 · hero only */
-
-	/* ── THE HEADING ROLES ────────────────────────────────────────────────
-	   Six names for six jobs, so a component asks for "a level-three heading"
-	   and never for a number of pixels. Re-point one of these and every h3 in
-	   the system moves together; re-point `--text-xl` and so does everything
-	   else that happens to be 20px, which is not the same thing.
-
-	   `--heading-*` is not a Tailwind namespace, so these land on :root and
-	   are read with `var()` — which is correct: a heading LEVEL is semantic,
-	   and there should be no `text-heading-3` utility inviting an h2 to wear
-	   an h3's size. */
-	--heading-1: var(--text-4xl);   /* 28px */
-	--heading-2: var(--text-2xl);   /* 22px */
-	--heading-3: var(--text-xl);    /* 20px */
-	--heading-4: 1.1875rem;         /* 19px */
-	--heading-5: var(--text-lg);    /* 18px */
-	--heading-6: var(--text-base);  /* 16px */
-
-	--heading-leading-1: 1.1;
-	--heading-leading-n: 1.2;       /* every level below the first */
-
-	/* ── THREE FAMILIES, FIVE VOICES ──────────────────────────────────────
-	   Geist replaced Inter and IBM Plex Mono on 2026-09-19. All three faces
-	   come from one package under the SIL OFL and are self-hosted; see
-	   docs/assets/fonts.css for the @font-face set and the licence.
-
-	     --font-body     Geist              everything read in sentences
-	     --font-display  Geist              headlines — the SAME face, worn
-	                                        bigger and tracked tighter
-	     --font-label    Geist              small, uppercase, tracked
-	     --font-data     Geist              small, tracked, LIGHT, tabular
-	     --font-mono     Geist Mono         CODE ONLY — audit-mono.py fails
-	                                        the build when it slips
-	     --font-pixel    Geist Pixel Square THE MARK. Not a voice: the brand
-	                                        lockup, a section take, a 404.
-	                                        Never a sentence, never under 24px.
-
-	   Why Geist and not Inter: Geist Mono is drawn as a sibling of Geist
-	   rather than borrowed from another family, so a code span inside a
-	   paragraph shares its x-height and its rhythm. That is the one thing
-	   Inter + Plex could not do, and it is the thing a documentation site
-	   does on every page. */
 	--font-*: initial;
-	--font-body:    'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-	--font-display: var(--font-body);
-	--font-label:   var(--font-body);
-	--font-data:    var(--font-body);
-	--font-mono:    'Geist Mono', ui-monospace, 'SF Mono', 'Cascadia Mono', monospace;
-	--font-slate:   var(--font-mono);
-	--font-sans:    var(--font-body);   /* so Tailwind's own `font-sans` is ours */
+	--font-family-body:     'Geist', ui-sans-serif, system-ui, -apple-system, sans-serif;
+	--font-family-headings: var(--font-family-body);
+	--font-family-button:   var(--font-family-body);
+	--font-family-mono:     'Geist Mono', ui-monospace, 'SF Mono', monospace;
+	--font-family-pixel:    'Geist Pixel Square', var(--font-family-mono);
+	--font-family-pixel-circle: 'Geist Pixel Circle', var(--font-family-mono);
+	--font-family-pixel-line:   'Geist Pixel Line', var(--font-family-mono);
+	--font-sans: var(--font-family-body);
+	--font-mono: var(--font-family-mono);
 
-	/* The three Pixel cuts are separate FAMILIES, not weights — they are
-	   three drawings of one alphabet, and nothing should be able to ask for
-	   "Pixel bold" and get a synthesised smear of a bitmap face. */
-	--font-pixel:        var(--font-pixel-square);
-	--font-pixel-square: 'Geist Pixel Square', var(--font-mono);
-	--font-pixel-circle: 'Geist Pixel Circle', var(--font-mono);
-	--font-pixel-line:   'Geist Pixel Line',   var(--font-mono);
+	--font-x-small: 0.75rem;    /* 12px */
+	--font-small:   0.875rem;   /* 14px */
+	--font-base:    1rem;       /* 16px */
+	--font-large:   1.125rem;   /* 18px */
+
+	--font-weight-light:    300;
+	--font-weight-regular:  400;
+	--font-weight-medium:   500;
+	--font-weight-semibold: 600;
+	--font-weight-bold:     700;
+
+	/* Aspect's heading scale, flat by design: 28 / 22 / 20 / 19 / 18 / 16.
+	   It reads as a UI rather than as a magazine, and that restraint is most
+	   of why the theme looks like one thing. */
+	--heading-1: 1.75rem;
+	--heading-2: 1.375rem;
+	--heading-3: 1.25rem;
+	--heading-4: 1.188rem;
+	--heading-5: 1.125rem;
+	--heading-6: 1rem;
+	--heading-leading-1: 1.1;
+	--heading-leading-n: 1.2;
+
+	/* Two display sizes above the scale, for a hero and nothing else. */
+	--display-1: clamp(2rem, 1.6rem + 1.8vw, 2.75rem);
+	--display-2: clamp(2.5rem, 1.9rem + 2.8vw, 3.75rem);
 
 	--leading-*: initial;
-	--leading-flat:    1;
-	--leading-tight:   1.1;
-	--leading-snug:    1.25;
-	--leading-normal:  1.5;
-	--leading-relaxed: 1.65;   /* the reading default */
-	--leading-loose:   1.85;
+	--leading-flat: 1;
+	--leading-tight: 1.1;
+	--leading-snug: 1.25;
+	--leading-normal: 1.5;
+	--leading-relaxed: 1.65;
+	--leading-loose: 1.85;
 
 	--tracking-*: initial;
 	--tracking-tighter: -0.035em;
-	--tracking-tight:   -0.02em;
-	--tracking-normal:  0em;
-	--tracking-wide:    0.02em;
-	--tracking-data:    0.05em;   /* Geist, small, numeric */
-	--tracking-label:   0.14em;   /* Geist, small, uppercase — the slate voice */
-	--tracking-widest:  0.16em;
-	--tracking-slate:   var(--tracking-label);
+	--tracking-tight: -0.02em;
+	--tracking-normal: 0em;
+	--tracking-wide: 0.02em;
+	--tracking-data: 0.05em;
+	--tracking-label: 0.14em;
 
-	/* Weight is an alias: our name is `--weight-*`, Tailwind's namespace is
-	   `--font-weight-*`, so there is no circle to avoid. */
-	--font-weight-light:     var(--weight-light);
-	--font-weight-normal:    var(--weight-regular);
-	--font-weight-medium:    var(--weight-medium);
-	--font-weight-semibold:  var(--weight-semibold);
-	--font-weight-bold:      var(--weight-bold);
+	/* ═══ SPACING — ASPECT'S LADDER, EXACTLY ════════════════════════════════
+	   2 · 4 · 6 · 8 · 10 · 12 · 16 · 20 · 30 · 80 · 100. Not a 4px grid: the
+	   dense end is finer than a 4px grid can be (2 and 6 both matter in a
+	   control), and the loose end jumps because a section gap is not four
+	   steps up from a chip's padding, it is a different KIND of distance. */
+	--spacing-*: initial;
+	--spacing-1:  0.125rem;
+	--spacing-2:  0.25rem;
+	--spacing-3:  0.375rem;
+	--spacing-4:  0.5rem;
+	--spacing-5:  0.625rem;
+	--spacing-6:  0.75rem;
+	--spacing-7:  1rem;
+	--spacing-8:  1.25rem;
+	--spacing-9:  1.875rem;
+	--spacing-10: 5rem;
+	--spacing-11: 6.25rem;
+	--vertical-rhythm: 1.5rem;
 
-	/* ═══ SHAPE — CANONICAL ═════════════════════════════════════════════════
-	   `--radius-*` is Tailwind's namespace and ours. Declared here; removed
-	   from 09-shape.css, which keeps borders, dots, z-index and the notch. */
+	/* ═══ RADIUS — NUMBERED, NOT NAMED ══════════════════════════════════════ */
 	--radius-*: initial;
-	--radius-none: 0;
-	--radius-xs:   2px;
-	--radius-sm:   4px;
-	--radius-md:   6px;
-	--radius-lg:   10px;
-	--radius-xl:   16px;
-	--radius-2xl:  24px;
+	--radius-1: 6px;
+	--radius-2: 8px;
+	--radius-3: 10px;
+	--radius-4: 14px;
+	--radius-5: 16px;
+	--radius-6: clamp(16px, 1rem + 1.25vw, 30px);
 	--radius-full: 9999px;
-	--radius-pill: var(--radius-full);
 
-	/* Named for a job, so the shape of every card changes in one edit.
-	   Retuned in the 2026-09 rebuild: a card is 14px, which is softer than
-	   the old 10px and is what stops a grid of cards reading as a table. A
-	   CONTROL stays tighter than the card it sits in — a button inside a card
-	   with the same radius as the card looks stuck to it. */
-	--radius-card:    0.875rem;          /* 14px */
-	--radius-control: var(--radius-lg);  /* 10px · nav rows, inputs, chips */
-	--radius-media:   var(--radius-xl);  /* 16px · images, video wells */
-	--radius-sheet:   var(--radius-2xl); /* 24px · panels, dialogs */
-	--radius-badge:   var(--radius-md);  /*  6px · the smallest fill */
+	/* ═══ LAYOUT ════════════════════════════════════════════════════════════ */
+	--layout--padding: clamp(16px, 0.7rem + 1.25vw, 30px);
+	--layout--gap:     clamp(60px, 3.1rem + 1.8vw, 80px);
 
-	/* ═══ ELEVATION — CANONICAL ═════════════════════════════════════════════
-	   `--shadow-1` … `--shadow-4` were already aliases of `--elevation-*` in
-	   04-elevation.css; they move here so `shadow-2` is a real utility. The
-	   `--elevation-*` names stay where they are and remain what components
-	   read. */
-	--shadow-*: initial;
-	--shadow-1: var(--elevation-1);
-	--shadow-2: var(--elevation-2);
-	--shadow-3: var(--elevation-3);
-	--shadow-4: var(--elevation-4);
-	--shadow-media: 0 24px 64px -24px oklch(63% 0.19 34 / 0.28);
+	--container--width:      700px;
+	--container-wide--width: 1100px;
+	--container-media--width: 1300px;
 
-	/* ═══ MOTION — CANONICAL ════════════════════════════════════════════════
-	   `--ease-*` is Tailwind's namespace. The durations stay in 05-motion.css
-	   because they are re-declared to 1ms under prefers-reduced-motion, which
-	   is a MEDIA QUERY — and `@theme` holds no conditionals. */
-	--ease-*: initial;
-	--ease-out:       cubic-bezier(0.22, 1, 0.36, 1);
-	--ease-inout:     cubic-bezier(0.65, 0, 0.35, 1);
-	--ease-in-out:    var(--ease-inout);   /* Tailwind's spelling of the same curve */
-	--ease-snap:      cubic-bezier(0.2, 0, 0, 1);
-	--ease-overshoot: cubic-bezier(0.34, 1.56, 0.64, 1);
+	--navbar--height:     58px;
+	--navbar--min-height: 58px;
 
-	/* ═══ LAYOUT — ALIASES ══════════════════════════════════════════════════ */
+	--sidebar--width:           248px;
+	--sidebar-collapsed--width: 72px;
+	--sidebar--padding:         var(--spacing-6);
 
-	/* ⚠️ THE BREAKPOINTS ARE LITERALS, AND THEY HAVE TO BE.
-	   These were `var(--bp-md)` for about ten minutes, which compiled without
-	   a word of complaint into
-
-	       @media (width >= var(--bp-md)) { … }
-
-	   and `var()` IS NOT LEGAL IN A MEDIA QUERY. The browser drops the whole
-	   block, so every `md:`, `lg:` and `xl:` rule in the bundle silently did
-	   nothing — a two-column layout that was one column at every width, with
-	   the correct CSS sitting right there in the file.
-
-	   A media query is evaluated before the cascade exists; there is no element
-	   to resolve a custom property against. So the numbers live here, and
-	   03-space.css's `--bp-*` read back from them. One number, and the one that
-	   a media query can actually use is the one that is written down. */
 	--breakpoint-*: initial;
-	--breakpoint-sm:  30rem;    /* 480px  · phone landscape */
-	--breakpoint-md:  48rem;    /* 768px  · tablet — navs collapse below this */
-	--breakpoint-lg:  64rem;    /* 1024px · laptop — sidebars appear */
-	--breakpoint-xl:  80rem;    /* 1280px · desktop — content max reached */
-	--breakpoint-2xl: 96rem;    /* 1536px · wide — gutters grow, content does not */
+	--breakpoint-xs:  27.5rem;   /*  440 */
+	--breakpoint-sm:  33.75rem;  /*  540 */
+	--breakpoint-md:  48rem;     /*  768 */
+	--breakpoint-lg:  62rem;     /*  992 */
+	--breakpoint-xl:  75rem;     /* 1200 */
+	--breakpoint-2xl: 87.5rem;   /* 1400 */
 
-	/* `--width-*` → `max-w-*`. The measures a page is allowed to be. */
-	--container-xs:  var(--width-xs);
-	--container-sm:  var(--width-sm);
-	--container-md:  var(--width-md);
-	--container-lg:  var(--width-lg);
-	--container-xl:  var(--width-xl);
-	--container-2xl: var(--width-2xl);
+	/* ═══ COMPONENT KNOBS ═══════════════════════════════════════════════════
+	   Aspect's third idea, and the one that makes a UI kit themeable: every
+	   component's dimensions and colours are variables under the component's
+	   own name, declared here so all of them can be seen at once. */
 
-	/* The reading measures, so `max-w-prose` is this system's prose and not
-	   Tailwind's 65ch guess. */
-	--container-prose:   var(--measure-prose);
-	--container-lead:    var(--measure-lead);
-	--container-ui:      var(--measure-ui);
-	--container-narrow:  var(--measure-narrow);
+	--button--padding-v:     var(--spacing-4);
+	--button--padding-h:     var(--spacing-8);
+	--button--min-height:    2.5rem;
+	--button--font-size:     var(--font-small);
+	--button--font-weight:   var(--font-weight-semibold);
+	--button--border-radius: 1.25rem;
 
-	/* The one spacing name worth taking over: the page gutter is a decision,
-	   not a step on a ladder, so `px-gutter` should exist. Everything else on
-	   the ladder is reached with `p-(--space-12)`. */
-	--spacing-gutter: var(--gutter);
-	--spacing-tap:    var(--tap-min);
+	--avatar--size:       2.25rem;
+	--avatar--size-large: 2.875rem;
+	--avatar--size-small: 1.375rem;
 
-	/* ═══ THE SHELL — CANONICAL ═════════════════════════════════════════════
-	   The system now ships an APPLICATION SHELL, not just a page: a sticky
-	   top bar, a sidebar that can collapse to a rail, and a content column
-	   between them. These four numbers are what makes that shell work, and
-	   they are tokens rather than literals because two of them appear in a
-	   `calc()` in three different files.
+	--dropdown--padding:       var(--spacing-2);
+	--dropdown--offset:        var(--spacing-5);
+	--dropdown--border-radius: var(--radius-4);
 
-	   THE BAR AND THE SIDEBAR HAVE TO AGREE. The sidebar is sticky BELOW the
-	   bar, so its top offset and its max height are both derived from
-	   `--bar-h`. Hard-code either one and a taller bar silently pushes the
-	   sidebar's last item under the fold. */
-	--bar-h:        3.625rem;   /* 58px · the sticky top bar */
-	--rail-w:       4.5rem;     /* 72px · the sidebar, collapsed to icons */
-	--side-w:       15.5rem;    /* 248px · the sidebar, open */
-	--side-pad:     var(--space-3);
+	--input--min-height:    2.5rem;
+	--input--padding-v:     var(--spacing-5);
+	--input--padding-h:     var(--spacing-7);
+	--input--border-radius: var(--radius-3);
 
-	/* ═══ THE MEASURES — CANONICAL ══════════════════════════════════════════
-	   Three widths, and an article uses all three. The reading column is the
-	   default; a table or a diagram steps out to `wide`; a feature image
-	   steps out again to `media` and no further, because beyond that a 16:9
-	   image on a 27-inch display stops being a picture and becomes a wall. */
-	--width-read:  43.75rem;   /*  700px · the reading column */
-	--width-wide:  68.75rem;   /* 1100px · tables, diagrams, wide cards */
-	--width-media: 81.25rem;   /* 1300px · feature images, full-bleed */
+	--card--padding:       var(--spacing-8);
+	--card--border-radius: var(--radius-4);
+
+	--tooltip--background: var(--color-contrast);
+	--tooltip--foreground: var(--color-background);
+
+	/* ═══ ELEVATION AND MOTION ══════════════════════════════════════════════ */
+	--shadow-*: initial;
+	--shadow-1: light-dark(0 1px 2px oklch(12.5% 0.012 275 / 0.05), 0 0 0 1px oklch(100% 0 0 / 0.05));
+	--shadow-2: light-dark(0 4px 14px -8px oklch(12.5% 0.012 275 / 0.45), 0 0 0 1px oklch(100% 0 0 / 0.07));
+	--shadow-3: light-dark(0 12px 32px -12px oklch(12.5% 0.012 275 / 0.24), 0 0 0 1px oklch(100% 0 0 / 0.10));
+	--shadow-4: light-dark(0 20px 60px -10px oklch(12.5% 0.012 275 / 0.28), 0 0 0 1px oklch(100% 0 0 / 0.14));
+
+	--ease-*: initial;
+	--ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+	--ease-inout:  cubic-bezier(0.65, 0, 0.35, 1);
+	--ease-in-out: var(--ease-inout);
+	--ease-snap:   cubic-bezier(0.2, 0, 0, 1);
 }
+
+
+/* =============================================================================
+   DEPRECATED — the previous token names, mapped
+
+   Forty-five component files read these. Each one is a single alias onto a
+   token above, and the block SHRINKS: a component drops its aliases as it is
+   re-cut against the new names, and when the last one goes so does this.
+
+   ⚠️ NOTHING NEW MAY USE A NAME BELOW THIS LINE.
+
+   They are declared outside `@theme` deliberately — a Tailwind utility should
+   not exist for a deprecated name, so `bg-canvas` stops being generated while
+   `var(--bg-canvas)` keeps working for the files that still say it.
+   ========================================================================== */
+
+:root {
+	/* ── Surface ───────────────────────────────────────────────────────────── */
+	--bg-canvas:  var(--color-background);
+	--bg-surface: var(--color-background);
+	--bg-raised:  var(--color-background-100);
+	--bg-overlay: var(--color-background-100);
+	--bg-sunken:  var(--color-background-100);
+	--bg-muted:   var(--color-background-200);
+	--bg-inverse: var(--color-contrast);
+	--bg-media:   var(--color-background-200);
+	--bg-scrim:   var(--color-overlay);
+
+	/* ── Foreground ────────────────────────────────────────────────────────── */
+	--fg-default:    var(--color-contrast);
+	--fg-muted:      var(--color-foreground);
+	--fg-subtle:     var(--color-secondary);
+	--fg-faint:      var(--color-mute);
+	--fg-disabled:   var(--color-mute);
+	--fg-on-inverse: var(--color-background);
+	--fg-on-accent:  var(--color-accent-foreground);
+	--fg-accent:     var(--color-accent);
+	--fg-link:       var(--color-accent);
+	--fg-link-hover: var(--color-accent-hover);
+
+	/* ── Line ──────────────────────────────────────────────────────────────── */
+	--line-subtle:  var(--color-border);
+	--line-default: var(--color-border);
+	--line-strong:  var(--color-background-300);
+	--line-inverse: var(--color-border);
+	--line-accent:  var(--color-accent);
+
+	/* ── Accent and status ─────────────────────────────────────────────────── */
+	--accent:          var(--color-accent);
+	--accent-hover:    var(--color-accent-hover);
+	--accent-press:    var(--color-accent-hover);
+	--accent-soft:     var(--color-accent-soft);
+	--accent-soft-fg:  var(--color-accent-soft-fg);
+	--accent-ring:     color-mix(in oklab, var(--color-accent) 45%, transparent);
+	--craft:           var(--color-warning);
+	--craft-soft:      color-mix(in oklab, var(--color-warning) 14%, transparent);
+	--craft-fg:        var(--color-warning);
+
+	--success-fg:    var(--color-success);
+	--success-bg:    color-mix(in oklab, var(--color-success) 14%, transparent);
+	--success-line:  color-mix(in oklab, var(--color-success) 35%, transparent);
+	--success-solid: var(--color-success);
+	--info-fg:       var(--color-info);
+	--info-bg:       color-mix(in oklab, var(--color-info) 14%, transparent);
+	--info-line:     color-mix(in oklab, var(--color-info) 35%, transparent);
+	--info-solid:    var(--color-info);
+	--warning-fg:    var(--color-warning);
+	--warning-bg:    color-mix(in oklab, var(--color-warning) 14%, transparent);
+	--warning-line:  color-mix(in oklab, var(--color-warning) 35%, transparent);
+	--warning-solid: var(--color-warning);
+	--danger-fg:     var(--color-error);
+	--danger-bg:     color-mix(in oklab, var(--color-error) 14%, transparent);
+	--danger-line:   color-mix(in oklab, var(--color-error) 35%, transparent);
+	--danger-solid:  var(--color-error);
+
+	--hover-wash:   light-dark(oklch(12.5% 0.012 275 / 0.04), oklch(100% 0 0 / 0.06));
+	--press-wash:   light-dark(oklch(12.5% 0.012 275 / 0.08), oklch(100% 0 0 / 0.10));
+	--selection-bg: var(--color-accent-soft);
+	--selection-fg: var(--color-contrast);
+	--pure-white:   var(--color-white);
+	--pure-black:   var(--color-black);
+	--img-dim:      light-dark(none, brightness(0.88));
+
+	/* Syntax, and the chart series. Six hues on the shared ladder. */
+	--syn-structure: var(--color-contrast);
+	--syn-key:       var(--color-accent);
+	--syn-str:       light-dark(oklch(47% 0.085 195), oklch(82% 0.085 195));
+	--syn-num:       var(--color-warning);
+	--syn-fn:        var(--color-info);
+	--syn-var:       light-dark(oklch(46% 0.155 285), oklch(82% 0.100 285));
+	--syn-com:       var(--color-mute);
+	--syn-punc:      var(--color-secondary);
+	--chart-1: var(--color-accent);
+	--chart-2: var(--color-info);
+	--chart-3: var(--color-warning);
+	--chart-4: light-dark(oklch(54% 0.175 285), oklch(73% 0.140 285));
+	--chart-5: light-dark(oklch(56% 0.100 195), oklch(74% 0.100 195));
+	--chart-6: var(--color-success);
+	--pattern-ink:   light-dark(oklch(12.5% 0.012 275 / 0.07), oklch(100% 0 0 / 0.07));
+	--pattern-ink-2: light-dark(oklch(12.5% 0.012 275 / 0.14), oklch(100% 0 0 / 0.14));
+
+	/* ── Spacing ───────────────────────────────────────────────────────────── */
+	--space-0: 0;
+	--space-px: 1px;
+	--space-1: var(--spacing-2);
+	--space-2: var(--spacing-4);
+	--space-3: var(--spacing-6);
+	--space-4: var(--spacing-7);
+	--space-5: var(--spacing-8);
+	--space-6: var(--vertical-rhythm);
+	--space-8: var(--spacing-9);
+	--space-10: clamp(2.25rem, 1.95rem + 1.35vw, 3.25rem);
+	--space-12: clamp(2.75rem, 2.30rem + 2.00vw, 4.25rem);
+	--space-16: clamp(3.50rem, 2.80rem + 3.10vw, 6rem);
+	--space-20: var(--spacing-10);
+	--space-24: var(--spacing-11);
+	--gutter: var(--layout--padding);
+	--gap-hair: var(--spacing-1);
+	--gap-tight: var(--spacing-3);
+	--gap-snug: var(--spacing-5);
+	--gap-block: var(--spacing-9);
+	--gap-section: var(--layout--gap);
+	--tap-min: 44px;
+
+	/* ── Type ──────────────────────────────────────────────────────────────── */
+	--text-3xs: 0.625rem;
+	--text-2xs: 0.6875rem;
+	--text-xs: var(--font-x-small);
+	--text-sm: var(--font-small);
+	--text-base: var(--font-base);
+	--text-md: 1.0625rem;
+	--text-lg: var(--font-large);
+	--text-xl: var(--heading-3);
+	--text-2xl: var(--heading-2);
+	--text-3xl: 1.5625rem;
+	--text-4xl: var(--heading-1);
+	--text-5xl: var(--display-1);
+	--text-6xl: var(--display-2);
+
+	--font-body:    var(--font-family-body);
+	--font-display: var(--font-family-headings);
+	--font-label:   var(--font-family-body);
+	--font-data:    var(--font-family-body);
+	--font-slate:   var(--font-family-mono);
+	--font-pixel:        var(--font-family-pixel);
+	--font-pixel-square: var(--font-family-pixel);
+	--font-pixel-circle: var(--font-family-pixel-circle);
+	--font-pixel-line:   var(--font-family-pixel-line);
+
+	--weight-light:    var(--font-weight-light);
+	--weight-regular:  var(--font-weight-regular);
+	--weight-medium:   var(--font-weight-medium);
+	--weight-semibold: var(--font-weight-semibold);
+	--weight-bold:     var(--font-weight-bold);
+	--tracking-tighter: -0.035em;
+	--tracking-slate: var(--tracking-label);
+	--tracking-widest: 0.16em;
+
+	--measure-prose:  66ch;
+	--measure-lead:   54ch;
+	--measure-ui:     44ch;
+	--measure-narrow: 34ch;
+	--prose-rhythm:   1.5em;
+
+	/* ── Shape, elevation, motion ──────────────────────────────────────────── */
+	--radius-none: 0;
+	--radius-xs: 2px;
+	--radius-sm: 4px;
+	--radius-md: var(--radius-1);
+	--radius-lg: var(--radius-3);
+	--radius-xl: var(--radius-5);
+	--radius-2xl: 24px;
+	--radius-pill: var(--radius-full);
+	--radius-card:    var(--radius-4);
+	--radius-control: var(--radius-3);
+	--radius-media:   var(--radius-5);
+	--radius-sheet:   var(--radius-6);
+	--radius-badge:   var(--radius-1);
+	--border-hair: 1px;
+	--border-1: 1px;
+	--border-2: 2px;
+	--border-3: 3px;
+	--dot-sm: 0.375rem;
+	--dot-md: 0.5rem;
+	--dot-lg: 0.75rem;
+	--notch: 0.75rem;
+
+	--elevation-0: none;
+	--elevation-1: var(--shadow-1);
+	--elevation-2: var(--shadow-2);
+	--elevation-3: var(--shadow-3);
+	--elevation-4: var(--shadow-4);
+	--focus-ring: 0 0 0 2px var(--color-background), 0 0 0 4px var(--color-accent);
+	--ring-focus: var(--focus-ring);
+	--shadow-media: 0 24px 64px -24px color-mix(in oklab, var(--color-accent) 28%, transparent);
+
+	--dur-1: 60ms;
+	--dur-2: 120ms;
+	--dur-3: 200ms;
+	--dur-4: 320ms;
+	--dur-5: 480ms;
+	--ease-overshoot: cubic-bezier(0.34, 1.56, 0.64, 1);
+	--t-colors: color var(--dur-2) var(--ease-out),
+		background-color var(--dur-2) var(--ease-out),
+		border-color var(--dur-2) var(--ease-out);
+	--t-transform: translate var(--dur-2) var(--ease-out), scale var(--dur-2) var(--ease-out);
+	--t-shadow: box-shadow var(--dur-3) var(--ease-out);
+
+	/* ── The shell ─────────────────────────────────────────────────────────── */
+	--bar-h:    var(--navbar--height);
+	--side-w:   var(--sidebar--width);
+	--rail-w:   var(--sidebar-collapsed--width);
+	--side-pad: var(--sidebar--padding);
+	--width-xs: 20rem;
+	--width-sm: 30rem;
+	--width-md: 45rem;
+	--width-lg: 60rem;
+	--width-xl: 75rem;
+	--width-2xl: 90rem;
+	--width-full: 100%;
+	--width-read:  var(--container--width);
+	--width-wide:  var(--container-wide--width);
+	--width-media: var(--container-media--width);
+	--bp-sm: var(--breakpoint-sm);
+	--bp-md: var(--breakpoint-md);
+	--bp-lg: var(--breakpoint-lg);
+	--bp-xl: var(--breakpoint-xl);
+	--bp-2xl: var(--breakpoint-2xl);
+
+	--z-below: -1;
+	--z-base: 0;
+	--z-raised: 10;
+	--z-sticky: 100;
+	--z-nav: 200;
+	--z-dropdown: 300;
+	--z-overlay: 400;
+	--z-modal: 500;
+	--z-toast: 600;
+	--z-max: 9999;
+
+	color-scheme: light dark;
+}
+
+:root[data-theme='light'] { color-scheme: light; }
+:root[data-theme='dark']  { color-scheme: dark; }
+
+/* The accent presets, re-cut onto the new names. Six lines each, because the
+   accent is four tones and every one has to move together. */
+[data-accent='azure'] {
+	--color-accent:         light-dark(oklch(54% 0.150 240), oklch(73% 0.125 240));
+	--color-accent-hover:   light-dark(oklch(46% 0.130 240), oklch(82% 0.090 240));
+	--color-accent-soft:    light-dark(oklch(96.5% 0.018 240), oklch(62% 0.145 240 / 0.16));
+	--color-accent-soft-fg: light-dark(oklch(46% 0.130 240), oklch(89% 0.060 240));
+}
+
+[data-accent='iris'] {
+	--color-accent:         light-dark(oklch(54% 0.175 285), oklch(73% 0.140 285));
+	--color-accent-hover:   light-dark(oklch(46% 0.155 285), oklch(82% 0.100 285));
+	--color-accent-soft:    light-dark(oklch(96.5% 0.020 285), oklch(62% 0.17 285 / 0.16));
+	--color-accent-soft-fg: light-dark(oklch(46% 0.155 285), oklch(89% 0.068 285));
+}
+
+[data-accent='mint'] {
+	--color-accent:         light-dark(oklch(46% 0.100 155), oklch(74% 0.125 155));
+	--color-accent-hover:   light-dark(oklch(37% 0.080 155), oklch(82% 0.105 155));
+	--color-accent-soft:    light-dark(oklch(96.5% 0.022 155), oklch(64% 0.13 155 / 0.16));
+	--color-accent-soft-fg: light-dark(oklch(46% 0.100 155), oklch(89% 0.075 155));
+}
+
+[data-accent='teal'] {
+	--color-accent:         light-dark(oklch(47% 0.085 195), oklch(74% 0.100 195));
+	--color-accent-hover:   light-dark(oklch(38% 0.070 195), oklch(82% 0.085 195));
+	--color-accent-soft:    light-dark(oklch(96.5% 0.020 195), oklch(65% 0.105 195 / 0.16));
+	--color-accent-soft-fg: light-dark(oklch(47% 0.085 195), oklch(89% 0.062 195));
+}
+
+::selection { background: var(--selection-bg); color: var(--selection-fg); }
+img, video { filter: var(--img-dim); }

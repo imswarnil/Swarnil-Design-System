@@ -317,17 +317,41 @@
 		position: relative;
 		display: flex;
 		align-items: center;
-		gap: var(--space-4);
 	}
 
+	/* The drop shadow is what lifts the picture off the wash. A soft, mostly
+	   downward fall — not a glow — so it reads as a photograph resting on the
+	   page rather than as a card floating over it. */
 	.intro__frame {
 		position: relative;
 		flex: 1;
 		margin: 0;
 		border-radius: var(--radius-media);
-		background: var(--bg-muted);
+		background: var(--color-background-200);
+		box-shadow: var(--shadow-4);
 		overflow: hidden;
 		aspect-ratio: var(--intro-ratio, 4 / 5);
+	}
+
+	/* On load, once. The picture settles up into place and the words arrive
+	   behind it. `backwards` fill so nothing flashes at its end position
+	   before the animation starts. */
+	@media (prefers-reduced-motion: no-preference) {
+		.intro__frame { animation: intro-rise var(--dur-5) var(--ease-out) backwards; }
+		.intro__copy > * { animation: intro-in var(--dur-5) var(--ease-out) backwards; }
+		.intro__copy > :nth-child(1) { animation-delay: 60ms; }
+		.intro__copy > :nth-child(2) { animation-delay: 110ms; }
+		.intro__copy > :nth-child(3) { animation-delay: 150ms; }
+		.intro__copy > :nth-child(4) { animation-delay: 185ms; }
+		.intro__copy > :nth-child(n + 5) { animation-delay: 215ms; }
+	}
+
+	@keyframes intro-rise {
+		from { opacity: 0; translate: 0 var(--space-5); scale: 0.98; }
+	}
+
+	@keyframes intro-in {
+		from { opacity: 0; translate: 0 var(--space-3); }
 	}
 
 	.intro__frame > img,
@@ -339,13 +363,70 @@
 		border: 0;
 	}
 
+	/* ── The control column ────────────────────────────────────────────────
+	   ON the picture's edge, not beside it: `inset-inline-end: 0` plus
+	   `translate: 50%` puts the column half on the frame and half off, which
+	   is what ties the two together. Beside it, they read as two objects.
+
+	   A sibling of the frame rather than a child — the frame clips to keep
+	   its corners round and would cut the column in half. */
 	.intro__rail {
+		position: absolute;
+		inset-block-start: 50%;
+		inset-inline-end: 0;
+		z-index: var(--z-raised);
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: var(--space-3);
-		flex: none;
+		gap: var(--spacing-6);
+		translate: 50% -50%;
 	}
+
+	/* The buttons in the column are round, page-coloured and shadowed, so they
+	   read on any photograph without a scrim. Hover fills with the accent —
+	   the one place in this section where it fills anything. */
+	.intro__rail .social {
+		--social-size: 2.25rem;
+		--social-gap: var(--spacing-6);
+		--social-bg: var(--color-background);
+		--social-fg: var(--color-contrast);
+		--social-bg-hover: var(--color-accent);
+		--social-fg-hover: var(--color-accent-foreground);
+	}
+
+	.intro__rail .social__link,
+	.intro__play {
+		border: 1px solid var(--color-border);
+		box-shadow: var(--shadow-2);
+	}
+
+	.intro__rail .social__link:hover { border-color: var(--color-accent); }
+
+	/* The film's control. Accent-filled from the start, because it is the one
+	   thing in the column that changes the page rather than leaving it. */
+	.intro__play {
+		display: grid;
+		place-items: center;
+		inline-size: 2.25rem;
+		block-size: 2.25rem;
+		padding: 0;
+		border-color: var(--color-accent);
+		border-radius: var(--radius-full);
+		background: var(--color-accent);
+		color: var(--color-accent-foreground);
+		cursor: pointer;
+		transition: var(--t-colors), translate var(--dur-3) var(--ease-out);
+	}
+
+	.intro__play:hover { background: var(--color-accent-hover); border-color: var(--color-accent-hover); }
+	.intro__play .icon { --icon-size: 1rem; }
+
+	/* Playing: the control travels to the frame's top corner and becomes the
+	   way out. It KEEPS ITS SLOT in the column, so the accounts never move. */
+	.intro[data-playing] .intro__play { translate: 0 calc(var(--intro-play-travel, 0px) * -1); }
+	.intro__play .icon-close { display: none; }
+	.intro[data-playing] .intro__play .icon-play { display: none; }
+	.intro[data-playing] .intro__play .icon-close { display: block; }
 
 	/* ═══ VARIANTS ═════════════════════════════════════════════════════════
 	   Five arrangements of the same parts. Every one of them is the same
@@ -503,8 +584,15 @@
 		.intro__title { font-size: clamp(var(--text-3xl), 9cqi, var(--text-5xl)); }
 	}
 
+	/* On a narrow card the column has no margin to straddle, so it comes
+	   inside the frame and lies along the bottom instead. */
 	@container (width < 32rem) {
-		.intro__rail { position: absolute; inset-block-end: var(--space-3); inset-inline-end: var(--space-3); flex-direction: row; }
+		.intro__rail {
+			inset-block: auto var(--spacing-6);
+			inset-inline-end: var(--spacing-6);
+			flex-direction: row;
+			translate: 0;
+		}
 	}
 
 	/* The wash drifts, the dot pulses and the reel rolls. All three are
@@ -512,7 +600,9 @@
 	@media (prefers-reduced-motion: reduce) {
 		.intro__mesh,
 		.intro__tick,
-		.intro__reel { animation: none; will-change: auto; }
+		.intro__reel,
+		.intro__frame,
+		.intro__copy > * { animation: none; will-change: auto; }
 		.intro__loop { display: none; }
 	}
 }
