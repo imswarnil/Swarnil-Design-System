@@ -319,24 +319,35 @@
 		align-items: center;
 	}
 
+	/* The mount is the frame's coordinate space and holds its resting size.
+	   The frame is positioned INSIDE it, so when play takes the frame out of
+	   flow the words beside it do not jump: the mount's box does not change. */
+	.intro__mount {
+		position: relative;
+		flex: 1;
+		aspect-ratio: var(--intro-ratio, 1);
+	}
+
 	/* The drop shadow is what lifts the picture off the wash. A soft, mostly
 	   downward fall — not a glow — so it reads as a photograph resting on the
 	   page rather than as a card floating over it. */
 	.intro__frame {
-		position: relative;
-		flex: 1;
 		margin: 0;
 		border-radius: var(--radius-media);
 		background: var(--color-background-200);
 		box-shadow: var(--intro-shadow);
 		overflow: hidden;
-		aspect-ratio: var(--intro-ratio, 1);
 
-		/* THE FRAME CANNOT BE TRANSITIONED BY CSS ALONE. Pressing play swaps
-		   its aspect-ratio, and `aspect-ratio` is not an animatable property
-		   — the rectangle would jump. So the shape change is tweened on the
-		   element's own `--intro-ratio` through a registered property (see
-		   0-config/properties.css) and the layout follows it continuously. */
+		/* THE SHAPE CHANGE IS NOT A CSS TRANSITION. Playing switches this
+		   element's `position` and its width from a length to `auto`, and
+		   neither interpolates — the box would jump while something on top
+		   of it appeared to move. src/js/intro.js animates the RECTANGLE
+		   instead (left/top/width/height, Web Animations), which re-lays out
+		   the picture on every frame so nothing stretches.
+
+		   Only the shadow transitions here. */
+		position: absolute;
+		inset: 0;
 		transition: box-shadow var(--dur-4) var(--ease-out);
 	}
 
@@ -356,8 +367,29 @@
 	   it stands, the still fades out under the player, and the control
 	   travels to the corner as the way back. Nothing opens, nothing
 	   navigates, and nothing is fetched from a video host until play. */
+	/* Playing: the frame leaves the mount and becomes a 16/9 rectangle that
+	   spans the whole section. The mount keeps its square, so nothing beside
+	   it moves — which is what makes the film look like it grew out of the
+	   picture rather than replacing it. */
 	.intro[data-playing] .intro__frame {
-		--intro-ratio: 1.7778;   /* 16 / 9, as a number the property can tween */
+		/* Anchored to the mount's RIGHT edge and grown leftward, so the film
+		   is bigger than the picture was rather than a squashed version of
+		   it. A square that becomes 16/9 at the same width has lost half its
+		   height, and that reads as the picture shrinking — the opposite of
+		   what pressing play should feel like.
+
+		   The mount keeps its square, so nothing in the layout moves; the
+		   film simply overhangs the gap between the columns. */
+		/* `inset-block: 50% auto`, not just a start — the base rule sets
+		   `inset: 0`, and top AND bottom both pinned is over-constrained:
+		   the height resolves from the two edges and `aspect-ratio` is
+		   ignored. The end edge has to be released explicitly. */
+		inset-block: 50% auto;
+		inset-inline: auto 0;
+		inline-size: min(160%, 40rem);
+		block-size: auto;
+		aspect-ratio: 1.7778;
+		translate: 0 -50%;
 		box-shadow:
 			-24px 36px 64px -28px color-mix(in oklab, var(--color-black) 46%, transparent),
 			-6px 10px 20px -12px color-mix(in oklab, var(--color-black) 28%, transparent);
