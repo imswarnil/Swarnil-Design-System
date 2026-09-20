@@ -434,6 +434,14 @@ PAGE_TEMPLATES = [
 ]
 
 
+# Standalone previews of ONE section, for a docs page to link at. Built like
+# a template, listed nowhere: a reader reaches them from the component's page.
+SECTION_PAGES = [
+    ('hero-personal', 'Personal hero', 'The personal hero at full width.', ['Intro']),
+    ('pricing-section', 'Pricing', 'The pricing section at full width.', ['Pricing']),
+]
+
+
 def wireframe(kind):
     """A drawn thumbnail, in system tokens so it follows the theme.
 
@@ -795,7 +803,7 @@ def main():
     tpl_shell = (PAGES_DIR / '_shell.html').read_text()
     (OUT / 't').mkdir(exist_ok=True)
     built = 0
-    for slug, title, blurb, uses in PAGE_TEMPLATES:
+    for slug, title, blurb, uses in PAGE_TEMPLATES + SECTION_PAGES:
         src = PAGES_DIR / f'{slug}.html'
         if not src.exists():
             print(f'  warning: docs/pages/{slug}.html missing — listed but not built')
