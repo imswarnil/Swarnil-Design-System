@@ -44,8 +44,8 @@ Nothing here is a control — every control lives on [Field](/field).
 `.form-row` is a grid of equal columns that stacks on its own. It uses
 `auto-fit` against a minimum column width rather than a media query, so it
 stacks by arithmetic when its container is narrow, not when the viewport is —
-toggle the 320px preview to see it. `.form-row-3` lowers the minimum so three
-fields fit.
+toggle the 320px preview to see it. The minimum is `13rem`, so a row of three
+short fields keeps all three until the container cannot hold them.
 
 :::demo
 <form class="form w-lg" action="#" onsubmit="return false">
@@ -59,7 +59,7 @@ fields fit.
       <input class="input" id="fr-h" type="number" value="1080" />
     </div>
   </div>
-  <div class="form-row form-row-3">
+  <div class="form-row">
     <div class="field">
       <label class="field__label" for="fr-hh">Hours</label>
       <input class="input" id="fr-hh" type="number" value="0" min="0" />
@@ -88,9 +88,9 @@ fieldset disables everything inside it at once.
 <form class="form w-lg" action="#" onsubmit="return false">
   <fieldset class="fieldset">
     <legend>Visibility</legend>
-    <label class="choice"><input class="radio" type="radio" name="vis" checked /> Public</label>
-    <label class="choice"><input class="radio" type="radio" name="vis" /> Members</label>
-    <label class="choice"><input class="radio" type="radio" name="vis" /> Unlisted</label>
+    <label class="choice"><input class="check" type="radio" name="vis" checked /> Public</label>
+    <label class="choice"><input class="check" type="radio" name="vis" /> Members</label>
+    <label class="choice"><input class="check" type="radio" name="vis" /> Unlisted</label>
   </fieldset>
   <fieldset class="fieldset fieldset-boxed">
     <legend>Distribution</legend>
@@ -219,12 +219,11 @@ stylesheet styles that verdict with no script.
     </div>
   </div>
   <label class="field field-float"><textarea class="input" id="up-notes" rows="3" placeholder=" "></textarea><span class="field__label">Show notes</span></label>
-  <hr class="form__divider" />
   <fieldset class="fieldset">
     <legend>Resolution</legend>
     <div class="grid-2">
-      <label class="choice choice-card"><input class="radio" type="radio" name="up-res" checked /> 1080p60</label>
-      <label class="choice choice-card"><input class="radio" type="radio" name="up-res" /> 4K</label>
+      <label class="choice"><input class="check" type="radio" name="up-res" checked /> 1080p60</label>
+      <label class="choice"><input class="check" type="radio" name="up-res" /> 4K</label>
     </div>
   </fieldset>
   <div class="field">
@@ -237,25 +236,30 @@ stylesheet styles that verdict with no script.
     <label class="choice"><input class="switch" type="checkbox" role="switch" checked /> Notify subscribers</label>
     <label class="choice"><input class="switch" type="checkbox" role="switch" /> Post the clip to the community tab</label>
   </fieldset>
-  <div class="form__actions form__actions-end">
+  <div class="form__actions">
     <button class="btn btn-ghost" type="button">Save draft</button>
     <button class="btn btn-primary" type="submit">Upload</button>
   </div>
 </form>
 :::
 
-`.form__actions-end` moves the buttons to the trailing edge for a form that
-ends a dialog or a sheet; the default sits them on the reading edge, under the
-fields, where a page-level form ends.
+The actions sit on the reading edge, under the fields, where a page-level form
+ends. Below 540px every button in the row goes full width, because a half-width
+button on a phone is a target nobody aims at.
 
 ## Properties
 
-| Variable | On | Does |
-| --- | --- | --- |
-| `--form-gap` | `.form` | Space between fields; rows read it for their column gap too |
-| `--form-row-min` | `.form-row` | Minimum column width before the row stacks (`12rem`; `.form-row-3` sets `8rem`) |
-| `--field-h`, `--field-text` | `.form-sm`, `.form-lg` | Inherited control height and font size, read by every `.input`, `.select` and `.range` inside |
-| `--fieldset-gap` | `.fieldset` | Space between the controls in a group |
+The form does not carry variables of its own any more — the gaps, the padding
+and the radius come straight off the spacing and radius tokens, so a form
+changes shape when the system does rather than when a form variable is set.
+
+| Part | Comes from |
+| --- | --- |
+| Gap between fields | `--spacing-8` |
+| Padding inside the border | `--spacing-9` |
+| The border and its radius | `--border-hair`, `--color-border`, `--radius-6` |
+| Row columns | `auto-fit`, minimum `13rem` |
+| Gap inside a `.fieldset` | `--spacing-6` |
 
 ## Accessibility
 

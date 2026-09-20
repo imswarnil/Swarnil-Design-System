@@ -123,4 +123,10 @@ not on it has not been looked at yet.
 | Navigation (navlist) | Done |
 | Shell | Done |
 | Card | Done |
+| Button | Done — rebuilt as a pill, the radius half the height |
+| Input, select, textarea | Done — filled wells, no border |
+| Field, form, fieldset | Done — the form draws the only edge |
+| Panel / alert | Pending |
+| Badge / chip | Pending |
+| Table | Pending |
 | Everything else | Pending |

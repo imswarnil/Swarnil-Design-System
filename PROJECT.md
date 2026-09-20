@@ -45,9 +45,8 @@ it for *paths*, never for design decisions about this repo.
 
 ## Where things stand
 
-`main` serves `design.imswarnil.com`. The working branch is `bulma-experiment`,
-which is now badly named: the Bulma experiment was reverted in full and the
-branch carries the Tailwind + daisyUI conversion instead. **Rename or merge it.**
+`main` serves `design.imswarnil.com`, and the Tailwind + daisyUI work is on it —
+the old `bulma-experiment` branch was merged in `546b064`. Work happens on `main`.
 
 ### The stack
 
@@ -60,8 +59,8 @@ branch carries the Tailwind + daisyUI conversion instead. **Rename or merge it.*
 | Broadcast | `src/broadcast.css` → `dist/swarnil-broadcast.css` |
 | Docs | `docs/assets/site.css` → `site/assets/site.min.css` |
 
-Sizes, gzipped: web bundle **82.9 KB**, broadcast **87.2 KB**, docs site
-**68.1 KB**. A consumer compiling from source against their own markup gets
+Sizes, gzipped: web bundle **82.4 KB**, broadcast **86.7 KB**, docs site
+**73.8 KB**. A consumer compiling from source against their own markup gets
 roughly **58 KB** — smaller, because their utilities come from their own class
 names rather than a safelist.
 
@@ -95,14 +94,13 @@ Nothing is queued — ask. Open threads worth remembering:
 - **THE RE-CUT IS IN PROGRESS.** Every component is being brought to the eight
   rules in `docs/content/house-style.md`, one at a time, and the progress table
   at the bottom of that page is the record. Done: navbar + dropdown,
-  navigation, shell, card. **Next: panel/alert, field/form, badge/chip, table,
-  button.** Surfaces first — they are what make the difference visible — then
+  navigation, shell, card, button, input, field/form. **Next: panel/alert,
+  badge/chip, table.** Surfaces first — they are what make the difference visible — then
   controls, then the sections.
 - **No audit stops the docs chrome taking a system class name.** `.rail` cost a
   session's debugging. `audit-classes.py` already knows every class the system
   defines; failing when `docs/assets/*.css` redefines one would be a few lines.
 
-- **The branch name lies.** `bulma-experiment` holds the Tailwind work.
 - **`@utility` classes must be safelisted for the prebuilt bundles.** They are
   compiled like any Tailwind utility, so nothing *uses* them in a library build
   and they ship as nothing unless named in `src/0-config/safelist.css`.
@@ -123,6 +121,44 @@ Nothing is queued — ask. Open threads worth remembering:
 Newest first. What changed, and anything that would surprise the next session.
 Trimmed on 2026-09-14 to the last three sessions — everything before that is in
 git history, which is where a log of finished work belongs.
+
+### 2026-09-20 (later) — The docs catch up to the rebuild, and CI goes green
+
+The token rebuild, the button/input rebuild and the field rebuild all landed in
+one push, and **CI failed on it** — `npm run check` had been reported green from
+a grep that hid the class audit. Run `35487215709` is the red one; this session
+is the repair, and nothing new was designed.
+
+**Four breakages, all from the rebuilds:**
+
+1. **The token layer took Tailwind's own namespaces with it.** Clearing
+   `--spacing-*` removed `m-0` and `inset-0` from the build; clearing
+   `--radius-*` removed `rounded-md` and `rounded-lg`; and the surface names
+   the docs use as utilities (`bg-sunken`, `text-fg`) never had `--color-*`
+   entries to generate from. `--spacing: 0.25rem` is back as the scale's root,
+   the t-shirt radii sit beside Aspect's numbered ones, and the surface
+   utilities are **aliases of the tokens**, not a second set of values.
+2. **The field rebuild dropped eight class families the docs still used.** The
+   docs now document what ships: a radio is `.check` with `type="radio"`,
+   `.choice__desc` is `.choice__hint`, `.choice-top` is gone because `.choice`
+   already aligns to the top, and sizes go on the control (`.input-sm`) rather
+   than on a `.field-sm` wrapper. **Deleted with the things they documented:**
+   the choice card, `.input-icon-end`, `.form-row-3`, `.form__divider`,
+   `.form__actions-end`, and the `.field__pop` burst section.
+3. **Both properties tables were fiction.** Of fifteen variables `field.md`
+   listed, four exist. The form carries none of its own any more, so that table
+   now names where each measurement actually comes from.
+4. **The camera motif left markup behind.** `.vf` in `hero.md` and
+   `landing.html` (now a plain filled well), `.win`/`.win-term` in
+   `principles.md`, and `.tpl-body` on the template shell's `<body>`, which
+   styled nothing anywhere.
+
+**Principle 0 was still the camera.** It described a visual language deleted in
+`e14863a` — viewfinders, record lights, tape. It is now *a fill, not a frame*,
+and points at the house style for the look. Principle 7 (Frames) went with the
+components it demonstrated; 8–12 renumbered to 7–11.
+
+`npm run check` exits **0** as a whole chain, not per-gate with a filter.
 
 ### 2026-09-20 — Navbar dropdowns, real template pages, and the house style the re-cut is measured against
 

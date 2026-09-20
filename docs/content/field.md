@@ -90,23 +90,10 @@ The error says what happened, then what to do. Never just "invalid".
 </div>
 :::
 
-Three heights, matching `.btn-sm`, `.btn` and `.btn-lg`. To resize every
-control in a field at once, put `.field-sm` or `.field-lg` on the wrapper —
-the height is inherited, so the control class is not needed. `.form-sm` and
-`.form-lg` do the same for a whole form; see [Form](/form).
-
-:::demo Size on the wrapper
-<div class="stack w-md">
-  <div class="field field-sm">
-    <label class="field__label" for="f-tag">Tag</label>
-    <input class="input" id="f-tag" type="text" placeholder="studio-notes" />
-  </div>
-  <div class="field field-lg">
-    <label class="field__label" for="f-join">Join the list</label>
-    <input class="input" id="f-join" type="email" placeholder="you@domain.com" />
-  </div>
-</div>
-:::
+Three heights, matching `.btn-sm`, `.btn` and `.btn-lg`. The size goes on the
+control, not on the wrapper — `.input-sm`, `.select-sm` and `.textarea-sm`, and
+the same three in `-lg`. To resize every control at once, put `.form-sm` or
+`.form-lg` on the form; see [Form](/form).
 
 ## Textarea
 
@@ -122,18 +109,15 @@ page: the resize handle is vertical only.
 
 ## With an icon
 
-`.input-icon` seats a glyph inside the control and pads the text past it.
-`.input-icon-end` puts it on the trailing edge.
+`.input-icon` seats a glyph inside the control and pads the text past it. The
+icon sits on the leading edge, goes quiet in `--color-mute`, and takes the ink
+colour while the control has focus.
 
 :::demo
 <div class="stack stack-sm w-md">
   <div class="input-icon">
     <svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-search"/></svg>
     <input class="input" type="search" placeholder="Search episodes" aria-label="Search episodes" />
-  </div>
-  <div class="input-icon input-icon-end">
-    <svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-clock"/></svg>
-    <input class="input" type="text" value="00:12:47" aria-label="Start at" />
   </div>
 </div>
 :::
@@ -165,9 +149,11 @@ method. A `multiple` select drops the chevron and shows its options in the box.
 
 ## Checkbox and radio
 
-`accent-color` is the entire implementation — no sprite, no pseudo-element,
-and Space and the arrow keys behave exactly as the platform ships them. The
-`.choice` label wraps the input so the whole line is the hit target.
+`.check` draws the box itself — a fill with a masked tick, no sprite and no
+extra element — so a checked box inverts to the ink colour instead of tinting
+the platform's. `type="radio"` rounds it and swaps the tick for a dot. Space and
+the arrow keys behave exactly as the platform ships them, and the `.choice`
+label wraps the input so the whole line is the hit target.
 
 :::demo
 <div class="stack stack-sm w-md">
@@ -180,42 +166,21 @@ and Space and the arrow keys behave exactly as the platform ships them. The
 :::demo Radios, grouped by a real fieldset
 <fieldset class="fieldset w-md">
   <legend>Watch quality</legend>
-  <label class="choice"><input class="radio" type="radio" name="q" checked /> Auto (recommended)</label>
-  <label class="choice"><input class="radio" type="radio" name="q" /> 1080p60 always</label>
-  <label class="choice"><input class="radio" type="radio" name="q" /> Data saver</label>
+  <label class="choice"><input class="check" type="radio" name="q" checked /> Auto (recommended)</label>
+  <label class="choice"><input class="check" type="radio" name="q" /> 1080p60 always</label>
+  <label class="choice"><input class="check" type="radio" name="q" /> Data saver</label>
 </fieldset>
 :::
 
 :::demo Two-line choice
 <div class="stack stack-sm w-md">
-  <label class="choice choice-top">
+  <label class="choice">
     <input class="check" type="checkbox" checked />
-    <span>Members only<span class="choice__desc">Free viewers see the trailer and a join button.</span></span>
+    <span>Members only<span class="choice__hint">Free viewers see the trailer and a join button.</span></span>
   </label>
-  <label class="choice choice-top">
+  <label class="choice">
     <input class="check" type="checkbox" />
-    <span>Schedule<span class="choice__desc">Goes live at 09:00 in the channel's timezone.</span></span>
-  </label>
-</div>
-:::
-
-## Choice card
-
-The whole tile is the control. The input stays real, so keyboard and screen
-reader behaviour stay native, and `:has(:checked)` styles the tile from the
-input's own state. Focus lands on the card's outline, not the tiny box inside.
-
-:::demo
-<div class="grid-2 w-md">
-  <label class="choice choice-card"><input class="radio" type="radio" name="res" checked /> 1080p</label>
-  <label class="choice choice-card"><input class="radio" type="radio" name="res" /> 4K</label>
-  <label class="choice choice-card choice-top">
-    <input class="check" type="checkbox" checked />
-    <span>Captions<span class="choice__desc">Auto-generated, editable.</span></span>
-  </label>
-  <label class="choice choice-card choice-top">
-    <input class="check" type="checkbox" />
-    <span>Chapters<span class="choice__desc">From the timestamps in the notes.</span></span>
+    <span>Schedule<span class="choice__hint">Goes live at 09:00 in the channel's timezone.</span></span>
   </label>
 </div>
 :::
@@ -304,20 +269,14 @@ sets the label column so a stack of them lines up.
 
 | Variable | On | Does |
 | --- | --- | --- |
-| `--field-gap` | `.field` | Space between label, control and hint |
-| `--field-h` | `.field-sm`, `.field-lg`, `.form-sm`, `.form-lg` | Inherited control height every `.input`, `.select` and `.range` inside reads |
-| `--field-text` | same | Inherited control font size |
-| `--field-label-w` | `.field-inline` | Width of the label column |
-| `--input-icon-inset` | `.input-icon` | Padding that clears the seated icon |
-| `--input-h` | `.input`, `.select` | Control height (falls back to `--field-h`, then 2.5rem) |
-| `--input-bg` | `.input` | Fill |
-| `--input-line` | `.input`, `.select` | Border colour; the focus and invalid states set it |
-| `--input-pad` | `.input` | Inline padding |
-| `--switch-h`, `--switch-w` | `.switch` | Track size; the thumb and its travel are derived |
-| `--switch-pad` | `.switch` | Inset of the thumb from the track |
-| `--range-track` | `.range` | Track thickness |
-| `--range-thumb` | `.range` | Thumb diameter |
-| `--value` | `.range` | Filled portion of the track, as a percentage |
+| `--input-h` | `.input`, `.select` | Control height — `2.5rem`, and the radius is half of it |
+| `--input-bg` | `.input`, `.select` | The fill, which is the whole shape: there is no border to set |
+| `--input-bg-hover` | same | The step the fill takes on hover and while focused |
+| `--input-line` | same | `transparent` by default; `.input-bordered` and the invalid state are what set it |
+
+The rest is the token layer doing its job. Sizes come from `.input-sm` and
+`.input-lg` setting `--input-h`; the inline padding, the radius and the type
+size are derived from it rather than named separately.
 
 ## Accessibility
 
@@ -330,59 +289,5 @@ sets the label column so a stack of them lines up.
 - The error disc means the state is never carried by colour alone.
 - A switch carries `role="switch"`; a group of radios sits in a real
   `<fieldset>` with a `<legend>`.
-- The choice card moves the focus ring to the tile, so the keyboard sees the
-  same target the mouse does.
 - The floating label is a real `<label>` wrapping the input, so it is the
   accessible name whether floated or resting.
-
-## The marks that answer a keystroke
-
-A subscribe field, a comment box, a search: the moment somebody starts typing,
-a small spray of marks leaves the field. It is the same idea as
-[`.btn-burst`](/button.html), and it is here for the same reason — the one
-moment on a creator's page where a flourish is the point rather than a
-distraction.
-
-:::demo Type something
-<div class="stack" style="max-inline-size: 24rem">
-  <label class="field">
-    <span class="field__label">Email</span>
-    <input class="input" type="email" placeholder="you@studio.tv" autocomplete="email" />
-    <span class="field__pop" aria-hidden="true">
-      <span style="--a: 70deg"><svg class="icon"><use href="/icons/sprite.svg#i-mail"/></svg></span>
-      <span style="--a: 110deg"><svg class="icon"><use href="/icons/sprite.svg#i-heart"/></svg></span>
-      <span style="--a: 90deg; --d: 3.4rem"><svg class="icon"><use href="/icons/sprite.svg#i-sparkle"/></svg></span>
-    </span>
-    <span class="field__hint">One issue a week. Unsubscribe in one click.</span>
-  </label>
-
-  <label class="field">
-    <span class="field__label">Say something</span>
-    <input class="input" type="text" placeholder="What did this miss?" />
-    <span class="field__pop" aria-hidden="true">
-      <span style="--a: 60deg"><svg class="icon"><use href="/icons/sprite.svg#i-message"/></svg></span>
-      <span style="--a: 120deg"><svg class="icon"><use href="/icons/sprite.svg#i-thumbs-up"/></svg></span>
-    </span>
-  </label>
-</div>
-:::
-
-It fires on `:not(:placeholder-shown)`, which is CSS's way of asking *has
-anyone typed anything* — so the input needs a `placeholder` for the selector to
-have something to test. That is not a hack: a field with no placeholder has no
-empty state to detect.
-
-```html
-<label class="field">
-  <span class="field__label">Email</span>
-  <input class="input" type="email" placeholder="you@studio.tv" />
-  <span class="field__pop" aria-hidden="true">
-    <span style="--a: 70deg">…icon…</span>
-    <span style="--a: 110deg">…icon…</span>
-  </span>
-</label>
-```
-
-`aria-hidden` and `pointer-events: none`, because these are confetti. Delete
-the whole block and the field is identical in every way that matters — which is
-the test any flourish has to pass before it ships.

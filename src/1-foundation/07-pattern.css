@@ -7,7 +7,7 @@
 
    COMPOSITION WARNING
    Each paints on ::before. An element has exactly one, so a pattern cannot
-   share an element with .frame, .vf, or anything else that uses ::before.
+   share an element with .btn-live, .pop-arrow or anything else using ::before.
    Put the pattern on a child or a parent. This is not theoretical — both are
    one class deep, so source order alone decides the winner, and moving a file
    has silently swapped them before.
