@@ -219,3 +219,200 @@
 		vbox.appendChild(f);
 	}
 }());
+
+/* =============================================================================
+   THE COMPONENT INDEX — filter and order
+
+   Progressive, like everything else on this site: with JavaScript off the
+   index still renders every card in A–Z order, which is the useful default.
+   This adds the name filter, the group chips and the order switch.
+
+   Nothing here fetches or re-renders. The cards are in the markup; this only
+   sets `hidden` on the ones that do not match and re-orders the rest, so the
+   list can never disagree with the build that produced it.
+   ========================================================================== */
+
+(() => {
+	const index = document.querySelector('[data-index]');
+	if (!index) return;
+
+	const grid = index.querySelector('[data-index-grid]');
+	const search = index.querySelector('[data-index-search]');
+	const count = index.querySelector('[data-index-count]');
+	const empty = index.querySelector('[data-index-empty]');
+	const cards = [...grid.querySelectorAll('.xcard')];
+
+	let order = 'az';
+	let group = 'all';
+
+	/* The A–Z order inserts a letter heading before each new initial. They are
+	   created once and re-used, because creating them per keystroke would make
+	   the filter re-flow the whole grid on every character. */
+	const letters = new Map();
+
+	const letterHead = (ch) => {
+		if (!letters.has(ch)) {
+			const h = document.createElement('p');
+			h.className = 'xindex__letter';
+			h.setAttribute('aria-hidden', 'true');
+			h.textContent = ch;
+			letters.set(ch, h);
+		}
+		return letters.get(ch);
+	};
+
+	const apply = () => {
+		const q = (search?.value || '').trim().toLowerCase();
+		let shown = 0;
+
+		letters.forEach((h) => h.remove());
+
+		const visible = cards.filter((card) => {
+			const okName = !q || card.dataset.name.includes(q);
+			const okGroup = group === 'all' || card.dataset.group === group;
+			const on = okName && okGroup;
+			card.hidden = !on;
+			if (on) shown += 1;
+			return on;
+		});
+
+		if (order === 'az') {
+			visible.sort((a, b) => a.dataset.name.localeCompare(b.dataset.name));
+			let last = null;
+			visible.forEach((card) => {
+				if (card.dataset.letter !== last) {
+					last = card.dataset.letter;
+					grid.append(letterHead(last));
+				}
+				grid.append(card);
+			});
+		} else {
+			/* By group, then by name inside it — the sidebar's order, so the
+			   two ways of finding a component agree with each other. */
+			visible.sort((a, b) =>
+				a.dataset.group.localeCompare(b.dataset.group) ||
+				a.dataset.name.localeCompare(b.dataset.name));
+			visible.forEach((card) => grid.append(card));
+		}
+
+		/* Hidden cards go to the end, out of the way of the sort above. */
+		cards.filter((c) => c.hidden).forEach((c) => grid.append(c));
+
+		if (count) count.textContent = `${shown} component${shown === 1 ? '' : 's'}`;
+		if (empty) empty.hidden = shown !== 0;
+	};
+
+	search?.addEventListener('input', apply);
+
+	index.querySelectorAll('[data-index-sort]').forEach((btn) => {
+		btn.addEventListener('click', () => {
+			order = btn.dataset.indexSort;
+			index.querySelectorAll('[data-index-sort]')
+				.forEach((b) => b.classList.toggle('is-on', b === btn));
+			apply();
+		});
+	});
+
+	index.querySelectorAll('[data-index-group]').forEach((btn) => {
+		btn.addEventListener('click', () => {
+			group = btn.dataset.indexGroup;
+			index.querySelectorAll('[data-index-group]')
+				.forEach((b) => b.classList.toggle('is-on', b === btn));
+			apply();
+		});
+	});
+
+	/* "/" focuses the docs search; the index gets its own, so a reader already
+	   on this page filters rather than jumping to the site search. */
+	addEventListener('keydown', (e) => {
+		if (e.key !== '/' || e.metaKey || e.ctrlKey) return;
+		if (/^(INPUT|TEXTAREA)$/.test(e.target.tagName)) return;
+		e.preventDefault();
+		search?.focus();
+	});
+
+	apply();
+})();
+
+/* =============================================================================
+   CONTENTS SCROLL-SPY — which heading you are actually in
+
+   The contents list is rendered by build.py with no active state, so until now
+   it was a list of links that never said where you were. This marks one — and
+   only one — with `aria-current`, the same attribute the sidebar and the
+   navbar use, so the styling cannot disagree with the accessibility tree.
+
+   ── THREE THINGS THIS DELIBERATELY DOES NOT DO ────────────────────────────
+
+   NO IntersectionObserver. An observer answers "did a heading just cross a
+   line", which is the wrong question. The right one is "which heading did I
+   most recently pass", and that has an answer at every scroll position —
+   including the two an observer gets wrong: at the top of a page nothing has
+   crossed yet, and a short final section may never reach the line at all, so
+   it could never be marked.
+
+   NO requestAnimationFrame. rAF is SUSPENDED in a background tab, so a spy
+   built on it stops marking whenever the page is not frontmost and then works
+   the instant you look at it — the worst kind of bug to chase.
+
+   NO CACHED OFFSETS. Measuring once and re-measuring on resize sounds cheaper
+   and is a source of silent staleness: a demo that reflows, a font that swaps,
+   an image that loads, an accordion that opens — every one of them moves the
+   headings and none of them fires `resize`. Reading the rects live costs one
+   layout read per scroll over a list that is never longer than a page's
+   headings, and it cannot go stale.
+   ========================================================================== */
+
+(() => {
+	const toc = document.querySelector('.toc');
+	if (!toc) return;
+
+	const links = [...toc.querySelectorAll('.toc__link')];
+	if (links.length < 2) return;
+
+	const items = links
+		.map((link) => ({ link, el: document.getElementById(link.getAttribute('href').slice(1)) }))
+		.filter((t) => t.el);
+	if (items.length < 2) return;
+
+	let current = null;
+
+	const mark = () => {
+		/* The reading line: a quarter down the viewport. A heading becomes
+		   "the one you are in" when it passes this, not when it leaves. */
+		const line = innerHeight * 0.25;
+
+		/* At the very bottom the last heading wins outright — its section may
+		   be two lines long and never reach the line on any screen.
+
+		   `scrollY > 0` guards the FIRST call, which runs before the page has
+		   finished laying out: for a moment `scrollHeight` is barely taller
+		   than the viewport, "at the end" is true, and the list opens marking
+		   the last heading on a page you have not scrolled. You cannot be at
+		   the end of a document you have not moved in. */
+		const atEnd = scrollY > 0
+			&& innerHeight + scrollY >= document.documentElement.scrollHeight - 2;
+
+		let found = items[0];
+		if (atEnd) {
+			found = items[items.length - 1];
+		} else {
+			for (const item of items) {
+				if (item.el.getBoundingClientRect().top <= line) found = item;
+			}
+		}
+
+		if (found.link === current) return;
+		if (current) current.removeAttribute('aria-current');
+		found.link.setAttribute('aria-current', 'true');
+		current = found.link;
+
+		/* Keep the marked item visible when the list scrolls inside its own
+		   pinned box. `nearest` so it never jumps a list already showing it. */
+		found.link.scrollIntoView({ block: 'nearest' });
+	};
+
+	mark();
+	addEventListener('scroll', mark, { passive: true });
+	addEventListener('resize', mark);
+})();

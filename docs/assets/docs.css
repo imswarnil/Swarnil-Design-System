@@ -450,32 +450,38 @@ body {
 	translate: -50% -50%;
 }
 
-/* The sidebar's own footer: the two things a reader who lives in these docs
-   actually reaches for. The edit link goes straight to THIS page's markdown
-   on GitHub — a docs site whose fix is one click away collects fixes. */
-.side__foot {
-	margin-block-start: var(--space-6);
-	padding-block-start: var(--space-4);
-	border-block-start: 1px solid var(--line-subtle);
+/* ── Page actions ──────────────────────────────────────────────────────────
+   The two things a reader who lives in these docs actually reaches for, and
+   they live in the RAIL rather than the sidebar because they are actions on
+   THIS PAGE, not navigation. The rail is already where this page's own
+   controls are; the sidebar is the way to other pages.
+
+   The edit link goes straight to this page's markdown on GitHub — a docs site
+   whose fix is one click away collects fixes. */
+.pageacts {
 	display: flex;
 	flex-direction: column;
-	gap: var(--space-1);
+	gap: var(--gap-hair);
+	padding-block-start: var(--space-4);
+	border-block-start: 1px solid var(--line-subtle);
 }
 
-.side__foot-link {
+.pageacts__link {
 	display: flex;
 	align-items: center;
 	gap: var(--space-2);
-	padding: var(--space-2) var(--space-3);
-	border-radius: var(--radius-md);
+	padding: var(--space-2) var(--space-2);
+	border-radius: var(--radius-control);
 	font-size: var(--text-xs);
-	color: var(--fg-faint);
+	font-weight: var(--weight-medium);
+	color: var(--fg-subtle);
 	text-decoration: none;
-	transition: color var(--dur-1) var(--ease-out);
+	transition: var(--t-colors);
 }
 
-.side__foot-link:hover { color: var(--fg-default); }
-.side__foot-link .icon { --icon-size: 0.875rem; }
+.pageacts__link:hover { color: var(--fg-default); background: var(--bg-sunken); }
+.pageacts__link .icon { --icon-size: 0.875rem; color: var(--fg-faint); }
+.pageacts__link:hover .icon { color: var(--fg-accent); }
 
 /* ── Main column ──────────────────────────────────────────────────────────── */
 
@@ -749,6 +755,20 @@ body {
 	background: var(--bg-surface);
 }
 
+/* A demo whose example OPENS something over the page — a navbar dropdown, a
+   hover menu — cannot clip its own frame, or the one thing it exists to show
+   is the one thing you cannot see.
+
+   `overflow: hidden` is here to make the rounded corners clip the stage, and
+   the stage is the same colour as the frame, so the corners can be handed to
+   the stage instead and the frame can let go. */
+.demo:has(.navbar__item, .menu-hover) { overflow: visible; }
+
+.demo:has(.navbar__item, .menu-hover) .demo__stage {
+	border-end-start-radius: inherit;
+	border-end-end-radius: inherit;
+}
+
 .demo__cap {
 	padding: var(--space-3) var(--space-4);
 	font-size: var(--text-sm);
@@ -824,11 +844,20 @@ body {
 /* ── TOC rail ─────────────────────────────────────────────────────────────── */
 
 /* align-self: stretch is what makes the sticky TOC inside actually stick.
-   The shell sets align-items:start, so .rail was only as tall as its content —
+   The shell sets align-items:start, so .docrail was only as tall as its content —
    and a sticky element can only travel inside its PARENT'S box. With nothing
    to travel through it pins once and then scrolls away, which looks exactly
    like sticky being broken. */
-.rail {
+/* ⚠️ RENAMED FROM `.docrail`, 2026-09-20, because `.docrail` is a SYSTEM component —
+   the sticky share rail in src/4-patterns/55-share.css. The docs chrome had
+   quietly inherited its `position: sticky` and its `align-self: start`, so the
+   contents column became sticky TOO: two nested sticky boxes, the outer one
+   pinned, the inner one with nothing left to travel through. The list sat
+   216px down the viewport and never moved, which looks exactly like sticky
+   being broken rather than like a name collision.
+
+   The chrome does not get to use a name the system owns. That is the fix. */
+.docrail {
 	align-self: stretch;
 	padding-block: var(--space-10);
 	border-inline-start: 1px solid var(--line-subtle);
@@ -849,7 +878,7 @@ body {
    max-block-size caps the pair at the viewport, and the TOC (not the ad) is
    the part allowed to scroll inside it, so a long contents list never pushes
    the slot off the screen. */
-.rail__pin {
+.docrail__pin {
 	position: sticky;
 	top: calc(var(--bar-h) + var(--space-6));
 	display: flex;
@@ -858,7 +887,7 @@ body {
 	max-height: calc(100dvh - var(--bar-h) - var(--space-10));
 }
 
-.rail__ad {
+.docrail__ad {
 	flex: none;
 	--ad-h: 12.5rem;
 }
@@ -866,7 +895,7 @@ body {
 /* Below a certain height there is no room for both. The contents win: an ad
    nobody can see is worth less than a table of contents somebody uses. */
 @media (max-height: 46rem) {
-	.rail__ad { display: none; }
+	.docrail__ad { display: none; }
 }
 
 /* ── The TOC ──────────────────────────────────────────────────────────────
@@ -976,7 +1005,7 @@ body {
 
 @media (max-width: 80rem) {
 	.shell { grid-template-columns: var(--side-w) minmax(0, 1fr); }
-	.rail { display: none; }
+	.docrail { display: none; }
 }
 
 @media (max-width: 60rem) {
@@ -1379,4 +1408,373 @@ a.crumbs__link:hover { color: var(--fg-default); }
 
 .layers__arrow { stroke: var(--line-strong); stroke-width: 1.25; fill: none; }
 
+}
+
+
+/* =============================================================================
+   THE COMPONENT INDEX — the other way into the docs
+
+   A sidebar only helps a reader who already knows the name of the thing. This
+   is the page for the reader who does not: every component as a card, with a
+   name filter and a choice of order.
+
+   The whole grid is generated in docs/build.py from the SAME front matter the
+   sidebar reads, so it cannot go stale. Nothing here knows how many cards
+   there are.
+   ========================================================================== */
+
+.xindex { margin-block: var(--space-8) var(--space-12); }
+
+/* ── The bar ──────────────────────────────────────────────────────────────── */
+
+.xindex__bar {
+	position: sticky;
+	top: var(--bar-h);
+	z-index: var(--z-raised);
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--gap-snug);
+	margin-block-end: var(--space-6);
+	padding-block: var(--space-3);
+	background: var(--bg-canvas);
+	border-block-end: var(--border-hair) solid var(--line-subtle);
+}
+
+.xindex__search {
+	display: flex;
+	align-items: center;
+	gap: var(--gap-tight);
+	flex: 1 1 14rem;
+	min-inline-size: 0;
+	padding-inline: var(--space-3);
+	block-size: var(--tap-min);
+	border-radius: var(--radius-control);
+	background: var(--bg-sunken);
+	color: var(--fg-subtle);
+	transition: var(--t-colors);
+}
+
+.xindex__search:focus-within { background: var(--bg-muted); color: var(--fg-default); }
+.xindex__search .icon { --icon-size: 0.9rem; flex: none; }
+
+.xindex__search input {
+	flex: 1;
+	min-inline-size: 0;
+	border: 0;
+	background: none;
+	color: var(--fg-default);
+	font: inherit;
+	font-size: var(--text-sm);
+	outline: none;
+}
+
+.xindex__search input::placeholder { color: var(--fg-faint); }
+.xindex__search input::-webkit-search-cancel-button { appearance: none; }
+
+.xindex__chips,
+.xindex__sort { display: flex; flex-wrap: wrap; gap: var(--gap-hair); }
+
+/* A chip is a control, so it is a rounded row like every other control in the
+   system — and the ON state is the surface stepping up, never the accent. The
+   accent is spent on the dot, and only on the dot. */
+.xchip {
+	block-size: var(--tap-min);
+	padding-inline: var(--space-3);
+	border: 0;
+	border-radius: var(--radius-control);
+	background: none;
+	color: var(--fg-subtle);
+	font-family: inherit;
+	font-size: var(--text-sm);
+	font-weight: var(--weight-medium);
+	white-space: nowrap;
+	cursor: pointer;
+	transition: var(--t-colors);
+}
+
+.xchip:hover { background: var(--bg-sunken); color: var(--fg-default); }
+.xchip.is-on { background: var(--bg-muted); color: var(--fg-default); }
+
+.xindex__count {
+	margin: 0;
+	margin-inline-start: auto;
+	font-family: var(--font-data);
+	font-size: var(--text-xs);
+	font-weight: var(--weight-light);
+	letter-spacing: var(--tracking-data);
+	font-variant-numeric: tabular-nums;
+	color: var(--fg-faint);
+	white-space: nowrap;
+}
+
+/* ── The grid ─────────────────────────────────────────────────────────────── */
+
+.xindex__grid {
+	display: grid;
+	gap: var(--space-3);
+	grid-template-columns: repeat(auto-fill, minmax(min(17rem, 100%), 1fr));
+}
+
+.xcard {
+	display: flex;
+	align-items: flex-start;
+	gap: var(--space-3);
+	padding: var(--space-4);
+	border: var(--border-hair) solid var(--line-subtle);
+	border-radius: var(--radius-card);
+	background: var(--bg-surface);
+	color: inherit;
+	text-decoration: none;
+	transition: var(--t-colors);
+}
+
+.xcard:hover { border-color: var(--line-default); background: var(--bg-sunken); }
+
+/* The initial, set in the Pixel face. This is the one place on a docs page
+   where the mark face earns its keep: it is not a word being read, it is an
+   index tab, and a pixel letter reads as a LABEL rather than as prose. */
+.xcard__letter {
+	display: grid;
+	place-items: center;
+	inline-size: 2rem;
+	block-size: 2rem;
+	flex: none;
+	border-radius: var(--radius-badge);
+	background: var(--bg-muted);
+	color: var(--fg-subtle);
+	font-family: var(--font-pixel);
+	font-size: var(--text-sm);
+	line-height: 1;
+}
+
+.xcard__body { display: flex; flex-direction: column; gap: var(--gap-hair); min-inline-size: 0; }
+
+.xcard__title {
+	font-size: var(--text-sm);
+	font-weight: var(--weight-semibold);
+	color: var(--fg-default);
+}
+
+.xcard__lead {
+	font-size: var(--text-xs);
+	line-height: var(--leading-snug);
+	color: var(--fg-subtle);
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	line-clamp: 2;
+	overflow: hidden;
+}
+
+.xcard__group {
+	margin-inline-start: auto;
+	flex: none;
+	align-self: center;
+	font-family: var(--font-label);
+	font-size: var(--text-3xs);
+	font-weight: var(--weight-semibold);
+	letter-spacing: var(--tracking-label);
+	text-transform: uppercase;
+	color: var(--fg-faint);
+}
+
+/* A letter heading, inserted by docs.js when the order is A–Z. */
+.xindex__letter {
+	grid-column: 1 / -1;
+	margin-block: var(--space-4) 0;
+	font-family: var(--font-pixel);
+	font-size: var(--text-lg);
+	color: var(--fg-faint);
+}
+
+.xindex__letter:first-child { margin-block-start: 0; }
+
+.xindex__empty {
+	padding-block: var(--space-10);
+	text-align: center;
+	color: var(--fg-subtle);
+}
+
+.xcard[hidden] { display: none; }
+
+@media (width < 40rem) {
+	.xindex__bar { position: static; }
+	.xindex__count { inline-size: 100%; margin-inline-start: 0; }
+	.xcard__group { display: none; }
+}
+
+
+/* =============================================================================
+   THE TEMPLATE GALLERY — and the bar on a template page
+
+   Four cards on /templates.html, each a drawn wireframe in a browser chrome,
+   and a fixed strip on the template pages themselves so you can get back.
+
+   The wireframes are SVG with `fill: var(--token)` on every rect, so they
+   follow the theme like everything else on the site. A screenshot would not.
+   ========================================================================== */
+
+.tplgrid {
+	display: grid;
+	gap: var(--space-6);
+	grid-template-columns: repeat(auto-fill, minmax(min(21rem, 100%), 1fr));
+	margin-block: var(--space-8) var(--space-12);
+}
+
+.tplcard {
+	display: flex;
+	flex-direction: column;
+	border: var(--border-hair) solid var(--line-subtle);
+	border-radius: var(--radius-card);
+	background: var(--bg-surface);
+	overflow: hidden;
+	transition: var(--t-colors);
+}
+
+.tplcard:hover { border-color: var(--line-default); }
+
+/* The shot, dressed as a browser window — three dots and an address bar. It is
+   a small lie that does a lot of work: it tells you this is a WHOLE PAGE and
+   not another component demo, before you have read a word. */
+.tplcard__shot {
+	display: block;
+	background: var(--bg-sunken);
+	border-block-end: var(--border-hair) solid var(--line-subtle);
+	text-decoration: none;
+}
+
+.tplcard__chrome {
+	display: flex;
+	align-items: center;
+	gap: var(--gap-tight);
+	padding: var(--space-2) var(--space-3);
+	border-block-end: var(--border-hair) solid var(--line-subtle);
+}
+
+.tplcard__chrome > span {
+	inline-size: 0.5rem;
+	block-size: 0.5rem;
+	border-radius: var(--radius-full);
+	background: var(--line-strong);
+	flex: none;
+}
+
+.tplcard__url {
+	inline-size: auto !important;
+	block-size: auto !important;
+	border-radius: var(--radius-badge) !important;
+	background: var(--bg-muted) !important;
+	flex: 1 !important;
+	margin-inline-start: var(--space-2);
+	padding: 1px var(--space-2);
+	font-family: var(--font-mono);
+	font-size: var(--text-3xs);
+	color: var(--fg-faint);
+}
+
+.tplcard__wire {
+	display: block;
+	inline-size: 100%;
+	block-size: auto;
+	aspect-ratio: 160 / 100;
+}
+
+.tplcard__body {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: var(--space-3);
+	padding: var(--space-5);
+}
+
+.tplcard__title { margin: 0; font-size: var(--heading-5); }
+.tplcard__title > a { color: var(--fg-default); text-decoration: none; }
+.tplcard__title > a:hover { color: var(--fg-accent); }
+
+.tplcard__lead {
+	margin: 0;
+	font-size: var(--text-sm);
+	line-height: var(--leading-normal);
+	color: var(--fg-muted);
+}
+
+.tplcard__uses { display: flex; flex-wrap: wrap; gap: var(--gap-hair); }
+
+.tplcard__use {
+	padding: 2px var(--space-2);
+	border-radius: var(--radius-badge);
+	background: var(--bg-muted);
+	font-size: var(--text-3xs);
+	font-weight: var(--weight-medium);
+	color: var(--fg-subtle);
+}
+
+/* ── The strip on a template page ────────────────────────────────────────── */
+
+/* `position: fixed`, so the template underneath starts at the top of the
+   viewport exactly as it would in production. A sticky strip would push a
+   sticky navbar down and the template would be documenting the wrong thing. */
+.tplbar {
+	position: fixed;
+	inset-block-end: var(--space-4);
+	inset-inline-start: 50%;
+	translate: -50% 0;
+	z-index: var(--z-toast);
+	display: flex;
+	align-items: center;
+	gap: var(--space-4);
+	max-inline-size: calc(100vw - var(--space-8));
+	padding: var(--space-2) var(--space-3);
+	border: var(--border-hair) solid var(--line-default);
+	border-radius: var(--radius-full);
+	background: color-mix(in oklab, var(--bg-overlay) 92%, transparent);
+	backdrop-filter: blur(12px);
+	box-shadow: var(--elevation-3);
+	font-size: var(--text-xs);
+}
+
+.tplbar__back {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--gap-tight);
+	color: var(--fg-muted);
+	font-weight: var(--weight-medium);
+	text-decoration: none;
+	white-space: nowrap;
+}
+
+.tplbar__back:hover { color: var(--fg-default); }
+.tplbar__name { font-weight: var(--weight-semibold); color: var(--fg-default); white-space: nowrap; }
+
+.tplbar__uses {
+	min-inline-size: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	color: var(--fg-faint);
+}
+
+.tplbar__theme {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--gap-tight);
+	padding: 2px var(--space-2);
+	border: 0;
+	border-radius: var(--radius-full);
+	background: var(--bg-muted);
+	color: var(--fg-muted);
+	font: inherit;
+	cursor: pointer;
+	white-space: nowrap;
+}
+
+.tplbar__theme:hover { color: var(--fg-default); }
+
+@media (width < 48rem) {
+	.tplbar__uses { display: none; }
+}
+
+@media print {
+	.tplbar { display: none; }
 }

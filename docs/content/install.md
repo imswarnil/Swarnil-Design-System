@@ -77,11 +77,11 @@ in the page that renders your thumbnails.
 ## The fonts
 
 The fonts are the only external dependency, and even they are a choice. Two
-families, not three — Inter does display and body alike. Point the family tokens
+families, not three — Geist does display and body alike. Point the family tokens
 anywhere you like and drop the `<link>`.
 
 ```html
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
       rel="stylesheet">
 ```
 

@@ -77,3 +77,53 @@
 		requestAnimationFrame(update);
 	}, { passive: true });
 }());
+
+/* =============================================================================
+   NAVBAR DROPDOWNS — the two behaviours <details> does not give you
+
+   `<details class="navbar__item">` already toggles on click, is keyboard
+   operable and works with this file absent. What the platform does not do for
+   a disclosure used as a MENU is close it when you click elsewhere, or when
+   you press Escape — both of which a reader expects from anything that opens
+   over the page.
+
+   So this file adds exactly those two, and nothing else. No open/close API, no
+   positioning, no focus trap: a dropdown in a navbar is a menu you browse, not
+   a dialog, and trapping focus in it would be wrong.
+   ========================================================================== */
+
+(function () {
+	'use strict';
+
+	function items() {
+		return Array.prototype.slice.call(document.querySelectorAll('details.navbar__item'));
+	}
+
+	function closeAll(except) {
+		items().forEach(function (d) {
+			if (d !== except) d.open = false;
+		});
+	}
+
+	/* Only one panel open at a time. Two open dropdowns in one bar is a state
+	   nobody asked for and a layout that overlaps itself. */
+	document.addEventListener('toggle', function (e) {
+		var d = e.target;
+		if (d.matches && d.matches('details.navbar__item') && d.open) closeAll(d);
+	}, true);
+
+	document.addEventListener('click', function (e) {
+		if (!e.target.closest('details.navbar__item')) closeAll(null);
+	});
+
+	document.addEventListener('keydown', function (e) {
+		if (e.key !== 'Escape') return;
+		var open = items().filter(function (d) { return d.open; });
+		if (!open.length) return;
+		/* Focus goes back to the summary that opened it — otherwise Escape
+		   drops the reader at the top of the document. */
+		var summary = open[0].querySelector('summary');
+		closeAll(null);
+		if (summary) summary.focus();
+	});
+}());

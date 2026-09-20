@@ -136,11 +136,11 @@ lead: A token-first design system on Tailwind CSS 4 and daisyUI. Almost monochro
 <section class="band">
   <p class="sec__kicker"><span class="sec__take">TAKE 03</span>The two voices</p>
   <h2 class="sec__title">Type that knows what it is saying</h2>
-  <p class="sec__lead">Inter for display and for everything you read — including labels, which are the same face worn small and tracked. Hierarchy comes from weight, size and tracking, not from a second family. Monospace appears only where the content is data.</p>
+  <p class="sec__lead">Geist for display and for everything you read — including labels, which are the same face worn small and tracked. Hierarchy comes from weight, size and tracking, not from a second family. Monospace appears only where the content is data.</p>
 
   <div class="feats">
     <article class="feat">
-      <p class="t-label m-0 mb-2">A label · Inter</p>
+      <p class="t-label m-0 mb-2">A label · Geist</p>
       <p class="t-small m-0">Uppercase and tracked is what makes a label read as a label. The monospace was never doing that work.</p>
     </article>
     <article class="feat">
@@ -148,7 +148,7 @@ lead: A token-first design system on Tailwind CSS 4 and daisyUI. Almost monochro
       <p class="t-small m-0">A timecode is data, so it takes the mono voice. This is the only kind of thing that does.</p>
     </article>
     <article class="feat">
-      <p class="spec-display spec-xl m-0 mb-2">Inter, at 600</p>
+      <p class="spec-display spec-xl m-0 mb-2">Geist, at 600</p>
       <p class="t-small m-0">Headlines, numbers, the mark. Tight tracking that closes further as it grows.</p>
     </article>
   </div>

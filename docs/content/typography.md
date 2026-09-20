@@ -2,18 +2,48 @@
 title: Typography
 group: Foundation
 order: 50
-lead: One face. Monospace is not a second voice — it is a tool, and it comes out only for code.
+lead: One face for everything read, a second that is a tool, a third that is a mark — and the rule that keeps them apart.
 ---
 
-## The four voices
+## The five voices
 
 | Token | Face | Job |
 | --- | --- | --- |
-| `--font-display` | Inter | Headlines, numbers, the mark |
-| `--font-body` | Inter | Everything read in sentences |
-| `--font-label` | Inter | Worn small, uppercase, tracked, **semibold** |
-| `--font-data` | Inter | Worn small, tracked, **light**, tabular figures |
-| `--font-mono` | IBM Plex Mono | **Code only** |
+| `--font-display` | Geist | Headlines, numbers, the mark |
+| `--font-body` | Geist | Everything read in sentences |
+| `--font-label` | Geist | Worn small, uppercase, tracked, **semibold** |
+| `--font-data` | Geist | Worn small, tracked, **light**, tabular figures |
+| `--font-mono` | Geist Mono | **Code only** |
+| `--font-pixel` | Geist Pixel Square | **The mark** — never a sentence |
+
+## Why Geist
+
+Because **Geist Mono is drawn as a sibling of Geist**, not borrowed from
+another family. A code span inside a paragraph shares that paragraph's
+x-height and its rhythm, so inline code stops announcing a seam every time it
+appears.
+
+That matters here more than almost anywhere: a third of every page on this
+site is code set inside a sentence. It is also the one claim you can check in
+a single line of CSS — `.t-mono` carries **no size correction at all**, where
+the previous pairing needed `0.9375em` to stop mono sitting a step too large.
+
+## The three Pixel cuts
+
+`--font-pixel` is not a voice, it is a **mark** — the system signing its own
+name. It is allowed on the brand lockup, a section's take, an error number and
+the index letters on the [Components](/components.html) page. It is forbidden
+in running text and below 24px, where a bitmap face stops being legible and
+starts being a texture.
+
+| Token | Cut |
+| --- | --- |
+| `--font-pixel-square` | The default — `--font-pixel` points here |
+| `--font-pixel-circle` | Rounder, softer at large sizes |
+| `--font-pixel-line` | Outline only |
+
+Each is a separate **family**, not a weight, so nothing can ask for "Pixel
+bold" and get a synthesised smear of a bitmap face.
 
 `--font-display`, `--font-label` and `--font-data` are all *aliases* of the body
 face on purpose. A headline, a label and a timecode are not different faces from
@@ -32,9 +62,9 @@ token.
 
 :::demo The same face, four ways
 <div class="stack stack-sm">
-  <p class="spec-display spec-2xl m-0">Inter sets the headlines</p>
-  <p class="m-0">Inter sets everything you actually read, in sentences like this one.</p>
-  <p class="t-label m-0">A label · Inter, semibold, uppercase</p>
+  <p class="spec-display spec-2xl m-0">Geist sets the headlines</p>
+  <p class="m-0">Geist sets everything you actually read, in sentences like this one.</p>
+  <p class="t-label m-0">A label · Geist, semibold, uppercase</p>
   <p class="t-data m-0">00:12:47 · 1280 × 720 · v2.1.0</p>
   <p class="t-mono m-0">const accent = "oklch(63% 0.19 34)";</p>
 </div>
@@ -43,7 +73,7 @@ token.
 ## Why one face and not a pairing
 
 A display face earns its keep only if it says something the body face cannot.
-Set Inter at 600, close the tracking to `-0.02em` and take the size to
+Set Geist at 600, close the tracking to `-0.02em` and take the size to
 `2.5rem`, and it already reads as a headline. The **size** and the **tracking**
 are doing that work — not the family. A second family layered on top changes the
 *flavour* of the headline without changing what it communicates.
@@ -67,14 +97,14 @@ opposite.
 
 The usual argument for setting timecodes and counts in mono is **alignment** —
 fixed-width glyphs make a column of numbers line up. That argument is true about
-the 1970s and false about Inter, which ships proper **tabular figures**:
+the 1970s and false about Geist, which ships proper **tabular figures**:
 
 ```css
 font-variant-numeric: tabular-nums;
 ```
 
 That gives every digit the same advance width *in a proportional face*.
-`00:12:47` lines up in Inter exactly as well as it does in Plex Mono.
+`00:12:47` lines up in Geist exactly as well as it does in Geist Mono.
 
 So alignment was never the real reason. The real reason was that mono **looks**
 technical — and once everything technical is mono, mono stops meaning anything
@@ -90,7 +120,7 @@ typeface:
 | **small** | data is subordinate by definition |
 | **tabular** | every digit the same width, so columns align |
 
-:::demo Both columns are Inter. Only the right one has tabular figures.
+:::demo Both columns are Geist. Only the right one has tabular figures.
 <div class="grid-2">
   <div class="stack stack-sm">
     <p class="t-label m-0">Proportional</p>

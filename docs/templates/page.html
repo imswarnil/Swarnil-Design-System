@@ -24,9 +24,10 @@ try {
 } catch (e) { document.documentElement.dataset.theme = 'light'; }
 </script>
 
-<!-- Self-hosted, variable, latin-only preload: the one face every page paints
-     with. Mono and latin-ext load on demand from fonts.css. -->
-<link rel="preload" href="/assets/fonts/inter-100-900-latin.woff2" as="font" type="font/woff2" crossorigin />
+<!-- Self-hosted and variable: one file covers 100–900, so the 300 data voice
+     and the 700 headline are the same download. Mono and the three Pixel cuts
+     load on demand from fonts.css. -->
+<link rel="preload" href="/assets/fonts/geist-variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="/assets/fonts.css{v}" />
 
 <!-- ONE STYLESHEET. Tailwind, daisyUI, the system, the broadcast layer and
@@ -52,12 +53,7 @@ try {
     <span class="brand__sub">Design System</span>
   </a>
 
-  <nav class="bar__nav" aria-label="Primary">
-    <a class="barlink" href="/introduction.html" aria-current="page"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-file"/></svg>Docs</a>
-    <a class="barlink" href="/principles.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-bookmark"/></svg>Principles</a>
-    <a class="barlink" href="/install.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-box"/></svg>Install</a>
-    <a class="barlink" href="/icons.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-capture"/></svg>Icons</a>
-  </nav>
+  <nav class="bar__nav" aria-label="Primary">{barnav}</nav>
 
   <button class="bar__burger" type="button" aria-expanded="false" aria-controls="sidenav" aria-label="Menu">
     <span></span><span></span><span></span>
@@ -89,10 +85,6 @@ try {
     <nav class="nav" aria-label="Documentation">
       {nav}
     </nav>
-    <div class="side__foot">
-      <a class="side__foot-link" href="{editurl}" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-edit"/></svg>Edit this page</a>
-      <a class="side__foot-link" href="https://github.com/imswarnil/Swarnil-Design-System/blob/main/CONTRIBUTING.md" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-heart"/></svg>Contribute</a>
-    </div>
   </aside>
 
   <main class="main" id="main">
@@ -112,6 +104,9 @@ try {
       <div class="foot__row">
         <nav class="foot__links" aria-label="Footer">
           <a href="/introduction.html">Docs</a>
+          <a href="/components.html">Components</a>
+          <a href="/templates.html">Templates</a>
+          <a href="/contribute.html">Contribute</a>
           <a href="/principles.html">Principles</a>
           <a href="/icons.html">Swarnil Icons</a>
           <a href="https://github.com/imswarnil/Swarnil-Design-System" rel="noopener">GitHub</a>
@@ -122,10 +117,16 @@ try {
     </footer>
   </main>
 
-  <div class="rail">
-    <div class="rail__pin">
+  <div class="docrail">
+    <div class="docrail__pin">
       {toc}
-      <aside class="ad ad-rect rail__ad" data-ad-state="idle">
+
+      <div class="pageacts">
+        <a class="pageacts__link" href="{editurl}" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-edit"/></svg>Edit this page</a>
+        <a class="pageacts__link" href="/contribute.html"><svg class="icon icon-sm" aria-hidden="true"><use href="/icons/sprite.svg#i-heart"/></svg>Contribute</a>
+      </div>
+
+      <aside class="ad ad-rect docrail__ad" data-ad-state="idle">
         <p class="ad__label">Sponsored<button class="ad__close" type="button" aria-label="Hide this ad"><svg class="icon" aria-hidden="true"><use href="/icons/sprite.svg#i-x"/></svg></button></p>
         <div class="ad__slot"><p class="ad__note">The system&#39;s own <a href="/ad.html">ad slot</a>, reserving its height before anything loads.</p></div>
       </aside>

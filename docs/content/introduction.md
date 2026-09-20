@@ -162,9 +162,9 @@ The type system is one face you read and one you do not.
 
 :::demo
 <div class="stack stack-sm">
-  <p class="spec-display spec-2xl m-0">Inter sets the headlines</p>
+  <p class="spec-display spec-2xl m-0">Geist sets the headlines</p>
   <p class="t-muted m-0">…and everything you actually read, including labels — the same face worn small, uppercase and tracked.</p>
-  <p class="t-label m-0 mt-4">A label, in Inter</p>
+  <p class="t-label m-0 mt-4">A label, in Geist</p>
   <p class="t-data m-0">TAKE 47 · 00:12:47</p>
 </div>
 :::

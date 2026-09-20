@@ -1,7 +1,7 @@
 /* =============================================================================
    21 · TABLE, DEFINITION LIST, STEPS
 
-   Headers are LABELS, so they take the label voice — Inter, small, uppercase,
+   Headers are LABELS, so they take the label voice — Geist, small, uppercase,
    tracked. They are not data. A numeric column IS data, so .table__num takes
    the data voice and tabular figures, which is the only way a column of
    numbers lines up.

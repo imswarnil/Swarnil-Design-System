@@ -80,7 +80,7 @@ corners are the screen.
 - Render the stage at the platform's width — a 1280px-wide `canvas-yt` is the
   thumbnail at 1× — and capture the element. Every colour is kept exactly:
   the stage sets `print-color-adjust: exact`.
-- No web fonts at export time. Subset and self-host Inter, or the render
+- No web fonts at export time. Subset and self-host Geist, or the render
   races the font and you ship a fallback face.
 - Type never below `3.4cqi` (44px on 1280). It has to survive the 168px grid.
 - Turn `canvas-guides` off, or print — guides are display: none on paper.

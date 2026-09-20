@@ -75,7 +75,7 @@ in `.footer__brand` at the top.
     <div class="footer__bottom">
       <div>
         <p class="footer__fine">MIT · © 2026 Swarnil Singhai</p>
-        <p class="footer__meta"><span><strong>v0.4.0</strong></span><span>Built <strong>Sep 07</strong></span><span>Set in <strong>Inter</strong></span></p>
+        <p class="footer__meta"><span><strong>v0.4.0</strong></span><span>Built <strong>Sep 07</strong></span><span>Set in <strong>Geist</strong></span></p>
       </div>
       <div class="stack stack-sm">
         <nav class="footer__legal" aria-label="Legal"><a href="#i">Privacy</a><a href="#i">Licence</a><a href="#i">RSS</a><a href="#i">Sitemap</a></nav>

@@ -203,32 +203,89 @@
 	   standing, so `text-lg` would take our size and Tailwind's leading — a
 	   pair from two different systems. Leading is this system's own axis and
 	   is set with `leading-*`, deliberately, so no size carries one. */
+	/* ── THE RAMP ─────────────────────────────────────────────────────────
+	   Flat on purpose, and flattened deliberately in the 2026-09 rebuild.
+	   A documentation site and an editorial theme are both UI before they are
+	   posters: the range that actually gets used every day is 11px to 28px,
+	   and a scale whose h1 jumps to 52px spends its top three steps on
+	   moments that occur once a page, if ever.
+
+	   So 2xl/3xl/4xl are now fixed and close together — 22 / 25 / 28 — which
+	   is what makes a heading read as a heading by WEIGHT and TRACKING rather
+	   than by size. 5xl and 6xl stay fluid and are the only display sizes;
+	   they are for a landing hero and nothing else. */
 	--text-*: initial;
 	--text-3xs:  0.625rem;    /* 10px · the floor. Data, and only data */
 	--text-2xs:  0.6875rem;   /* 11px */
 	--text-xs:   0.75rem;     /* 12px */
-	--text-sm:   0.875rem;    /* 14px */
+	--text-sm:   0.875rem;    /* 14px · the UI default: meta, nav, buttons */
 	--text-base: 1rem;        /* 16px */
 	--text-md:   1.0625rem;   /* 17px · long-form body */
 	--text-lg:   1.125rem;    /* 18px */
 	--text-xl:   1.25rem;     /* 20px */
-	--text-2xl:  clamp(1.375rem, 1.24rem + 0.60vw, 1.75rem);
-	--text-3xl:  clamp(1.625rem, 1.36rem + 1.18vw, 2.375rem);
-	--text-4xl:  clamp(2rem,     1.55rem + 2.00vw, 3.25rem);
-	--text-5xl:  clamp(2.5rem,   1.70rem + 3.55vw, 4.75rem);
-	--text-6xl:  clamp(3rem,     1.75rem + 5.55vw, 6.5rem);
+	--text-2xl:  1.375rem;    /* 22px */
+	--text-3xl:  1.5625rem;   /* 25px */
+	--text-4xl:  1.75rem;     /* 28px · the largest size the UI ever needs */
+	--text-5xl:  clamp(2rem,  1.60rem + 1.80vw, 2.75rem);   /* 32 → 44 · display */
+	--text-6xl:  clamp(2.5rem, 1.90rem + 2.80vw, 3.75rem);  /* 40 → 60 · hero only */
 
-	/* Two families, four voices. Inter does display and body alike; mono
-	   appears only where the content is data — house rule 4, and
-	   scripts/audit-mono.py fails the build when it slips. */
+	/* ── THE HEADING ROLES ────────────────────────────────────────────────
+	   Six names for six jobs, so a component asks for "a level-three heading"
+	   and never for a number of pixels. Re-point one of these and every h3 in
+	   the system moves together; re-point `--text-xl` and so does everything
+	   else that happens to be 20px, which is not the same thing.
+
+	   `--heading-*` is not a Tailwind namespace, so these land on :root and
+	   are read with `var()` — which is correct: a heading LEVEL is semantic,
+	   and there should be no `text-heading-3` utility inviting an h2 to wear
+	   an h3's size. */
+	--heading-1: var(--text-4xl);   /* 28px */
+	--heading-2: var(--text-2xl);   /* 22px */
+	--heading-3: var(--text-xl);    /* 20px */
+	--heading-4: 1.1875rem;         /* 19px */
+	--heading-5: var(--text-lg);    /* 18px */
+	--heading-6: var(--text-base);  /* 16px */
+
+	--heading-leading-1: 1.1;
+	--heading-leading-n: 1.2;       /* every level below the first */
+
+	/* ── THREE FAMILIES, FIVE VOICES ──────────────────────────────────────
+	   Geist replaced Inter and IBM Plex Mono on 2026-09-19. All three faces
+	   come from one package under the SIL OFL and are self-hosted; see
+	   docs/assets/fonts.css for the @font-face set and the licence.
+
+	     --font-body     Geist              everything read in sentences
+	     --font-display  Geist              headlines — the SAME face, worn
+	                                        bigger and tracked tighter
+	     --font-label    Geist              small, uppercase, tracked
+	     --font-data     Geist              small, tracked, LIGHT, tabular
+	     --font-mono     Geist Mono         CODE ONLY — audit-mono.py fails
+	                                        the build when it slips
+	     --font-pixel    Geist Pixel Square THE MARK. Not a voice: the brand
+	                                        lockup, a section take, a 404.
+	                                        Never a sentence, never under 24px.
+
+	   Why Geist and not Inter: Geist Mono is drawn as a sibling of Geist
+	   rather than borrowed from another family, so a code span inside a
+	   paragraph shares its x-height and its rhythm. That is the one thing
+	   Inter + Plex could not do, and it is the thing a documentation site
+	   does on every page. */
 	--font-*: initial;
-	--font-body:    'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+	--font-body:    'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
 	--font-display: var(--font-body);
 	--font-label:   var(--font-body);
 	--font-data:    var(--font-body);
-	--font-mono:    'IBM Plex Mono', ui-monospace, 'SF Mono', 'Cascadia Mono', monospace;
+	--font-mono:    'Geist Mono', ui-monospace, 'SF Mono', 'Cascadia Mono', monospace;
 	--font-slate:   var(--font-mono);
 	--font-sans:    var(--font-body);   /* so Tailwind's own `font-sans` is ours */
+
+	/* The three Pixel cuts are separate FAMILIES, not weights — they are
+	   three drawings of one alphabet, and nothing should be able to ask for
+	   "Pixel bold" and get a synthesised smear of a bitmap face. */
+	--font-pixel:        var(--font-pixel-square);
+	--font-pixel-square: 'Geist Pixel Square', var(--font-mono);
+	--font-pixel-circle: 'Geist Pixel Circle', var(--font-mono);
+	--font-pixel-line:   'Geist Pixel Line',   var(--font-mono);
 
 	--leading-*: initial;
 	--leading-flat:    1;
@@ -243,8 +300,8 @@
 	--tracking-tight:   -0.02em;
 	--tracking-normal:  0em;
 	--tracking-wide:    0.02em;
-	--tracking-data:    0.05em;   /* Inter, small, numeric */
-	--tracking-label:   0.14em;   /* Inter, small, uppercase — the slate voice */
+	--tracking-data:    0.05em;   /* Geist, small, numeric */
+	--tracking-label:   0.14em;   /* Geist, small, uppercase — the slate voice */
 	--tracking-widest:  0.16em;
 	--tracking-slate:   var(--tracking-label);
 
@@ -270,11 +327,16 @@
 	--radius-full: 9999px;
 	--radius-pill: var(--radius-full);
 
-	/* Named for a job, so the shape of every card changes in one edit. */
-	--radius-card:    var(--radius-lg);
-	--radius-control: var(--radius-md);
-	--radius-media:   var(--radius-lg);
-	--radius-sheet:   var(--radius-2xl);
+	/* Named for a job, so the shape of every card changes in one edit.
+	   Retuned in the 2026-09 rebuild: a card is 14px, which is softer than
+	   the old 10px and is what stops a grid of cards reading as a table. A
+	   CONTROL stays tighter than the card it sits in — a button inside a card
+	   with the same radius as the card looks stuck to it. */
+	--radius-card:    0.875rem;          /* 14px */
+	--radius-control: var(--radius-lg);  /* 10px · nav rows, inputs, chips */
+	--radius-media:   var(--radius-xl);  /* 16px · images, video wells */
+	--radius-sheet:   var(--radius-2xl); /* 24px · panels, dialogs */
+	--radius-badge:   var(--radius-md);  /*  6px · the smallest fill */
 
 	/* ═══ ELEVATION — CANONICAL ═════════════════════════════════════════════
 	   `--shadow-1` … `--shadow-4` were already aliases of `--elevation-*` in
@@ -343,4 +405,29 @@
 	   the ladder is reached with `p-(--space-12)`. */
 	--spacing-gutter: var(--gutter);
 	--spacing-tap:    var(--tap-min);
+
+	/* ═══ THE SHELL — CANONICAL ═════════════════════════════════════════════
+	   The system now ships an APPLICATION SHELL, not just a page: a sticky
+	   top bar, a sidebar that can collapse to a rail, and a content column
+	   between them. These four numbers are what makes that shell work, and
+	   they are tokens rather than literals because two of them appear in a
+	   `calc()` in three different files.
+
+	   THE BAR AND THE SIDEBAR HAVE TO AGREE. The sidebar is sticky BELOW the
+	   bar, so its top offset and its max height are both derived from
+	   `--bar-h`. Hard-code either one and a taller bar silently pushes the
+	   sidebar's last item under the fold. */
+	--bar-h:        3.625rem;   /* 58px · the sticky top bar */
+	--rail-w:       4.5rem;     /* 72px · the sidebar, collapsed to icons */
+	--side-w:       15.5rem;    /* 248px · the sidebar, open */
+	--side-pad:     var(--space-3);
+
+	/* ═══ THE MEASURES — CANONICAL ══════════════════════════════════════════
+	   Three widths, and an article uses all three. The reading column is the
+	   default; a table or a diagram steps out to `wide`; a feature image
+	   steps out again to `media` and no further, because beyond that a 16:9
+	   image on a 27-inch display stops being a picture and becomes a wall. */
+	--width-read:  43.75rem;   /*  700px · the reading column */
+	--width-wide:  68.75rem;   /* 1100px · tables, diagrams, wide cards */
+	--width-media: 81.25rem;   /* 1300px · feature images, full-bleed */
 }

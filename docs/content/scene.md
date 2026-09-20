@@ -139,7 +139,7 @@ on the right, a ticker along the bottom. The widgets inside are the
         <div class="scene__cam pattern pattern-dot"></div>
         <div class="chatbox">
           <p class="chatbox__msg m-0"><span class="chatbox__badge"></span><span class="chatbox__who">ravi_k</span><span class="chatbox__text">what font is that?</span></p>
-          <p class="chatbox__msg m-0"><span class="chatbox__who chatbox__who-mod">mod_anu</span><span class="chatbox__text">Inter, everywhere</span></p>
+          <p class="chatbox__msg m-0"><span class="chatbox__who chatbox__who-mod">mod_anu</span><span class="chatbox__text">Geist, everywhere</span></p>
           <p class="chatbox__msg m-0"><span class="chatbox__who">devi</span><span class="chatbox__text">the frame thing is so good</span></p>
         </div>
       </div>
