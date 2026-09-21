@@ -1,0 +1,15 @@
+{{!-- The docs sidebar. A titled group is an ordinary menu item that opens — the
+	same .im-navlink as every other row, with a chevron — using the system's
+	own im-navtree (a native <details>). The group holding this page is open. --}}
+{{#each nav}}
+{{#if title}}
+<details class="im-navtree"{{#if open}} open{{/if}}>
+	<summary class="im-navlink" title="{{title}}">{{icon icon}}<span>{{title}}</span></summary>
+	<div class="im-navtree-items">
+		{{#each items}}<a class="im-navlink" href="{{url}}"{{#if current}} aria-current="page"{{/if}}><span>{{label}}</span></a>{{/each}}
+	</div>
+</details>
+{{else}}
+{{#each items}}<a class="im-navlink" href="{{url}}" title="{{label}}"{{#if current}} aria-current="page"{{/if}}>{{icon icon}}<span>{{label}}</span></a>{{/each}}
+{{/if}}
+{{/each}}

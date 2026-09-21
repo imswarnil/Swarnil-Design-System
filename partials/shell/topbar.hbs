@@ -1,0 +1,33 @@
+{{!-- Top bar (app layout — sits above a side nav).
+	  start   nav toggle · brand · anything you put in the block
+	  centre  search
+	  end     search (phones) · theme toggle · GitHub star · your own partial
+	Params: drawer (id of the phone drawer), search_custom (true = do not wire
+	Ghost's search), github (repo URL — shows a Star button), end (name of a
+	partial to render at the far right). --}}
+<header class="im-topbar">
+	<div class="im-topbar-start">
+		<button class="im-btn im-btn-ghost im-btn-icon max-lg:hidden" type="button" data-nav-toggle aria-label="{{t "Collapse navigation"}}" aria-expanded="true">{{> "icons/panel-left"}}</button>
+		<button class="im-btn im-btn-ghost im-btn-icon md:hidden" type="button" data-drawer-open="#{{#if drawer}}{{drawer}}{{else}}drawer{{/if}}" aria-label="{{t "Open navigation"}}">{{> "icons/menu"}}</button>
+		<a class="im-brand" href="{{@site.url}}">
+			{{#if @site.logo}}<img src="{{@site.logo}}" alt="{{@site.title}}">{{else}}<span>{{@site.title}}</span>{{/if}}
+		</a>
+		{{#if @partial-block}}{{> @partial-block}}{{/if}}
+	</div>
+
+	<div class="im-topbar-search">
+		<button class="im-searchbar" type="button" data-search-open{{#unless search_custom}} data-ghost-search{{/unless}}>
+			{{> "icons/search"}}<span>{{t "Search"}}</span><kbd>/</kbd>
+		</button>
+	</div>
+
+	<div class="im-topbar-end">
+		<button class="im-btn im-btn-ghost im-btn-icon md:hidden" type="button" data-search-open{{#unless search_custom}} data-ghost-search{{/unless}} aria-label="{{t "Search"}}">{{> "icons/search"}}</button>
+		{{> "components/theme-button"}}
+		{{#if github}}
+			<a class="im-btn im-btn-outline im-btn-sm max-sm:hidden" href="{{github}}" target="_blank" rel="noopener noreferrer">{{> "icons/brand-github"}}<span>{{t "Star"}}</span>{{> "icons/star"}}</a>
+			<a class="im-btn im-btn-ghost im-btn-icon sm:hidden" href="{{github}}" target="_blank" rel="noopener noreferrer" aria-label="GitHub">{{> "icons/brand-github"}}</a>
+		{{/if}}
+		{{#if end}}{{> (lookup . "end")}}{{/if}}
+	</div>
+</header>

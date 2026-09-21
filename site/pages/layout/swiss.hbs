@@ -1,0 +1,111 @@
+---
+title: Swiss grid
+description: The grid, made visible. Hairline rails and rules, registration marks where they meet, cells that share their borders, and line patterns for the empty space — the ruled, engineered look of a Swiss poster, or of a modern developer-product site.
+eyebrow: Layout
+source: src/layout/frame.css · src/utilities/index.css · src/components/swiss.css
+---
+<h2>The idea</h2>
+<p>Most interfaces hide their grid. This style draws it: a page is a column between two <strong>rails</strong>; its sections are <strong>rows</strong> divided by <strong>rules</strong>; content sits in <strong>cells</strong> that share their borders, so a row of things reads as one ruled table instead of a set of floating boxes. Everything is drawn with one token, <code>--im-line</code>, so it follows dark mode. The <a href="/">home page</a> is built this way.</p>
+
+<h2>Frame and rows</h2>
+{{#example flush=true}}
+<div class="im-frame" style="--im-frame-width: 100%; --im-row-pad: 1.5rem; border-inline: 0">
+	<section class="im-frame-row im-frame-marks" style="border-top: 0"><p class="im-caption" data-index="01">A row</p><p class="mt-2">Padded by <code>--im-row-pad</code>. <code>im-frame-marks</code> adds the two registration marks on its top rule.</p></section>
+	<section class="im-frame-row im-frame-split im-frame-marks"><div><p class="im-caption">Split · left</p><p class="mt-2">Two columns divided by a rule.</p></div><div><p class="im-caption">Split · right</p><p class="mt-2">Stacks below 56rem. <code>--im-split</code> sets the ratio.</p></div></section>
+	<div class="im-frame-head im-frame-marks"><p class="im-caption" data-index="02">A head</p><a class="im-card-cta" href="#frame-and-rows">An action {{> "icons/arrow-right"}}</a></div>
+	<section class="im-frame-row im-frame-row-flush"><div class="im-cells im-cells-3"><div class="im-cell"><span class="im-cell-title">Cell</span><span>Flush rows let cells touch the rails.</span></div><div class="im-cell"><span class="im-cell-title">Cell</span><span>Borders are shared, never doubled.</span></div><div class="im-cell"><span class="im-cell-title">Cell</span><span>Any content goes in one.</span></div></div></section>
+</div>
+{{/example}}
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Class</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>im-frame</code></td><td>The column and its two rails. <code>--im-frame-width</code> (72rem); <code>im-frame-wide</code> for 90rem.</td></tr>
+		<tr><td><code>im-frame-row</code></td><td>A section with a rule above it. <code>-flush</code> removes its padding; <code>im-frame-gap</code> is an empty, ruled gap.</td></tr>
+		<tr><td><code>im-frame-marks</code></td><td>A <code>+</code> where the row's top rule meets each rail. <code>--im-mark</code> sets its colour.</td></tr>
+		<tr><td><code>im-frame-head</code></td><td>A thin row for a label on the left and an action on the right.</td></tr>
+		<tr><td><code>im-frame-split</code></td><td>Two columns with a rule between them.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>Cells</h2>
+<p>The grid's own background is the line colour, its gap is 1px, and each child paints the canvas back in — so every border is shared and exactly one pixel, however the cells wrap. A cell that is a link fills on hover.</p>
+{{#example}}
+<div class="im-cells" style="--im-cell-min: 11rem">
+	<a class="im-cell" href="#cells"><span class="im-card-icon">{{> "icons/palette"}}</span><span class="im-cell-title">Tokens</span><span>A link cell.</span></a>
+	<a class="im-cell" href="#cells"><span class="im-card-icon">{{> "icons/component"}}</span><span class="im-cell-title">Components</span><span>Fills on hover.</span></a>
+	<a class="im-cell" href="#cells"><span class="im-card-icon">{{> "icons/rows-3"}}</span><span class="im-cell-title">Sections</span><span>Borders stay single.</span></a>
+	<div class="im-cell im-cell-wide im-bg-lines"><span class="im-caption">im-cell-wide — spans the row</span></div>
+</div>
+{{/example}}
+<p><code>im-cells</code> auto-fits at <code>--im-cell-min</code> (14rem). When a ragged last row would look wrong, fix the count with <code>im-cells-2</code> / <code>-3</code> / <code>-4</code>; they step down to two columns, then one.</p>
+
+<h3>Components in cells</h3>
+<p>Anything fits. A card placed directly in a cell grid drops its own surface — the cell is the surface.</p>
+{{#example}}
+<div class="im-cells im-cells-3">
+	{{#foreach demo.three}}<div class="im-cell">{{> "components/post-card"}}</div>{{/foreach}}
+</div>
+{{/example}}
+{{#example}}
+<div class="im-cells im-cells-3">
+	<div class="im-cell"><p class="im-caption" data-index="A">Actions</p><div class="im-cluster"><a class="im-btn im-btn-primary im-btn-sm" href="#components-in-cells">Deploy</a><a class="im-btn im-btn-sm" href="#components-in-cells">Logs</a></div></div>
+	<div class="im-cell"><p class="im-caption" data-index="B">Status</p><div class="im-cluster"><span class="im-badge im-badge-success">{{> "icons/check"}} Live</span><span class="im-badge im-badge-outline">v0.6</span></div></div>
+	<div class="im-cell"><p class="im-caption" data-index="C">Subscribe</p>{{> "components/subscribe" id="swiss-subscribe"}}</div>
+</div>
+{{/example}}
+
+<h2>Line patterns</h2>
+<p>The empty space of a ruled layout wants line work: <code>im-bg-grid</code>, <code>im-bg-lines</code>, <code>im-bg-rules</code>, <code>im-bg-blueprint</code>, <code>im-bg-cross</code> and a dozen more, with fade masks. They have their own page — <a href="/foundation/patterns/">Patterns</a>.</p>
+{{#example}}
+<div class="im-grid-auto" style="--im-grid-min: 9rem; --im-grid-gap: .75rem">
+	<div class="pattern-tile im-bg-grid">im-bg-grid</div>
+	<div class="pattern-tile im-bg-lines">im-bg-lines</div>
+	<div class="pattern-tile im-bg-cross">im-bg-cross</div>
+	<div class="pattern-tile im-bg-blueprint">im-bg-blueprint</div>
+</div>
+{{/example}}
+{{#example flush=true title="A hero backdrop: grid, faded from the centre"}}
+<div class="relative isolate grid place-items-center overflow-hidden px-6 py-16 text-center">
+	<div class="im-bg-grid im-fade-radial absolute inset-0 -z-10" aria-hidden="true"></div>
+	<p class="im-caption im-caption-rule" data-index="→">Ship faster</p>
+	<h3 class="text-h1 mt-3">Grid lines, not drop shadows.</h3>
+	<div class="im-cluster mt-5 justify-center"><a class="im-btn im-btn-primary" href="#line-patterns">Start building</a><a class="im-btn" href="#line-patterns">Read the docs</a></div>
+</div>
+{{/example}}
+
+<h2>Caption</h2>
+{{#example center=true}}
+<p class="im-caption" data-index="01">Foundation</p>
+<p class="im-caption">No index</p>
+<p class="im-caption im-caption-rule" data-index="→">With a rule</p>
+{{/example}}
+<p>Geist Mono, upper-case, letter-spaced: the caption of a Swiss layout. <code>data-index</code> prints an accent-coloured number before it.</p>
+
+<h2>The style scope</h2>
+<p>The default look is <em>soft</em> — pills and filled, rounded surfaces. <code>data-im-style="swiss"</code>, on <code>&lt;html&gt;</code> or on any wrapper, re-tunes the <em>same</em> components into line work that sits flush in a ruled grid. Use the <strong>Swiss / Soft</strong> switch in the top bar to flip this whole site; side by side:</p>
+{{#example}}
+<div class="im-grid-fit" style="--im-grid-min: 16rem">
+	<div class="im-stack" style="--im-stack-gap: .75rem" data-im-style="soft">
+		<p class="im-caption">data-im-style="soft" (default)</p>
+		<div class="im-cluster"><a class="im-btn im-btn-primary" href="#the-style-scope">Primary</a><a class="im-btn" href="#the-style-scope">Default</a><a class="im-tag" href="#the-style-scope">Tag</a></div>
+		<div class="im-card"><span class="im-card-title">Card</span><span>Filled and rounded.</span></div>
+	</div>
+	<div class="im-stack" style="--im-stack-gap: .75rem" data-im-style="swiss">
+		<p class="im-caption">data-im-style="swiss"</p>
+		<div class="im-cluster"><a class="im-btn im-btn-primary" href="#the-style-scope">Primary</a><a class="im-btn" href="#the-style-scope">Default</a><a class="im-tag" href="#the-style-scope">Tag</a></div>
+		<div class="im-card"><span class="im-card-title">Card</span><span>Outlined and near-square.</span></div>
+	</div>
+</div>
+{{/example}}
+<p>It is almost entirely token overrides — the scope re-declares the six <code>--im-radius-*</code> steps, and a component that says <code>--im-card-radius: var(--im-radius-xl)</code> picks the new value up by itself. That is the payoff of building components on tokens: a second visual language is one short file, <code>src/components/swiss.css</code>. Write your own the same way.</p>
+
+<h2>Using it well</h2>
+<ul>
+	<li><strong>Let lines do the separating.</strong> In this style, reach for a rule or a cell before a filled surface or a shadow.</li>
+	<li><strong>Align to the rails.</strong> Flush rows for anything tabular or visual; padded rows for text.</li>
+	<li><strong>Marks are punctuation</strong> — on the rows that begin a new part of the page, not on every one.</li>
+	<li><strong>One pattern per view</strong>, faded, behind content or in space that would otherwise be empty. Never behind body text at full strength.</li>
+	<li><strong>Captions, not headings, for wayfinding</strong> — a numbered mono caption above a section, and keep real headings for content.</li>
+</ul>

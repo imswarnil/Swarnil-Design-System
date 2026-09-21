@@ -1,0 +1,71 @@
+---
+title: Getting started
+description: What is in the box, how to run it, and where each kind of change goes.
+eyebrow: Start here
+---
+<h2>Run it</h2>
+{{{{code}}}}
+npm install
+npm run dev        # http://localhost:4700 — rebuilds and reloads on save
+npm run build      # one-off build into dist/
+npm run vendor     # re-copy fonts and icons from their npm packages
+{{{{/code}}}}
+
+<h2>What you ship</h2>
+<p>The build produces two files. A Ghost theme needs nothing else from here except the fonts and whichever partials it uses.</p>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>File</th><th>What it is</th></tr></thead>
+	<tbody>
+		<tr><td><code>dist/assets/im.css</code></td><td>Tokens, reset, layout, components and only the Tailwind utilities your templates use.</td></tr>
+		<tr><td><code>dist/assets/im.js</code></td><td>Theme switch, collapsible nav, drawer, menus, copy, share, table of contents. No dependencies.</td></tr>
+		<tr><td><code>dist/assets/im-code.js</code></td><td>Optional: syntax highlighting and a copy button for code blocks.</td></tr>
+		<tr><td><code>assets/fonts/</code></td><td>Geist, Geist Mono, Geist Pixel — with their licence file.</td></tr>
+		<tr><td><code>partials/</code></td><td>Ghost partials: icons, components, the shell's top bar.</td></tr>
+		<tr><td><code>sections/&lt;name&gt;/</code></td><td>Self-contained page sections. Copy a folder to use one.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>Where things go</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>You want to…</th><th>Edit</th></tr></thead>
+	<tbody>
+		<tr><td>Change a colour's value, in light or dark</td><td><code>src/foundation/tokens/semantic.css</code></td></tr>
+		<tr><td>Change the grey ramp, type scale, radii, widths</td><td><code>src/foundation/tokens/primitives.css</code></td></tr>
+		<tr><td>Restyle a bare element (<code>h2</code>, <code>a</code>, <code>code</code>)</td><td><code>src/foundation/base/elements.css</code></td></tr>
+		<tr><td>Change the page frame</td><td><code>src/layout/</code></td></tr>
+		<tr><td>Add or change a component</td><td><code>src/components/&lt;name&gt;.css</code> (+ a partial if it has markup)</td></tr>
+		<tr><td>Add a layout helper or one-purpose class</td><td><code>src/utilities/index.css</code></td></tr>
+		<tr><td>Add a page section</td><td><code>sections/&lt;name&gt;/</code></td></tr>
+		<tr><td>Add an icon</td><td>its Lucide name in <code>scripts/vendor.mjs</code>, then <code>npm run vendor</code></td></tr>
+		<tr><td>Document any of it</td><td><code>site/pages/</code> + a line in <code>site/site.config.mjs</code></td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>Folder layout</h2>
+{{{{code}}}}
+src/                     the design system
+  index.css              the layer stack — the only entry point
+  foundation/tokens/     primitives · semantic · code  (--im-*)  +  tailwind.css (the bridge)
+  foundation/base/       fonts · elements · prose
+  layout/                shell · topbar · sidenav · page
+  components/            one file per component
+  utilities/             wrap, grid-auto, cluster, stack, ring-line, pixel …
+  js/im.js · im-code.js  behaviour · syntax highlighting
+partials/                Ghost partials: icons/ components/ shell/
+sections/                reusable page sections, one folder each
+assets/fonts/            Geist family + OFL.txt
+site/                    this documentation site
+scripts/vendor.mjs       copies fonts + icons in from their npm packages
+PROVENANCE.md            where every outside file came from
+{{{{/code}}}}
+
+<h2>Three rules</h2>
+<ol>
+	<li><strong>Tokens before values.</strong> A hex code or a bare pixel value inside a component is a token that has not been named yet.</li>
+	<li><strong>Everything in a layer.</strong> Unlayered CSS outranks every layer. Only a section's own stylesheet is unlayered, and it styles nothing but its own block of class names.</li>
+	<li><strong>Write it, or license it.</strong> Nothing enters this repo from another theme. If it was not written here, it comes from an openly licensed package and gets a line in <a href="/provenance/">PROVENANCE.md</a>.</li>
+</ol>

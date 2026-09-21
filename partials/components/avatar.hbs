@@ -1,0 +1,9 @@
+{{!-- Avatar. Params: src, name, size ("sm" | "lg" | "xl"), class.
+	No src → the name's first letter. No name either → a user icon. --}}
+<span class="im-avatar{{#if size}} im-avatar-{{size}}{{/if}}{{#if class}} {{class}}{{/if}}"{{#if name}} data-initial="{{name.[0]}}"{{/if}}>
+	{{~#if src~}}
+		<img src="{{img_url src size="xs"}}" alt="{{name}}" width="96" height="96" loading="lazy" decoding="async">
+	{{~else~}}
+		{{#unless name}}{{> "icons/user"}}{{/unless}}
+	{{~/if~}}
+</span>

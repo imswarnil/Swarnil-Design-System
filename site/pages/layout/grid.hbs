@@ -1,0 +1,62 @@
+---
+title: Containers & grid
+description: A handful of layout utilities that cover most arrangements without a breakpoint. They are real Tailwind utilities, so variants work — md:im-grid-auto.
+eyebrow: Layout
+source: src/utilities/index.css
+---
+<h2>Containers</h2>
+<p><code>im-wrap</code> centres content at a maximum width. The page already has a gutter (<code>.im-shell-main</code>'s padding), so a wrap adds none of its own.</p>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Utility</th><th>Max width</th><th>For</th></tr></thead>
+	<tbody>
+		<tr><td><code>im-wrap-prose</code></td><td>44rem</td><td>Reading: a post body, a doc.</td></tr>
+		<tr><td><code>im-wrap</code></td><td>72rem</td><td>A page: article plus rail, a landing page. Override with <code>--im-wrap</code>.</td></tr>
+		<tr><td><code>im-wrap-wide</code></td><td>90rem</td><td>Galleries, feeds.</td></tr>
+		<tr><td><code>im-bleed</code></td><td>—</td><td>Break out of the gutter to the viewport edges.</td></tr>
+	</tbody>
+</table>
+</div>
+<p>The same widths exist as <code>max-w-prose</code>, <code>max-w-page</code>, <code>max-w-wide</code>.</p>
+
+<h2>im-grid-auto</h2>
+<p>As many columns as fit at a minimum width. Set <code>--im-grid-min</code> and <code>--im-grid-gap</code>. This is the workhorse: post feeds, card lists, swatches.</p>
+{{#example}}
+<div class="im-grid-auto" style="--im-grid-min: 8rem; --im-grid-gap: .75rem">
+	<div class="demo-cell">1</div><div class="demo-cell">2</div><div class="demo-cell">3</div><div class="demo-cell">4</div><div class="demo-cell">5</div>
+</div>
+{{/example}}
+
+<h2>im-grid-fit</h2>
+<p>The same, but with few items the columns stretch to fill the row instead of leaving empty tracks.</p>
+{{#example}}
+<div class="im-grid-fit" style="--im-grid-min: 8rem; --im-grid-gap: .75rem">
+	<div class="demo-cell">1</div><div class="demo-cell">2</div><div class="demo-cell">3</div>
+</div>
+{{/example}}
+
+<h2>im-grid-page</h2>
+<p>Twelve columns, for a deliberate composition. Place children with Tailwind's <code>col-span-*</code>, responsive as usual.</p>
+{{#example}}
+<div class="im-grid-page" style="--im-grid-gap: .75rem">
+	<div class="demo-cell col-span-12 md:col-span-8">col-span-12 md:col-span-8</div>
+	<div class="demo-cell col-span-12 md:col-span-4">md:col-span-4</div>
+	<div class="demo-cell col-span-6 md:col-span-3">3</div><div class="demo-cell col-span-6 md:col-span-3">3</div><div class="demo-cell col-span-12 md:col-span-6">6</div>
+</div>
+{{/example}}
+
+<h2>im-cluster &amp; im-stack</h2>
+<p><code>im-cluster</code> is a wrapping row (<code>--im-cluster-gap</code>); <code>im-stack</code> is a column (<code>--im-stack-gap</code>, default one line of rhythm).</p>
+{{#example}}
+<div class="im-stack">
+	<div class="im-cluster"><a class="im-btn im-btn-sm im-btn-primary" href="#cluster-stack">Save</a><a class="im-btn im-btn-sm" href="#cluster-stack">Cancel</a><span class="im-badge im-badge-warning">Unsaved</span></div>
+	<div class="im-cluster"><a class="im-tag" href="#cluster-stack">Travel</a><a class="im-tag" href="#cluster-stack">Craft</a><a class="im-tag" href="#cluster-stack">Career</a></div>
+</div>
+{{/example}}
+
+<h2>im-ring-line</h2>
+<p>A 1px border drawn as an inset shadow: it takes no space, and being translucent it works on any surface. Use it wherever you would reach for <code>border</code>.</p>
+{{#example center=true}}
+<div class="im-ring-line rounded-xl px-5 py-4 text-sm">ring-line</div>
+<div class="im-ring-line bg-surface rounded-xl px-5 py-4 text-sm">on a surface</div>
+{{/example}}

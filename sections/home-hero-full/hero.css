@@ -1,0 +1,1075 @@
+/*
+	Home hero, full — sections/home-hero-full/
+
+	Served as written (no build): plain CSS, with container queries for the
+	responsive work — they follow the width the hero actually gets, so a
+	collapsed side nav, a tablet and a phone are all the same rule.
+
+	Depends on the design system's tokens only (--im-*, --im-text-*,
+	--im-space, --im-radius-*, --im-font-*) and on two of its components, .im-btn and
+	.im-subscribe. It is deliberately NOT in a cascade layer: a section owns its
+	own block of class names (im-hero__*) and nothing else styles them.
+
+	Markup: hero.hbs + parts/*.hbs — the sections below are in the same order
+	Script: hero.js
+
+	  1. Section      the container and the grid     hero.hbs
+	  2. Background   mesh, loop, grain              parts/background.hbs
+	  3. Copy         ticker → note                  parts/copy.hbs
+	  4. Picture      frame, still, arrival          parts/picture.hbs
+	  5. Player       the still becomes the film     parts/picture.hbs + hero.js
+	  6. Controls     the column on the border       parts/controls.hbs
+	  7. Arrival      the stagger on load
+	  8. Responsive   ≤1080 · ≤880 tablet · ≤640 phone
+	  9. Reduced motion
+*/
+
+/* ── 1. Section ────────────────────────────────────────────────────────── */
+
+/* The section is the container the queries measure, and nothing more: a
+   container query cannot style its own container, so every dimension that
+   changes by width — the height, the padding — is on the grid inside it. */
+.im-hero {
+	position: relative;
+	z-index: 0;
+	container-type: inline-size;
+	overflow: hidden;
+	border-radius: var(--im-radius-2xl);
+	isolation: isolate;
+}
+
+/* The hero is the first screen: the viewport minus the site header and the
+   gutter above it, the row centred inside. A min-height, not a height, so a
+   long introduction grows the section instead of spilling out of it. `svh`,
+   because on a phone `vh` is the viewport with the browser chrome retracted
+   and a 100vh hero is taller than the screen until you scroll.
+
+   The picture is a square centred in the row; the film that replaces it is
+   exactly as tall as that square. */
+.im-hero__grid {
+	display: grid;
+	grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+	align-content: center;
+	align-items: center;
+	gap: clamp(2rem, 6cqi, 5.5rem);
+	min-height: calc(100svh - 9rem);
+	padding-block: clamp(1.5rem, 5vh, 4rem) clamp(1.5rem, 4vh, 3rem);
+	padding-inline: clamp(1rem, 4cqi, 4rem) clamp(1.5rem, 6cqi, 5.5rem);
+}
+
+/* ── 2. Background: a light red wash, and the loop moving inside it ────── */
+
+/*
+	The loop itself is light — red on white (media/hero-loop.mp4, generated
+	with ffmpeg) — and blends `multiply` over the page's own background, so
+	all it adds is a soft drifting red tint. Black text on a 5–15% red wash
+	is still black text on white as far as contrast goes, so nothing has to
+	be masked away from the copy.
+
+	Dark scheme: `invert(1) hue-rotate(180deg)` flips the lightness and puts
+	the hue back — red-on-white becomes red-on-black — and the blend becomes
+	`screen`, which is `multiply` seen from the other side. One file, both
+	schemes. Written twice — once for the explicit attribute, once for the OS
+	preference before im.js has set it; keep the pairs identical.
+*/
+
+/* Paints the page's own background colour, and that is not cosmetic:
+   `mix-blend-mode` blends with the backdrop INSIDE its stacking context,
+   and `z-index: -1` makes one. Without a ground of its own the loop would
+   have nothing to multiply against. */
+.im-hero__bg {
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	overflow: hidden;
+	border-radius: inherit;
+	background-color: var(--im-canvas);
+	pointer-events: none;
+}
+
+/* The CSS mesh is the still fallback: what shows before the video has
+   decoded a frame, on a connection that never finishes it, and under
+   prefers-reduced-motion. Masked, like the loop, to one small ellipse on
+   the copy's side, so nothing tints the picture or the ground under the
+   film's shadow. */
+.im-hero__mesh {
+	position: absolute;
+	inset: -20%;
+	-webkit-mask-image: radial-gradient(
+		30% 46% at 50% 46%,
+		#000 0%,
+		#000 12%,
+		transparent 72%
+	);
+	mask-image: radial-gradient(
+		30% 46% at 50% 46%,
+		#000 0%,
+		#000 12%,
+		transparent 72%
+	);
+	background:
+		radial-gradient(
+			38% 46% at 82% 8%,
+			color-mix(in srgb, var(--im-accent) 9%, transparent),
+			transparent 68%
+		),
+		radial-gradient(
+			34% 44% at 96% 54%,
+			color-mix(in srgb, var(--im-accent) 6%, transparent),
+			transparent 70%
+		),
+		radial-gradient(
+			40% 40% at 58% 96%,
+			color-mix(in srgb, var(--im-accent) 8%, transparent),
+			transparent 72%
+		),
+		radial-gradient(
+			46% 52% at 6% 4%,
+			color-mix(in srgb, var(--im-accent) 6%, transparent),
+			transparent 74%
+		);
+	animation: im-hero-mesh 34s ease-in-out infinite alternate;
+}
+
+@keyframes im-hero-mesh {
+	from {
+		transform: translate3d(0, 0, 0) scale(1);
+	}
+
+	to {
+		transform: translate3d(-3%, 2%, 0) scale(1.08);
+	}
+}
+
+.im-hero__plate {
+	position: absolute;
+	inset: 0;
+	-webkit-mask-image: radial-gradient(
+		34% 52% at 50% 44%,
+		#000 0%,
+		#000 12%,
+		transparent 72%
+	);
+	mask-image: radial-gradient(
+		34% 52% at 50% 44%,
+		#000 0%,
+		#000 12%,
+		transparent 72%
+	);
+}
+
+.im-hero__loop {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	mix-blend-mode: multiply;
+	opacity: 0.26;
+}
+
+:root[data-theme="dark"] .im-hero__loop {
+	filter: invert(1) hue-rotate(180deg);
+	mix-blend-mode: screen;
+	opacity: 0.22;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme]) .im-hero__loop {
+		filter: invert(1) hue-rotate(180deg);
+		mix-blend-mode: screen;
+		opacity: 0.22;
+	}
+}
+
+/* Grain over the whole hero: one inline feTurbulence — no request, no file
+   — tiled at 140px so it never reads as a repeat. `soft-light`, not
+   `overlay`: overlay pushes the light wash towards white and takes the tint
+   back out. */
+.im-hero__noise {
+	position: absolute;
+	inset: 0;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+	background-size: 140px 140px;
+	mix-blend-mode: soft-light;
+	opacity: 0.7;
+}
+
+:root[data-theme="dark"] .im-hero__noise {
+	opacity: 0.28;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme]) .im-hero__noise {
+		opacity: 0.28;
+	}
+}
+
+/* ── 3. Copy ───────────────────────────────────────────────────────────── */
+
+.im-hero__copy {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: calc(var(--im-space) * 4);
+	max-width: 40rem;
+}
+
+/* The ticker: a window one line tall with a column of phrases inside it,
+   stepped up one line at a time. FIVE PHRASES — six items, five steps; the
+   last repeats the first so the restart is invisible. Add one and every
+   stop below has to be recalculated. */
+.im-hero__ticker {
+	--im-ticker--line: 1.6;
+
+	display: flex;
+	align-items: center;
+	gap: 0.6em;
+	margin: 0;
+	color: var(--im-accent);
+	font-family: var(--im-font-pixel);
+	font-size: 1rem;
+	letter-spacing: 0.06em;
+	line-height: var(--im-ticker--line);
+	text-transform: uppercase;
+}
+
+.im-hero__ticker-dot {
+	flex: 0 0 auto;
+	width: 0.45em;
+	height: 0.45em;
+	border-radius: 50%;
+	background-color: currentcolor;
+	animation: im-hero-tick 2.8s ease-out infinite;
+}
+
+@keyframes im-hero-tick {
+	0% {
+		opacity: 1;
+		scale: 1;
+	}
+
+	50% {
+		opacity: 0.35;
+		scale: 0.72;
+	}
+
+	100% {
+		opacity: 1;
+		scale: 1;
+	}
+}
+
+.im-hero__ticker-window {
+	display: block;
+	height: calc(var(--im-ticker--line) * 1em);
+	overflow: hidden;
+}
+
+.im-hero__ticker-reel {
+	display: block;
+	animation: im-hero-roll 16s cubic-bezier(0.7, 0, 0.2, 1) infinite;
+}
+
+.im-hero__ticker-reel > span {
+	display: block;
+	height: calc(var(--im-ticker--line) * 1em);
+	white-space: nowrap;
+}
+
+@keyframes im-hero-roll {
+	0%,
+	16% {
+		transform: translateY(0);
+	}
+
+	20%,
+	36% {
+		transform: translateY(calc(var(--im-ticker--line) * -1em));
+	}
+
+	40%,
+	56% {
+		transform: translateY(calc(var(--im-ticker--line) * -2em));
+	}
+
+	60%,
+	76% {
+		transform: translateY(calc(var(--im-ticker--line) * -3em));
+	}
+
+	80%,
+	96% {
+		transform: translateY(calc(var(--im-ticker--line) * -4em));
+	}
+
+	100% {
+		transform: translateY(calc(var(--im-ticker--line) * -5em));
+	}
+}
+
+.im-hero__title {
+	margin: 0;
+	color: var(--im-ink);
+	font-family: var(--im-font-heading);
+	font-size: clamp(2.25rem, 6.4cqi, 4.25rem);
+	font-weight: var(--im-weight-semibold);
+	letter-spacing: -0.035em;
+	line-height: 1.04;
+	text-wrap: balance;
+}
+
+.im-hero__mark {
+	display: inline-block;
+	color: var(--im-accent);
+}
+
+.im-hero__tagline {
+	margin: 0;
+	color: var(--im-ink);
+	font-size: clamp(1.125rem, 2.4cqi, 1.5rem);
+	font-weight: var(--im-weight-medium);
+	line-height: 1.4;
+}
+
+.im-hero__intro {
+	max-width: 36rem;
+	margin: 0;
+	color: var(--im-body);
+	font-size: var(--im-text-lg);
+	line-height: 1.75;
+	text-wrap: pretty;
+}
+
+/* Role, employer, place. The employer is the only outbound link in the
+   hero, so it is the only thing underlined. */
+.im-hero__roles {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: calc(var(--im-space) * 1.5) calc(var(--im-space) * 2.5);
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.im-hero__role {
+	display: inline-flex;
+	align-items: baseline;
+	gap: 0.4em;
+	color: var(--im-ink);
+	font-size: var(--im-text-sm);
+	font-weight: var(--im-weight-medium);
+}
+
+.im-hero__role + .im-hero__role::before {
+	content: "";
+	width: 0.28em;
+	height: 0.28em;
+	margin-right: 0.4em;
+	border-radius: 50%;
+	background-color: var(--im-faint);
+	translate: 0 -0.25em;
+}
+
+.im-hero__role-ico {
+	display: inline-flex;
+	align-items: center;
+	color: var(--im-accent);
+}
+
+.im-hero__role-ico svg {
+	width: 1.05em;
+	height: 1.05em;
+}
+
+.im-hero__role-at {
+	color: var(--im-faint);
+	font-weight: var(--im-weight-normal, 400);
+}
+
+.im-hero__role-org {
+	color: var(--im-accent);
+	text-decoration: underline;
+	text-decoration-thickness: 1px;
+	text-underline-offset: 0.2em;
+}
+
+.im-hero__role--where {
+	color: var(--im-muted);
+	font-weight: var(--im-weight-normal, 400);
+}
+
+.im-hero__aim {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.4em;
+	margin: 0;
+	color: var(--im-muted);
+	font-size: var(--im-text-sm);
+	line-height: 1.5;
+}
+
+.im-hero__aim-ico {
+	display: inline-flex;
+	color: var(--im-accent);
+}
+
+.im-hero__aim-ico svg {
+	width: 1em;
+	height: 1em;
+}
+
+.im-hero__aim strong {
+	color: var(--im-ink);
+	font-weight: var(--im-weight-medium);
+}
+
+.im-hero__aim-slash {
+	color: var(--im-faint);
+}
+
+/* Newsletter and the one button, side by side. */
+.im-hero__actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: calc(var(--im-space) * 3);
+	width: 100%;
+}
+
+.im-hero__actions .im-subscribe {
+	flex: 0 1 17rem;
+	width: auto;
+	max-width: 19rem;
+	min-width: 0;
+}
+
+.im-hero__story {
+	flex: 0 0 auto;
+	gap: calc(var(--im-space) * 2);
+}
+
+.im-hero__note {
+	margin: calc(calc(var(--im-space) * 2) - calc(var(--im-space) * 4)) 0 0;
+	color: var(--im-faint);
+	font-size: var(--im-text-xs);
+	font-weight: var(--im-weight-medium);
+}
+
+/* No form (members off, or already a member), no line about the form. */
+.im-hero__copy:not(:has(.im-subscribe)) .im-hero__note {
+	display: none;
+}
+
+/* ── 4. Picture ────────────────────────────────────────────────────────── */
+
+/* The column reserves half a button on its right: the controls straddle the
+   frame's border, and without this the half that hangs off is clipped by
+   the section's own overflow. Centred in the row: the picture is a square of
+   its own, not a column as tall as the words. */
+.im-hero__photo {
+	display: grid;
+	align-self: center;
+	justify-self: end;
+	width: 100%;
+	max-width: 30rem;
+	padding-right: 1.125rem;
+}
+
+.im-hero__frame {
+	display: grid;
+	margin: 0;
+}
+
+/* THE SQUARE. The mount holds the shape: while the film plays the still is
+   taken out of flow, and without a shape of its own here the column would
+   collapse the moment play was pressed. The film that replaces the picture
+   is exactly as tall as this square and grows leftward from it. */
+.im-hero__mount {
+	position: relative;
+	aspect-ratio: 1 / 1;
+}
+
+.im-hero__still {
+	position: relative;
+	height: 100%;
+	overflow: hidden;
+	border: 1px solid var(--im-line);
+	border-radius: var(--im-radius-2xl);
+	background: var(--im-surface);
+}
+
+.im-hero__image,
+.im-hero__image img {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+/* The picture develops on arrival: revealed top-down, sharpening as it
+   comes. The blur used by the player's crossfade (§6) is on the <img>, not
+   here — this animation fills `filter` and would override it. */
+.im-hero__image {
+	animation: im-hero-develop 1.25s cubic-bezier(0.5, 0, 0.2, 1) 0.35s both;
+	transition: opacity 0.55s ease;
+}
+
+@keyframes im-hero-develop {
+	0% {
+		clip-path: inset(0 0 100% 0);
+		filter: blur(14px) saturate(0.2) contrast(1.4);
+	}
+
+	70% {
+		clip-path: inset(0 0 0 0);
+		filter: blur(9px) saturate(0.5) contrast(1.25);
+	}
+
+	100% {
+		clip-path: inset(0 0 0 0);
+		filter: none;
+	}
+}
+
+.im-hero__image img {
+	object-fit: cover;
+	transition: filter 0.55s ease;
+}
+
+.im-hero__image--logo img {
+	object-fit: contain;
+	padding: clamp(1rem, 6cqi, 2.5rem);
+}
+
+/* ── 5. Player: the still becomes the film ─────────────────────────────── */
+
+/*
+	THE FILM FLOATS OVER THE WORDS; THE WORDS DO NOT MOVE. Anchored to the
+	mount's right edge and stretched to its full height, with an aspect
+	ratio and `width: auto`: the width is DERIVED from the height, so the
+	film is exactly as tall as the picture it replaced and grows leftward
+	over the copy because its right edge is pinned. The shadow falls to the
+	LEFT only — every offset is on the x axis — because that is where the
+	words are; a downward shadow would read as a second, lower edge.
+
+	hero.js animates the rectangle between the two layouts (position and
+	`width: auto` do not interpolate) over `--im-film-tween`; the CSS below
+	takes over from the moment it lands.
+*/
+.im-hero__mount.is-playing .im-hero__still {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 5;
+	width: auto;
+	height: 100%;
+	min-height: 0;
+	aspect-ratio: var(--im-film-ratio, 16 / 9);
+	border-color: transparent;
+	box-shadow:
+		-2px 0 6px -2px hsl(0deg 0% 2% / 20%),
+		-28px 0 56px -14px hsl(0deg 0% 2% / 38%),
+		-60px 0 110px -30px hsl(0deg 0% 2% / 42%);
+}
+
+/* THE CROSSFADE. Picture and film trade places through a blur: the picture
+   fades out and blurs while the film arrives blurred and sharpens. Both
+   start once the frame has landed (`--im-film-tween`), which is when hero.js
+   has built the player, and they overlap. */
+.im-hero__mount.is-playing .im-hero__image {
+	opacity: 0;
+	transition-delay: var(--im-film-tween, 620ms);
+}
+
+.im-hero__mount.is-playing .im-hero__image img {
+	filter: blur(18px);
+	transition-delay: var(--im-film-tween, 620ms);
+}
+
+.im-hero__stage,
+.im-hero__stage iframe {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	border: 0;
+}
+
+.im-hero__stage {
+	opacity: 0;
+	filter: blur(18px);
+	pointer-events: none;
+	transition:
+		opacity 0.55s ease,
+		filter 0.55s ease;
+}
+
+.im-hero__mount.is-playing .im-hero__stage {
+	opacity: 1;
+	filter: blur(0);
+	pointer-events: auto;
+	transition-delay: var(--im-film-tween, 620ms);
+}
+
+/* The way back is the same crossfade in reverse, starting at once — while
+   the frame is still shrinking — so the picture is back and sharp by the
+   time the frame reaches it. */
+.im-hero__mount.is-closing .im-hero__stage {
+	opacity: 0;
+	filter: blur(18px);
+	transition-delay: 0s;
+}
+
+.im-hero__mount.is-closing .im-hero__image {
+	opacity: 1;
+	transition-delay: 0s;
+}
+
+.im-hero__mount.is-closing .im-hero__image img {
+	filter: blur(0);
+	transition-delay: 0s;
+}
+
+/* ── 6. Controls: one column on the frame's right border ───────────────── */
+
+/* Centred on the border — half on the picture, half off. Playing, the
+   film's right edge is the mount's right edge, so the column straddles the
+   film exactly as it straddles the picture. */
+.im-hero__controls {
+	position: absolute;
+	top: 50%;
+	right: 0;
+	z-index: 6;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: calc(var(--im-space) * 1.5);
+	translate: 50% -50%;
+}
+
+.im-hero__social {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: calc(var(--im-space) * 1.5);
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.im-hero__social-link {
+	display: grid;
+	place-items: center;
+	width: 1.875rem;
+	height: 1.875rem;
+	border: 1px solid var(--im-line);
+	border-radius: 50%;
+	background: var(--im-surface);
+	color: var(--im-body);
+	transition:
+		background-color 0.2s ease,
+		border-color 0.2s ease,
+		color 0.2s ease,
+		transform 0.2s ease;
+}
+
+.im-hero__social-link > svg {
+	width: 0.8125rem;
+	height: 0.8125rem;
+}
+
+.im-hero__social-link:hover,
+.im-hero__social-link:focus-visible {
+	border-color: var(--im-ink);
+	background: var(--im-canvas);
+	color: var(--im-ink);
+	transform: translateY(-2px);
+}
+
+/* The film's control: the same small, light round button as the accounts —
+   only its icon is in the accent, because it is the one thing in the column
+   that changes the page rather than leaving it. Playing, hero.js TRANSLATES
+   it to the frame's top corner — it keeps its slot, so the accounts do not
+   shift — and `translate` is the one property that transitions. */
+.im-hero__toggle {
+	display: grid;
+	place-items: center;
+	width: 1.875rem;
+	height: 1.875rem;
+	padding: 0;
+	border: 1px solid var(--im-line);
+	border-radius: 50%;
+	background: var(--im-surface);
+	color: var(--im-accent);
+	cursor: pointer;
+	transition:
+		translate 0.55s cubic-bezier(0.2, 0.8, 0.2, 1),
+		background-color 0.2s ease,
+		border-color 0.2s ease,
+		color 0.2s ease,
+		transform 0.2s ease;
+}
+
+.im-hero__toggle:hover,
+.im-hero__toggle:focus-visible {
+	border-color: var(--im-accent);
+	background: var(--im-accent);
+	color: var(--im-on-accent, #fff);
+	transform: scale(1.08);
+}
+
+.im-hero__toggle-ico {
+	display: grid;
+	place-items: center;
+}
+
+.im-hero__toggle-ico svg {
+	width: 0.75rem;
+	height: 0.75rem;
+}
+
+.im-hero__toggle-ico--play svg {
+	fill: currentcolor;
+}
+
+/* One icon at a time; the state class picks it. */
+.im-hero__toggle-ico--stop,
+.im-hero__mount.is-playing .im-hero__toggle-ico--play {
+	display: none;
+}
+
+.im-hero__mount.is-playing .im-hero__toggle-ico--stop {
+	display: grid;
+}
+
+/* ── 7. Arrival ────────────────────────────────────────────────────────── */
+
+.im-hero__copy > *,
+.im-hero__photo {
+	animation: im-hero-in 0.7s cubic-bezier(0.2, 0.75, 0.22, 1) both;
+}
+
+.im-hero__copy > :nth-child(2) {
+	animation-delay: 70ms;
+}
+
+.im-hero__copy > :nth-child(3) {
+	animation-delay: 140ms;
+}
+
+.im-hero__copy > :nth-child(4) {
+	animation-delay: 210ms;
+}
+
+.im-hero__copy > :nth-child(5) {
+	animation-delay: 280ms;
+}
+
+.im-hero__copy > :nth-child(6) {
+	animation-delay: 350ms;
+}
+
+.im-hero__photo {
+	animation-delay: 140ms;
+}
+
+@keyframes im-hero-in {
+	from {
+		opacity: 0;
+		transform: translateY(12px);
+	}
+
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+/* ── 8. Responsive, by container width ─────────────────────────────────── */
+
+@container (max-width: 1080px) {
+	.im-hero__grid {
+		gap: clamp(1.5rem, 4cqi, 3rem);
+		padding-inline: clamp(1rem, 3cqi, 2.5rem);
+	}
+
+	.im-hero__photo {
+		max-width: 24rem;
+	}
+
+	/* All the actions on one row, or the button drops onto a line of its
+	   own and leaves a hole where the form used to be. */
+	.im-hero__actions {
+		gap: calc(var(--im-space) * 2);
+	}
+
+	.im-hero__actions .im-subscribe {
+		flex: 1 1 11rem;
+		max-width: 15rem;
+	}
+}
+
+/* Tablet: two columns, the picture with a shape of its own. Matching the
+   column of words is right at desktop, where the picture's column is wide;
+   here it made a sliver, so the picture is 3:4 and the film changes shape
+   in place — there is no full-height column for a right-anchored film to
+   be as tall as. */
+@container (max-width: 880px) {
+	.im-hero__grid {
+		grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr);
+		gap: calc(var(--im-space) * 4);
+	}
+
+	.im-hero__photo {
+		align-content: start;
+		max-width: 17rem;
+		padding-right: 0.95rem;
+	}
+
+	/* Still a square; playing, the mount lets go of its shape so the frame can
+	   become 16:9 in flow. */
+	.im-hero__mount.is-playing {
+		aspect-ratio: auto;
+	}
+
+	/* `height: auto`, or the desktop rule's `height: 100%` leaks in and the
+	   aspect-ratio loses. */
+	.im-hero__mount.is-playing .im-hero__still {
+		position: static;
+		width: 100%;
+		height: auto;
+		aspect-ratio: 16 / 9;
+		box-shadow: 0 18px 40px -20px hsl(0deg 0% 2% / 40%);
+	}
+
+	.im-hero__title {
+		font-size: clamp(2rem, 7cqi, 3rem);
+	}
+
+	.im-hero__intro {
+		font-size: var(--im-text-base);
+	}
+
+	.im-hero__controls,
+	.im-hero__social {
+		gap: calc(var(--im-space) * 1);
+	}
+
+	.im-hero__toggle,
+	.im-hero__social-link {
+		width: 1.75rem;
+		height: 1.75rem;
+	}
+
+	.im-hero__toggle-ico svg,
+	.im-hero__social-link > svg {
+		width: 0.75rem;
+		height: 0.75rem;
+	}
+}
+
+/* Phone: one column, the picture first, everything left-aligned — every
+   line starts in the same place, and the picture is part of the column,
+   not a header above it. Type is set rather than inherited: the desktop
+   clamps all bottom out together at this width and flatten the hierarchy. */
+@container (max-width: 640px) {
+	/* Flush with the bar above and a clear step down to the words. */
+	.im-hero__grid {
+		grid-template-columns: minmax(0, 1fr);
+		gap: calc(var(--im-space) * 5);
+		min-height: 0;
+		padding-block: calc(var(--im-space) * 1.5) calc(var(--im-space) * 2.5);
+		padding-inline: calc(var(--im-space) * 2.5);
+	}
+
+	.im-hero__copy {
+		align-items: stretch;
+		gap: calc(var(--im-space) * 2);
+		max-width: 100%;
+		text-align: left;
+	}
+
+	/* More room on the right, so the column has space against the screen
+	   edge. */
+	.im-hero__photo {
+		order: -1;
+		justify-self: stretch;
+		max-width: 100%;
+		padding-right: 1.4rem;
+	}
+
+	.im-hero__mount {
+		height: auto;
+	}
+
+	/* Square — the same square the desktop draws beside the words. */
+	.im-hero__still {
+		height: auto;
+		min-height: 0;
+		aspect-ratio: 1 / 1;
+	}
+
+	.im-hero__image--logo img {
+		padding: 0.75rem;
+	}
+
+	/* 9:16, and IN the viewport: the width is capped at what 78svh of
+	   height allows, which keeps the ratio exact and the whole frame on
+	   screen (a max-height alone would have broken the ratio). hero.js
+	   scrolls it into view as it opens and plays the portrait cut. */
+	.im-hero__mount.is-playing .im-hero__still {
+		position: static;
+		width: 100%;
+		height: auto;
+		max-width: calc(78svh * 9 / 16);
+		margin-inline: auto;
+		aspect-ratio: 9 / 16;
+	}
+
+	.im-hero__ticker {
+		font-size: 0.625rem;
+		letter-spacing: 0.16em;
+	}
+
+	.im-hero__title {
+		font-size: 2rem;
+		letter-spacing: -0.03em;
+		line-height: 1.08;
+	}
+
+	.im-hero__tagline {
+		font-size: 1rem;
+		line-height: 1.35;
+	}
+
+	.im-hero__intro {
+		font-size: 0.9375rem;
+		line-height: 1.6;
+	}
+
+	.im-hero__roles,
+	.im-hero__aim {
+		font-size: 0.8125rem;
+	}
+
+	/* Two facts, two lines, rather than wrapping mid-fact. */
+	.im-hero__roles {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: calc(var(--im-space) * 1);
+	}
+
+	.im-hero__role + .im-hero__role::before {
+		display: none;
+	}
+
+	/* The form on one row, 70 / 30. Flex-grow ratios on a zero basis split
+	   the remaining space in that proportion once the gap is taken out,
+	   which fixed percentages would not; `min-width: 0` alone let the
+	   input collapse to a circle beside a wide "Subscribe". */
+	.im-hero__actions .im-subscribe {
+		flex: 1 1 100%;
+		max-width: 100%;
+	}
+
+	.im-hero__actions .im-subscribe-field {
+		display: flex;
+		flex-wrap: nowrap;
+		gap: calc(var(--im-space) * 1);
+	}
+
+	.im-hero__actions .im-subscribe-field > input {
+		flex: 7 1 0;
+		min-width: 0;
+		padding-right: calc(var(--im-space) * 2.5);
+		font-size: 1rem;
+	}
+
+	/* A real flex item, so it takes its 30. */
+	.im-hero__actions .im-subscribe-field > .im-btn {
+		flex: 3 1 0;
+		justify-content: center;
+		min-width: 0;
+		padding-inline: calc(var(--im-space) * 1.5);
+		font-size: 0.75rem;
+	}
+
+	/* One call to action beside the form, and the form is the one that
+	   matters here. */
+	.im-hero__story {
+		display: none;
+	}
+
+	.im-hero__note {
+		font-size: 0.6875rem;
+	}
+
+	.im-hero__controls,
+	.im-hero__social {
+		gap: 0.35rem;
+	}
+
+	.im-hero__toggle,
+	.im-hero__social-link {
+		width: 1.7rem;
+		height: 1.7rem;
+	}
+
+	.im-hero__toggle-ico svg,
+	.im-hero__social-link > svg {
+		width: 0.7rem;
+		height: 0.7rem;
+	}
+
+	/* A small feathered patch beside the copy, not a band across the top:
+	   stacked, the tint belongs with the words. The long fade (12% → 74%)
+	   is the feather. */
+	.im-hero__plate,
+	.im-hero__mesh {
+		-webkit-mask-image: radial-gradient(
+			48% 24% at 22% 64%,
+			#000 0%,
+			#000 12%,
+			transparent 74%
+		);
+		mask-image: radial-gradient(
+			48% 24% at 22% 64%,
+			#000 0%,
+			#000 12%,
+			transparent 74%
+		);
+	}
+
+	/* A little stronger, so the patch reads red rather than pink. Three
+	   classes deep on purpose: the dark-scheme rule is
+	   `:root[data-theme] .im-hero__loop` (0,3,0) and a bare `.im-hero__loop`
+	   would lose to it. This ties and, later in the file, wins. */
+	.im-hero__bg .im-hero__plate .im-hero__loop {
+		opacity: 0.4;
+	}
+}
+
+/* ── 9. Reduced motion ────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+	.im-hero__copy > *,
+	.im-hero__photo,
+	.im-hero__ticker-reel,
+	.im-hero__ticker-dot,
+	.im-hero__mesh,
+	.im-hero__image {
+		animation: none;
+	}
+
+	.im-hero__image,
+	.im-hero__image img,
+	.im-hero__stage {
+		transition: none;
+		filter: none;
+	}
+
+	.im-hero__plate {
+		display: none;
+	}
+}

@@ -1,0 +1,248 @@
+/* Gallery + lightbox.
+
+   <div class="im-gallery" data-im-lightbox>
+     <a class="im-gallery-item" href="big.jpg" data-caption="…"><img src="small.jpg" alt="…"></a> …
+   </div>
+
+   The thumbnails are LINKS to the large image, so with no script a click still
+   opens the picture. js/im-media.js turns the set into a lightbox: one native
+   <dialog> with arrows, a counter, captions, swipe and the keyboard.
+   Layouts:  (default) even grid · -masonry · -mosaic (first one large) · -strip. */
+
+.im-gallery {
+	--im-gallery-min: 12rem;
+	--im-gallery-gap: 0.5rem;
+
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-gallery-min), 100%), 1fr));
+	gap: var(--im-gallery-gap);
+}
+
+.im-gallery-item {
+	position: relative;
+	display: block;
+	aspect-ratio: var(--im-gallery-ratio, 1 / 1);
+	overflow: hidden;
+	border-radius: var(--im-radius-md);
+	background-color: var(--im-surface-2);
+	cursor: zoom-in;
+}
+
+.im-gallery-item > img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: scale 700ms var(--im-ease-out), filter 500ms;
+}
+
+.im-gallery-item:is(:hover, :focus-visible) > img {
+	scale: 1.05;
+}
+
+/* The others step back while one is hovered. */
+@media (hover: hover) {
+	.im-gallery:hover > .im-gallery-item:not(:hover) > img {
+		filter: grayscale(0.7) brightness(0.85);
+	}
+}
+
+/* An expand mark in the corner. */
+.im-gallery-item::after {
+	content: "";
+	position: absolute;
+	top: 0.5rem;
+	right: 0.5rem;
+	width: 1.625rem;
+	height: 1.625rem;
+	border-radius: var(--im-radius-sm);
+	background:
+		linear-gradient(#fff, #fff) center / 0.625rem 1.5px no-repeat,
+		linear-gradient(#fff, #fff) center / 1.5px 0.625rem no-repeat,
+		rgb(20 20 20 / 55%);
+	backdrop-filter: blur(8px);
+	opacity: 0;
+	transition: opacity 200ms;
+}
+
+.im-gallery-item:is(:hover, :focus-visible)::after {
+	opacity: 1;
+}
+
+.im-gallery-masonry {
+	display: block;
+	columns: var(--im-gallery-min) auto;
+	column-gap: var(--im-gallery-gap);
+}
+
+.im-gallery-masonry > .im-gallery-item {
+	aspect-ratio: auto;
+	margin-bottom: var(--im-gallery-gap);
+	break-inside: avoid;
+}
+
+.im-gallery-masonry > .im-gallery-item > img {
+	height: auto;
+}
+
+.im-gallery-mosaic {
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.im-gallery-mosaic > :first-child {
+	grid-column: span 2;
+	grid-row: span 2;
+}
+
+@media (width < 40rem) {
+	.im-gallery-mosaic {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+.im-gallery-strip {
+	display: flex;
+	overflow-x: auto;
+	scroll-snap-type: x mandatory;
+	scrollbar-width: thin;
+}
+
+.im-gallery-strip > .im-gallery-item {
+	flex: 0 0 min(70%, 22rem);
+	aspect-ratio: 4 / 3;
+	scroll-snap-align: start;
+}
+
+/* A single picture that opens:  <a class="im-zoomable" data-im-lightbox href="big.jpg"><img …></a> */
+.im-zoomable {
+	display: block;
+	overflow: hidden;
+	border-radius: var(--im-radius-lg);
+	cursor: zoom-in;
+}
+
+/* ---- the lightbox (built by the script) ----
+   Frosted, not blacked-out: the page stays there, blurred, behind a veil of
+   the canvas colour — white in light mode, near-black in dark — and the
+   picture floats on it with a shadow. The cross is the top-right corner. */
+.im-lightbox {
+	width: 100vw;
+	max-width: none;
+	height: 100dvh;
+	max-height: none;
+	margin: 0;
+	padding: 0;
+	background-color: color-mix(in oklab, var(--im-canvas) 72%, transparent);
+	color: var(--im-ink);
+	-webkit-backdrop-filter: blur(28px) saturate(1.4);
+	backdrop-filter: blur(28px) saturate(1.4);
+}
+
+/* Where the blur is not available the veil is simply denser. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+	.im-lightbox {
+		background-color: color-mix(in oklab, var(--im-canvas) 96%, transparent);
+	}
+}
+
+.im-lightbox::backdrop {
+	background: none;
+}
+
+.im-lightbox[open] {
+	display: grid;
+	grid-template: "bar" auto "stage" minmax(0, 1fr) "caption" auto / minmax(0, 1fr);
+	animation: im-fade-in 220ms;
+}
+
+.im-lightbox-bar {
+	grid-area: bar;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	padding: 0.75rem 1rem;
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	letter-spacing: 0.08em;
+}
+
+.im-lightbox-stage {
+	grid-area: stage;
+	position: relative;
+	display: grid;
+	/* One definite track, so the picture's max-height: 100% has something to
+	   be a percentage of — an auto track would simply grow to the picture. */
+	grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+	place-items: center;
+	min-height: 0;
+	padding-inline: clamp(0.5rem, 6vw, 5rem);
+	touch-action: pan-y;
+}
+
+.im-lightbox-stage > img {
+	width: auto;
+	height: auto;
+	max-width: 100%;
+	max-height: min(100%, calc(100dvh - 7.5rem));
+	object-fit: contain;
+	border-radius: var(--im-radius-lg);
+	box-shadow: 0 0 0 1px var(--im-line), 0 2.5rem 5rem -2rem rgb(0 0 0 / 35%);
+	animation: im-lightbox-in 320ms var(--im-ease-out);
+	user-select: none;
+}
+
+@keyframes im-lightbox-in {
+	from { opacity: 0; scale: 0.97; }
+}
+
+.im-lightbox-caption {
+	grid-area: caption;
+	min-height: 3rem;
+	padding: 0.875rem 1.25rem 1.25rem;
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+	text-align: center;
+}
+
+.im-lightbox .im-btn {
+	--im-btn-bg: var(--im-canvas);
+	--im-btn-fg: var(--im-ink);
+	--im-btn-bg-hover: var(--im-ink);
+	--im-btn-fg-hover: var(--im-canvas);
+
+	box-shadow: inset 0 0 0 1px var(--im-line), var(--im-shadow-float);
+}
+
+/* The cross: larger than the arrows, because it is the way out. */
+.im-lightbox [data-close] {
+	width: 2.75rem;
+	height: 2.75rem;
+}
+
+.im-lightbox [data-close] > .im-icon {
+	font-size: 1.25rem;
+	transition: rotate 220ms var(--im-ease-out);
+}
+
+.im-lightbox [data-close]:hover > .im-icon {
+	rotate: 90deg;
+}
+
+.im-lightbox-count {
+	color: var(--im-muted);
+}
+
+.im-lightbox-prev,
+.im-lightbox-next {
+	position: absolute;
+	top: 50%;
+	z-index: 1;
+	translate: 0 -50%;
+}
+
+.im-lightbox-prev { left: 0.75rem; }
+.im-lightbox-next { right: 0.75rem; }
+
+.im-lightbox[data-single] :is(.im-lightbox-prev, .im-lightbox-next, .im-lightbox-count) {
+	display: none;
+}

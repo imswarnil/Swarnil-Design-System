@@ -1,0 +1,93 @@
+---
+title: Video & timestamps
+description: A player that costs nothing until it is pressed, and a list of timestamps that drives it — press a chapter to jump there; the one playing is marked as the video runs. The video counterpart of the table of contents.
+eyebrow: Media
+source: src/components/video.css · src/js/im-media.js
+---
+<h2>Player and chapters</h2>
+<p>Press a timestamp — the player starts at that point. Press another while it plays and it seeks.</p>
+{{#example}}
+<div class="im-video-layout">
+	<div class="im-video" id="demo-video" data-im-video="aqz-KE-bpKQ" data-im-video-title="Big Buck Bunny">
+		<img class="im-video-poster" src="https://i.ytimg.com/vi/aqz-KE-bpKQ/maxresdefault.jpg" alt="">
+		<button class="im-video-play" type="button" aria-label="Play video">{{> "icons/play"}}</button>
+		<div class="im-video-meta"><span>Big Buck Bunny</span><small>10:34</small></div>
+	</div>
+	<ol class="im-chapters" data-im-chapters="#demo-video" data-im-duration="10:34" aria-label="Chapters">
+		<li><button type="button" data-t="0:00"><time>0:00</time><span>Opening titles</span><small>0:32</small></button></li>
+		<li><button type="button" data-t="0:32"><time>0:32</time><span>The meadow</span><small>1:16</small></button></li>
+		<li><button type="button" data-t="1:48"><time>1:48</time><span>Three troublemakers</span><small>2:07</small></button></li>
+		<li><button type="button" data-t="3:55"><time>3:55</time><span>The plan</span><small>2:35</small></button></li>
+		<li><button type="button" data-t="6:30"><time>6:30</time><span>Revenge</span><small>2:45</small></button></li>
+		<li><button type="button" data-t="9:15"><time>9:15</time><span>Credits</span><small>1:19</small></button></li>
+	</ol>
+</div>
+{{/example}}
+
+<h2>How it behaves</h2>
+<ul>
+	<li><strong>Nothing loads from YouTube until play is pressed.</strong> Before that it is a picture and a button: no iframe, no cookies, no 500 KB of player. Then it comes from the no-cookie domain.</li>
+	<li><strong>A chapter seeks the player</strong> — and starts it at that point if it has not been started. The player is scrolled back into view if you had scrolled past it.</li>
+	<li><strong>The playing chapter is marked</strong> <code>aria-current="true"</code>, with a bar on its leading edge and its own progress drawn under it. The script talks to the player with <code>postMessage</code> — YouTube's own API script is never loaded.</li>
+	<li><strong>The poster is the hit area.</strong> The round button is what you see; the whole picture is what you can press.</li>
+</ul>
+
+<h2>As chips</h2>
+<p><code>im-chapters-chips</code>: the same timestamps as a wrapping row — for under a video in a blog post, where a column would be too much.</p>
+{{#example}}
+<div class="im-stack" style="--im-stack-gap: .875rem">
+	<div class="im-video" id="demo-video-2" data-im-video="aqz-KE-bpKQ" style="max-width: 34rem">
+		<img class="im-video-poster" src="https://i.ytimg.com/vi/aqz-KE-bpKQ/hqdefault.jpg" alt="">
+		<button class="im-video-play" type="button" aria-label="Play video">{{> "icons/play"}}</button>
+	</div>
+	<ol class="im-chapters im-chapters-chips" data-im-chapters="#demo-video-2" aria-label="Jump to">
+		<li><button type="button" data-t="0:00"><time>0:00</time>Intro</button></li>
+		<li><button type="button" data-t="1:48"><time>1:48</time>Troublemakers</button></li>
+		<li><button type="button" data-t="3:55"><time>3:55</time>The plan</button></li>
+		<li><button type="button" data-t="6:30"><time>6:30</time>Revenge</button></li>
+	</ol>
+</div>
+{{/example}}
+
+<h2>A self-hosted file</h2>
+<p>Put a <code>&lt;video&gt;</code> inside <code>im-video</code> and leave <code>data-im-video</code> empty. Chapters drive it the same way.</p>
+{{#example}}
+<div class="im-stack" style="--im-stack-gap: .875rem; max-width: 34rem">
+	<div class="im-video" id="demo-video-3" data-im-video="">
+		<video src="{{demo.video}}" preload="metadata" loop playsinline></video>
+		<img class="im-video-poster" src="{{demo.post.feature_image}}" alt="">
+		<button class="im-video-play" type="button" aria-label="Play video">{{> "icons/play"}}</button>
+	</div>
+	<ol class="im-chapters im-chapters-chips" data-im-chapters="#demo-video-3" aria-label="Jump to">
+		<li><button type="button" data-t="0:00"><time>0:00</time>Start</button></li>
+		<li><button type="button" data-t="0:04"><time>0:04</time>Middle</button></li>
+		<li><button type="button" data-t="0:08"><time>0:08</time>End</button></li>
+	</ol>
+</div>
+{{/example}}
+
+<h2>Markup</h2>
+{{{{code "hbs"}}}}
+<div class="im-video" id="talk" data-im-video="YOUTUBE_ID" data-im-video-title="{{title}}">
+	<img class="im-video-poster" src="{{img_url feature_image size="l"}}" alt="">
+	<button class="im-video-play" type="button" aria-label="{{t "Play video"}}">{{> "icons/play"}}</button>
+</div>
+
+<ol class="im-chapters" data-im-chapters="#talk" data-im-duration="24:10" aria-label="{{t "Chapters"}}">
+	<li><button type="button" data-t="0:00"><time>0:00</time><span>Introduction</span></button></li>
+	<li><button type="button" data-t="2:15"><time>2:15</time><span>The problem</span></button></li>
+</ol>
+{{{{/code}}}}
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Attribute</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>data-im-video="ID"</code></td><td>The YouTube id. Empty for a <code>&lt;video&gt;</code> inside.</td></tr>
+		<tr><td><code>data-im-chapters="#id"</code></td><td>Which player the list drives.</td></tr>
+		<tr><td><code>data-t="m:ss"</code></td><td>On each chapter button. <code>h:mm:ss</code> works too.</td></tr>
+		<tr><td><code>data-im-duration="m:ss"</code></td><td>The video's length, so the <em>last</em> chapter's progress can be drawn.</td></tr>
+		<tr><td><code>--im-video-ratio</code></td><td>16 / 9. Use 9 / 16 for a vertical video.</td></tr>
+	</tbody>
+</table>
+</div>
+<p>In a Ghost post, authors can keep writing timestamps as a plain list — <code>2:15 The problem</code> — and a few lines of theme script can turn any list whose items start with a time into this component.</p>

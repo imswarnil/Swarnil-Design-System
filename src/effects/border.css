@@ -1,0 +1,122 @@
+/* Border effects — four, and they are the system's own line work.
+
+   The design language here is the ruled grid: hairlines, registration marks,
+   rulers. So an edge is drawn the same way — never glowing, never rainbow.
+
+     corners   four brackets instead of a box
+     ticks     a ruler along an edge
+     trace     one bright segment that travels the hairline
+     draw      the rule draws itself round the box on hover
+
+   All take --im-fx-ink (default: ink) and --im-fx-width. */
+
+@property --im-fx-turn {
+	syntax: "<angle>";
+	initial-value: 0deg;
+	inherits: false;
+}
+
+/* Corners: brackets. On hover (-close) they run along the edges until they meet
+   — the same gesture as the card's edge sharpening. */
+.im-fx-corners {
+	--_c: var(--im-fx-ink, var(--im-ink));
+	--_l: var(--im-fx-length, 0.875rem);
+	--_w: var(--im-fx-width, 1.5px);
+
+	background-image:
+		linear-gradient(var(--_c), var(--_c)), linear-gradient(var(--_c), var(--_c)),
+		linear-gradient(var(--_c), var(--_c)), linear-gradient(var(--_c), var(--_c)),
+		linear-gradient(var(--_c), var(--_c)), linear-gradient(var(--_c), var(--_c)),
+		linear-gradient(var(--_c), var(--_c)), linear-gradient(var(--_c), var(--_c));
+	background-position: 0 0, 0 0, 100% 0, 100% 0, 0 100%, 0 100%, 100% 100%, 100% 100%;
+	background-repeat: no-repeat;
+	background-size:
+		var(--_l) var(--_w), var(--_w) var(--_l),
+		var(--_l) var(--_w), var(--_w) var(--_l),
+		var(--_l) var(--_w), var(--_w) var(--_l),
+		var(--_l) var(--_w), var(--_w) var(--_l);
+	transition: background-size var(--im-duration-slow) var(--im-ease-out);
+}
+
+.im-fx-corners-close:is(:hover, :focus-within) {
+	--_l: 100%;
+}
+
+/* Ticks: a ruler. Minor every half rem, major every 2.5rem. -bottom, -left put
+   it on another edge. */
+.im-fx-ticks {
+	--_c: var(--im-fx-ink, var(--im-ink));
+
+	/* One tick per tile, repeated: exact at any length. */
+	background-image:
+		linear-gradient(to right, color-mix(in oklab, var(--_c) 45%, transparent) 1px, transparent 1px),
+		linear-gradient(to right, var(--_c) 1px, transparent 1px);
+	background-position: 0 0;
+	background-repeat: repeat-x;
+	background-size: 0.5rem 0.3125rem, 2.5rem 0.625rem;
+	padding-top: 1.125rem;
+}
+
+.im-fx-ticks-bottom {
+	background-position: 0 100%;
+	padding-top: 0;
+	padding-bottom: 1.125rem;
+}
+
+.im-fx-ticks-left {
+	background-image:
+		linear-gradient(to bottom, color-mix(in oklab, var(--_c) 45%, transparent) 1px, transparent 1px),
+		linear-gradient(to bottom, var(--_c) 1px, transparent 1px);
+	background-repeat: repeat-y;
+	background-size: 0.3125rem 0.5rem, 0.625rem 2.5rem;
+	padding-top: 0;
+	padding-left: 1.125rem;
+}
+
+/* Trace: a hairline box with one bright segment travelling round it — a
+   scanner, a "live" state. One per view. */
+.im-fx-trace {
+	border: var(--im-fx-width, 1px) solid transparent;
+	background:
+		linear-gradient(var(--im-fx-bg, var(--im-canvas)), var(--im-fx-bg, var(--im-canvas))) padding-box,
+		conic-gradient(from var(--im-fx-turn), var(--im-line) 0 78%, var(--im-fx-ink, var(--im-accent)) 92%, var(--im-line) 100%) border-box;
+	animation: im-fx-turn var(--im-fx-speed, 5s) linear infinite;
+}
+
+@keyframes im-fx-turn {
+	to { --im-fx-turn: 360deg; }
+}
+
+/* Draw: the rule draws itself round the box, from the top-left and the
+   bottom-right at once. */
+.im-fx-draw {
+	position: relative;
+}
+
+.im-fx-draw::before,
+.im-fx-draw::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	border: var(--im-fx-width, 1.5px) solid transparent;
+	border-radius: inherit;
+	pointer-events: none;
+	transition: clip-path var(--im-duration-slow) var(--im-ease-out);
+}
+
+.im-fx-draw::before {
+	border-top-color: var(--im-fx-ink, var(--im-ink));
+	border-right-color: var(--im-fx-ink, var(--im-ink));
+	clip-path: inset(0 100% 100% 0);
+}
+
+.im-fx-draw::after {
+	border-bottom-color: var(--im-fx-ink, var(--im-ink));
+	border-left-color: var(--im-fx-ink, var(--im-ink));
+	clip-path: inset(100% 0 0 100%);
+}
+
+.im-fx-draw:is(:hover, :focus-within)::before,
+.im-fx-draw:is(:hover, :focus-within)::after {
+	clip-path: inset(0);
+}

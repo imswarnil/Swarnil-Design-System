@@ -1,0 +1,127 @@
+/* .im-prose — long-form text: a post body, a doc page. Preflight strips list
+   markers and margins from everything; this puts them back for writing, at
+   one rhythm (--im-flow). In a Ghost theme, put it on the element wrapping
+   {{content}} — or use .im-content (components/content.css), which shares
+   every rule below and adds the wide / full-bleed canvas and the editor cards. */
+
+.im-prose {
+	max-width: var(--im-width-prose);
+	color: var(--im-body);
+}
+
+:is(.im-prose, .im-content) > * + * {
+	margin-top: var(--im-flow);
+}
+
+:is(.im-prose, .im-content) > :is(h2, h3, h4) {
+	margin-top: calc(var(--im-flow) * 2);
+	scroll-margin-top: calc(var(--im-bar-height) + 1.25rem);
+}
+
+:is(.im-prose, .im-content) > :is(h2, h3, h4) + * {
+	margin-top: calc(var(--im-flow) * 0.6);
+}
+
+/* Lists. Unordered: a small square in the accent — the system's dot. Ordered:
+   the number in Geist Mono with a leading zero, like a figure caption.
+   (::marker content is ignored by browsers that cannot do it; they print the
+   ordinary number, which is fine.) */
+:is(.im-prose, .im-content) :is(ul, ol) {
+	padding-left: 1.5rem;
+}
+
+:is(.im-prose, .im-content) ul {
+	list-style: square;
+}
+
+:is(.im-prose, .im-content) ul ul {
+	list-style: "–  ";
+}
+
+:is(.im-prose, .im-content) ol {
+	list-style: decimal-leading-zero;
+}
+
+:is(.im-prose, .im-content) ol ol {
+	list-style: lower-alpha;
+}
+
+:is(.im-prose, .im-content) ol ol ol {
+	list-style: lower-roman;
+}
+
+:is(.im-prose, .im-content) li {
+	padding-left: 0.25rem;
+}
+
+:is(.im-prose, .im-content) li + li,
+:is(.im-prose, .im-content) li > :is(ul, ol) {
+	margin-top: 0.4em;
+}
+
+:is(.im-prose, .im-content) ul > li::marker {
+	color: var(--im-accent);
+}
+
+:is(.im-prose, .im-content) ol > li::marker {
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: 0.8125em;
+	font-variant-numeric: tabular-nums;
+}
+
+/* Quote: a hanging mark in Geist Pixel, not a coloured side border. */
+:is(.im-prose, .im-content) blockquote {
+	position: relative;
+	padding-left: 2.75rem;
+	color: var(--im-ink);
+	font-size: var(--im-text-lg);
+	font-weight: 500;
+	line-height: 1.5;
+}
+
+:is(.im-prose, .im-content) blockquote::before {
+	content: "\201C";
+	position: absolute;
+	top: -0.05em;
+	left: 0;
+	color: var(--im-accent);
+	font-family: var(--im-font-pixel);
+	font-size: 3.25rem;
+	font-weight: 400;
+	line-height: 1;
+}
+
+:is(.im-prose, .im-content) blockquote > * + * {
+	margin-top: 0.75em;
+}
+
+:is(.im-prose, .im-content) blockquote :is(cite, footer) {
+	display: block;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	font-style: normal;
+	font-weight: 400;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+}
+
+:is(.im-prose, .im-content) img,
+:is(.im-prose, .im-content) video {
+	border-radius: var(--im-radius-lg);
+}
+
+:is(.im-prose, .im-content) figcaption {
+	margin-top: 0.625rem;
+	color: var(--im-muted);
+	font-size: var(--im-text-sm);
+	text-align: center;
+}
+
+/* A table wider than the column scrolls inside its own box. */
+.im-table-scroll {
+	overflow-x: auto;
+	border-radius: var(--im-radius-lg);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+}

@@ -1,0 +1,93 @@
+---
+title: Sidebar
+description: The side nav — grouped links with icons, collapsible trees, counts. It collapses to an icon rail and, on a phone, its links move into the menu panel. The one on the left of this page is it.
+eyebrow: Navigation
+source: src/layout/sidenav.css
+---
+<h2>Groups and links</h2>
+<p>One class, <code>im-navlink</code>, inside <code>im-navgroup</code>s. The current page is <code>aria-current="page"</code> — no "active" class to keep in step.</p>
+{{#example style="max-width: 17rem"}}
+<nav aria-label="Example">
+	<div class="im-navgroup">
+		<a class="im-navlink" href="#groups-and-links" aria-current="page">{{> "icons/house"}}<span>Home</span></a>
+		<a class="im-navlink" href="#groups-and-links">{{> "icons/book-open"}}<span>Journal</span><small>48</small></a>
+		<a class="im-navlink" href="#groups-and-links">{{> "icons/video"}}<span>Videos</span><span class="im-badge im-badge-accent">New</span></a>
+	</div>
+</nav>
+{{/example}}
+
+<h2>Titled groups</h2>
+{{#example style="max-width: 17rem"}}
+<nav class="im-stack" style="--im-stack-gap: 1.25rem" aria-label="Example">
+	<div class="im-navgroup">
+		<p class="im-navgroup-title">Writing</p>
+		<a class="im-navlink" href="#titled-groups">{{> "icons/book-open"}}<span>Journal</span></a>
+		<a class="im-navlink" href="#titled-groups">{{> "icons/tag"}}<span>Topics</span></a>
+	</div>
+	<div class="im-navgroup">
+		<p class="im-navgroup-title">About</p>
+		<a class="im-navlink" href="#titled-groups">{{> "icons/user"}}<span>Me</span></a>
+		<a class="im-navlink" href="#titled-groups">{{> "icons/mail"}}<span>Contact</span></a>
+	</div>
+</nav>
+{{/example}}
+
+<h2>Tree</h2>
+<p>A collapsible group is a native <code>&lt;details&gt;</code>: keyboard support, open state and find-in-page all come from the browser, with no script. Add <code>open</code> to start expanded — do that for the branch containing the current page.</p>
+{{#example style="max-width: 17rem"}}
+<nav class="im-navgroup" aria-label="Example">
+	<a class="im-navlink" href="#tree">{{> "icons/house"}}<span>Home</span></a>
+	<details class="im-navtree" open>
+		<summary class="im-navlink">{{> "icons/layers"}}<span>Projects</span></summary>
+		<div class="im-navtree-items">
+			<a class="im-navlink" href="#tree" aria-current="page"><span>Case studies</span></a>
+			<a class="im-navlink" href="#tree"><span>Work log</span></a>
+			<a class="im-navlink" href="#tree"><span>Open source</span><small>12</small></a>
+		</div>
+	</details>
+	<details class="im-navtree">
+		<summary class="im-navlink">{{> "icons/map-pin"}}<span>Travel</span></summary>
+		<div class="im-navtree-items">
+			<a class="im-navlink" href="#tree"><span>Trips</span></a>
+			<a class="im-navlink" href="#tree"><span>Wishlist</span></a>
+		</div>
+	</details>
+	<a class="im-navlink" href="#tree">{{> "icons/mail"}}<span>Contact</span></a>
+</nav>
+{{/example}}
+
+<h2>Three states</h2>
+{{#example}}
+<div class="im-grid-fit" style="--im-grid-min: 11rem">
+	<div class="im-stack" style="--im-stack-gap: .5rem"><div class="mini-shell"><span>bar</span><span>nav</span><span>main</span></div><p class="text-sm text-muted"><strong>Open</strong> — from <code>lg</code>, by default</p></div>
+	<div class="im-stack" style="--im-stack-gap: .5rem"><div class="mini-shell" style="--mini-nav: 2rem"><span>bar</span><span></span><span>main</span></div><p class="text-sm text-muted"><strong>Rail</strong> — <code>md</code>…<code>lg</code>, or collapsed by the visitor</p></div>
+	<div class="im-stack" style="--im-stack-gap: .5rem"><div class="mini-shell" style="--mini-nav: 0rem"><span>bar</span><span></span><span>main</span></div><p class="text-sm text-muted"><strong>Drawer</strong> — below <code>md</code></p></div>
+</div>
+{{/example}}
+<ul>
+	<li><strong>Rail.</strong> Labels, group titles, counts and tree children are hidden with CSS only — they stay in the DOM for screen readers — and each link's <code>title</code> supplies the tooltip. So always give a nav link a <code>title</code> and an icon.</li>
+	<li><strong>The visitor's choice</strong> is <code>&lt;html data-nav="rail"&gt;</code>, toggled by any <code>[data-nav-toggle]</code>, stored, and applied before first paint by <code>partials/shell/head-script.hbs</code> — so the page never jumps.</li>
+	<li><strong>On a phone.</strong> Below <code>md</code> the side nav leaves the grid and its links become tiles in the <a href="/navigation/navbar/#menu-panel">menu panel</a> — a group of links becomes a tile that opens.</li>
+	<li><strong>It scrolls on its own</strong>, under the bar, with a scrollbar that only appears on hover; a footer (<code>im-sidenav-foot</code>) sticks to its bottom.</li>
+</ul>
+
+<h2>Structure</h2>
+{{{{code "hbs"}}}}
+<aside class="im-sidenav" aria-label="Sections">
+	<div class="im-navgroup">
+		<p class="im-navgroup-title">Writing</p>
+		<a class="im-navlink" href="/journal/" title="Journal" aria-current="page">{{> "icons/book-open"}}<span>Journal</span></a>
+		…
+	</div>
+	<p class="im-sidenav-foot">© 2026</p>
+</aside>
+{{{{/code}}}}
+<p>In Ghost, <code>\{{navigation as="side"}}</code> renders the site's navigation as <code>im-navlink</code>s (without icons — Ghost's navigation has none; add them by matching on <code>slug</code> in <code>partials/navigation.hbs</code> if you want them).</p>
+
+<h2>Variables</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Variable</th><th>Value</th></tr></thead>
+	<tbody>{{#each tokens.frame}}<tr><td><code>{{name}}</code></td><td>{{value}}</td></tr>{{/each}}</tbody>
+</table>
+</div>

@@ -1,0 +1,16 @@
+/* Tokens. Every one is an --im-* custom property — that is the public API,
+   usable from any stylesheet, with or without Tailwind.
+
+   primitives.css   raw values with no meaning: grey ramp, type scale, radii.
+   semantic.css     what a value is FOR: canvas, surface, ink, line, accent…
+                    the only tier that changes between light and dark.
+   code.css         the syntax-highlighting theme.
+   motion.css       durations, curves, distance, stagger.
+   tailwind.css     the bridge: hands the tokens to Tailwind so that
+                    bg-surface, text-ink, rounded-lg, text-sm … exist. */
+
+@import "./primitives.css" layer(tokens);
+@import "./semantic.css" layer(tokens);
+@import "./code.css" layer(tokens);
+@import "./motion.css" layer(tokens);
+@import "./tailwind.css";

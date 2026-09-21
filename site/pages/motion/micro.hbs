@@ -1,0 +1,65 @@
+---
+title: Interaction
+description: This system has two signature interactions, and they are built into the components rather than added by hand. Everything else is deliberately left out. A site that answers every touch with a different flourish feels busy; one that answers the same way every time feels designed.
+eyebrow: Motion
+source: src/components/button.css · card.css · src/motion/micro.css
+---
+<h2>One · the button leans</h2>
+<p>A button gives under the press, and a <strong>trailing</strong> icon leans the way the button is going. Nothing else moves. It is automatic — there is no class to add.</p>
+{{#example center=true}}
+<a class="im-btn im-btn-primary im-btn-lg" href="#one-the-button-leans">Get started {{> "icons/arrow-right"}}</a>
+<a class="im-btn" href="#one-the-button-leans">Read the docs {{> "icons/arrow-right"}}</a>
+<a class="im-btn im-btn-outline" href="#one-the-button-leans">Open {{> "icons/arrow-up-right"}}</a>
+<a class="im-btn im-btn-ghost" href="#one-the-button-leans">{{> "icons/download"}} A leading icon stays still</a>
+{{/example}}
+<p>Only an icon that comes <em>after</em> the label leans: that is the one that says "this goes somewhere". A leading icon names the action and stays put.</p>
+
+<h2>Two · the edge sharpens</h2>
+<p>A card is a ruled box, and it answers by <strong>drawing its rule</strong>: the hairline turns to ink, and its CTA arrow leans — the same lean as the button. No lift, no shadow, no tilt. Also automatic, for any card that is a link or holds a title link.</p>
+{{#example}}
+<div class="im-grid-auto" style="--im-grid-min: 14rem">
+	<a class="im-card im-card-outline im-card-link" href="#two-the-edge-sharpens"><span class="im-card-title">An outlined card</span><span>Hover me: hairline → ink.</span><span class="im-card-cta">Read {{> "icons/arrow-right"}}</span></a>
+	<article class="im-card im-card-outline"><div class="im-card-media"><img src="{{demo.post.feature_image}}" alt="" loading="lazy"></div><div class="im-card-body"><h3 class="im-card-title"><a href="#two-the-edge-sharpens">A card with media</a></h3><span class="im-card-cta">Read {{> "icons/arrow-right"}}</span></div></article>
+	<a class="im-card im-card-link" href="#two-the-edge-sharpens"><span class="im-card-title">A filled card</span><span>Has no edge to sharpen, so it steps up one surface shade instead.</span></a>
+</div>
+{{/example}}
+<p>The same gesture runs through the system: the <a href="/navigation/pagination/#previous-next-article">post nav</a> arrows lean, the <a href="/effects/border/#corners">corner brackets</a> run along their edges, an <a href="/forms/inputs/#states">input</a>'s hairline becomes a 2px rule on focus. One idea, repeated, is what makes a site feel like one thing.</p>
+
+<h2>The small remainder</h2>
+<p>For things that are not buttons or cards.</p>
+{{#example center=true}}
+<a class="im-underline text-ink font-medium" href="#the-small-remainder">im-underline — a text link's rule draws in</a>
+<a class="im-nudge inline-flex items-center gap-1.5 text-sm font-medium text-ink no-underline" href="#the-small-remainder">im-nudge, on a plain link {{> "icons/arrow-right"}}</a>
+<a class="im-nudge im-nudge-back inline-flex items-center gap-1.5 text-sm font-medium text-ink no-underline" href="#the-small-remainder">{{> "icons/arrow-left"}} im-nudge-back</a>
+{{/example}}
+{{#example center=true title="im-like — a toggle that pops. State is aria-pressed; data-im-toggle flips it."}}
+<button class="im-like" type="button" aria-pressed="false" aria-label="Like" data-im-toggle>{{> "icons/heart"}}</button>
+<button class="im-like" type="button" aria-pressed="true" aria-label="Like" data-im-toggle>{{> "icons/heart"}}</button>
+<button class="im-like" type="button" aria-pressed="false" aria-label="Save" data-im-toggle style="--im-like: var(--im-accent)">{{> "icons/bookmark"}}</button>
+{{/example}}
+{{#example center=true title="im-shake — “no”"}}
+<button class="im-btn im-btn-outline" type="button" onclick="this.classList.remove('im-shake');void this.offsetWidth;this.classList.add('im-shake')">Wrong password — press me</button>
+{{/example}}
+
+<h2>Feedback that components already give</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Where</th><th>What happens</th></tr></thead>
+	<tbody>
+		<tr><td><a href="/components/button/#states">Button</a></td><td><code>aria-busy</code> swaps the label for a spinner.</td></tr>
+		<tr><td><a href="/components/share/#copy-and-share-on-anything">Copy</a></td><td>The label becomes "Copied", the button turns green, then resets.</td></tr>
+		<tr><td><a href="/forms/choices/">Checkbox &amp; radio</a></td><td>The tick draws itself; the dot springs in.</td></tr>
+		<tr><td><a href="/components/switch/">Switch &amp; switcher</a></td><td>The thumb stretches while held, then springs to the choice.</td></tr>
+		<tr><td><a href="/forms/controls/#file-drop">File drop</a></td><td>Its dashes march while something is over it.</td></tr>
+		<tr><td><a href="/navigation/menu/">Menu</a>, <a href="/components/dialog/">dialog</a>, <a href="/components/disclosure/">accordion</a></td><td>Enter from where they were opened.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>What was left out, on purpose</h2>
+<p>Earlier versions had ripple, magnetic buttons, 3D tilt, a pointer spotlight, swapping labels and spinning icons. Each is fine alone; together they are a toy box, and none of them belongs to a ruled, typographic system. They were removed. If a project truly needs one, it is twenty lines — but ask first whether the two above already say it.</p>
+<ul>
+	<li><strong>Answer within 100ms.</strong> A press must respond at once, even if the work takes longer.</li>
+	<li><strong>One interaction per element.</strong></li>
+	<li><strong>Hover is a bonus, never the only way.</strong> Everything here also fires on keyboard focus, and none of it carries information a touch user would miss.</li>
+</ul>

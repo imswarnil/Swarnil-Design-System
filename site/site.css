@@ -1,0 +1,440 @@
+/* Docs chrome — this site only, not part of the system. Written the way a
+   theme's own CSS would be: @reference for tokens + utilities, one layer. */
+
+@reference "../src/index.css";
+
+@layer components {
+	.skip-link {
+		position: fixed;
+		top: 0.5rem;
+		left: 0.5rem;
+		z-index: 100;
+		translate: 0 -200%;
+	}
+
+	.skip-link:focus {
+		translate: 0;
+	}
+
+	.im-shell-main > .im-with-aside,
+	.im-shell-main > .doc-head {
+		padding-top: 1.5rem;
+	}
+
+	/* ---- doc page ----
+	   Fluid: the article takes whatever the side nav leaves, with the contents
+	   rail pinned at the right — so collapsing the nav visibly widens the page. */
+	.shell-doc.im-with-aside,
+	[data-nav="rail"] .shell-doc.im-with-aside {
+		max-width: var(--im-width-wide);
+	}
+
+	.shell-doc .im-prose {
+		max-width: 62rem;
+	}
+
+	.doc {
+		@apply im-stack min-w-0;
+
+		--im-stack-gap: 1.75rem;
+	}
+
+	.doc-head {
+		@apply im-stack;
+
+		--im-stack-gap: 0.75rem;
+	}
+
+	.doc-source {
+		@apply text-sm;
+	}
+
+	.doc-pager {
+		@apply grid grid-cols-2 gap-4 mt-8 pt-8 border-t border-line;
+	}
+
+	.doc-pager-next {
+		@apply items-end text-right;
+	}
+
+	/* ---- example: a stage and its source ---- */
+	.example {
+		@apply rounded-xl overflow-hidden im-ring-line;
+	}
+
+	.example-title {
+		@apply px-4 py-2.5 text-sm font-medium text-muted border-b border-line;
+	}
+
+	.example-stage {
+		@apply p-8 bg-canvas overflow-x-auto;
+
+		@media (width < 40rem) {
+			@apply p-4;
+		}
+	}
+
+	.example-center {
+		@apply flex flex-wrap items-center justify-center gap-4;
+	}
+
+	.example-flush {
+		@apply p-0;
+	}
+
+	.example-surface {
+		@apply bg-surface;
+	}
+
+	/* The page-transition picker: the chosen style is filled. */
+	[data-transition][aria-pressed="true"] {
+		--im-btn-bg: var(--im-ink);
+		--im-btn-fg: var(--im-canvas);
+		--im-btn-bg-hover: var(--im-ink);
+		--im-btn-fg-hover: var(--im-canvas);
+
+		box-shadow: none;
+	}
+
+	/* For demos whose content opens outside its box: hover cards, tooltips. */
+	.example:has(> .example-spill) {
+		overflow: visible;
+	}
+
+	.example-spill {
+		@apply rounded-t-xl;
+
+		overflow: visible;
+	}
+
+	.example-code {
+		@apply rounded-none border-t border-line;
+
+		max-height: 20rem;
+		box-shadow: none;
+	}
+
+	/* ---- token displays ---- */
+	.swatches {
+		@apply im-grid-auto;
+
+		--im-grid-min: 10rem;
+		--im-grid-gap: 1rem;
+	}
+
+	.swatch {
+		@apply flex flex-col gap-1.5 min-w-0;
+	}
+
+	.swatch-chip {
+		@apply h-16 rounded-lg im-ring-line;
+
+		background-color: var(--swatch);
+	}
+
+	.swatch-name {
+		@apply font-mono text-sm font-medium text-ink;
+	}
+
+	.swatch-meta {
+		@apply flex flex-col font-mono text-xs text-muted;
+	}
+
+	.specimen {
+		@apply flex flex-col gap-1 py-4 border-t border-line first:border-t-0 first:pt-0;
+	}
+
+	.specimen-meta {
+		@apply font-mono text-xs text-muted;
+	}
+
+	.radius-box {
+		@apply w-full bg-surface-2 im-ring-line;
+
+		aspect-ratio: 3 / 2;
+		border-radius: var(--r);
+	}
+
+	.demo-cell {
+		@apply grid place-items-center min-h-16 rounded-lg bg-surface text-sm text-muted;
+	}
+
+	.layer-list {
+		@apply flex flex-col gap-1;
+	}
+
+	.layer {
+		@apply grid items-baseline gap-x-4 gap-y-0.5 px-4 py-3 rounded-lg bg-surface text-sm;
+
+		grid-template-columns: 7rem minmax(0, 1fr);
+
+		> strong {
+			@apply font-mono;
+		}
+
+		@media (width < 40rem) {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+
+	.im-icon-grid {
+		@apply im-grid-auto;
+
+		--im-grid-min: 7rem;
+		--im-grid-gap: 0.5rem;
+	}
+
+	.im-icon-cell {
+		@apply flex flex-col items-center gap-2.5 px-2 py-5 rounded-lg im-ring-line text-ink text-center;
+
+		> .im-icon {
+			font-size: 1.375rem;
+		}
+
+		> span {
+			@apply font-mono text-xs text-muted;
+
+			overflow-wrap: anywhere;
+		}
+	}
+
+	.file-list {
+		@apply flex flex-col font-mono text-sm;
+
+		> li {
+			@apply px-4 py-2 border-t border-line first:border-t-0;
+		}
+	}
+
+	/* A miniature of the shell, for the layout docs. */
+	.mini-shell {
+		@apply grid rounded-lg overflow-hidden im-ring-line text-xs text-muted;
+
+		grid-template: "bar bar" 2rem "nav main" 9rem / var(--mini-nav, 5.5rem) 1fr;
+		transition: grid-template-columns 220ms var(--im-ease-out);
+
+		> * {
+			@apply grid place-items-center;
+		}
+
+		> :nth-child(1) {
+			@apply bg-surface-2;
+
+			grid-area: bar;
+		}
+
+		> :nth-child(2) {
+			@apply bg-surface;
+
+			grid-area: nav;
+		}
+
+		> :nth-child(3) {
+			grid-area: main;
+		}
+	}
+
+	/* ---- the page ground: a grid in Swiss, nothing in Soft ---- */
+	[data-im-style="swiss"] .im-shell-main {
+		background-image:
+			linear-gradient(to right, color-mix(in oklab, var(--im-line) 55%, transparent) 1px, transparent 1px),
+			linear-gradient(to bottom, color-mix(in oklab, var(--im-line) 55%, transparent) 1px, transparent 1px);
+		background-size: 3rem 3rem;
+		background-position: -1px -1px;
+	}
+
+	/* The article is one solid sheet laid on the grid — the grid is the margin,
+	   never a sliver between two blocks of the text. */
+	[data-im-style="swiss"] .doc {
+		background-color: var(--im-canvas);
+		box-shadow: 0 0 0 1rem var(--im-canvas);
+	}
+
+	/* ---- home ---- */
+	.home-hero {
+		display: grid;
+		grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+		align-items: stretch;
+		overflow: hidden;
+		isolation: isolate;
+	}
+
+	/* One grid only: the hero paints out the page ground, and its own grid is
+	   masked away from the middle — it survives at the corners and along the
+	   borders, and the words sit on clear canvas. */
+	.home-hero {
+		background-color: var(--im-canvas);
+	}
+
+	.home-hero-grid {
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		-webkit-mask-image: radial-gradient(ellipse 75% 80% at 50% 50%, transparent 55%, #000 100%);
+		mask-image: radial-gradient(ellipse 75% 80% at 50% 50%, transparent 55%, #000 100%);
+	}
+
+	.home-hero-copy {
+		@apply flex flex-col items-start justify-center gap-5;
+
+		padding: clamp(2rem, 1rem + 5vw, 5rem) var(--im-row-pad);
+
+		> h1 {
+			@apply text-display tracking-tighter;
+
+			max-width: 15ch;
+		}
+	}
+
+	.home-hero-art {
+		@apply grid place-items-center bg-canvas;
+
+		padding: clamp(1rem, 3vw, 2.5rem);
+		border-left: 1px solid var(--im-line);
+	}
+
+	.home-art {
+		width: 100%;
+		max-width: 30rem;
+		height: auto;
+	}
+
+	/* The quarter disc turns a quarter, slowly; the marker rides the circle. */
+	.home-art-accent,
+	.home-art-orbit {
+		transform-origin: 240px 240px;
+		animation: home-art-turn 24s var(--im-ease-in-out) infinite alternate;
+	}
+
+	.home-art-orbit {
+		animation-duration: 36s;
+		animation-direction: alternate-reverse;
+	}
+
+	@keyframes home-art-turn {
+		to {
+			rotate: 270deg;
+		}
+	}
+
+	@media (width < 56rem) {
+		.home-hero {
+			grid-template-columns: minmax(0, 1fr);
+		}
+
+		.home-hero-art {
+			border-top: 1px solid var(--im-line);
+			border-left: 0;
+		}
+
+		.home-art {
+			max-width: 20rem;
+		}
+	}
+
+	.home-filler {
+		min-height: 10rem;
+	}
+
+	.stat {
+		@apply flex flex-col;
+
+		> strong {
+			@apply text-h1 text-ink;
+		}
+
+		> span {
+			@apply text-sm text-muted;
+		}
+	}
+
+	.stat-figure {
+		@apply im-pixel text-ink;
+
+		font-size: clamp(2rem, 1.4rem + 2vw, 3rem);
+		line-height: 1;
+	}
+
+	/* ---- motion demos ---- */
+	.curve-demo {
+		@apply flex flex-col gap-2.5;
+	}
+
+	.curve-row {
+		@apply grid items-center gap-4;
+
+		grid-template-columns: 4.5rem minmax(0, 1fr);
+	}
+
+	.curve-track {
+		@apply relative block h-6 rounded-sm bg-surface;
+	}
+
+	.curve-track > i {
+		@apply absolute top-1 left-1 size-4 rounded-full bg-accent;
+
+		transition: left 900ms var(--curve);
+	}
+
+	.curve-demo:hover .curve-track > i {
+		left: calc(100% - 1.25rem);
+	}
+
+	.replay {
+		@apply absolute top-2 right-2 z-10;
+	}
+
+	/* ---- pattern samples ---- */
+	.pattern-tile {
+		@apply flex items-end min-h-32 p-3 ring-line bg-canvas font-mono text-xs text-muted;
+	}
+
+	/* ---- search dialog ---- */
+	.search {
+		@apply p-0 rounded-xl bg-canvas text-body shadow-float im-ring-line;
+
+		width: min(34rem, calc(100vw - 2rem));
+		margin: 12vh auto auto;
+
+		&::backdrop {
+			background-color: var(--im-scrim);
+		}
+	}
+
+	.search-form {
+		@apply flex items-center gap-3 px-4 py-3 border-b border-line;
+
+		> .im-icon {
+			@apply text-muted text-lg;
+		}
+
+		> input {
+			@apply grow min-w-0 h-8 bg-transparent text-ink outline-none;
+		}
+
+		> kbd {
+			@apply shrink-0;
+		}
+	}
+
+	.search-results {
+		@apply flex flex-col gap-0.5 p-2 overflow-y-auto;
+
+		max-height: 50vh;
+
+		&:empty::after {
+			@apply block px-3 py-6 text-sm text-muted text-center;
+
+			content: "Nothing matches.";
+		}
+
+		a {
+			@apply flex items-center px-3 py-2 rounded-md text-sm font-medium no-underline;
+		}
+
+		a:hover,
+		a[aria-selected="true"] {
+			@apply bg-surface-2 text-ink;
+		}
+	}
+}

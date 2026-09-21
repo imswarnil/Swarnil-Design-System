@@ -1,0 +1,48 @@
+---
+title: Provenance & licences
+description: What was written here, what came from somewhere else, and the working rules that keep this codebase yours to ship and sell. This page mirrors PROVENANCE.md.
+eyebrow: Guide
+---
+<div class="im-callout im-callout-warning">
+	<p class="im-callout-title">This is an engineering record, not legal advice</p>
+	<p>It documents what is in the repo and where it came from. Before selling a theme, have someone qualified look at it — especially if the product's look was inspired by a specific commercial theme.</p>
+</div>
+
+<h2>Written here</h2>
+<p>All of <code>src/</code> (tokens, base, layout, components, utilities, <code>im.js</code>, and the syntax highlighter <code>im-code.js</code> with its colour theme — a tokeniser written for this system, not a port of an existing library), every partial in <code>partials/components/</code> and <code>partials/shell/</code>, everything in <code>sections/</code>, and the docs tooling in <code>site/</code> — class names, token names, markup structure, file layout and scripts included.</p>
+
+<h2>From somewhere else</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>What</th><th>Source</th><th>Licence</th><th>Where</th></tr></thead>
+	<tbody>
+		<tr><td>CSS engine, reset, utilities, default spacing &amp; breakpoints</td><td>Tailwind CSS</td><td>MIT</td><td>compiled into <code>im.css</code></td></tr>
+		<tr><td>The grey ramp's values</td><td>Tailwind CSS <code>neutral</code></td><td>MIT</td><td><code>primitives.css</code></td></tr>
+		<tr><td>Geist, Geist Mono, Geist Pixel</td><td><code>geist</code> npm package (Vercel)</td><td>SIL OFL 1.1</td><td><code>assets/fonts/</code> + <code>OFL.txt</code></td></tr>
+		<tr><td>Line icons</td><td>Lucide</td><td>ISC</td><td><code>partials/icons/</code></td></tr>
+		<tr><td>Brand marks</td><td>Simple Icons</td><td>CC0 1.0</td><td><code>partials/icons/brand-*</code></td></tr>
+		<tr><td>Template rendering in the docs</td><td>Handlebars</td><td>MIT</td><td>build only — not shipped</td></tr>
+		<tr><td>Sample photographs in the docs</td><td>Unsplash</td><td>Unsplash License</td><td>hot-linked in the preview — not shipped</td></tr>
+	</tbody>
+</table>
+</div>
+<p>Fonts and icons are copied in by <code>scripts/vendor.mjs</code> from the official packages, so each file's origin can be shown. Brand marks stay trademarks of their owners: use them only to link to that service.</p>
+
+<h2>What is deliberately <em>not</em> here</h2>
+<p>No file, stylesheet, script, template, class name, variable name or documentation text from any commercial theme. The build does not read any theme folder. A licence that lets you <em>use</em> a paid theme on a site almost never lets you redistribute it or a modified version of it, so none of one can be in a product.</p>
+
+<h2>Ideas versus expression</h2>
+<p>Broadly, copyright protects how something is <em>expressed</em> — the actual code, markup, text, artwork — not the idea behind it. A top bar with a collapsible side nav, pill-shaped buttons, a neutral palette, a popular open-source typeface: these are common conventions that many products share. What would be a problem is reproducing another product's <em>code</em>, or imitating a distinctive overall look so closely that buyers could take one product for the other. Two habits follow:</p>
+<ul>
+	<li><strong>Take ideas, write the code.</strong> Decide what a component should do, then write it from a blank file against this system's tokens. Never with another theme's source open beside it.</li>
+	<li><strong>Make the product its own thing.</strong> Its own name, its own accent and details, its own demo content and screenshots. Similar in sensibility is fine; interchangeable is not.</li>
+</ul>
+
+<h2>Working rules</h2>
+<ol>
+	<li>Nothing is copied into this repo from a commercial theme — not a snippet, not a class name list, not a settings schema.</li>
+	<li>Anything from outside is openly licensed (MIT, ISC, BSD, Apache-2.0, OFL, CC0), arrives through <code>scripts/vendor.mjs</code> or <code>package.json</code>, and gets a row in the table above.</li>
+	<li>Keep licence files with what they cover (<code>assets/fonts/OFL.txt</code>, <code>partials/icons/README.md</code>).</li>
+	<li>Commit history is evidence of independent work. Commit as you go, with messages that say what was built.</li>
+	<li>Do not use another product's name — in the theme's name, its marketing, or its docs.</li>
+</ol>

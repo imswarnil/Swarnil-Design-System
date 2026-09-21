@@ -22,16 +22,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: { node-version: 20, cache: npm }
-      - uses: actions/setup-python@v5
-        with: { python-version: '3.12' }
+        with: { node-version: 22, cache: npm }
       - run: npm ci
-      # `npm run build` = bundles into dist/ + the site into site/. build.py
-      # mirrors src/, dist/ and the icon sprite into site/ and writes CNAME,
-      # robots.txt, sitemap.xml and .nojekyll, so site/ is the whole artifact.
+      # `npm run build` writes the whole site into dist/, including CNAME,
+      # .nojekyll and robots.txt — dist/ is the artifact.
       - run: npm run build
+        env:
+          SITE_URL: https://design.imswarnil.com/
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
-        with: { path: site }
+        with: { path: dist }
       - id: deployment
         uses: actions/deploy-pages@v4

@@ -1,0 +1,93 @@
+---
+title: Code
+description: Syntax highlighting with the system's own tokeniser and colour theme, plus a copy button. About 3 KB, no library — and it upgrades exactly the markup Ghost's code card emits.
+eyebrow: Component
+source: src/js/im-code.js · src/components/code.css · src/foundation/tokens/code.css
+---
+<h2>Use it</h2>
+<p>Load <code>im-code.js</code>. Every <code>&lt;pre&gt;&lt;code class="language-…"&gt;</code> on the page gets a header with the language and a copy button, and its tokens coloured. In Ghost that is every code card — authors pick the language in the editor and nothing else is needed.</p>
+{{{{code "hbs"}}}}
+<script src="{{asset "im-code.js"}}" defer></script>
+{{{{/code}}}}
+<p>Without the script a <code>&lt;pre&gt;</code> still looks right; it just has no colours and no button. Content added later: <code>imCode.highlight(element)</code>.</p>
+
+<h2>Languages</h2>
+{{{{code "js"}}}}
+// JavaScript · TypeScript · JSX
+import { readTokens } from './lib/tokens.mjs';
+
+export async function build({ quiet = false } = {}) {
+	const started = Date.now();
+	const tokens = readTokens();          /* two tiers */
+	if (!quiet) console.log(`built ${tokens.count} tokens in ${Date.now() - started}ms`);
+	return tokens.count > 0 ? true : null;
+}
+{{{{/code}}}}
+{{{{code "css"}}}}
+/* CSS · SCSS */
+.im-btn-primary {
+	--im-btn-bg: var(--im-accent);
+	color: #ff5a1f;
+	padding: 0 1.125rem;
+	transition: background-color 140ms;
+}
+
+@media (width < 48rem) {
+	.im-btn:hover::after { content: "→" !important; }
+}
+{{{{/code}}}}
+{{{{code "hbs"}}}}
+{{!-- HTML · Handlebars --}}
+<article class="im-card {{post_class}}" data-id="{{id}}">
+	{{#if feature_image}}
+		<img src="{{img_url feature_image size="m"}}" alt="{{title}}" loading="lazy">
+	{{else}}
+		{{> "icons/file-text" size=2}}
+	{{/if}}
+	<h3 class="im-card-title"><a href="{{url}}">{{title}}</a></h3>  <!-- stretched link -->
+</article>
+{{{{/code}}}}
+{{{{code "bash"}}}}
+# Shell
+npm install && npm run build
+PORT=4701 npm run dev --no-watch | tee "build log.txt"
+{{{{/code}}}}
+{{{{code "json"}}}}
+{
+	"name": "im-design-system",
+	"version": "0.3.0",
+	"private": true,
+	"engines": { "node": ">=22" }
+}
+{{{{/code}}}}
+{{{{code "yaml"}}}}
+# YAML — e.g. Ghost's routes.yaml
+routes:
+  /: home
+collections:
+  /journal/:
+    permalink: /journal/{slug}/
+    filter: tag:journal
+{{{{/code}}}}
+<p>Also: <code>html</code>, <code>xml</code>, <code>svg</code>, <code>ts</code>, <code>jsx</code>, <code>tsx</code>, <code>scss</code>, <code>sh</code>, <code>zsh</code>, <code>yml</code>. <code>&lt;style&gt;</code> and <code>&lt;script&gt;</code> inside HTML are highlighted in their own language. Any other language gets comments, strings and numbers — and is never broken: what no rule matches is left as plain text.</p>
+
+<h2>The theme</h2>
+<p>A code block is <strong>dark in both colour schemes</strong>: code reads best light-on-dark, and a dark slab gives a page of prose a clear change of voice. On a dark page it steps up one shade so it stays a distinct surface. Keywords are warm (kin to the accent) and strings cool, so the two most frequent roles never blur together; punctuation and comments recede.</p>
+{{#example code=false surface=true}}
+<div class="swatches" style="--im-grid-min: 9rem">{{#each tokens.code}}<div class="swatch"><div class="swatch-chip" style="--swatch: var({{name}})"></div><span class="swatch-name">{{key}}</span><span class="swatch-meta"><span>{{light}}</span>{{#if dark}}<span>dark page · {{dark}}</span>{{/if}}</span></div>{{/each}}</div>
+{{/example}}
+<p>The block carries its own chrome colours — <code>--im-code-line</code>, <code>--im-code-muted</code>, <code>--im-code-hover</code> — because the page's line and muted tokens are tuned for the page's background, not this one. It also sets <code>color-scheme: dark</code>, so its scrollbars are dark even on a light page. To re-theme, change the variables in <code>src/foundation/tokens/code.css</code>, or override them on one block.</p>
+
+<h3>A light block</h3>
+<p>Add <code>im-code-light</code> to the <code>&lt;pre&gt;</code> for a light block, whatever the page's scheme — for a print-style page, or to contrast two snippets.</p>
+<pre class="im-code-light"><code class="language-css">.im-code-light {
+	--im-code-bg: var(--im-gray-100);      /* the whole palette is re-declared */
+	--im-code-keyword: #c2410c;
+	color-scheme: light;
+}</code></pre>
+
+<h2>How it works</h2>
+<p>It is a tokeniser, not a parser: one regular expression per language, alternatives tried left to right at each position, so tokens cannot overlap and the source text is reproduced character for character. That trade keeps it tiny and safe; it will occasionally colour something a full parser would not (a regex literal in JavaScript is the classic). For documentation and blog posts that is the right trade. If you need an IDE-grade result, swap in a full highlighter and keep <code>code.css</code> — the class names are <code>im-tok-keyword</code>, <code>-string</code>, <code>-comment</code>, <code>-number</code>, <code>-function</code>, <code>-tag</code>, <code>-attr</code>, <code>-variable</code>, <code>-punct</code>.</p>
+
+<h2>Inline</h2>
+<p>Inline <code>code</code> and <kbd>keys</kbd> are base element styles, not part of this component.</p>

@@ -1,0 +1,44 @@
+---
+title: Principles
+description: Six cascade layers and two tiers of tokens. Knowing which layer a rule belongs in is most of knowing the system.
+eyebrow: Foundation
+source: src/index.css
+---
+<h2>The layer stack</h2>
+<p>Lowest priority first. A later layer beats an earlier one whatever the selector's specificity, so a utility on an element always wins, and a component never has to out-shout the base styles.</p>
+{{#example code=false}}
+<div class="layer-list">
+	<div class="layer"><strong>theme</strong><span>Tailwind's variables and ours: every token, as a CSS custom property.</span></div>
+	<div class="layer"><strong>tokens</strong><span>The light and dark <em>values</em> of the semantic tokens, and the frame metrics.</span></div>
+	<div class="layer"><strong>base</strong><span>Tailwind's Preflight reset, then bare elements: headings, links, code, tables, <code>.im-prose</code>.</span></div>
+	<div class="layer"><strong>layout</strong><span>The page frame: shell, top bar, side nav, drawer, article-with-aside.</span></div>
+	<div class="layer"><strong>components</strong><span><code>.im-btn</code>, <code>.im-card</code>, <code>.im-post-card</code>, <code>.im-menu</code> … one file each.</span></div>
+	<div class="layer"><strong>utilities</strong><span>Tailwind's utilities and the custom ones. Always win.</span></div>
+</div>
+{{/example}}
+
+<h2>Two tiers of tokens</h2>
+<p><strong>Primitives</strong> are raw values with no meaning: <code>gray-200</code>, <code>radius-lg</code>, <code>text-sm</code>. <strong>Semantic</strong> tokens say what a value is <em>for</em>: <code>canvas</code>, <code>surface</code>, <code>ink</code>, <code>line</code>, <code>accent</code>. Components use semantic tokens only — that is what lets dark mode, or a re-skin, be a change to one file.</p>
+{{{{code}}}}
+/* primitives.css */            /* semantic.css */
+--im-gray-100: …;            --im-surface: var(--im-gray-100);      /* light */
+--im-gray-900: …;            [data-theme="dark"] { --im-surface: var(--im-gray-900); }
+
+/* a component */               /* a template */
+background: var(--im-surface);        class="bg-surface text-ink"
+{{{{/code}}}}
+<p>Both tiers are declared with Tailwind's <code>@theme static</code>, so each token is a CSS variable <em>and</em> a utility, and exists even if no template uses it — which is what lets a section's plain stylesheet rely on them.</p>
+
+<h2>Tailwind, constrained</h2>
+<p>The palette is replaced (<code>--im-*: initial</code>), as are the type scale, radii, shadows and container widths. <code>bg-red-500</code> and <code>text-2xl</code> generate nothing — there is no such value in this system. Spacing and breakpoints are Tailwind's own, unchanged: <code>p-4</code> is 1rem, <code>md:</code> is 48rem.</p>
+
+<h2>How components are written</h2>
+<ul>
+	<li><strong>Knobs are variables.</strong> <code>.im-btn</code> reads <code>--im-btn-bg</code>, <code>--im-btn-fg</code>, <code>--im-btn-height</code>. A variant only assigns them; a caller can adjust one instance inline.</li>
+	<li><strong>Variants are additive classes</strong> — <code>btn btn-primary btn-sm</code> — never a new component.</li>
+	<li><strong>State comes from attributes</strong> the platform already has: <code>aria-current</code>, <code>aria-busy</code>, <code>aria-expanded</code>, <code>:disabled</code>, <code>[popover]</code>, <code>&lt;dialog&gt;</code>.</li>
+	<li><strong>No JavaScript unless the platform cannot do it.</strong> Menus are popovers, the drawer and search are dialogs. <code>im.js</code> only positions, remembers, and builds the table of contents.</li>
+</ul>
+
+<h2>Dark mode</h2>
+<p><code>&lt;html data-theme="light | dark"&gt;</code>. The visitor's choice (light, dark or system) is stored; an inline script in <code>&lt;head&gt;</code> resolves it before first paint, and <code>im.js</code> keeps it in step with the OS. Because components use semantic tokens you rarely need Tailwind's <code>dark:</code> variant — but it is wired to the same attribute when you do.</p>

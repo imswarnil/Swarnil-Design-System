@@ -1,0 +1,10 @@
+/* Icons are inline SVG partials (partials/icons/). They size to the text
+   around them — set font-size on the icon, or on its parent. */
+
+.im-icon {
+	display: inline-block;
+	flex: none;
+	width: 1em;
+	height: 1em;
+	vertical-align: -0.125em;
+}

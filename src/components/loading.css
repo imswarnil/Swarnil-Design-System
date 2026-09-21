@@ -1,0 +1,82 @@
+/* Loading — what shows before the content does.
+
+   SKELETON   a grey shape where something will be        .im-skeleton
+   LAZY       a picture that fades up from a blur         .im-lazy   (js/im-media.js)
+   Both keep the layout still: the space is held, so nothing jumps on arrival. */
+
+.im-skeleton {
+	display: block;
+	border-radius: var(--im-radius-sm);
+	background-color: var(--im-surface-2);
+	background-image: linear-gradient(100deg, transparent 30%, color-mix(in oklab, var(--im-canvas) 65%, transparent) 50%, transparent 70%);
+	background-size: 200% 100%;
+	background-repeat: no-repeat;
+	animation: im-skeleton 1.4s linear infinite;
+}
+
+@keyframes im-skeleton {
+	from { background-position: 150% 0; }
+	to { background-position: -50% 0; }
+}
+
+.im-skeleton-text {
+	height: 0.75em;
+	margin-block: 0.425em;
+}
+
+.im-skeleton-title {
+	height: 1.25em;
+	margin-block: 0.25em 0.5em;
+}
+
+.im-skeleton-circle { border-radius: 50%; }
+.im-skeleton-media { aspect-ratio: 16 / 10; border-radius: var(--im-radius-lg); }
+.im-skeleton-btn { width: 6.5rem; height: 2.5rem; border-radius: var(--im-radius-full); }
+
+/* Pulse instead of a sweep — calmer, for many skeletons at once. */
+.im-skeleton-pulse {
+	background-image: none;
+	animation: im-pulse 1.6s var(--im-ease-in-out) infinite;
+}
+
+/* A region that is loading:  <div class="im-loading" aria-busy="true">…skeletons…</div>
+   When aria-busy goes false, the real content fades up. */
+.im-loading[aria-busy="false"] > * {
+	animation: im-enter var(--im-duration-base) var(--im-ease-out) both;
+
+	--im-from-y: 0.5rem;
+}
+
+/* ---- lazy picture ----
+   <span class="im-lazy" style="--im-lazy-ratio: 16 / 10; --im-lazy-ground: #7a8a99">
+     <img loading="lazy" src="…" alt="…">
+   </span>
+   Holds its shape, shows a ground colour (or a tiny blurred placeholder set as
+   --im-lazy-src), and the picture sharpens in when it has loaded. */
+.im-lazy {
+	position: relative;
+	display: block;
+	aspect-ratio: var(--im-lazy-ratio, 16 / 10);
+	overflow: hidden;
+	border-radius: var(--im-radius-lg);
+	background: var(--im-lazy-ground, var(--im-surface-2)) var(--im-lazy-src, none) center / cover no-repeat;
+}
+
+.im-lazy > img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+[data-im-js] .im-lazy > img {
+	opacity: 0;
+	scale: 1.04;
+	filter: blur(14px);
+	transition: opacity 600ms, scale 900ms var(--im-ease-out), filter 700ms;
+}
+
+[data-im-js] .im-lazy > img[data-im-loaded] {
+	opacity: 1;
+	scale: 1;
+	filter: none;
+}

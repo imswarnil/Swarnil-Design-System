@@ -1,0 +1,152 @@
+---
+title: Carousel
+description: A row that scrolls sideways and snaps. Four looks from one component — a card row, a full-width slider, video tiles that preview on hover, and a numbered top ten — all sized by their own width, not the screen's.
+eyebrow: Component
+source: src/components/carousel.css · src/js/im.js · partials/components/carousel.hbs
+---
+<h2>Card row</h2>
+<p>Put anything in it. The scrolling is the browser's — a flex row with scroll-snap — so touch, trackpad momentum, the keyboard and screen readers work with no script at all. <code>im.js</code> only adds the arrows, the counter and the progress bar.</p>
+{{#example}}
+{{#> "components/carousel" title="Latest" label="Latest posts"}}
+	{{#foreach demo.six}}{{> "components/post-card"}}{{/foreach}}
+{{/"components/carousel"}}
+{{/example}}
+<p>The next slide always <em>peeks</em>: that sliver is what tells a visitor there is more, better than any arrow. Drag it, use the arrows, or focus the row and press <kbd>←</kbd> <kbd>→</kbd>.</p>
+
+<h2>How many show</h2>
+<p>A number — fractional, for the peek — that steps up with the carousel's <strong>own width</strong> (a container query), so the same markup is right in a sidebar and across a full page.</p>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Variable</th><th>When the carousel is</th><th>Default</th></tr></thead>
+	<tbody>
+		<tr><td><code>--im-slides</code></td><td>any width</td><td>1.15</td></tr>
+		<tr><td><code>--im-slides-sm</code></td><td>≥ 30rem</td><td>2.2</td></tr>
+		<tr><td><code>--im-slides-md</code></td><td>≥ 48rem</td><td>3.2</td></tr>
+		<tr><td><code>--im-slides-lg</code></td><td>≥ 72rem</td><td>4.2</td></tr>
+	</tbody>
+</table>
+</div>
+{{#example title="Two and a bit, at every width — and page dots instead of a bar"}}
+{{#> "components/carousel" label="Featured" dots=true progress=false style="--im-slides: 1.3; --im-slides-sm: 2.3; --im-slides-md: 2.3; --im-slides-lg: 2.3"}}
+	{{#foreach demo.six}}{{> "components/post-card" layout="cover"}}{{/foreach}}
+{{/"components/carousel"}}
+{{/example}}
+{{#example title="The same carousel in a 22rem column — it re-counts by itself" style="max-width: 22rem"}}
+{{#> "components/carousel" title="Narrow" label="Narrow"}}
+	{{#foreach demo.four}}{{> "components/post-card"}}{{/foreach}}
+{{/"components/carousel"}}
+{{/example}}
+
+<h2>Slider</h2>
+<p><code>im-carousel-slider</code>: one slide at a time, full width, with the arrows over its sides and dots over its foot. <code>autoplay</code> advances it and loops; it pauses on hover, on keyboard focus, in a hidden tab, and never runs under reduced motion.</p>
+{{#example flush=true}}
+{{#> "components/carousel" class="im-carousel-slider" label="Highlights" dots=true autoplay="6000"}}
+	{{#foreach demo.four}}
+	<article class="im-slide" role="group" aria-roledescription="slide">
+		<img class="im-slide-media" src="{{feature_image}}" alt="" loading="lazy">
+		<p class="im-caption" data-index="0{{@number}}">{{primary_tag.name}}</p>
+		<h3 class="im-slide-title"><a href="#slider">{{title}}</a></h3>
+		<p class="im-slide-text">{{excerpt words="18"}}</p>
+		<div class="im-cluster"><a class="im-btn im-btn-primary" href="#slider">{{> "icons/play"}} Read</a><a class="im-btn im-btn-outline" href="#slider" style="--im-btn-fg: #fff; --im-btn-fg-hover: #000; --im-btn-bg-hover: #fff; box-shadow: inset 0 0 0 1px rgb(255 255 255 / 40%)">{{> "icons/plus"}} Save</a></div>
+	</article>
+	{{/foreach}}
+{{/"components/carousel"}}
+{{/example}}
+<p>A slide is an <code>im-slide</code>: a picture or a <code>&lt;video&gt;</code> as <code>im-slide-media</code>, a scrim from the reading corner so the words hold on any image, then a caption, <code>im-slide-title</code>, <code>im-slide-text</code> and buttons. Its type scales with the slide (<code>cqi</code> units), not the viewport.</p>
+
+<h2>Video tiles</h2>
+<p><code>im-tile</code> is a poster that <strong>previews its video when hovered or focused</strong>, the way a streaming row does. The video is <code>preload="none"</code> — nothing is fetched until the pointer arrives — it plays muted, rewinds on leave, and is switched off entirely under reduced motion and on touch-only devices. Hover one.</p>
+{{#example}}
+{{#> "components/carousel" class="im-carousel-tiles" title="Continue watching" label="Continue watching"}}
+	{{#foreach demo.six}}
+	<a class="im-tile" href="#video-tiles">
+		<img class="im-tile-poster" src="{{feature_image}}" alt="" loading="lazy">
+		<video class="im-tile-video" src="{{../demo.video}}" muted loop playsinline preload="none" data-im-preview></video>
+		{{#if featured}}<span class="im-tile-badge im-badge im-badge-accent">New</span>{{/if}}
+		<span class="im-tile-play">{{> "icons/play"}}</span>
+		<span class="im-tile-body"><strong class="im-tile-title">{{title}}</strong><span class="im-tile-meta"><span class="im-tile-match">9{{@index}}% match</span><span>2026</span><span>{{reading_time}} min</span></span></span>
+		<span class="im-tile-progress" style="--im-tile-progress: .{{@number}}5"></span>
+	</a>
+	{{/foreach}}
+{{/"components/carousel"}}
+{{/example}}
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Part</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>im-tile</code></td><td>The link. 16:9; <code>im-tile-tall</code> for a 2:3 poster; or set <code>--im-tile-ratio</code>.</td></tr>
+		<tr><td><code>im-tile-poster</code> · <code>im-tile-video</code></td><td>The still, and the preview that fades in over it. Add <code>data-im-preview</code> to the video.</td></tr>
+		<tr><td><code>im-tile-body</code> · <code>-title</code> · <code>-meta</code> · <code>-match</code></td><td>The caption over a scrim.</td></tr>
+		<tr><td><code>im-tile-play</code> · <code>im-tile-badge</code></td><td>A play mark that appears on hover; a badge pinned top-left.</td></tr>
+		<tr><td><code>im-tile-progress</code></td><td>"Continue watching": <code>--im-tile-progress</code> from 0 to 1.</td></tr>
+	</tbody>
+</table>
+</div>
+<p><code>im-carousel-tiles</code> on the carousel gives the row breathing room, so a tile's hover zoom is not clipped by the track.</p>
+
+<h2>Top ten</h2>
+<p><code>im-carousel-ranked</code>: each slide is an <code>im-rank</code> wrapping a tall tile, with a huge outlined numeral tucked behind the poster's edge. The numbers are <strong>CSS counters</strong> — reorder the slides and they renumber themselves — and they are sized from the slide's own width, so they scale with however many show.</p>
+{{#example}}
+{{#> "components/carousel" class="im-carousel-ranked" title="Top 10 this week" label="Top 10 this week"}}
+	{{#foreach demo.ten}}
+	<div class="im-rank">
+		<a class="im-tile im-tile-tall" href="#top-ten">
+			<img class="im-tile-poster" src="{{feature_image}}" alt="" loading="lazy">
+			<span class="im-tile-body"><strong class="im-tile-title">{{title}}</strong><span class="im-tile-meta"><span>{{primary_tag.name}}</span></span></span>
+		</a>
+	</div>
+	{{/foreach}}
+{{/"components/carousel"}}
+{{/example}}
+{{#example title="im-carousel-ranked-pixel — numerals in Geist Pixel"}}
+{{#> "components/carousel" class="im-carousel-ranked im-carousel-ranked-pixel" title="Most read" label="Most read" progress=false}}
+	{{#foreach demo.ten}}
+	<div class="im-rank">
+		<a class="im-tile im-tile-tall" href="#top-ten">
+			<img class="im-tile-poster" src="{{feature_image}}" alt="" loading="lazy">
+			<video class="im-tile-video" src="{{../demo.video}}" muted loop playsinline preload="none" data-im-preview></video>
+			<span class="im-tile-body"><strong class="im-tile-title">{{title}}</strong></span>
+		</a>
+	</div>
+	{{/foreach}}
+{{/"components/carousel"}}
+{{/example}}
+
+<h2>In a Ghost theme</h2>
+{{{{code "hbs"}}}}
+{{#get "posts" filter="featured:true" limit="10" include="tags,authors" as |featured|}}
+	{{#> "components/carousel" class="im-carousel-ranked" title="Top 10" label="Top 10 posts"}}
+		{{#foreach featured}}
+			<div class="im-rank">
+				<a class="im-tile im-tile-tall" href="{{url}}">
+					<img class="im-tile-poster" src="{{img_url feature_image size="m"}}" alt="" loading="lazy">
+					<span class="im-tile-body"><strong class="im-tile-title">{{title}}</strong></span>
+				</a>
+			</div>
+		{{/foreach}}
+	{{/"components/carousel"}}
+{{/get}}
+{{{{/code}}}}
+
+<h2>Parameters</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Param</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>label</code></td><td>The accessible name. Required when there is no <code>title</code>.</td></tr>
+		<tr><td><code>title</code></td><td>A visible heading.</td></tr>
+		<tr><td><code>class</code></td><td><code>im-carousel-slider</code> · <code>im-carousel-tiles</code> · <code>im-carousel-ranked</code> (+ <code>-pixel</code>)</td></tr>
+		<tr><td><code>dots</code> · <code>progress</code></td><td><code>dots=true</code> adds page dots; <code>progress=false</code> removes the bar.</td></tr>
+		<tr><td><code>autoplay</code></td><td>Milliseconds per step. Loops.</td></tr>
+		<tr><td><code>style</code></td><td>Inline variables — the <code>--im-slides-*</code> counts, <code>--im-carousel-gap</code>.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>Details that matter</h2>
+<ul>
+	<li><strong>No script, still a carousel.</strong> Without <code>im.js</code> it scrolls and snaps; only the controls are inert.</li>
+	<li><strong>Controls hide when there is nothing to scroll</strong> — three slides in a row that fits four shows no arrows.</li>
+	<li><strong>Arrows move a page</strong>, not a slide: however many whole slides are showing.</li>
+	<li><strong>Accessibility:</strong> the region is a labelled <code>carousel</code>; the track is focusable and arrow-key driven; the counter and progress are decorative (<code>aria-hidden</code>); autoplay stops the moment anything inside has focus.</li>
+</ul>

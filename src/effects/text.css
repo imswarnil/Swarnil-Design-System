@@ -1,0 +1,274 @@
+/* Text effects. Put them on the heading, or on a <span> around some words. */
+
+/* Gradient: ink into accent. --im-fx-from / --im-fx-to. */
+.im-fx-gradient {
+	background-image: linear-gradient(var(--im-fx-angle, 100deg), var(--im-fx-from, var(--im-ink)), var(--im-fx-to, var(--im-accent)));
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+}
+
+/* Shine: a highlight that sweeps across, forever. */
+.im-fx-shine {
+	background-image: linear-gradient(100deg, var(--im-fx-from, var(--im-ink)) 40%, var(--im-fx-to, var(--im-faint)) 50%, var(--im-fx-from, var(--im-ink)) 60%);
+	background-size: 250% 100%;
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+	animation: im-fx-shine var(--im-fx-speed, 3.2s) linear infinite;
+}
+
+@keyframes im-fx-shine {
+	from { background-position: 120% 0; }
+	to { background-position: -130% 0; }
+}
+
+/* Outline: stroke, no fill. -fill fills it on hover. */
+.im-fx-outline {
+	color: transparent;
+	-webkit-text-stroke: var(--im-fx-stroke, 1.5px) var(--im-ink);
+	paint-order: stroke fill;
+}
+
+.im-fx-outline-fill {
+	transition: color var(--im-duration-base) var(--im-ease-out);
+}
+
+.im-fx-outline-fill:hover,
+a:hover .im-fx-outline-fill {
+	color: var(--im-ink);
+}
+
+/* Marker: a highlighter pen — yellow, as highlighters are. It draws itself
+   when revealed (data-im-reveal on it or an ancestor) or hovered; -on = always.
+   Other inks: -pink · -green · -blue · -accent, or set --im-fx-marker.
+   The ink sits BEHIND the words and is mixed for both schemes, so the text
+   keeps its own colour and stays readable. */
+.im-fx-marker {
+	--im-fx-marker: #ffe14d;
+
+	background-image: linear-gradient(104deg, transparent 0.4em, color-mix(in oklab, var(--im-fx-marker) 78%, transparent) 0.4em calc(100% - 0.4em), transparent calc(100% - 0.4em));
+	background-position: 0 72%;
+	background-repeat: no-repeat;
+	background-size: 0% 0.7em;
+	margin-inline: -0.2em;
+	padding-inline: 0.2em;
+	border-radius: 0.2em 0.5em 0.3em 0.6em;
+	transition: background-size var(--im-duration-slow) var(--im-ease-out) 120ms;
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+}
+
+[data-theme="dark"] .im-fx-marker {
+	background-image: linear-gradient(104deg, transparent 0.4em, color-mix(in oklab, var(--im-fx-marker) 34%, transparent) 0.4em calc(100% - 0.4em), transparent calc(100% - 0.4em));
+}
+
+.im-fx-marker-pink { --im-fx-marker: #ff8fc7; }
+.im-fx-marker-green { --im-fx-marker: #8ff0a4; }
+.im-fx-marker-blue { --im-fx-marker: #8ecbff; }
+.im-fx-marker-accent { --im-fx-marker: var(--im-accent); }
+
+/* Full height: a swipe over the whole line rather than its lower half. */
+.im-fx-marker-full {
+	background-position: 0 50%;
+	background-size: 0% 1.15em;
+}
+
+.im-fx-marker-on,
+.im-fx-marker:hover,
+[data-im-revealed] .im-fx-marker,
+.im-fx-marker[data-im-revealed] {
+	background-size: 100% 0.7em;
+}
+
+.im-fx-marker-full:is(.im-fx-marker-on, :hover, [data-im-revealed]),
+[data-im-revealed] .im-fx-marker-full {
+	background-size: 100% 1.15em;
+}
+
+/* Scribble: a hand-drawn circle, underline, box or strike, drawn in.
+   <span data-im-scribble="circle">important</span>   (needs im-motion.js)
+   The SVG is stretched to the phrase, so it fits any words at any size. */
+.im-scribble {
+	position: relative;
+	display: inline-block;
+	white-space: nowrap;
+}
+
+.im-scribble-mark {
+	position: absolute;
+	inset: -0.18em -0.32em;
+	width: calc(100% + 0.64em);
+	height: calc(100% + 0.36em);
+	overflow: visible;
+	pointer-events: none;
+}
+
+.im-scribble-underline,
+.im-scribble-strike {
+	inset: auto -0.1em -0.22em;
+	width: calc(100% + 0.2em);
+	height: 0.42em;
+}
+
+.im-scribble-strike {
+	inset: 46% -0.1em auto;
+}
+
+.im-scribble-mark > path {
+	fill: none;
+	stroke: var(--im-fx-scribble, var(--im-accent));
+	stroke-width: var(--im-fx-stroke, 2.5);
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	vector-effect: non-scaling-stroke;
+	stroke-dasharray: 1;
+	stroke-dashoffset: 1;
+	transition: stroke-dashoffset 900ms var(--im-ease-in-out) 200ms;
+}
+
+.im-scribble[data-im-revealed] > .im-scribble-mark > path,
+[data-im-revealed] .im-scribble > .im-scribble-mark > path,
+:root:not([data-im-js]) .im-scribble-mark > path {
+	stroke-dashoffset: 0;
+}
+
+/* A scribble only draws; it never hides the words it is on. */
+[data-im-js] [data-im-reveal="none"]:not([data-im-revealed]) {
+	opacity: 1;
+	translate: none;
+}
+
+/* Wave & wiggle & breathe — per-letter motion. All three need the letters
+   split:  <span class="im-fx-wave" data-im-split="chars">…</span> */
+.im-fx-wave .im-split-unit {
+	animation: im-fx-wave 1.6s var(--im-ease-in-out) infinite;
+	animation-delay: calc(var(--im-i, 0) * 70ms);
+}
+
+.im-fx-wiggle .im-split-unit {
+	animation: im-fx-wiggle 900ms var(--im-ease-in-out) infinite;
+	animation-delay: calc(var(--im-i, 0) * -130ms);
+}
+
+/* Geist is a VARIABLE font, so weight itself can move: each letter swells and
+   thins in turn. Only a variable face can do this. */
+.im-fx-breathe .im-split-unit {
+	animation: im-fx-breathe 2.4s var(--im-ease-in-out) infinite;
+	animation-delay: calc(var(--im-i, 0) * 90ms);
+}
+
+/* On hover only, instead of forever. */
+.im-fx-hover:not(:hover) .im-split-unit {
+	animation-play-state: paused;
+}
+
+@keyframes im-fx-wave {
+	0%, 60%, 100% { translate: 0 0; }
+	30% { translate: 0 -0.18em; }
+}
+
+@keyframes im-fx-wiggle {
+	0%, 100% { rotate: -5deg; translate: 0 0.02em; }
+	50% { rotate: 5deg; translate: 0 -0.02em; }
+}
+
+@keyframes im-fx-breathe {
+	0%, 100% { font-weight: 300; }
+	50% { font-weight: 800; }
+}
+
+/* Split text used for looping effects must not wait to be revealed. */
+[data-im-js] :is(.im-fx-wave, .im-fx-wiggle, .im-fx-breathe)[data-im-split]:not([data-im-revealed]) .im-split-unit {
+	opacity: 1;
+	translate: none;
+	filter: none;
+}
+
+/* Stack: a hard, stepped shadow — poster lettering. */
+.im-fx-stack {
+	color: var(--im-ink);
+	text-shadow:
+		0.04em 0.04em 0 var(--im-canvas),
+		0.07em 0.07em 0 var(--im-fx-to, var(--im-accent)),
+		0.11em 0.11em 0 var(--im-canvas),
+		0.14em 0.14em 0 var(--im-fx-to, var(--im-accent));
+}
+
+/* Typewriter: types itself once, with a caret. Needs a monospaced face and the
+   character count:  style="--im-fx-chars: 18" */
+.im-fx-typewriter {
+	display: inline-block;
+	width: calc(var(--im-fx-chars, 20) * 1ch);
+	overflow: hidden;
+	border-right: 2px solid var(--im-accent);
+	font-family: var(--im-font-mono);
+	white-space: nowrap;
+	animation:
+		im-fx-type calc(var(--im-fx-chars, 20) * 70ms) steps(var(--im-fx-chars, 20)) both,
+		im-blink 900ms steps(1) infinite;
+}
+
+@keyframes im-fx-type {
+	from { width: 0; }
+}
+
+/* Glitch: two offset, clipped copies. Needs the text again: data-text="…" */
+.im-fx-glitch {
+	position: relative;
+	display: inline-block;
+}
+
+.im-fx-glitch::before,
+.im-fx-glitch::after {
+	content: attr(data-text);
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+}
+
+.im-fx-glitch::before {
+	color: var(--im-accent);
+	animation: im-fx-glitch 2.4s steps(1) infinite;
+}
+
+.im-fx-glitch::after {
+	color: var(--im-info);
+	animation: im-fx-glitch 2.4s steps(1) infinite reverse;
+}
+
+@keyframes im-fx-glitch {
+	0%, 84%, 100% { clip-path: inset(0 0 100% 0); translate: 0 0; }
+	86% { clip-path: inset(12% 0 58% 0); translate: -0.06em 0; }
+	90% { clip-path: inset(62% 0 8% 0); translate: 0.06em 0; }
+	94% { clip-path: inset(34% 0 38% 0); translate: -0.04em 0.02em; }
+}
+
+/* Split: im-motion.js wraps each word (or character) in a span so they can
+   arrive one after another.  <h2 data-im-split="words" data-im-reveal>…</h2> */
+.im-split-unit {
+	display: inline-block;
+	white-space: pre;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	[data-im-js] [data-im-split]:not([data-im-revealed]) .im-split-unit {
+		opacity: 0;
+		translate: 0 0.5em;
+		filter: blur(6px);
+	}
+
+	[data-im-split] .im-split-unit {
+		transition:
+			opacity var(--im-duration-slow) var(--im-ease-out),
+			translate var(--im-duration-slow) var(--im-ease-out),
+			filter var(--im-duration-slow) var(--im-ease-out);
+		transition-delay: calc(var(--im-i, 0) * var(--im-fx-split-step, 45ms));
+	}
+
+	/* The units carry the motion, so the element itself must not also fade. */
+	[data-im-js] [data-im-split][data-im-reveal]:not([data-im-revealed]) {
+		opacity: 1;
+		translate: none;
+	}
+}

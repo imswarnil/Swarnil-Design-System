@@ -1,0 +1,28 @@
+{{!-- Carousel. A BLOCK partial — your slides go inside it:
+
+	{{#> "components/carousel" title="Featured" label="Featured posts"}}
+		{{#foreach posts}}{{> "components/post-card"}}{{/foreach}}
+	{{/"components/carousel"}}
+
+	Params
+	  label      accessible name. Required if there is no title.
+	  title      a visible heading (an h2).
+	  class      variants: "im-carousel-slider" · "im-carousel-tiles" · "im-carousel-ranked"
+	  dots       true — page dots          progress   false — hide the bar
+	  autoplay   ms per step, e.g. 6000   (pauses on hover, focus, hidden tab, reduced motion)
+	  style      inline variables, e.g. "--im-slides-lg: 3.2" --}}
+<section class="im-carousel{{#if class}} {{class}}{{/if}}" data-im-carousel{{#if autoplay}} data-im-carousel-autoplay="{{autoplay}}"{{/if}} aria-roledescription="carousel" aria-label="{{#if label}}{{label}}{{else}}{{title}}{{/if}}"{{#if style}} style="{{style}}"{{/if}}>
+	<div class="im-carousel-head">
+		{{#if title}}<h2 class="im-carousel-title">{{title}}</h2>{{/if}}
+		<span class="im-carousel-count" data-im-carousel-count aria-hidden="true"></span>
+		<div class="im-carousel-nav">
+			<button class="im-btn im-btn-icon im-btn-sm" type="button" data-im-carousel-prev aria-label="{{t "Previous"}}">{{> "icons/chevron-left"}}</button>
+			<button class="im-btn im-btn-icon im-btn-sm" type="button" data-im-carousel-next aria-label="{{t "Next"}}">{{> "icons/chevron-right"}}</button>
+		</div>
+	</div>
+	<div class="im-carousel-track" tabindex="0">
+		{{> @partial-block}}
+	</div>
+	{{#if dots}}<div class="im-carousel-dots" data-im-carousel-dots></div>{{/if}}
+	{{#match progress "!=" false}}<div class="im-carousel-progress" aria-hidden="true"><span></span></div>{{/match}}
+</section>

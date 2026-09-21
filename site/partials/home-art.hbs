@@ -1,0 +1,54 @@
+{{!-- The home page illustration. Original artwork: a Swiss-poster composition
+	of the system's own ideas — a grid, a circle on it, one accent shape,
+	hatching, registration marks, three numbered layers. Every colour is a
+	token, so it follows dark mode; it is decorative, so it is aria-hidden. --}}
+<svg class="home-art" viewBox="0 0 480 480" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+	<defs>
+		<pattern id="home-art-hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+			<line x1="0" y1="0" x2="0" y2="8" stroke="var(--im-ink)" stroke-width="1"/>
+		</pattern>
+		<pattern id="home-art-dots" width="10" height="10" patternUnits="userSpaceOnUse">
+			<circle cx="5" cy="5" r="1" fill="var(--im-muted)"/>
+		</pattern>
+	</defs>
+
+	{{!-- the grid: 12 × 12 modules of 40 --}}
+	<g stroke="var(--im-line)" stroke-width="1">
+		<path d="M0 .5H480M0 40.5H480M0 80.5H480M0 120.5H480M0 160.5H480M0 200.5H480M0 240.5H480M0 280.5H480M0 320.5H480M0 360.5H480M0 400.5H480M0 440.5H480M0 479.5H480"/>
+		<path d="M.5 0V480M40.5 0V480M80.5 0V480M120.5 0V480M160.5 0V480M200.5 0V480M240.5 0V480M280.5 0V480M320.5 0V480M360.5 0V480M400.5 0V480M440.5 0V480M479.5 0V480"/>
+	</g>
+
+	{{!-- accent: a quarter disc, top right --}}
+	<path class="home-art-accent" d="M240 80A160 160 0 0 1 400 240H240Z" fill="var(--im-accent)"/>
+
+	{{!-- hatching, bottom left; dots, bottom right --}}
+	<rect x="80" y="240" width="160" height="160" fill="url(#home-art-hatch)"/>
+	<rect x="280" y="280" width="120" height="120" fill="url(#home-art-dots)"/>
+
+	{{!-- ink: one solid module, and the circle the composition hangs on --}}
+	<rect x="240" y="240" width="40" height="40" fill="var(--im-ink)"/>
+	<circle cx="240" cy="240" r="160" stroke="var(--im-ink)" stroke-width="1.5"/>
+	<path d="M80 240H400M240 80V400" stroke="var(--im-ink)" stroke-width="1.5"/>
+	<circle class="home-art-orbit" cx="240" cy="80" r="6" fill="var(--im-canvas)" stroke="var(--im-ink)" stroke-width="1.5"/>
+
+	{{!-- three layers, stacked top left --}}
+	<g stroke="var(--im-ink)" stroke-width="1.5" fill="var(--im-canvas)">
+		<rect x="100" y="140" width="100" height="60"/>
+		<rect x="110" y="126" width="100" height="60"/>
+		<rect x="120" y="112" width="100" height="60"/>
+	</g>
+
+	{{!-- registration marks --}}
+	<g stroke="var(--im-ink)" stroke-width="1">
+		<path d="M40 34V46M34 40H46M440 34V46M434 40H446M40 434V446M34 440H46M440 434V446M434 440H446"/>
+	</g>
+
+	{{!-- captions --}}
+	<g fill="var(--im-muted)" font-family="var(--im-font-mono)" font-size="9" letter-spacing=".9">
+		<text x="126" y="130">03 COMPONENTS</text>
+		<text x="52" y="64">IM / 0.3</text>
+		<text x="428" y="64" text-anchor="end">12 COL</text>
+		<text x="52" y="426">40 PX MODULE</text>
+		<text x="428" y="426" text-anchor="end">R 160</text>
+	</g>
+</svg>

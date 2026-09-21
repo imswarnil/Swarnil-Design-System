@@ -1,0 +1,635 @@
+/* Forms. Fields are opted into with a class: Preflight leaves bare inputs
+   unstyled, and third-party embeds (Ghost portal, comments) must not inherit
+   ours.
+
+   <div class="im-field">
+     <label class="im-label" for="x">Name <span class="im-label-note">optional</span></label>
+     <input class="im-input" id="x" aria-describedby="x-hint">
+     <p class="im-hint" id="x-hint">As it should appear on the invoice.</p>
+   </div>
+
+   STATE COMES FROM THE PLATFORM: :hover, :focus-visible, :disabled, :read-only,
+   aria-invalid="true" (with .im-error beside it), and .im-valid for a confirmed
+   value. Nothing to toggle but the attributes you would set anyway. */
+
+.im-field {
+	display: flex;
+	flex-direction: column;
+	gap: 0.375rem;
+	min-width: 0;
+}
+
+.im-label {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 0.75rem;
+	color: var(--im-ink);
+	font-size: var(--im-text-sm);
+	font-weight: 500;
+}
+
+.im-label-note {
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+	font-weight: 400;
+}
+
+.im-label-required::after {
+	content: "*";
+	margin-left: 0.125rem;
+	color: var(--im-danger);
+}
+
+.im-hint {
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+}
+
+.im-error {
+	display: none;
+	align-items: center;
+	gap: 0.375rem;
+	color: var(--im-danger);
+	font-size: var(--im-text-xs);
+	font-weight: 500;
+}
+
+.im-field:has([aria-invalid="true"]) > .im-error {
+	display: flex;
+	animation: im-enter var(--im-duration-fast) var(--im-ease-out);
+
+	--im-from-y: -0.25rem;
+}
+
+.im-field:has([aria-invalid="true"]) > .im-hint {
+	display: none;
+}
+
+/* ---- text controls ---- */
+.im-input,
+.im-select,
+.im-textarea {
+	--im-input-height: 2.5rem;
+	--im-input-ring: var(--im-line);
+
+	display: block;
+	width: 100%;
+	min-height: var(--im-input-height);
+	padding: 0.5rem 0.875rem;
+	border-radius: var(--im-radius-lg);
+	background-color: var(--im-canvas);
+	box-shadow: inset 0 0 0 1px var(--im-input-ring);
+	color: var(--im-ink);
+	font-size: var(--im-text-sm);
+	transition: box-shadow 140ms, background-color 140ms;
+}
+
+.im-textarea {
+	min-height: 6.5rem;
+	resize: vertical;
+	line-height: 1.55;
+}
+
+:is(.im-input, .im-select, .im-textarea)::placeholder {
+	color: var(--im-faint);
+}
+
+:is(.im-input, .im-select, .im-textarea):hover {
+	--im-input-ring: var(--im-faint);
+}
+
+/* Focus: the hairline becomes a 2px rule in ink, with a soft accent halo. */
+:is(.im-input, .im-select, .im-textarea):focus-visible {
+	outline: 0;
+	box-shadow: inset 0 0 0 2px var(--im-ink), 0 0 0 4px var(--im-accent-tint);
+}
+
+:is(.im-input, .im-select, .im-textarea)[aria-invalid="true"] {
+	box-shadow: inset 0 0 0 2px var(--im-danger);
+}
+
+:is(.im-input, .im-select, .im-textarea)[aria-invalid="true"]:focus-visible {
+	box-shadow: inset 0 0 0 2px var(--im-danger), 0 0 0 4px var(--im-danger-tint);
+}
+
+:is(.im-input, .im-select, .im-textarea).im-valid {
+	box-shadow: inset 0 0 0 2px var(--im-success);
+}
+
+:is(.im-input, .im-select, .im-textarea):disabled {
+	background-color: var(--im-surface);
+	color: var(--im-muted);
+	cursor: not-allowed;
+}
+
+:is(.im-input, .im-textarea):read-only:not(:disabled) {
+	background-color: var(--im-surface);
+	box-shadow: none;
+}
+
+.im-input-sm { --im-input-height: 2rem; padding-block: 0.25rem; font-size: var(--im-text-xs); }
+.im-input-lg { --im-input-height: 3rem; padding-inline: 1.125rem; font-size: var(--im-text-base); }
+
+/* Underlined: a rule, not a box — for a quiet, editorial form. */
+.im-input-line {
+	padding-inline: 0;
+	border-radius: 0;
+	background-color: transparent;
+	box-shadow: inset 0 -1px 0 var(--im-input-ring);
+}
+
+.im-input-line:focus-visible {
+	box-shadow: inset 0 -2px 0 var(--im-ink);
+}
+
+/* ---- select ---- native, with our chevron. */
+.im-select {
+	appearance: none;
+	padding-right: 2.25rem;
+	background-image:
+		linear-gradient(45deg, transparent 50%, var(--im-muted) 50%),
+		linear-gradient(135deg, var(--im-muted) 50%, transparent 50%);
+	background-position: calc(100% - 1.0625rem) 50%, calc(100% - 0.75rem) 50%;
+	background-repeat: no-repeat;
+	background-size: 0.3125rem 0.3125rem;
+	cursor: pointer;
+}
+
+/* ---- group: an icon, a unit or a button inside the field ----
+   <div class="im-input-group"> {{> "icons/search"}} <input class="im-input"> <kbd>/</kbd> </div> */
+.im-input-group {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	min-height: 2.5rem;
+	padding-inline: 0.75rem;
+	border-radius: var(--im-radius-lg);
+	background-color: var(--im-canvas);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	color: var(--im-muted);
+	font-size: var(--im-text-sm);
+	transition: box-shadow 140ms;
+}
+
+.im-input-group:hover {
+	box-shadow: inset 0 0 0 1px var(--im-faint);
+}
+
+.im-input-group:focus-within {
+	box-shadow: inset 0 0 0 2px var(--im-ink), 0 0 0 4px var(--im-accent-tint);
+}
+
+.im-input-group:has([aria-invalid="true"]) {
+	box-shadow: inset 0 0 0 2px var(--im-danger);
+}
+
+.im-input-group > .im-input {
+	flex: 1 1 0;
+	min-width: 0;
+	min-height: 2.5rem;
+	padding-inline: 0;
+	background: none;
+	box-shadow: none;
+}
+
+.im-input-group > .im-icon {
+	font-size: 1rem;
+}
+
+.im-input-group > .im-btn {
+	--im-btn-height: 2rem;
+
+	margin-right: -0.5rem;
+}
+
+/* A fixed prefix or suffix: "https://", ".com", "€". */
+.im-input-addon {
+	flex: none;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+}
+
+/* ---- floating label ----
+   <div class="im-float"><input class="im-input" id="e" placeholder=" "><label for="e">Email</label></div>
+   The placeholder must be a single space: that is what :placeholder-shown reads. */
+.im-float {
+	position: relative;
+}
+
+.im-float > .im-input {
+	--im-input-height: 3.25rem;
+
+	padding-top: 1.25rem;
+	padding-bottom: 0.25rem;
+}
+
+.im-float > label {
+	position: absolute;
+	top: 50%;
+	left: 0.875rem;
+	translate: 0 -50%;
+	color: var(--im-muted);
+	font-size: var(--im-text-sm);
+	pointer-events: none;
+	transform-origin: 0 50%;
+	transition: translate 180ms var(--im-ease-out), scale 180ms var(--im-ease-out), color 180ms;
+}
+
+.im-float > .im-input:is(:focus, :not(:placeholder-shown)) + label {
+	translate: 0 -135%;
+	scale: 0.78;
+	color: var(--im-ink);
+}
+
+/* ---- checkbox & radio ----
+   <label class="im-check"><input type="checkbox"><span>Send me the newsletter</span></label>
+   The box is the real input, restyled: a tick that DRAWS itself, a dot that
+   springs in. Indeterminate is a dash. */
+.im-check,
+.im-radio {
+	display: inline-flex;
+	align-items: flex-start;
+	gap: 0.625rem;
+	color: var(--im-ink);
+	font-size: var(--im-text-sm);
+	line-height: 1.25rem;
+	cursor: pointer;
+}
+
+.im-check > input,
+.im-radio > input {
+	appearance: none;
+	position: relative;
+	flex: none;
+	width: 1.25rem;
+	height: 1.25rem;
+	margin: 0;
+	border-radius: var(--im-radius-sm);
+	background-color: var(--im-canvas);
+	box-shadow: inset 0 0 0 1.5px var(--im-faint);
+	cursor: pointer;
+	transition: background-color 160ms, box-shadow 160ms, scale 120ms;
+}
+
+.im-radio > input {
+	border-radius: 50%;
+}
+
+:is(.im-check, .im-radio):hover > input {
+	box-shadow: inset 0 0 0 1.5px var(--im-ink);
+}
+
+:is(.im-check, .im-radio) > input:active {
+	scale: 0.9;
+}
+
+:is(.im-check, .im-radio) > input:focus-visible {
+	outline: 2px solid var(--im-accent);
+	outline-offset: 2px;
+}
+
+.im-check > input:is(:checked, :indeterminate),
+.im-radio > input:checked {
+	background-color: var(--im-ink);
+	box-shadow: none;
+}
+
+/* The tick: two strokes of a rotated box, revealed by a clip that opens. */
+.im-check > input::after {
+	content: "";
+	position: absolute;
+	top: 0.1875rem;
+	left: 0.4375rem;
+	width: 0.3125rem;
+	height: 0.625rem;
+	border-right: 2px solid var(--im-canvas);
+	border-bottom: 2px solid var(--im-canvas);
+	rotate: 45deg;
+	clip-path: inset(0 100% 0 0);
+	transition: clip-path 260ms var(--im-ease-out) 60ms;
+}
+
+.im-check > input:checked::after {
+	clip-path: inset(0);
+}
+
+.im-check > input:indeterminate::after {
+	top: 0.5625rem;
+	left: 0.3125rem;
+	width: 0.625rem;
+	height: 0;
+	border-right: 0;
+	rotate: 0deg;
+	clip-path: inset(0);
+}
+
+/* The dot: springs in. */
+.im-radio > input::after {
+	content: "";
+	position: absolute;
+	inset: 0.375rem;
+	border-radius: 50%;
+	background-color: var(--im-canvas);
+	scale: 0;
+	transition: scale 260ms var(--im-ease-spring);
+}
+
+.im-radio > input:checked::after {
+	scale: 1;
+}
+
+:is(.im-check, .im-radio):has(:disabled) {
+	color: var(--im-muted);
+	cursor: not-allowed;
+}
+
+:is(.im-check, .im-radio) > input:disabled {
+	background-color: var(--im-surface-2);
+	box-shadow: none;
+	cursor: not-allowed;
+}
+
+/* In the accent instead of ink. */
+.im-check-accent > input:is(:checked, :indeterminate),
+.im-radio-accent > input:checked {
+	background-color: var(--im-accent);
+}
+
+/* A label with a second line. */
+.im-check > span > small,
+.im-radio > span > small {
+	display: block;
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+	line-height: 1.4;
+}
+
+/* ---- choice card: a whole card is the radio or checkbox ----
+   <label class="im-choice"><input type="radio" name="plan"><span class="im-choice-title">Pro</span><span>…</span></label> */
+.im-choice {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+	padding: 1rem 2.75rem 1rem 1.125rem;
+	border-radius: var(--im-radius-lg);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+	cursor: pointer;
+	transition: box-shadow 160ms, background-color 160ms;
+}
+
+.im-choice:hover {
+	box-shadow: inset 0 0 0 1px var(--im-ink);
+}
+
+.im-choice:has(:checked) {
+	background-color: var(--im-surface);
+	box-shadow: inset 0 0 0 2px var(--im-ink);
+}
+
+.im-choice:has(:focus-visible) {
+	outline: 2px solid var(--im-accent);
+	outline-offset: 2px;
+}
+
+.im-choice > input {
+	appearance: none;
+	position: absolute;
+	top: 1rem;
+	right: 1rem;
+	width: 1.125rem;
+	height: 1.125rem;
+	margin: 0;
+	border-radius: 50%;
+	box-shadow: inset 0 0 0 1.5px var(--im-faint);
+	transition: background-color 160ms, box-shadow 160ms;
+}
+
+.im-choice > input[type="checkbox"] {
+	border-radius: var(--im-radius-sm);
+}
+
+.im-choice > input:checked {
+	background-color: var(--im-ink);
+	box-shadow: inset 0 0 0 0.25rem var(--im-ink), inset 0 0 0 1rem var(--im-canvas);
+}
+
+.im-choice-title {
+	color: var(--im-ink);
+	font-weight: 600;
+}
+
+/* ---- range ---- <input class="im-range" type="range" style="--im-value: .4"> (im.js keeps --im-value in step) */
+.im-range {
+	appearance: none;
+	width: 100%;
+	height: 1.25rem;
+	background: none;
+	cursor: pointer;
+}
+
+.im-range::-webkit-slider-runnable-track {
+	height: 0.25rem;
+	border-radius: var(--im-radius-full);
+	background: linear-gradient(to right, var(--im-ink) calc(var(--im-value, 0.5) * 100%), var(--im-surface-3) 0);
+}
+
+.im-range::-moz-range-track {
+	height: 0.25rem;
+	border-radius: var(--im-radius-full);
+	background: linear-gradient(to right, var(--im-ink) calc(var(--im-value, 0.5) * 100%), var(--im-surface-3) 0);
+}
+
+.im-range::-webkit-slider-thumb {
+	appearance: none;
+	width: 1.125rem;
+	height: 1.125rem;
+	margin-top: -0.4375rem;
+	border-radius: 50%;
+	background-color: var(--im-canvas);
+	box-shadow: inset 0 0 0 2px var(--im-ink);
+	transition: scale 160ms var(--im-ease-spring);
+}
+
+.im-range::-moz-range-thumb {
+	width: 1.125rem;
+	height: 1.125rem;
+	border: 0;
+	border-radius: 50%;
+	background-color: var(--im-canvas);
+	box-shadow: inset 0 0 0 2px var(--im-ink);
+}
+
+.im-range:active::-webkit-slider-thumb {
+	scale: 1.25;
+}
+
+.im-range:focus-visible {
+	outline: 0;
+}
+
+.im-range:focus-visible::-webkit-slider-thumb {
+	box-shadow: inset 0 0 0 2px var(--im-ink), 0 0 0 4px var(--im-accent-tint);
+}
+
+/* ---- file drop ---- <label class="im-drop"><input type="file"> … </label> */
+.im-drop {
+	--_c: var(--im-faint);
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.375rem;
+	padding: 2rem 1.25rem;
+	border-radius: var(--im-radius-lg);
+	background-image:
+		repeating-linear-gradient(90deg, var(--_c) 0 6px, transparent 6px 12px),
+		repeating-linear-gradient(90deg, var(--_c) 0 6px, transparent 6px 12px),
+		repeating-linear-gradient(0deg, var(--_c) 0 6px, transparent 6px 12px),
+		repeating-linear-gradient(0deg, var(--_c) 0 6px, transparent 6px 12px);
+	background-position: 0 0, 0 100%, 0 0, 100% 0;
+	background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+	background-size: 12px 1.5px, 12px 1.5px, 1.5px 12px, 1.5px 12px;
+	color: var(--im-muted);
+	font-size: var(--im-text-sm);
+	text-align: center;
+	cursor: pointer;
+	transition: background-color 160ms, color 160ms;
+}
+
+.im-drop > input {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	opacity: 0;
+}
+
+.im-drop > .im-icon {
+	color: var(--im-ink);
+	font-size: 1.5rem;
+}
+
+.im-drop > strong {
+	color: var(--im-ink);
+}
+
+/* The dashes march while something is over it, or it has focus. */
+.im-drop:is(:hover, :focus-within, [data-im-over]) {
+	--_c: var(--im-ink);
+
+	background-color: var(--im-surface);
+	animation: im-drop-march 600ms linear infinite;
+}
+
+@keyframes im-drop-march {
+	to { background-position: 12px 0, -12px 100%, 0 -12px, 100% 12px; }
+}
+
+/* ---- layout ---- */
+.im-form {
+	display: grid;
+	gap: 1.125rem;
+}
+
+.im-form-row {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(13rem, 100%), 1fr));
+	gap: 1.125rem;
+}
+
+.im-fieldset {
+	display: grid;
+	gap: 0.75rem;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.im-fieldset > legend {
+	margin-bottom: 0.5rem;
+	padding: 0;
+	color: var(--im-ink);
+	font-size: var(--im-text-sm);
+	font-weight: 600;
+}
+
+.im-form-actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 0.625rem;
+	padding-top: 1rem;
+	border-top: 1px solid var(--im-line);
+}
+
+@media (width < 30rem) {
+	.im-form-actions > .im-btn {
+		flex: 1 1 100%;
+	}
+}
+
+/* Subscribe — partials/components/subscribe.hbs: an email field with its
+   button inside it. */
+.im-subscribe {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	width: 100%;
+	max-width: 24rem;
+}
+
+.im-subscribe-field {
+	display: flex;
+	align-items: center;
+	gap: 0.25rem;
+	padding: 0.25rem;
+	border-radius: var(--im-radius-full);
+	background-color: var(--im-canvas);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	transition: box-shadow 120ms;
+}
+
+.im-subscribe-field:focus-within {
+	box-shadow: inset 0 0 0 2px var(--im-accent);
+}
+
+.im-subscribe-field > input {
+	flex: 1 1 0;
+	min-width: 0;
+	height: 2.25rem;
+	padding-inline: 0.875rem 0.25rem;
+	background: transparent;
+	color: var(--im-ink);
+	font-size: var(--im-text-sm);
+	outline: 0;
+}
+
+.im-subscribe-field > input::placeholder {
+	color: var(--im-faint);
+}
+
+.im-subscribe-field > .im-btn {
+	--im-btn-height: 2.25rem;
+}
+
+.im-subscribe-status {
+	display: none;
+	padding-inline: 0.875rem;
+	font-size: var(--im-text-xs);
+}
+
+/* Ghost's members script toggles these classes on the <form>. */
+.im-subscribe.success .im-subscribe-status[data-state="success"] {
+	display: block;
+	color: var(--im-success);
+}
+
+.im-subscribe.error .im-subscribe-status[data-state="error"] {
+	display: block;
+	color: var(--im-danger);
+}

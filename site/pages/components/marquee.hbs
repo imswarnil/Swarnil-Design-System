@@ -1,0 +1,95 @@
+---
+title: Marquee
+description: Content that loops sideways forever, without a seam. Write the items once — the script clones them for the loop and hides the copy from screen readers.
+eyebrow: Component
+source: src/components/marquee.css · src/js/im.js
+---
+<h2>Words</h2>
+{{#example flush=true}}
+<div class="im-marquee im-marquee-text py-6" data-im-marquee>
+	<div class="im-marquee-group">
+		<span>Tokens</span><span class="im-marquee-sep"></span>
+		<span class="im-pixel">Layout</span><span class="im-marquee-sep"></span>
+		<span>Components</span><span class="im-marquee-sep"></span>
+		<span class="im-pixel">Sections</span><span class="im-marquee-sep"></span>
+	</div>
+</div>
+{{/example}}
+<p>The markup is one group. <code>im.js</code> clones it, marks the clone <code>aria-hidden</code> and takes its links out of the tab order, then starts the animation — so nothing moves, and nothing flashes half-built, before it is ready. Each copy travels exactly its own width plus one gap, which is why the loop has no seam at any screen width.</p>
+
+<h2>Two rows, opposite ways</h2>
+<p><code>im-marquee-reverse</code> runs it the other way; <code>im-marquee-fade</code> softens the edges; different speeds keep two rows from marching in step.</p>
+{{#example flush=true}}
+<div class="im-stack py-6" style="--im-stack-gap: .75rem">
+	<div class="im-marquee im-marquee-fade im-marquee-pause" data-im-marquee style="--im-marquee-gap: .625rem; --im-marquee-speed: 46s">
+		<div class="im-marquee-group">{{#foreach fixtures.tags}}<a class="im-tag im-tag-dot" href="#two-rows-opposite-ways">{{name}}</a>{{/foreach}}<a class="im-tag" href="#two-rows-opposite-ways">Design systems</a><a class="im-tag" href="#two-rows-opposite-ways">Ghost</a><a class="im-tag" href="#two-rows-opposite-ways">Tailwind</a><a class="im-tag" href="#two-rows-opposite-ways">Photography</a></div>
+	</div>
+	<div class="im-marquee im-marquee-fade im-marquee-pause im-marquee-reverse" data-im-marquee style="--im-marquee-gap: .625rem; --im-marquee-speed: 58s">
+		<div class="im-marquee-group"><a class="im-tag" href="#two-rows-opposite-ways">Budapest</a><a class="im-tag" href="#two-rows-opposite-ways">Amsterdam</a><a class="im-tag" href="#two-rows-opposite-ways">Amalfi</a><a class="im-tag" href="#two-rows-opposite-ways">Kazbegi</a><a class="im-tag" href="#two-rows-opposite-ways">Faroe Islands</a><a class="im-tag" href="#two-rows-opposite-ways">Rome</a><a class="im-tag" href="#two-rows-opposite-ways">Lisbon</a><a class="im-tag" href="#two-rows-opposite-ways">Kyoto</a></div>
+	</div>
+</div>
+{{/example}}
+<p><strong>Anything clickable must pause:</strong> <code>im-marquee-pause</code> stops it on hover <em>and</em> on keyboard focus, so a link can be reached without chasing it.</p>
+
+<h2>Logos and marks</h2>
+<p><code>im-marquee-logo</code> evens out height and keeps marks quiet until hovered. Here, the system's own icons.</p>
+{{#example flush=true}}
+<div class="im-marquee im-marquee-fade py-7" data-im-marquee style="--im-marquee-gap: 3.5rem; --im-marquee-speed: 30s">
+	<div class="im-marquee-group">
+		<span class="im-marquee-logo">{{> "icons/brand-github"}}</span><span class="im-marquee-logo">{{> "icons/brand-youtube"}}</span><span class="im-marquee-logo">{{> "icons/brand-x"}}</span><span class="im-marquee-logo">{{> "icons/brand-instagram"}}</span><span class="im-marquee-logo">{{> "icons/brand-bluesky"}}</span><span class="im-marquee-logo">{{> "icons/brand-mastodon"}}</span><span class="im-marquee-logo">{{> "icons/brand-threads"}}</span><span class="im-marquee-logo">{{> "icons/brand-reddit"}}</span>
+	</div>
+</div>
+{{/example}}
+
+<h2>Cards</h2>
+<p>Items can be anything — quotes, posts, stats. Give them a width, since a marquee item has no row to fill.</p>
+{{#example flush=true}}
+<div class="im-marquee im-marquee-fade im-marquee-pause py-6" data-im-marquee style="--im-marquee-gap: 1rem; --im-marquee-speed: 60s">
+	<div class="im-marquee-group" style="align-items: stretch">
+		<figure class="im-card im-card-outline w-72"><blockquote class="text-ink">"The tokens carried our rebrand in an afternoon."</blockquote><figcaption class="im-card-meta"><span>{{> "icons/user"}} A designer</span></figcaption></figure>
+		<figure class="im-card im-card-outline w-72"><blockquote class="text-ink">"I deleted a section by deleting a folder. That was the whole job."</blockquote><figcaption class="im-card-meta"><span>{{> "icons/user"}} A developer</span></figcaption></figure>
+		<figure class="im-card im-card-outline w-72"><blockquote class="text-ink">"Dark mode just worked. I had budgeted a week."</blockquote><figcaption class="im-card-meta"><span>{{> "icons/user"}} A founder</span></figcaption></figure>
+		<figure class="im-card im-card-outline w-72"><blockquote class="text-ink">"It reads like a poster and behaves like an app."</blockquote><figcaption class="im-card-meta"><span>{{> "icons/user"}} An editor</span></figcaption></figure>
+	</div>
+</div>
+{{/example}}
+
+<h2>Vertical</h2>
+<p><code>im-marquee-vertical</code> needs a height: <code>--im-marquee-height</code> (20rem).</p>
+{{#example style="max-width: 22rem"}}
+<div class="im-marquee im-marquee-vertical im-marquee-fade im-marquee-pause" data-im-marquee style="--im-marquee-gap: .75rem; --im-marquee-height: 16rem; --im-marquee-speed: 24s">
+	<div class="im-marquee-group" style="align-items: stretch">
+		{{#foreach demo.four}}<a class="im-card im-card-outline im-card-link im-card-sm" href="#vertical"><span class="im-card-eyebrow">{{primary_tag.name}}</span><span class="im-card-title">{{title}}</span></a>{{/foreach}}
+	</div>
+</div>
+{{/example}}
+
+<h2>In a Swiss row</h2>
+<p>A marquee between two rules is the classic use: a band across the page.</p>
+{{#example flush=true}}
+<div class="im-frame" style="--im-frame-width: 100%; border-inline: 0">
+	<div class="im-frame-row im-frame-row-flush im-frame-marks" style="border-top: 0">
+		<div class="im-marquee im-marquee-text py-4" data-im-marquee style="font-size: 1.5rem; --im-marquee-speed: 28s">
+			<div class="im-marquee-group"><span class="im-pixel">Now shipping</span><span class="im-marquee-sep"></span><span>Carousel</span><span class="im-marquee-sep"></span><span class="im-pixel">Marquee</span><span class="im-marquee-sep"></span><span>Swiss grid</span><span class="im-marquee-sep"></span></div>
+		</div>
+	</div>
+	<div class="im-frame-row"><p class="im-caption" data-index="01">The row below the band</p></div>
+</div>
+{{/example}}
+
+<h2>Options</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th></th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>--im-marquee-speed</code></td><td>One full lap. 40s. Longer content needs a longer lap to move at the same pace.</td></tr>
+		<tr><td><code>--im-marquee-gap</code></td><td>Between items. 2.5rem.</td></tr>
+		<tr><td><code>--im-marquee-fade</code></td><td>How much of each edge fades, with <code>im-marquee-fade</code>. 12%.</td></tr>
+		<tr><td><code>im-marquee-reverse</code> · <code>-pause</code> · <code>-fade</code> · <code>-vertical</code></td><td>Direction, pause on hover/focus, soft edges, orientation.</td></tr>
+		<tr><td><code>im-marquee-text</code> · <code>im-marquee-sep</code> · <code>im-marquee-logo</code></td><td>Ready-made items: banner type, an accent dot between words, an evened-out mark.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>Reduced motion</h2>
+<p>Under <code>prefers-reduced-motion</code> it does not move at all: the clone is hidden and the row becomes an ordinary, scrollable one — every item is still reachable. Treat a marquee as decoration either way: never put something in one that a visitor <em>must</em> read.</p>

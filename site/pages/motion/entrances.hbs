@@ -1,0 +1,106 @@
+---
+title: Entrances
+description: Twenty-five named ways for a thing to arrive — nine for text, eight for pictures, eight for blocks and whole sections. They are a menu to choose from, not a set to use all at once - pick one per kind, in one place, and the whole site follows.
+eyebrow: Motion
+source: src/motion/entrance.css · src/js/im-motion.js
+---
+<h2>Use one</h2>
+{{{{code "hbs"}}}}
+<h1 data-im-in="line-up">Plays when it scrolls into view</h1>      <!-- needs im-motion.js -->
+<h1 class="im-in im-in-line-up">Plays on load, CSS only</h1>
+{{{{/code}}}}
+<p>Above the fold, "scrolls into view" <em>is</em> on load — so <code>data-im-in</code> is the one to reach for. With no JavaScript nothing is ever hidden; under <code>prefers-reduced-motion</code> nothing is hidden and nothing moves.</p>
+
+<h2>Choose once, for the whole site</h2>
+<p>Three aliases play whatever a variable names. Templates say <em>what kind of thing</em> is arriving; one line of CSS — or a theme setting — says <em>how</em>.</p>
+{{{{code "hbs"}}}}
+<h2 data-im-in="text">…</h2>          <!-- plays --im-in-text     (default: line-up) -->
+<img data-im-in="image" …>            <!-- plays --im-in-image    (default: develop) -->
+<section data-im-in="section">…</section>   <!-- --im-in-section  (default: rise)    -->
+{{{{/code}}}}
+{{{{code "css"}}}}
+:root {
+	--im-in-text: im-in-blur-in;
+	--im-in-image: im-in-iris;
+	--im-in-section: im-in-fade;
+}
+{{{{/code}}}}
+<p>Any style that is a single animation can be named this way — 21 of the 25. The four that need more than that (<code>words</code>, <code>chars</code>, <code>curtain</code>, <code>frame</code>) are asked for by name.</p>
+
+<h2>Text</h2>
+<p>Press <strong>Replay</strong> on any row.</p>
+{{#example code=false}}
+<div class="im-cells im-cells-3" data-replay>
+	<div class="im-cell" data-replay-tile><p class="im-caption" data-index="01">rise</p><p class="text-h2 font-semibold tracking-tight text-ink" data-im-in="rise" style="min-height: 2.4em">Make it easy to read.</p><span class="text-sm">The plain one: up a little, out of nothing.</span></div>
+	<div class="im-cell" data-replay-tile><p class="im-caption" data-index="02">line-up</p><p class="text-h2 font-semibold tracking-tight text-ink" data-im-in="line-up" style="min-height: 2.4em">Make it easy to read.</p><span class="text-sm">Rises from behind its own baseline, as if through a slot.</span></div>
+	<div class="im-cell" data-replay-tile><p class="im-caption" data-index="03">blur-in</p><p class="text-h2 font-semibold tracking-tight text-ink" data-im-in="blur-in" style="min-height: 2.4em">Make it easy to read.</p><span class="text-sm">Comes into focus.</span></div>
+	<div class="im-cell" data-replay-tile><p class="im-caption" data-index="04">track-in</p><p class="text-h2 font-semibold tracking-tight text-ink" data-im-in="track-in" style="min-height: 2.4em">Make it easy to read.</p><span class="text-sm">Letters close up from wide to set.</span></div>
+	<div class="im-cell" data-replay-tile><p class="im-caption" data-index="05">type</p><p class="text-h2 font-semibold tracking-tight text-ink" data-im-in="type" style="min-height: 2.4em">Make it easy to read.</p><span class="text-sm">Wiped on in steps, like a line being typed.</span></div>
+	<div class="im-cell" data-replay-tile><p class="im-caption" data-index="06">words</p><p class="text-h2 font-semibold tracking-tight text-ink" data-im-in="words" style="min-height: 2.4em">Make it easy to read.</p><span class="text-sm">Word by word, each tipping upright. Needs the script.</span></div>
+	<div class="im-cell" data-replay-tile><p class="im-caption" data-index="07">chars</p><p class="text-h2 font-semibold tracking-tight text-ink" data-im-in="chars" style="min-height: 2.4em">Make it easy to read.</p><span class="text-sm">Letter by letter, each popping in. Needs the script.</span></div>
+	<div class="im-cell" data-replay-tile><p class="im-caption" data-index="08">flip</p><p class="text-h2 font-semibold tracking-tight text-ink" data-im-in="flip" style="min-height: 2.4em">Make it easy to read.</p><span class="text-sm">Tips up from lying flat on the page.</span></div>
+	<div class="im-cell" data-replay-tile><p class="im-caption" data-index="09">pixel</p><p class="text-h2 font-semibold tracking-tight text-ink" data-im-in="pixel" style="min-height: 2.4em">Make it easy to read.</p><span class="text-sm">Arrives in Geist Pixel, then resolves into its own face. The system's signature.</span></div>
+</div>
+{{/example}}
+
+<h2>Image</h2>
+{{#example code=false}}
+<div class="im-cells im-cells-4" data-replay>
+	<div class="im-cell" data-replay-tile><p class="im-caption" data-index="10">wipe-right</p><figure class="im-fx-img" style="aspect-ratio: 4 / 3; overflow: hidden"><img data-im-in="wipe-right" src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></figure><span class="text-sm">Uncovered by a straight edge, left to right.</span></div>
+	<div class="im-cell" data-replay-tile><p class="im-caption" data-index="11">wipe-up</p><figure class="im-fx-img" style="aspect-ratio: 4 / 3; overflow: hidden"><img data-im-in="wipe-up" src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></figure><span class="text-sm">Uncovered from the bottom.</span></div>
+	<div class="im-cell" data-replay-tile><p class="im-caption" data-index="12">iris</p><figure class="im-fx-img" style="aspect-ratio: 4 / 3; overflow: hidden"><img data-im-in="iris" src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></figure><span class="text-sm">Opens from the centre, like a lens.</span></div>
+	<div class="im-cell" data-replay-tile><p class="im-caption" data-index="13">blinds</p><figure class="im-fx-img" style="aspect-ratio: 4 / 3; overflow: hidden"><img data-im-in="blinds" src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></figure><span class="text-sm">Eight slats open together.</span></div>
+	<div class="im-cell" data-replay-tile><p class="im-caption" data-index="14">zoom-out</p><figure class="im-fx-img" style="aspect-ratio: 4 / 3; overflow: hidden"><img data-im-in="zoom-out" src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></figure><span class="text-sm">Settles back from slightly too close.</span></div>
+	<div class="im-cell" data-replay-tile><p class="im-caption" data-index="15">develop</p><figure class="im-fx-img" style="aspect-ratio: 4 / 3; overflow: hidden"><img data-im-in="develop" src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></figure><span class="text-sm">Like a print in the tray: pale and soft, then colour and edge.</span></div>
+	<div class="im-cell" data-replay-tile><p class="im-caption" data-index="16">curtain</p><figure class="im-fx-img" data-im-in="curtain" style="aspect-ratio: 4 / 3"><img src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></figure><span class="text-sm">A panel of the accent crosses and leaves the picture behind it. On the wrapper.</span></div>
+	<div class="im-cell" data-replay-tile><p class="im-caption" data-index="17">tilt</p><figure class="im-fx-img" style="aspect-ratio: 4 / 3; overflow: hidden"><img data-im-in="tilt" src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></figure><span class="text-sm">Swings in on a vertical hinge.</span></div>
+</div>
+{{/example}}
+<p>The clipping styles (<code>wipe</code>, <code>iris</code>, <code>blinds</code>, <code>unfold</code>) hide nothing from a search engine or a screen reader — the picture is in the page from the first byte; only its paint is delayed.</p>
+
+<h2>Blocks and sections</h2>
+{{#example code=false}}
+<div class="im-cells im-cells-4" data-replay>
+	<div class="im-cell" data-replay-tile><p class="im-caption" data-index="18">fade</p><div class="im-card im-card-outline" data-im-in="fade" style="min-height: 7rem"><span class="im-card-title">A block</span><span>A card, a row, a whole section.</span></div><span class="text-sm">Opacity only. The safe choice for a lot of things at once.</span></div>
+	<div class="im-cell" data-replay-tile><p class="im-caption" data-index="19">slide-left</p><div class="im-card im-card-outline" data-im-in="slide-left" style="min-height: 7rem"><span class="im-card-title">A block</span><span>A card, a row, a whole section.</span></div><span class="text-sm">Travels leftwards into place.</span></div>
+	<div class="im-cell" data-replay-tile><p class="im-caption" data-index="20">slide-right</p><div class="im-card im-card-outline" data-im-in="slide-right" style="min-height: 7rem"><span class="im-card-title">A block</span><span>A card, a row, a whole section.</span></div><span class="text-sm">Travels rightwards into place.</span></div>
+	<div class="im-cell" data-replay-tile><p class="im-caption" data-index="21">scale-up</p><div class="im-card im-card-outline" data-im-in="scale-up" style="min-height: 7rem"><span class="im-card-title">A block</span><span>A card, a row, a whole section.</span></div><span class="text-sm">Grows the last few percent.</span></div>
+	<div class="im-cell" data-replay-tile><p class="im-caption" data-index="22">pop</p><div class="im-card im-card-outline" data-im-in="pop" style="min-height: 7rem"><span class="im-card-title">A block</span><span>A card, a row, a whole section.</span></div><span class="text-sm">With a little overshoot. Small things only.</span></div>
+	<div class="im-cell" data-replay-tile><p class="im-caption" data-index="23">drop</p><div class="im-card im-card-outline" data-im-in="drop" style="min-height: 7rem"><span class="im-card-title">A block</span><span>A card, a row, a whole section.</span></div><span class="text-sm">Falls into place and settles.</span></div>
+	<div class="im-cell" data-replay-tile><p class="im-caption" data-index="24">unfold</p><div class="im-card im-card-outline" data-im-in="unfold" style="min-height: 7rem"><span class="im-card-title">A block</span><span>A card, a row, a whole section.</span></div><span class="text-sm">Rolls down from its top edge, like a blind.</span></div>
+	<div class="im-cell" data-replay-tile><p class="im-caption" data-index="25">frame</p><div class="im-card im-card-outline" data-im-in="frame" style="min-height: 7rem"><span class="im-card-title">A block</span><span>A card, a row, a whole section.</span></div><span class="text-sm">The Swiss one: a hairline frame draws itself in ink, then the content arrives inside it.</span></div>
+</div>
+{{/example}}
+
+<h2>One after another</h2>
+<p><code>im-stagger</code> on a parent numbers its children; every entrance reads that number as a delay (<code>--im-stagger</code>, 60ms a step).</p>
+{{#example}}
+<div class="im-grid-auto im-stagger" data-replay style="--im-grid-min: 10rem">
+	<div class="im-card" data-im-in="rise"><span class="im-card-title">One</span></div>
+	<div class="im-card" data-im-in="rise"><span class="im-card-title">Two</span></div>
+	<div class="im-card" data-im-in="rise"><span class="im-card-title">Three</span></div>
+	<div class="im-card" data-im-in="rise"><span class="im-card-title">Four</span></div>
+</div>
+{{/example}}
+
+<h2>Knobs</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Variable</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>--im-in-duration</code></td><td>How long. Defaults to <code>--im-duration-slow</code> (640ms); a few styles set their own.</td></tr>
+		<tr><td><code>--im-in-ease</code></td><td>The curve. <code>--im-ease-out</code>.</td></tr>
+		<tr><td><code>--im-in-delay</code></td><td>Wait before starting — for a hero: heading 0ms, lede 120ms, buttons 240ms.</td></tr>
+		<tr><td><code>--im-in-steps</code></td><td><code>type</code>: how many steps. Roughly the number of characters.</td></tr>
+		<tr><td><code>--im-in-curtain</code></td><td><code>curtain</code>: the panel's colour. The accent.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>Choosing</h2>
+<ul>
+	<li><strong>One per kind, per site.</strong> A heading that rises on one page and flips on the next reads as a bug. Set the three variables and stop.</li>
+	<li><strong>Quiet for many, loud for one.</strong> A grid of twenty cards wants <code>fade</code> or <code>rise</code>. <code>frame</code>, <code>curtain</code> and <code>pixel</code> are for the one thing at the top of the page.</li>
+	<li><strong>Pairs that belong together:</strong> <code>line-up</code> + <code>wipe-up</code> + <code>unfold</code> (everything arrives through an edge — the Swiss set) · <code>blur-in</code> + <code>develop</code> + <code>fade</code> (everything comes into focus — the soft set).</li>
+	<li><strong>Never delay reading.</strong> Body text does not get an entrance. Headings, pictures, cards and bands do.</li>
+</ul>

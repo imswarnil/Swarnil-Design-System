@@ -1,0 +1,45 @@
+---
+title: Add a section
+description: A section is a folder. Everything it needs is inside it, and nothing outside it knows it exists.
+eyebrow: Guide
+---
+<h2>The folder</h2>
+{{{{code}}}}
+sections/newsletter-band/
+  band.hbs          the entry partial: loads its assets, sets the order, passes params down
+  parts/*.hbs       optional — split a long section by region
+  band.css          plain CSS, one block of class names: im-band__*
+  band.js           optional — only what the platform cannot do
+  media/            optional
+{{{{/code}}}}
+<p>It appears under <a href="/sections/">Sections</a> on the next build. Add a showcase page at <code>site/pages/sections/newsletter-band/index.hbs</code> with <code>layout: wide</code>.</p>
+
+<h2>The entry partial</h2>
+{{{{code}}}}
+{{#contentFor "styles"}}
+	<link rel="stylesheet" href="{{asset "sections/newsletter-band/band.css"}}">
+{{/contentFor}}
+
+<section class="im-band" aria-label="{{t "Newsletter"}}">
+	<h2 class="im-band__title">{{title}}</h2>
+	{{> "components/subscribe" id="band-email"}}
+</section>
+{{{{/code}}}}
+<p><code>contentFor "styles"</code> / <code>"scripts"</code> hand the assets to the layout, so only pages that use the section load them.</p>
+
+<h2>Rules</h2>
+<ul>
+	<li><strong>One block of class names</strong>, BEM-style, prefixed (<code>im-band__title</code>, <code>im-band__title--large</code>). That is what makes it safe for the stylesheet to sit outside the cascade layers.</li>
+	<li><strong>Tokens for every colour, size and radius.</strong> In plain CSS, spacing is <code>calc(var(--im-space) * 4)</code>.</li>
+	<li><strong>Reuse components</strong> — <code>.im-btn</code>, <code>.im-subscribe</code>, <code>.im-post-card</code> — rather than restyling them. Adjust one through its variables if needed.</li>
+	<li><strong>Container queries, not media queries.</strong> Put <code>container-type: inline-size</code> on the section's root and size by <code>@container</code>; a section cannot know what column it will be placed in.</li>
+	<li><strong>Content by parameter.</strong> If the section mentions a person, a company or a video id, that is a parameter.</li>
+	<li><strong>Respect <code>prefers-reduced-motion</code></strong>, and pause any decorative video in JS as well — a hidden video still decodes.</li>
+</ul>
+
+<h2>In a Ghost theme</h2>
+<p>Ghost only reads partials from <code>partials/</code> and only serves files from <code>assets/</code>, so a section is installed in two halves — the names stay the same:</p>
+{{{{code}}}}
+sections/band/*.hbs, parts/   →  partials/sections/band/
+sections/band/*.css *.js media/ →  assets/sections/band/
+{{{{/code}}}}

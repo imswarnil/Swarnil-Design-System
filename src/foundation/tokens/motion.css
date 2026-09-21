@@ -1,0 +1,24 @@
+/* Motion tokens. Four durations, four curves, one distance.
+
+   instant  a colour or opacity change under the pointer
+   fast     small things that move: a toggle, a chevron, a press
+   base     a panel, a menu, a card entering
+   slow     a whole section arriving; a hero
+   Curves: `out` for things ARRIVING (fast start, soft landing — the default),
+   `in` for things LEAVING, `in-out` for things that travel and stay on screen,
+   `spring` for a little overshoot on something small and playful. */
+
+:root {
+	--im-duration-instant: 120ms;
+	--im-duration-fast: 200ms;
+	--im-duration-base: 360ms;
+	--im-duration-slow: 640ms;
+
+	--im-ease-in: cubic-bezier(0.5, 0, 0.9, 0.4);
+	--im-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+	/* How far an entering thing travels. Small: motion should be felt, not watched. */
+	--im-distance: 1rem;
+	/* The gap between one staggered item and the next. */
+	--im-stagger: 70ms;
+}

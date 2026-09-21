@@ -1,0 +1,175 @@
+/* Topbar — brand left, search centre, actions right. Sticky, translucent. */
+
+.im-topbar {
+	grid-area: bar;
+	position: sticky;
+	top: 0;
+	z-index: 40;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 28rem) minmax(0, 1fr);
+	align-items: center;
+	gap: 1rem;
+	height: var(--im-bar-height);
+	padding-inline: 0.875rem var(--im-gutter);
+	background-color: color-mix(in oklab, var(--im-canvas) 86%, transparent);
+	backdrop-filter: saturate(1.6) blur(12px);
+}
+
+.im-topbar-start,
+.im-topbar-end {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	min-width: 0;
+}
+
+.im-topbar-end {
+	justify-content: flex-end;
+}
+
+.im-brand {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	min-width: 0;
+	color: var(--im-ink);
+	font-weight: 600;
+	letter-spacing: var(--im-tracking-tight);
+	text-decoration: none;
+	white-space: nowrap;
+}
+
+.im-brand:hover {
+	color: var(--im-ink);
+}
+
+.im-brand > img {
+	height: 1.75rem;
+	width: auto;
+}
+
+/* The search field is a button that LOOKS like a field: it opens a dialog. */
+.im-searchbar {
+	display: flex;
+	align-items: center;
+	gap: 0.625rem;
+	width: 100%;
+	height: 2.5rem;
+	padding-inline: 0.875rem 0.625rem;
+	border-radius: var(--im-radius-full);
+	background-color: var(--im-surface);
+	color: var(--im-muted);
+	font-size: var(--im-text-sm);
+	text-align: left;
+	cursor: pointer;
+	transition: background-color 120ms, color 120ms;
+}
+
+.im-searchbar:hover {
+	background-color: var(--im-surface-2);
+	color: var(--im-ink);
+}
+
+.im-searchbar > .im-icon {
+	font-size: 1rem;
+}
+
+.im-searchbar > kbd {
+	margin-left: auto;
+}
+
+/* Which menu button shows is decided by utilities in the partial
+   (max-lg:hidden / md:hidden): .im-btn sets `display` in a later layer, so a
+   rule here could not hide it. */
+
+@media (width < 48rem) {
+	.im-topbar {
+		grid-template-columns: minmax(0, 1fr) auto;
+		padding-inline: 0.5rem var(--im-gutter);
+	}
+
+	.im-topbar-search {
+		display: none;
+	}
+}
+
+/* ---- primary links ----
+   <nav class="im-topbar-nav"> <a class="im-toplink" aria-current="page">…</a> </nav>
+   Shown from lg up; below that the same links live in the drawer. A link that
+   opens a menu is a <button class="im-toplink" popovertarget="…">. */
+.im-topbar-nav {
+	display: none;
+	align-items: center;
+	gap: 0.125rem;
+	min-width: 0;
+}
+
+@media (width >= 64rem) {
+	.im-topbar-nav {
+		display: flex;
+	}
+}
+
+.im-toplink {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.25rem;
+	min-height: 2.25rem;
+	padding: 0 0.75rem;
+	border-radius: var(--im-radius-full);
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+	font-weight: 500;
+	text-decoration: none;
+	white-space: nowrap;
+	cursor: pointer;
+	transition: background-color 120ms, color 120ms;
+}
+
+.im-toplink:hover,
+.im-toplink:focus-visible,
+.im-toplink[aria-expanded="true"] {
+	background-color: var(--im-surface);
+	color: var(--im-ink);
+}
+
+.im-toplink[aria-current="page"] {
+	color: var(--im-ink);
+	font-weight: 600;
+}
+
+.im-toplink > .im-icon {
+	color: var(--im-muted);
+	font-size: 0.875rem;
+	transition: rotate 160ms var(--im-ease-out);
+}
+
+.im-toplink[aria-expanded="true"] > .im-icon {
+	rotate: 180deg;
+}
+
+/* ---- site navbar ----
+   For a site WITHOUT a side nav: brand + links on the left, actions on the
+   right, no centred search column. Add im-topbar-line for a hairline. */
+.im-topbar-site {
+	grid-template-columns: minmax(0, 1fr) auto;
+	padding-inline: var(--im-gutter);
+}
+
+.im-topbar-site .im-topbar-start {
+	gap: 1.25rem;
+}
+
+.im-topbar-line {
+	border-bottom: 1px solid var(--im-line);
+}
+
+@media (width < 48rem) {
+	.im-topbar-site {
+		padding-inline: 0.5rem var(--im-gutter);
+	}
+
+	.im-topbar-site .im-topbar-start {
+		gap: 0.25rem;
+	}
+}

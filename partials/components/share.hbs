@@ -1,0 +1,17 @@
+{{!-- Share the current post. Context: a post (uses its url and title).
+	Params: heading (a line above the row), compact (true = always icons),
+	        soft (true = neutral until hovered).
+	Every link is a plain URL — no third-party script, nothing tracks. --}}
+<div class="im-share{{#if compact}} im-share-compact{{/if}}">
+	{{#if heading}}<p class="im-share-title">{{heading}}</p>{{/if}}
+	<ul class="im-share-list">
+		<li><a class="im-btn im-btn-brand{{#if soft}} im-btn-brand-soft{{/if}}" data-brand="x" href="https://x.com/intent/post?url={{encode (url absolute="true")}}&text={{encode title}}" target="_blank" rel="noopener noreferrer">{{> "icons/brand-x"}}<span>X</span></a></li>
+		<li><a class="im-btn im-btn-brand{{#if soft}} im-btn-brand-soft{{/if}}" data-brand="facebook" href="https://www.facebook.com/sharer/sharer.php?u={{encode (url absolute="true")}}" target="_blank" rel="noopener noreferrer">{{> "icons/brand-facebook"}}<span>Facebook</span></a></li>
+		<li><a class="im-btn im-btn-brand{{#if soft}} im-btn-brand-soft{{/if}}" data-brand="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url={{encode (url absolute="true")}}" target="_blank" rel="noopener noreferrer">{{> "icons/brand-linkedin"}}<span>LinkedIn</span></a></li>
+		<li><a class="im-btn im-btn-brand{{#if soft}} im-btn-brand-soft{{/if}}" data-brand="whatsapp" href="https://wa.me/?text={{encode title}}%20{{encode (url absolute="true")}}" target="_blank" rel="noopener noreferrer">{{> "icons/brand-whatsapp"}}<span>WhatsApp</span></a></li>
+		<li><a class="im-btn im-btn-brand{{#if soft}} im-btn-brand-soft{{/if}}" data-brand="reddit" href="https://www.reddit.com/submit?url={{encode (url absolute="true")}}&title={{encode title}}" target="_blank" rel="noopener noreferrer">{{> "icons/brand-reddit"}}<span>Reddit</span></a></li>
+		<li><a class="im-btn" href="mailto:?subject={{encode title}}&body={{encode (url absolute="true")}}">{{> "icons/mail"}}<span>{{t "Email"}}</span></a></li>
+		<li><button class="im-btn" type="button" data-im-copy="{{url absolute="true"}}" data-im-copied-label="{{t "Copied"}}">{{> "icons/link"}}<span data-im-copy-label>{{t "Copy link"}}</span></button></li>
+		<li><button class="im-btn" type="button" data-im-share="{{url absolute="true"}}" data-im-share-title="{{title}}">{{> "icons/share"}}<span>{{t "More"}}</span></button></li>
+	</ul>
+</div>

@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "logo-sting",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["/Users/swarnil/Namaste Salesforce/logo-sting/serve.py"],
+      "port": 8931
+    }
+  ]
+}

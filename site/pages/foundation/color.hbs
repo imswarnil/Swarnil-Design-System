@@ -1,0 +1,49 @@
+---
+title: Color
+description: One achromatic ramp, and a small set of names for what a colour is for. Swatches are painted with the live variable — switch the theme from the gear, top right.
+eyebrow: Foundation
+source: src/foundation/tokens/semantic.css
+---
+<h2>Surfaces</h2>
+<p>From the page upward. A raised thing is one step up from what it sits on; its hover is one more.</p>
+{{#example code=false}}
+<div class="swatches">{{#each tokens.surfaces}}<div class="swatch"><div class="swatch-chip" style="--swatch: var({{name}})"></div><span class="swatch-name">bg-{{key}}</span><span class="swatch-meta"><span>{{light}}</span>{{#if dark}}<span>dark · {{dark}}</span>{{/if}}</span></div>{{/each}}</div>
+{{/example}}
+
+<h2>Text</h2>
+{{#example code=false}}
+<div class="swatches">{{#each tokens.text}}<div class="swatch"><div class="swatch-chip" style="--swatch: var({{name}})"></div><span class="swatch-name">text-{{key}}</span><span class="swatch-meta"><span>{{light}}</span>{{#if dark}}<span>dark · {{dark}}</span>{{/if}}</span></div>{{/each}}</div>
+{{/example}}
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Token</th><th>Use it for</th></tr></thead>
+	<tbody>
+		<tr><td><code>ink</code></td><td>Headings, links, anything that must read first.</td></tr>
+		<tr><td><code>body</code></td><td>Running text.</td></tr>
+		<tr><td><code>muted</code></td><td>Meta: dates, counts, captions, inactive icons.</td></tr>
+		<tr><td><code>faint</code></td><td>Placeholders, separators, disabled.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>Accent</h2>
+<p><code>accent</code> reads Ghost's <code>--ghost-accent-color</code> (Settings → Design → Brand) and falls back to the value in <code>semantic.css</code>. <code>on-accent</code> is the text colour that sits on it.</p>
+{{#example}}
+<div class="im-cluster">
+	<span class="bg-accent text-on-accent rounded-md px-4 py-2 text-sm font-medium">bg-accent text-on-accent</span>
+	<span class="bg-accent-tint text-ink rounded-md px-4 py-2 text-sm font-medium">bg-accent-tint</span>
+	<span class="text-accent text-sm font-medium">text-accent</span>
+</div>
+{{/example}}
+
+<h2>Status</h2>
+<p>Each status has a <code>-tint</code>: the colour mixed at low strength over the <em>current</em> canvas, so tints need no dark value of their own.</p>
+{{#example code=false}}
+<div class="swatches">{{#each tokens.status}}<div class="swatch"><div class="swatch-chip" style="--swatch: var({{name}})"></div><span class="swatch-name">{{key}}</span><span class="swatch-meta"><span>{{light}}</span>{{#if dark}}<span>dark · {{dark}}</span>{{/if}}</span></div>{{/each}}{{#each tokens.tints}}<div class="swatch"><div class="swatch-chip" style="--swatch: var({{name}})"></div><span class="swatch-name">{{key}}</span><span class="swatch-meta"><span>derived</span></span></div>{{/each}}</div>
+{{/example}}
+
+<h2>The grey ramp</h2>
+<p>Primitives — not for use in components. Pure neutral (zero chroma), so it never tints a photograph beside it. The values are Tailwind CSS's <code>neutral</code> scale, MIT licensed.</p>
+{{#example code=false}}
+<div class="swatches" style="--im-grid-min: 7rem">{{#each tokens.grays}}<div class="swatch"><div class="swatch-chip" style="--swatch: var({{name}})"></div><span class="swatch-name">{{key}}</span></div>{{/each}}</div>
+{{/example}}

@@ -1,0 +1,37 @@
+/* Badge — a status or a count.  <span class="badge badge-success">Live</span> */
+
+.im-badge {
+	--im-badge-bg: var(--im-surface-2);
+	--im-badge-fg: var(--im-ink);
+
+	display: inline-flex;
+	align-items: center;
+	gap: 0.3rem;
+	min-height: 1.375rem;
+	padding: 0 0.5rem;
+	border-radius: var(--im-radius-sm);
+	background-color: var(--im-badge-bg);
+	color: var(--im-badge-fg);
+	font-size: var(--im-text-xs);
+	font-weight: 500;
+	line-height: 1;
+	letter-spacing: 0;
+	white-space: nowrap;
+	vertical-align: middle;
+}
+
+.im-badge > .im-icon { font-size: 0.8125rem; }
+
+.im-badge-accent  { --im-badge-bg: var(--im-accent);       --im-badge-fg: var(--im-on-accent); }
+.im-badge-success { --im-badge-bg: var(--im-success-tint); --im-badge-fg: var(--im-success); }
+.im-badge-warning { --im-badge-bg: var(--im-warning-tint); --im-badge-fg: var(--im-warning); }
+.im-badge-danger  { --im-badge-bg: var(--im-danger-tint);  --im-badge-fg: var(--im-danger); }
+.im-badge-info    { --im-badge-bg: var(--im-info-tint);    --im-badge-fg: var(--im-info); }
+
+.im-badge-outline {
+	--im-badge-bg: transparent;
+
+	box-shadow: inset 0 0 0 1px var(--im-line);
+}
+
+.im-badge-pill { border-radius: var(--im-radius-full); }

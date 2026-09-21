@@ -1,0 +1,94 @@
+---
+title: Text & lists
+description: The body of a post — what Ghost prints for a post's content. One class, im-content, sets the type, the lists, the links and the rhythm, and gives the editor's wide and full-width cards somewhere to go.
+eyebrow: Content
+source: src/components/content.css · src/foundation/base/prose.css
+---
+<h2>Use it</h2>
+{{{{code "hbs"}}}}
+<section class="im-content">
+	{{content}}
+</section>
+{{{{/code}}}}
+<p><code>im-content</code> shares every typographic rule of <code>im-prose</code> and adds an article's needs: a canvas with three widths (<a href="/content/article/">see it whole</a>), the <a href="/content/cards/">editor's cards</a>, tables that scroll, footnotes. Inside a column that is already padded — a docs page, a card — add <code>im-content-flush</code>.</p>
+
+<h2>Headings and paragraphs</h2>
+{{#example code=false}}
+<div class="im-content im-content-flush">
+	<h2>The org is a codebase</h2>
+	<p>Most Salesforce orgs are treated like a settings page: someone clicks until it works. The ones that last are treated like <strong>software</strong> — with <a href="#headings-and-paragraphs">version control</a>, review, and a way back. This is <em>not</em> more work. It is the same work, done <mark>where you can see it</mark>.</p>
+	<h3>Start with what changes most</h3>
+	<p>Flows, permission sets and page layouts change weekly. Put those under source control first; the data model can wait. Press <kbd>⌘</kbd> <kbd>K</kbd> to find any of them, and run <code>sf project retrieve start</code> to pull them down.</p>
+	<h4>A smaller heading</h4>
+	<p>Used for a run of short sections. Headings balance their line breaks, so a two-line heading never leaves one word alone on the second line.</p>
+</div>
+{{/example}}
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Element</th><th></th></tr></thead>
+	<tbody>
+		<tr><td>Body</td><td>1.0625rem / 1.7 — a touch larger and looser than the interface, because it is read for minutes, not seconds. <code>--im-content-size</code> changes it.</td></tr>
+		<tr><td>Links</td><td>Ink, underlined <strong>in the accent</strong>; the whole link turns accent on hover. Only bare <code>&lt;a&gt;</code>s — a link with a class (a button, a card) is left alone.</td></tr>
+		<tr><td><code>&lt;mark&gt;</code> · <code>&lt;kbd&gt;</code> · <code>&lt;code&gt;</code></td><td>From the base layer, the same everywhere.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>Unordered list</h2>
+<p>A small <strong>square in the accent</strong> — the system's dot. A nested list steps down to a dash.</p>
+{{#example code=false}}
+<div class="im-content im-content-flush">
+	<ul>
+		<li>Put flows, permission sets and layouts under source control first.</li>
+		<li>Review every change, however small.
+			<ul>
+				<li>One reviewer is enough.</li>
+				<li>The point is a second pair of eyes, not a committee.</li>
+			</ul>
+		</li>
+		<li>Keep a way back: a tagged release you can redeploy in one command.</li>
+	</ul>
+</div>
+{{/example}}
+
+<h2>Ordered list</h2>
+<p>The number is set in <strong>Geist Mono with a leading zero</strong>, like a figure caption. Nested lists go to letters, then roman numerals.</p>
+{{#example code=false}}
+<div class="im-content im-content-flush">
+	<ol>
+		<li>Create a scratch org from the project definition.</li>
+		<li>Push the source and assign the permission set.
+			<ol>
+				<li>If the push fails, read the first error only.</li>
+				<li>Fix it, push again.
+					<ol><li>Repeat.</li><li>It is always the first error.</li></ol>
+				</li>
+			</ol>
+		</li>
+		<li>Run the tests. Open a pull request.</li>
+	</ol>
+</div>
+{{/example}}
+<p>Where a browser cannot restyle a marker's text it prints the ordinary number — nothing breaks.</p>
+
+<h2>Lede and drop cap</h2>
+<p>Two optional modifiers on the wrapper. <code>im-content-lede</code> sets the opening paragraph larger; <code>im-content-dropcap</code> gives it a drop cap in Geist Pixel, in the accent.</p>
+{{#example code=false}}
+<div class="im-content im-content-flush im-content-lede im-content-dropcap">
+	<p>Sorrento to Amalfi is forty kilometres and takes two hours, because nobody on it wants to arrive. The road was cut into the cliff in the 1840s and has not been widened since; buses fold their mirrors in to pass.</p>
+	<p>The second paragraph returns to the ordinary size. Everything below it is the normal rhythm of the page — one variable, <code>--im-flow</code>, between every block.</p>
+</div>
+{{/example}}
+{{{{code "hbs"}}}}
+<section class="im-content im-content-lede im-content-dropcap">{{content}}</section>
+{{{{/code}}}}
+
+<h2>Divider</h2>
+<p>The editor's divider is an <code>&lt;hr&gt;</code>. In an article it is a <strong>short piece of the system's ruler</strong>, centred — the same ticks as the <a href="/layout/divider/#the-ruler">divider</a> component.</p>
+{{#example code=false}}
+<div class="im-content im-content-flush">
+	<p>The end of one part.</p>
+	<hr>
+	<p>The start of the next.</p>
+</div>
+{{/example}}

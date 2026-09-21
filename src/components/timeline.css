@@ -1,0 +1,271 @@
+/* Timeline — events in order, on a line.
+
+   <ol class="im-timeline">
+     <li class="im-timeline-item" data-state="done">
+       <span class="im-timeline-marker"></span>                 ← dot; or put an icon / number inside
+       <time class="im-timeline-time">Mar 2026</time>
+       <h3  class="im-timeline-title">Moved to Budapest</h3>
+       <p   class="im-timeline-text">…</p>
+     </li>
+   </ol>
+
+   Variants (on the <ol>):  -alt (sides alternate) · -numbered · -compact ·
+   -cards · -horizontal.    States (on an item): done · current · upcoming.
+   The line is drawn per item, so it ends exactly at the last marker. */
+
+.im-timeline {
+	--im-timeline-marker: 0.75rem;
+	--im-timeline-gutter: 1.5rem;
+	--im-timeline-gap: 1.75rem;
+	--im-timeline-line: var(--im-line);
+
+	container-type: inline-size;
+	display: flex;
+	flex-direction: column;
+	counter-reset: im-timeline;
+}
+
+.im-timeline-item {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+	padding-left: calc(var(--im-timeline-marker) + var(--im-timeline-gutter));
+	padding-bottom: var(--im-timeline-gap);
+	counter-increment: im-timeline;
+}
+
+.im-timeline-item:last-child {
+	padding-bottom: 0;
+}
+
+/* The line: from this marker's centre down to the next one's. */
+.im-timeline-item::before {
+	content: "";
+	position: absolute;
+	top: calc(0.3rem + var(--im-timeline-marker) / 2);
+	bottom: calc(-0.3rem - var(--im-timeline-marker) / 2);
+	left: calc(var(--im-timeline-marker) / 2 - 0.5px);
+	width: 1px;
+	background-color: var(--im-timeline-line);
+}
+
+.im-timeline-item:last-child::before {
+	display: none;
+}
+
+.im-timeline-marker {
+	position: absolute;
+	top: 0.3rem;
+	left: 0;
+	z-index: 1;
+	display: grid;
+	place-items: center;
+	width: var(--im-timeline-marker);
+	height: var(--im-timeline-marker);
+	border-radius: 50%;
+	background-color: var(--im-canvas);
+	box-shadow: inset 0 0 0 2px var(--im-faint);
+	color: var(--im-muted);
+	font-size: 0.875rem;
+	font-weight: 600;
+	line-height: 1;
+}
+
+/* A marker with something in it (an icon, a number) is a larger disc. */
+.im-timeline-marker:not(:empty),
+.im-timeline-numbered .im-timeline-marker {
+	--im-timeline-marker: 2rem;
+
+	top: -0.25rem;
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	background-color: var(--im-surface);
+}
+
+.im-timeline:has(.im-timeline-marker:not(:empty)),
+.im-timeline-numbered {
+	--im-timeline-marker: 2rem;
+	--im-timeline-gutter: 1rem;
+}
+
+.im-timeline-numbered .im-timeline-marker::before {
+	content: counter(im-timeline);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+}
+
+.im-timeline-time {
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+.im-timeline-title {
+	color: var(--im-ink);
+	font-size: var(--im-text-h5);
+	font-weight: 600;
+	line-height: var(--im-leading-h5);
+	letter-spacing: var(--im-tracking-tight);
+}
+
+.im-timeline-text {
+	max-width: 60ch;
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+}
+
+/* ---- states ---- */
+.im-timeline-item[data-state="done"] > .im-timeline-marker {
+	background-color: var(--im-ink);
+	box-shadow: none;
+	color: var(--im-canvas);
+}
+
+.im-timeline-item[data-state="done"]::before {
+	background-color: var(--im-ink);
+}
+
+.im-timeline-item[data-state="current"] > .im-timeline-marker {
+	background-color: var(--im-accent);
+	box-shadow: 0 0 0 4px var(--im-accent-tint);
+	color: var(--im-on-accent);
+}
+
+.im-timeline-item[data-state="upcoming"] > :not(.im-timeline-marker) {
+	opacity: 0.6;
+}
+
+.im-timeline-item[data-state="upcoming"]::before {
+	background: repeating-linear-gradient(to bottom, var(--im-timeline-line) 0 4px, transparent 4px 8px);
+}
+
+/* ---- compact: a changelog, an activity feed ---- */
+.im-timeline-compact {
+	--im-timeline-gap: 0.875rem;
+	--im-timeline-gutter: 1rem;
+}
+
+.im-timeline-compact .im-timeline-item {
+	flex-flow: row wrap;
+	align-items: baseline;
+	gap: 0 0.75rem;
+}
+
+.im-timeline-compact .im-timeline-title {
+	font-size: var(--im-text-sm);
+	font-weight: 500;
+}
+
+.im-timeline-compact .im-timeline-time {
+	order: 2;
+	margin-left: auto;
+}
+
+/* ---- cards: each event on a surface ---- */
+.im-timeline-cards .im-timeline-item > .im-card {
+	margin-top: 0.375rem;
+}
+
+/* ---- alternating: events either side of a centre line (when it has room) ---- */
+@container (width >= 44rem) {
+	.im-timeline-alt > .im-timeline-item {
+		width: 50%;
+		padding-left: 0;
+		padding-right: calc(var(--im-timeline-marker) / 2 + var(--im-timeline-gutter));
+		align-items: flex-end;
+		text-align: right;
+	}
+
+	.im-timeline-alt > .im-timeline-item::before {
+		right: -0.5px;
+		left: auto;
+	}
+
+	.im-timeline-alt > .im-timeline-item > .im-timeline-marker {
+		right: calc(var(--im-timeline-marker) / -2);
+		left: auto;
+	}
+
+	.im-timeline-alt > .im-timeline-item:nth-child(even) {
+		align-self: flex-end;
+		align-items: flex-start;
+		padding-right: 0;
+		padding-left: calc(var(--im-timeline-marker) / 2 + var(--im-timeline-gutter));
+		text-align: left;
+	}
+
+	.im-timeline-alt > .im-timeline-item:nth-child(even)::before {
+		right: auto;
+		left: -0.5px;
+	}
+
+	.im-timeline-alt > .im-timeline-item:nth-child(even) > .im-timeline-marker {
+		right: auto;
+		left: calc(var(--im-timeline-marker) / -2);
+	}
+}
+
+/* ---- horizontal: a row that scrolls and snaps ---- */
+.im-timeline-horizontal {
+	--im-timeline-step: 15rem;
+
+	flex-direction: row;
+	overflow-x: auto;
+	scroll-snap-type: x proximity;
+	scrollbar-width: thin;
+	padding-bottom: 0.75rem;
+}
+
+.im-timeline-horizontal > .im-timeline-item {
+	flex: 0 0 var(--im-timeline-step);
+	padding: calc(var(--im-timeline-marker) + 1.125rem) 1.5rem 0 0;
+	scroll-snap-align: start;
+}
+
+.im-timeline-horizontal > .im-timeline-item::before {
+	top: calc(var(--im-timeline-marker) / 2 - 0.5px);
+	right: 0;
+	bottom: auto;
+	left: calc(var(--im-timeline-marker) / 2);
+	width: auto;
+	height: 1px;
+}
+
+.im-timeline-horizontal > .im-timeline-item[data-state="upcoming"]::before {
+	background: repeating-linear-gradient(to right, var(--im-timeline-line) 0 4px, transparent 4px 8px);
+}
+
+.im-timeline-horizontal > .im-timeline-item > .im-timeline-marker {
+	top: 0;
+}
+
+/* Steps: horizontal, equal widths, no scrolling — a checkout, an onboarding. */
+.im-timeline-steps {
+	overflow: visible;
+}
+
+.im-timeline-steps > .im-timeline-item {
+	flex: 1 1 0;
+	min-width: 0;
+}
+
+@container (width < 34rem) {
+	.im-timeline-steps {
+		flex-direction: column;
+	}
+
+	.im-timeline-steps > .im-timeline-item {
+		padding: 0 0 var(--im-timeline-gap) calc(var(--im-timeline-marker) + var(--im-timeline-gutter));
+	}
+
+	.im-timeline-steps > .im-timeline-item::before {
+		top: calc(var(--im-timeline-marker) / 2);
+		right: auto;
+		bottom: calc(var(--im-timeline-marker) / -2);
+		left: calc(var(--im-timeline-marker) / 2 - 0.5px);
+		width: 1px;
+		height: auto;
+	}
+}

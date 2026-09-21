@@ -1,0 +1,73 @@
+---
+title: Callout
+description: An aside in running text. A ruled box that wears its kind on its top edge, the way a fieldset wears its legend — a small label with an icon, readable without relying on colour. No coloured side-stripe.
+eyebrow: Component
+source: src/components/callout.css
+---
+<h2>Kinds</h2>
+{{#example}}
+<div class="im-stack" style="--im-stack-gap: 1.5rem">
+	<div class="im-callout"><p class="im-callout-label">{{> "icons/info"}} Note</p><p>Useful, not urgent. The neutral callout.</p></div>
+	<div class="im-callout im-callout-info"><p class="im-callout-label">{{> "icons/lightbulb"}} Good to know</p><p>Utilities point at live variables, so they follow dark mode by themselves.</p></div>
+	<div class="im-callout im-callout-success"><p class="im-callout-label">{{> "icons/circle-check"}} Done</p><p>The theme passed validation.</p></div>
+	<div class="im-callout im-callout-warning"><p class="im-callout-label">{{> "icons/triangle-alert"}} Heads up</p><p>Rebuild before expecting the change in Ghost.</p></div>
+	<div class="im-callout im-callout-danger"><p class="im-callout-label">{{> "icons/circle-x"}} Do not</p><p>Paste in code from another theme.</p></div>
+</div>
+{{/example}}
+<p>The label sits <em>on</em> the top rule. It carries the icon, the word and the colour together — so the kind is clear in greyscale, to a colour-blind reader, and to a screen reader, which simply reads "Heads up".</p>
+
+<h2>With a title and actions</h2>
+{{#example}}
+<div class="im-callout im-callout-accent">
+	<p class="im-callout-label">{{> "icons/sparkles"}} New</p>
+	<p class="im-callout-title">The carousel has a numbered top-ten</p>
+	<p>Huge outlined numerals behind each poster, from CSS counters — reorder the slides and the numbers follow.</p>
+	<div class="im-callout-actions"><a class="im-btn im-btn-sm im-btn-ink" href="/components/carousel/#top-ten">See it {{> "icons/arrow-right"}}</a><a class="im-btn im-btn-sm im-btn-ghost" href="#with-a-title-and-actions">Dismiss</a></div>
+</div>
+{{/example}}
+
+<h2>Tinted</h2>
+<p><code>im-callout-tint</code> fills the box; the label becomes a solid chip so it still reads on the fill.</p>
+{{#example}}
+<div class="im-grid-fit" style="--im-grid-min: 16rem; --im-grid-gap: 1.5rem">
+	<div class="im-callout im-callout-tint im-callout-info"><p class="im-callout-label">{{> "icons/lightbulb"}} Tip</p><p>Press <kbd>/</kbd> anywhere to search.</p></div>
+	<div class="im-callout im-callout-tint im-callout-warning"><p class="im-callout-label">{{> "icons/triangle-alert"}} Deprecated</p><p>Use <code>im-caption</code> instead.</p></div>
+	<div class="im-callout im-callout-tint im-callout-success"><p class="im-callout-label">{{> "icons/circle-check"}} Saved</p><p>Your changes are live.</p></div>
+</div>
+{{/example}}
+
+<h2>With an icon tile</h2>
+<p><code>im-callout-icon</code>: a tinted tile to the left of the text instead of a label on the edge — for a callout that stands alone, outside prose.</p>
+{{#example}}
+<div class="im-stack" style="--im-stack-gap: .75rem">
+	<div class="im-callout im-callout-icon im-callout-info"><span class="im-callout-mark">{{> "icons/shield"}}</span><p class="im-callout-title">Two-factor is off</p><p>Turn it on to protect your publication.</p><div class="im-callout-actions"><a class="im-btn im-btn-sm" href="#with-an-icon-tile">Turn on</a></div></div>
+	<div class="im-callout im-callout-icon im-callout-danger"><span class="im-callout-mark">{{> "icons/wallet"}}</span><p class="im-callout-title">Payment failed</p><p>Your card ending 4242 was declined.</p></div>
+</div>
+{{/example}}
+
+<h2>Sizes</h2>
+{{#example}}
+<div class="im-stack" style="--im-stack-gap: 1.25rem">
+	<div class="im-callout im-callout-sm im-callout-warning">{{> "icons/triangle-alert"}}<span><strong>Small.</strong> One line — a banner above a form, a note in a table.</span></div>
+	<div class="im-callout im-callout-info"><p class="im-callout-label">{{> "icons/info"}} Medium</p><p>The default. A paragraph or two inside an article.</p></div>
+	<div class="im-callout im-callout-lg im-callout-accent"><p class="im-callout-label">{{> "icons/rocket"}} Large</p><p class="im-callout-title">A callout that is nearly a section</p><p>For the one announcement on a page: roomier padding, a larger title, space for a button.</p><div class="im-callout-actions"><a class="im-btn im-btn-primary" href="#sizes">Get started {{> "icons/arrow-right"}}</a></div></div>
+</div>
+{{/example}}
+
+<h2>Notes</h2>
+<ul>
+	<li>The label is a cut-out on the top rule, so it needs the <strong>ground colour behind the callout</strong>. On the page canvas that is automatic; on another surface set <code>--im-callout-ground</code> to that surface's colour.</li>
+	<li>An <strong>urgent</strong> message that appears after an action (a failed save) needs <code>role="alert"</code>. A callout that is just part of the page does not.</li>
+	<li>Ghost's editor has its own callout <em>card</em> for authors; this component is for templates. They can share the look — style <code>.kg-callout-card</code> with the same variables.</li>
+</ul>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Variable</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>--im-callout-color</code></td><td>The label, the icon, and the border's tint.</td></tr>
+		<tr><td><code>--im-callout-tint</code></td><td>The fill, with <code>-tint</code>; the icon tile's background.</td></tr>
+		<tr><td><code>--im-callout-pad</code></td><td>Padding. 1.125rem.</td></tr>
+		<tr><td><code>--im-callout-ground</code></td><td>What is behind the callout — for the label's cut-out.</td></tr>
+	</tbody>
+</table>
+</div>

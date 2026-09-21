@@ -1,0 +1,15 @@
+{{!-- The docs menu on a phone: the same data as the sidebar, as tiles. A group
+	is a tile that opens across both columns; only one is open at a time
+	(the shared `name`), and the one holding this page starts open. --}}
+{{#each nav}}
+{{#if title}}
+<details class="im-navtile-group" name="docs-menu"{{#if open}} open{{/if}}>
+	<summary class="im-navtile">{{icon icon}}<span>{{title}}</span><small>{{items.length}}</small></summary>
+	<div class="im-navtile-items">
+		{{#each items}}<a href="{{url}}"{{#if current}} aria-current="page"{{/if}}>{{label}}</a>{{/each}}
+	</div>
+</details>
+{{else}}
+{{#each items}}<a class="im-navtile" href="{{url}}"{{#if current}} aria-current="page"{{/if}}>{{icon icon}}<span>{{label}}</span></a>{{/each}}
+{{/if}}
+{{/each}}

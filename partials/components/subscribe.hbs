@@ -1,0 +1,13 @@
+{{!-- Newsletter form, wired to Ghost members. Renders only when memberships
+	are on and the visitor is signed out. Params: id, label, button, placeholder. --}}
+{{#if @site.members_enabled}}{{#unless @member}}
+<form class="im-subscribe{{#if class}} {{class}}{{/if}}" data-members-form="subscribe">
+	<label class="sr-only" for="{{#if id}}{{id}}{{else}}subscribe-email{{/if}}">{{#if label}}{{label}}{{else}}{{t "Email address"}}{{/if}}</label>
+	<div class="im-subscribe-field">
+		<input id="{{#if id}}{{id}}{{else}}subscribe-email{{/if}}" type="email" required autocomplete="email" placeholder="{{#if placeholder}}{{placeholder}}{{else}}{{t "you@example.com"}}{{/if}}" data-members-email>
+		<button class="im-btn im-btn-primary" type="submit">{{#if button}}{{button}}{{else}}{{t "Subscribe"}}{{/if}}</button>
+	</div>
+	<p class="im-subscribe-status" data-state="success">{{t "Check your inbox to confirm."}}</p>
+	<p class="im-subscribe-status" data-state="error" data-members-error></p>
+</form>
+{{/unless}}{{/if}}

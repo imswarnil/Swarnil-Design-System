@@ -1,0 +1,64 @@
+{{!-- The words. Name and intro are the site title and description — the same
+	two strings the <title> and meta description carry. --}}
+<div class="im-hero__copy">
+	{{!-- FIVE phrases on one line, rolling; the last repeats the first so the
+		loop is seamless. The reel is aria-hidden and the <p>'s label carries
+		all five, so a screen reader hears each once. --}}
+	{{#if phrase_1}}
+	<p class="im-hero__ticker" aria-label="{{phrase_1}}. {{phrase_2}}. {{phrase_3}}. {{phrase_4}}. {{phrase_5}}.">
+		<span class="im-hero__ticker-dot" aria-hidden="true"></span>
+		<span class="im-hero__ticker-window" aria-hidden="true">
+			<span class="im-hero__ticker-reel">
+				<span>{{phrase_1}}</span>
+				<span>{{phrase_2}}</span>
+				<span>{{phrase_3}}</span>
+				<span>{{phrase_4}}</span>
+				<span>{{phrase_5}}</span>
+				<span>{{phrase_1}}</span>
+			</span>
+		</span>
+	</p>
+	{{/if}}
+
+	<h1 class="im-hero__title">{{#if greeting}}{{greeting}}{{else}}{{t "Hi, I'm"}}{{/if}} <span class="im-hero__mark">{{@site.title}}.</span></h1>
+
+	{{#if tagline}}<p class="im-hero__tagline">{{tagline}}</p>{{/if}}
+	{{#if @site.description}}<p class="im-hero__intro">{{@site.description}}</p>{{/if}}
+
+	{{#if role}}
+	<ul class="im-hero__roles">
+		<li class="im-hero__role">
+			<span class="im-hero__role-ico">{{> "icons/briefcase"}}</span>
+			<span class="im-hero__role-title">{{role}}</span>
+			{{#if org}}
+				<span class="im-hero__role-at">{{t "at"}}</span>
+				{{#if org_url}}<a class="im-hero__role-org" href="{{org_url}}" target="_blank" rel="noopener noreferrer">{{org}}</a>{{else}}<span class="im-hero__role-org">{{org}}</span>{{/if}}
+			{{/if}}
+		</li>
+		{{#if where}}
+			<li class="im-hero__role im-hero__role--where">
+				<span class="im-hero__role-ico">{{> "icons/map-pin"}}</span>
+				<span>{{where}}</span>
+			</li>
+		{{/if}}
+	</ul>
+	{{/if}}
+
+	{{#if aim_a}}
+		<p class="im-hero__aim">
+			<span class="im-hero__aim-ico">{{> "icons/arrow-right"}}</span>
+			<span>{{t "Working towards"}}</span>
+			<strong>{{aim_a}}</strong>
+			{{#if aim_b}}<span class="im-hero__aim-slash" aria-hidden="true">/</span><strong>{{aim_b}}</strong>{{/if}}
+		</p>
+	{{/if}}
+
+	<div class="im-hero__actions">
+		{{> "components/subscribe" id="hero-email"}}
+		{{#if cta_url}}
+			<a class="im-btn im-btn-primary im-hero__story" href="{{cta_url}}">{{#if cta_label}}{{cta_label}}{{else}}{{t "My story"}}{{/if}}{{> "icons/arrow-right"}}</a>
+		{{/if}}
+	</div>
+
+	{{#if note}}<p class="im-hero__note">{{note}}</p>{{/if}}
+</div>

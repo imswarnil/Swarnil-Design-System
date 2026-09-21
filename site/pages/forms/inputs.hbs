@@ -1,0 +1,90 @@
+---
+title: Inputs
+description: Text fields and everything around them — label, hint, error, icons, add-ons — in every state. Fields are opted into with a class, so Ghost's portal and other embeds never inherit yours.
+eyebrow: Forms
+source: src/components/field.css
+---
+<h2>A field</h2>
+{{#example style="max-width: 26rem"}}
+<div class="im-field">
+	<label class="im-label" for="in-name">Name <span class="im-label-note">optional</span></label>
+	<input class="im-input" id="in-name" type="text" placeholder="Ada Lovelace" aria-describedby="in-name-hint">
+	<p class="im-hint" id="in-name-hint">As it should appear on the invoice.</p>
+</div>
+{{/example}}
+<p><code>im-field</code> stacks a label, a control and a hint. Tie the hint to the input with <code>aria-describedby</code> so a screen reader reads it with the field.</p>
+
+<h2>States</h2>
+<p>Every state comes from the platform — a pseudo-class or an ARIA attribute you would set anyway. Nothing to toggle but the truth.</p>
+{{#example}}
+<div class="im-form-row">
+	<div class="im-field"><label class="im-label" for="st-1">Default</label><input class="im-input" id="st-1" placeholder="Hover and focus me"></div>
+	<div class="im-field"><label class="im-label" for="st-2">Filled</label><input class="im-input" id="st-2" value="ada@example.com"></div>
+	<div class="im-field"><label class="im-label" for="st-3">Valid</label><input class="im-input im-valid" id="st-3" value="ada@example.com"><p class="im-hint" style="color: var(--im-success)">Looks good.</p></div>
+	<div class="im-field"><label class="im-label im-label-required" for="st-4">Invalid</label><input class="im-input" id="st-4" value="ada@" aria-invalid="true" aria-describedby="st-4-e"><p class="im-hint">We will never share it.</p><p class="im-error" id="st-4-e">{{> "icons/circle-alert"}} Enter a complete email address.</p></div>
+	<div class="im-field"><label class="im-label" for="st-5">Disabled</label><input class="im-input" id="st-5" value="Not editable" disabled></div>
+	<div class="im-field"><label class="im-label" for="st-6">Read-only</label><input class="im-input" id="st-6" value="im_live_4f8a…c21" readonly></div>
+</div>
+{{/example}}
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>State</th><th>Trigger</th><th>Look</th></tr></thead>
+	<tbody>
+		<tr><td>Hover</td><td><code>:hover</code></td><td>The hairline darkens.</td></tr>
+		<tr><td>Focus</td><td><code>:focus-visible</code></td><td>The hairline becomes a 2px rule in ink, with a soft accent halo.</td></tr>
+		<tr><td>Invalid</td><td><code>aria-invalid="true"</code></td><td>A 2px rule in the danger colour; <code>im-error</code> appears and the hint steps aside.</td></tr>
+		<tr><td>Valid</td><td><code>.im-valid</code></td><td>A 2px rule in the success colour. Use sparingly — only where confirmation helps.</td></tr>
+		<tr><td>Disabled · read-only</td><td><code>:disabled</code> · <code>:read-only</code></td><td>A filled ground; read-only keeps full-strength text because it is still meant to be read.</td></tr>
+	</tbody>
+</table>
+</div>
+<p><strong>The error animates in, and the field shakes once</strong> if you add <code>im-shake-invalid</code> — press the button:</p>
+{{#example style="max-width: 26rem"}}
+<form class="im-form" onsubmit="event.preventDefault(); const i=this.querySelector('input'); const bad=!i.value.includes('@'); i.setAttribute('aria-invalid', String(bad));">
+	<div class="im-field"><label class="im-label" for="try-email">Email</label><input class="im-input im-shake-invalid" id="try-email" placeholder="Type something without an @" aria-describedby="try-e"><p class="im-hint">Then press the button.</p><p class="im-error" id="try-e">{{> "icons/circle-alert"}} That does not look like an email address.</p></div>
+	<button class="im-btn im-btn-primary" type="submit">Check it</button>
+</form>
+{{/example}}
+
+<h2>Sizes &amp; styles</h2>
+{{#example style="max-width: 26rem"}}
+<div class="im-stack" style="--im-stack-gap: .875rem">
+	<input class="im-input im-input-sm" placeholder="im-input-sm · 32" aria-label="Small">
+	<input class="im-input" placeholder="Default · 40" aria-label="Default">
+	<input class="im-input im-input-lg" placeholder="im-input-lg · 48" aria-label="Large">
+	<input class="im-input im-input-line" placeholder="im-input-line — a rule, not a box" aria-label="Underlined">
+</div>
+{{/example}}
+
+<h2>With an icon, a unit, a button</h2>
+{{#example style="max-width: 28rem"}}
+<div class="im-stack" style="--im-stack-gap: .875rem">
+	<div class="im-input-group">{{> "icons/search"}}<input class="im-input" type="search" placeholder="Search posts" aria-label="Search"><kbd>/</kbd></div>
+	<div class="im-input-group">{{> "icons/at-sign"}}<input class="im-input" type="email" placeholder="you@example.com" aria-label="Email"></div>
+	<div class="im-input-group"><span class="im-input-addon">https://</span><input class="im-input" placeholder="yoursite" aria-label="Subdomain"><span class="im-input-addon">.ghost.io</span></div>
+	<div class="im-input-group"><span class="im-input-addon">€</span><input class="im-input" type="number" placeholder="0.00" aria-label="Amount" inputmode="decimal"><span class="im-input-addon">/ month</span></div>
+	<div class="im-input-group">{{> "icons/key-round"}}<input class="im-input" type="password" value="hunter2hunter2" aria-label="Password"><button class="im-btn im-btn-ghost im-btn-sm" type="button" onclick="const i=this.previousElementSibling; const show=i.type==='password'; i.type=show?'text':'password'; this.textContent=show?'Hide':'Show'">Show</button></div>
+	<div class="im-input-group">{{> "icons/link"}}<input class="im-input" value="https://example.com/a-post/" readonly aria-label="Link"><button class="im-btn im-btn-ink im-btn-sm" type="button" data-im-copy="https://example.com/a-post/"><span data-im-copy-label>Copy</span></button></div>
+</div>
+{{/example}}
+<p><code>im-input-group</code> draws the box and the focus ring; the <code>im-input</code> inside goes borderless. Icons, <code>im-input-addon</code> text, a <code>&lt;kbd&gt;</code> or a small button can sit at either end.</p>
+
+<h2>Floating label</h2>
+{{#example style="max-width: 26rem"}}
+<div class="im-stack" style="--im-stack-gap: .875rem">
+	<div class="im-float"><input class="im-input" id="fl-1" type="email" placeholder=" "><label for="fl-1">Email address</label></div>
+	<div class="im-float"><input class="im-input" id="fl-2" type="text" placeholder=" " value="Ada Lovelace"><label for="fl-2">Full name</label></div>
+</div>
+{{/example}}
+<p>The label starts as the placeholder and rises when the field has focus or a value. It needs <code>placeholder=" "</code> — a single space — because that is what <code>:placeholder-shown</code> reads. It is a real <code>&lt;label&gt;</code>, so it is never lost the way placeholder-only labels are.</p>
+
+<h2>Textarea</h2>
+{{#example style="max-width: 28rem"}}
+<div class="im-field"><label class="im-label" for="ta-1">Message <span class="im-label-note">Markdown is fine</span></label><textarea class="im-textarea" id="ta-1" placeholder="Say hello…"></textarea></div>
+{{/example}}
+
+<h2>Subscribe</h2>
+<p>An email field with its button inside it, wired to Ghost members. The partial renders only when memberships are on and the visitor is signed out.</p>
+{{#example}}
+{{> "components/subscribe" id="ex-subscribe"}}
+{{/example}}

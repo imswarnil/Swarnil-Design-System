@@ -1,0 +1,105 @@
+---
+title: Editor cards
+description: Bookmark, callout, toggle, button, product, header, signup and call-to-action — every card in Ghost's editor, restyled in this system's own language. The class names are Ghost's; every rule is ours.
+eyebrow: Content
+source: src/components/koenig.css · src/js/im-content.js
+---
+<h2>Own the cards</h2>
+<p>Ghost can inject a default stylesheet and script for its cards. That stylesheet is <em>unlayered</em>, so it would beat every rule in this system. Turn it off in the theme's <code>package.json</code>, and load the system's small replacement for the script:</p>
+{{{{code "json"}}}}
+{
+  "config": {
+    "card_assets": false
+  }
+}
+{{{{/code}}}}
+{{{{code "hbs"}}}}
+<script src="{{asset "js/im-content.js"}}" defer></script>
+{{{{/code}}}}
+<p><code>im-content.js</code> (~2 KB) does what Ghost's script did — gallery proportions, the toggle, the audio and video players — and two things it did not: scrolling tables and click-to-zoom. A post is fully readable without it.</p>
+
+<h2>Bookmark</h2>
+<p>A link, previewed. The edge sharpens to ink on hover — the system's one hover. In a narrow column the picture moves above the words (a container query, so it answers to the column, not the screen).</p>
+{{#example code=false}}
+<div class="im-content im-content-flush">
+	<figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="#bookmark"><div class="kg-bookmark-content"><div class="kg-bookmark-title">{{demo.three.[0].title}}</div><div class="kg-bookmark-description">{{demo.three.[0].excerpt}} The longer this description runs, the more clearly you can see that it is held to two lines and then cut with an ellipsis.</div><div class="kg-bookmark-metadata"><img class="kg-bookmark-icon" src="{{demo.author.profile_image}}" alt=""><span class="kg-bookmark-author">{{demo.author.name}}</span><span class="kg-bookmark-publisher">imswarnil.com</span></div></div><div class="kg-bookmark-thumbnail"><img src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></div></a></figure>
+</div>
+{{/example}}
+
+<h2>Callout</h2>
+<p>A ground in the kind's tint with a matching hairline, and the emoji in its own tile. <strong>No coloured bar down one side.</strong> The editor's nine colours map onto the system's status tokens, so they follow dark mode.</p>
+{{#example code=false}}
+<div class="im-content im-content-flush">
+	<div class="kg-card kg-callout-card kg-callout-card-grey"><div class="kg-callout-emoji">📌</div><div class="kg-callout-text">Grey — the default. A note that is useful but not urgent.</div></div>
+	<div class="kg-card kg-callout-card kg-callout-card-blue"><div class="kg-callout-emoji">💡</div><div class="kg-callout-text">Blue — <strong>good to know</strong>. Links <a href="#callout">look like this</a> inside one.</div></div>
+	<div class="kg-card kg-callout-card kg-callout-card-green"><div class="kg-callout-emoji">✅</div><div class="kg-callout-text">Green — it worked.</div></div>
+	<div class="kg-card kg-callout-card kg-callout-card-yellow"><div class="kg-callout-emoji">⚠️</div><div class="kg-callout-text">Yellow — back up the database before you run this.</div></div>
+	<div class="kg-card kg-callout-card kg-callout-card-red"><div class="kg-callout-emoji">⛔</div><div class="kg-callout-text">Red — this cannot be undone.</div></div>
+	<div class="kg-card kg-callout-card kg-callout-card-accent"><div class="kg-callout-emoji">✨</div><div class="kg-callout-text">Accent — in the site's own colour.</div></div>
+</div>
+{{/example}}
+<p>Also <code>-white</code>, <code>-pink</code> and <code>-purple</code>. With the emoji switched off in the editor the tile is simply not printed.</p>
+
+<h2>Toggle</h2>
+<p>A ruled row that opens. Consecutive toggles share a rule, so a run of them reads as one FAQ, not a stack of boxes.</p>
+{{#example code=false}}
+<div class="im-content im-content-flush">
+	<div class="kg-card kg-toggle-card" data-kg-toggle-state="close"><div class="kg-toggle-heading"><h4 class="kg-toggle-heading-text">Do I need a visa to work in Hungary?</h4><button class="kg-toggle-card-icon" aria-label="Expand toggle to read content"><svg viewBox="0 0 24 24"><path d="M5 9l7 7 7-7"/></svg></button></div><div class="kg-toggle-content"><p>From outside the EU, yes — a residence permit for the purpose of employment. Your employer starts it; you finish it at the consulate.</p></div></div>
+	<div class="kg-card kg-toggle-card" data-kg-toggle-state="close"><div class="kg-toggle-heading"><h4 class="kg-toggle-heading-text">How long does it take?</h4><button class="kg-toggle-card-icon" aria-label="Expand toggle to read content"><svg viewBox="0 0 24 24"><path d="M5 9l7 7 7-7"/></svg></button></div><div class="kg-toggle-content"><p>Plan for ten weeks from the signed contract to the stamp. Mine took seven.</p></div></div>
+	<div class="kg-card kg-toggle-card" data-kg-toggle-state="open"><div class="kg-toggle-heading"><h4 class="kg-toggle-heading-text">Can my family come with me?</h4><button class="kg-toggle-card-icon" aria-label="Expand toggle to read content"><svg viewBox="0 0 24 24"><path d="M5 9l7 7 7-7"/></svg></button></div><div class="kg-toggle-content"><p>Yes, through family reunification, once your own permit is issued.</p></div></div>
+</div>
+{{/example}}
+
+<h2>Button</h2>
+{{#example code=false}}
+<div class="im-content im-content-flush">
+	<div class="kg-card kg-button-card kg-align-center"><a href="#button" class="kg-btn kg-btn-accent">Download the checklist</a></div>
+	<div class="kg-card kg-button-card kg-align-left"><a href="#button" class="kg-btn">A default button, left-aligned</a></div>
+</div>
+{{/example}}
+<p>The system's button under the editor's class names: a pill, ink by default, the accent with <code>kg-btn-accent</code>.</p>
+
+<h2>Product</h2>
+{{#example code=false}}
+<div class="im-content im-content-flush">
+	<div class="kg-card kg-product-card"><div class="kg-product-card-container"><img src="{{demo.three.[2].feature_image}}" class="kg-product-card-image" loading="lazy" alt=""><div class="kg-product-card-title-container"><h4 class="kg-product-card-title">The Org Is a Codebase — the course</h4></div><div class="kg-product-card-rating"><span class="kg-product-card-rating-active kg-product-card-rating-star"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.5l-5.9 3.2 1.2-6.6L2.5 9.5l6.6-.9z"/></svg></span><span class="kg-product-card-rating-active kg-product-card-rating-star"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.5l-5.9 3.2 1.2-6.6L2.5 9.5l6.6-.9z"/></svg></span><span class="kg-product-card-rating-active kg-product-card-rating-star"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.5l-5.9 3.2 1.2-6.6L2.5 9.5l6.6-.9z"/></svg></span><span class="kg-product-card-rating-active kg-product-card-rating-star"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.5l-5.9 3.2 1.2-6.6L2.5 9.5l6.6-.9z"/></svg></span><span class="kg-product-card-rating-star"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.5l-5.9 3.2 1.2-6.6L2.5 9.5l6.6-.9z"/></svg></span></div><div class="kg-product-card-description"><p>Six hours on treating a Salesforce org like software: source control, scratch orgs, review and release.</p><ul><li>42 lessons, all with transcripts</li><li>A working repo to fork</li></ul></div><a href="#product" class="kg-product-card-button kg-product-card-btn-accent" target="_blank" rel="noopener noreferrer"><span>Enrol — €89</span></a></div></div>
+</div>
+{{/example}}
+<p>Title and rating share a row; stars are the accent; the description can hold a list; the button spans the card.</p>
+
+<h2>Header</h2>
+<p>A band with a heading, in the body of a post. Both generations of the card are covered — the older one with <code>kg-style-dark</code> / <code>-light</code> / <code>-accent</code> / <code>-image</code> and three sizes, and the current one (<code>kg-v2</code>), whose colours arrive inline from the editor and which can split into words and picture.</p>
+{{#example code=false flush=true}}
+<div class="im-content im-content-flush">
+	<div class="kg-card kg-header-card kg-v2 kg-width-wide kg-layout-split" style="background-color: #0a0a0a;" data-background-color="#0a0a0a"><div class="kg-header-card-content"><picture><img class="kg-header-card-image" src="{{demo.three.[1].feature_image}}" loading="lazy" alt=""></picture><div class="kg-header-card-text"><h2 class="kg-header-card-heading" style="color: #ffffff;" data-text-color="#ffffff">Part two: leaving</h2><p class="kg-header-card-subheading" style="color: #ffffff;" data-text-color="#ffffff">What four years of consulting taught me about saying no.</p><a href="#header" class="kg-header-card-button" style="background-color: #ffffff; color: #0a0a0a;" data-button-color="#ffffff" data-button-text-color="#0a0a0a">Keep reading</a></div></div></div>
+	<div class="kg-card kg-header-card kg-width-wide kg-size-small kg-style-accent"><h2 class="kg-header-card-header">An older header card, in the accent</h2><h3 class="kg-header-card-subheader">Small size. Still styled, because old posts still have them.</h3></div>
+</div>
+{{/example}}
+
+<h2>Signup</h2>
+<p>The field and its button share one pill; focus thickens the pill's edge to ink. <code>loading</code>, <code>success</code> and <code>error</code> — the classes Ghost's members script puts on the form — swap the label for a spinner, the form for the thank-you, and show the error. Ghost removes this card for signed-in members on the server.</p>
+{{#example code=false flush=true}}
+<div class="im-content im-content-flush">
+	<div class="kg-card kg-signup-card kg-width-wide" data-lexical-signup-form style="background-color: #f5f5f5; display: none;"><div class="kg-signup-card-content"><div class="kg-signup-card-text kg-align-center"><h2 class="kg-signup-card-heading" style="color: #0a0a0a;">One email when something lands.</h2><p class="kg-signup-card-subheading" style="color: #0a0a0a;">Nothing else, ever. Unsubscribe in one click.</p><form class="kg-signup-card-form" data-members-form="signup" onsubmit="return false"><div class="kg-signup-card-fields"><input class="kg-signup-card-input" id="kg-email" data-members-email type="email" required placeholder="Your email" aria-label="Your email"><button class="kg-signup-card-button kg-style-accent" style="color: #ffffff;" type="submit"><span class="kg-signup-card-button-default">Subscribe</span><span class="kg-signup-card-button-loading"></span></button></div><div class="kg-signup-card-success" style="color: #0a0a0a;">Email sent! Check your inbox to complete your signup.</div><div class="kg-signup-card-error" style="color: #0a0a0a;" data-members-error></div></form><p class="kg-signup-card-disclaimer" style="color: #0a0a0a;">No spam. Unsubscribe anytime.</p></div></div></div>
+</div>
+{{/example}}
+
+<h2>Call to action</h2>
+<p>The newest card. "Sponsored" is the system's mono caption on the card's top rule. <strong>Minimal</strong> puts a small picture beside the words; <strong>immersive</strong> stacks a large one above them with a full-width button. Eight grounds, from the same tints as the callout.</p>
+{{#example code=false}}
+<div class="im-content im-content-flush">
+	<div class="kg-card kg-cta-card kg-cta-bg-grey kg-cta-minimal kg-cta-has-img" data-layout="minimal"><div class="kg-cta-sponsor-label-wrapper"><div class="kg-cta-sponsor-label"><span style="white-space: pre-wrap;">Sponsored</span></div></div><div class="kg-cta-content"><div class="kg-cta-image-container"><a href="#call-to-action"><img src="{{demo.three.[2].feature_image}}" alt="" loading="lazy"></a></div><div class="kg-cta-content-inner"><div class="kg-cta-text"><p><strong>Scratch orgs in one click.</strong> Spin up a clean Salesforce org from any branch, seeded with data, and throw it away when the pull request merges.</p></div><a href="#call-to-action" class="kg-cta-button kg-style-accent" style="color: #ffffff;">Try it free</a></div></div></div>
+	<div class="kg-card kg-cta-card kg-cta-bg-blue kg-cta-immersive kg-cta-centered kg-cta-has-img" data-layout="immersive"><div class="kg-cta-content"><div class="kg-cta-image-container"><img src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></div><div class="kg-cta-content-inner"><div class="kg-cta-text"><p><strong>The Amalfi guide, as a PDF.</strong> Every stop on the road, with parking.</p></div><a href="#call-to-action" class="kg-cta-button">Get the guide</a></div></div></div>
+</div>
+{{/example}}
+
+<h2>Paywall</h2>
+<p>Where a post is cut for non-members, Ghost prints its own upgrade box, styled inline in the site's accent. The system only rounds it and sets its font, so it sits with everything else; the wording and the button are Ghost's and follow your portal settings.</p>
+
+<h2>Every card, one rhythm</h2>
+<ul>
+	<li>A card gets <strong>1.5 ×</strong> <code>--im-flow</code> above and below — a little more air than a paragraph.</li>
+	<li>One radius (<code>--im-kg-radius</code>) and one padding (<code>--im-kg-pad</code>), set on <code>.kg-card</code>. Change them once.</li>
+	<li>Boxes are a hairline, never a shadow; a card that is a link answers by sharpening that hairline to ink.</li>
+	<li>Captions are centred, small, muted — and can hold links.</li>
+</ul>

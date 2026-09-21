@@ -1,0 +1,35 @@
+---
+title: Badge & tag
+description: A badge states something — a status, a count. A tag goes somewhere — it is a link to a topic.
+eyebrow: Component
+source: src/components/badge.css · tag.css
+---
+<h2>Badge</h2>
+{{#example center=true}}
+<span class="im-badge">Neutral</span>
+<span class="im-badge im-badge-accent">Accent</span>
+<span class="im-badge im-badge-success">Live</span>
+<span class="im-badge im-badge-warning">Draft</span>
+<span class="im-badge im-badge-danger">Failed</span>
+<span class="im-badge im-badge-info">Guide</span>
+<span class="im-badge im-badge-outline">Outline</span>
+{{/example}}
+
+{{#example center=true title="With an icon, and as a pill"}}
+<span class="im-badge im-badge-success">{{> "icons/check"}} Published</span>
+<span class="im-badge im-badge-outline">{{> "icons/lock"}} Members</span>
+<span class="im-badge im-badge-accent im-badge-pill">{{> "icons/flame"}} Featured</span>
+{{/example}}
+
+{{#example title="Beside a heading"}}
+<h3 class="flex items-center gap-2.5">Release notes <span class="im-badge im-badge-info">v0.2</span></h3>
+{{/example}}
+
+<h2>Tag</h2>
+{{#example center=true}}
+<a class="im-tag" href="#tag">Travel</a>
+<a class="im-tag" href="#tag" aria-current="page">Craft</a>
+<a class="im-tag im-tag-dot" href="#tag" style="--im-tag-dot: #0b6e4f">Career</a>
+<a class="im-tag im-tag-dot" href="#tag" style="--im-tag-dot: #175cd3">Salesforce</a>
+{{/example}}
+<p>In Ghost, a tag's own colour is <code>accent_color</code>: <code>style="--im-tag-dot: \{{accent_color}}"</code>. The current tag is <code>aria-current="page"</code>.</p>

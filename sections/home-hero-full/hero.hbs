@@ -1,0 +1,52 @@
+{{!--
+	Home hero, full.   {{> "sections/home-hero-full/hero" tagline="…" role="…" …}}
+
+	Two columns: words on the left, a picture on the right that turns into a
+	video player in place. Behind both, a slow wash of colour. One call is the
+	whole section — it loads its own stylesheet and script.
+
+	sections/home-hero-full/
+	  hero.hbs            this — assets, order, parameters passed down
+	  parts/background    the wash: CSS mesh, an mp4 loop, film grain
+	  parts/copy          ticker, name, tagline, intro, role, aim, subscribe
+	  parts/picture       the picture, which becomes the player in place
+	  parts/controls      the column on the picture's right border
+	  hero.css  hero.js   styles and behaviour, in the same order as the parts
+	  media/              hero-loop.mp4 + .jpg poster (any seamless loop works)
+
+	FROM GHOST ADMIN, not from parameters
+	  name      Settings → General → Site title         (the <h1>)
+	  intro     Settings → General → Site description
+	  picture   Settings → Design → logo, else the publication cover
+	  accounts  Settings → Social accounts
+	  subscribe shown when memberships are on and the visitor is signed out
+
+	PARAMETERS — every one optional; a missing one removes its line
+	  greeting                  "Hi, I'm"
+	  tagline                   one line under the name
+	  phrase_1 … phrase_5       the rolling ticker (exactly five; see hero.css §3)
+	  role, org, org_url        "Role at Org"
+	  where                     a place
+	  aim_a, aim_b              "Working towards A / B"
+	  cta_label, cta_url        the button beside the subscribe form
+	  note                      small print under the form
+	  video, video_portrait     YouTube ids: wide cut, and a 9:16 cut for phones
+
+	The layout needs two blocks in default.hbs:  {{{block "styles"}}} in <head>
+	and {{{block "scripts"}}} before </body>.
+--}}
+{{#contentFor "styles"}}
+	<link rel="stylesheet" href="{{asset "sections/home-hero-full/hero.css"}}">
+{{/contentFor}}
+{{#contentFor "scripts"}}
+	<script src="{{asset "sections/home-hero-full/hero.js"}}" defer></script>
+{{/contentFor}}
+
+<section class="im-hero" aria-label="{{t "Introduction"}}">
+	{{> "sections/home-hero-full/parts/background"}}
+
+	<div class="im-hero__grid">
+		{{> "sections/home-hero-full/parts/copy"}}
+		{{> "sections/home-hero-full/parts/picture"}}
+	</div>
+</section>

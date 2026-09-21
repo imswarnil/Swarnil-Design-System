@@ -1,0 +1,137 @@
+/* Marquee — content that loops sideways, forever, without a seam.
+
+   <div class="im-marquee" data-im-marquee>
+     <div class="im-marquee-group"> …items… </div>
+   </div>
+
+   You write the group ONCE. js/im.js clones it (aria-hidden, so a screen
+   reader meets each item a single time) and the two copies chase each other:
+   each travels exactly its own width plus one gap, so the loop has no seam at
+   any width. Until the script has run nothing moves — no half-marquee flash.
+
+     --im-marquee-speed   one full lap         (40s)
+     --im-marquee-gap     between items        (2.5rem)                       */
+
+.im-marquee {
+	--im-marquee-gap: 2.5rem;
+	--im-marquee-speed: 40s;
+
+	display: flex;
+	gap: var(--im-marquee-gap);
+	overflow: hidden;
+	user-select: none;
+}
+
+.im-marquee-group {
+	display: flex;
+	flex: none;
+	align-items: center;
+	justify-content: space-around;
+	gap: var(--im-marquee-gap);
+	min-width: 100%;
+}
+
+.im-marquee[data-im-ready] > .im-marquee-group {
+	animation: im-marquee var(--im-marquee-speed) linear infinite;
+}
+
+@keyframes im-marquee {
+	to {
+		translate: calc(-100% - var(--im-marquee-gap)) 0;
+	}
+}
+
+.im-marquee-reverse > .im-marquee-group {
+	animation-direction: reverse;
+}
+
+/* Hover or keyboard focus inside pauses it — anything clickable should. */
+.im-marquee-pause:is(:hover, :focus-within) > .im-marquee-group {
+	animation-play-state: paused;
+}
+
+/* Soft edges: items arrive out of, and leave into, nothing. */
+.im-marquee-fade {
+	mask-image: linear-gradient(to right, transparent, #000 var(--im-marquee-fade, 12%), #000 calc(100% - var(--im-marquee-fade, 12%)), transparent);
+}
+
+/* ---- vertical ---- give it a height. */
+.im-marquee-vertical {
+	flex-direction: column;
+	height: var(--im-marquee-height, 20rem);
+}
+
+.im-marquee-vertical > .im-marquee-group {
+	flex-direction: column;
+	min-width: 0;
+	min-height: 100%;
+}
+
+.im-marquee-vertical[data-im-ready] > .im-marquee-group {
+	animation-name: im-marquee-y;
+}
+
+@keyframes im-marquee-y {
+	to {
+		translate: 0 calc(-100% - var(--im-marquee-gap));
+	}
+}
+
+.im-marquee-vertical.im-marquee-fade {
+	mask-image: linear-gradient(to bottom, transparent, #000 var(--im-marquee-fade, 12%), #000 calc(100% - var(--im-marquee-fade, 12%)), transparent);
+}
+
+/* ---- ready-made items ---- */
+/* Big type: a banner of words. */
+.im-marquee-text {
+	--im-marquee-gap: 1.5rem;
+
+	color: var(--im-ink);
+	font-family: var(--im-font-heading);
+	font-size: clamp(2rem, 1.2rem + 4vw, 4.5rem);
+	font-weight: 600;
+	line-height: 1.1;
+	letter-spacing: var(--im-tracking-tighter);
+	white-space: nowrap;
+}
+
+/* A separator between words: <span class="im-marquee-sep"></span> */
+.im-marquee-sep {
+	flex: none;
+	width: 0.35em;
+	height: 0.35em;
+	border-radius: 50%;
+	background-color: var(--im-accent);
+}
+
+/* Logos: evened out and quiet until hovered. */
+.im-marquee-logo {
+	flex: none;
+	height: 1.75rem;
+	width: auto;
+	color: var(--im-muted);
+	opacity: 0.75;
+	transition: opacity 160ms, color 160ms;
+}
+
+.im-marquee-logo:hover {
+	color: var(--im-ink);
+	opacity: 1;
+}
+
+/* Reduced motion: it stops, and becomes an ordinary scrollable row. The clone
+   is hidden so nothing is shown twice. */
+@media (prefers-reduced-motion: reduce) {
+	.im-marquee {
+		overflow-x: auto;
+		mask-image: none;
+	}
+
+	.im-marquee[data-im-ready] > .im-marquee-group {
+		animation: none;
+	}
+
+	.im-marquee > .im-marquee-group[aria-hidden="true"] {
+		display: none;
+	}
+}

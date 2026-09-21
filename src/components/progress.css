@@ -1,0 +1,140 @@
+/* Progress — how far along. A bar, a set of steps, or a ring.
+   All read --im-value, from 0 to 1. Keep aria-valuenow in step with it.
+
+   <div class="im-progress" role="progressbar" aria-label="Upload" aria-valuenow="64" style="--im-value: .64"></div> */
+
+.im-progress {
+	--im-progress-height: 0.375rem;
+
+	position: relative;
+	height: var(--im-progress-height);
+	border-radius: var(--im-radius-full);
+	background-color: var(--im-surface-2);
+	overflow: hidden;
+}
+
+.im-progress::after {
+	content: "";
+	display: block;
+	width: calc(var(--im-value, 0) * 100%);
+	height: 100%;
+	border-radius: inherit;
+	background-color: var(--im-progress-color, var(--im-accent));
+	transition: width 600ms var(--im-ease-out);
+}
+
+.im-progress-sm { --im-progress-height: 0.1875rem; }
+.im-progress-lg { --im-progress-height: 0.625rem; }
+
+/* A hairline track and a square end: the Swiss bar. */
+.im-progress-line {
+	--im-progress-height: 2px;
+
+	border-radius: 0;
+	background-color: var(--im-line);
+}
+
+/* Moving stripes: it is happening right now. */
+.im-progress-striped::after {
+	background-image: repeating-linear-gradient(135deg, rgb(255 255 255 / 28%) 0 0.375rem, transparent 0.375rem 0.75rem);
+	background-size: 1.0625rem 100%;
+	animation: im-progress-stripes 700ms linear infinite;
+}
+
+@keyframes im-progress-stripes {
+	to { background-position: 1.0625rem 0; }
+}
+
+/* No value, unknown duration. */
+.im-progress-indeterminate::after {
+	width: 40%;
+	animation: im-progress-slide 1.4s var(--im-ease-in-out) infinite;
+}
+
+@keyframes im-progress-slide {
+	from { translate: -100% 0; }
+	to { translate: 250% 0; }
+}
+
+/* With its label:  <div class="im-progress-field"><span>Storage</span><output>64%</output><div class="im-progress">…</div></div> */
+.im-progress-field {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	gap: 0.375rem 1rem;
+	color: var(--im-ink);
+	font-size: var(--im-text-sm);
+	font-weight: 500;
+}
+
+.im-progress-field > output {
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	font-variant-numeric: tabular-nums;
+}
+
+.im-progress-field > .im-progress {
+	grid-column: 1 / -1;
+}
+
+/* Segments: discrete steps.  style="--im-steps: 5; --im-step: 3" */
+.im-progress-steps {
+	display: grid;
+	grid-template-columns: repeat(var(--im-steps, 4), minmax(0, 1fr));
+	gap: 0.25rem;
+	height: var(--im-progress-height, 0.375rem);
+}
+
+.im-progress-steps > i {
+	border-radius: var(--im-radius-full);
+	background-color: var(--im-surface-2);
+	transition: background-color 300ms;
+}
+
+.im-progress-steps > i[data-on] {
+	background-color: var(--im-progress-color, var(--im-accent));
+}
+
+/* ---- ring ---- <span class="im-ring" style="--im-value: .72">72%</span> */
+.im-ring {
+	--im-ring-size: 3.5rem;
+	--im-ring-width: 0.3125rem;
+
+	display: inline-grid;
+	place-items: center;
+	flex: none;
+	width: var(--im-ring-size);
+	height: var(--im-ring-size);
+	border-radius: 50%;
+	background:
+		radial-gradient(closest-side, var(--im-ring-ground, var(--im-canvas)) calc(100% - var(--im-ring-width)), transparent calc(100% - var(--im-ring-width) + 1px)),
+		conic-gradient(var(--im-progress-color, var(--im-accent)) calc(var(--im-value, 0) * 360deg), var(--im-surface-2) 0);
+	color: var(--im-ink);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	font-weight: 500;
+	font-variant-numeric: tabular-nums;
+}
+
+.im-ring-sm { --im-ring-size: 1.5rem; --im-ring-width: 0.1875rem; font-size: 0; }
+.im-ring-lg { --im-ring-size: 6rem; --im-ring-width: 0.5rem; font-size: var(--im-text-h4); }
+.im-ring-xl { --im-ring-size: 9rem; --im-ring-width: 0.625rem; font-size: var(--im-text-h2); }
+
+/* A spinner: the ring with no value, turning. */
+.im-ring-spin {
+	background:
+		radial-gradient(closest-side, var(--im-ring-ground, var(--im-canvas)) calc(100% - var(--im-ring-width)), transparent calc(100% - var(--im-ring-width) + 1px)),
+		conic-gradient(var(--im-progress-color, var(--im-accent)) 25%, var(--im-surface-2) 0);
+	animation: im-spin 900ms linear infinite;
+}
+
+/* A ring with a caption under it. */
+.im-ring-field {
+	display: inline-flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.5rem;
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+	text-align: center;
+}

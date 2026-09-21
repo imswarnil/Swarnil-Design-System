@@ -1,0 +1,71 @@
+---
+title: Tooltip & hover card
+description: A tooltip names something. A hover card previews something — the article a link goes to, or the author behind a name. Both are CSS only, open on keyboard focus as well as hover, and stay out of the way on touch.
+eyebrow: Component
+source: src/components/feedback.css · hovercard.css
+---
+<h2>Tooltip</h2>
+{{#example center=true}}
+<button class="im-btn im-btn-icon" type="button" aria-label="Copy link" data-im-tip="Copy link">{{> "icons/link"}}</button>
+<button class="im-btn im-btn-icon" type="button" aria-label="Save" data-im-tip="Save for later" data-im-tip-side="bottom">{{> "icons/bookmark"}}</button>
+<span class="im-badge im-badge-outline" tabindex="0" data-im-tip="Only members can read this post">{{> "icons/lock"}} Members</span>
+<kbd tabindex="0" data-im-tip="Opens search">/</kbd>
+{{/example}}
+<p><code>data-im-tip="…"</code>; <code>data-im-tip-side="bottom"</code> flips it. It is for <em>supplementary</em> text: an icon button still needs its <code>aria-label</code>, and nothing essential may live only in a tooltip — touch users never see one.</p>
+
+<h2>Article hover card</h2>
+<p>Hover or focus the link: a preview of where it goes. It waits a beat before opening, and stays open while the pointer is inside it.</p>
+{{#example spill=true}}
+<p class="text-lg" style="max-width: 40rem">I wrote about this at length in
+<span class="im-hovercard"><a href="#article-hover-card">{{demo.three.[0].title}}</a><span class="im-hovercard-panel" role="tooltip">
+		<span class="im-hovercard-media"><img src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></span>
+		<span class="im-card-eyebrow">{{demo.three.[0].primary_tag.name}}</span>
+		<span class="im-hovercard-title">{{demo.three.[0].title}}</span>
+		<span>{{demo.three.[0].excerpt}}</span>
+		<span class="im-hovercard-meta"><span>17 Sep 2026</span><span>{{demo.three.[0].reading_time}} min read</span></span>
+	</span></span>, and again, more briefly, in
+<span class="im-hovercard im-hovercard-below"><a href="#article-hover-card">{{demo.three.[1].title}}</a><span class="im-hovercard-panel" role="tooltip">
+		<span class="im-hovercard-title">{{demo.three.[1].title}}</span>
+		<span>{{demo.three.[1].excerpt}}</span>
+		<span class="im-hovercard-meta"><span>{{demo.three.[1].reading_time}} min read</span></span>
+	</span></span>.</p>
+{{/example}}
+
+<h2>Author hover card</h2>
+{{#example spill=true}}
+<p class="flex flex-wrap items-center gap-2 text-sm text-muted">By
+<span class="im-hovercard">
+	<a class="inline-flex items-center gap-2 font-medium text-ink no-underline" href="#author-hover-card">{{> "components/avatar" size="sm" src=demo.author.profile_image name=demo.author.name}}{{demo.author.name}}</a><span class="im-hovercard-panel" role="tooltip">
+		<span class="im-hovercard-person">{{> "components/avatar" size="lg" src=demo.author.profile_image name=demo.author.name}}<span><span class="im-hovercard-title">{{demo.author.name}}</span><span class="im-hovercard-meta"><span>Engineer</span><span>{{demo.author.location}}</span></span></span></span>
+		<span>{{demo.author.bio}}</span>
+		<span class="im-widget-stats" style="padding-top: .625rem"><span class="flex flex-col"><strong>{{demo.author.count.posts}}</strong><span>posts</span></span><span class="flex flex-col"><strong>12.4k</strong><span>readers</span></span></span>
+		<span class="im-cluster"><a class="im-btn im-btn-primary im-btn-sm" href="#author-hover-card">Follow</a><a class="im-btn im-btn-sm" href="#author-hover-card">All posts</a></span>
+	</span>
+</span>· 17 Sep 2026 · 8 min read</p>
+{{/example}}
+<p>The panel can hold links and buttons of its own — a gap-bridging strip lets the pointer travel from the name into the card without it closing.</p>
+
+<h2>Markup</h2>
+{{{{code "hbs"}}}}
+<span class="im-hovercard"><a href="{{url}}">{{title}}</a><span class="im-hovercard-panel" role="tooltip">
+	<span class="im-hovercard-media"><img src="{{img_url feature_image size="s"}}" alt="" loading="lazy"></span>
+	<span class="im-hovercard-title">{{title}}</span>
+	<span>{{excerpt words="24"}}</span>
+</span></span>
+{{{{/code}}}}
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Class</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>im-hovercard</code></td><td>The wrapper. Inline, so it sits in a sentence. Children are <code>&lt;span&gt;</code>s for the same reason. In running text keep the link, the panel and the closing tag touching — a line break between them prints as a space before the next comma.</td></tr>
+		<tr><td><code>-below</code></td><td>Open under the link instead of over it.</td></tr>
+		<tr><td><code>-center</code></td><td>Centre the panel over a short, unbroken trigger — a name, an avatar. By default the panel hangs from the start of the link, so a long link can still wrap with its sentence.</td></tr>
+		<tr><td><code>im-hovercard-media</code> · <code>-title</code> · <code>-meta</code> · <code>-person</code></td><td>Parts. Anything else — a card eyebrow, buttons, stats — can go in too.</td></tr>
+		<tr><td><code>--im-hovercard-width</code></td><td>19rem.</td></tr>
+	</tbody>
+</table>
+</div>
+<div class="im-callout im-callout-info">
+	<p class="im-callout-label">{{> "icons/info"}} Touch</p>
+	<p>On a device with no hover the card never opens and the link simply goes where it says. So a hover card must only ever <em>preview</em> — never be the only way to reach something.</p>
+</div>

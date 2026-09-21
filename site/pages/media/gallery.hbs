@@ -1,0 +1,70 @@
+---
+title: Gallery & lightbox
+description: A grid of pictures that opens into a full-screen viewer — arrows, a counter, captions, swipe and the keyboard. The thumbnails are plain links to the large image, so it works before, and without, the script.
+eyebrow: Media
+source: src/components/gallery.css · src/js/im-media.js
+---
+<h2>Gallery</h2>
+<p>Click any picture.</p>
+{{#example}}
+<div class="im-gallery" data-im-lightbox>
+	{{#foreach demo.six}}<a class="im-gallery-item" href="{{feature_image}}" data-caption="{{title}}"><img src="{{feature_image}}" alt="{{title}}" loading="lazy"></a>{{/foreach}}
+</div>
+{{/example}}
+<p>In the viewer: <kbd>←</kbd> <kbd>→</kbd> move, <kbd>Esc</kbd> closes, a swipe moves on touch, and the cross — or a click anywhere on the frosted surround — closes. The surround is a blurred veil of the canvas colour, so the page stays faintly there behind the picture: white in light mode, near-black in dark. It is one native <code>&lt;dialog&gt;</code>, built the first time it is needed, so focus is trapped, the page behind cannot scroll, and focus returns to the thumbnail afterwards — all from the browser. Neighbouring images are warmed in the background so the arrows feel instant.</p>
+
+<h2>Layouts</h2>
+{{#example title="im-gallery-mosaic — the first picture large"}}
+<div class="im-gallery im-gallery-mosaic" data-im-lightbox>
+	{{#foreach demo.six limit=5}}<a class="im-gallery-item" href="{{feature_image}}" data-caption="{{title}}"><img src="{{feature_image}}" alt="{{title}}" loading="lazy"></a>{{/foreach}}
+</div>
+{{/example}}
+{{#example title="im-gallery-masonry — pictures keep their own shape"}}
+<div class="im-gallery im-gallery-masonry" data-im-lightbox style="--im-gallery-min: 11rem">
+	{{#foreach demo.ten limit=7}}<a class="im-gallery-item" href="{{feature_image}}" data-caption="{{title}}"><img src="{{feature_image}}" alt="{{title}}" loading="lazy" style="aspect-ratio: {{#if @even}}4 / 5{{else}}{{#if @first}}1 / 1{{else}}16 / 10{{/if}}{{/if}}; object-fit: cover"></a>{{/foreach}}
+</div>
+{{/example}}
+{{#example title="im-gallery-strip — one row that scrolls and snaps"}}
+<div class="im-gallery im-gallery-strip" data-im-lightbox>
+	{{#foreach demo.six}}<a class="im-gallery-item" href="{{feature_image}}" data-caption="{{title}}"><img src="{{feature_image}}" alt="{{title}}" loading="lazy"></a>{{/foreach}}
+</div>
+{{/example}}
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Variable</th><th>Default</th></tr></thead>
+	<tbody>
+		<tr><td><code>--im-gallery-min</code></td><td>12rem — the narrowest a column may be</td></tr>
+		<tr><td><code>--im-gallery-gap</code></td><td>0.5rem</td></tr>
+		<tr><td><code>--im-gallery-ratio</code></td><td>1 / 1 — the thumbnails' shape (grid layouts)</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>A single picture</h2>
+<p><code>data-im-lightbox</code> on one link opens just that picture — for a feature image, or any image in an article.</p>
+{{#example style="max-width: 30rem"}}
+<figure>
+	<a class="im-zoomable" data-im-lightbox href="{{demo.post.feature_image}}"><img src="{{demo.post.feature_image}}" alt="{{demo.post.title}}" loading="lazy"></a>
+	<figcaption class="mt-2 text-sm text-muted text-center">The caption is read from the figure's own figcaption.</figcaption>
+</figure>
+{{/example}}
+
+<h2>With Ghost's own galleries</h2>
+<p>Ghost's editor outputs gallery and image cards as plain <code>&lt;img&gt;</code>s, not links. Wrap the post body once, and a few lines in your theme turn each one into a link the lightbox understands:</p>
+{{{{code "js"}}}}
+// theme.js — make every content image openable
+for (const img of document.querySelectorAll('.im-prose :is(.kg-image-card, .kg-gallery-image) img')) {
+	const a = document.createElement('a');
+	a.href = img.src.replace(/\/size\/w\d+\//, '/');     // Ghost's full-size original
+	img.replaceWith(a);
+	a.append(img);
+}
+document.querySelector('.im-prose')?.setAttribute('data-im-lightbox', '');
+{{{{/code}}}}
+
+<h2>Captions and alt text</h2>
+<ul>
+	<li>The viewer's caption comes from <code>data-caption</code>, else the enclosing <code>&lt;figcaption&gt;</code>, else the image's <code>alt</code>.</li>
+	<li><code>alt</code> is carried to the large image, so write it on the thumbnail.</li>
+	<li>With a modifier key held — <kbd>⌘</kbd>/<kbd>Ctrl</kbd>-click — the link opens in a new tab as links do; the lightbox steps aside.</li>
+</ul>

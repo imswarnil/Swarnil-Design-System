@@ -1,0 +1,90 @@
+---
+title: Social & share
+description: Buttons in a service's own colour, and a share row for a post. Every link is a plain URL — no third-party script, no tracking, nothing to consent to.
+eyebrow: Component
+source: src/components/button.css · share.css · partials/components/share.hbs
+---
+<h2>Social buttons</h2>
+<p><code>im-btn-brand</code> plus <code>data-brand</code>. It is still an <code>im-btn</code>, so sizes, icon-only and groups all apply.</p>
+{{#example}}
+<div class="im-cluster">
+	<a class="im-btn im-btn-brand" data-brand="x" href="#social-buttons">{{> "icons/brand-x"}} Follow on X</a>
+	<a class="im-btn im-btn-brand" data-brand="github" href="#social-buttons">{{> "icons/brand-github"}} GitHub</a>
+	<a class="im-btn im-btn-brand" data-brand="youtube" href="#social-buttons">{{> "icons/brand-youtube"}} Subscribe</a>
+	<a class="im-btn im-btn-brand" data-brand="instagram" href="#social-buttons">{{> "icons/brand-instagram"}} Instagram</a>
+	<a class="im-btn im-btn-brand" data-brand="facebook" href="#social-buttons">{{> "icons/brand-facebook"}} Facebook</a>
+	<a class="im-btn im-btn-brand" data-brand="whatsapp" href="#social-buttons">{{> "icons/brand-whatsapp"}} WhatsApp</a>
+	<a class="im-btn im-btn-brand" data-brand="telegram" href="#social-buttons">{{> "icons/brand-telegram"}} Telegram</a>
+	<a class="im-btn im-btn-brand" data-brand="reddit" href="#social-buttons">{{> "icons/brand-reddit"}} Reddit</a>
+	<a class="im-btn im-btn-brand" data-brand="rss" href="#social-buttons">{{> "icons/rss"}} RSS</a>
+</div>
+{{/example}}
+
+<h3>Soft</h3>
+<p><code>im-btn-brand-soft</code> stays neutral and takes the colour only on hover — right for a row of several, where nine solid colours would shout.</p>
+{{#example}}
+<div class="im-cluster">
+	<a class="im-btn im-btn-brand im-btn-brand-soft" data-brand="x" href="#soft">{{> "icons/brand-x"}} X</a>
+	<a class="im-btn im-btn-brand im-btn-brand-soft" data-brand="github" href="#soft">{{> "icons/brand-github"}} GitHub</a>
+	<a class="im-btn im-btn-brand im-btn-brand-soft" data-brand="youtube" href="#soft">{{> "icons/brand-youtube"}} YouTube</a>
+	<a class="im-btn im-btn-brand im-btn-brand-soft" data-brand="instagram" href="#soft">{{> "icons/brand-instagram"}} Instagram</a>
+	<a class="im-btn im-btn-brand im-btn-brand-soft" data-brand="bluesky" href="#soft">{{> "icons/brand-bluesky"}} Bluesky</a>
+	<a class="im-btn im-btn-brand im-btn-brand-soft" data-brand="mastodon" href="#soft">{{> "icons/brand-mastodon"}} Mastodon</a>
+</div>
+{{/example}}
+
+<h3>Icon only, and grouped</h3>
+{{#example center=true}}
+<a class="im-btn im-btn-icon im-btn-brand" data-brand="x" href="#icon-only-and-grouped" aria-label="X">{{> "icons/brand-x"}}</a>
+<a class="im-btn im-btn-icon im-btn-brand" data-brand="youtube" href="#icon-only-and-grouped" aria-label="YouTube">{{> "icons/brand-youtube"}}</a>
+<a class="im-btn im-btn-icon im-btn-brand" data-brand="instagram" href="#icon-only-and-grouped" aria-label="Instagram">{{> "icons/brand-instagram"}}</a>
+<div class="im-btn-group" role="group" aria-label="Follow">
+	<a class="im-btn im-btn-icon im-btn-brand im-btn-brand-soft" data-brand="x" href="#icon-only-and-grouped" aria-label="X">{{> "icons/brand-x"}}</a>
+	<a class="im-btn im-btn-icon im-btn-brand im-btn-brand-soft" data-brand="github" href="#icon-only-and-grouped" aria-label="GitHub">{{> "icons/brand-github"}}</a>
+	<a class="im-btn im-btn-icon im-btn-brand im-btn-brand-soft" data-brand="youtube" href="#icon-only-and-grouped" aria-label="YouTube">{{> "icons/brand-youtube"}}</a>
+	<a class="im-btn im-btn-icon im-btn-brand im-btn-brand-soft" data-brand="rss" href="#icon-only-and-grouped" aria-label="RSS">{{> "icons/rss"}}</a>
+</div>
+{{/example}}
+<p>In Ghost, loop the site's own accounts: <code>\{{#social_accounts @site}} … data-brand="\{{type}}" … \{{> (concat "icons/brand-" type)}} … \{{/social_accounts}}</code>.</p>
+
+<h2>Share</h2>
+<p>The partial's context is a post: it builds every link from the post's absolute URL and title. "Copy link" confirms in place; "More" opens the operating system's share sheet and is hidden where there is none.</p>
+{{#example}}
+{{#with demo.post}}{{> "components/share" heading="Share this post"}}{{/with}}
+{{/example}}
+
+<h3>Responsive by container</h3>
+<p>It measures its <em>own</em> width, not the viewport's: under 34rem the labels drop and it becomes a row of icons. So it is right in a wide footer and in a narrow rail without a second variant. Same partial, 20rem wide:</p>
+{{#example style="max-width: 20rem"}}
+{{#with demo.post}}{{> "components/share" soft=true}}{{/with}}
+{{/example}}
+
+<h3>Compact</h3>
+<p><code>compact=true</code> is always icons, a size smaller — for a post header or a sticky rail.</p>
+{{#example}}
+{{#with demo.post}}{{> "components/share" compact=true soft=true}}{{/with}}
+{{/example}}
+
+<h2>Parameters</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Param</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>heading</code></td><td>A line above the row.</td></tr>
+		<tr><td><code>soft</code></td><td><code>true</code> — neutral buttons that colour on hover.</td></tr>
+		<tr><td><code>compact</code></td><td><code>true</code> — small, icon-only.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>Copy and share, on anything</h2>
+<p>Both behaviours are data attributes handled by <code>im.js</code>, not tied to this component.</p>
+{{#example center=true}}
+<button class="im-btn im-btn-outline" type="button" data-im-copy="https://example.com/a-post/">{{> "icons/link"}}<span data-im-copy-label>Copy link</span></button>
+<button class="im-btn im-btn-outline" type="button" data-im-copy="">{{> "icons/copy"}}<span data-im-copy-label>Copy this page's URL</span></button>
+{{/example}}
+
+<div class="im-callout im-callout-info">
+	<p class="im-callout-title">Brand marks</p>
+	<p>Icons are from Simple Icons (CC0) and the colours are each service's published brand colour. The marks remain their owners' trademarks — use them to link <em>to</em> that service, unmodified. LinkedIn asked Simple Icons to remove its mark, so <code>brand-linkedin</code> is a neutral link icon.</p>
+</div>

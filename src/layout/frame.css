@@ -1,0 +1,216 @@
+/* Frame — the Swiss grid made visible.
+
+   A page is a column between two hairline RAILS; its sections are ROWS divided
+   by hairline rules; where a rule meets a rail there can be a registration
+   MARK. Content is set in CELLS that share their borders, so a row of things
+   reads as one ruled table rather than a set of floating boxes.
+
+   <div class="im-frame">
+     <section class="im-frame-row im-frame-marks"> … </section>
+     <section class="im-frame-row im-frame-row-flush">
+       <div class="im-cells"> <div class="im-cell">…</div> … </div>
+     </section>
+   </div>
+
+   Everything is drawn with --im-line, so it follows dark mode, and nothing
+   here needs JavaScript. */
+
+.im-frame {
+	--im-frame-width: var(--im-width-page);
+	--im-row-pad: clamp(1.5rem, 1rem + 2.5vw, 3rem);
+
+	position: relative;
+	width: 100%;
+	max-width: var(--im-frame-width);
+	margin-inline: auto;
+	border-inline: 1px solid var(--im-line);
+}
+
+.im-frame-wide {
+	--im-frame-width: var(--im-width-wide);
+}
+
+.im-frame-row {
+	position: relative;
+	padding: var(--im-row-pad);
+	border-top: 1px solid var(--im-line);
+}
+
+.im-frame-row:last-child {
+	border-bottom: 1px solid var(--im-line);
+}
+
+/* No padding: for cells, media or anything that should touch the rails. */
+.im-frame-row-flush {
+	padding: 0;
+}
+
+/* A row that is only a gap — white space, ruled. */
+.im-frame-gap {
+	height: var(--im-row-pad);
+	padding: 0;
+}
+
+/* Registration marks: a small + where the row's top rule meets each rail. */
+.im-frame-marks::before,
+.im-frame-marks::after {
+	content: "";
+	position: absolute;
+	top: -5px;
+	z-index: 1;
+	width: 9px;
+	height: 9px;
+	background:
+		linear-gradient(var(--im-mark, var(--im-ink)), var(--im-mark, var(--im-ink))) center / 1px 100% no-repeat,
+		linear-gradient(var(--im-mark, var(--im-ink)), var(--im-mark, var(--im-ink))) center / 100% 1px no-repeat;
+	pointer-events: none;
+}
+
+.im-frame-marks::before {
+	left: -5px;
+}
+
+.im-frame-marks::after {
+	right: -5px;
+}
+
+/* A row's heading line: a label on the left, anything on the right. */
+.im-frame-head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 0.5rem 1.5rem;
+	padding: 0.875rem var(--im-row-pad);
+	border-top: 1px solid var(--im-line);
+}
+
+/* Two columns split by a rule; stacks when the FRAME is narrow. */
+.im-frame-split {
+	display: grid;
+	grid-template-columns: minmax(0, var(--im-split, 1fr)) minmax(0, 1fr);
+	padding: 0;
+}
+
+.im-frame-split > * {
+	min-width: 0;
+	padding: var(--im-row-pad);
+}
+
+.im-frame-split > * + * {
+	border-left: 1px solid var(--im-line);
+}
+
+@media (width < 56rem) {
+	.im-frame-split {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.im-frame-split > * + * {
+		border-top: 1px solid var(--im-line);
+		border-left: 0;
+	}
+}
+
+/* ---- cells ----------------------------------------------------------------
+   Children share their borders. The trick: the grid's own background is the
+   line colour, its gap is 1px, and each child paints the canvas back in. */
+.im-cells {
+	--im-cell-min: 14rem;
+
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(var(--im-cell-min), 100%), 1fr));
+	gap: 1px;
+	border: 1px solid var(--im-line);
+	background-color: var(--im-line);
+}
+
+.im-cells > * {
+	background-color: var(--im-canvas);
+}
+
+/* Inside a flush row the frame already draws the outer lines. */
+.im-frame-row-flush > .im-cells {
+	border: 0;
+}
+
+/* A fixed number of columns, for when auto-fit would leave a ragged last row. */
+.im-cells-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.im-cells-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.im-cells-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+@media (width < 56rem) {
+	.im-cells-3,
+	.im-cells-4 {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (width < 36rem) {
+	.im-cells-2,
+	.im-cells-3,
+	.im-cells-4 {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+.im-cell {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	min-width: 0;
+	padding: clamp(1.125rem, 0.9rem + 1vw, 1.75rem);
+	color: var(--im-body);
+	text-decoration: none;
+}
+
+a.im-cell {
+	transition: background-color 140ms;
+}
+
+a.im-cell:hover,
+a.im-cell:focus-visible {
+	background-color: var(--im-surface);
+	color: var(--im-body);
+}
+
+.im-cell-title {
+	color: var(--im-ink);
+	font-size: var(--im-text-h4);
+	font-weight: 600;
+	line-height: var(--im-leading-h4);
+	letter-spacing: var(--im-tracking-tight);
+}
+
+/* A cell that spans the row — a banner inside a set of cells. */
+.im-cell-wide {
+	grid-column: 1 / -1;
+}
+
+/* ---- caption ----------------------------------------------------------------
+   <p class="im-caption" data-index="01">Foundation</p>
+   Small, mono, upper-case: the caption of a Swiss layout. (Not `im-label` —
+   that is the form field label.) */
+.im-caption {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.625rem;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	font-weight: 500;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.im-caption[data-index]::before {
+	content: attr(data-index);
+	color: var(--im-accent);
+}
+
+.im-caption-rule::after {
+	content: "";
+	width: 2rem;
+	height: 1px;
+	background-color: var(--im-line);
+}

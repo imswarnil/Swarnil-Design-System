@@ -1,76 +1,36 @@
-/* =============================================================================
-   SWARNIL DESIGN SYSTEM — the library entry
+/* ==========================================================================
+   The design system — one entry point, one layer stack.
 
-   Tailwind + daisyUI + this repo's design, in that order. See
-   src/0-config/layers.css for why that order is what it is.
+     theme        Tailwind's variables + ours (foundation/tokens)
+     tokens       light / dark values for the semantic tokens
+     base         Tailwind Preflight, then our element styles
+     layout       page frame, containers
+     components   .im-btn, .im-card, .im-post-card …
+     utilities    Tailwind utilities + ours — always win
 
-   ── THIS FILE DOES NOT IMPORT TAILWIND ────────────────────────────────────
-   That is deliberate, and it is what makes the package usable two ways.
-
-   A consumer who already runs Tailwind writes:
-
-       @import "tailwindcss";
-       @import "@imswarnil/swarnil-design";
-
-   …and their utilities are generated from THEIR markup, so they pay for the
-   classes they use and no others. If this file imported Tailwind itself, that
-   consumer would get it twice.
-
-   A consumer who does not want a build step links `dist/swarnil-design.css`,
-   which is src/bundle.css compiled — the same source with Tailwind on top of
-   it and a stated set of utilities baked in.
-
-   0-config MUST come first. It declares the sub-layer order, and that
-   declaration only binds if the browser reads it before the first layered rule.
-
-   Docs: https://design.imswarnil.com
+   Everything outside this repo that ends up in the bundle is openly licensed:
+   Tailwind CSS (MIT). See PROVENANCE.md.
    ========================================================================== */
 
-/* ── daisyUI, minus the thirty components this repo builds itself ──────────
-   `themes: false` turns off daisyUI's own light/dark. That is a correctness
-   requirement, not a preference — see src/0-daisy/bridge.css.
+@layer theme, tokens, base, layout, components, effects, utilities;
 
-   `exclude` is the more interesting half, and it exists because THE CASCADE
-   ALONE DOES NOT SETTLE A COLLISION. The layer order guarantees our `.hero`
-   beats daisyUI's `.hero`. It guarantees nothing about
+@import "tailwindcss/theme.css" layer(theme);
+@import "./foundation/tokens/index.css";
 
-       .hero > * { grid-column-start: 1; grid-row-start: 1 }
+@import "tailwindcss/preflight.css" layer(base);
+@import "./foundation/base/index.css" layer(base);
 
-   which is daisyUI stacking every child of a hero into one grid cell. We have
-   no competing rule for `.hero > *`, so it applied — and the landing page's
-   two-column hero rendered with the illustration on top of the headline. The
-   same shape was waiting in twenty other places: `.stack > *`, `.toast > *`,
-   `.footer > :not(script, style, template)`, `.card figure`, `.timeline > li`,
-   `.menu .dropdown-content`, `.table :where(...)`.
+@import "./layout/index.css" layer(layout);
+@import "./components/index.css" layer(components);
 
-   Chasing those one by one means a reset for every descendant daisyUI names,
-   forever, and a silent regression every time it names a new one. So we simply
-   do not ship the components we already build. Thirty names, gone from
-   daisyUI's output entirely: no collision to arbitrate, no leak to reset, and
-   a smaller bundle.
+/* Motion and effects: above components, so an effect can restyle one. */
+@import "./motion/index.css" layer(effects);
+@import "./effects/index.css" layer(effects);
 
-   WHAT REMAINS IS THE POINT OF HAVING daisyUI AT ALL — thirty-one components
-   this repo never built: drawer, swap, range, rating, toggle, checkbox, modal,
-   dropdown, breadcrumbs, dock, diff, calendar, mask, fab, validator and the
-   rest. Build one of them here and it belongs in the exclude list the same
-   day.
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
+@import "./utilities/index.css";
 
-   `collapse` and `steps` are the two names that run the other way. This repo
-   built both, and on 2026-09-15 deleted both — no page used either, and the
-   audit calls a family at zero a component nobody knows about. They stay
-   excluded rather than handed back to daisyUI: nothing asked for them, so
-   the honest bundle is one where the name simply does not exist. */
-@plugin "daisyui" {
-	themes: false;
-	exclude: alert, avatar, badge, button, card, carousel, chat, collapse, countdown, fieldset, footer, hero, input, kbd, list, loading, menu, navbar, progress, radio, range, select, skeleton, stack, stat, steps, tab, table, timeline, toast;
-}
-
-@import "./0-config/index.css";   /* layer order, @theme, @property      */
-@import "./0-daisy/bridge.css";   /* daisyUI's knobs, from our tokens    */
-@import "./1-foundation/index.css";
-@import "./2-elements/index.css";
-@import "./3-components/index.css";
-@import "./4-patterns/index.css";
-@import "./5-sections/index.css";
-@import "./6-utilities/index.css";  /* @utility — the few Tailwind lacks   */
-@import "./8-framework/index.css";  /* @utility — the page column and row  */
+@source "../site";
+@source "../partials";
+@source "../sections";
+@source "../src";

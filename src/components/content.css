@@ -1,0 +1,229 @@
+/* Content — the body of a post: what Ghost prints for {{content}}.
+
+   <section class="im-content">{{content}}</section>
+
+   It shares every typographic rule of .im-prose (foundation/base/prose.css)
+   and adds what an article needs on top: a canvas with three widths, so the
+   editor's "wide" and "full" cards can break out of the text column; tables
+   that scroll; footnotes; a rule that is a piece of the ruler.
+   The editor's cards themselves are in koenig.css.
+
+   Knobs:  --im-content-main    the text column            (--im-width-prose)
+           --im-content-wide    how far "wide" reaches out, each side (10rem)
+           --im-content-gutter  the page's side padding     (--im-gutter)   */
+
+.im-content {
+	--im-content-main: var(--im-width-prose);
+	--im-content-wide: 10rem;
+	--im-content-gutter: var(--im-gutter, 1rem);
+
+	display: grid;
+	grid-template-columns:
+		[full-start] minmax(var(--im-content-gutter), 1fr)
+		[wide-start] minmax(0, var(--im-content-wide))
+		[main-start] min(var(--im-content-main), 100% - var(--im-content-gutter) * 2) [main-end]
+		minmax(0, var(--im-content-wide)) [wide-end]
+		minmax(var(--im-content-gutter), 1fr) [full-end];
+	color: var(--im-body);
+	font-size: var(--im-content-size, 1.0625rem);
+	line-height: 1.7;
+	overflow-wrap: break-word;
+}
+
+.im-content > * {
+	grid-column: main;
+	min-width: 0;
+}
+
+.im-content > .kg-width-wide {
+	grid-column: wide;
+}
+
+.im-content > .kg-width-full {
+	grid-column: full;
+}
+
+/* Already inside a padded column (a docs page, a card): no gutters of its own. */
+.im-content-flush {
+	--im-content-gutter: 0px;
+}
+
+/* ---- text ---- */
+.im-content > :is(h1, h2, h3, h4, h5, h6) {
+	color: var(--im-ink);
+	text-wrap: balance;
+}
+
+.im-content > h2 { font-size: clamp(1.5rem, 1.3rem + 0.8vw, 1.875rem); }
+.im-content > h3 { font-size: clamp(1.25rem, 1.15rem + 0.4vw, 1.4375rem); }
+
+.im-content a:not([class]) {
+	color: var(--im-ink);
+	text-decoration: underline;
+	text-decoration-color: var(--im-accent);
+	text-decoration-thickness: 1.5px;
+	text-underline-offset: 0.2em;
+	transition: text-decoration-color 140ms, color 140ms;
+}
+
+.im-content a:not([class]):hover {
+	color: var(--im-accent);
+}
+
+.im-content strong {
+	color: var(--im-ink);
+	font-weight: 600;
+}
+
+/* An opening paragraph set larger, and an optional drop cap:
+   <section class="im-content im-content-lede im-content-dropcap"> */
+.im-content-lede > p:first-of-type {
+	color: var(--im-ink);
+	font-size: 1.25em;
+	line-height: 1.55;
+}
+
+.im-content-dropcap > p:first-of-type::first-letter {
+	float: left;
+	margin: 0.08em 0.12em 0 0;
+	color: var(--im-accent);
+	font-family: var(--im-font-pixel);
+	font-size: 3.6em;
+	font-weight: 400;
+	line-height: 0.82;
+}
+
+/* A rule is a short piece of the system's ruler, centred. */
+.im-content > hr {
+	justify-self: center;
+	width: 7.5rem;
+	height: 0.625rem;
+	margin-block: calc(var(--im-flow) * 2);
+	border: 0;
+	background-image:
+		linear-gradient(var(--im-line), var(--im-line)),
+		linear-gradient(to right, color-mix(in oklab, var(--im-ink) 40%, transparent) 1px, transparent 1px),
+		linear-gradient(to right, var(--im-ink) 1px, transparent 1px);
+	background-position: 0 100%;
+	background-repeat: no-repeat, repeat-x, repeat-x;
+	background-size: 100% 1px, 0.5rem 0.3125rem, 2.5rem 0.625rem;
+}
+
+/* The second quote style of the editor: centred, between two marked rules. */
+:is(.im-prose, .im-content) blockquote.kg-blockquote-alt {
+	padding: 1.75rem 1rem;
+	border-block: 1px solid var(--im-line);
+	color: var(--im-ink);
+	font-size: clamp(1.25rem, 1.1rem + 0.8vw, 1.625rem);
+	font-weight: 500;
+	line-height: 1.35;
+	letter-spacing: var(--im-tracking-tight);
+	text-align: center;
+	text-wrap: balance;
+}
+
+:is(.im-prose, .im-content) blockquote.kg-blockquote-alt::before {
+	content: "+";
+	top: 0;
+	left: 0;
+	translate: -50% -52%;
+	color: var(--im-faint);
+	font-family: var(--im-font-mono);
+	font-size: 1rem;
+}
+
+:is(.im-prose, .im-content) blockquote.kg-blockquote-alt::after {
+	content: "+";
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	translate: 50% 52%;
+	color: var(--im-faint);
+	font-family: var(--im-font-mono);
+	font-size: 1rem;
+	font-weight: 400;
+	line-height: 1;
+}
+
+/* ---- tables ----
+   im-content.js wraps each in .im-table-scroll. Without it a table still
+   scrolls on its own, as a block. */
+.im-content > table {
+	display: block;
+	max-width: 100%;
+	overflow-x: auto;
+}
+
+.im-content table {
+	font-variant-numeric: tabular-nums;
+}
+
+.im-content thead th {
+	background-color: var(--im-surface);
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	font-weight: 500;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+.im-content tbody tr {
+	transition: background-color 120ms;
+}
+
+.im-content tbody tr:hover {
+	background-color: var(--im-surface);
+}
+
+.im-content tbody td:first-child {
+	color: var(--im-ink);
+	font-weight: 500;
+}
+
+/* ---- footnotes (Markdown card) ---- */
+.im-content .footnote-ref > a,
+.im-content sup > a {
+	padding-inline: 0.15em;
+	color: var(--im-accent);
+	font-family: var(--im-font-mono);
+	font-size: 0.85em;
+	text-decoration: none;
+}
+
+.im-content .footnotes-sep {
+	display: none;
+}
+
+.im-content .footnotes {
+	margin-top: calc(var(--im-flow) * 2.5);
+	padding-top: 1.25rem;
+	border-top: 1px solid var(--im-line);
+	color: var(--im-muted);
+	font-size: var(--im-text-sm);
+}
+
+.im-content .footnotes::before {
+	content: "Notes";
+	display: block;
+	margin-bottom: 0.75rem;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.im-content .footnote-backref {
+	margin-left: 0.25rem;
+	text-decoration: none;
+}
+
+/* A heading reached by an anchor link flashes its marker. */
+.im-content :is(h2, h3, h4):target {
+	text-decoration: underline;
+	text-decoration-color: var(--im-accent);
+	text-decoration-thickness: 2px;
+	text-underline-offset: 0.25em;
+}

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="{{@site.locale}}">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>{{meta_title}}</title>
+	<meta name="description" content="{{#if page.description}}{{page.description}}{{else}}{{@site.description}}{{/if}}">
+	{{> "shell/head-script"}}
+	{{!-- Docs only: which STYLE SCOPE the site is shown in. A theme would simply
+	     write <html data-im-style="swiss"> — or leave it off for the soft look. --}}
+	<script>(function(){var s;try{s=localStorage.getItem('im-style')}catch(e){}document.documentElement.dataset.imStyle=s==='soft'?'soft':'swiss';var t;try{t=localStorage.getItem('im-transition')}catch(e){}document.documentElement.dataset.imTransition=t||'rise'})();</script>
+	<link rel="preload" href="/assets/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+	{{ghost_head}}
+	<link rel="stylesheet" href="/assets/im.css">
+	<link rel="stylesheet" href="/assets/docs.css">
+	{{{block "styles"}}}
+</head>
+<body>
+	<a class="im-btn im-btn-ink skip-link" href="#main">{{t "Skip to content"}}</a>
+
+	<div class="im-shell">
+		{{#> "shell/topbar" search_custom=true github="https://github.com/imswarnil" end="docs/topbar-end"}}
+			<span class="im-badge im-badge-outline max-sm:hidden">v0.6</span>
+		{{/"shell/topbar"}}
+
+		<aside class="im-sidenav" aria-label="{{t "Documentation"}}">
+			<nav class="im-navgroup" aria-label="{{t "Documentation"}}">{{> "docs/nav"}}</nav>
+			<p class="im-sidenav-foot">Tailwind 4 · Ghost 6</p>
+		</aside>
+
+		<main class="im-shell-main" id="main">
+			{{{body}}}
+		</main>
+
+		<footer class="im-shell-foot">
+			<span>© {{name}}. Original work — see <a href="/provenance/">provenance</a>.</span>
+			<span class="im-cluster"><a href="/getting-started/">Getting started</a><a href="/sections/">Sections</a></span>
+		</footer>
+	</div>
+
+	<dialog class="im-navpanel" id="drawer" aria-label="{{t "Navigation"}}">
+		<div class="im-navpanel-head">
+			<a class="im-brand" href="/">{{@site.title}}</a>
+			<button class="im-btn im-btn-ghost im-btn-icon" type="button" data-drawer-close aria-label="{{t "Close"}}">{{> "icons/x"}}</button>
+		</div>
+		<nav class="im-navpanel-grid" aria-label="{{t "Documentation"}}">{{> "docs/nav-panel"}}</nav>
+		<div class="im-navpanel-foot">
+			{{> "components/theme-button"}}
+			<a class="im-btn im-btn-ghost im-btn-icon" href="https://github.com/imswarnil" target="_blank" rel="noopener noreferrer" aria-label="GitHub">{{> "icons/brand-github"}}</a>
+			<a class="im-btn im-btn-primary im-btn-sm" style="margin-left: auto" href="/getting-started/">Get started {{> "icons/arrow-right"}}</a>
+		</div>
+	</dialog>
+
+	<dialog class="search" id="search" aria-label="{{t "Search"}}">
+		<form method="dialog" class="search-form">
+			{{> "icons/search"}}
+			<input type="search" placeholder="Search the docs…" autocomplete="off" aria-label="Search">
+			<kbd>esc</kbd>
+		</form>
+		<ul class="search-results"></ul>
+		<script type="application/json" id="search-index">{{{search_index}}}</script>
+	</dialog>
+
+	<script src="/assets/im.js"></script>
+	<script src="/assets/im-code.js"></script>
+	<script src="/assets/im-motion.js"></script>
+	<script src="/assets/im-media.js"></script>
+	<script src="/assets/im-charts.js"></script>
+	<script src="/assets/im-content.js"></script>
+	<script src="/assets/docs.js"></script>
+	{{{block "scripts"}}}
+</body>
+</html>

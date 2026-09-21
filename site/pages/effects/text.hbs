@@ -1,0 +1,106 @@
+---
+title: Text effects
+description: Decoration for a headline, as single classes. Put one on the heading, or on a span around a few words. Each degrades to plain text, and all motion stops under reduced motion.
+eyebrow: Effects
+source: src/effects/text.css · src/js/im-motion.js
+---
+<h2>Gradient</h2>
+{{#example}}
+<p class="text-display font-semibold tracking-tighter"><span class="im-fx-gradient">Ink into accent.</span></p>
+<p class="text-h1 font-semibold tracking-tight mt-4"><span class="im-fx-gradient" style="--im-fx-from: var(--im-info); --im-fx-to: var(--im-success); --im-fx-angle: 90deg">Any two colours, any angle.</span></p>
+{{/example}}
+<p><code>--im-fx-from</code>, <code>--im-fx-to</code>, <code>--im-fx-angle</code>. The text must stay legible at both ends of the gradient — check the lighter end against the background.</p>
+
+<h2>Shine</h2>
+{{#example}}
+<p class="text-display font-semibold tracking-tighter"><span class="im-fx-shine">A light passes over it.</span></p>
+{{/example}}
+<p>A highlight sweeps across, forever. <code>--im-fx-speed</code> (3.2s). For a word that is loading, or one line on a launch page — not for body copy.</p>
+
+<h2>Outline</h2>
+{{#example}}
+<p class="text-display font-bold tracking-tighter"><span class="im-fx-outline">Stroke, no fill.</span></p>
+<p class="text-display font-bold tracking-tighter mt-2"><span class="im-fx-outline im-fx-outline-fill">Hover to fill me.</span></p>
+{{/example}}
+<p><code>--im-fx-stroke</code> (1.5px). Needs a heavy weight and a large size; thin outlined text is unreadable.</p>
+
+<h2>Highlighter</h2>
+{{#example}}
+<p class="text-h1 font-semibold tracking-tight" data-im-reveal="none" style="max-width: 24ch">The part that matters is <span class="im-fx-marker">run over with a yellow highlighter</span> as you reach it.</p>
+<p class="text-lg mt-6 leading-loose">Other inks: <span class="im-fx-marker im-fx-marker-on">yellow</span>, <span class="im-fx-marker im-fx-marker-pink im-fx-marker-on">pink</span>, <span class="im-fx-marker im-fx-marker-green im-fx-marker-on">green</span>, <span class="im-fx-marker im-fx-marker-blue im-fx-marker-on">blue</span>, <span class="im-fx-marker im-fx-marker-accent im-fx-marker-on">the accent</span> — and <span class="im-fx-marker im-fx-marker-full im-fx-marker-on">full height</span>, a swipe over the whole line.</p>
+{{/example}}
+<p><code>im-fx-marker</code> is highlighter <strong>yellow</strong> by default, with slightly slanted, uneven ends like a real pen stroke. It draws itself when an ancestor with <code>data-im-reveal</code> is revealed, or on hover; <code>im-fx-marker-on</code> keeps it on. The ink is behind the words and re-mixed for dark mode, so the text keeps its own colour and stays readable. It follows the text across line breaks.</p>
+
+<h2>Hand-drawn circle</h2>
+{{#example}}
+<p class="text-display font-semibold tracking-tighter" style="max-width: 16ch">Draw a <span data-im-scribble="circle">circle</span> round the word that matters.</p>
+<p class="text-h2 font-semibold tracking-tight mt-8">Or <span data-im-scribble="underline">underline it</span>, <span data-im-scribble="box" style="--im-fx-scribble: var(--im-info)">box it</span>, or <span data-im-scribble="strike" style="--im-fx-scribble: var(--im-danger)">strike it out</span>.</p>
+{{/example}}
+<p><code>data-im-scribble="circle"</code> — also <code>underline</code>, <code>box</code>, <code>strike</code>. <code>im-motion.js</code> adds a hand-drawn SVG path stretched to the phrase (so it fits any words at any size) and the pen <strong>draws it in</strong> when it scrolls into view. <code>--im-fx-scribble</code> is the ink (the accent by default); <code>--im-fx-stroke</code> its weight. Keep the phrase on one line — a circle cannot wrap.</p>
+
+<h2>Wiggle, wave, breathe</h2>
+<p>Per-letter motion. The letters must be split: add <code>data-im-split="chars"</code>.</p>
+{{#example}}
+<p class="text-display font-semibold tracking-tighter"><span class="im-fx-wiggle" data-im-split="chars">Wiggle</span> · <span class="im-fx-wave" data-im-split="chars">Wave</span></p>
+<p class="text-display tracking-tighter mt-4"><span class="im-fx-breathe" data-im-split="chars">Breathe in, breathe out</span></p>
+<p class="text-h2 font-semibold tracking-tight mt-6"><span class="im-fx-wiggle im-fx-hover" data-im-split="chars">Only when hovered — add im-fx-hover</span></p>
+{{/example}}
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Class</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>im-fx-wiggle</code></td><td>Each letter rocks, out of step with its neighbours.</td></tr>
+		<tr><td><code>im-fx-wave</code></td><td>A wave passes along the word.</td></tr>
+		<tr><td><code>im-fx-breathe</code></td><td>Each letter's <strong>weight</strong> swells and thins in turn — possible only because Geist is a variable font.</td></tr>
+		<tr><td><code>im-fx-hover</code></td><td>Runs only while hovered.</td></tr>
+	</tbody>
+</table>
+</div>
+<p>A screen reader still gets the word whole: the letters are hidden from it and the element is labelled with the full text.</p>
+
+<h2>Stack</h2>
+{{#example}}
+<p class="text-display font-bold tracking-tighter"><span class="im-fx-stack">Poster lettering.</span></p>
+{{/example}}
+<p>A hard, stepped shadow in the accent. Sized in <code>em</code>, so it scales with the type.</p>
+
+<h2>Pixel</h2>
+{{#example}}
+<p class="text-display tracking-tight"><span class="im-pixel">Geist Pixel, </span><span class="font-semibold">beside Geist.</span></p>
+{{/example}}
+<p>Not an effect so much as a voice: <code>im-pixel</code> sets Geist Pixel. One word or one line in a heading is the dose.</p>
+
+<h2>Typewriter</h2>
+{{#example}}
+<p class="text-h2"><span class="im-fx-typewriter" data-replay style="--im-fx-chars: 26">npm install im-design-system</span></p>
+{{/example}}
+<p>Types itself once, with a caret. It is set in Geist Mono because it <em>needs</em> a monospaced face — the width is counted in characters: <code>style="--im-fx-chars: 26"</code>.</p>
+
+<h2>Glitch</h2>
+{{#example}}
+<p class="text-display font-bold tracking-tighter"><span class="im-fx-glitch" data-text="Signal lost">Signal lost</span></p>
+{{/example}}
+<p>Two offset, clipped copies flicker now and then. It needs the text a second time, in <code>data-text</code>. Use sparingly: it is the loudest thing here.</p>
+
+<h2>Split reveal</h2>
+<p><code>data-im-split="words"</code> (or <code>"chars"</code>): <code>im-motion.js</code> wraps each unit so the text arrives piece by piece when it scrolls into view. Screen readers still get the sentence whole — the pieces are hidden from them and the element is labelled with the full text.</p>
+{{#example}}
+<h3 class="text-display font-semibold tracking-tighter" data-im-split="words" style="max-width: 16ch">Every word arrives on its own beat.</h3>
+<p class="im-pixel text-h1 text-ink mt-6" data-im-split="chars" style="--im-fx-split-step: 35ms">CHARACTER BY CHARACTER</p>
+{{/example}}
+
+<h2>Scramble</h2>
+{{#example}}
+<p class="font-mono text-h2 text-ink" data-im-scramble>Resolving out of noise…</p>
+{{/example}}
+<p><code>data-im-scramble</code>: the text resolves, left to right, out of random glyphs when revealed. Monospace keeps it from jittering.</p>
+
+<h2>Combining, and restraint</h2>
+{{#example}}
+<h3 class="text-display font-semibold tracking-tighter" style="max-width: 18ch">Build the theme <span class="im-fx-gradient">you would buy</span>, <span class="im-pixel">then ship it.</span></h3>
+{{/example}}
+<ul>
+	<li><strong>One effect per headline</strong>, on a few words, not the whole line.</li>
+	<li><strong>Never on body text</strong> or anything a visitor must read to proceed.</li>
+	<li><strong>Looping effects (shine, glitch) at most once per view.</strong></li>
+</ul>

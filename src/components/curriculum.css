@@ -1,0 +1,251 @@
+/* Curriculum — the navigation of a course: modules that open, lessons inside
+   them with their state, and how far along you are.
+
+   <button class="im-btn im-curriculum-open" data-im-curriculum-open="#course">{{> "icons/menu"}} Curriculum</button>
+   <aside class="im-curriculum" id="course" aria-label="Course curriculum">
+     <header class="im-curriculum-head"> title · progress </header>
+     <details class="im-module" open>
+       <summary><span class="im-module-index">01</span><span class="im-module-title">Foundations</span><small>3 / 4</small></summary>
+       <ol class="im-lessons">
+         <li><a class="im-lesson" href="…" data-state="done"> <span class="im-lesson-mark"></span> <span>Lesson</span> <small>6:20</small> </a></li>
+       </ol>
+     </details>
+   </aside>
+
+   From lg it is a sticky column beside the lesson. Below lg it is off-screen and
+   the open button shows; pressed, it slides in as a panel over the page.
+   Lesson states: done · current (aria-current="page") · locked. */
+
+.im-curriculum {
+	--im-curriculum-width: 20rem;
+
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+	border: 1px solid var(--im-line);
+	border-radius: var(--im-radius-lg);
+	background-color: var(--im-canvas);
+	font-size: var(--im-text-sm);
+}
+
+.im-curriculum-head {
+	display: flex;
+	flex-direction: column;
+	gap: 0.625rem;
+	padding: 1rem 1.125rem;
+	border-bottom: 1px solid var(--im-line);
+}
+
+.im-curriculum-title {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.75rem;
+	color: var(--im-ink);
+	font-size: var(--im-text-base);
+	font-weight: 600;
+	letter-spacing: var(--im-tracking-tight);
+}
+
+.im-curriculum-close {
+	display: none;
+}
+
+.im-curriculum-progress {
+	display: flex;
+	align-items: center;
+	gap: 0.625rem;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+}
+
+.im-curriculum-progress > .im-progress {
+	flex: 1 1 0;
+}
+
+.im-module + .im-module {
+	border-top: 1px solid var(--im-line);
+}
+
+.im-module > summary {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr) auto auto;
+	align-items: center;
+	gap: 0.625rem;
+	padding: 0.8125rem 1.125rem;
+	color: var(--im-ink);
+	font-weight: 600;
+	list-style: none;
+	cursor: pointer;
+	transition: background-color 120ms;
+}
+
+.im-module > summary::-webkit-details-marker {
+	display: none;
+}
+
+.im-module > summary:hover {
+	background-color: var(--im-surface);
+}
+
+.im-module > summary::after {
+	content: "";
+	width: 0.375rem;
+	height: 0.375rem;
+	border-right: 1.5px solid var(--im-muted);
+	border-bottom: 1.5px solid var(--im-muted);
+	rotate: -45deg;
+	transition: rotate 160ms var(--im-ease-out);
+}
+
+.im-module[open] > summary::after {
+	rotate: 45deg;
+}
+
+.im-module-index {
+	color: var(--im-accent);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	font-weight: 500;
+}
+
+.im-module > summary > small {
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	font-weight: 400;
+}
+
+.im-lessons {
+	display: flex;
+	flex-direction: column;
+	padding: 0 0.5rem 0.5rem;
+}
+
+.im-lesson {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr) auto;
+	align-items: center;
+	gap: 0.625rem;
+	min-height: 2.25rem;
+	padding: 0.25rem 0.625rem;
+	border-radius: var(--im-radius-md);
+	color: var(--im-body);
+	text-decoration: none;
+	transition: background-color 120ms, color 120ms;
+}
+
+.im-lesson:hover {
+	background-color: var(--im-surface);
+	color: var(--im-ink);
+}
+
+.im-lesson > small {
+	color: var(--im-faint);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	font-variant-numeric: tabular-nums;
+}
+
+/* The mark: an empty ring, a filled tick, the accent for "you are here", a lock. */
+.im-lesson-mark {
+	display: grid;
+	place-items: center;
+	width: 1.125rem;
+	height: 1.125rem;
+	border-radius: 50%;
+	box-shadow: inset 0 0 0 1.5px var(--im-faint);
+	color: transparent;
+	font-size: 0.6875rem;
+}
+
+.im-lesson[data-state="done"] > .im-lesson-mark {
+	background-color: var(--im-ink);
+	box-shadow: none;
+	color: var(--im-canvas);
+}
+
+.im-lesson[data-state="done"] {
+	color: var(--im-muted);
+}
+
+.im-lesson[aria-current="page"] {
+	background-color: var(--im-surface);
+	color: var(--im-ink);
+	font-weight: 600;
+}
+
+.im-lesson[aria-current="page"] > .im-lesson-mark {
+	background-color: var(--im-accent);
+	box-shadow: 0 0 0 3px var(--im-accent-tint);
+}
+
+.im-lesson[data-state="locked"] {
+	color: var(--im-faint);
+	pointer-events: none;
+}
+
+.im-lesson[data-state="locked"] > .im-lesson-mark {
+	box-shadow: none;
+	color: var(--im-faint);
+	font-size: 0.875rem;
+}
+
+/* ---- layout: lesson + curriculum ---- */
+.im-course {
+	display: grid;
+	gap: 1.5rem;
+}
+
+.im-curriculum-open {
+	justify-self: start;
+}
+
+@media (width >= 64rem) {
+	.im-course {
+		grid-template-columns: minmax(0, 1fr) var(--im-curriculum-width, 20rem);
+		align-items: start;
+	}
+
+	.im-course > .im-curriculum {
+		position: sticky;
+		top: calc(var(--im-bar-height) + 1.25rem);
+		max-height: calc(100dvh - var(--im-bar-height) - 2.5rem);
+		overflow-y: auto;
+		scrollbar-width: thin;
+	}
+
+	.im-course .im-curriculum-open {
+		display: none;
+	}
+}
+
+/* Below lg: a panel that slides in over the page. */
+@media (width < 64rem) {
+	.im-course > .im-curriculum {
+		position: fixed;
+		inset: 0 0 0 auto;
+		z-index: 70;
+		width: min(var(--im-curriculum-width), 88vw);
+		border: 0;
+		border-left: 1px solid var(--im-line);
+		border-radius: 0;
+		overflow-y: auto;
+		overscroll-behavior: contain;
+		translate: 100% 0;
+		visibility: hidden;
+		transition: translate 280ms var(--im-ease-out), visibility 0s 280ms;
+	}
+
+	.im-course > .im-curriculum[data-im-open] {
+		translate: 0 0;
+		visibility: visible;
+		box-shadow: 0 0 0 100vmax var(--im-scrim);
+		transition: translate 280ms var(--im-ease-out);
+	}
+
+	.im-course .im-curriculum-close {
+		display: inline-flex;
+	}
+}

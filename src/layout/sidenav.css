@@ -1,0 +1,211 @@
+/* Sidenav — links, optionally grouped. One class, .im-navlink, is the whole
+   vocabulary, and the same markup is reused inside the phone drawer.
+
+   A group that opens is an ORDINARY row with a chevron — .im-navtree, a native
+   <details> — so it looks exactly like every other menu item. */
+
+.im-sidenav {
+	grid-area: nav;
+	position: sticky;
+	top: var(--im-bar-height);
+	align-self: start;
+	display: flex;
+	flex-direction: column;
+	gap: 0.875rem;
+	height: calc(100dvh - var(--im-bar-height));
+	padding: 0.75rem 0.625rem;
+	overflow: hidden auto;
+	overscroll-behavior: contain;
+	scrollbar-width: thin;
+	scrollbar-color: transparent transparent;
+}
+
+.im-sidenav:hover {
+	scrollbar-color: var(--im-surface-3) transparent;
+}
+
+.im-navgroup {
+	display: flex;
+	flex-direction: column;
+	gap: 0.125rem;
+}
+
+.im-navgroup-title {
+	padding: 0.375rem 0.625rem 0.25rem;
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+	font-weight: 500;
+	white-space: nowrap;
+}
+
+.im-navlink {
+	display: flex;
+	align-items: center;
+	gap: 0.625rem;
+	min-height: 2.25rem;
+	padding: 0.25rem 0.625rem;
+	border-radius: var(--im-radius-md);
+	color: var(--im-ink);
+	font-family: var(--im-font-body);
+	font-size: var(--im-text-sm);
+	font-weight: 500;
+	text-decoration: none;
+	white-space: nowrap;
+	cursor: pointer;
+	transition: background-color 120ms;
+}
+
+.im-navlink > .im-icon {
+	flex: none;
+	font-size: 1.125rem;
+	stroke-width: 1.7;
+	color: var(--im-muted);
+	transition: color 120ms;
+}
+
+.im-navlink > span {
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.im-navlink:hover,
+.im-navlink:focus-visible {
+	background-color: var(--im-surface);
+	color: var(--im-ink);
+}
+
+.im-navlink:hover > .im-icon,
+.im-navlink[aria-current="page"] > .im-icon {
+	color: var(--im-ink);
+}
+
+.im-navlink[aria-current="page"] {
+	background-color: var(--im-surface-2);
+}
+
+/* A count or a badge at the end of a link. */
+.im-navlink > .im-badge,
+.im-navlink > small {
+	margin-left: auto;
+}
+
+.im-navlink > small {
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+	font-weight: 400;
+}
+
+.im-sidenav-foot {
+	margin-top: auto;
+	padding: 1rem 0.625rem 0.25rem;
+	border-top: 1px solid var(--im-line);
+	color: var(--im-muted);
+	font-size: var(--im-text-sm);
+}
+
+/* ---- tree: a menu item that opens ----
+   <details class="im-navtree" open>
+     <summary class="im-navlink">{{> "icons/layers"}}<span>Projects</span></summary>
+     <div class="im-navtree-items"> <a class="im-navlink" href="…"><span>Case studies</span></a> … </div>
+   </details>
+   Keyboard, open state and find-in-page come from the browser. */
+.im-navtree > summary {
+	list-style: none;
+	user-select: none;
+}
+
+.im-navtree > summary::-webkit-details-marker {
+	display: none;
+}
+
+.im-navtree > summary::after {
+	content: "";
+	flex: none;
+	width: 0.375rem;
+	height: 0.375rem;
+	margin-left: auto;
+	margin-right: 0.25rem;
+	border-right: 1.5px solid var(--im-muted);
+	border-bottom: 1.5px solid var(--im-muted);
+	rotate: -45deg;
+	transition: rotate 160ms var(--im-ease-out);
+}
+
+.im-navtree[open] > summary::after {
+	rotate: 45deg;
+}
+
+.im-navtree-items {
+	display: flex;
+	flex-direction: column;
+	gap: 0.125rem;
+	margin: 0.125rem 0 0.375rem 1.1875rem;
+	padding-left: 0.5rem;
+	border-left: 1px solid var(--im-line);
+}
+
+.im-navtree-items > .im-navlink {
+	min-height: 2rem;
+	color: var(--im-body);
+	font-weight: 400;
+}
+
+.im-navtree-items > .im-navlink[aria-current="page"] {
+	color: var(--im-ink);
+	font-weight: 500;
+}
+
+/* The group that holds the current page reads as current too. */
+.im-navtree:has([aria-current="page"]) > summary > .im-icon {
+	color: var(--im-ink);
+}
+
+/* ---- rail: icons only ----
+   Between md and lg always, and from lg up when the visitor collapses it.
+   Labels stay in the DOM; each link's `title` is the tooltip. A tree shows
+   only its own icon. */
+@media (width < 48rem) {
+	.im-sidenav {
+		display: none;
+	}
+}
+
+@media (width >= 48rem) and (width < 64rem) {
+	.im-sidenav :is(.im-navlink > span, .im-navlink > small, .im-navlink > .im-badge, .im-navgroup-title, .im-sidenav-foot, .im-navtree-items) {
+		display: none;
+	}
+
+	.im-sidenav .im-navtree > summary::after {
+		display: none;
+	}
+
+	.im-sidenav .im-navlink {
+		justify-content: center;
+		min-height: 2.5rem;
+		padding-inline: 0;
+	}
+
+	.im-sidenav .im-navlink > .im-icon {
+		font-size: 1.1875rem;
+	}
+}
+
+@media (width >= 64rem) {
+	[data-nav="rail"] .im-sidenav :is(.im-navlink > span, .im-navlink > small, .im-navlink > .im-badge, .im-navgroup-title, .im-sidenav-foot, .im-navtree-items) {
+		display: none;
+	}
+
+	[data-nav="rail"] .im-sidenav .im-navtree > summary::after {
+		display: none;
+	}
+
+	[data-nav="rail"] .im-sidenav .im-navlink {
+		justify-content: center;
+		min-height: 2.5rem;
+		padding-inline: 0;
+	}
+
+	[data-nav="rail"] .im-sidenav .im-navlink > .im-icon {
+		font-size: 1.1875rem;
+	}
+}

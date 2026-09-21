@@ -1,0 +1,65 @@
+---
+title: Quotes, tables & notes
+description: The blocks between paragraphs — two kinds of quotation, tables that scroll inside their own box, and footnotes.
+eyebrow: Content
+source: src/components/content.css · src/foundation/base/prose.css
+---
+<h2>Blockquote</h2>
+<p>A hanging quotation mark in <strong>Geist Pixel</strong>, in the accent — not a coloured bar down the side. A <code>&lt;cite&gt;</code> or <code>&lt;footer&gt;</code> inside becomes a mono caption.</p>
+{{#example code=false}}
+<div class="im-content im-content-flush">
+	<blockquote>
+		<p>Tidy first, then change. The tidying is most of the work, and it is the part nobody budgets for.</p>
+		<cite>A note to myself, 2024</cite>
+	</blockquote>
+</div>
+{{/example}}
+
+<h3>The alternative quote</h3>
+<p>The editor's second style (press the quote button twice) prints <code>&lt;blockquote class="kg-blockquote-alt"&gt;</code>. Here it is a pull quote: centred, larger, between two hairlines that end in registration marks — the <a href="/layout/swiss/">Swiss frame</a>, in miniature.</p>
+{{#example code=false}}
+<div class="im-content im-content-flush">
+	<blockquote class="kg-blockquote-alt">Nobody on this road wants to arrive.</blockquote>
+</div>
+{{/example}}
+
+<h2>Table</h2>
+<p>From a Markdown or HTML card. Column heads are mono captions on a surface; the first column is ink; rows answer the pointer; numbers line up (<code>tabular-nums</code>). <code>im-content.js</code> wraps each table in <code>im-table-scroll</code>, so a wide one scrolls <strong>inside its own box</strong> instead of pushing the page sideways — and without the script it still scrolls, as a block.</p>
+{{#example code=false}}
+<div class="im-content im-content-flush">
+	<table>
+		<thead><tr><th>City</th><th>Rent, 1-bed</th><th>Transit pass</th><th>Coffee</th><th>Verdict</th></tr></thead>
+		<tbody>
+			<tr><td>Amsterdam</td><td>€1,950</td><td>€105</td><td>€3.80</td><td>Lovely, and you will pay for it</td></tr>
+			<tr><td>Budapest</td><td>€780</td><td>€24</td><td>€2.40</td><td>The best value on this list</td></tr>
+			<tr><td>Lisbon</td><td>€1,350</td><td>€40</td><td>€1.20</td><td>Cheap coffee, expensive everything else</td></tr>
+			<tr><td>Berlin</td><td>€1,400</td><td>€58</td><td>€3.50</td><td>Finding the flat is the hard part</td></tr>
+		</tbody>
+	</table>
+</div>
+{{/example}}
+
+<h2>Footnotes</h2>
+<p>Markdown cards support footnotes. The reference is a small mono number in the accent; the notes sit under a rule, captioned.</p>
+{{#example code=false}}
+<div class="im-content im-content-flush">
+	<p>Rents in the centre rose by a fifth in two years<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>, while salaries did not<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>.</p>
+	<hr class="footnotes-sep">
+	<section class="footnotes">
+		<ol class="footnotes-list">
+			<li id="fn1" class="footnote-item"><p>Asking rents, from listings — not what sitting tenants pay. <a href="#fnref1" class="footnote-backref">↩︎</a></p></li>
+			<li id="fn2" class="footnote-item"><p>Median, all sectors. <a href="#fnref2" class="footnote-backref">↩︎</a></p></li>
+		</ol>
+	</section>
+</div>
+{{/example}}
+
+<h2>Code</h2>
+<p>A code card is the system's own <a href="/components/code/">code block</a> — dark in both themes, highlighted by <code>im-code.js</code>, with a copy button. The card's caption sits beneath it.</p>
+{{#example code=false}}
+<div class="im-content im-content-flush">
+<figure class="kg-card kg-code-card kg-card-hascaption"><pre><code class="language-bash">sf org create scratch --definition-file config/project-scratch-def.json --alias dev
+sf project deploy start --target-org dev
+sf apex run test --target-org dev --wait 10</code></pre><figcaption>Three commands from nothing to a tested org.</figcaption></figure>
+</div>
+{{/example}}

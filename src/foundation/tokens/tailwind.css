@@ -1,0 +1,120 @@
+/* The bridge. Tailwind reads its theme from fixed namespaces (--color-*,
+   --text-*, --radius-* …); each one here simply points at an --im-* token.
+
+   `inline` makes a utility compile to the token itself —
+       .bg-surface { background-color: var(--im-surface) }
+   so the --im-* variables stay the single source of truth, and dark mode
+   reaches every utility for free. `--x-*: initial` first clears Tailwind's
+   own scale: bg-red-500 or text-2xl do not exist here. Spacing keeps
+   Tailwind's arithmetic (p-4 = 4 × --im-space) and breakpoints are Tailwind's. */
+
+@theme inline {
+	--color-*: initial;
+	--color-white: var(--im-white);
+	--color-black: var(--im-black);
+	--color-gray-50: var(--im-gray-50);
+	--color-gray-100: var(--im-gray-100);
+	--color-gray-200: var(--im-gray-200);
+	--color-gray-300: var(--im-gray-300);
+	--color-gray-400: var(--im-gray-400);
+	--color-gray-500: var(--im-gray-500);
+	--color-gray-600: var(--im-gray-600);
+	--color-gray-700: var(--im-gray-700);
+	--color-gray-800: var(--im-gray-800);
+	--color-gray-900: var(--im-gray-900);
+	--color-gray-950: var(--im-gray-950);
+	--color-canvas: var(--im-canvas);
+	--color-surface: var(--im-surface);
+	--color-surface-2: var(--im-surface-2);
+	--color-surface-3: var(--im-surface-3);
+	--color-line: var(--im-line);
+	--color-scrim: var(--im-scrim);
+	--color-ink: var(--im-ink);
+	--color-body: var(--im-body);
+	--color-muted: var(--im-muted);
+	--color-faint: var(--im-faint);
+	--color-accent: var(--im-accent);
+	--color-on-accent: var(--im-on-accent);
+	--color-accent-tint: var(--im-accent-tint);
+	--color-success: var(--im-success);
+	--color-warning: var(--im-warning);
+	--color-danger: var(--im-danger);
+	--color-info: var(--im-info);
+	--color-success-tint: var(--im-success-tint);
+	--color-warning-tint: var(--im-warning-tint);
+	--color-danger-tint: var(--im-danger-tint);
+	--color-info-tint: var(--im-info-tint);
+
+	--spacing: var(--im-space);
+
+	--font-*: initial;
+	--font-sans: var(--im-font-sans);
+	--font-mono: var(--im-font-mono);
+	--font-pixel: var(--im-font-pixel);
+	--font-heading: var(--im-font-heading);
+	--font-body: var(--im-font-body);
+
+	--text-*: initial;
+	--text-xs: var(--im-text-xs);
+	--text-xs--line-height: var(--im-leading-xs);
+	--text-sm: var(--im-text-sm);
+	--text-sm--line-height: var(--im-leading-sm);
+	--text-base: var(--im-text-base);
+	--text-base--line-height: var(--im-leading-base);
+	--text-lg: var(--im-text-lg);
+	--text-lg--line-height: var(--im-leading-lg);
+	--text-h6: var(--im-text-h6);
+	--text-h6--line-height: var(--im-leading-h6);
+	--text-h5: var(--im-text-h5);
+	--text-h5--line-height: var(--im-leading-h5);
+	--text-h4: var(--im-text-h4);
+	--text-h4--line-height: var(--im-leading-h4);
+	--text-h3: var(--im-text-h3);
+	--text-h3--line-height: var(--im-leading-h3);
+	--text-h2: var(--im-text-h2);
+	--text-h2--line-height: var(--im-leading-h2);
+	--text-h1: var(--im-text-h1);
+	--text-h1--line-height: var(--im-leading-h1);
+	--text-display: var(--im-text-display);
+	--text-display--line-height: var(--im-leading-display);
+
+	--font-weight-*: initial;
+	--font-weight-normal: var(--im-weight-normal);
+	--font-weight-medium: var(--im-weight-medium);
+	--font-weight-semibold: var(--im-weight-semibold);
+	--font-weight-bold: var(--im-weight-bold);
+
+	--tracking-*: initial;
+	--tracking-tight: var(--im-tracking-tight);
+	--tracking-tighter: var(--im-tracking-tighter);
+	--tracking-normal: var(--im-tracking-normal);
+	--tracking-wide: var(--im-tracking-wide);
+
+	--radius-*: initial;
+	--radius-xs: var(--im-radius-xs);
+	--radius-sm: var(--im-radius-sm);
+	--radius-md: var(--im-radius-md);
+	--radius-lg: var(--im-radius-lg);
+	--radius-xl: var(--im-radius-xl);
+	--radius-2xl: var(--im-radius-2xl);
+	--radius-full: var(--im-radius-full);
+
+	--shadow-*: initial;
+	--shadow-float: var(--im-shadow-float);
+
+	--container-*: initial;
+	--container-prose: var(--im-width-prose);
+	--container-page: var(--im-width-page);
+	--container-wide: var(--im-width-wide);
+
+	--breakpoint-3xl: 120rem;
+
+	--ease-*: initial;
+	--ease-out: var(--im-ease-out);
+	--ease-in-out: var(--im-ease-in-out);
+	--default-transition-duration: 160ms;
+	--default-transition-timing-function: var(--im-ease-out);
+}
+
+/* dark: follows the attribute, not the OS — the visitor's choice wins. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));

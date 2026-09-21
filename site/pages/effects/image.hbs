@@ -1,0 +1,104 @@
+---
+title: Image effects
+description: Treatments for a picture or a video. The class goes on the wrapper — a figure, a link — with the image inside it. im-fx-img is the shared base that clips, rounds and fills.
+eyebrow: Effects
+source: src/effects/image.css
+---
+<h2>The base</h2>
+{{{{code "hbs"}}}}
+<figure class="im-fx-img im-fx-colour" style="aspect-ratio: 4 / 3">
+	<img src="…" alt="…" loading="lazy">
+</figure>
+{{{{/code}}}}
+<p><code>im-fx-img</code> clips to a radius (<code>--im-fx-radius</code>), makes the image cover its box, and gives the effects a stacking context. Give the wrapper a shape — an <code>aspect-ratio</code> or a height.</p>
+
+<h2>Hover</h2>
+<p>Four that earn the name. Hover each.</p>
+{{#example}}
+<div class="im-grid-auto" style="--im-grid-min: 15rem">
+	<figure class="im-fx-img im-fx-colour" style="aspect-ratio: 4 / 3"><img src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></figure>
+	<figure class="im-fx-img im-fx-lens" style="aspect-ratio: 4 / 3; --im-fx-src: url('{{demo.three.[1].feature_image}}')"><img src="{{demo.three.[1].feature_image}}" alt="" loading="lazy"></figure>
+	<figure class="im-fx-img im-fx-glare" style="aspect-ratio: 4 / 3"><img src="{{demo.three.[2].feature_image}}" alt="" loading="lazy"></figure>
+	<figure class="im-fx-img im-fx-curtain" style="aspect-ratio: 4 / 3"><img src="{{demo.four.[3].feature_image}}" alt="" loading="lazy"><figcaption><span class="im-caption" style="color: inherit; opacity: .8">{{demo.four.[3].primary_tag.name}}</span><strong>{{demo.four.[3].title}}</strong><span>{{demo.four.[3].reading_time}} min read →</span></figcaption></figure>
+</div>
+{{/example}}
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Class</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>im-fx-colour</code></td><td>Black and white; the picture's colour returns as it pushes in. The default for a grid of mixed pictures — it makes them one set.</td></tr>
+		<tr><td><code>im-fx-lens</code></td><td>Black and white, and a <strong>circle of true colour follows the pointer</strong>. Give it the image again as <code>--im-fx-src: url(…)</code>; <code>--im-fx-lens</code> (7rem) is the radius. Needs <code>im-motion.js</code>.</td></tr>
+		<tr><td><code>im-fx-glare</code></td><td>A sheet of light crosses the picture once, as it pushes in.</td></tr>
+		<tr><td><code>im-fx-curtain</code></td><td>A panel in the accent rises over the picture carrying the caption, while the picture sinks behind it. On touch devices the caption is simply always shown, over a scrim.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h3>Focus group</h3>
+<p>Wrap several in <code>im-fx-group</code>: hover one and the others step back — dimmer, greyer, a hair smaller.</p>
+{{#example}}
+<div class="im-fx-group im-grid-auto" style="--im-grid-min: 11rem; --im-grid-gap: .75rem">
+	{{#foreach demo.four}}<figure class="im-fx-img" style="aspect-ratio: 1 / 1"><img src="{{feature_image}}" alt="" loading="lazy"></figure>{{/foreach}}
+</div>
+{{/example}}
+<p>To open a picture full-screen on click, that is the <a href="/media/gallery/">gallery &amp; lightbox</a>.</p>
+
+<h2>Tone</h2>
+{{#example}}
+<div class="im-grid-auto" style="--im-grid-min: 13rem">
+	<figure class="im-fx-img im-fx-duotone" style="aspect-ratio: 4 / 3"><img src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></figure>
+	<figure class="im-fx-img im-fx-duotone" style="aspect-ratio: 4 / 3; --im-fx-to: #4ac26b; --im-fx-from: #06281a"><img src="{{demo.three.[1].feature_image}}" alt="" loading="lazy"></figure>
+	<figure class="im-fx-img im-fx-duotone" style="aspect-ratio: 4 / 3; --im-fx-to: #6ea8fe; --im-fx-from: #0b1b3a"><img src="{{demo.three.[2].feature_image}}" alt="" loading="lazy"></figure>
+</div>
+{{/example}}
+<p><code>im-fx-duotone</code> maps shadows to <code>--im-fx-from</code> and highlights to <code>--im-fx-to</code> (the accent by default). It makes a set of unrelated photographs look like one series — useful for a feed of mixed stock and personal pictures.</p>
+
+<h2>Overlays</h2>
+{{#example}}
+<div class="im-grid-auto" style="--im-grid-min: 13rem">
+	<figure class="im-fx-img im-fx-vignette" style="aspect-ratio: 4 / 3"><img src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></figure>
+	<figure class="im-fx-img im-fx-scanlines" style="aspect-ratio: 4 / 3"><img src="{{demo.three.[1].feature_image}}" alt="" loading="lazy"></figure>
+	<figure class="im-fx-img im-fx-scanlines im-fx-vignette im-fx-colour" style="aspect-ratio: 4 / 3"><img src="{{demo.three.[2].feature_image}}" alt="" loading="lazy"></figure>
+</div>
+{{/example}}
+<p><code>im-fx-vignette</code> darkens the corners, which helps white text sit on a busy picture. <code>im-fx-scanlines</code> is a CRT texture. They combine with each other and with the hover effects.</p>
+
+<h2>Motion</h2>
+{{#example}}
+<div class="im-grid-auto" style="--im-grid-min: 13rem">
+	<figure class="im-fx-img im-fx-kenburns" style="aspect-ratio: 4 / 3"><img src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></figure>
+	<figure class="im-fx-img im-fx-reveal" data-im-reveal style="aspect-ratio: 4 / 3"><img src="{{demo.three.[1].feature_image}}" alt="" loading="lazy"></figure>
+	<figure class="im-fx-img im-fx-parallax" style="aspect-ratio: 4 / 3"><img src="{{demo.three.[2].feature_image}}" alt="" loading="lazy"></figure>
+</div>
+{{/example}}
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Class</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>im-fx-kenburns</code></td><td>A slow push and pan, for a hero or a slide.</td></tr>
+		<tr><td><code>im-fx-reveal</code> + <code>data-im-reveal</code></td><td>Wiped in from the left as it scrolls into view, while the picture settles from a slight zoom.</td></tr>
+		<tr><td><code>im-fx-parallax</code></td><td>The picture drifts inside its frame as the page scrolls. Pure CSS; in a browser without scroll timelines it is a still picture.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>Frame</h2>
+{{#example center=true surface=true}}
+<figure class="im-fx-img im-fx-frame" style="width: 16rem; aspect-ratio: 4 / 5"><img src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></figure>
+<figure class="im-fx-img im-fx-frame im-fx-glare" style="width: 16rem; aspect-ratio: 4 / 5"><img src="{{demo.three.[1].feature_image}}" alt="" loading="lazy"></figure>
+{{/example}}
+<p><code>im-fx-frame</code>: a mat, a hairline and the float shadow — a print on a wall. The second adds <code>im-fx-glare</code> — light across the glass.</p>
+
+<h2>With video</h2>
+<p>Everything works on a <code>&lt;video&gt;</code> too. For a poster that previews its video on hover, use the <a href="/components/carousel/#video-tiles">tile</a>.</p>
+{{#example style="max-width: 28rem"}}
+<figure class="im-fx-img im-fx-scanlines im-fx-vignette" style="aspect-ratio: 16 / 9"><video src="{{demo.video}}" muted loop playsinline autoplay></video></figure>
+{{/example}}
+
+<h2>Always</h2>
+<ul>
+	<li><strong>Write the <code>alt</code>.</strong> An effect changes how a picture looks, not whether it needs describing. Decorative pictures get <code>alt=""</code>.</li>
+	<li><strong>Give the wrapper a shape</strong> so the page does not jump when the image loads.</li>
+	<li><strong>One hover treatment per page.</strong> Pick <code>im-fx-colour</code> or <code>im-fx-glare</code> and use it everywhere; save the lens and the curtain for one special place.</li>
+	<li><strong>Do not hide meaning in a hover</strong> — a caption that only appears on hover must not be the only place that information lives.</li>
+</ul>

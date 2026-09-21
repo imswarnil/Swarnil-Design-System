@@ -1,0 +1,53 @@
+/* Avatar
+   <span class="avatar" data-initial="S"><img src="…" alt="…"></span>
+   No <img>: the initial shows. Sizes: avatar-sm · (default) · avatar-lg · avatar-xl */
+
+.im-avatar {
+	--im-avatar-size: 2.25rem;
+
+	position: relative;
+	display: inline-grid;
+	place-items: center;
+	flex: none;
+	width: var(--im-avatar-size);
+	height: var(--im-avatar-size);
+	border-radius: 50%;
+	overflow: hidden;
+	background-color: var(--im-surface-2);
+	color: var(--im-muted);
+	font-size: calc(var(--im-avatar-size) * 0.4);
+	font-weight: 600;
+	line-height: 1;
+	text-transform: uppercase;
+}
+
+.im-avatar::before {
+	content: attr(data-initial);
+}
+
+.im-avatar > img {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.im-avatar > .im-icon {
+	position: absolute;
+	font-size: calc(var(--im-avatar-size) * 0.5);
+}
+
+.im-avatar-sm { --im-avatar-size: 1.5rem; }
+.im-avatar-lg { --im-avatar-size: 3rem; }
+.im-avatar-xl { --im-avatar-size: 4.5rem; }
+
+/* Overlapping row of avatars. */
+.im-avatar-stack {
+	display: inline-flex;
+}
+
+.im-avatar-stack > .im-avatar + .im-avatar {
+	margin-left: calc(var(--im-avatar-size, 2.25rem) * -0.3);
+	box-shadow: 0 0 0 2px var(--im-canvas);
+}

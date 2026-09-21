@@ -1,0 +1,25 @@
+{{!-- The picture IS the player. Play opens nothing: the frame becomes a 16:9
+	screen where it stands (9:16 on a phone), the film plays inside it and the
+	cross puts the picture back. Nothing is fetched from YouTube until play is
+	pressed; the iframe is destroyed on close. No `video`, no play button. --}}
+<div class="im-hero__photo">
+	<figure class="im-hero__frame">
+		<div class="im-hero__mount" data-stage data-stage-video="{{video}}" data-stage-video-portrait="{{video_portrait}}">
+			<div class="im-hero__still">
+				{{#if @site.logo}}
+					<picture class="im-hero__image im-hero__image--logo">
+						<img src="{{img_url @site.logo size="l"}}" srcset="{{img_url @site.logo size="m"}} 750w, {{img_url @site.logo size="l"}} 1140w, {{img_url @site.logo size="xl"}} 1920w" sizes="(min-width: 56rem) 40vw, 92vw" alt="{{@site.title}}" width="1140" height="1425" fetchpriority="high" decoding="async">
+					</picture>
+				{{else if @site.cover_image}}
+					<picture class="im-hero__image">
+						<img src="{{img_url @site.cover_image size="l"}}" srcset="{{img_url @site.cover_image size="m"}} 750w, {{img_url @site.cover_image size="l"}} 1140w, {{img_url @site.cover_image size="xl"}} 1920w" sizes="(min-width: 56rem) 40vw, 92vw" alt="{{@site.title}}" width="1140" height="1425" fetchpriority="high" decoding="async">
+					</picture>
+				{{/if}}
+
+				<div class="im-hero__stage" data-stage-slot></div>
+			</div>
+
+			{{> "sections/home-hero-full/parts/controls"}}
+		</div>
+	</figure>
+</div>

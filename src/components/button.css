@@ -1,0 +1,289 @@
+/* Button
+   <a class="btn btn-primary" href="…">Label {{> "icons/arrow-right"}}</a>
+
+   Variants set colours; sizes set height. Nothing else differs. */
+
+.im-btn {
+	--im-btn-height: 2.5rem;
+	--im-btn-pad: 1.125rem;
+	--im-btn-radius: var(--im-radius-full);
+	--im-btn-bg: var(--im-surface);
+	--im-btn-fg: var(--im-ink);
+	--im-btn-bg-hover: var(--im-surface-2);
+	--im-btn-fg-hover: var(--im-ink);
+
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	min-height: var(--im-btn-height);
+	padding: 0 var(--im-btn-pad);
+	border-radius: var(--im-btn-radius);
+	background-color: var(--im-btn-bg);
+	color: var(--im-btn-fg);
+	font-family: var(--im-font-body);
+	font-size: var(--im-text-sm);
+	font-weight: 600;
+	line-height: 1.2;
+	text-align: center;
+	text-decoration: none;
+	white-space: nowrap;
+	cursor: pointer;
+	user-select: none;
+	transition: background-color 140ms, color 140ms, opacity 140ms, scale 140ms;
+}
+
+.im-btn:hover,
+.im-btn:focus-visible,
+.im-btn[aria-expanded="true"] {
+	background-color: var(--im-btn-bg-hover);
+	color: var(--im-btn-fg-hover);
+}
+
+.im-btn:active {
+	scale: 0.98;
+}
+
+.im-btn:disabled,
+.im-btn[aria-disabled="true"] {
+	opacity: 0.5;
+	cursor: not-allowed;
+	scale: 1;
+}
+
+.im-btn > .im-icon {
+	font-size: 1rem;
+	transition: translate 200ms var(--im-ease-out);
+}
+
+/* THE button interaction (there is one): it gives under the press, and a
+   TRAILING icon leans the way the button is going. Nothing else moves. */
+.im-btn:hover > .im-icon:last-child:not(:first-child) {
+	translate: 0.1875rem 0;
+}
+
+/* ---- variants ---- */
+.im-btn-primary {
+	--im-btn-bg: var(--im-accent);
+	--im-btn-fg: var(--im-on-accent);
+	--im-btn-bg-hover: var(--im-ink);
+	--im-btn-fg-hover: var(--im-canvas);
+}
+
+.im-btn-ink {
+	--im-btn-bg: var(--im-ink);
+	--im-btn-fg: var(--im-canvas);
+	--im-btn-bg-hover: var(--im-accent);
+	--im-btn-fg-hover: var(--im-on-accent);
+}
+
+.im-btn-ghost {
+	--im-btn-bg: transparent;
+	--im-btn-fg: var(--im-muted);
+	--im-btn-bg-hover: var(--im-surface-2);
+}
+
+.im-btn-outline {
+	--im-btn-bg: transparent;
+	--im-btn-bg-hover: var(--im-surface);
+
+	box-shadow: inset 0 0 0 1px var(--im-line);
+}
+
+.im-btn-danger {
+	--im-btn-bg: var(--im-danger);
+	--im-btn-fg: var(--im-white);
+	--im-btn-bg-hover: var(--im-ink);
+	--im-btn-fg-hover: var(--im-canvas);
+}
+
+/* ---- sizes ---- */
+.im-btn-sm {
+	--im-btn-height: 2rem;
+	--im-btn-pad: 0.875rem;
+
+	font-weight: 500;
+}
+
+.im-btn-lg {
+	--im-btn-height: 3rem;
+	--im-btn-pad: 1.5rem;
+
+	font-size: var(--im-text-base);
+}
+
+/* Square, for a lone icon. Always give it an aria-label. */
+.im-btn-icon {
+	--im-btn-pad: 0;
+
+	width: var(--im-btn-height);
+}
+
+.im-btn-icon > .im-icon {
+	font-size: 1.125rem;
+}
+
+.im-btn-block {
+	display: flex;
+	width: 100%;
+}
+
+/* Busy: set aria-busy="true"; the label hides and a spinner takes its place. */
+.im-btn[aria-busy="true"] {
+	position: relative;
+	color: transparent;
+	pointer-events: none;
+}
+
+.im-btn[aria-busy="true"]::after {
+	content: "";
+	position: absolute;
+	width: 1rem;
+	height: 1rem;
+	border: 2px solid var(--im-btn-fg);
+	border-right-color: transparent;
+	border-radius: 50%;
+	animation: im-btn-spin 700ms linear infinite;
+}
+
+@keyframes im-btn-spin {
+	to {
+		rotate: 360deg;
+	}
+}
+
+/* ---- icon position ----
+   An icon before or after the label needs nothing. For an icon that should
+   sit at the far edge of a wide button, push it with im-btn-icon-end. */
+.im-btn-icon-end > .im-icon:last-child {
+	margin-left: auto;
+}
+
+/* Stacked: icon above a short label — toolbars, tab bars. */
+.im-btn-stacked {
+	--im-btn-height: 3.75rem;
+	--im-btn-pad: 0.875rem;
+	--im-btn-radius: var(--im-radius-lg);
+
+	flex-direction: column;
+	gap: 0.25rem;
+	font-size: var(--im-text-xs);
+	font-weight: 500;
+}
+
+.im-btn-stacked > .im-icon {
+	font-size: 1.25rem;
+}
+
+/* ---- group ----
+   <div class="im-btn-group" role="group" aria-label="…"> … </div>
+   Buttons joined into one control. The pressed one is aria-pressed="true"
+   (or aria-current). im-btn-group-vertical stacks them. */
+.im-btn-group {
+	display: inline-flex;
+	border-radius: var(--im-btn-radius, var(--im-radius-full));
+	isolation: isolate;
+}
+
+.im-btn-group > .im-btn {
+	border-radius: 0;
+}
+
+.im-btn-group > .im-btn + .im-btn {
+	margin-left: 1px;
+}
+
+.im-btn-group > .im-btn:first-child {
+	border-start-start-radius: var(--im-btn-radius);
+	border-end-start-radius: var(--im-btn-radius);
+}
+
+.im-btn-group > .im-btn:last-child {
+	border-start-end-radius: var(--im-btn-radius);
+	border-end-end-radius: var(--im-btn-radius);
+}
+
+.im-btn-group > .im-btn:focus-visible {
+	z-index: 1;
+}
+
+.im-btn-group > .im-btn:is([aria-pressed="true"], [aria-current="true"], [aria-current="page"]) {
+	--im-btn-bg: var(--im-ink);
+	--im-btn-fg: var(--im-canvas);
+	--im-btn-bg-hover: var(--im-ink);
+	--im-btn-fg-hover: var(--im-canvas);
+}
+
+.im-btn-group-vertical {
+	flex-direction: column;
+	--im-btn-radius: var(--im-radius-lg);
+}
+
+.im-btn-group-vertical > .im-btn + .im-btn {
+	margin: 1px 0 0;
+}
+
+.im-btn-group-vertical > .im-btn:first-child {
+	border-radius: var(--im-btn-radius) var(--im-btn-radius) 0 0;
+}
+
+.im-btn-group-vertical > .im-btn:last-child {
+	border-radius: 0 0 var(--im-btn-radius) var(--im-btn-radius);
+}
+
+/* ---- social ----
+   <a class="im-btn im-btn-brand" data-brand="github" href="…">{{> "icons/brand-github"}} GitHub</a>
+   Solid in the service's own colour. im-btn-brand-soft stays neutral and only
+   takes the colour on hover — for a row of several. */
+.im-btn-brand {
+	--im-brand: var(--im-ink);
+	--im-btn-bg: var(--im-brand);
+	--im-btn-fg: #fff;
+	--im-btn-bg-hover: color-mix(in oklab, var(--im-brand) 82%, #000);
+	--im-btn-fg-hover: #fff;
+}
+
+.im-btn-brand-soft {
+	--im-btn-bg: var(--im-surface);
+	--im-btn-fg: var(--im-ink);
+	--im-btn-bg-hover: var(--im-brand);
+	--im-btn-fg-hover: #fff;
+}
+
+[data-brand="facebook"] { --im-brand: #1877f2; }
+[data-brand="linkedin"] { --im-brand: #0a66c2; }
+[data-brand="youtube"] { --im-brand: #f00; }
+[data-brand="instagram"] { --im-brand: #e4405f; }
+[data-brand="whatsapp"] { --im-brand: #128c4a; }
+[data-brand="reddit"] { --im-brand: #ff4500; }
+[data-brand="telegram"] { --im-brand: #1c93d3; }
+[data-brand="pinterest"] { --im-brand: #bd081c; }
+[data-brand="bluesky"] { --im-brand: #0a7aff; }
+[data-brand="mastodon"] { --im-brand: #6364ff; }
+[data-brand="rss"] { --im-brand: #ee802f; }
+
+/* X, GitHub, Threads and TikTok are black marks: ink, so they invert in dark. */
+:is([data-brand="x"], [data-brand="github"], [data-brand="threads"], [data-brand="tiktok"]).im-btn-brand {
+	--im-btn-fg: var(--im-canvas);
+	--im-btn-fg-hover: var(--im-canvas);
+	--im-btn-bg-hover: color-mix(in oklab, var(--im-ink) 80%, var(--im-canvas));
+}
+
+:is([data-brand="x"], [data-brand="github"], [data-brand="threads"], [data-brand="tiktok"]).im-btn-brand-soft {
+	--im-btn-fg: var(--im-ink);
+	--im-btn-bg-hover: var(--im-ink);
+	--im-btn-fg-hover: var(--im-canvas);
+}
+
+/* ---- theme button ---- partials/components/theme-button.hbs
+   Three icons in the markup; the one for the current CHOICE shows. */
+.im-theme-button > span {
+	display: none;
+}
+
+[data-theme-choice="light"] .im-theme-button > [data-for="light"],
+[data-theme-choice="dark"] .im-theme-button > [data-for="dark"],
+[data-theme-choice="system"] .im-theme-button > [data-for="system"],
+:root:not([data-theme-choice]) .im-theme-button > [data-for="system"] {
+	display: contents;
+}

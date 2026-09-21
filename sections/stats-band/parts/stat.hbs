@@ -1,0 +1,9 @@
+{{!-- One figure. Called by stats.hbs; see the parameter list there. --}}
+<div class="im-statband__stat">
+	<p class="im-caption" data-index="{{n}}">{{label}}</p>
+	<div class="im-stat-row">
+		<span class="im-stat-figure">{{prefix}}<span data-im-count="{{value}}">{{#if text}}{{text}}{{else}}{{value}}{{/if}}</span>{{suffix}}</span>
+		{{#if spark}}<svg class="im-spark" data-im-spark="{{spark}}" data-im-area aria-hidden="true"></svg>{{/if}}
+	</div>
+	{{#if delta}}<span class="im-stat-delta"{{#if trend}} data-trend="{{trend}}"{{/if}}>{{#match trend "down"}}{{> "icons/trending-down"}}{{else match trend "flat"}}{{else}}{{> "icons/trending-up"}}{{/match}} {{delta}}</span>{{/if}}
+</div>

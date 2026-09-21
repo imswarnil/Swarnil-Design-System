@@ -1,0 +1,117 @@
+---
+title: Timeline
+description: Events in order, on a line. One list, six variations — plain, with icons, numbered, compact, cards, alternating — and two horizontal forms. States mark what is done, current and still to come.
+eyebrow: Component
+source: src/components/timeline.css
+---
+<h2>Vertical</h2>
+{{#example}}
+<ol class="im-timeline">
+	<li class="im-timeline-item"><span class="im-timeline-marker"></span><time class="im-timeline-time">Sep 2026</time><h3 class="im-timeline-title">Moved the site to a system of its own</h3><p class="im-timeline-text">Tokens, a shell, components and sections, written from a blank file.</p></li>
+	<li class="im-timeline-item"><span class="im-timeline-marker"></span><time class="im-timeline-time">Mar 2026</time><h3 class="im-timeline-title">Moved to Budapest</h3><p class="im-timeline-text">New city, same laptop.</p></li>
+	<li class="im-timeline-item"><span class="im-timeline-marker"></span><time class="im-timeline-time">2022</time><h3 class="im-timeline-title">Started writing in public</h3></li>
+</ol>
+{{/example}}
+<p>An <code>&lt;ol&gt;</code>, because the order is the point. The line is drawn per item — from one marker's centre to the next — so it ends exactly at the last marker, whatever the items' heights.</p>
+
+<h2>States</h2>
+<p><code>data-state</code> on an item: <code>done</code> (solid, and the line below it solid), <code>current</code> (accent, with a halo), <code>upcoming</code> (dimmed, with a dashed line).</p>
+{{#example}}
+<ol class="im-timeline">
+	<li class="im-timeline-item" data-state="done"><span class="im-timeline-marker"></span><h3 class="im-timeline-title">Order placed</h3><p class="im-timeline-text">Tuesday, 09:12</p></li>
+	<li class="im-timeline-item" data-state="done"><span class="im-timeline-marker"></span><h3 class="im-timeline-title">Packed</h3><p class="im-timeline-text">Tuesday, 15:40</p></li>
+	<li class="im-timeline-item" data-state="current"><span class="im-timeline-marker"></span><h3 class="im-timeline-title">Out for delivery</h3><p class="im-timeline-text">Arriving today before 18:00</p></li>
+	<li class="im-timeline-item" data-state="upcoming"><span class="im-timeline-marker"></span><h3 class="im-timeline-title">Delivered</h3></li>
+</ol>
+{{/example}}
+
+<h2>With icons</h2>
+<p>Put an icon inside the marker and it becomes a disc.</p>
+{{#example}}
+<ol class="im-timeline">
+	<li class="im-timeline-item" data-state="done"><span class="im-timeline-marker">{{> "icons/check"}}</span><h3 class="im-timeline-title">Signed up</h3><p class="im-timeline-text">Welcome email sent.</p></li>
+	<li class="im-timeline-item" data-state="current"><span class="im-timeline-marker">{{> "icons/mail"}}</span><h3 class="im-timeline-title">Confirm your address</h3><p class="im-timeline-text">Check your inbox for the link.</p></li>
+	<li class="im-timeline-item" data-state="upcoming"><span class="im-timeline-marker">{{> "icons/rocket"}}</span><h3 class="im-timeline-title">First issue</h3><p class="im-timeline-text">Lands on Sunday.</p></li>
+</ol>
+{{/example}}
+
+<h2>Numbered</h2>
+{{#example}}
+<ol class="im-timeline im-timeline-numbered">
+	<li class="im-timeline-item"><span class="im-timeline-marker"></span><h3 class="im-timeline-title">Install</h3><p class="im-timeline-text"><code>npm install</code>, then <code>npm run dev</code>.</p></li>
+	<li class="im-timeline-item"><span class="im-timeline-marker"></span><h3 class="im-timeline-title">Set your tokens</h3><p class="im-timeline-text">Accent, radii and type in <code>semantic.css</code>.</p></li>
+	<li class="im-timeline-item"><span class="im-timeline-marker"></span><h3 class="im-timeline-title">Ship</h3><p class="im-timeline-text">Copy <code>im.css</code> and <code>im.js</code> into the theme.</p></li>
+</ol>
+{{/example}}
+<p>The numbers are CSS counters — reorder the items and they follow.</p>
+
+<h2>Compact</h2>
+<p>A changelog, an activity feed: one line each, the time pushed to the right.</p>
+{{#example}}
+<ol class="im-timeline im-timeline-compact">
+	<li class="im-timeline-item"><span class="im-timeline-marker"></span><h3 class="im-timeline-title">Added the carousel and marquee</h3><time class="im-timeline-time">v0.4</time></li>
+	<li class="im-timeline-item"><span class="im-timeline-marker"></span><h3 class="im-timeline-title">Swiss grid and style scope</h3><time class="im-timeline-time">v0.4</time></li>
+	<li class="im-timeline-item"><span class="im-timeline-marker"></span><h3 class="im-timeline-title">Everything namespaced <code>im-</code></h3><time class="im-timeline-time">v0.3</time></li>
+	<li class="im-timeline-item"><span class="im-timeline-marker"></span><h3 class="im-timeline-title">Rebuilt from a blank slate</h3><time class="im-timeline-time">v0.2</time></li>
+</ol>
+{{/example}}
+
+<h2>Cards</h2>
+{{#example}}
+<ol class="im-timeline im-timeline-cards">
+	{{#foreach demo.three}}
+	<li class="im-timeline-item"><span class="im-timeline-marker"></span><time class="im-timeline-time">{{date format="D MMM YYYY"}}</time>
+		<div class="im-card-wrap"><article class="im-card im-card-outline im-card-horizontal" style="--im-card-media-width: 30%"><div class="im-card-media"><img src="{{feature_image}}" alt="" loading="lazy"></div><div class="im-card-body"><p class="im-card-eyebrow">{{primary_tag.name}}</p><h3 class="im-card-title"><a href="#cards">{{title}}</a></h3></div></article></div>
+	</li>
+	{{/foreach}}
+</ol>
+{{/example}}
+
+<h2>Alternating</h2>
+<p><code>im-timeline-alt</code>: events fall either side of a centre line — when the timeline itself is at least 44rem wide (a container query). Narrower, it is the ordinary vertical one.</p>
+{{#example}}
+<ol class="im-timeline im-timeline-alt">
+	<li class="im-timeline-item" data-state="done"><span class="im-timeline-marker"></span><time class="im-timeline-time">2019</time><h3 class="im-timeline-title">First Salesforce project</h3><p class="im-timeline-text">Learned what an org looks like from the inside.</p></li>
+	<li class="im-timeline-item" data-state="done"><span class="im-timeline-marker"></span><time class="im-timeline-time">2022</time><h3 class="im-timeline-title">Went independent</h3><p class="im-timeline-text">Four years of consulting begin.</p></li>
+	<li class="im-timeline-item" data-state="current"><span class="im-timeline-marker"></span><time class="im-timeline-time">2026</time><h3 class="im-timeline-title">Budapest</h3><p class="im-timeline-text">Engineering, and documenting all of it.</p></li>
+	<li class="im-timeline-item" data-state="upcoming"><span class="im-timeline-marker"></span><time class="im-timeline-time">Next</time><h3 class="im-timeline-title">Forward-deployed</h3></li>
+</ol>
+{{/example}}
+
+<h2>Horizontal</h2>
+<p><code>im-timeline-horizontal</code>: a row that scrolls and snaps. <code>--im-timeline-step</code> (15rem) is each event's width.</p>
+{{#example}}
+<ol class="im-timeline im-timeline-horizontal">
+	<li class="im-timeline-item" data-state="done"><span class="im-timeline-marker"></span><time class="im-timeline-time">Day 1</time><h3 class="im-timeline-title">Sorrento</h3><p class="im-timeline-text">Pick up the car.</p></li>
+	<li class="im-timeline-item" data-state="done"><span class="im-timeline-marker"></span><time class="im-timeline-time">Day 2</time><h3 class="im-timeline-title">Positano</h3><p class="im-timeline-text">The road everyone photographs.</p></li>
+	<li class="im-timeline-item" data-state="current"><span class="im-timeline-marker"></span><time class="im-timeline-time">Day 3</time><h3 class="im-timeline-title">Amalfi</h3><p class="im-timeline-text">Lemons, stairs, more stairs.</p></li>
+	<li class="im-timeline-item" data-state="upcoming"><span class="im-timeline-marker"></span><time class="im-timeline-time">Day 4</time><h3 class="im-timeline-title">Ravello</h3><p class="im-timeline-text">Up the hill for the view.</p></li>
+	<li class="im-timeline-item" data-state="upcoming"><span class="im-timeline-marker"></span><time class="im-timeline-time">Day 5</time><h3 class="im-timeline-title">Salerno</h3><p class="im-timeline-text">Train home.</p></li>
+</ol>
+{{/example}}
+
+<h3>Steps</h3>
+<p>Add <code>im-timeline-steps</code>: equal widths, no scrolling — a checkout, an onboarding. It turns vertical when its own width drops under 34rem.</p>
+{{#example}}
+<ol class="im-timeline im-timeline-horizontal im-timeline-steps im-timeline-numbered">
+	<li class="im-timeline-item" data-state="done"><span class="im-timeline-marker"></span><h3 class="im-timeline-title">Cart</h3></li>
+	<li class="im-timeline-item" data-state="done"><span class="im-timeline-marker"></span><h3 class="im-timeline-title">Details</h3></li>
+	<li class="im-timeline-item" data-state="current" aria-current="step"><span class="im-timeline-marker"></span><h3 class="im-timeline-title">Payment</h3></li>
+	<li class="im-timeline-item" data-state="upcoming"><span class="im-timeline-marker"></span><h3 class="im-timeline-title">Done</h3></li>
+</ol>
+{{/example}}
+
+<h2>Variables</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Variable</th><th>Default</th></tr></thead>
+	<tbody>
+		<tr><td><code>--im-timeline-marker</code></td><td>0.75rem (2rem with content)</td></tr>
+		<tr><td><code>--im-timeline-gutter</code></td><td>1.5rem — marker to text</td></tr>
+		<tr><td><code>--im-timeline-gap</code></td><td>1.75rem — between events</td></tr>
+		<tr><td><code>--im-timeline-line</code></td><td><code>var(--im-line)</code></td></tr>
+		<tr><td><code>--im-timeline-step</code></td><td>15rem — horizontal only</td></tr>
+	</tbody>
+</table>
+</div>
+<p>In a Ghost theme, a timeline of posts is <code>\{{#foreach posts}}</code> around one <code>im-timeline-item</code>, with <code>\{{date}}</code> in the <code>&lt;time&gt;</code>. Animate its arrival with <code>data-im-reveal-group</code> on the list and <code>data-im-reveal="up"</code> on each item.</p>

@@ -1,0 +1,43 @@
+---
+title: Typography
+description: Three families, all Geist, all under the SIL Open Font License. Sans for reading, Mono for code, Pixel for a word that should feel like a display.
+eyebrow: Foundation
+source: src/foundation/tokens/primitives.css · base/fonts.css
+---
+<h2>Families</h2>
+{{#example code=false}}
+<div class="specimen"><p class="font-sans text-h2 text-ink font-semibold tracking-tight">Geist — the quick brown fox</p><p class="specimen-meta">font-sans · variable 100–900 · headings and body</p></div>
+<div class="specimen"><p class="font-mono text-h3 text-ink">Geist Mono — const fox = "quick";</p><p class="specimen-meta">font-mono · variable 100–900 · code, tokens, tabular data</p></div>
+<div class="specimen"><p class="im-pixel text-h1 text-ink">Geist Pixel — 404 · LEVEL UP</p><p class="specimen-meta">font-pixel / .im-pixel · one weight · display only, never body text</p></div>
+{{/example}}
+<p><code>font-heading</code> and <code>font-body</code> read Ghost's font settings first (<code>--gh-font-heading</code>, <code>--gh-font-body</code>) and fall back to Geist, so a site owner's choice in Settings → Design still applies.</p>
+
+<h3>Pixel cuts</h3>
+<p>Geist Pixel ships five cuts. Square is <code>font-pixel</code>; the others are separate families to ask for by name.</p>
+{{#example}}
+<div class="im-grid-fit text-h2 text-ink" style="--im-grid-min: 9rem">
+	<span style="font-family: 'Geist Pixel'">Square</span>
+	<span style="font-family: 'Geist Pixel Grid'">Grid</span>
+	<span style="font-family: 'Geist Pixel Circle'">Circle</span>
+	<span style="font-family: 'Geist Pixel Triangle'">Triangle</span>
+	<span style="font-family: 'Geist Pixel Line'">Line</span>
+</div>
+{{/example}}
+
+<h2>Scale</h2>
+{{#example code=false}}
+{{#each tokens.textSizes}}
+<div class="specimen"><p class="text-ink{{#unless (eq key "xs")}}{{#unless (eq key "sm")}}{{#unless (eq key "base")}}{{#unless (eq key "lg")}} font-semibold tracking-tight{{/unless}}{{/unless}}{{/unless}}{{/unless}}" style="font-size: var({{name}}); line-height: {{leading}}">The quick brown fox jumps over the lazy dog</p><p class="specimen-meta">text-{{key}} · {{value}} · leading {{leading}}</p></div>
+{{/each}}
+{{/example}}
+<p>Bare <code>h1</code>–<code>h6</code> already use <code>text-h1</code>…<code>text-h6</code>, semibold, tight tracking, balanced wrapping. Use the utilities when the element and the look must differ.</p>
+
+<h2>Weights</h2>
+{{#example code=false}}
+<div class="im-cluster" style="--im-cluster-gap: 2.5rem">{{#each tokens.weights}}<div class="stat"><strong style="font-family: var(--im-font-sans); font-weight: {{value}}">Ag</strong><span><code>font-{{key}}</code> · {{value}}</span></div>{{/each}}</div>
+{{/example}}
+
+<h2>Prose</h2>
+<p>Preflight removes list markers and margins from everything, which is right for interfaces and wrong for writing. <code>.im-prose</code> puts them back at one rhythm: <a href="#prose">links</a>, <code>inline code</code>, <kbd>⌘ K</kbd>, <mark>highlights</mark>, <strong>strong</strong>. In a Ghost theme it goes on the element wrapping <code>\{{content}}</code>. This paragraph is inside one.</p>
+<blockquote>A blockquote carries the accent on its leading edge.</blockquote>
+<ul><li>Lists get their markers back,<ul><li>nested ones too,</li></ul></li><li>in a quiet colour.</li></ul>

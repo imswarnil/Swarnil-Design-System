@@ -1,0 +1,230 @@
+/* Divider — a rule between things. Drawn, like everything else here, as line
+   work: a hairline, a ruler, a run of dots, a rule with a mark on it.
+
+   <hr class="im-divider">                                  a hairline
+   <div class="im-divider im-divider-ticks" role="separator"></div>
+   <div class="im-divider" role="separator"><span>or</span></div>     with a label
+
+   Styles:  -ticks · -dashed · -dotted · -double · -fade · -marks · -hatch
+   Motion:  -draw (draws in when revealed) · -scan (a light travels it) · -march
+   Vertical: -vertical, in a flex row. Knobs: --im-divider-ink, --im-divider-gap. */
+
+.im-divider {
+	--im-divider-ink: var(--im-line);
+	--im-divider-gap: 0.875rem;
+
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: var(--im-divider-gap);
+	width: 100%;
+	height: 1px;
+	margin: 0;
+	border: 0;
+	background-color: var(--im-divider-ink);
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+/* With a label: the element stops being the line; two lines flank the label. */
+.im-divider:has(> *) {
+	height: auto;
+	background-color: transparent;
+}
+
+.im-divider:has(> *)::before,
+.im-divider:has(> *)::after {
+	content: "";
+	flex: 1 1 0;
+	height: 1px;
+	background-color: var(--im-divider-ink);
+}
+
+.im-divider-start::before { flex: 0 0 1.5rem; }
+.im-divider-end::after { flex: 0 0 1.5rem; }
+
+/* ---- styles ---- */
+/* Ruler: minor ticks every half rem, major every 2.5 — the system's signature. */
+/* Each tick is one small tile, repeated — not a repeating-gradient, whose
+   1px stops a browser may drop over a long run. */
+.im-divider-ticks {
+	height: 0.625rem;
+	background-color: transparent;
+	background-image:
+		linear-gradient(var(--im-divider-ink), var(--im-divider-ink)),
+		linear-gradient(to right, color-mix(in oklab, var(--im-divider-tick, var(--im-ink)) 40%, transparent) 1px, transparent 1px),
+		linear-gradient(to right, var(--im-divider-tick, var(--im-ink)) 1px, transparent 1px);
+	background-position: 0 100%, 0 100%, 0 100%;
+	background-repeat: no-repeat, repeat-x, repeat-x;
+	background-size: 100% 1px, 0.5rem 0.3125rem, 2.5rem 0.625rem;
+}
+
+.im-divider-dashed {
+	background-color: transparent;
+	background-image: repeating-linear-gradient(to right, var(--im-divider-ink) 0 6px, transparent 6px 12px);
+}
+
+.im-divider-dotted {
+	height: 3px;
+	background-color: transparent;
+	background-image: radial-gradient(circle, var(--im-divider-dot, var(--im-faint)) 1.25px, transparent 1.5px);
+	background-size: 0.625rem 3px;
+}
+
+.im-divider-double {
+	height: 4px;
+	background-color: transparent;
+	border-block: 1px solid var(--im-divider-ink);
+}
+
+/* Fades out at both ends. */
+.im-divider-fade {
+	background-color: transparent;
+	background-image: linear-gradient(to right, transparent, var(--im-divider-ink) 20%, var(--im-divider-ink) 80%, transparent);
+}
+
+/* A registration mark at each end. */
+.im-divider-marks::before,
+.im-divider-marks::after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	width: 9px;
+	height: 9px;
+	translate: 0 -50%;
+	background:
+		linear-gradient(var(--im-ink), var(--im-ink)) center / 1px 100% no-repeat,
+		linear-gradient(var(--im-ink), var(--im-ink)) center / 100% 1px no-repeat;
+}
+
+.im-divider-marks::before { left: -4px; }
+.im-divider-marks::after { right: -4px; }
+
+/* A band of hatching. */
+.im-divider-hatch {
+	height: 0.625rem;
+	border-block: 1px solid var(--im-divider-ink);
+	background-color: transparent;
+	background-image: repeating-linear-gradient(135deg, var(--im-divider-ink) 0 1px, transparent 1px 0.375rem);
+}
+
+/* In the accent, a little heavier: the end of a chapter. */
+.im-divider-accent {
+	--im-divider-ink: var(--im-accent);
+
+	height: 2px;
+}
+
+/* ---- motion ---- */
+/* Draws in from the left when revealed (data-im-reveal="none" on it). */
+@media (prefers-reduced-motion: no-preference) {
+	[data-im-js] .im-divider-draw:not([data-im-revealed]) {
+		opacity: 1;
+		scale: 0 1;
+	}
+
+	.im-divider-draw {
+		transform-origin: 0 50%;
+		transition: scale 1100ms var(--im-ease-out);
+	}
+
+	.im-divider-draw.im-divider-center {
+		transform-origin: 50% 50%;
+	}
+}
+
+/* A short bright segment travels along it, forever. */
+.im-divider-scan {
+	overflow: hidden;
+}
+
+.im-divider-scan::after {
+	content: "";
+	position: absolute;
+	inset: 0 auto 0 0;
+	width: 22%;
+	background-image: linear-gradient(to right, transparent, var(--im-divider-light, var(--im-accent)), transparent);
+	animation: im-divider-scan var(--im-divider-speed, 3.2s) var(--im-ease-in-out) infinite;
+}
+
+@keyframes im-divider-scan {
+	from { translate: -100% 0; }
+	to { translate: 460% 0; }
+}
+
+/* Marching dashes. */
+.im-divider-march {
+	background-color: transparent;
+	background-image: repeating-linear-gradient(to right, var(--im-divider-ink) 0 6px, transparent 6px 12px);
+	background-size: 12px 100%;
+	animation: im-divider-march 700ms linear infinite;
+}
+
+@keyframes im-divider-march {
+	to { background-position: 12px 0; }
+}
+
+/* The ruler slides, as if being measured against. */
+.im-divider-ticks.im-divider-slide {
+	animation: im-divider-slide 6s linear infinite;
+}
+
+@keyframes im-divider-slide {
+	to { background-position: 0 100%, 2.5rem 100%, 2.5rem 100%; }
+}
+
+/* ---- vertical ---- between items in a flex row. It stretches to the row. */
+.im-divider-vertical {
+	flex: none;
+	flex-direction: column;
+	align-self: stretch;
+	width: 1px;
+	height: auto;
+	min-height: 1.25rem;
+}
+
+.im-divider-vertical:has(> *) {
+	width: auto;
+}
+
+.im-divider-vertical:has(> *)::before,
+.im-divider-vertical:has(> *)::after {
+	width: 1px;
+	height: auto;
+}
+
+.im-divider-vertical.im-divider-ticks {
+	width: 0.625rem;
+	background-image:
+		linear-gradient(var(--im-divider-ink), var(--im-divider-ink)),
+		linear-gradient(to bottom, color-mix(in oklab, var(--im-divider-tick, var(--im-ink)) 40%, transparent) 1px, transparent 1px),
+		linear-gradient(to bottom, var(--im-divider-tick, var(--im-ink)) 1px, transparent 1px);
+	background-position: 0 0;
+	background-repeat: no-repeat, repeat-y, repeat-y;
+	background-size: 1px 100%, 0.3125rem 0.5rem, 0.625rem 2.5rem;
+}
+
+.im-divider-vertical.im-divider-dashed {
+	background-image: repeating-linear-gradient(to bottom, var(--im-divider-ink) 0 6px, transparent 6px 12px);
+}
+
+.im-divider-vertical.im-divider-fade {
+	background-image: linear-gradient(to bottom, transparent, var(--im-divider-ink) 20%, var(--im-divider-ink) 80%, transparent);
+}
+
+.im-divider-vertical.im-divider-scan::after {
+	inset: 0 0 auto;
+	width: auto;
+	height: 22%;
+	background-image: linear-gradient(to bottom, transparent, var(--im-divider-light, var(--im-accent)), transparent);
+	animation-name: im-divider-scan-y;
+}
+
+@keyframes im-divider-scan-y {
+	from { translate: 0 -100%; }
+	to { translate: 0 460%; }
+}

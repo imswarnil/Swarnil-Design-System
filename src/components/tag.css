@@ -1,0 +1,36 @@
+/* Tag — a topic link.  <a class="tag" href="/tag/travel/">Travel</a>
+   With a dot in the tag's own colour: style="--im-tag-dot: #0b6e4f" */
+
+.im-tag {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	min-height: 1.75rem;
+	padding: 0 0.75rem;
+	border-radius: var(--im-radius-full);
+	background-color: var(--im-surface);
+	color: var(--im-ink);
+	font-size: var(--im-text-sm);
+	font-weight: 500;
+	text-decoration: none;
+	white-space: nowrap;
+	transition: background-color 120ms;
+}
+
+.im-tag:hover {
+	background-color: var(--im-surface-2);
+	color: var(--im-ink);
+}
+
+.im-tag[aria-current="page"] {
+	background-color: var(--im-ink);
+	color: var(--im-canvas);
+}
+
+.im-tag-dot::before {
+	content: "";
+	width: 0.5rem;
+	height: 0.5rem;
+	border-radius: 50%;
+	background-color: var(--im-tag-dot, var(--im-faint));
+}

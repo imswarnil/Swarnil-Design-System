@@ -1,0 +1,72 @@
+---
+title: Form layout & states
+description: Putting fields together — rows that collapse on their own, grouped questions, the action bar — and the life of a form from empty, to invalid, to sending, to done.
+eyebrow: Forms
+source: src/components/field.css
+---
+<h2>A whole form</h2>
+{{#example}}
+<form class="im-form" style="max-width: 38rem" onsubmit="event.preventDefault(); const b=this.querySelector('[type=submit]'); b.setAttribute('aria-busy','true'); setTimeout(()=>{b.removeAttribute('aria-busy'); this.querySelector('[data-done]').hidden=false; this.reset()},1400)">
+	<div class="im-form-row">
+		<div class="im-field"><label class="im-label im-label-required" for="fm-first">First name</label><input class="im-input" id="fm-first" required autocomplete="given-name"></div>
+		<div class="im-field"><label class="im-label" for="fm-last">Last name</label><input class="im-input" id="fm-last" autocomplete="family-name"></div>
+	</div>
+	<div class="im-field"><label class="im-label im-label-required" for="fm-email">Email</label><div class="im-input-group">{{> "icons/at-sign"}}<input class="im-input" id="fm-email" type="email" required autocomplete="email" placeholder="you@example.com"></div><p class="im-hint">For the reply only.</p></div>
+	<div class="im-form-row">
+		<div class="im-field"><label class="im-label" for="fm-topic">Topic</label><select class="im-select" id="fm-topic"><option>A project</option><option>Speaking</option><option>Just hello</option></select></div>
+		<div class="im-field"><label class="im-label" for="fm-budget">Budget <span class="im-label-note">optional</span></label><div class="im-input-group"><span class="im-input-addon">€</span><input class="im-input" id="fm-budget" type="number" inputmode="numeric" placeholder="5,000"></div></div>
+	</div>
+	<div class="im-field"><label class="im-label im-label-required" for="fm-msg">Message</label><textarea class="im-textarea" id="fm-msg" required placeholder="What are you building?"></textarea></div>
+	<fieldset class="im-fieldset"><legend>How should I reply?</legend><div class="im-cluster" style="--im-cluster-gap: 1.25rem"><label class="im-radio"><input type="radio" name="fm-reply" checked><span>Email</span></label><label class="im-radio"><input type="radio" name="fm-reply"><span>A call</span></label></div></fieldset>
+	<label class="im-check"><input type="checkbox"><span>Also send me the newsletter<small>One email when something lands.</small></span></label>
+	<div class="im-callout im-callout-sm im-callout-success" data-done hidden role="status">{{> "icons/circle-check"}}<span><strong>Sent.</strong> I will reply within two days.</span></div>
+	<div class="im-form-actions"><button class="im-btn im-btn-ghost" type="reset">Clear</button><button class="im-btn im-btn-primary" type="submit">Send message {{> "icons/arrow-right"}}</button></div>
+</form>
+{{/example}}
+<p>Submit it: the browser's own validation runs first; then the button goes <code>aria-busy</code> (its label becomes a spinner, further clicks are ignored), and a small success <a href="/components/callout/#sizes">callout</a> appears with <code>role="status"</code> so it is announced.</p>
+
+<h2>Layout pieces</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Class</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>im-form</code></td><td>A grid with one rhythm between everything in it.</td></tr>
+		<tr><td><code>im-form-row</code></td><td>Fields side by side that <strong>collapse by themselves</strong> when a column would be narrower than 13rem — no breakpoint to choose.</td></tr>
+		<tr><td><code>im-field</code></td><td>Label + control + hint / error.</td></tr>
+		<tr><td><code>im-fieldset</code> + <code>&lt;legend&gt;</code></td><td>A question with several inputs: radios, a group of checkboxes, an address.</td></tr>
+		<tr><td><code>im-form-actions</code></td><td>A ruled bar, buttons to the right; on a phone each button takes the full width, primary last so it is nearest the thumb.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>The life of a form</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Moment</th><th>What to set</th><th>What the system does</th></tr></thead>
+	<tbody>
+		<tr><td>A field is wrong</td><td><code>aria-invalid="true"</code> on it; text in its <code>im-error</code></td><td>Danger rule, error slides in, hint steps aside; <code>im-shake-invalid</code> shakes it once.</td></tr>
+		<tr><td>Sending</td><td><code>aria-busy="true"</code> on the submit button</td><td>Label → spinner; pointer events off.</td></tr>
+		<tr><td>Sent</td><td>Show a success callout with <code>role="status"</code></td><td>—</td></tr>
+		<tr><td>Failed</td><td>A danger callout with <code>role="alert"</code> at the top of the form</td><td>—</td></tr>
+		<tr><td>Ghost members forms</td><td>Nothing — Ghost adds <code>.loading</code> / <code>.success</code> / <code>.error</code> to the form</td><td>The <a href="/forms/inputs/#subscribe">subscribe</a> partial styles those.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>An inline form</h2>
+{{#example}}
+<form class="flex flex-wrap items-end gap-3" onsubmit="return false">
+	<div class="im-field grow" style="min-width: 12rem"><label class="im-label" for="il-q">Search the archive</label><div class="im-input-group">{{> "icons/search"}}<input class="im-input" id="il-q" type="search" placeholder="amalfi, tokens, moving…"></div></div>
+	<div class="im-field"><label class="im-label" for="il-t">In</label><select class="im-select" id="il-t"><option>Everything</option><option>Travel</option><option>Craft</option></select></div>
+	<button class="im-btn im-btn-ink" type="submit">Search</button>
+</form>
+{{/example}}
+
+<h2>Habits</h2>
+<ul>
+	<li><strong>Every control has a visible <code>&lt;label&gt;</code>.</strong> A placeholder is a hint, not a label — it vanishes the moment it is needed.</li>
+	<li><strong>Validate on blur and on submit, not on every keystroke.</strong> Nobody's email is valid after one letter.</li>
+	<li><strong>Say how to fix it</strong>, not just that it is wrong: "Enter a complete email address", not "Invalid".</li>
+	<li><strong>Use <code>autocomplete</code>, <code>inputmode</code> and the right <code>type</code></strong> — on a phone they decide which keyboard appears.</li>
+	<li><strong>Mark the optional fields</strong> if most are required, or the required ones if most are optional. Not both.</li>
+</ul>

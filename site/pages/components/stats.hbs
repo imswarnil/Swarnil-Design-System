@@ -1,0 +1,77 @@
+---
+title: Stats & charts
+description: Numbers, and the smallest charts that explain them — bars, a ranking, a sparkline, a ring, a donut. For a glance, not for analysis. Most are pure CSS.
+eyebrow: Component
+source: src/components/stats.css · src/js/im-charts.js
+---
+<h2>Stat</h2>
+{{#example}}
+<div class="im-grid-fit" style="--im-grid-min: 10rem">
+	<div class="im-stat"><span class="im-stat-figure" data-im-count="12480">12,480</span><span class="im-stat-label">readers</span><span class="im-stat-delta">{{> "icons/trending-up"}} 12% this month</span></div>
+	<div class="im-stat"><span class="im-stat-figure"><span data-im-count="41.2">41.2</span>%</span><span class="im-stat-label">open rate</span><span class="im-stat-delta" data-trend="down">{{> "icons/trending-down"}} 1.4 pts</span></div>
+	<div class="im-stat"><span class="im-stat-figure im-pixel" data-im-count="246">246</span><span class="im-stat-label">posts</span><span class="im-stat-delta" data-trend="flat">no change</span></div>
+</div>
+{{/example}}
+<p>A figure, what it counts, how it moved. <code>data-im-count</code> counts it up on scroll (<a href="/motion/animation/#counting-up">Animation</a>); the final number stays in the markup for search engines and no-script readers.</p>
+
+<h2>A stats band</h2>
+<p>Stats in a row of <a href="/layout/swiss/#cells">cells</a>, each with its own small chart — a ready-made section for a home or an about page.</p>
+{{#example flush=true}}
+<div class="im-cells im-cells-4" style="border: 0">
+	<div class="im-cell"><p class="im-caption" data-index="01">Readers</p><div class="im-stat-row"><span class="im-stat-figure" data-im-count="12480">12,480</span><svg class="im-spark" data-im-spark="4,6,5,8,7,11,10,14,13,17" data-im-area></svg></div><span class="im-stat-delta">{{> "icons/trending-up"}} 12%</span></div>
+	<div class="im-cell"><p class="im-caption" data-index="02">Open rate</p><div class="im-stat-row"><span class="im-stat-figure">41%</span><span class="im-ring" style="--im-value: .41">41</span></div><span class="im-stat-delta" data-trend="down">{{> "icons/trending-down"}} 1.4 pts</span></div>
+	<div class="im-cell"><p class="im-caption" data-index="03">Posts</p><div class="im-stat-row"><span class="im-stat-figure im-pixel">246</span><svg class="im-spark" data-im-spark="12,9,14,8,11,16,10,18" style="--im-chart-color: var(--im-ink)"></svg></div><span class="im-stat-delta" data-trend="flat">18 this quarter</span></div>
+	<div class="im-cell"><p class="im-caption" data-index="04">Paid</p><div class="im-stat-row"><span class="im-stat-figure">$3.2k</span><span class="im-ring" style="--im-value: .64; --im-progress-color: var(--im-success)">64</span></div><span class="im-stat-delta">{{> "icons/trending-up"}} of $5k goal</span></div>
+</div>
+{{/example}}
+
+<h2>Bars</h2>
+{{#example}}
+<div class="im-bars" data-im-reveal="none" role="img" aria-label="Posts per month: Jan 4, Feb 7, Mar 5, Apr 9, May 6, Jun 12, Jul 8, Aug 10">
+	<i style="--v: .33; --n: 0" data-label="Jan"></i><i style="--v: .58; --n: 1" data-label="Feb"></i><i style="--v: .42; --n: 2" data-label="Mar"></i><i style="--v: .75; --n: 3" data-label="Apr"></i><i style="--v: .5; --n: 4" data-label="May"></i><i style="--v: 1; --n: 5" data-label="Jun" data-on></i><i style="--v: .67; --n: 6" data-label="Jul"></i><i style="--v: .83; --n: 7" data-label="Aug"></i>
+</div>
+{{/example}}
+<p>Pure CSS: each <code>&lt;i&gt;</code> takes <code>--v</code> from 0 to 1 and a <code>data-label</code>. <code>data-on</code> marks the one to notice. With <code>data-im-reveal="none"</code> the bars grow in when scrolled to (<code>--n</code> staggers them). Give the chart a <code>role="img"</code> and an <code>aria-label</code> that <em>says the numbers</em> — that is its accessible form.</p>
+
+<h2>Ranking</h2>
+{{#example style="max-width: 30rem"}}
+<div class="im-hbars" role="img" aria-label="Top topics by posts">
+	<span>Travel</span><i style="--v: 1"></i><b>48</b>
+	<span>Craft</span><i style="--v: .71"></i><b>34</b>
+	<span>Career</span><i style="--v: .5"></i><b>24</b>
+	<span>Salesforce</span><i style="--v: .33"></i><b>16</b>
+</div>
+{{/example}}
+
+<h2>Line</h2>
+{{#example}}
+<svg class="im-spark im-spark-wide" data-im-spark="4,6,5,9,8,12,10,15,13,18,16,22,19,26" data-im-area aria-label="Readers, last 14 weeks: from 4 thousand to 26 thousand"></svg>
+{{/example}}
+<p>The one chart that needs a script (<code>im-charts.js</code>, about 1 KB): <code>&lt;svg class="im-spark" data-im-spark="4,8,6,…"&gt;</code>. It scales to the SVG's own box, so size it with CSS — <code>im-spark-wide</code> fills the width. <code>data-im-area</code> fills under the line.</p>
+{{#example center=true title="Inline, as a sparkline"}}
+<span class="inline-flex items-center gap-3 text-sm">Readers <svg class="im-spark" data-im-spark="3,5,4,7,6,9,8,12"></svg> <strong>+12%</strong></span>
+<span class="inline-flex items-center gap-3 text-sm">Churn <svg class="im-spark" data-im-spark="9,8,8,6,7,5,4,3" style="--im-chart-color: var(--im-success)"></svg> <strong>−4%</strong></span>
+{{/example}}
+
+<h2>Donut</h2>
+{{#example}}
+<div class="im-cluster" style="--im-cluster-gap: 2rem">
+	<span class="im-donut" style="--a: .46; --b: .32" role="img" aria-label="Members: 46% free, 32% monthly, 22% yearly"><span class="im-stat"><span class="text-h3">1,204</span><span class="im-stat-label">members</span></span></span>
+	<ul class="im-legend" style="min-width: 12rem">
+		<li style="--c: var(--im-accent)">Free<b>46%</b></li>
+		<li style="--c: var(--im-ink)">Monthly<b>32%</b></li>
+		<li style="--c: var(--im-surface-3)">Yearly<b>22%</b></li>
+	</ul>
+</div>
+{{/example}}
+<p>Three slices from two variables — <code>--a</code>, <code>--b</code>, and the rest. More slices than that and a donut stops being readable; use the ranking.</p>
+
+<h2>Honest limits</h2>
+<ul>
+	<li>These are for <strong>a glance</strong>: a trend, a share, a comparison of a few things. No axes, no tooltips, no zoom.</li>
+	<li>For data someone will <em>study</em>, embed a real charting library — and style it with the same tokens (<code>--im-accent</code>, <code>--im-ink</code>, <code>--im-line</code>) so it belongs.</li>
+	<li>Always put the numbers in text too: in the <code>aria-label</code>, a caption, or a table.</li>
+</ul>
+
+<h2>As a whole section</h2>
+<p>For a full band of a page — copy, four figures and a bar row, called with parameters — use the <a href="/sections/stats-band/">Stats band</a> section.</p>

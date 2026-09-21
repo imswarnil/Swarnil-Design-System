@@ -1,0 +1,46 @@
+---
+title: Dialog
+description: A native modal. The focus trap, Esc, the backdrop and scroll-locking all come from the browser; the system adds the look, the entrance, and two data attributes to open and close it.
+eyebrow: Component
+source: src/components/feedback.css · src/js/im.js
+---
+<h2>Confirm</h2>
+{{#example center=true}}
+<button class="im-btn im-btn-primary" type="button" data-im-dialog-open="#dlg-confirm">Open a dialog</button>
+<dialog class="im-dialog" id="dlg-confirm" aria-labelledby="dlg-confirm-t">
+	<div class="im-dialog-head"><h2 class="im-dialog-title" id="dlg-confirm-t">Unsubscribe?</h2><button class="im-btn im-btn-ghost im-btn-icon im-btn-sm" type="button" data-im-dialog-close aria-label="Close">{{> "icons/x"}}</button></div>
+	<div class="im-dialog-body">You will stop receiving new posts by email. You can subscribe again at any time.</div>
+	<div class="im-dialog-foot"><button class="im-btn" type="button" data-im-dialog-close>Keep me subscribed</button><button class="im-btn im-btn-danger" type="button" data-im-dialog-close>Unsubscribe</button></div>
+</dialog>
+{{/example}}
+
+<h2>With a form</h2>
+{{#example center=true}}
+<button class="im-btn im-btn-outline" type="button" data-im-dialog-open="#dlg-form">{{> "icons/mail"}} Get the newsletter</button>
+<dialog class="im-dialog" id="dlg-form" aria-labelledby="dlg-form-t">
+	<div class="im-dialog-head"><h2 class="im-dialog-title" id="dlg-form-t">One email when something lands</h2><button class="im-btn im-btn-ghost im-btn-icon im-btn-sm" type="button" data-im-dialog-close aria-label="Close">{{> "icons/x"}}</button></div>
+	<form class="im-dialog-body im-form" method="dialog">
+		<div class="im-field"><label class="im-label" for="dlg-email">Email</label><div class="im-input-group">{{> "icons/at-sign"}}<input class="im-input" id="dlg-email" type="email" placeholder="you@example.com" autofocus></div><p class="im-hint">Nothing else, ever.</p></div>
+		<button class="im-btn im-btn-primary im-btn-block" type="submit">Subscribe</button>
+	</form>
+</dialog>
+{{/example}}
+<p>A <code>&lt;form method="dialog"&gt;</code> closes the dialog when submitted — no script. <code>autofocus</code> inside a dialog is where focus lands when it opens.</p>
+
+<h2>Markup</h2>
+{{{{code "hbs"}}}}
+<button class="im-btn" data-im-dialog-open="#share">Share</button>
+
+<dialog class="im-dialog" id="share" aria-labelledby="share-title">
+	<div class="im-dialog-head">
+		<h2 class="im-dialog-title" id="share-title">Share this post</h2>
+		<button class="im-btn im-btn-ghost im-btn-icon im-btn-sm" data-im-dialog-close aria-label="{{t "Close"}}">{{> "icons/x"}}</button>
+	</div>
+	<div class="im-dialog-body">{{> "components/share" soft=true}}</div>
+</dialog>
+{{{{/code}}}}
+<ul>
+	<li><code>data-im-dialog-open="#id"</code> opens; <code>data-im-dialog-close</code>, <kbd>Esc</kbd> or a click on the backdrop closes.</li>
+	<li>Label it with <code>aria-labelledby</code>. Focus returns to the opening button by itself.</li>
+	<li>The <a href="/navigation/navbar/#drawer">drawer</a>, the <a href="/media/gallery/">lightbox</a> and this site's search are the same element with different clothes.</li>
+</ul>

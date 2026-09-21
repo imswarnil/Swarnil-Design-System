@@ -1,0 +1,97 @@
+/* Micro-interactions — deliberately few.
+
+   The system has TWO signature interactions, and they are built into the
+   components, not added by hand:
+     · a BUTTON gives under the press, and its trailing icon leans   (button.css)
+     · a CARD sharpens its edge to ink, and its CTA arrow leans      (card.css)
+
+   What is here is the small remainder — for things that are not buttons or
+   cards. If you are reaching for a third flourish on one element, stop. */
+
+/* Underline: drawn left to right on hover, withdrawn to the right on leave.
+   The text-link counterpart of the card's edge. */
+.im-underline {
+	background-image: linear-gradient(currentcolor, currentcolor);
+	background-position: 100% 100%;
+	background-repeat: no-repeat;
+	background-size: 0% 1px;
+	text-decoration: none;
+	transition: background-size var(--im-duration-base) var(--im-ease-out);
+}
+
+.im-underline:hover,
+.im-underline:focus-visible {
+	background-position: 0% 100%;
+	background-size: 100% 1px;
+}
+
+/* Nudge: for a link that is NOT an im-btn, the same leaning icon.
+   -back leans left. */
+.im-nudge > .im-icon {
+	transition: translate var(--im-duration-fast) var(--im-ease-out);
+}
+
+.im-nudge:hover > .im-icon { translate: 0.1875rem 0; }
+.im-nudge-back:hover > .im-icon { translate: -0.1875rem 0; }
+
+/* Shake: "no". Add the class (or set aria-invalid) and it plays once. */
+.im-shake,
+.im-shake-invalid[aria-invalid="true"] {
+	animation: im-shake 380ms var(--im-ease-in-out);
+}
+
+@keyframes im-shake {
+	20% { translate: -0.375rem 0; }
+	40% { translate: 0.3125rem 0; }
+	60% { translate: -0.1875rem 0; }
+	80% { translate: 0.125rem 0; }
+}
+
+/* Like: a toggle that pops, with a ring that bursts from it.
+   <button class="im-like" aria-pressed="false" data-im-toggle>{{> "icons/heart"}}</button> */
+.im-like {
+	position: relative;
+	display: inline-grid;
+	place-items: center;
+	width: 2.5rem;
+	height: 2.5rem;
+	border-radius: 50%;
+	color: var(--im-muted);
+	font-size: 1.25rem;
+	cursor: pointer;
+	transition: color var(--im-duration-fast), background-color var(--im-duration-fast);
+}
+
+.im-like:hover {
+	background-color: var(--im-surface);
+	color: var(--im-ink);
+}
+
+.im-like[aria-pressed="true"] {
+	color: var(--im-like, #e5484d);
+}
+
+.im-like[aria-pressed="true"] > .im-icon {
+	fill: currentcolor;
+	animation: im-like-pop 420ms var(--im-ease-spring);
+}
+
+.im-like[aria-pressed="true"]::after {
+	content: "";
+	position: absolute;
+	inset: 0.25rem;
+	border: 2px solid currentcolor;
+	border-radius: 50%;
+	animation: im-like-burst 520ms var(--im-ease-out) forwards;
+	pointer-events: none;
+}
+
+@keyframes im-like-pop {
+	0% { scale: 0.6; }
+	60% { scale: 1.25; }
+}
+
+@keyframes im-like-burst {
+	from { scale: 0.4; opacity: 0.9; }
+	to { scale: 1.7; opacity: 0; }
+}

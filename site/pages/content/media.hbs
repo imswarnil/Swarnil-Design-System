@@ -1,0 +1,64 @@
+---
+title: Media cards
+description: Pictures, galleries, video, audio, embeds and files, as the editor prints them. Three widths — regular, wide and full — and a lightbox if you ask for one.
+eyebrow: Content
+source: src/components/koenig.css · src/js/im-content.js
+---
+<h2>Image</h2>
+<p>Rounded, centred, never upscaled. The caption is the editor's <code>&lt;figcaption&gt;</code>.</p>
+{{#example code=false}}
+<div class="im-content im-content-flush" data-im-zoom>
+	<figure class="kg-card kg-image-card kg-card-hascaption"><img src="{{demo.three.[0].feature_image}}" class="kg-image" alt="A village on a cliff above the sea" loading="lazy" width="1600" height="900"><figcaption><span style="white-space: pre-wrap;">Positano from the road. Click to open it — this example has <code>data-im-zoom</code>.</span></figcaption></figure>
+</div>
+{{/example}}
+
+<h3>Wide and full</h3>
+<p>The editor's width setting adds <code>kg-width-wide</code> or <code>kg-width-full</code>. <code>im-content</code> is a grid with three named widths, so those cards <strong>break out of the text column</strong> with no negative margins and no <code>100vw</code>: wide reaches <code>--im-content-wide</code> (10rem) past the text on each side; full goes edge to edge and loses its corners. It is easier seen than described — <a href="/content/article/">the full article</a>.</p>
+
+<h2>Gallery</h2>
+<p>Up to nine pictures in rows of three. <code>im-content.js</code> gives each picture its share of the row from its proportions, so <strong>every picture in a row ends at the same height</strong> without cropping. Without the script they are even columns, cropped to fit.</p>
+{{#example code=false}}
+<div class="im-content im-content-flush" data-im-zoom>
+	<figure class="kg-card kg-gallery-card kg-width-wide kg-card-hascaption"><div class="kg-gallery-container"><div class="kg-gallery-row"><div class="kg-gallery-image"><img src="{{demo.six.[0].feature_image}}" width="1600" height="900" loading="lazy" alt=""></div><div class="kg-gallery-image"><img src="https://images.unsplash.com/photo-1534445867742-43195f401b6c?auto=format&fit=crop&w=800&h=1000&q=80" width="800" height="1000" loading="lazy" alt=""></div><div class="kg-gallery-image"><img src="{{demo.six.[2].feature_image}}" width="1600" height="900" loading="lazy" alt=""></div></div><div class="kg-gallery-row"><div class="kg-gallery-image"><img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=900&h=900&q=80" width="900" height="900" loading="lazy" alt=""></div><div class="kg-gallery-image"><img src="{{demo.six.[4].feature_image}}" width="1600" height="900" loading="lazy" alt=""></div></div></div><figcaption><span style="white-space: pre-wrap;">Five pictures, two rows, no cropping.</span></figcaption></figure>
+</div>
+{{/example}}
+
+<h3>Open on click</h3>
+<p>Add <code>data-im-zoom</code> to the wrapper and every image and gallery picture opens in the <a href="/media/gallery/">lightbox</a> — the frosted viewer with arrows, a counter and the caption. It needs <code>im-media.js</code> as well.</p>
+{{{{code "hbs"}}}}
+<section class="im-content" data-im-zoom>{{content}}</section>
+{{{{/code}}}}
+
+<h2>Video</h2>
+<p>The editor's poster and a large play button. Pressed, the button hands over to the <strong>browser's own controls</strong> — they are accessible, they know about captions, picture-in-picture and casting, and nothing drawn by hand is better. A looping clip gets no controls at all.</p>
+{{#example code=false}}
+<div class="im-content im-content-flush">
+	<figure class="kg-card kg-video-card kg-width-regular kg-card-hascaption"><div class="kg-video-container"><video src="{{demo.video}}" poster="/assets/sections/home-hero-full/media/hero-loop.jpg" width="1280" height="720" playsinline preload="metadata"></video><div class="kg-video-overlay"><button class="kg-video-large-play-icon" aria-label="Play video"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 3.5l14 8.5-14 8.5z"/></svg></button></div><div class="kg-video-player-container"><div class="kg-video-player"></div></div></div><figcaption><span style="white-space: pre-wrap;">A short loop, self-hosted.</span></figcaption></figure>
+</div>
+{{/example}}
+
+<h2>Audio</h2>
+<p>The editor's own player markup, restyled and wired by <code>im-content.js</code>: play, seek, speed (1× → 1.5× → 2× → 0.75×), mute and volume. Volume folds away on a phone, where the hardware buttons do it.</p>
+{{#example code=false}}
+<div class="im-content im-content-flush">
+	<div class="kg-card kg-audio-card"><img src="{{demo.three.[1].feature_image}}" alt="" class="kg-audio-thumbnail"><div class="kg-audio-player-container"><audio src="{{demo.video}}" preload="metadata"></audio><div class="kg-audio-title">Episode 12 — What four years of consulting taught me</div><div class="kg-audio-player"><button class="kg-audio-play-icon" aria-label="Play audio"><svg viewBox="0 0 24 24"><path d="M6 3.5l14 8.5-14 8.5z"/></svg></button><button class="kg-audio-pause-icon kg-audio-hide" aria-label="Pause audio"><svg viewBox="0 0 24 24"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg></button><span class="kg-audio-current-time">0:00</span><div class="kg-audio-time">/<span class="kg-audio-duration">0:00</span></div><input type="range" class="kg-audio-seek-slider" max="100" value="0" aria-label="Seek"><button class="kg-audio-playback-rate" aria-label="Adjust playback speed">1×</button><button class="kg-audio-unmute-icon" aria-label="Mute"><svg viewBox="0 0 24 24"><path d="M3 9h4l5-4v14l-5-4H3zM15.5 8.5a5 5 0 010 7l-1.2-1.2a3.3 3.3 0 000-4.6z"/></svg></button><button class="kg-audio-mute-icon kg-audio-hide" aria-label="Unmute"><svg viewBox="0 0 24 24"><path d="M3 9h4l5-4v14l-5-4H3zM15 9.4l1.2-1.2 2 2 2-2 1.2 1.2-2 2 2 2-1.2 1.2-2-2-2 2-1.2-1.2 2-2z"/></svg></button><input type="range" class="kg-audio-volume-slider" max="100" value="100" aria-label="Volume"></div></div></div>
+</div>
+{{/example}}
+<p class="text-sm text-muted">The demo file is a silent clip; the player is real.</p>
+
+<h2>Embed</h2>
+<p>YouTube, Vimeo, Loom, Wistia and Dailymotion frames are made fluid at 16 : 9 — the editor prints them at a fixed 200 × 113. Anything else (a post from X, a Spotify player) keeps its own size and is centred.</p>
+{{#example code=false}}
+<div class="im-content im-content-flush">
+	<figure class="kg-card kg-embed-card kg-card-hascaption"><iframe width="200" height="113" src="https://www.youtube-nocookie.com/embed/aqz-KE-bpKQ?feature=oembed" title="Big Buck Bunny" loading="lazy" allow="accelerometer; encrypted-media; picture-in-picture" allowfullscreen></iframe><figcaption><span style="white-space: pre-wrap;">Big Buck Bunny — Blender Foundation, CC BY 3.0.</span></figcaption></figure>
+</div>
+{{/example}}
+<p>For a video with timestamps beside it, that is a component of its own: <a href="/media/video/">Video &amp; timestamps</a>.</p>
+
+<h2>File</h2>
+<p>A download. The whole card is the link; its edge sharpens to ink and the arrow leans the way the file goes — down.</p>
+{{#example code=false}}
+<div class="im-content im-content-flush">
+	<div class="kg-card kg-file-card"><a class="kg-file-card-container" href="#file" title="Download" download><div class="kg-file-card-contents"><div class="kg-file-card-title">Moving to Europe — the checklist</div><div class="kg-file-card-caption">Everything to do, in the order to do it, from visa to first payslip.</div><div class="kg-file-card-metadata"><div class="kg-file-card-filename">moving-checklist.pdf</div><div class="kg-file-card-filesize">248 KB</div></div></div><div class="kg-file-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7.5 10.5L12 15l4.5-4.5M5 19h14"/></svg></div></a></div>
+</div>
+{{/example}}

@@ -1,0 +1,124 @@
+---
+title: Animation
+description: Motion tokens, and four kinds of animation built on them — things that enter, things that reveal on scroll, things scrubbed by the scroll itself, and things that loop. All of it stands down under prefers-reduced-motion.
+eyebrow: Motion
+source: src/foundation/tokens/motion.css · src/motion/animate.css · src/js/im-motion.js
+---
+<h2>Principles</h2>
+<ul>
+	<li><strong>Motion explains.</strong> Where something came from, what changed, what will happen if you press. If it explains nothing, leave it out.</li>
+	<li><strong>Short and small.</strong> 120–640ms and about a rem of travel. Motion should be <em>felt</em>, not watched.</li>
+	<li><strong>Arrive fast, land soft.</strong> <code>ease-out</code> for entering, <code>ease-in</code> for leaving, <code>in-out</code> for things that travel and stay.</li>
+	<li><strong>Never in the way.</strong> Nothing is hidden waiting for an animation unless JavaScript has confirmed it can reveal it; nothing moves for a visitor who asked it not to.</li>
+</ul>
+
+<h2>Tokens</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Token</th><th>Value</th><th>For</th></tr></thead>
+	<tbody>
+		<tr><td><code>--im-duration-instant</code></td><td>120ms</td><td>A colour or opacity change under the pointer.</td></tr>
+		<tr><td><code>--im-duration-fast</code></td><td>200ms</td><td>Small things that move: a toggle, a chevron, a press.</td></tr>
+		<tr><td><code>--im-duration-base</code></td><td>360ms</td><td>A panel, a menu, a card entering.</td></tr>
+		<tr><td><code>--im-duration-slow</code></td><td>640ms</td><td>A whole section arriving; a hero.</td></tr>
+		<tr><td><code>--im-ease-out</code> · <code>-in</code> · <code>-in-out</code> · <code>-spring</code></td><td>curves</td><td>Arriving · leaving · travelling · a small, playful overshoot.</td></tr>
+		<tr><td><code>--im-distance</code></td><td>1rem</td><td>How far an entering thing travels.</td></tr>
+		<tr><td><code>--im-stagger</code></td><td>70ms</td><td>The gap between one staggered item and the next.</td></tr>
+	</tbody>
+</table>
+</div>
+{{#example title="The four curves, same distance, same duration — hover to run" code=false}}
+<div class="curve-demo">
+	<div class="curve-row"><code>out</code><span class="curve-track"><i style="--curve: var(--im-ease-out)"></i></span></div>
+	<div class="curve-row"><code>in</code><span class="curve-track"><i style="--curve: var(--im-ease-in)"></i></span></div>
+	<div class="curve-row"><code>in-out</code><span class="curve-track"><i style="--curve: var(--im-ease-in-out)"></i></span></div>
+	<div class="curve-row"><code>spring</code><span class="curve-track"><i style="--curve: var(--im-ease-spring)"></i></span></div>
+</div>
+{{/example}}
+
+<h2>Enter</h2>
+<p>Plays once, when the element is rendered. <code>im-enter</code> plus a direction. Press <strong>Replay</strong>.</p>
+{{#example}}
+<div class="im-grid-auto" data-replay style="--im-grid-min: 8rem; --im-grid-gap: .75rem">
+	<div class="demo-cell im-enter im-enter-fade">fade</div>
+	<div class="demo-cell im-enter im-enter-up">up</div>
+	<div class="demo-cell im-enter im-enter-down">down</div>
+	<div class="demo-cell im-enter im-enter-left">left</div>
+	<div class="demo-cell im-enter im-enter-right">right</div>
+	<div class="demo-cell im-enter im-enter-scale">scale</div>
+	<div class="demo-cell im-enter im-enter-blur">blur</div>
+	<div class="demo-cell im-enter im-enter-pop">pop</div>
+</div>
+{{/example}}
+
+<h3>Stagger</h3>
+<p><code>im-stagger</code> on the parent: its children enter one after another, <code>--im-stagger</code> apart.</p>
+{{#example}}
+<div class="im-grid-auto im-stagger" data-replay style="--im-grid-min: 7rem; --im-grid-gap: .75rem">
+	<div class="demo-cell im-enter im-enter-up">1</div><div class="demo-cell im-enter im-enter-up">2</div><div class="demo-cell im-enter im-enter-up">3</div><div class="demo-cell im-enter im-enter-up">4</div><div class="demo-cell im-enter im-enter-up">5</div><div class="demo-cell im-enter im-enter-up">6</div>
+</div>
+{{/example}}
+<p>Tune one instance with <code>--im-enter-duration</code>, <code>--im-enter-delay</code>, <code>--im-distance</code>.</p>
+
+<h2>Reveal on scroll</h2>
+<p><code>data-im-reveal="up"</code> — also <code>down</code>, <code>left</code>, <code>right</code>, <code>scale</code>, <code>blur</code>, <code>fade</code>. It shows the first time it scrolls into view. Needs <code>im-motion.js</code>. Scroll to these:</p>
+{{#example}}
+<div class="im-grid-auto" data-im-reveal-group style="--im-grid-min: 9rem; --im-grid-gap: .75rem">
+	<div class="demo-cell" data-im-reveal="up">up</div>
+	<div class="demo-cell" data-im-reveal="scale">scale</div>
+	<div class="demo-cell" data-im-reveal="blur">blur</div>
+	<div class="demo-cell" data-im-reveal="left">left</div>
+</div>
+{{/example}}
+<p><code>data-im-reveal-group</code> on a parent staggers the reveals inside it.</p>
+<div class="im-callout im-callout-info">
+	<p class="im-callout-title">It cannot hide your content</p>
+	<p>A reveal only starts hidden when the inline head script has set <code>data-im-js</code> on <code>&lt;html&gt;</code> <em>and</em> the visitor has not asked for reduced motion. With JavaScript off, blocked or broken, everything is simply visible.</p>
+</div>
+
+<h3>Counting up</h3>
+<p><code>data-im-count="1200"</code> counts to the number when revealed. Decimals are kept; digits are formatted for the visitor's locale.</p>
+{{#example}}
+<div class="im-grid-fit" style="--im-grid-min: 9rem">
+	<div class="im-stat"><span class="im-stat-figure" data-im-count="12480">12,480</span><span class="im-stat-label">readers</span></div>
+	<div class="im-stat"><span class="im-stat-figure"><span data-im-count="98.6">98.6</span>%</span><span class="im-stat-label">uptime</span></div>
+	<div class="im-stat"><span class="im-stat-figure" data-im-count="246">246</span><span class="im-stat-label">posts</span></div>
+</div>
+{{/example}}
+<p>Write the final number in the markup too — it is what shows without the script, and what a search engine reads.</p>
+
+<h2>Scroll-driven</h2>
+<p>Scrubbed by the scroll position itself, in pure CSS (<code>animation-timeline</code>). Where a browser lacks it, nothing happens — the element is just there.</p>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Class</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>im-scroll-in</code></td><td>Fades and rises as it crosses the bottom of the viewport — a reveal with no script, that also reverses.</td></tr>
+		<tr><td><code>im-scroll-parallax</code></td><td>Drifts against the scroll. <code>--im-parallax</code> (2rem) is the travel.</td></tr>
+	</tbody>
+</table>
+</div>
+{{#example}}
+<div class="im-grid-fit" style="--im-grid-min: 10rem">
+	<div class="demo-cell im-scroll-in" style="min-height: 6rem">im-scroll-in</div>
+	<div class="demo-cell im-scroll-in" style="min-height: 6rem">im-scroll-in</div>
+	<div class="demo-cell im-scroll-parallax" style="min-height: 6rem; --im-parallax: 1.5rem">im-scroll-parallax</div>
+</div>
+{{/example}}
+
+<h2>Loops</h2>
+{{#example center=true}}
+<span class="text-h2 text-ink">{{> "icons/loader" }}</span>
+<span class="im-spin text-h2 text-ink inline-flex">{{> "icons/loader"}}</span>
+<span class="im-pulse im-badge im-badge-info">im-pulse</span>
+<span class="im-bounce im-badge">im-bounce</span>
+<span class="im-float im-badge im-badge-accent">im-float</span>
+<span class="im-wiggle text-h2 text-ink inline-flex">{{> "icons/bell"}}</span>
+<span class="inline-flex items-center gap-2 text-sm"><span class="im-ping"></span> Live</span>
+<span class="im-dots text-muted"><i></i><i></i><i></i></span>
+<span class="font-mono text-sm text-ink">ready<span class="im-blink">_</span></span>
+{{/example}}
+<p><code>im-spin</code> · <code>im-pulse</code> · <code>im-bounce</code> · <code>im-float</code> · <code>im-wiggle</code> · <code>im-ping</code> · <code>im-dots</code> · <code>im-blink</code>. A loop draws the eye for as long as it runs — keep one to a view, and stop it when its reason ends.</p>
+
+<h2>Reduced motion</h2>
+<p>The base styles cut every animation and transition to nothing under <code>prefers-reduced-motion: reduce</code>. On top of that: reveals never hide, counters show their final number, the marquee and carousel autoplay stop, pointer effects are skipped. You do not need to handle it per component.</p>

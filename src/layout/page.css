@@ -1,0 +1,78 @@
+/* Page furniture that sits inside .im-shell-main. */
+
+/* A block of the page: optional head (title + action), then a body. */
+.im-section {
+	display: flex;
+	flex-direction: column;
+	gap: 1.25rem;
+	min-width: 0;
+}
+
+.im-section-head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: end;
+	justify-content: space-between;
+	gap: 0.75rem 1.5rem;
+}
+
+.im-section-title {
+	font-size: var(--im-text-h2);
+	line-height: var(--im-leading-h2);
+}
+
+.im-lede {
+	max-width: var(--im-width-prose);
+	color: var(--im-body);
+	font-size: var(--im-text-lg);
+	line-height: var(--im-leading-lg);
+}
+
+/* Article + aside: a reading column with a slim sticky rail beside it.
+
+   The width FOLLOWS THE SIDE NAV: collapse the nav to its rail and the space
+   it gives up goes to the content, instead of becoming a wider empty margin. */
+.im-with-aside {
+	--im-aside-width: 13.5rem;
+
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) var(--im-aside-width);
+	gap: 2rem clamp(1.5rem, 3vw, 3.5rem);
+	width: 100%;
+	max-width: var(--im-width-page);
+	margin-inline: auto;
+	transition: max-width 220ms var(--im-ease-out);
+}
+
+[data-nav="rail"] .im-with-aside {
+	max-width: calc(var(--im-width-page) + var(--im-nav-width) - var(--im-nav-rail));
+}
+
+/* Anything else that is capped at the page width widens the same way. */
+[data-nav="rail"] :is(.im-wrap, .im-frame:not(.im-frame-wide)) {
+	--im-wrap: calc(var(--im-width-page) + var(--im-nav-width) - var(--im-nav-rail));
+	--im-frame-width: calc(var(--im-width-page) + var(--im-nav-width) - var(--im-nav-rail));
+}
+
+.im-with-aside > aside > .im-sticky-rail {
+	position: sticky;
+	top: calc(var(--im-bar-height) + 1.25rem);
+	max-height: calc(100dvh - var(--im-bar-height) - 2.5rem);
+	overflow-y: auto;
+	scrollbar-width: thin;
+}
+
+@media (width < 64rem) {
+	.im-with-aside {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.im-with-aside > aside {
+		order: -1;
+	}
+
+	.im-with-aside > aside > .im-sticky-rail {
+		position: static;
+		max-height: none;
+	}
+}

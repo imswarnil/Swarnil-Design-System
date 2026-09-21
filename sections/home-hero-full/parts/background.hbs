@@ -1,0 +1,12 @@
+{{!-- The wash, in three layers: a CSS mesh (the still fallback), the mp4
+	loop lit through it, and grain over both. Decorative — no sound, no
+	controls, hidden from assistive tech. --}}
+<div class="im-hero__bg" aria-hidden="true">
+	<div class="im-hero__mesh"></div>
+	<div class="im-hero__plate">
+		<video class="im-hero__loop" autoplay muted loop playsinline disablepictureinpicture preload="auto" poster="{{asset "sections/home-hero-full/media/hero-loop.jpg"}}" data-hero-loop>
+			<source src="{{asset "sections/home-hero-full/media/hero-loop.mp4"}}" type="video/mp4">
+		</video>
+	</div>
+	<div class="im-hero__noise"></div>
+</div>

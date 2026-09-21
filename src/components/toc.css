@@ -1,0 +1,124 @@
+/* Table of contents — <nav class="toc" data-toc="#article"></nav>
+   im.js fills it from the target's h2/h3 and marks the one in view. */
+
+.im-toc {
+	font-size: var(--im-text-sm);
+}
+
+.im-toc:empty {
+	display: none;
+}
+
+.im-toc-title {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	margin-bottom: 0.625rem;
+	color: var(--im-ink);
+	font-size: var(--im-text-sm);
+	font-weight: 600;
+}
+
+.im-toc-list {
+	display: flex;
+	flex-direction: column;
+	border-left: 1px solid var(--im-line);
+}
+
+.im-toc-link {
+	display: block;
+	margin-left: -1px;
+	padding: 0.25rem 0 0.25rem 0.75rem;
+	border-left: 1px solid transparent;
+	color: var(--im-muted);
+	font-weight: 500;
+	line-height: 1.35;
+	text-decoration: none;
+	transition: color 120ms, border-color 120ms;
+}
+
+.im-toc-link[data-depth="3"] {
+	padding-left: 1.625rem;
+	font-weight: 400;
+}
+
+.im-toc-link:hover {
+	color: var(--im-ink);
+}
+
+.im-toc-link[aria-current="true"] {
+	border-left-color: var(--im-ink);
+	color: var(--im-ink);
+}
+
+/* ---- as a disclosure ----
+   <details class="im-toc-box"> <summary>On this page</summary> <nav class="im-toc" data-toc="#article" data-toc-title=""></nav> </details>
+   For a phone, or inside an article: a bordered box that opens. */
+.im-toc-box {
+	border-radius: var(--im-radius-lg);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	font-size: var(--im-text-sm);
+}
+
+.im-toc-box > summary {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.75rem;
+	padding: 0.75rem 1rem;
+	color: var(--im-ink);
+	font-weight: 600;
+	list-style: none;
+	cursor: pointer;
+}
+
+.im-toc-box > summary::-webkit-details-marker {
+	display: none;
+}
+
+.im-toc-box > summary::after {
+	content: "";
+	width: 0.45rem;
+	height: 0.45rem;
+	margin-right: 0.25rem;
+	border-right: 1.5px solid var(--im-muted);
+	border-bottom: 1.5px solid var(--im-muted);
+	rotate: 45deg;
+	transition: rotate 160ms var(--im-ease-out);
+}
+
+.im-toc-box[open] > summary::after {
+	rotate: -135deg;
+}
+
+.im-toc-box > .im-toc {
+	padding: 0 1rem 0.875rem;
+}
+
+.im-toc-box .im-toc-title {
+	display: none;
+}
+
+/* Numbered: 1, 1.1 — counters, so the markup stays a flat list. */
+.im-toc-numbered .im-toc-list {
+	counter-reset: im-toc-2;
+}
+
+.im-toc-numbered .im-toc-link[data-depth="2"] {
+	counter-increment: im-toc-2;
+	counter-reset: im-toc-3;
+}
+
+.im-toc-numbered .im-toc-link[data-depth="3"] {
+	counter-increment: im-toc-3;
+}
+
+.im-toc-numbered .im-toc-link[data-depth="2"]::before {
+	content: counter(im-toc-2) ". ";
+	color: var(--im-faint);
+}
+
+.im-toc-numbered .im-toc-link[data-depth="3"]::before {
+	content: counter(im-toc-2) "." counter(im-toc-3) " ";
+	color: var(--im-faint);
+}

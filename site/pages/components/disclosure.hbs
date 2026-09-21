@@ -1,0 +1,117 @@
+---
+title: Accordion & tabs
+description: Two ways to show one thing at a time. The accordion is native details elements and needs no script; tabs are a few lines in im.js following the ARIA pattern.
+eyebrow: Component
+source: src/components/disclosure.css · src/js/im.js
+---
+<h2>Accordion</h2>
+{{#example}}
+<div class="im-accordion">
+	<details name="faq" open><summary>Does it need JavaScript?</summary><div class="im-accordion-body">No. It is a native <code>&lt;details&gt;</code>: the keyboard, the open state and the browser's find-in-page all work by themselves.</div></details>
+	<details name="faq"><summary>Can only one be open at a time?</summary><div class="im-accordion-body">Give each <code>&lt;details&gt;</code> the same <code>name</code> and the browser closes the others. Leave <code>name</code> off and they open independently.</div></details>
+	<details name="faq"><summary>Will a search engine see the closed answers?</summary><div class="im-accordion-body">Yes — the content is in the page, only collapsed.</div></details>
+</div>
+{{/example}}
+
+<h3>With icons</h3>
+<p>Put an <code>im-accordion-icon</code> first in the summary. It takes the accent when its item is open.</p>
+{{#example}}
+<div class="im-accordion">
+	<details name="faq-i" open><summary><span class="im-accordion-icon">{{> "icons/truck"}}</span>Shipping</summary><div class="im-accordion-body">Two to four working days, tracked.</div></details>
+	<details name="faq-i"><summary><span class="im-accordion-icon">{{> "icons/refresh-cw"}}</span>Returns</summary><div class="im-accordion-body">Thirty days, no questions.</div></details>
+	<details name="faq-i"><summary><span class="im-accordion-icon">{{> "icons/shield"}}</span>Privacy</summary><div class="im-accordion-body">No tracking, no third-party scripts.</div></details>
+</div>
+{{/example}}
+{{#example title="im-accordion-cards — separate boxes; the open one takes an ink edge"}}
+<div class="im-accordion im-accordion-cards">
+	<details name="faq-c" open><summary><span class="im-accordion-icon">{{> "icons/credit-card"}}</span>Which cards do you take?</summary><div class="im-accordion-body">All major cards, through Stripe.</div></details>
+	<details name="faq-c"><summary><span class="im-accordion-icon">{{> "icons/key-round"}}</span>Can I share my login?</summary><div class="im-accordion-body">A membership is for one reader.</div></details>
+</div>
+{{/example}}
+
+{{#example title="im-accordion-boxed"}}
+<div class="im-accordion im-accordion-boxed">
+	<details><summary>Shipping</summary><div class="im-accordion-body">Two to four working days.</div></details>
+	<details><summary>Returns</summary><div class="im-accordion-body">Thirty days, no questions.</div></details>
+</div>
+{{/example}}
+
+<h2>Tabs</h2>
+{{#example}}
+<div class="im-tabs" data-im-tabs>
+	<div class="im-tablist" role="tablist" aria-label="Install">
+		<button class="im-tab" type="button" role="tab" aria-selected="true" aria-controls="tab-npm">npm</button>
+		<button class="im-tab" type="button" role="tab" aria-controls="tab-pnpm">pnpm</button>
+		<button class="im-tab" type="button" role="tab" aria-controls="tab-yarn">yarn</button>
+	</div>
+	<div class="im-tabpanel" role="tabpanel" id="tab-npm"><pre><code class="language-bash">npm install &amp;&amp; npm run dev</code></pre></div>
+	<div class="im-tabpanel" role="tabpanel" id="tab-pnpm" hidden><pre><code class="language-bash">pnpm install &amp;&amp; pnpm dev</code></pre></div>
+	<div class="im-tabpanel" role="tabpanel" id="tab-yarn" hidden><pre><code class="language-bash">yarn &amp;&amp; yarn dev</code></pre></div>
+</div>
+{{/example}}
+<p><code>data-im-tabs</code> on the wrapper; each tab names its panel in <code>aria-controls</code>; every panel but the first starts <code>hidden</code>. <kbd>←</kbd> <kbd>→</kbd> <kbd>Home</kbd> <kbd>End</kbd> move between tabs, and only the selected tab is in the tab order — the ARIA tabs pattern.</p>
+
+<h3>With icons</h3>
+{{#example}}
+<div class="im-tabs" data-im-tabs>
+	<div class="im-tablist" role="tablist" aria-label="Account">
+		<button class="im-tab" type="button" role="tab" aria-selected="true" aria-controls="ti-1">{{> "icons/user"}} Profile</button>
+		<button class="im-tab" type="button" role="tab" aria-controls="ti-2">{{> "icons/bell"}} Notifications <span class="im-badge im-badge-accent">3</span></button>
+		<button class="im-tab" type="button" role="tab" aria-controls="ti-3">{{> "icons/credit-card"}} Billing</button>
+	</div>
+	<div class="im-tabpanel" role="tabpanel" id="ti-1"><p>Your name, picture and bio.</p></div>
+	<div class="im-tabpanel" role="tabpanel" id="ti-2" hidden><p>Three unread.</p></div>
+	<div class="im-tabpanel" role="tabpanel" id="ti-3" hidden><p>Plan and invoices.</p></div>
+</div>
+{{/example}}
+{{#example title="im-tablist-stacked im-tablist-fill — icon above label, a tab bar"}}
+<div class="im-tabs" data-im-tabs style="max-width: 26rem">
+	<div class="im-tablist im-tablist-stacked im-tablist-fill" role="tablist" aria-label="Sections">
+		<button class="im-tab" type="button" role="tab" aria-selected="true" aria-controls="ts-1">{{> "icons/house"}}Home</button>
+		<button class="im-tab" type="button" role="tab" aria-controls="ts-2">{{> "icons/search"}}Search</button>
+		<button class="im-tab" type="button" role="tab" aria-controls="ts-3">{{> "icons/bookmark"}}Saved</button>
+		<button class="im-tab" type="button" role="tab" aria-controls="ts-4">{{> "icons/user"}}You</button>
+	</div>
+	<div class="im-tabpanel" role="tabpanel" id="ts-1"><p class="text-sm">Home.</p></div><div class="im-tabpanel" role="tabpanel" id="ts-2" hidden><p class="text-sm">Search.</p></div><div class="im-tabpanel" role="tabpanel" id="ts-3" hidden><p class="text-sm">Saved.</p></div><div class="im-tabpanel" role="tabpanel" id="ts-4" hidden><p class="text-sm">You.</p></div>
+</div>
+{{/example}}
+
+<h3>Vertical</h3>
+<p><code>im-tabs-vertical</code>, with the list and panels wrapped in <code>im-tabs-body</code>: tabs down the side, the panel beside them. When the <em>component</em> is under 36rem wide it becomes the ordinary horizontal, scrolling row — a container query, so it is right in a narrow column too.</p>
+{{#example}}
+<div class="im-tabs im-tabs-vertical" data-im-tabs>
+	<div class="im-tabs-body">
+		<div class="im-tablist" role="tablist" aria-label="Settings" aria-orientation="vertical">
+			<button class="im-tab" type="button" role="tab" aria-selected="true" aria-controls="tv-1">{{> "icons/settings"}} General</button>
+			<button class="im-tab" type="button" role="tab" aria-controls="tv-2">{{> "icons/palette"}} Appearance</button>
+			<button class="im-tab" type="button" role="tab" aria-controls="tv-3">{{> "icons/users"}} Members</button>
+			<button class="im-tab" type="button" role="tab" aria-controls="tv-4">{{> "icons/code"}} Code injection</button>
+		</div>
+		<div>
+			<div class="im-tabpanel" role="tabpanel" id="tv-1"><h4 class="text-h4">General</h4><p class="mt-2 text-sm">Title, description, timezone, language.</p></div>
+			<div class="im-tabpanel" role="tabpanel" id="tv-2" hidden><h4 class="text-h4">Appearance</h4><p class="mt-2 text-sm">Brand colour, fonts, theme.</p></div>
+			<div class="im-tabpanel" role="tabpanel" id="tv-3" hidden><h4 class="text-h4">Members</h4><p class="mt-2 text-sm">Access, tiers, portal.</p></div>
+			<div class="im-tabpanel" role="tabpanel" id="tv-4" hidden><h4 class="text-h4">Code injection</h4><p class="mt-2 text-sm">Site header and footer.</p></div>
+		</div>
+	</div>
+</div>
+{{/example}}
+
+<h3>Pills</h3>
+{{#example}}
+<div class="im-tabs" data-im-tabs>
+	<div class="im-tablist im-tablist-pills" role="tablist" aria-label="Billing">
+		<button class="im-tab" type="button" role="tab" aria-selected="true" aria-controls="bill-m">Monthly</button>
+		<button class="im-tab" type="button" role="tab" aria-controls="bill-y">Yearly <span class="im-badge im-badge-success">−20%</span></button>
+	</div>
+	<div class="im-tabpanel" role="tabpanel" id="bill-m"><p class="im-stat"><span class="im-stat-figure">$9</span><span class="im-stat-label">per month</span></p></div>
+	<div class="im-tabpanel" role="tabpanel" id="bill-y" hidden><p class="im-stat"><span class="im-stat-figure">$86</span><span class="im-stat-label">per year</span></p></div>
+</div>
+{{/example}}
+
+<h2>Which one?</h2>
+<ul>
+	<li><strong>Accordion</strong> when the items are independent and a reader may want several — an FAQ, filters, a long settings page.</li>
+	<li><strong>Tabs</strong> when they are alternatives of the same thing — the same command in three package managers, monthly versus yearly.</li>
+	<li><strong>Neither</strong> for content everyone needs. Hiding it costs a click and the reader may never know it was there.</li>
+</ul>

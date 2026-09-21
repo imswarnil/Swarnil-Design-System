@@ -1,0 +1,8 @@
+/* Effects — decoration, as single classes: im-fx-*. Three families, one file
+   each. An effect changes how something LOOKS, never what it is or does; all
+   of them degrade to the plain element, and all motion stops under
+   prefers-reduced-motion. */
+
+@import "./text.css";
+@import "./image.css";
+@import "./border.css";

@@ -1,0 +1,249 @@
+/* Image effects. Put the class on the WRAPPER (a <figure>, an <a>), with the
+   <img> or <video> inside it:
+     <figure class="im-fx-img im-fx-zoom"><img …></figure>
+   im-fx-img is the shared base: it clips, rounds and fills. */
+
+.im-fx-img {
+	position: relative;
+	display: block;
+	overflow: hidden;
+	border-radius: var(--im-fx-radius, var(--im-radius-xl));
+	isolation: isolate;
+	background-color: var(--im-surface-2);
+}
+
+.im-fx-img > :is(img, video) {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+/* ---- hover: four that earn the name ---- */
+
+/* Reveal-colour: black and white, and the picture's colour returns as it
+   pushes in. The default treatment for a grid of pictures. */
+.im-fx-colour > :is(img, video) {
+	filter: grayscale(1) contrast(1.06);
+	transition: filter 700ms var(--im-ease-out), scale 900ms var(--im-ease-out);
+}
+
+.im-fx-colour:is(:hover, :focus-within) > :is(img, video) {
+	filter: none;
+	scale: 1.06;
+}
+
+/* Lens: black and white, and a circle of true colour follows the pointer.
+   (im-motion.js feeds the pointer's position.) The same picture is painted
+   twice: once desaturated, once in colour and masked to the lens. */
+.im-fx-lens > :is(img, video) {
+	filter: grayscale(1) contrast(1.06);
+}
+
+.im-fx-lens::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	background: var(--im-fx-src) center / cover no-repeat;
+	mask-image: radial-gradient(circle var(--im-fx-lens, 7rem) at var(--im-lens-x, 50%) var(--im-lens-y, 50%), #000 60%, transparent 100%);
+	opacity: 0;
+	transition: opacity var(--im-duration-base);
+	pointer-events: none;
+}
+
+.im-fx-lens:hover::after {
+	opacity: 1;
+}
+
+/* Glare: a sheet of light crosses the picture once. */
+.im-fx-glare::before {
+	content: "";
+	position: absolute;
+	inset: -20% -60%;
+	z-index: 2;
+	background-image: linear-gradient(105deg, transparent 42%, rgb(255 255 255 / 45%) 50%, transparent 58%);
+	translate: -60% 0;
+	pointer-events: none;
+}
+
+.im-fx-glare:is(:hover, :focus-within)::before {
+	translate: 60% 0;
+	transition: translate 900ms var(--im-ease-out);
+}
+
+.im-fx-glare > :is(img, video) {
+	transition: scale 900ms var(--im-ease-out);
+}
+
+.im-fx-glare:is(:hover, :focus-within) > :is(img, video) {
+	scale: 1.05;
+}
+
+/* Curtain: a panel in the accent rises over the picture carrying the caption,
+   while the picture sinks and dims behind it.
+   <figure class="im-fx-img im-fx-curtain"><img …><figcaption>…</figcaption></figure> */
+.im-fx-curtain > figcaption {
+	position: absolute;
+	inset: 0;
+	z-index: 2;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	gap: 0.25rem;
+	margin: 0;
+	padding: 1.25rem;
+	background-color: color-mix(in oklab, var(--im-fx-ink, var(--im-accent)) 92%, transparent);
+	color: var(--im-on-accent);
+	font-size: var(--im-text-sm);
+	text-align: left;
+	clip-path: inset(100% 0 0 0);
+	transition: clip-path 600ms var(--im-ease-out);
+}
+
+.im-fx-curtain > figcaption > strong {
+	color: inherit;
+	font-size: var(--im-text-h4);
+	line-height: var(--im-leading-h4);
+	letter-spacing: var(--im-tracking-tight);
+}
+
+.im-fx-curtain > :is(img, video) {
+	transition: scale 900ms var(--im-ease-out);
+}
+
+.im-fx-curtain:is(:hover, :focus-within) > figcaption {
+	clip-path: inset(0);
+}
+
+.im-fx-curtain:is(:hover, :focus-within) > :is(img, video) {
+	scale: 1.1;
+}
+
+@media (hover: none) {
+	.im-fx-curtain > figcaption {
+		inset: auto 0 0;
+		padding-top: 2.5rem;
+		background: linear-gradient(to top, rgb(0 0 0 / 80%), transparent);
+		color: #fff;
+		clip-path: none;
+	}
+}
+
+/* Focus group: hover one picture and its siblings step back.
+   <div class="im-fx-group"> <figure class="im-fx-img">…</figure> … </div> */
+@media (hover: hover) {
+	.im-fx-group:hover > :not(:hover) {
+		opacity: 0.45;
+		filter: grayscale(0.8);
+		scale: 0.985;
+	}
+
+	.im-fx-group > * {
+		transition: opacity var(--im-duration-base), filter var(--im-duration-base), scale var(--im-duration-base) var(--im-ease-out);
+	}
+}
+
+/* Duotone: shadows to ink, highlights to the accent. */
+.im-fx-duotone > :is(img, video) {
+	filter: grayscale(1) contrast(1.1);
+}
+
+.im-fx-duotone::before,
+.im-fx-duotone::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	pointer-events: none;
+}
+
+.im-fx-duotone::before {
+	background-color: var(--im-fx-to, var(--im-accent));
+	mix-blend-mode: multiply;
+}
+
+.im-fx-duotone::after {
+	background-color: var(--im-fx-from, #1a1033);
+	mix-blend-mode: lighten;
+}
+
+/* Ken Burns: a slow push, for a hero or a slide. */
+.im-fx-kenburns > :is(img, video) {
+	animation: im-fx-kenburns 22s var(--im-ease-in-out) infinite alternate;
+}
+
+@keyframes im-fx-kenburns {
+	from { scale: 1; translate: 0 0; }
+	to { scale: 1.14; translate: -2% -2%; }
+}
+
+/* Reveal: wiped in from the left when it scrolls into view (data-im-reveal). */
+@media (prefers-reduced-motion: no-preference) {
+	[data-im-js] .im-fx-reveal[data-im-reveal]:not([data-im-revealed]) {
+		opacity: 1;
+		translate: none;
+		clip-path: inset(0 100% 0 0);
+	}
+
+	.im-fx-reveal {
+		clip-path: inset(0 0 0 0);
+		transition: clip-path 900ms var(--im-ease-out);
+	}
+
+	[data-im-js] .im-fx-reveal[data-im-reveal]:not([data-im-revealed]) > :is(img, video) {
+		scale: 1.15;
+	}
+
+	.im-fx-reveal > :is(img, video) {
+		transition: scale 1200ms var(--im-ease-out);
+	}
+}
+
+/* Scanlines & vignette: overlays. */
+.im-fx-scanlines::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	background-image: repeating-linear-gradient(to bottom, rgb(0 0 0 / 22%) 0 1px, transparent 1px 3px);
+	pointer-events: none;
+}
+
+.im-fx-vignette::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	background-image: radial-gradient(ellipse at center, transparent 45%, rgb(0 0 0 / 55%));
+	pointer-events: none;
+}
+
+/* Parallax: the picture drifts inside its frame as the page scrolls. */
+.im-fx-parallax > :is(img, video) {
+	height: 120%;
+	margin-top: -10%;
+}
+
+@supports (animation-timeline: view()) {
+	@media (prefers-reduced-motion: no-preference) {
+		.im-fx-parallax > :is(img, video) {
+			animation: im-scroll-parallax linear both;
+			animation-timeline: view();
+
+			--im-parallax: 8%;
+		}
+	}
+}
+
+/* Frame: a mat and a hairline, like a print. */
+.im-fx-frame {
+	padding: 0.625rem;
+	border-radius: var(--im-radius-md);
+	background-color: var(--im-canvas);
+	box-shadow: inset 0 0 0 1px var(--im-line), var(--im-shadow-float);
+}
+
+.im-fx-frame > :is(img, video) {
+	border-radius: var(--im-radius-xs);
+}

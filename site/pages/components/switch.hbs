@@ -1,0 +1,68 @@
+---
+title: Switch & switcher
+description: A switch turns one thing on or off. A switcher chooses one of a few, with a thumb that slides to the choice — the theme control, a style toggle, monthly or yearly. Both are real form inputs.
+eyebrow: Component
+source: src/components/feedback.css · switcher.css
+---
+<h2>Switcher</h2>
+<p>Real radio buttons in a <code>&lt;fieldset&gt;</code>: a form can submit it, the arrow keys move it, a screen reader says "2 of 3". The thumb is positioned by CSS alone, from <em>which</em> radio is checked.</p>
+{{#example center=true}}
+<fieldset class="im-switcher" aria-label="Billing">
+	<label><input type="radio" name="sw-bill" checked><span>Monthly</span></label>
+	<label><input type="radio" name="sw-bill"><span>Yearly</span></label>
+</fieldset>
+<fieldset class="im-switcher" aria-label="View">
+	<label><input type="radio" name="sw-view" checked>{{> "icons/layout-grid"}}<span>Grid</span></label>
+	<label><input type="radio" name="sw-view">{{> "icons/rows-3"}}<span>List</span></label>
+	<label><input type="radio" name="sw-view">{{> "icons/calendar"}}<span>Archive</span></label>
+</fieldset>
+{{/example}}
+
+<h3>As the theme switcher</h3>
+<p>Add <code>data-theme-set</code> to each radio and <code>im.js</code> wires it to the page's theme — and keeps it checked to match. This one is live.</p>
+{{#example center=true}}
+<fieldset class="im-switcher" aria-label="Theme">
+	<label><input type="radio" name="sw-theme" data-theme-set="light">{{> "icons/sun"}}<span>Light</span></label>
+	<label><input type="radio" name="sw-theme" data-theme-set="dark">{{> "icons/moon"}}<span>Dark</span></label>
+	<label><input type="radio" name="sw-theme" data-theme-set="system">{{> "icons/monitor"}}<span>Auto</span></label>
+</fieldset>
+<fieldset class="im-switcher im-switcher-icons" aria-label="Theme, icons only">
+	<label><input type="radio" name="sw-theme-2" data-theme-set="light">{{> "icons/sun"}}<span>Light</span></label>
+	<label><input type="radio" name="sw-theme-2" data-theme-set="dark">{{> "icons/moon"}}<span>Dark</span></label>
+	<label><input type="radio" name="sw-theme-2" data-theme-set="system">{{> "icons/monitor"}}<span>Auto</span></label>
+</fieldset>
+{{/example}}
+<p>For a single button that cycles instead, there is <code>partials/components/theme-button.hbs</code> — the one in this site's top bar.</p>
+
+<h3>Variants</h3>
+{{#example}}
+<div class="im-stack" style="--im-stack-gap: 1rem; align-items: flex-start">
+	<fieldset class="im-switcher im-switcher-sm" aria-label="Small"><label><input type="radio" name="sw-a" checked><span>Day</span></label><label><input type="radio" name="sw-a"><span>Week</span></label><label><input type="radio" name="sw-a"><span>Month</span></label><label><input type="radio" name="sw-a"><span>Year</span></label></fieldset>
+	<fieldset class="im-switcher im-switcher-solid" aria-label="Solid"><label><input type="radio" name="sw-b" checked><span>Swiss</span></label><label><input type="radio" name="sw-b"><span>Soft</span></label></fieldset>
+	<fieldset class="im-switcher im-switcher-lg" aria-label="Large"><label><input type="radio" name="sw-c"><span>For readers</span></label><label><input type="radio" name="sw-c" checked><span>For writers</span></label></fieldset>
+	<fieldset class="im-switcher im-switcher-block" aria-label="Full width" style="max-width: 24rem"><label><input type="radio" name="sw-d" checked><span>Sign in</span></label><label><input type="radio" name="sw-d"><span>Create account</span></label></fieldset>
+</div>
+{{/example}}
+<p><code>-sm</code> · <code>-lg</code> · <code>-solid</code> (the thumb takes the ink) · <code>-icons</code> (labels kept for screen readers) · <code>-block</code>. Two to five options; more than that is a <a href="/forms/controls/">select</a>.</p>
+
+<h2>Switch</h2>
+{{#example center=true}}
+<label class="im-switch"><input type="checkbox" role="switch" checked><span>Email me new posts</span></label>
+<label class="im-switch"><input type="checkbox" role="switch"><span>Weekly digest</span></label>
+<label class="im-switch"><input type="checkbox" role="switch" disabled><span>Disabled</span></label>
+{{/example}}
+<p>A real checkbox with <code>role="switch"</code>. The thumb stretches while held, then springs across. In a settings list:</p>
+{{#example style="max-width: 28rem"}}
+<div class="im-stack" style="--im-stack-gap: 0">
+	<label class="im-switch flex justify-between py-3"><span>Comments<small class="block text-xs text-muted">Let members reply under posts</small></span><input type="checkbox" role="switch" checked style="order: 2"></label>
+	<hr class="im-divider">
+	<label class="im-switch flex justify-between py-3"><span>Reading time<small class="block text-xs text-muted">Shown beside the date on every post</small></span><input type="checkbox" role="switch" style="order: 2"></label>
+</div>
+{{/example}}
+
+<h2>Switch or switcher or checkbox?</h2>
+<ul>
+	<li><strong>Switch</strong> — one setting, on or off, that takes effect <em>at once</em>.</li>
+	<li><strong>Switcher</strong> — one of a few mutually exclusive options, all visible.</li>
+	<li><strong><a href="/forms/choices/">Checkbox</a></strong> — a choice that is submitted with a form, or several that can be on together.</li>
+</ul>

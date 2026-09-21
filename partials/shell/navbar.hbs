@@ -1,0 +1,48 @@
+{{!-- Site navbar — for a site without a side nav.
+	  ≥ lg   brand · primary links · "More" (secondary nav) ……… search · theme · GitHub · CTA
+	  < lg   menu button · brand ……… search · CTA        (links move to the menu panel)
+	Params: id (unique per page, default "nav"), line (true = hairline under it), github (repo URL),
+	        cta_label, cta_url (default: Ghost's signup portal). --}}
+<header class="im-topbar im-topbar-site{{#if line}} im-topbar-line{{/if}}">
+	<div class="im-topbar-start">
+		<button class="im-btn im-btn-ghost im-btn-icon lg:hidden" type="button" data-drawer-open="#{{#if id}}{{id}}{{else}}nav{{/if}}-drawer" aria-label="{{t "Open navigation"}}">{{> "icons/menu"}}</button>
+		<a class="im-brand" href="{{@site.url}}">
+			{{#if @site.logo}}<img src="{{@site.logo}}" alt="{{@site.title}}">{{else}}<span>{{@site.title}}</span>{{/if}}
+		</a>
+		<nav class="im-topbar-nav" aria-label="{{t "Primary"}}">
+			{{navigation}}
+			{{#if @site.secondary_navigation}}
+				<button class="im-toplink" type="button" popovertarget="{{#if id}}{{id}}{{else}}nav{{/if}}-more" aria-expanded="false">{{t "More"}}{{> "icons/chevron-down"}}</button>
+				<div class="im-menu" id="{{#if id}}{{id}}{{else}}nav{{/if}}-more" popover data-align="start">{{navigation type="secondary" as="menu"}}</div>
+			{{/if}}
+		</nav>
+	</div>
+
+	<div class="im-topbar-end">
+		<button class="im-btn im-btn-ghost im-btn-icon" type="button" data-ghost-search aria-label="{{t "Search"}}">{{> "icons/search"}}</button>
+		{{> "components/theme-button"}}
+		{{#if github}}<a class="im-btn im-btn-ghost im-btn-icon max-sm:hidden" href="{{github}}" target="_blank" rel="noopener noreferrer" aria-label="GitHub">{{> "icons/brand-github"}}</a>{{/if}}
+		{{#unless @member}}
+			<a class="im-btn im-btn-primary im-btn-sm" href="{{#if cta_url}}{{cta_url}}{{else}}#/portal/signup{{/if}}">{{#if cta_label}}{{cta_label}}{{else}}{{t "Subscribe"}}{{/if}}</a>
+		{{/unless}}
+	</div>
+</header>
+
+<dialog class="im-navpanel" id="{{#if id}}{{id}}{{else}}nav{{/if}}-drawer" aria-label="{{t "Navigation"}}">
+	<div class="im-navpanel-head">
+		<a class="im-brand" href="{{@site.url}}">{{@site.title}}</a>
+		<button class="im-btn im-btn-ghost im-btn-icon" type="button" data-drawer-close aria-label="{{t "Close"}}">{{> "icons/x"}}</button>
+	</div>
+	<nav class="im-navpanel-grid" aria-label="{{t "Primary"}}">
+		{{navigation as="tiles"}}
+		{{#if @site.secondary_navigation}}
+			<p class="im-caption">{{t "More"}}</p>
+			{{navigation type="secondary" as="tiles"}}
+		{{/if}}
+	</nav>
+	<div class="im-navpanel-foot">
+		{{> "components/theme-button"}}
+		{{#if github}}<a class="im-btn im-btn-ghost im-btn-icon" href="{{github}}" target="_blank" rel="noopener noreferrer" aria-label="GitHub">{{> "icons/brand-github"}}</a>{{/if}}
+		<a class="im-btn im-btn-primary im-btn-sm" style="margin-left: auto" href="{{#if cta_url}}{{cta_url}}{{else}}#/portal/signup{{/if}}">{{#if cta_label}}{{cta_label}}{{else}}{{t "Subscribe"}}{{/if}}</a>
+	</div>
+</dialog>

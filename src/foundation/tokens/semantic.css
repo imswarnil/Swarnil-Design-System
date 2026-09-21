@@ -1,0 +1,90 @@
+/* Semantic tokens — the names components use. Light values first; dark is
+   keyed on <html data-theme="dark">. js/im.js resolves "system" and writes
+   the attribute; the media query covers the moment before it runs, and
+   visitors without JavaScript. */
+
+:root {
+	color-scheme: light;
+
+	/* ---- Surfaces, from the page upward ----------------------------------- */
+	--im-canvas: var(--im-white);
+	--im-surface: var(--im-gray-100);
+	--im-surface-2: var(--im-gray-200);
+	--im-surface-3: var(--im-gray-300);
+	--im-line: color-mix(in oklab, var(--im-gray-500) 24%, transparent);
+	--im-scrim: rgb(10 10 10 / 60%);
+
+	/* ---- Text, loudest to quietest ---------------------------------------- */
+	--im-ink: var(--im-gray-950);
+	--im-body: var(--im-gray-600);
+	--im-muted: var(--im-gray-500);
+	--im-faint: var(--im-gray-400);
+
+	/* ---- Accent: Ghost injects --ghost-accent-color from Settings → Design -- */
+	--im-accent: var(--ghost-accent-color, #ff5a1f);
+	--im-on-accent: var(--im-white);
+
+	/* ---- Status, and a tint of each over the CURRENT canvas ---------------- */
+	--im-success: #1a7f37;
+	--im-warning: #8a5a00;
+	--im-danger: #b42318;
+	--im-info: #175cd3;
+	--im-success-tint: color-mix(in oklab, var(--im-success) 11%, var(--im-canvas));
+	--im-warning-tint: color-mix(in oklab, var(--im-warning) 13%, var(--im-canvas));
+	--im-danger-tint: color-mix(in oklab, var(--im-danger) 10%, var(--im-canvas));
+	--im-info-tint: color-mix(in oklab, var(--im-info) 10%, var(--im-canvas));
+	--im-accent-tint: color-mix(in oklab, var(--im-accent) 10%, var(--im-canvas));
+
+	/* ---- Shadow: only for things that float -------------------------------- */
+	--im-shadow-float: 0 1px 2px rgb(0 0 0 / 6%), 0 12px 32px -8px rgb(0 0 0 / 18%);
+
+	/* ---- Frame metrics ------------------------------------------------------ */
+	--im-bar-height: 3.5rem;
+	--im-nav-width: 15rem;
+	--im-nav-rail: 4.25rem;
+	--im-gutter: clamp(1rem, 0.4rem + 2.4vw, 2rem);
+	--im-section-gap: clamp(3.5rem, 2.5rem + 3vw, 5.5rem);
+	--im-flow: 1.5rem;
+}
+
+:root[data-theme="dark"] {
+	color-scheme: dark;
+
+	--im-canvas: var(--im-gray-950);
+	--im-surface: var(--im-gray-900);
+	--im-surface-2: var(--im-gray-800);
+	--im-surface-3: var(--im-gray-700);
+	--im-line: color-mix(in oklab, var(--im-gray-400) 26%, transparent);
+	--im-scrim: rgb(0 0 0 / 72%);
+	--im-ink: var(--im-white);
+	--im-body: var(--im-gray-400);
+	--im-muted: var(--im-gray-500);
+	--im-faint: var(--im-gray-600);
+	--im-success: #4ac26b;
+	--im-warning: #e3b341;
+	--im-danger: #f97066;
+	--im-info: #6ea8fe;
+	--im-shadow-float: 0 1px 2px rgb(0 0 0 / 40%), 0 16px 40px -8px rgb(0 0 0 / 70%);
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme]) {
+		color-scheme: dark;
+
+		--im-canvas: var(--im-gray-950);
+		--im-surface: var(--im-gray-900);
+		--im-surface-2: var(--im-gray-800);
+		--im-surface-3: var(--im-gray-700);
+		--im-line: color-mix(in oklab, var(--im-gray-400) 26%, transparent);
+		--im-scrim: rgb(0 0 0 / 72%);
+		--im-ink: var(--im-white);
+		--im-body: var(--im-gray-400);
+		--im-muted: var(--im-gray-500);
+		--im-faint: var(--im-gray-600);
+		--im-success: #4ac26b;
+		--im-warning: #e3b341;
+		--im-danger: #f97066;
+		--im-info: #6ea8fe;
+		--im-shadow-float: 0 1px 2px rgb(0 0 0 / 40%), 0 16px 40px -8px rgb(0 0 0 / 70%);
+	}
+}

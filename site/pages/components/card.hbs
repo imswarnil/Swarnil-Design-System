@@ -1,0 +1,132 @@
+---
+title: Card
+description: A surface and a small vocabulary of parts — media, badge, header, icon, body, title, text, meta, footer, CTA. Every part is optional; vertical or horizontal; any surface.
+eyebrow: Component
+source: src/components/card.css
+---
+<h2>Anatomy</h2>
+{{#example style="max-width: 24rem"}}
+<article class="im-card">
+	<div class="im-card-media">
+		<img src="{{demo.post.feature_image}}" alt="" loading="lazy">
+		<span class="im-card-badge im-badge im-badge-accent">New</span>
+	</div>
+	<div class="im-card-body">
+		<p class="im-card-eyebrow">Travel</p>
+		<h3 class="im-card-title"><a href="#anatomy">Driving the Amalfi Coast</a></h3>
+		<p class="im-card-text">Sorrento to Amalfi from the passenger seat, with the bits the guidebooks leave out.</p>
+		<div class="im-card-meta"><span>{{> "icons/calendar"}} 17 Sep 2026</span><span>{{> "icons/clock"}} 8 min</span></div>
+	</div>
+	<div class="im-card-footer">
+		<span class="im-card-cta">Read the post {{> "icons/arrow-right"}}</span>
+		<button class="im-btn im-btn-ghost im-btn-icon im-btn-sm" type="button" aria-label="Save">{{> "icons/bookmark"}}</button>
+	</div>
+</article>
+{{/example}}
+
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Part</th><th>What it is</th></tr></thead>
+	<tbody>
+		<tr><td><code>im-card-media</code></td><td>Image, video or embed, edge to edge. <code>--im-card-ratio</code> sets its shape (16/10).</td></tr>
+		<tr><td><code>im-card-badge</code></td><td>Pinned over the media's top-left. Add to any <code>im-badge</code>. <code>im-card-badge-end</code> pins right.</td></tr>
+		<tr><td><code>im-card-header</code></td><td>A row above the body: an icon or avatar beside a title.</td></tr>
+		<tr><td><code>im-card-body</code></td><td>The padded content column. Grows to fill, so footers line up across a row of cards.</td></tr>
+		<tr><td><code>im-card-icon</code></td><td>A tinted square for an icon.</td></tr>
+		<tr><td><code>im-card-eyebrow</code></td><td>A category line above the title. May be a link.</td></tr>
+		<tr><td><code>im-card-title</code></td><td>The heading. A link inside it is stretched over the whole card.</td></tr>
+		<tr><td><code>im-card-text</code></td><td>Supporting copy. Add <code>im-card-clamp</code> to cut it at <code>--im-card-lines</code> (3).</td></tr>
+		<tr><td><code>im-card-meta</code></td><td>Small facts in a wrapping row — date, time, author. Sits at the bottom of the body.</td></tr>
+		<tr><td><code>im-card-footer</code></td><td>A ruled strip for actions.</td></tr>
+		<tr><td><code>im-card-cta</code></td><td>A text link with an arrow that nudges on hover.</td></tr>
+	</tbody>
+</table>
+</div>
+<p>The whole card is clickable through the title's link, while links and buttons in the meta and footer stay clickable above it — so there is never a link wrapped around a link.</p>
+
+<h2>The simplest card</h2>
+<p>With none of the structural parts, a card pads its own content. This is what the rest of these docs use.</p>
+{{#example}}
+<div class="im-grid-auto" style="--im-grid-min: 13rem">
+	<div class="im-card"><span class="im-card-title">Filled</span><span>One surface step up from the page.</span></div>
+	<div class="im-card im-card-outline"><span class="im-card-title">Outline</span><span>A hairline instead of a fill.</span></div>
+	<a class="im-card im-card-link" href="#the-simplest-card"><span class="im-card-title">Link</span><span>Steps up again on hover and focus.</span></a>
+</div>
+{{/example}}
+
+<h2>Surfaces</h2>
+{{#example}}
+<div class="im-grid-auto" style="--im-grid-min: 14rem">
+	<article class="im-card"><div class="im-card-media"><img src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></div><div class="im-card-body"><h3 class="im-card-title"><a href="#surfaces">Filled</a></h3><p class="im-card-text">The default surface.</p></div></article>
+	<article class="im-card im-card-outline"><div class="im-card-media"><img src="{{demo.three.[1].feature_image}}" alt="" loading="lazy"></div><div class="im-card-body"><h3 class="im-card-title"><a href="#surfaces">Outline</a></h3><p class="im-card-text">A hairline border, no fill.</p></div></article>
+	<article class="im-card im-card-plain"><div class="im-card-media"><img src="{{demo.three.[2].feature_image}}" alt="" loading="lazy"></div><div class="im-card-body"><h3 class="im-card-title"><a href="#surfaces">Plain</a></h3><p class="im-card-text">No surface: the media rounds itself and the text sits on the page.</p></div></article>
+</div>
+{{/example}}
+
+<h2>With an icon</h2>
+{{#example}}
+<div class="im-grid-auto" style="--im-grid-min: 14rem">
+	<article class="im-card im-card-outline"><div class="im-card-body"><span class="im-card-icon">{{> "icons/palette"}}</span><h3 class="im-card-title"><a href="#with-an-icon">Tokens</a></h3><p class="im-card-text">Two tiers, light and dark, one file each.</p><span class="im-card-cta">Learn more {{> "icons/arrow-right"}}</span></div></article>
+	<article class="im-card im-card-outline"><div class="im-card-body"><span class="im-card-icon">{{> "icons/component"}}</span><h3 class="im-card-title"><a href="#with-an-icon">Components</a></h3><p class="im-card-text">Knobs as variables, state as attributes.</p><span class="im-card-cta">Learn more {{> "icons/arrow-right"}}</span></div></article>
+	<article class="im-card im-card-outline"><div class="im-card-header"><span class="im-card-icon">{{> "icons/package"}}</span><h3 class="im-card-title"><a href="#with-an-icon">In the header</a></h3></div><div class="im-card-body"><p class="im-card-text">An icon beside the title instead of above it.</p></div></article>
+</div>
+{{/example}}
+
+<h2>Horizontal</h2>
+<p><code>im-card-horizontal</code> puts the media beside the body. Wrap it in <code>im-card-wrap</code> and it returns to vertical when <em>its own</em> width is under 30rem — so it is safe in any column, not just on a wide screen. <code>--im-card-media-width</code> (40%) sets the split; <code>im-card-reverse</code> flips it.</p>
+{{#example}}
+<div class="im-stack">
+	<div class="im-card-wrap"><article class="im-card im-card-horizontal">
+		<div class="im-card-media"><img src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"><span class="im-card-badge im-badge im-badge-accent">Featured</span></div>
+		<div class="im-card-body"><p class="im-card-eyebrow">Travel</p><h3 class="im-card-title"><a href="#horizontal">{{demo.three.[0].title}}</a></h3><p class="im-card-text im-card-clamp" style="--im-card-lines: 2">{{demo.three.[0].excerpt}}</p><div class="im-card-meta"><span>{{> "icons/calendar"}} 17 Sep 2026</span><span>{{> "icons/clock"}} 8 min</span></div></div>
+	</article></div>
+	<div class="im-card-wrap"><article class="im-card im-card-outline im-card-horizontal im-card-reverse" style="--im-card-media-width: 32%">
+		<div class="im-card-media"><img src="{{demo.three.[1].feature_image}}" alt="" loading="lazy"></div>
+		<div class="im-card-body"><h3 class="im-card-title"><a href="#horizontal">Reversed, outlined, a narrower image</a></h3><p class="im-card-text">Three modifiers and one variable.</p><span class="im-card-cta">Read {{> "icons/arrow-right"}}</span></div>
+	</article></div>
+</div>
+{{/example}}
+{{#example title="The same horizontal card in a 20rem column — it stacks itself" style="max-width: 20rem"}}
+<div class="im-card-wrap"><article class="im-card im-card-horizontal">
+	<div class="im-card-media"><img src="{{demo.three.[2].feature_image}}" alt="" loading="lazy"></div>
+	<div class="im-card-body"><h3 class="im-card-title"><a href="#horizontal">{{demo.three.[2].title}}</a></h3><div class="im-card-meta"><span>{{> "icons/clock"}} 5 min</span></div></div>
+</article></div>
+{{/example}}
+
+<h2>A row that lines up</h2>
+<p>The body grows, the meta sits at its bottom and the footer below that — so cards with different amounts of text still align across a grid.</p>
+{{#example}}
+<div class="im-grid-auto" style="--im-grid-min: 14rem">
+	{{#foreach demo.three}}
+	<article class="im-card im-card-outline">
+		<div class="im-card-media"><img src="{{feature_image}}" alt="" loading="lazy"></div>
+		<div class="im-card-body"><h3 class="im-card-title"><a href="#a-row-that-lines-up">{{title}}</a></h3><div class="im-card-meta"><span>{{> "icons/user"}} {{primary_author.name}}</span></div></div>
+		<div class="im-card-footer"><span class="im-card-cta">Read {{> "icons/arrow-right"}}</span><span class="im-badge">{{reading_time}} min</span></div>
+	</article>
+	{{/foreach}}
+</div>
+{{/example}}
+
+<h2>Sizes &amp; variables</h2>
+{{#example}}
+<div class="im-grid-auto" style="--im-grid-min: 13rem">
+	<div class="im-card im-card-sm"><span class="im-card-title">im-card-sm</span><span>Tighter padding and radius.</span></div>
+	<div class="im-card"><span class="im-card-title">Default</span><span>1.25rem and radius-xl.</span></div>
+	<div class="im-card im-card-lg"><span class="im-card-title">im-card-lg</span><span>Roomier, radius-2xl.</span></div>
+</div>
+{{/example}}
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Variable</th><th>Default</th></tr></thead>
+	<tbody>
+		<tr><td><code>--im-card-pad</code></td><td>1.25rem</td></tr>
+		<tr><td><code>--im-card-radius</code></td><td><code>var(--im-radius-xl)</code></td></tr>
+		<tr><td><code>--im-card-bg</code></td><td><code>var(--im-surface)</code></td></tr>
+		<tr><td><code>--im-card-gap</code></td><td>0.5rem — between parts of the body</td></tr>
+		<tr><td><code>--im-card-ratio</code></td><td>16 / 10 — the media's shape</td></tr>
+		<tr><td><code>--im-card-media-width</code></td><td>40% — horizontal only</td></tr>
+		<tr><td><code>--im-card-lines</code></td><td>3 — for <code>im-card-clamp</code></td></tr>
+	</tbody>
+</table>
+</div>
+<p>For a Ghost post, <a href="/components/post-card/">Post card</a> is a ready-made partial with the same ideas wired to a post's fields.</p>

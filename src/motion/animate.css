@@ -1,0 +1,151 @@
+/* Animation — four kinds, all built on the motion tokens.
+
+   1. ENTER     plays once when the element is rendered     class="im-enter im-enter-up"
+   2. REVEAL    plays once when it SCROLLS into view        data-im-reveal="up"      (im-motion.js)
+   3. SCROLL    is scrubbed by the scroll position itself   class="im-scroll-…"      (pure CSS)
+   4. LOOP      runs forever                                class="im-spin" …
+
+   Everything here is switched off under prefers-reduced-motion by the base
+   styles; a reveal additionally never HIDES anything in that case, or when
+   JavaScript is unavailable. */
+
+/* ---- 1 · enter ---- */
+.im-enter {
+	animation: im-enter var(--im-enter-duration, var(--im-duration-base)) var(--im-ease-out) both;
+	animation-delay: calc(var(--im-enter-delay, 0ms) + var(--im-i, 0) * var(--im-stagger));
+}
+
+.im-enter-fade { --im-from-y: 0; --im-from-x: 0; }
+.im-enter-up { --im-from-y: var(--im-distance); }
+.im-enter-down { --im-from-y: calc(var(--im-distance) * -1); }
+.im-enter-left { --im-from-x: var(--im-distance); }
+.im-enter-right { --im-from-x: calc(var(--im-distance) * -1); }
+.im-enter-scale { --im-from-scale: 0.94; }
+.im-enter-blur { --im-from-blur: 10px; }
+.im-enter-pop { --im-from-scale: 0.8; animation-timing-function: var(--im-ease-spring); }
+
+@keyframes im-enter {
+	from {
+		opacity: 0;
+		translate: var(--im-from-x, 0) var(--im-from-y, 0);
+		scale: var(--im-from-scale, 1);
+		filter: blur(var(--im-from-blur, 0));
+	}
+}
+
+/* Children enter one after another: put im-stagger on the parent. */
+.im-stagger > * { --im-i: 0; }
+.im-stagger > :nth-child(2) { --im-i: 1; }
+.im-stagger > :nth-child(3) { --im-i: 2; }
+.im-stagger > :nth-child(4) { --im-i: 3; }
+.im-stagger > :nth-child(5) { --im-i: 4; }
+.im-stagger > :nth-child(6) { --im-i: 5; }
+.im-stagger > :nth-child(7) { --im-i: 6; }
+.im-stagger > :nth-child(8) { --im-i: 7; }
+.im-stagger > :nth-child(n + 9) { --im-i: 8; }
+
+/* ---- 2 · reveal on scroll ----
+   Hidden ONLY when the head script has confirmed JavaScript (data-im-js) and
+   the visitor has not asked for reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+	[data-im-js] [data-im-reveal]:not([data-im-revealed]) {
+		opacity: 0;
+	}
+
+	[data-im-js] [data-im-reveal="up"]:not([data-im-revealed]) { translate: 0 var(--im-distance); }
+	[data-im-js] [data-im-reveal="down"]:not([data-im-revealed]) { translate: 0 calc(var(--im-distance) * -1); }
+	[data-im-js] [data-im-reveal="left"]:not([data-im-revealed]) { translate: var(--im-distance) 0; }
+	[data-im-js] [data-im-reveal="right"]:not([data-im-revealed]) { translate: calc(var(--im-distance) * -1) 0; }
+	[data-im-js] [data-im-reveal="scale"]:not([data-im-revealed]) { scale: 0.94; }
+	[data-im-js] [data-im-reveal="blur"]:not([data-im-revealed]) { filter: blur(10px); }
+
+	[data-im-reveal] {
+		transition:
+			opacity var(--im-duration-slow) var(--im-ease-out),
+			translate var(--im-duration-slow) var(--im-ease-out),
+			scale var(--im-duration-slow) var(--im-ease-out),
+			filter var(--im-duration-slow) var(--im-ease-out);
+		transition-delay: calc(var(--im-i, 0) * var(--im-stagger));
+	}
+}
+
+/* ---- 3 · scroll-driven (CSS only; where unsupported, nothing happens) ---- */
+@supports (animation-timeline: view()) {
+	@media (prefers-reduced-motion: no-preference) {
+		/* Fades and rises as it crosses the bottom fifth of the viewport. */
+		.im-scroll-in {
+			animation: im-enter linear both;
+			animation-timeline: view();
+			animation-range: entry 0% entry 60%;
+
+			--im-from-y: 2rem;
+		}
+
+		/* Drifts against the scroll: a quiet parallax for a picture. */
+		.im-scroll-parallax {
+			animation: im-scroll-parallax linear both;
+			animation-timeline: view();
+		}
+	}
+}
+
+@keyframes im-scroll-parallax {
+	from { translate: 0 calc(var(--im-parallax, 2rem) * -1); }
+	to { translate: 0 var(--im-parallax, 2rem); }
+}
+
+/* ---- 4 · loops ---- */
+.im-spin { animation: im-spin 1s linear infinite; }
+.im-pulse { animation: im-pulse 2s var(--im-ease-in-out) infinite; }
+.im-bounce { animation: im-bounce 1s infinite; }
+.im-float { animation: im-float 5s var(--im-ease-in-out) infinite alternate; }
+.im-wiggle { animation: im-wiggle 1.2s var(--im-ease-in-out) infinite; }
+.im-blink { animation: im-blink 1.1s steps(1) infinite; }
+
+/* A ring that radiates from a dot: "live", "new", "recording". */
+.im-ping {
+	position: relative;
+	display: inline-block;
+	width: 0.5rem;
+	height: 0.5rem;
+	border-radius: 50%;
+	background-color: var(--im-ping, var(--im-accent));
+}
+
+.im-ping::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	background-color: inherit;
+	animation: im-ping 1.6s var(--im-ease-out) infinite;
+}
+
+/* Three dots: "typing…", "working…". */
+.im-dots {
+	display: inline-flex;
+	gap: 0.25rem;
+}
+
+.im-dots > i {
+	width: 0.375rem;
+	height: 0.375rem;
+	border-radius: 50%;
+	background-color: currentcolor;
+	animation: im-dots 1.2s var(--im-ease-in-out) infinite;
+}
+
+.im-dots > i:nth-child(2) { animation-delay: 0.15s; }
+.im-dots > i:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes im-spin { to { rotate: 360deg; } }
+@keyframes im-pulse { 50% { opacity: 0.45; } }
+@keyframes im-bounce {
+	0%, 100% { translate: 0 -22%; animation-timing-function: cubic-bezier(0.8, 0, 1, 1); }
+	50% { translate: 0 0; animation-timing-function: cubic-bezier(0, 0, 0.2, 1); }
+}
+@keyframes im-float { to { translate: 0 -0.625rem; } }
+@keyframes im-wiggle { 0%, 100% { rotate: 0deg; } 25% { rotate: -7deg; } 75% { rotate: 7deg; } }
+@keyframes im-blink { 50% { opacity: 0; } }
+@keyframes im-ping { to { scale: 3; opacity: 0; } }
+@keyframes im-dots { 0%, 60%, 100% { translate: 0 0; opacity: 0.35; } 30% { translate: 0 -0.25rem; opacity: 1; } }

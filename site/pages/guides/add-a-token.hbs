@@ -1,0 +1,47 @@
+---
+title: Add a token
+description: A token is a CSS variable with a name worth agreeing on. Declare it once and it is a variable, a Tailwind utility, and a row in these docs.
+eyebrow: Guide
+---
+<h2>A colour</h2>
+<p>In <code>src/foundation/tokens/semantic.css</code>, inside the <code>@theme static</code> block. Name it for its job, not its hue.</p>
+{{{{code}}}}
+@theme static {
+	--im-brand: #0b6e4f;
+	--im-brand-tint: color-mix(in oklab, var(--im-brand) 10%, var(--im-canvas));
+}
+{{{{/code}}}}
+<p>Then its dark value, in <strong>both</strong> places below — the attribute, and the media query that covers the moment before <code>im.js</code> runs. A <code>-tint</code> mixed over <code>canvas</code> needs neither; it recomputes.</p>
+{{{{code}}}}
+:root[data-theme="dark"] { --im-brand: #4fd1a5; }
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme]) { --im-brand: #4fd1a5; }
+}
+{{{{/code}}}}
+<p>That is all. <code>bg-brand</code>, <code>text-brand</code>, <code>border-brand</code>, <code>bg-brand/20</code> exist on the next build, and <code>var(--im-brand)</code> works in any stylesheet.</p>
+
+<h2>Anything else</h2>
+<p>Primitives live in <code>primitives.css</code>. The variable's prefix decides which utilities it feeds — this is Tailwind's own convention:</p>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Declare</th><th>Get</th></tr></thead>
+	<tbody>
+		<tr><td><code>--im-*</code></td><td><code>bg-</code> <code>text-</code> <code>border-</code> <code>fill-</code> <code>ring-</code> …</td></tr>
+		<tr><td><code>--im-text-display</code> (+ <code>--im-leading-display</code>)</td><td><code>text-display</code></td></tr>
+		<tr><td><code>--im-font-serif</code></td><td><code>font-serif</code></td></tr>
+		<tr><td><code>--im-radius-3xl</code></td><td><code>rounded-3xl</code></td></tr>
+		<tr><td><code>--im-shadow-card</code></td><td><code>shadow-card</code></td></tr>
+		<tr><td><code>--im-width-narrow</code></td><td><code>max-w-narrow</code></td></tr>
+		<tr><td><code>--breakpoint-tablet</code></td><td><code>tablet:</code> variant</td></tr>
+	</tbody>
+</table>
+</div>
+
+<div class="im-callout im-callout-info">
+	<p class="im-callout-title">Why <code>@theme static</code></p>
+	<p>Plain <code>@theme</code> only emits a variable if some utility uses it. <code>static</code> emits every token always, which is what lets a section's hand-written stylesheet — or a Ghost theme's own CSS — rely on <code>var(--im-ink)</code> being there.</p>
+</div>
+
+<h2>Rename or re-value, freely</h2>
+<p>To re-skin, change values in <code>semantic.css</code>; components never mention a grey by number. To change the accent's fallback, edit <code>--im-accent</code> — in Ghost the site's brand colour overrides it anyway.</p>

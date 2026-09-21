@@ -1,0 +1,77 @@
+---
+title: Checkbox, radio & choice
+description: The real inputs, restyled — a tick that draws itself, a dot that springs in — so forms, labels and the keyboard all keep working. Plus choice cards, where a whole card is the option.
+eyebrow: Forms
+source: src/components/field.css
+---
+<h2>Checkbox</h2>
+{{#example}}
+<div class="im-stack" style="--im-stack-gap: .75rem">
+	<label class="im-check"><input type="checkbox" checked><span>Send me the newsletter</span></label>
+	<label class="im-check"><input type="checkbox"><span>Also the weekly digest<small>A summary every Sunday morning.</small></span></label>
+	<label class="im-check im-check-accent"><input type="checkbox" checked><span>im-check-accent — in the accent instead of ink</span></label>
+	<label class="im-check"><input type="checkbox" disabled><span>Disabled</span></label>
+	<label class="im-check"><input type="checkbox" checked disabled><span>Disabled, checked</span></label>
+</div>
+{{/example}}
+<p><strong>The selection animation is ours:</strong> the box fills with ink, then the tick is <em>drawn</em> — a clip that opens left to right — and the box gives slightly under the press. Click one slowly to see it.</p>
+
+<h3>Indeterminate</h3>
+<p>Some, but not all. It can only be set from script (<code>input.indeterminate = true</code>); it shows as a dash.</p>
+{{#example}}
+<div class="im-stack" style="--im-stack-gap: .625rem" id="ind-demo">
+	<label class="im-check"><input type="checkbox" id="ind-all"><span><strong>All topics</strong></span></label>
+	<div class="im-stack pl-7" style="--im-stack-gap: .5rem">
+		<label class="im-check"><input type="checkbox" class="ind-one" checked><span>Travel</span></label>
+		<label class="im-check"><input type="checkbox" class="ind-one"><span>Craft</span></label>
+		<label class="im-check"><input type="checkbox" class="ind-one" checked><span>Career</span></label>
+	</div>
+</div>
+<script>(()=>{const all=document.getElementById('ind-all'),ones=[...document.querySelectorAll('.ind-one')];const sync=()=>{const n=ones.filter(o=>o.checked).length;all.checked=n===ones.length;all.indeterminate=n>0&&n<ones.length};ones.forEach(o=>o.addEventListener('change',sync));all.addEventListener('change',()=>{ones.forEach(o=>o.checked=all.checked);sync()});sync()})()</script>
+{{/example}}
+
+<h2>Radio</h2>
+{{#example}}
+<fieldset class="im-fieldset">
+	<legend>How often?</legend>
+	<label class="im-radio"><input type="radio" name="freq" checked><span>Every post</span></label>
+	<label class="im-radio"><input type="radio" name="freq"><span>Weekly<small>One email on Sunday.</small></span></label>
+	<label class="im-radio"><input type="radio" name="freq"><span>Monthly</span></label>
+	<label class="im-radio"><input type="radio" name="freq" disabled><span>Never (disabled)</span></label>
+</fieldset>
+{{/example}}
+<p>Group radios in a <code>&lt;fieldset class="im-fieldset"&gt;</code> with a <code>&lt;legend&gt;</code> — that is the question they answer, and it is read aloud with each option. The dot <em>springs</em> in.</p>
+
+<h2>Choice cards</h2>
+<p>A whole card is the radio or the checkbox: a bigger target, and room to explain the option. The chosen card takes an ink edge.</p>
+{{#example}}
+<fieldset class="im-fieldset">
+	<legend>Pick a plan</legend>
+	<div class="im-grid-fit" style="--im-grid-min: 12rem; --im-grid-gap: .75rem">
+		<label class="im-choice"><input type="radio" name="plan"><span class="im-choice-title">Free</span><span>Public posts and the newsletter.</span><span class="text-ink font-semibold mt-1">$0</span></label>
+		<label class="im-choice"><input type="radio" name="plan" checked><span class="im-choice-title">Member <span class="im-badge im-badge-accent">Popular</span></span><span>Everything, plus the archive.</span><span class="text-ink font-semibold mt-1">$9 / month</span></label>
+		<label class="im-choice"><input type="radio" name="plan"><span class="im-choice-title">Patron</span><span>All that, and a thank-you.</span><span class="text-ink font-semibold mt-1">$25 / month</span></label>
+	</div>
+</fieldset>
+{{/example}}
+{{#example title="As checkboxes — several can be on"}}
+<div class="im-grid-fit" style="--im-grid-min: 12rem; --im-grid-gap: .75rem">
+	<label class="im-choice"><input type="checkbox" checked><span class="im-choice-title">{{> "icons/mail"}} Email</span><span>New posts in your inbox.</span></label>
+	<label class="im-choice"><input type="checkbox"><span class="im-choice-title">{{> "icons/rss"}} RSS</span><span>For your reader.</span></label>
+	<label class="im-choice"><input type="checkbox" checked><span class="im-choice-title">{{> "icons/bell"}} Push</span><span>A notification on publish.</span></label>
+</div>
+{{/example}}
+
+<h2>Switch and switcher</h2>
+<p>For a setting that takes effect at once, or one of a few options shown side by side, see <a href="/components/switch/">Switch &amp; switcher</a>.</p>
+{{#example center=true}}
+<label class="im-switch"><input type="checkbox" role="switch" checked><span>Comments</span></label>
+<fieldset class="im-switcher" aria-label="Billing"><label><input type="radio" name="ch-bill" checked><span>Monthly</span></label><label><input type="radio" name="ch-bill"><span>Yearly</span></label></fieldset>
+{{/example}}
+
+<h2>Always</h2>
+<ul>
+	<li><strong>Wrap the input in its <code>&lt;label&gt;</code></strong> (or use <code>for</code>) — the text becomes part of the target.</li>
+	<li><strong>The focus ring is on the box</strong>, 2px in the accent, for keyboard users.</li>
+	<li><strong>They are real inputs</strong>: <code>name</code>, <code>value</code>, <code>required</code>, <code>form.reset()</code> — all work.</li>
+</ul>

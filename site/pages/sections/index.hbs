@@ -1,0 +1,32 @@
+---
+title: Sections
+layout: wide
+description: Whole page sections, each a self-contained folder — markup, styles, script and media together. Copy a folder into a theme to use it; delete the folder to remove it.
+eyebrow: Sections
+source: sections/
+---
+<section class="im-section im-wrap-wide">
+	<div class="im-grid-auto" style="--im-grid-min: 20rem">
+		{{#each sections}}
+		<a class="im-card im-card-outline im-card-link" href="{{url}}">
+			<span class="im-badge im-badge-success">Ready</span>
+			<span class="im-card-title">{{slug}}</span>
+			<span>{{fileCount}} files · <code>sections/{{slug}}/</code></span>
+		</a>
+		{{/each}}
+		<div class="im-card"><span class="im-badge">Next</span><span class="im-card-title">Yours</span><span>Post feed, featured row, newsletter band, footer… <a href="/guides/add-a-section/">Add a section</a>.</span></div>
+	</div>
+</section>
+
+<section class="im-section im-wrap-wide">
+	<h2 class="im-section-title">What makes something a section</h2>
+	<div class="im-prose">
+		<ul>
+			<li><strong>It is a whole band of a page</strong>, not a piece of one. A button is a component; a hero is a section.</li>
+			<li><strong>It owns a block of class names</strong> (<code>im-hero__*</code>) that nothing else uses, so its stylesheet can be plain CSS, served as written, outside the layer stack.</li>
+			<li><strong>It depends on the system's tokens and components, and nothing else.</strong> No other section, no library.</li>
+			<li><strong>Its content arrives as parameters</strong> or from Ghost's settings. Nothing about one person or one site is written into the markup.</li>
+			<li><strong>It sizes itself with container queries</strong>, so it is correct in a narrow column, beside a collapsed nav, or full-bleed.</li>
+		</ul>
+	</div>
+</section>

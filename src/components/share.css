@@ -1,0 +1,72 @@
+/* Share — partials/components/share.hbs. A row of brand buttons for the
+   current post, plus "copy link" and, where the OS has one, its share sheet.
+
+   Responsive by CONTAINER: in a narrow column the labels drop and the row
+   becomes icons, wherever on the page it is placed. */
+
+.im-share {
+	container-type: inline-size;
+	display: flex;
+	flex-direction: column;
+	gap: 0.625rem;
+}
+
+.im-share-title {
+	color: var(--im-muted);
+	font-size: var(--im-text-sm);
+	font-weight: 500;
+}
+
+.im-share-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+}
+
+.im-share-list > li {
+	display: contents;
+}
+
+@container (width < 34rem) {
+	.im-share-list .im-btn {
+		--im-btn-pad: 0;
+
+		width: var(--im-btn-height);
+	}
+
+	.im-share-list .im-btn > span {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
+
+	.im-share-list .im-btn > .im-icon {
+		font-size: 1.0625rem;
+	}
+}
+
+/* A compact, always-icons variant — for a post header or a sticky rail. */
+.im-share-compact .im-share-list .im-btn {
+	--im-btn-height: 2.25rem;
+	--im-btn-pad: 0;
+
+	width: var(--im-btn-height);
+}
+
+.im-share-compact .im-share-list .im-btn > span {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+}
+
+.im-btn[data-im-copied] {
+	--im-btn-bg: var(--im-success-tint);
+	--im-btn-fg: var(--im-success);
+	--im-btn-bg-hover: var(--im-success-tint);
+	--im-btn-fg-hover: var(--im-success);
+}

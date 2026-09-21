@@ -1,0 +1,69 @@
+---
+title: Shell
+description: The app frame — a top bar across, a side nav down the left, the page beside it. You are looking at it; try the panel button, top left.
+eyebrow: Layout
+source: src/layout/ · partials/shell/topbar.hbs
+---
+<h2>Structure</h2>
+{{{{code}}}}
+<html data-theme="light" data-nav="open">
+<body>
+  <div class="im-shell">
+    <header class="im-topbar">…</header>
+    <aside  class="im-sidenav">…</aside>
+    <main   class="im-shell-main" id="main">…</main>
+    <footer class="im-shell-foot">…</footer>
+  </div>
+  <dialog class="im-navpanel" id="drawer">…</dialog>
+</body>
+{{{{/code}}}}
+<p><code>.im-shell</code> is a CSS grid with named areas. <code>.im-shell-main</code> is a flex column whose children are spaced by <code>--im-section-gap</code>, so a page is just a stack of blocks.</p>
+
+<h2>Three widths of side nav</h2>
+{{#example}}
+<div class="im-grid-fit" style="--im-grid-min: 11rem">
+	<div class="im-stack" style="--im-stack-gap: .5rem"><div class="mini-shell"><span>topbar</span><span>nav</span><span>main</span></div><p class="text-sm text-muted">Open — from <code>lg</code>, by default</p></div>
+	<div class="im-stack" style="--im-stack-gap: .5rem"><div class="mini-shell" style="--mini-nav: 2rem"><span>topbar</span><span></span><span>main</span></div><p class="text-sm text-muted">Rail — <code>md</code>…<code>lg</code>, or collapsed</p></div>
+	<div class="im-stack" style="--im-stack-gap: .5rem"><div class="mini-shell" style="--mini-nav: 0rem"><span>topbar</span><span></span><span>main</span></div><p class="text-sm text-muted">Drawer — below <code>md</code></p></div>
+</div>
+{{/example}}
+<p>The rail hides labels with CSS only; they stay in the DOM for screen readers, and each link's <code>title</code> gives the tooltip. The visitor's choice is <code>&lt;html data-nav="rail"&gt;</code>, stored, and applied before first paint by <code>partials/shell/head-script.hbs</code>.</p>
+
+<h2>Top bar</h2>
+<p>Three columns: start (nav toggle, brand), a centred search button, end (actions). The search "field" is a button that opens a dialog — in Ghost, leave <code>data-ghost-search</code> on it and Ghost's own search opens.</p>
+{{#example flush=true}}
+<div style="--im-gutter: 1rem; position: relative">
+	<header class="im-topbar" style="position: static">
+		<div class="im-topbar-start"><button class="im-btn im-btn-ghost im-btn-icon" type="button" aria-label="Collapse">{{> "icons/panel-left"}}</button><a class="im-brand" href="#top-bar">Publication</a></div>
+		<div class="im-topbar-search"><button class="im-searchbar" type="button">{{> "icons/search"}}<span>Search</span><kbd>/</kbd></button></div>
+		<div class="im-topbar-end"><a class="im-btn im-btn-sm im-btn-primary" href="#top-bar">Subscribe</a></div>
+	</header>
+</div>
+{{/example}}
+{{{{code}}}}
+{{#> "shell/topbar"}}
+  <span class="im-badge">Beta</span>        ← optional: anything after the brand
+{{/"shell/topbar"}}
+{{{{/code}}}}
+
+<h2>Side nav</h2>
+<p>One class, <code>.im-navlink</code>, inside <code>.im-navgroup</code>s. The current page is <code>aria-current="page"</code> — no "active" class to keep in step.</p>
+{{#example style="max-width: 16rem"}}
+<div class="im-navgroup">
+	<p class="im-navgroup-title">Writing</p>
+	<a class="im-navlink" href="#side-nav" aria-current="page">{{> "icons/house"}}<span>Home</span></a>
+	<a class="im-navlink" href="#side-nav">{{> "icons/book-open"}}<span>Journal</span></a>
+	<a class="im-navlink" href="#side-nav">{{> "icons/video"}}<span>Videos</span></a>
+</div>
+{{/example}}
+
+<h2>Article with a rail</h2>
+<p><code>.im-with-aside</code> is a reading column plus a sticky rail — this page. Below <code>lg</code> the rail moves above the article. Put <code>&lt;nav class="im-toc" data-toc="#article"&gt;</code> in it and <code>im.js</code> builds the table of contents from the article's <code>h2</code> and <code>h3</code>.</p>
+
+<h2>Metrics</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Variable</th><th>Value</th><th></th></tr></thead>
+	<tbody>{{#each tokens.frame}}<tr><td><code>{{name}}</code></td><td>{{value}}</td><td>{{frame_note name}}</td></tr>{{/each}}</tbody>
+</table>
+</div>

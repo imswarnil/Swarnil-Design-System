@@ -1,0 +1,74 @@
+---
+title: Page transitions
+description: How one page hands over to the next. Eight styles, chosen with one attribute on the html element. No script and no router - these are the browser's own cross-document view transitions, so they work with Ghost's ordinary links.
+eyebrow: Motion
+source: src/motion/transition.css
+---
+<h2>Try them</h2>
+<p>Pick a style, then follow any link — the side nav will do. Your choice is remembered for this site.</p>
+{{#example center=true code=false}}
+<div class="im-cluster justify-center" role="group" aria-label="Page transition">
+	<button class="im-btn im-btn-outline" type="button" data-transition="fade" aria-pressed="false">fade</button>
+	<button class="im-btn im-btn-outline" type="button" data-transition="rise" aria-pressed="false">rise</button>
+	<button class="im-btn im-btn-outline" type="button" data-transition="slide" aria-pressed="false">slide</button>
+	<button class="im-btn im-btn-outline" type="button" data-transition="zoom" aria-pressed="false">zoom</button>
+	<button class="im-btn im-btn-outline" type="button" data-transition="wipe" aria-pressed="false">wipe</button>
+	<button class="im-btn im-btn-outline" type="button" data-transition="iris" aria-pressed="false">iris</button>
+	<button class="im-btn im-btn-outline" type="button" data-transition="sheet" aria-pressed="false">sheet</button>
+	<button class="im-btn im-btn-outline" type="button" data-transition="blur" aria-pressed="false">blur</button>
+	<button class="im-btn im-btn-outline" type="button" data-transition="none" aria-pressed="false">none</button>
+</div>
+{{/example}}
+{{#example center=true code=false}}
+<a class="im-btn im-btn-primary" href="/motion/entrances/">Go to Entrances {{> "icons/arrow-right"}}</a>
+<a class="im-btn" href="/content/article/">Go to a full article {{> "icons/arrow-right"}}</a>
+<a class="im-btn" href="/">Go home {{> "icons/arrow-right"}}</a>
+{{/example}}
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Style</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>fade</code></td><td>A cross-fade, only quicker than the browser's.</td></tr>
+		<tr><td><code>rise</code></td><td>The old page lifts away; the new one comes up under it.</td></tr>
+		<tr><td><code>slide</code></td><td>Pages pass sideways, like sheets on a desk.</td></tr>
+		<tr><td><code>zoom</code></td><td>You step into the next page.</td></tr>
+		<tr><td><code>wipe</code></td><td>A straight edge crosses, and the new page is behind it.</td></tr>
+		<tr><td><code>iris</code></td><td>The new page opens out of the point you clicked.</td></tr>
+		<tr><td><code>sheet</code></td><td>The new page is a sheet pushed up over the old, which sinks back.</td></tr>
+		<tr><td><code>blur</code></td><td>The old page goes out of focus; the new one comes in.</td></tr>
+		<tr><td><code>none</code></td><td>Off. Navigation is exactly as the browser does it.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>Use it</h2>
+{{{{code "hbs"}}}}
+<html lang="{{@site.locale}}" data-im-transition="rise">
+{{{{/code}}}}
+<p>That is all. To let the site's owner choose, make it a custom setting in the theme's <code>package.json</code> and print it:</p>
+{{{{code "json"}}}}
+"custom": {
+  "page_transition": {
+    "type": "select",
+    "options": ["none", "fade", "rise", "slide", "zoom", "wipe", "iris", "sheet", "blur"],
+    "default": "rise",
+    "group": "site"
+  }
+}
+{{{{/code}}}}
+{{{{code "hbs"}}}}
+<html lang="{{@site.locale}}" data-im-transition="{{@custom.page_transition}}">
+{{{{/code}}}}
+
+<h2>How it behaves</h2>
+<ul>
+	<li><strong>The chrome holds still.</strong> The top bar and the side nav are given transition names of their own, so they do not take part: only the page beneath them changes.</li>
+	<li><strong>Opt-in.</strong> Without the attribute nothing is named and navigation is untouched.</li>
+	<li><strong><code>iris</code> opens from the click.</strong> <code>im-motion.js</code> remembers where the link was pressed and hands the point to the next page before its first frame. Without the script it opens from the centre.</li>
+	<li><strong>Progressive.</strong> A browser without cross-document view transitions just loads the page. Nothing to polyfill, nothing to break.</li>
+	<li><strong>Reduced motion turns it off</strong> — the rule that enables it sits inside <code>prefers-reduced-motion: no-preference</code>.</li>
+	<li><strong>Keep it short.</strong> <code>--im-vt-duration</code> is 420ms. A transition is felt on every single click; past half a second it is a toll.</li>
+</ul>
+
+<h2>With entrances</h2>
+<p>A page transition ends where <a href="/motion/entrances/">entrances</a> begin — the page arrives, then its heading does. Pair a quiet transition (<code>fade</code>, <code>rise</code>) with a characterful entrance, or the other way round. Both loud is a lot.</p>

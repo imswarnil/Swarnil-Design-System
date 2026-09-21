@@ -1,0 +1,135 @@
+---
+title: Button
+description: One class plus additive modifiers. A variant only assigns colour variables; a size only assigns a height; an icon is just a child.
+eyebrow: Component
+source: src/components/button.css
+---
+<h2>Variants</h2>
+{{#example center=true}}
+<a class="im-btn im-btn-primary" href="#variants">Primary</a>
+<a class="im-btn im-btn-ink" href="#variants">Ink</a>
+<a class="im-btn" href="#variants">Default</a>
+<a class="im-btn im-btn-outline" href="#variants">Outline</a>
+<a class="im-btn im-btn-ghost" href="#variants">Ghost</a>
+<a class="im-btn im-btn-danger" href="#variants">Danger</a>
+{{/example}}
+<p>Use <strong>one</strong> primary per view. <code>im-btn-ink</code> is the strong neutral for when the accent is already busy; default and outline are secondary; ghost is for toolbars.</p>
+
+<h2>Sizes</h2>
+{{#example center=true}}
+<a class="im-btn im-btn-primary im-btn-lg" href="#sizes">Large · 48</a>
+<a class="im-btn im-btn-primary" href="#sizes">Default · 40</a>
+<a class="im-btn im-btn-primary im-btn-sm" href="#sizes">Small · 32</a>
+{{/example}}
+
+<h2>With an icon</h2>
+<p>An icon is an inline SVG partial placed before or after the label; it sizes to the button. Every variant and size takes one.</p>
+{{#example title="Leading"}}
+<div class="im-cluster">
+	<a class="im-btn im-btn-primary" href="#with-an-icon">{{> "icons/plus"}} New post</a>
+	<a class="im-btn im-btn-ink" href="#with-an-icon">{{> "icons/download"}} Download</a>
+	<a class="im-btn" href="#with-an-icon">{{> "icons/share-2"}} Share</a>
+	<a class="im-btn im-btn-outline" href="#with-an-icon">{{> "icons/bookmark"}} Save</a>
+	<a class="im-btn im-btn-ghost" href="#with-an-icon">{{> "icons/pencil"}} Edit</a>
+	<a class="im-btn im-btn-danger" href="#with-an-icon">{{> "icons/trash-2"}} Delete</a>
+</div>
+{{/example}}
+{{#example title="Trailing"}}
+<div class="im-cluster">
+	<a class="im-btn im-btn-primary im-btn-lg" href="#with-an-icon">Get started {{> "icons/arrow-right"}}</a>
+	<a class="im-btn" href="#with-an-icon">Read more {{> "icons/arrow-right"}}</a>
+	<a class="im-btn im-btn-outline im-btn-sm" href="#with-an-icon">Open {{> "icons/external-link"}}</a>
+	<button class="im-btn im-btn-outline" type="button">Options {{> "icons/chevron-down"}}</button>
+</div>
+{{/example}}
+{{#example title="Icon pushed to the far edge of a full-width button" style="max-width: 22rem"}}
+<a class="im-btn im-btn-block im-btn-icon-end" href="#with-an-icon">{{> "icons/credit-card"}} Pay with card {{> "icons/chevron-right"}}</a>
+{{/example}}
+
+<h2>Icon only</h2>
+<p><code>im-btn-icon</code> makes it square — a circle, with the default radius. It <strong>must</strong> have an <code>aria-label</code>.</p>
+{{#example center=true}}
+<button class="im-btn im-btn-icon im-btn-primary im-btn-lg" type="button" aria-label="Play">{{> "icons/play"}}</button>
+<button class="im-btn im-btn-icon im-btn-primary" type="button" aria-label="Like">{{> "icons/heart"}}</button>
+<button class="im-btn im-btn-icon" type="button" aria-label="Search">{{> "icons/search"}}</button>
+<button class="im-btn im-btn-icon im-btn-outline" type="button" aria-label="Notifications">{{> "icons/bell"}}</button>
+<button class="im-btn im-btn-icon im-btn-ghost" type="button" aria-label="More">{{> "icons/ellipsis"}}</button>
+<button class="im-btn im-btn-icon im-btn-ghost im-btn-sm" type="button" aria-label="Close">{{> "icons/x"}}</button>
+{{/example}}
+
+<h2>Stacked</h2>
+<p>Icon above a short label — a toolbar, or a tab bar on a phone.</p>
+{{#example center=true}}
+<a class="im-btn im-btn-stacked im-btn-ghost" href="#stacked">{{> "icons/house"}}Home</a>
+<a class="im-btn im-btn-stacked im-btn-ghost" href="#stacked">{{> "icons/search"}}Search</a>
+<a class="im-btn im-btn-stacked" href="#stacked">{{> "icons/bookmark"}}Saved</a>
+<a class="im-btn im-btn-stacked im-btn-ghost" href="#stacked">{{> "icons/user"}}Account</a>
+{{/example}}
+
+<h2>Button group</h2>
+<p>Buttons joined into one control. Give the wrapper <code>role="group"</code> and a label; mark the chosen one with <code>aria-pressed="true"</code> (a toggle) or <code>aria-current</code> (a view).</p>
+{{#example title="A view switch"}}
+<div class="im-btn-group" role="group" aria-label="Layout">
+	<button class="im-btn" type="button" aria-pressed="true">{{> "icons/layout-grid"}} Grid</button>
+	<button class="im-btn" type="button" aria-pressed="false">{{> "icons/rows-3"}} List</button>
+	<button class="im-btn" type="button" aria-pressed="false">{{> "icons/calendar"}} Archive</button>
+</div>
+{{/example}}
+{{#example title="Icon only, small, and a split button"}}
+<div class="im-cluster" style="--im-cluster-gap: 1.5rem">
+	<div class="im-btn-group" role="group" aria-label="Pager">
+		<button class="im-btn im-btn-icon im-btn-sm" type="button" aria-label="Previous">{{> "icons/chevron-left"}}</button>
+		<button class="im-btn im-btn-sm" type="button">Page 2 of 9</button>
+		<button class="im-btn im-btn-icon im-btn-sm" type="button" aria-label="Next">{{> "icons/chevron-right"}}</button>
+	</div>
+	<div class="im-btn-group" role="group" aria-label="Publish">
+		<button class="im-btn im-btn-primary" type="button">Publish</button>
+		<button class="im-btn im-btn-primary im-btn-icon" type="button" aria-label="More publish options">{{> "icons/chevron-down"}}</button>
+	</div>
+</div>
+{{/example}}
+{{#example title="Vertical" style="max-width: 14rem"}}
+<div class="im-btn-group im-btn-group-vertical" role="group" aria-label="Sort" style="display: flex">
+	<button class="im-btn" type="button" aria-pressed="true">Newest</button>
+	<button class="im-btn" type="button" aria-pressed="false">Most read</button>
+	<button class="im-btn" type="button" aria-pressed="false">Oldest</button>
+</div>
+{{/example}}
+<p>The group is <code>inline-flex</code> and does not wrap. On a phone, prefer icon-only buttons, the vertical group, or a <a href="/navigation/menu/">menu</a>.</p>
+
+<h2>States</h2>
+{{#example center=true}}
+<button class="im-btn im-btn-primary" type="button" disabled>Disabled</button>
+<button class="im-btn im-btn-primary" type="button" aria-busy="true">Saving</button>
+<button class="im-btn" type="button" aria-expanded="true">Expanded {{> "icons/chevron-down"}}</button>
+{{/example}}
+<p>State is read from attributes you would set anyway: <code>disabled</code>, <code>aria-busy="true"</code> (label hides, spinner shows, clicks ignored), <code>aria-expanded="true"</code>.</p>
+
+<h2>Responsive</h2>
+<p>Buttons never wrap their label. For a row that must survive a phone: <code>im-btn-block</code> below a breakpoint, and let an icon carry the meaning where a label will not fit.</p>
+{{#example}}
+<div class="flex flex-col sm:flex-row gap-2.5">
+	<a class="im-btn im-btn-primary max-sm:w-full" href="#responsive">Subscribe {{> "icons/arrow-right"}}</a>
+	<a class="im-btn max-sm:w-full" href="#responsive">Read the archive</a>
+</div>
+{{/example}}
+
+<h2>Variables</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Variable</th><th>Default</th></tr></thead>
+	<tbody>
+		<tr><td><code>--im-btn-height</code></td><td>2.5rem</td></tr>
+		<tr><td><code>--im-btn-pad</code></td><td>1.125rem</td></tr>
+		<tr><td><code>--im-btn-radius</code></td><td><code>var(--im-radius-full)</code></td></tr>
+		<tr><td><code>--im-btn-bg</code> · <code>--im-btn-fg</code></td><td>surface · ink</td></tr>
+		<tr><td><code>--im-btn-bg-hover</code> · <code>--im-btn-fg-hover</code></td><td>surface-2 · ink</td></tr>
+	</tbody>
+</table>
+</div>
+{{#example title="Squarer buttons in one region — only a variable changed"}}
+<div class="im-cluster" style="--im-btn-radius: var(--im-radius-md)">
+	<a class="im-btn im-btn-primary" href="#variables">Primary</a><a class="im-btn" href="#variables">Default</a>
+	<div class="im-btn-group" role="group" aria-label="Demo"><button class="im-btn" type="button" aria-pressed="true">One</button><button class="im-btn" type="button">Two</button></div>
+</div>
+{{/example}}

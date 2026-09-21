@@ -1,0 +1,79 @@
+---
+title: Breadcrumb
+description: Where am I. An ordered list of links in a labelled nav, the last one marked as the current page. With icons, as icons only, as chips, and collapsed for a long trail.
+eyebrow: Navigation
+source: src/components/wayfinding.css
+---
+<h2>Default</h2>
+{{#example}}
+<nav aria-label="Breadcrumb"><ol class="im-breadcrumb">
+	<li><a href="#default">Home</a></li><li><a href="#default">Journal</a></li><li><a href="#default">Travel</a></li><li><span aria-current="page">Driving the Amalfi Coast</span></li>
+</ol></nav>
+{{/example}}
+<p>The separators are CSS, so a screen reader hears only the names. The last item is <code>aria-current="page"</code> and is not a link.</p>
+
+<h2>With icons</h2>
+{{#example}}
+<nav aria-label="Breadcrumb"><ol class="im-breadcrumb im-breadcrumb-chevron">
+	<li><a class="inline-flex items-center gap-1.5" href="#with-icons">{{> "icons/house"}} Home</a></li>
+	<li><a class="inline-flex items-center gap-1.5" href="#with-icons">{{> "icons/book-open"}} Journal</a></li>
+	<li><a class="inline-flex items-center gap-1.5" href="#with-icons">{{> "icons/map-pin"}} Travel</a></li>
+	<li><span class="inline-flex items-center gap-1.5" aria-current="page">{{> "icons/file-text"}} Driving the Amalfi Coast</span></li>
+</ol></nav>
+{{/example}}
+
+<h2>Icons only</h2>
+<p>For a tight header. Every icon link keeps a text name — in <code>aria-label</code>, and as a <a href="/components/tooltip/">tooltip</a>.</p>
+{{#example}}
+<nav aria-label="Breadcrumb"><ol class="im-breadcrumb im-breadcrumb-chevron">
+	<li><a href="#icons-only" aria-label="Home" data-im-tip="Home">{{> "icons/house"}}</a></li>
+	<li><a href="#icons-only" aria-label="Journal" data-im-tip="Journal">{{> "icons/book-open"}}</a></li>
+	<li><a href="#icons-only" aria-label="Travel" data-im-tip="Travel">{{> "icons/map-pin"}}</a></li>
+	<li><span aria-current="page">Driving the Amalfi Coast</span></li>
+</ol></nav>
+{{/example}}
+{{#example title="Just the home icon — the most common form"}}
+<nav aria-label="Breadcrumb"><ol class="im-breadcrumb">
+	<li><a href="#icons-only" aria-label="Home">{{> "icons/house"}}</a></li><li><a href="#icons-only">Components</a></li><li><span aria-current="page">Breadcrumb</span></li>
+</ol></nav>
+{{/example}}
+
+<h2>Separators</h2>
+{{#example}}
+<div class="im-stack" style="--im-stack-gap: 1rem">
+	<nav aria-label="Breadcrumb, slash"><ol class="im-breadcrumb"><li><a href="#separators">Home</a></li><li><a href="#separators">Docs</a></li><li><span aria-current="page">Slash (default)</span></li></ol></nav>
+	<nav aria-label="Breadcrumb, chevron"><ol class="im-breadcrumb im-breadcrumb-chevron"><li><a href="#separators">Home</a></li><li><a href="#separators">Docs</a></li><li><span aria-current="page">im-breadcrumb-chevron</span></li></ol></nav>
+	<nav aria-label="Breadcrumb, dot"><ol class="im-breadcrumb im-breadcrumb-dot"><li><a href="#separators">Home</a></li><li><a href="#separators">Docs</a></li><li><span aria-current="page">im-breadcrumb-dot</span></li></ol></nav>
+</div>
+{{/example}}
+
+<h2>Chips</h2>
+{{#example}}
+<nav aria-label="Breadcrumb"><ol class="im-breadcrumb im-breadcrumb-chips">
+	<li><a href="#chips">{{> "icons/house"}} Home</a></li><li><a href="#chips">Journal</a></li><li><a href="#chips">Travel</a></li><li><span aria-current="page">Amalfi</span></li>
+</ol></nav>
+{{/example}}
+
+<h2>A long trail</h2>
+<p>Collapse the middle into a <a href="/navigation/menu/">menu</a>, and keep the first and the last two.</p>
+{{#example}}
+<nav aria-label="Breadcrumb"><ol class="im-breadcrumb im-breadcrumb-chevron">
+	<li><a href="#a-long-trail" aria-label="Home">{{> "icons/house"}}</a></li>
+	<li><button class="im-btn im-btn-ghost im-btn-icon im-btn-sm" type="button" popovertarget="crumb-more" aria-label="Show 3 more levels" aria-expanded="false">{{> "icons/ellipsis"}}</button>
+		<div class="im-menu" id="crumb-more" popover data-align="start"><a class="im-menu-item" href="#a-long-trail">{{> "icons/folder"}}<span>Courses</span></a><a class="im-menu-item" href="#a-long-trail">{{> "icons/folder"}}<span>Design systems</span></a><a class="im-menu-item" href="#a-long-trail">{{> "icons/folder"}}<span>Module 2</span></a></div></li>
+	<li><a href="#a-long-trail">Tokens</a></li>
+	<li><span aria-current="page">Semantic tokens</span></li>
+</ol></nav>
+{{/example}}
+<p>On a phone, <code>im-breadcrumb-scroll</code> keeps a trail on one line and lets it scroll sideways, rather than wrapping to three.</p>
+
+<h2>In Ghost</h2>
+{{{{code "hbs"}}}}
+<nav aria-label="{{t "Breadcrumb"}}">
+	<ol class="im-breadcrumb im-breadcrumb-chevron">
+		<li><a href="{{@site.url}}" aria-label="{{t "Home"}}">{{> "icons/house"}}</a></li>
+		{{#primary_tag}}<li><a href="{{url}}">{{name}}</a></li>{{/primary_tag}}
+		<li><span aria-current="page">{{title}}</span></li>
+	</ol>
+</nav>
+{{{{/code}}}}

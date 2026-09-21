@@ -1,0 +1,361 @@
+/* Shell — the app frame: a top bar across, a side nav down the left, the page.
+
+   <body>
+     <div class="shell">
+       <header class="topbar">…</header>
+       <aside  class="sidenav">…</aside>
+       <main   class="shell-main">…</main>
+       <footer class="shell-foot">…</footer>
+     </div>
+
+   Three states, from <html data-nav>:  "open" (default) · "rail" (icons only).
+   Below lg the side nav is always a rail; below md it leaves the grid and the
+   same links live in a <dialog class="drawer">. */
+
+.im-shell {
+	display: grid;
+	grid-template-columns: var(--im-nav-width) minmax(0, 1fr);
+	grid-template-rows: var(--im-bar-height) 1fr auto;
+	grid-template-areas:
+		"bar  bar"
+		"nav  main"
+		"nav  foot";
+	min-height: 100dvh;
+	transition: grid-template-columns 220ms var(--im-ease-out);
+}
+
+.im-shell-main {
+	grid-area: main;
+	display: flex;
+	flex-direction: column;
+	gap: var(--im-section-gap);
+	width: 100%;
+	max-width: 160rem;
+	margin-inline: auto;
+	padding: 1.25rem var(--im-gutter) var(--im-section-gap);
+}
+
+.im-shell-foot {
+	grid-area: foot;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.5rem 1.5rem;
+	padding: 1.5rem var(--im-gutter);
+	border-top: 1px solid var(--im-line);
+	color: var(--im-muted);
+	font-size: var(--im-text-sm);
+}
+
+.im-shell-foot a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.im-shell-foot a:hover {
+	color: var(--im-ink);
+}
+
+/* From md up only: on a phone the side nav is not there at all, and a rail
+   remembered from a desktop visit must not leave a column for it. */
+@media (width >= 48rem) {
+	[data-nav="rail"] .im-shell {
+		grid-template-columns: var(--im-nav-rail) minmax(0, 1fr);
+	}
+}
+
+@media (width < 64rem) {
+	.im-shell {
+		grid-template-columns: var(--im-nav-rail) minmax(0, 1fr);
+	}
+}
+
+@media (width < 48rem) {
+	.im-shell {
+		grid-template-columns: minmax(0, 1fr);
+		grid-template-areas:
+			"bar"
+			"main"
+			"foot";
+	}
+}
+
+/* Menu panel — the navigation on a phone. A rounded sheet that opens inside
+   the viewport, over a blurred page, with the links as tiles in two columns.
+   A native <dialog>: focus trap, Esc and the backdrop come from the browser.
+
+   <dialog class="im-navpanel" id="menu">
+     <div class="im-navpanel-head"> brand · <button data-drawer-close>×</button> </div>
+     <nav class="im-navpanel-grid">
+       <a class="im-navtile" href="…">{{> "icons/house"}}<span>Home</span></a>
+       <a class="im-navtile im-navtile-wide" …>                       spans both columns
+       <details class="im-navtile-group" name="menu">                 a tile that opens
+         <summary class="im-navtile">{{> "icons/layers"}}<span>Foundation</span></summary>
+         <div class="im-navtile-items"> <a href="…">Color</a> … </div>
+       </details>
+     </nav>
+     <div class="im-navpanel-foot"> theme · accounts · a CTA </div>
+   </dialog>
+
+   Knobs: --im-navpanel-width (34rem), --im-navpanel-columns (2). */
+.im-navpanel {
+	--im-navpanel-width: 34rem;
+	--im-navpanel-columns: 2;
+
+	inset: 0.625rem 0.625rem auto;
+	width: auto;
+	max-width: var(--im-navpanel-width);
+	max-height: calc(100dvh - 1.25rem);
+	margin: 0 auto;
+	padding: 0.625rem;
+	border-radius: var(--im-radius-2xl);
+	background-color: var(--im-canvas);
+	box-shadow: inset 0 0 0 1px var(--im-line), var(--im-shadow-float);
+	color: var(--im-body);
+	overflow: hidden auto;
+	overscroll-behavior: contain;
+	scrollbar-width: none;
+}
+
+.im-navpanel::backdrop {
+	background-color: color-mix(in oklab, var(--im-canvas) 55%, transparent);
+	-webkit-backdrop-filter: blur(18px) saturate(1.3);
+	backdrop-filter: blur(18px) saturate(1.3);
+}
+
+.im-navpanel[open] {
+	transform-origin: 2rem 0;
+	animation: im-navpanel-in 320ms var(--im-ease-spring, var(--im-ease-out));
+}
+
+.im-navpanel[open]::backdrop {
+	animation: im-fade-in 240ms;
+}
+
+@keyframes im-navpanel-in {
+	from {
+		opacity: 0;
+		scale: 0.96;
+		translate: 0 -0.75rem;
+	}
+}
+
+.im-navpanel-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0.125rem 0.125rem 0.625rem 0.5rem;
+}
+
+.im-navpanel-grid {
+	display: grid;
+	grid-template-columns: repeat(var(--im-navpanel-columns), minmax(0, 1fr));
+	/* Dense: when an open group takes a whole row, the next tile moves up
+	   into the cell it would have left empty. */
+	grid-auto-flow: dense;
+	gap: 0.375rem;
+}
+
+/* A caption across the grid, to name a run of tiles. */
+.im-navpanel-grid > .im-caption,
+.im-navpanel-grid > .im-navgroup-title {
+	grid-column: 1 / -1;
+	padding: 0.625rem 0.5rem 0.125rem;
+}
+
+.im-navtile {
+	display: flex;
+	align-items: center;
+	gap: 0.625rem;
+	min-width: 0;
+	min-height: 3rem;
+	padding: 0.625rem 0.75rem;
+	border-radius: var(--im-radius-lg);
+	background-color: var(--im-surface);
+	color: var(--im-ink);
+	font-size: var(--im-text-sm);
+	font-weight: 500;
+	line-height: 1.25;
+	text-decoration: none;
+	cursor: pointer;
+	transition: background-color 140ms, box-shadow 140ms;
+}
+
+.im-navtile > .im-icon {
+	flex: none;
+	font-size: 1.125rem;
+	stroke-width: 1.7;
+	color: var(--im-muted);
+}
+
+.im-navtile > span {
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.im-navtile > small {
+	margin-left: auto;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	font-weight: 400;
+}
+
+/* The system's one hover: the edge sharpens to ink. */
+.im-navtile:hover,
+.im-navtile:focus-visible {
+	box-shadow: inset 0 0 0 1px var(--im-ink);
+}
+
+.im-navtile[aria-current="page"] {
+	background-color: var(--im-ink);
+	color: var(--im-canvas);
+}
+
+.im-navtile[aria-current="page"] > .im-icon {
+	color: inherit;
+}
+
+/* Stacked: icon above the label — for a short menu, where tiles can be tall. */
+.im-navtile-stacked {
+	flex-direction: column;
+	align-items: start;
+	justify-content: space-between;
+	min-height: 5.25rem;
+}
+
+.im-navtile-wide {
+	grid-column: 1 / -1;
+}
+
+/* A tile that opens. Closed, it is one cell; open, it takes the whole row and
+   lays its own links out in the same columns. */
+.im-navtile-group {
+	min-width: 0;
+	border-radius: var(--im-radius-lg);
+}
+
+.im-navtile-group > summary {
+	list-style: none;
+	user-select: none;
+}
+
+.im-navtile-group > summary::-webkit-details-marker {
+	display: none;
+}
+
+.im-navtile-group > summary::after {
+	content: "";
+	flex: none;
+	width: 0.375rem;
+	height: 0.375rem;
+	margin-left: auto;
+	margin-right: 0.125rem;
+	border-right: 1.5px solid var(--im-muted);
+	border-bottom: 1.5px solid var(--im-muted);
+	rotate: 45deg;
+	translate: 0 -0.125rem;
+	transition: rotate 160ms var(--im-ease-out);
+}
+
+/* With a count, the count takes the auto margin and the chevron follows it. */
+.im-navtile-group > summary:has(> small)::after {
+	margin-left: 0.5rem;
+}
+
+.im-navtile-group[open] {
+	grid-column: 1 / -1;
+	background-color: var(--im-surface);
+}
+
+.im-navtile-group[open] > summary {
+	background-color: transparent;
+}
+
+.im-navtile-group[open] > summary::after {
+	rotate: -135deg;
+	translate: 0 0.125rem;
+}
+
+.im-navtile-group:has([aria-current="page"]):not([open]) > summary {
+	box-shadow: inset 0 0 0 1px var(--im-ink);
+}
+
+.im-navtile-items {
+	display: grid;
+	grid-template-columns: repeat(var(--im-navpanel-columns), minmax(0, 1fr));
+	gap: 0.125rem;
+	padding: 0 0.375rem 0.5rem;
+}
+
+.im-navtile-items > a {
+	display: flex;
+	align-items: center;
+	min-width: 0;
+	min-height: 2.5rem;
+	padding: 0.375rem 0.5rem;
+	border-radius: var(--im-radius-md);
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+	text-decoration: none;
+}
+
+.im-navtile-items > a:hover,
+.im-navtile-items > a:focus-visible {
+	background-color: var(--im-canvas);
+	color: var(--im-ink);
+}
+
+.im-navtile-items > a[aria-current="page"] {
+	background-color: var(--im-canvas);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	color: var(--im-ink);
+	font-weight: 500;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.im-navtile-group[open] > .im-navtile-items {
+		animation: im-navpanel-items 220ms var(--im-ease-out);
+	}
+}
+
+@keyframes im-navpanel-items {
+	from {
+		opacity: 0;
+		translate: 0 -0.25rem;
+	}
+}
+
+.im-navpanel-foot {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem;
+	margin-top: 0.625rem;
+	padding: 0.625rem 0.125rem 0.125rem;
+	border-top: 1px solid var(--im-line);
+}
+
+.im-navpanel-foot > .im-btn-block,
+.im-navpanel-foot > .im-navpanel-cta {
+	flex: 1 1 100%;
+}
+
+/* Very narrow phones: one column reads better than two cramped ones. */
+@media (width < 20rem) {
+	.im-navpanel {
+		--im-navpanel-columns: 1;
+	}
+}
+
+/* No side nav: a site rather than an app. Pair with .im-topbar-site. */
+.im-shell-plain,
+[data-nav="rail"] .im-shell-plain {
+	grid-template-columns: minmax(0, 1fr);
+	grid-template-areas:
+		"bar"
+		"main"
+		"foot";
+}

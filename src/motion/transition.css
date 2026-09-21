@@ -1,0 +1,139 @@
+/* Page transitions — how one page hands over to the next. Cross-document View
+   Transitions: no script, no router, works with Ghost's ordinary links. Where a
+   browser cannot do it the page simply loads, as ever.
+
+   Choose ONE on <html>:
+       <html data-im-transition="rise">
+   fade · rise · slide · zoom · wipe · iris · sheet · blur
+
+   In a Ghost theme, make it a custom setting:
+       <html data-im-transition="{{@custom.page_transition}}">
+
+   The top bar and side nav are given names of their own, so the chrome holds
+   still and only the page underneath changes. Without the attribute nothing
+   is named, and navigation is exactly as it was.
+
+   Knobs: --im-vt-duration (420ms), --im-vt-ease.
+   iris opens from where the visitor clicked (im-motion.js carries the point
+   across); without the script it opens from the centre. */
+
+@media (prefers-reduced-motion: no-preference) {
+	@view-transition {
+		navigation: auto;
+	}
+}
+
+:root {
+	--im-vt-duration: 420ms;
+	--im-vt-ease: var(--im-ease-in-out);
+}
+
+/* Opt-in: with no style chosen, nothing takes part. */
+:root:not([data-im-transition]),
+:root[data-im-transition="none"] {
+	view-transition-name: none;
+}
+
+[data-im-transition]:not([data-im-transition="none"]) .im-topbar { view-transition-name: im-topbar; }
+[data-im-transition]:not([data-im-transition="none"]) .im-sidenav { view-transition-name: im-sidenav; }
+
+::view-transition-group(im-topbar),
+::view-transition-group(im-sidenav) {
+	z-index: 2;
+	animation-duration: 0s;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+	animation-duration: var(--im-vt-duration);
+	animation-timing-function: var(--im-vt-ease);
+}
+
+/* fade — the default cross-fade, only quicker. */
+[data-im-transition="fade"]::view-transition-old(root),
+[data-im-transition="fade"]::view-transition-new(root) {
+	animation-duration: 240ms;
+}
+
+/* rise — the old page lifts away; the new one comes up under it. */
+[data-im-transition="rise"]::view-transition-old(root) { animation-name: im-vt-rise-out; }
+[data-im-transition="rise"]::view-transition-new(root) { animation-name: im-vt-rise-in; }
+
+@keyframes im-vt-rise-out { to { opacity: 0; translate: 0 -1.5rem; } }
+@keyframes im-vt-rise-in { from { opacity: 0; translate: 0 1.5rem; } }
+
+/* slide — pages pass sideways, like sheets on a desk. */
+[data-im-transition="slide"]::view-transition-old(root) { animation-name: im-vt-slide-out; }
+[data-im-transition="slide"]::view-transition-new(root) { animation-name: im-vt-slide-in; }
+
+@keyframes im-vt-slide-out { to { opacity: 0; translate: -4rem 0; } }
+@keyframes im-vt-slide-in { from { opacity: 0; translate: 4rem 0; } }
+
+/* zoom — you step INTO the next page. */
+[data-im-transition="zoom"]::view-transition-old(root) { animation-name: im-vt-zoom-out; }
+[data-im-transition="zoom"]::view-transition-new(root) { animation-name: im-vt-zoom-in; }
+
+@keyframes im-vt-zoom-out { to { opacity: 0; scale: 1.06; } }
+@keyframes im-vt-zoom-in { from { opacity: 0; scale: 0.95; } }
+
+/* wipe — a straight edge crosses, and the new page is behind it. */
+[data-im-transition="wipe"]::view-transition-old(root) { animation: none; }
+
+[data-im-transition="wipe"]::view-transition-new(root) {
+	animation-name: im-vt-wipe;
+	animation-duration: calc(var(--im-vt-duration) * 1.4);
+}
+
+@keyframes im-vt-wipe { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0); } }
+
+/* iris — the new page opens out of the point that was clicked. */
+[data-im-transition="iris"]::view-transition-old(root) { animation: none; }
+
+[data-im-transition="iris"]::view-transition-new(root) {
+	animation-name: im-vt-iris;
+	animation-duration: calc(var(--im-vt-duration) * 1.6);
+}
+
+@keyframes im-vt-iris {
+	from { clip-path: circle(0 at var(--im-vt-x, 50%) var(--im-vt-y, 50%)); }
+	to { clip-path: circle(150vmax at var(--im-vt-x, 50%) var(--im-vt-y, 50%)); }
+}
+
+/* sheet — the new page is a sheet pushed up over the old, which sinks back. */
+[data-im-transition="sheet"]::view-transition-old(root) {
+	animation-name: im-vt-sheet-out;
+	animation-duration: calc(var(--im-vt-duration) * 1.3);
+}
+
+[data-im-transition="sheet"]::view-transition-new(root) {
+	animation-name: im-vt-sheet-in;
+	animation-duration: calc(var(--im-vt-duration) * 1.3);
+	animation-timing-function: var(--im-ease-out);
+}
+
+@keyframes im-vt-sheet-out { to { scale: 0.94; filter: brightness(0.7); } }
+
+@keyframes im-vt-sheet-in {
+	from { translate: 0 100%; border-radius: 1.5rem 1.5rem 0 0; }
+	to { translate: 0 0; border-radius: 0; }
+}
+
+[data-im-transition="sheet"]::view-transition-image-pair(root) {
+	isolation: auto;
+}
+
+[data-im-transition="sheet"]::view-transition-new(root) {
+	overflow: clip;
+	mix-blend-mode: normal;
+}
+
+[data-im-transition="sheet"]::view-transition-old(root) {
+	mix-blend-mode: normal;
+}
+
+/* blur — the old page goes out of focus; the new one comes in. */
+[data-im-transition="blur"]::view-transition-old(root) { animation-name: im-vt-blur-out; }
+[data-im-transition="blur"]::view-transition-new(root) { animation-name: im-vt-blur-in; }
+
+@keyframes im-vt-blur-out { to { opacity: 0; filter: blur(16px); } }
+@keyframes im-vt-blur-in { from { opacity: 0; filter: blur(16px); } }

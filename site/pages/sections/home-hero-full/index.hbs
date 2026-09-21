@@ -1,0 +1,105 @@
+---
+title: Home hero, full
+layout: wide
+description: A first-screen introduction. Words on the left; on the right a portrait that becomes a video player in place. Behind both, a slow wash of the accent colour. Press play.
+eyebrow: Section
+source: sections/home-hero-full/
+---
+{{> "sections/home-hero-full/hero"
+	tagline="First I do it. Then I share it."
+	phrase_1="Documenting my life"
+	phrase_2="Building projects"
+	phrase_3="Learning new skills"
+	phrase_4="Exploring the world"
+	phrase_5="Spending adult money on experiences"
+	role="Salesforce Engineer"
+	org="EF Education First"
+	org_url="https://www.ef.com/"
+	where="Budapest, Hungary"
+	aim_a="GTM Engineer"
+	aim_b="Forward Deployed Engineer"
+	cta_label="My story"
+	cta_url="#use-it"
+	note="One email when something lands. Nothing else, ever."
+	video="aqz-KE-bpKQ"
+}}
+
+<section class="im-section im-wrap">
+	<div class="im-with-aside" style="max-width: none">
+		<article class="doc" id="article">
+			<div class="im-prose">
+				<h2>Use it</h2>
+				<p>Copy the folder into a Ghost theme — templates under <code>partials/</code>, everything else under <code>assets/</code> — and call it from <code>home.hbs</code>:</p>
+				{{{{code}}}}
+partials/sections/home-hero-full/   ← hero.hbs + parts/
+assets/sections/home-hero-full/     ← hero.css, hero.js, media/
+
+{{> "sections/home-hero-full/hero"
+	tagline="First I do it. Then I share it."
+	phrase_1="Documenting my life"  phrase_2="Building projects"  phrase_3="Learning new skills"
+	phrase_4="Exploring the world"  phrase_5="Spending adult money on experiences"
+	role="Salesforce Engineer"  org="EF Education First"  org_url="https://www.ef.com/"
+	where="Budapest, Hungary"
+	aim_a="GTM Engineer"  aim_b="Forward Deployed Engineer"
+	cta_label="My story"  cta_url="/about/"
+	note="One email when something lands. Nothing else, ever."
+	video="YOUTUBE_ID"  video_portrait="YOUTUBE_ID_9x16"
+}}
+				{{{{/code}}}}
+				<p>The section loads its own stylesheet and script through two layout blocks, so <code>default.hbs</code> needs <code>\{{{block "styles"}}}</code> in the head and <code>\{{{block "scripts"}}}</code> before <code>&lt;/body&gt;</code>. Pages without the hero pay nothing for it.</p>
+
+				<h2>Where the content comes from</h2>
+				<div class="im-table-scroll">
+				<table>
+					<thead><tr><th>Shown</th><th>Source</th></tr></thead>
+					<tbody>
+						<tr><td>The name in the headline</td><td>Ghost → Settings → General → <strong>Site title</strong></td></tr>
+						<tr><td>The intro paragraph</td><td>Settings → General → <strong>Site description</strong></td></tr>
+						<tr><td>The picture</td><td>Settings → Design → <strong>logo</strong>, else the publication <strong>cover</strong></td></tr>
+						<tr><td>The account icons</td><td>Settings → <strong>Social accounts</strong></td></tr>
+						<tr><td>The subscribe form</td><td>Shown when memberships are on and the visitor is signed out</td></tr>
+						<tr><td>Everything else</td><td>Parameters — below</td></tr>
+					</tbody>
+				</table>
+				</div>
+
+				<h2>Parameters</h2>
+				<p>All optional. A missing one removes its line rather than leaving a gap.</p>
+				<div class="im-table-scroll">
+				<table>
+					<thead><tr><th>Param</th><th></th></tr></thead>
+					<tbody>
+						<tr><td><code>greeting</code></td><td>Before the name. Default "Hi, I'm".</td></tr>
+						<tr><td><code>tagline</code></td><td>One line under the name.</td></tr>
+						<tr><td><code>phrase_1</code> … <code>phrase_5</code></td><td>The rolling ticker. Exactly five — the <code>im-hero-roll</code> keyframes are timed to that count.</td></tr>
+						<tr><td><code>role</code>, <code>org</code>, <code>org_url</code></td><td>"Role at Org", the org optionally a link.</td></tr>
+						<tr><td><code>where</code></td><td>A place.</td></tr>
+						<tr><td><code>aim_a</code>, <code>aim_b</code></td><td>"Working towards A / B" — kept apart from the role so it never reads as a claim to hold it.</td></tr>
+						<tr><td><code>cta_label</code>, <code>cta_url</code></td><td>The button beside the form.</td></tr>
+						<tr><td><code>note</code></td><td>Small print under the form; hidden when there is no form.</td></tr>
+						<tr><td><code>video</code>, <code>video_portrait</code></td><td>YouTube ids: the wide cut, and a 9:16 cut a phone plays. No <code>video</code>, no play button.</td></tr>
+					</tbody>
+				</table>
+				</div>
+
+				<h2>Behaviour</h2>
+				<ul>
+					<li><strong>The picture is the player.</strong> Play opens nothing: the frame changes shape where it stands — 16:9, or 9:16 on a phone — and the film plays inside it. Its rectangle is tweened with the Web Animations API, so nothing stretches.</li>
+					<li><strong>Nothing loads from YouTube until play is pressed</strong> (and then from the no-cookie domain). The iframe is destroyed on close. <kbd>Esc</kbd> closes.</li>
+					<li><strong>Responsive by container, not viewport:</strong> ≤1080, ≤880 (tablet) and ≤640 (phone) of the hero's <em>own</em> width — so it is right beside an open nav, a rail, or none.</li>
+					<li><strong>Reduced motion</strong> stops the background loop (in CSS and in JS, since a hidden video still decodes), the ticker and the arrival stagger.</li>
+					<li><strong>Dark mode</strong> inverts the wash rather than swapping files: one loop, both schemes.</li>
+				</ul>
+
+				<h2>Depends on</h2>
+				<p>Tokens (<code>--im-*</code>, <code>--im-text-*</code>, <code>--im-space</code>, <code>--im-radius-2xl</code>, <code>--im-font-pixel</code>), the <code>.im-btn</code> and <code>.im-subscribe</code> components, and six icons. No library.</p>
+
+				<h2>Files</h2>
+			</div>
+			<ul class="file-list rounded-xl im-ring-line">
+				{{#each sections}}{{#if (eq slug "home-hero-full")}}{{#each files}}<li>{{this}}</li>{{/each}}{{/if}}{{/each}}
+			</ul>
+		</article>
+		<aside><div class="im-sticky-rail"><nav class="im-toc" data-toc="#article" aria-label="On this page"></nav></div></aside>
+	</div>
+</section>

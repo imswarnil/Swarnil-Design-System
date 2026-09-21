@@ -1,0 +1,215 @@
+/* Stats & charts — numbers, and the smallest charts that explain them.
+   Charts here are for a glance, not for analysis: no axes to read, no legend
+   to decode. For real data work, embed a charting library. */
+
+.im-stat {
+	display: flex;
+	flex-direction: column;
+	gap: 0.125rem;
+	min-width: 0;
+}
+
+.im-stat-figure {
+	color: var(--im-ink);
+	font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.75rem);
+	font-weight: 600;
+	line-height: 1.05;
+	letter-spacing: var(--im-tracking-tighter);
+	font-variant-numeric: tabular-nums;
+}
+
+.im-stat-label {
+	color: var(--im-muted);
+	font-size: var(--im-text-sm);
+}
+
+.im-stat-delta {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.25rem;
+	color: var(--im-success);
+	font-size: var(--im-text-xs);
+	font-weight: 600;
+}
+
+.im-stat-delta[data-trend="down"] { color: var(--im-danger); }
+.im-stat-delta[data-trend="flat"] { color: var(--im-muted); }
+
+/* A stat with a chart or a ring beside it. */
+.im-stat-row {
+	display: flex;
+	align-items: end;
+	justify-content: space-between;
+	gap: 1rem;
+}
+
+/* ---- bars ---- <div class="im-bars"> <i style="--v: .4" data-label="Mon"></i> … </div> */
+.im-bars {
+	--im-bars-height: 8rem;
+
+	display: flex;
+	align-items: end;
+	gap: clamp(0.25rem, 1.5%, 0.75rem);
+	height: var(--im-bars-height);
+	padding-bottom: 1.375rem;
+}
+
+.im-bars > i {
+	position: relative;
+	flex: 1 1 0;
+	height: calc(var(--v, 0) * 100%);
+	min-height: 2px;
+	border-radius: var(--im-radius-xs) var(--im-radius-xs) 0 0;
+	background-color: var(--im-surface-3);
+	transform-origin: 50% 100%;
+	transition: background-color 160ms;
+}
+
+.im-bars > i:hover,
+.im-bars > i[data-on] {
+	background-color: var(--im-chart-color, var(--im-accent));
+}
+
+.im-bars > i::after {
+	content: attr(data-label);
+	position: absolute;
+	top: calc(100% + 0.375rem);
+	left: 50%;
+	translate: -50% 0;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: 0.6875rem;
+	font-style: normal;
+	white-space: nowrap;
+}
+
+/* Bars grow in when revealed. */
+@media (prefers-reduced-motion: no-preference) {
+	[data-im-js] .im-bars[data-im-reveal]:not([data-im-revealed]) {
+		opacity: 1;
+		translate: none;
+	}
+
+	[data-im-js] .im-bars[data-im-reveal]:not([data-im-revealed]) > i {
+		scale: 1 0;
+	}
+
+	.im-bars[data-im-reveal] > i {
+		transition: scale 800ms var(--im-ease-out), background-color 160ms;
+	}
+
+	.im-bars[data-im-reveal] > i:nth-child(n) { transition-delay: calc((var(--n, 0)) * 40ms); }
+}
+
+/* ---- horizontal bars: a ranking ---- */
+.im-hbars {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr) auto;
+	align-items: center;
+	gap: 0.5rem 0.875rem;
+	font-size: var(--im-text-sm);
+}
+
+.im-hbars > span {
+	color: var(--im-ink);
+	font-weight: 500;
+}
+
+.im-hbars > i {
+	height: 0.5rem;
+	border-radius: var(--im-radius-full);
+	background: linear-gradient(to right, var(--im-chart-color, var(--im-accent)) calc(var(--v, 0) * 100%), var(--im-surface-2) 0);
+}
+
+.im-hbars > b {
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	font-weight: 400;
+	font-variant-numeric: tabular-nums;
+	text-align: right;
+}
+
+/* ---- sparkline / line ---- <svg class="im-spark" data-im-spark="4,8,6,12,9,14"></svg> (js/im-charts.js) */
+.im-spark {
+	display: block;
+	width: var(--im-spark-width, 7rem);
+	height: var(--im-spark-height, 2.25rem);
+	overflow: visible;
+	color: var(--im-chart-color, var(--im-accent));
+}
+
+.im-spark-line {
+	fill: none;
+	stroke: currentcolor;
+	stroke-width: 1.75;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	vector-effect: non-scaling-stroke;
+}
+
+.im-spark-area {
+	fill: currentcolor;
+	opacity: 0.12;
+}
+
+.im-spark-dot {
+	fill: currentcolor;
+}
+
+.im-spark-wide {
+	--im-spark-width: 100%;
+	--im-spark-height: 9rem;
+}
+
+/* ---- donut ---- <span class="im-donut" style="--a: .46; --b: .32">…</span> three slices: a, b, and the rest */
+.im-donut {
+	--im-donut-size: 8rem;
+	--im-donut-width: 1rem;
+
+	display: inline-grid;
+	place-items: center;
+	flex: none;
+	width: var(--im-donut-size);
+	height: var(--im-donut-size);
+	border-radius: 50%;
+	background:
+		radial-gradient(closest-side, var(--im-canvas) calc(100% - var(--im-donut-width)), transparent calc(100% - var(--im-donut-width) + 1px)),
+		conic-gradient(
+			var(--im-accent) 0 calc(var(--a, 0) * 360deg),
+			var(--im-ink) 0 calc((var(--a, 0) + var(--b, 0)) * 360deg),
+			var(--im-surface-3) 0
+		);
+	color: var(--im-ink);
+	font-weight: 600;
+	text-align: center;
+}
+
+.im-legend {
+	display: flex;
+	flex-direction: column;
+	gap: 0.375rem;
+	font-size: var(--im-text-sm);
+}
+
+.im-legend > li {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr) auto;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.im-legend > li::before {
+	content: "";
+	width: 0.625rem;
+	height: 0.625rem;
+	border-radius: 2px;
+	background-color: var(--c, var(--im-surface-3));
+}
+
+.im-legend > li > b {
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	font-weight: 400;
+}

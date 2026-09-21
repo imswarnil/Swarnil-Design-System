@@ -1,0 +1,52 @@
+---
+title: A full article
+layout: wide
+description: Everything together, on the real canvas — text in the reading column, a wide gallery, a full-bleed header. Resize the window - the wide cards pull in before the text does.
+eyebrow: Content
+source: src/components/content.css · src/components/koenig.css
+---
+<section class="im-content im-content-lede im-content-dropcap" data-im-zoom style="padding-block: 1rem 4rem">
+	<p>Sorrento to Amalfi is forty kilometres and takes two hours, because nobody on it wants to arrive. The road was cut into the cliff in the 1840s and has not been widened since; buses fold their mirrors in to pass.</p>
+	<p>This page is one <code>&lt;section class="im-content"&gt;</code>. The text you are reading sits in the <strong>main</strong> column — 44rem, the system's reading width. Nothing here has a width of its own; the grid places it.</p>
+
+	<figure class="kg-card kg-image-card kg-width-wide kg-card-hascaption"><img src="{{demo.three.[0].feature_image}}" class="kg-image" alt="A village on a cliff above the sea" loading="lazy" width="1600" height="900"><figcaption><span style="white-space: pre-wrap;">A <strong>wide</strong> image: 10rem past the text on each side, while there is room.</span></figcaption></figure>
+
+	<h2>Three widths, one grid</h2>
+	<p>The wrapper is a grid with named lines — <code>full</code>, <code>wide</code>, <code>main</code>. Every child lands in <code>main</code>; a card the author set to <em>wide</em> or <em>full</em> in the editor carries a class that moves it outward. No negative margins, no <code>100vw</code> (which ignores the scrollbar and causes a sideways scroll).</p>
+	<ul>
+		<li><strong>Main</strong> — <code>--im-content-main</code>, the reading column.</li>
+		<li><strong>Wide</strong> — reaches <code>--im-content-wide</code> further on each side, and gives that back first as the window narrows.</li>
+		<li><strong>Full</strong> — edge to edge of the wrapper, corners squared.</li>
+	</ul>
+
+	<blockquote class="kg-blockquote-alt">Nobody on this road wants to arrive.</blockquote>
+
+	<p>After a pull quote the rhythm returns. Below is a gallery, also wide, whose rows are justified by <code>im-content.js</code>; click any picture.</p>
+
+	<figure class="kg-card kg-gallery-card kg-width-wide"><div class="kg-gallery-container"><div class="kg-gallery-row"><div class="kg-gallery-image"><img src="{{demo.six.[0].feature_image}}" width="1600" height="900" loading="lazy" alt=""></div><div class="kg-gallery-image"><img src="https://images.unsplash.com/photo-1534445867742-43195f401b6c?auto=format&fit=crop&w=800&h=1000&q=80" width="800" height="1000" loading="lazy" alt=""></div><div class="kg-gallery-image"><img src="{{demo.six.[2].feature_image}}" width="1600" height="900" loading="lazy" alt=""></div></div></div></figure>
+
+	<div class="kg-card kg-callout-card kg-callout-card-yellow"><div class="kg-callout-emoji">⚠️</div><div class="kg-callout-text">Drive it west to east and you are on the cliff side. Drive it east to west and you are on the sea side. Choose accordingly.</div></div>
+
+	<h3>What it costs</h3>
+	<table>
+		<thead><tr><th>Item</th><th>Low season</th><th>High season</th></tr></thead>
+		<tbody>
+			<tr><td>Car hire, per day</td><td>€38</td><td>€95</td></tr>
+			<tr><td>Parking in Positano, per hour</td><td>€6</td><td>€10</td></tr>
+			<tr><td>SITA bus, all day</td><td>€10</td><td>€10</td></tr>
+		</tbody>
+	</table>
+
+	<div class="kg-card kg-header-card kg-v2 kg-width-full" style="background-color: #0a0a0a;" data-background-color="#0a0a0a"><picture><img class="kg-header-card-image" src="{{demo.three.[1].feature_image}}" loading="lazy" alt="" style="opacity: .45"></picture><div class="kg-header-card-content"><div class="kg-header-card-text kg-align-center"><h2 class="kg-header-card-heading" style="color: #ffffff;">Part two: the way back</h2><p class="kg-header-card-subheading" style="color: #ffffff;">A <strong>full-width</strong> header card: edge to edge of the content area.</p></div></div></div>
+
+	<p>And back to the column. A bookmark, a rule, and the end.</p>
+
+	<figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="/content/cards/"><div class="kg-bookmark-content"><div class="kg-bookmark-title">Editor cards</div><div class="kg-bookmark-description">Bookmark, callout, toggle, button, product, header, signup and call-to-action — each one, on its own.</div><div class="kg-bookmark-metadata"><span class="kg-bookmark-author">Im Design System</span><span class="kg-bookmark-publisher">Content</span></div></div><div class="kg-bookmark-thumbnail"><img src="{{demo.three.[2].feature_image}}" alt="" loading="lazy"></div></a></figure>
+
+	<hr>
+
+	<p>In a theme this is the whole of <code>post.hbs</code>'s body:</p>
+	<pre><code class="language-hbs">&lt;section class="im-content im-content-lede" data-im-zoom&gt;
+	\{{content}}
+&lt;/section&gt;</code></pre>
+</section>

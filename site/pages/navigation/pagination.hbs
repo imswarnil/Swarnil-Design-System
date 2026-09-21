@@ -1,0 +1,106 @@
+---
+title: Pagination
+description: Every way to get to the next lot — numbered, ruled, prev / next, compact, load more, infinite scroll, previous / next article, dots, and jump-to-page. Pick by how the reader moves, not by how it looks.
+eyebrow: Navigation
+source: src/components/pagination.css
+---
+<h2>Numbered</h2>
+{{#example}}
+<nav class="im-pagination im-pagination-collapse" aria-label="Pages">
+	<a class="im-page" href="#numbered" aria-label="Previous page">{{> "icons/chevron-left"}}</a>
+	<a class="im-page" href="#numbered">1</a><a class="im-page" href="#numbered" aria-current="page">2</a><a class="im-page" href="#numbered">3</a><a class="im-page" href="#numbered">4</a>
+	<span class="im-page im-page-gap">…</span><a class="im-page" href="#numbered">12</a>
+	<a class="im-page" href="#numbered" aria-label="Next page">{{> "icons/chevron-right"}}</a>
+</nav>
+{{/example}}
+<p>For an archive someone might navigate by position ("it was around page 8"). <code>im-pagination-collapse</code> keeps only the ends, the arrows and the current page on a phone. The current page is <code>aria-current="page"</code>; a dead end is <code>aria-disabled="true"</code>.</p>
+
+<h3>Ruled</h3>
+{{#example}}
+<nav class="im-pagination im-pagination-ruled" aria-label="Pages">
+	<a class="im-page" href="#ruled" aria-label="Previous page" aria-disabled="true">{{> "icons/chevron-left"}}</a>
+	<a class="im-page" href="#ruled" aria-current="page">1</a><a class="im-page" href="#ruled">2</a><a class="im-page" href="#ruled">3</a><a class="im-page" href="#ruled">4</a><a class="im-page" href="#ruled">5</a>
+	<a class="im-page" href="#ruled" aria-label="Next page">{{> "icons/chevron-right"}}</a>
+</nav>
+{{/example}}
+<p><code>im-pagination-ruled</code>: every page in a box, sharing edges — the Swiss one.</p>
+
+<h2>Previous / next</h2>
+{{#example}}
+<nav class="im-pagination im-pagination-spread" aria-label="Pages">
+	<a class="im-btn" href="#previous-next">{{> "icons/arrow-left"}} Newer</a>
+	<span class="text-sm text-muted">Page 2 of 12</span>
+	<a class="im-btn" href="#previous-next">Older {{> "icons/arrow-right"}}</a>
+</nav>
+{{/example}}
+<p>For a feed read in order, where page numbers mean nothing. This is what Ghost's <code>\{{pagination}}</code> data gives you directly.</p>
+
+<h3>Compact</h3>
+{{#example center=true}}
+<nav class="im-pagination im-pagination-compact" aria-label="Pages">
+	<a class="im-btn im-btn-icon im-btn-sm" href="#compact" aria-label="Previous page">{{> "icons/chevron-left"}}</a><span>02 / 12</span><a class="im-btn im-btn-icon im-btn-sm" href="#compact" aria-label="Next page">{{> "icons/chevron-right"}}</a>
+</nav>
+{{/example}}
+
+<h2>Load more</h2>
+{{#example}}
+<div class="im-loadmore">
+	<span>Showing 24 of 96 posts</span>
+	<div class="im-progress im-progress-sm" role="progressbar" aria-label="Posts shown" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="--im-value: .25"></div>
+	<button class="im-btn im-btn-outline" type="button">Load 24 more {{> "icons/chevron-down"}}</button>
+</div>
+{{/example}}
+<p>The reader stays in control and keeps their place, and the footer stays reachable. Say how many there are — it is the difference between "more" and "how much more". While fetching, set <code>aria-busy="true"</code> on the button.</p>
+
+<h2>Infinite scroll</h2>
+{{#example}}
+<div class="im-stack" style="--im-stack-gap: 0">
+	<div class="im-infinite" role="status"><span class="im-ring im-ring-sm im-ring-spin" aria-hidden="true"></span><span>Loading more posts…</span><span class="im-infinite-end">You have reached the end</span></div>
+	<div class="im-divider" role="separator"></div>
+	<div class="im-infinite" role="status" data-done><span class="im-ring im-ring-sm im-ring-spin" aria-hidden="true"></span><span>Loading more posts…</span><span class="im-infinite-end">{{> "icons/check"}} That is everything — 96 posts</span></div>
+</div>
+{{/example}}
+<p><code>im-infinite</code> is the sentinel your script observes; <code>data-done</code> swaps it to the end state. Use infinite scroll only for a stream with no footer to reach and no position worth returning to — and always give it an end.</p>
+
+<h2>Previous / next article</h2>
+{{#example}}
+<nav class="im-postnav" aria-label="More posts">
+	<a href="#previous-next-article"><small>{{> "icons/arrow-left"}} Previous</small>{{demo.three.[0].title}}</a>
+	<a href="#previous-next-article"><small>Next {{> "icons/arrow-right"}}</small>{{demo.three.[1].title}}</a>
+</nav>
+{{/example}}
+{{{{code "hbs"}}}}
+<nav class="im-postnav" aria-label="{{t "More posts"}}">
+	{{#prev_post}}<a href="{{url}}"><small>{{> "icons/arrow-left"}} {{t "Previous"}}</small>{{title}}</a>{{/prev_post}}
+	{{#next_post}}<a href="{{url}}"><small>{{t "Next"}} {{> "icons/arrow-right"}}</small>{{title}}</a>{{/next_post}}
+</nav>
+{{{{/code}}}}
+
+<h2>Dots</h2>
+{{#example}}
+<nav class="im-pagedots" aria-label="Pages"><a href="#dots" aria-label="Page 1"></a><a href="#dots" aria-label="Page 2" aria-current="page"></a><a href="#dots" aria-label="Page 3"></a><a href="#dots" aria-label="Page 4"></a></nav>
+{{/example}}
+<p>For a handful of pages, an onboarding, or slides. More than about seven and dots stop meaning anything.</p>
+
+<h2>Jump to page</h2>
+{{#example}}
+<div class="im-cluster" style="--im-cluster-gap: 1.25rem; justify-content: space-between">
+	<label class="im-pagejump">Go to page <input class="im-input" type="number" min="1" max="120" value="4" inputmode="numeric"> of 120</label>
+	<label class="im-pagejump">Show <select class="im-select" style="width: auto"><option>12</option><option selected>24</option><option>48</option></select> per page</label>
+</div>
+{{/example}}
+<p>For very long, data-like lists — alongside a numbered row, not instead of it.</p>
+
+<h2>Which one?</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>The reader is…</th><th>Use</th></tr></thead>
+	<tbody>
+		<tr><td>reading a blog feed in order</td><td>Previous / next, or load more</td></tr>
+		<tr><td>looking for something in an archive</td><td>Numbered (+ jump, if it is long)</td></tr>
+		<tr><td>browsing a visual stream</td><td>Load more — infinite only if there is no footer</td></tr>
+		<tr><td>at the end of an article</td><td>Previous / next article</td></tr>
+		<tr><td>stepping through a few screens</td><td>Dots, or compact</td></tr>
+	</tbody>
+</table>
+</div>

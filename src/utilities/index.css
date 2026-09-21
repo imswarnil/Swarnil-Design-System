@@ -1,0 +1,86 @@
+@import "./patterns.css";
+
+/* Custom utilities — @utility, so variants work (md:grid-auto, hover:ring-line).
+
+   Knobs are read with a fallback and never declared here: a utility that
+   declared its own default would outrank a component trying to set it. */
+
+/* ---- containers: a max width, centred, with the page gutter ---------------- */
+@utility im-wrap {
+	width: 100%;
+	max-width: var(--im-wrap, var(--im-width-page));
+	margin-inline: auto;
+}
+
+@utility im-wrap-prose {
+	width: 100%;
+	max-width: var(--im-width-prose);
+	margin-inline: auto;
+}
+
+@utility im-wrap-wide {
+	width: 100%;
+	max-width: var(--im-width-wide);
+	margin-inline: auto;
+}
+
+/* Break out of a padded parent to the viewport edges. */
+@utility im-bleed {
+	width: auto;
+	margin-inline: calc(var(--im-gutter) * -1);
+}
+
+/* ---- grids --------------------------------------------------------------- */
+/* As many columns as fit at a minimum width — no breakpoints. --im-grid-min. */
+@utility im-grid-auto {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-grid-min, 16rem), 100%), 1fr));
+	gap: var(--im-grid-gap, 1.25rem);
+}
+
+/* Same, but columns stretch to fill the row when there are few items. */
+@utility im-grid-fit {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(var(--im-grid-min, 16rem), 100%), 1fr));
+	gap: var(--im-grid-gap, 1.25rem);
+}
+
+/* A 12-column page grid; place children with Tailwind's col-span-*. */
+@utility im-grid-page {
+	display: grid;
+	grid-template-columns: repeat(12, minmax(0, 1fr));
+	gap: var(--im-grid-gap, 1.25rem);
+}
+
+/* ---- small arrangements --------------------------------------------------- */
+@utility im-cluster {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--im-cluster-gap, 0.625rem);
+}
+
+@utility im-stack {
+	display: flex;
+	flex-direction: column;
+	gap: var(--im-stack-gap, var(--im-flow));
+}
+
+/* A 1px border that takes no space and works on any surface. */
+@utility im-ring-line {
+	box-shadow: inset 0 0 0 1px var(--im-line);
+}
+
+/* ---- type ------------------------------------------------------------------ */
+@utility im-eyebrow {
+	color: var(--im-muted);
+	font-size: var(--im-text-sm);
+	font-weight: 500;
+}
+
+/* Geist Pixel, for a word that should read as a display. */
+@utility im-pixel {
+	font-family: var(--im-font-pixel);
+	font-weight: 400;
+	letter-spacing: 0;
+}

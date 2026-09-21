@@ -1,0 +1,62 @@
+{{!--
+	Stats band.   {{> "sections/stats-band/stats" title="…" stat_1_value="12480" stat_1_label="readers" …}}
+
+	A ruled band: words on the left, up to four figures on the right in cells
+	that share their borders, and — optionally — a row of bars underneath.
+	Figures count up and sparklines draw when the band scrolls into view.
+
+	sections/stats-band/
+	  stats.hbs        this — assets, layout, parameters passed down
+	  parts/stat       one figure: caption, number, movement, sparkline
+	  stats.css        layout only; the figures are the system's im-stat
+	  stats.js         builds the bar row from its data attribute
+
+	PARAMETERS — every one optional; a missing one removes its piece
+	  caption, index            the mono caption above the title, and its number
+	  title, text               heading and one paragraph
+	  cta_label, cta_url        a link under the text
+	  stat_N_value              N = 1…4. A plain number ("12480", "41.2") — it is counted up to
+	  stat_N_text               what to print without JavaScript ("12,480"); defaults to the value
+	  stat_N_prefix, _suffix    "$", "%", "k"
+	  stat_N_label              what it counts
+	  stat_N_delta, _trend      "12% this month", and "up" | "down" | "flat"
+	  stat_N_spark              comma-separated values for a sparkline
+	  bars, bar_labels          comma-separated values (and labels) for the bar row
+	  bars_caption              the caption above the bars
+	  bars_on                   which bar is lit, counted from 1; defaults to the last
+
+	Needs im-motion.js (count-up) and im-charts.js (sparklines) from the system;
+	without them the figures simply stand still. The layout needs
+	{{{block "styles"}}} in <head> and {{{block "scripts"}}} before </body>.
+--}}
+{{#contentFor "styles"}}
+	<link rel="stylesheet" href="{{asset "sections/stats-band/stats.css"}}">
+{{/contentFor}}
+{{#contentFor "scripts"}}
+	<script src="{{asset "sections/stats-band/stats.js"}}" defer></script>
+{{/contentFor}}
+
+<section class="im-statband" aria-label="{{#if title}}{{title}}{{else}}{{t "In numbers"}}{{/if}}">
+	<div class="im-statband__grid">
+		<header class="im-statband__copy">
+			{{#if caption}}<p class="im-caption"{{#if index}} data-index="{{index}}"{{/if}}>{{caption}}</p>{{/if}}
+			{{#if title}}<h2 class="im-statband__title">{{title}}</h2>{{/if}}
+			{{#if text}}<p class="im-statband__text">{{text}}</p>{{/if}}
+			{{#if cta_label}}<a class="im-card-cta" href="{{cta_url}}">{{cta_label}} {{> "icons/arrow-right"}}</a>{{/if}}
+		</header>
+
+		<div class="im-statband__figures">
+			{{#if stat_1_value}}{{> "sections/stats-band/parts/stat" n="01" value=stat_1_value text=stat_1_text prefix=stat_1_prefix suffix=stat_1_suffix label=stat_1_label delta=stat_1_delta trend=stat_1_trend spark=stat_1_spark}}{{/if}}
+			{{#if stat_2_value}}{{> "sections/stats-band/parts/stat" n="02" value=stat_2_value text=stat_2_text prefix=stat_2_prefix suffix=stat_2_suffix label=stat_2_label delta=stat_2_delta trend=stat_2_trend spark=stat_2_spark}}{{/if}}
+			{{#if stat_3_value}}{{> "sections/stats-band/parts/stat" n="03" value=stat_3_value text=stat_3_text prefix=stat_3_prefix suffix=stat_3_suffix label=stat_3_label delta=stat_3_delta trend=stat_3_trend spark=stat_3_spark}}{{/if}}
+			{{#if stat_4_value}}{{> "sections/stats-band/parts/stat" n="04" value=stat_4_value text=stat_4_text prefix=stat_4_prefix suffix=stat_4_suffix label=stat_4_label delta=stat_4_delta trend=stat_4_trend spark=stat_4_spark}}{{/if}}
+		</div>
+	</div>
+
+	{{#if bars}}
+	<div class="im-statband__chart">
+		{{#if bars_caption}}<p class="im-caption">{{bars_caption}}</p>{{/if}}
+		<div class="im-bars im-statband__bars" data-im-statband-bars="{{bars}}"{{#if bar_labels}} data-labels="{{bar_labels}}"{{/if}}{{#if bars_on}} data-on="{{bars_on}}"{{/if}} role="img" aria-label="{{#if bars_caption}}{{bars_caption}}{{else}}{{t "Chart"}}{{/if}}"></div>
+	</div>
+	{{/if}}
+</section>

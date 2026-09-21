@@ -1,0 +1,290 @@
+/* Accordion — native <details>. Keyboard, state and find-in-page are free.
+   <div class="im-accordion">
+     <details name="faq"> <summary>Question</summary> <div class="im-accordion-body">…</div> </details>
+   </div>
+   Same `name` on each <details> = only one open at a time (the browser does it). */
+
+.im-accordion {
+	border-block: 1px solid var(--im-line);
+}
+
+.im-accordion > details + details {
+	border-top: 1px solid var(--im-line);
+}
+
+.im-accordion > details > summary {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	padding: 1rem 0.25rem;
+	color: var(--im-ink);
+	font-weight: 500;
+	list-style: none;
+	cursor: pointer;
+	transition: color 120ms;
+}
+
+.im-accordion > details > summary::-webkit-details-marker {
+	display: none;
+}
+
+.im-accordion > details > summary:hover {
+	color: var(--im-accent);
+}
+
+/* A plus that turns into a minus. */
+.im-accordion > details > summary::after {
+	content: "";
+	flex: none;
+	width: 0.75rem;
+	height: 0.75rem;
+	background:
+		linear-gradient(currentcolor, currentcolor) center / 100% 1.5px no-repeat,
+		linear-gradient(currentcolor, currentcolor) center / 1.5px 100% no-repeat;
+	transition: rotate 220ms var(--im-ease-out), background-size 220ms;
+}
+
+.im-accordion > details[open] > summary::after {
+	background-size: 100% 1.5px, 1.5px 0;
+	rotate: 180deg;
+}
+
+.im-accordion-body {
+	padding: 0 0.25rem 1.25rem;
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+}
+
+details[open] > .im-accordion-body {
+	animation: im-accordion-in 260ms var(--im-ease-out);
+}
+
+@keyframes im-accordion-in {
+	from {
+		opacity: 0;
+		translate: 0 -0.375rem;
+	}
+}
+
+.im-accordion-boxed {
+	border: 1px solid var(--im-line);
+	border-radius: var(--im-radius-lg);
+}
+
+.im-accordion-boxed > details > summary,
+.im-accordion-boxed .im-accordion-body {
+	padding-inline: 1.125rem;
+}
+
+/* With a leading icon:  <summary><span class="im-accordion-icon">{{> "icons/lock"}}</span>Question</summary> */
+.im-accordion-icon {
+	display: grid;
+	place-items: center;
+	flex: none;
+	width: 2rem;
+	height: 2rem;
+	margin-right: -0.25rem;
+	border-radius: var(--im-radius-md);
+	background-color: var(--im-surface);
+	color: var(--im-muted);
+	font-size: 1rem;
+	transition: background-color 160ms, color 160ms;
+}
+
+.im-accordion > details > summary:has(.im-accordion-icon) {
+	justify-content: flex-start;
+}
+
+.im-accordion > details > summary:has(.im-accordion-icon)::after {
+	margin-left: auto;
+}
+
+.im-accordion > details[open] > summary > .im-accordion-icon {
+	background-color: var(--im-accent-tint);
+	color: var(--im-accent);
+}
+
+.im-accordion > details:has(.im-accordion-icon) > .im-accordion-body {
+	padding-left: 3rem;
+}
+
+/* Separate cards instead of one ruled list. */
+.im-accordion-cards {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	border: 0;
+}
+
+.im-accordion-cards > details,
+.im-accordion-cards > details + details {
+	border: 1px solid var(--im-line);
+	border-radius: var(--im-radius-lg);
+	transition: border-color 160ms;
+}
+
+.im-accordion-cards > details[open] {
+	border-color: var(--im-ink);
+}
+
+.im-accordion-cards > details > summary,
+.im-accordion-cards .im-accordion-body {
+	padding-inline: 1.125rem;
+}
+
+.im-accordion-cards > details:has(.im-accordion-icon) > .im-accordion-body {
+	padding-left: 3.875rem;
+}
+
+/* Tabs — js/im.js wires [data-im-tabs].
+   <div class="im-tabs" data-im-tabs>
+     <div class="im-tablist" role="tablist" aria-label="…">
+       <button class="im-tab" role="tab" aria-selected="true" aria-controls="p1">One</button> …
+     </div>
+     <div class="im-tabpanel" role="tabpanel" id="p1">…</div> …
+   </div> */
+.im-tablist {
+	display: flex;
+	gap: 0.25rem;
+	overflow-x: auto;
+	border-bottom: 1px solid var(--im-line);
+	scrollbar-width: none;
+}
+
+.im-tab {
+	position: relative;
+	flex: none;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
+	padding: 0.625rem 0.875rem;
+	color: var(--im-muted);
+	font-size: var(--im-text-sm);
+	font-weight: 500;
+	cursor: pointer;
+	transition: color 120ms;
+}
+
+.im-tab:hover {
+	color: var(--im-ink);
+}
+
+.im-tab::after {
+	content: "";
+	position: absolute;
+	inset: auto 0.5rem -1px;
+	height: 2px;
+	background-color: var(--im-ink);
+	scale: 0 1;
+	transition: scale 220ms var(--im-ease-out);
+}
+
+.im-tab[aria-selected="true"] {
+	color: var(--im-ink);
+}
+
+.im-tab[aria-selected="true"]::after {
+	scale: 1 1;
+}
+
+.im-tabpanel {
+	padding-top: 1.25rem;
+}
+
+.im-tabpanel:not([hidden]) {
+	animation: im-accordion-in 240ms var(--im-ease-out);
+}
+
+/* Pill tabs: a segmented control. */
+.im-tablist-pills {
+	display: inline-flex;
+	gap: 0.125rem;
+	padding: 0.1875rem;
+	border: 0;
+	border-radius: var(--im-radius-full);
+	background-color: var(--im-surface);
+}
+
+.im-tablist-pills > .im-tab {
+	padding: 0.375rem 0.875rem;
+	border-radius: var(--im-radius-full);
+}
+
+.im-tablist-pills > .im-tab::after {
+	display: none;
+}
+
+.im-tablist-pills > .im-tab[aria-selected="true"] {
+	background-color: var(--im-canvas);
+	box-shadow: 0 1px 2px rgb(0 0 0 / 12%);
+}
+
+.im-tab > .im-icon {
+	font-size: 1rem;
+}
+
+/* Icon above the label — a tab bar. */
+.im-tablist-stacked > .im-tab {
+	flex-direction: column;
+	gap: 0.25rem;
+	padding: 0.625rem 1rem;
+	font-size: var(--im-text-xs);
+}
+
+.im-tablist-stacked > .im-tab > .im-icon {
+	font-size: 1.25rem;
+}
+
+.im-tablist-fill > .im-tab {
+	flex: 1 1 0;
+	justify-content: center;
+}
+
+/* ---- vertical ---- tabs down the side, panel beside them. Falls back to a
+   horizontal, scrolling row when the COMPONENT is narrow. */
+.im-tabs-vertical {
+	container-type: inline-size;
+}
+
+@container (width >= 36rem) {
+	.im-tabs-vertical > .im-tabs-body {
+		display: grid;
+		grid-template-columns: var(--im-tabs-width, 13rem) minmax(0, 1fr);
+		gap: 1.5rem;
+		align-items: start;
+	}
+
+	.im-tabs-vertical .im-tablist {
+		flex-direction: column;
+		gap: 0.125rem;
+		overflow: visible;
+		border-right: 1px solid var(--im-line);
+		border-bottom: 0;
+		padding-right: 0.5rem;
+	}
+
+	.im-tabs-vertical .im-tab {
+		justify-content: flex-start;
+		border-radius: var(--im-radius-md);
+	}
+
+	.im-tabs-vertical .im-tab:hover {
+		background-color: var(--im-surface);
+	}
+
+	.im-tabs-vertical .im-tab::after {
+		inset: 0.5rem calc(-0.5rem - 1px) 0.5rem auto;
+		width: 2px;
+		height: auto;
+		scale: 1 0;
+	}
+
+	.im-tabs-vertical .im-tab[aria-selected="true"]::after {
+		scale: 1 1;
+	}
+
+	.im-tabs-vertical .im-tabpanel {
+		padding-top: 0;
+	}
+}

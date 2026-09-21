@@ -1,0 +1,56 @@
+---
+title: Space, radius, shadow
+description: Spacing is Tailwind's own 4px grid, unchanged. Radii and the single shadow are this system's.
+eyebrow: Foundation
+source: src/foundation/tokens/primitives.css
+---
+<h2>Spacing</h2>
+<p>Every spacing utility is a multiple of <code>--im-space</code> (0.25rem): <code>p-4</code> is 1rem, <code>gap-6</code> is 1.5rem. In a plain stylesheet, write <code>calc(var(--im-space) * 4)</code>.</p>
+{{#example code=false}}
+<div class="im-stack" style="--im-stack-gap: 0.5rem">
+	<div class="flex items-center gap-4 text-sm"><code class="w-12">1</code><span class="text-muted w-16">4px</span><span class="h-3 rounded-xs bg-accent" style="width: calc(var(--im-space) * 1)"></span></div>
+	<div class="flex items-center gap-4 text-sm"><code class="w-12">2</code><span class="text-muted w-16">8px</span><span class="h-3 rounded-xs bg-accent" style="width: calc(var(--im-space) * 2)"></span></div>
+	<div class="flex items-center gap-4 text-sm"><code class="w-12">3</code><span class="text-muted w-16">12px</span><span class="h-3 rounded-xs bg-accent" style="width: calc(var(--im-space) * 3)"></span></div>
+	<div class="flex items-center gap-4 text-sm"><code class="w-12">4</code><span class="text-muted w-16">16px</span><span class="h-3 rounded-xs bg-accent" style="width: calc(var(--im-space) * 4)"></span></div>
+	<div class="flex items-center gap-4 text-sm"><code class="w-12">6</code><span class="text-muted w-16">24px</span><span class="h-3 rounded-xs bg-accent" style="width: calc(var(--im-space) * 6)"></span></div>
+	<div class="flex items-center gap-4 text-sm"><code class="w-12">8</code><span class="text-muted w-16">32px</span><span class="h-3 rounded-xs bg-accent" style="width: calc(var(--im-space) * 8)"></span></div>
+	<div class="flex items-center gap-4 text-sm"><code class="w-12">12</code><span class="text-muted w-16">48px</span><span class="h-3 rounded-xs bg-accent" style="width: calc(var(--im-space) * 12)"></span></div>
+	<div class="flex items-center gap-4 text-sm"><code class="w-12">16</code><span class="text-muted w-16">64px</span><span class="h-3 rounded-xs bg-accent" style="width: calc(var(--im-space) * 16)"></span></div>
+	<div class="flex items-center gap-4 text-sm"><code class="w-12">24</code><span class="text-muted w-16">96px</span><span class="h-3 rounded-xs bg-accent" style="width: calc(var(--im-space) * 24)"></span></div>
+</div>
+{{/example}}
+
+<h3>Page rhythm</h3>
+<p>Four variables hold the page's own measurements. Use them for anything that must line up with the frame.</p>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Variable</th><th>Value</th><th></th></tr></thead>
+	<tbody>{{#each tokens.frame}}<tr><td><code>{{name}}</code></td><td>{{value}}</td><td>{{frame_note name}}</td></tr>{{/each}}</tbody>
+</table>
+</div>
+
+<h2>Radius</h2>
+{{#example code=false}}
+<div class="swatches" style="--im-grid-min: 8rem">{{#each tokens.radius}}<div class="swatch"><div class="radius-box" style="--r: var({{name}})"></div><span class="swatch-name">rounded-{{key}}</span><span class="swatch-meta"><span>{{value}}</span></span></div>{{/each}}</div>
+{{/example}}
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Step</th><th>Used for</th></tr></thead>
+	<tbody>
+		<tr><td><code>xs</code> · <code>sm</code></td><td>Inline code, badges, flags on a post card.</td></tr>
+		<tr><td><code>md</code></td><td>Menu items, callouts.</td></tr>
+		<tr><td><code>lg</code></td><td>Inputs, nav links, code blocks, images in prose.</td></tr>
+		<tr><td><code>xl</code></td><td>Cards, post-card media, menus, dialogs.</td></tr>
+		<tr><td><code>2xl</code></td><td>Heroes and other page-sized surfaces.</td></tr>
+		<tr><td><code>full</code></td><td>Buttons, tags, the search field, avatars.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>Shadow</h2>
+<p>Surfaces are separated by a background step or a hairline, not by elevation. The one shadow is for things that float above the page: menus, dialogs.</p>
+{{#example center=true surface=true}}
+<div class="shadow-float bg-canvas rounded-xl px-5 py-4 text-sm">shadow-float</div>
+<div class="im-ring-line bg-canvas rounded-xl px-5 py-4 text-sm">ring-line</div>
+<div class="bg-surface-2 rounded-xl px-5 py-4 text-sm">bg-surface-2</div>
+{{/example}}

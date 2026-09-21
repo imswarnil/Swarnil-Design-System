@@ -1,0 +1,73 @@
+---
+title: Home
+layout: home
+---
+<div class="im-frame im-frame-wide">
+
+	<section class="im-frame-row im-frame-row-flush im-frame-marks home-hero">
+		<div class="home-hero-grid im-bg-grid im-style-grid" aria-hidden="true"></div>
+		<div class="home-hero-copy">
+			<p class="im-caption" data-index="00">Tailwind 4 · Ghost 6 · Geist</p>
+			<h1>A design system you own, <span class="im-pixel">end to end.</span></h1>
+			<p class="im-lede">
+				Tokens, a page shell, components and ready-made sections for Ghost themes — written from
+				scratch on Tailwind CSS. Everything that was not written here is openly licensed and
+				<a href="/provenance/">listed by name</a>.
+			</p>
+			<div class="im-cluster">
+				<a class="im-btn im-btn-primary im-btn-lg" href="/getting-started/">Get started {{> "icons/arrow-right"}}</a>
+				<a class="im-btn im-btn-lg" href="/layout/swiss/">The Swiss grid</a>
+			</div>
+		</div>
+		<div class="home-hero-art">{{> "docs/home-art"}}</div>
+	</section>
+
+	<section class="im-frame-row im-frame-row-flush im-frame-marks">
+		<div class="im-cells im-cells-4">
+			<div class="im-cell"><strong class="stat-figure">{{tokens.count}}</strong><span class="im-caption">Tokens · --im-*</span></div>
+			<div class="im-cell"><strong class="stat-figure">40+</strong><span class="im-caption">Components</span></div>
+			<div class="im-cell"><strong class="stat-figure">{{icons.length}}</strong><span class="im-caption">Icons, as partials</span></div>
+			<div class="im-cell"><strong class="stat-figure">3</strong><span class="im-caption">Fonts — all Geist</span></div>
+		</div>
+	</section>
+
+	<div class="im-frame-head im-frame-marks"><p class="im-caption" data-index="01">Foundation</p><a class="im-card-cta" href="/foundation/principles/">Principles {{> "icons/arrow-right"}}</a></div>
+	<section class="im-frame-row im-frame-row-flush">
+		<div class="im-cells im-cells-3">
+			<a class="im-cell" href="/foundation/color/"><span class="im-card-icon">{{> "icons/palette"}}</span><span class="im-cell-title">Color</span><span>A neutral ramp, and names for what a colour is for. Dark mode for free.</span></a>
+			<a class="im-cell" href="/foundation/typography/"><span class="im-card-icon">{{> "icons/type"}}</span><span class="im-cell-title">Typography</span><span>Geist to read, Geist Mono for code, Geist Pixel for display.</span></a>
+			<a class="im-cell" href="/foundation/space/"><span class="im-card-icon">{{> "icons/ruler"}}</span><span class="im-cell-title">Space, radius, shadow</span><span>A 4px grid, seven radii, one shadow.</span></a>
+			<a class="im-cell" href="/layout/swiss/"><span class="im-card-icon">{{> "icons/grid-2x2"}}</span><span class="im-cell-title">Swiss grid</span><span>Rails, rules, registration marks and cells that share their borders. This page.</span></a>
+			<a class="im-cell" href="/layout/shell/"><span class="im-card-icon">{{> "icons/panel-left"}}</span><span class="im-cell-title">Shell</span><span>Top bar, collapsible side nav, phone drawer.</span></a>
+			<a class="im-cell" href="/layout/grid/"><span class="im-card-icon">{{> "icons/layout-grid"}}</span><span class="im-cell-title">Containers &amp; grid</span><span>Layouts that need no breakpoints.</span></a>
+		</div>
+	</section>
+
+	<div class="im-frame-head im-frame-marks"><p class="im-caption" data-index="02">Components — rendered by the real partials</p><a class="im-card-cta" href="/components/post-card/">Post card {{> "icons/arrow-right"}}</a></div>
+	<section class="im-frame-row im-frame-row-flush">
+		<div class="im-cells im-cells-4">
+			{{#foreach demo.four}}<div class="im-cell">{{> "components/post-card" eager=true}}</div>{{/foreach}}
+		</div>
+	</section>
+
+	<section class="im-frame-row im-frame-split im-frame-marks" style="--im-split: 1.2fr">
+		<div class="im-stack" style="--im-stack-gap: 1rem">
+			<p class="im-caption" data-index="03">Sections</p>
+			<h2>Whole bands of a page, one folder each.</h2>
+			<p class="im-lede">Markup, styles, script and media together; responsive by container, content by parameter. The first is a full home hero whose portrait becomes a video player in place.</p>
+			<div class="im-cluster"><a class="im-btn im-btn-ink" href="/sections/home-hero-full/">Home hero, full {{> "icons/arrow-right"}}</a><a class="im-btn" href="/guides/add-a-section/">Add a section</a></div>
+		</div>
+		<div class="im-bg-lines home-filler" aria-hidden="true"></div>
+	</section>
+
+	<div class="im-frame-head im-frame-marks"><p class="im-caption" data-index="04">Build on it</p></div>
+	<section class="im-frame-row im-frame-row-flush">
+		<div class="im-cells im-cells-4">
+			<a class="im-cell" href="/guides/add-a-token/"><span class="im-badge im-badge-info" style="align-self: start">Guide</span><span class="im-cell-title">Add a token</span><span>One declaration becomes a variable and a utility.</span></a>
+			<a class="im-cell" href="/guides/add-a-component/"><span class="im-badge im-badge-info" style="align-self: start">Guide</span><span class="im-cell-title">Add a component</span><span>One file, tokens only, knobs as variables.</span></a>
+			<a class="im-cell" href="/motion/animation/"><span class="im-badge im-badge-accent" style="align-self: start">New</span><span class="im-cell-title">Motion &amp; effects</span><span>Motion tokens, reveals, two signature interactions, and text, image and border effects.</span></a>
+			<a class="im-cell" href="/provenance/"><span class="im-badge im-badge-success" style="align-self: start">Read this</span><span class="im-cell-title">Provenance</span><span>Where every outside file came from.</span></a>
+		</div>
+	</section>
+
+</div>

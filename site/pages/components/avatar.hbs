@@ -1,0 +1,42 @@
+---
+title: Avatar
+description: A round image that degrades to an initial, then to an icon. Four sizes.
+eyebrow: Component
+source: src/components/avatar.css · partials/components/avatar.hbs
+---
+<h2>Sizes</h2>
+{{#example center=true}}
+{{> "components/avatar" size="sm" src=demo.author.profile_image name=demo.author.name}}
+{{> "components/avatar" src=demo.author.profile_image name=demo.author.name}}
+{{> "components/avatar" size="lg" src=demo.author.profile_image name=demo.author.name}}
+{{> "components/avatar" size="xl" src=demo.author.profile_image name=demo.author.name}}
+{{/example}}
+
+<h2>Fallbacks</h2>
+<p>No <code>src</code>: the name's first letter. No name either: a user icon — the signed-out state.</p>
+{{#example center=true}}
+{{> "components/avatar" name="Swarnil"}}
+{{> "components/avatar" size="lg" name="Im"}}
+{{> "components/avatar"}}
+{{/example}}
+
+<h2>Stack</h2>
+{{#example center=true}}
+<span class="im-avatar-stack">
+	{{> "components/avatar" src=demo.author.profile_image name="A"}}
+	{{> "components/avatar" name="Bea"}}
+	{{> "components/avatar" name="Cy"}}
+</span>
+{{/example}}
+
+<h2>Parameters</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Param</th><th>Values</th></tr></thead>
+	<tbody>
+		<tr><td><code>src</code></td><td>Image URL. Omit for the initial.</td></tr>
+		<tr><td><code>name</code></td><td>Alt text and the source of the initial.</td></tr>
+		<tr><td><code>size</code></td><td><code>"sm"</code> 24 · default 36 · <code>"lg"</code> 48 · <code>"xl"</code> 72. Or set <code>--im-avatar-size</code>.</td></tr>
+	</tbody>
+</table>
+</div>

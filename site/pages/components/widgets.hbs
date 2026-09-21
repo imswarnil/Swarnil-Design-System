@@ -1,0 +1,114 @@
+---
+title: Widgets
+description: The blocks of a sidebar — who wrote this, subscribe, what is popular, topics, where to follow, a promotion. One frame, many contents; stack them in a column beside an article.
+eyebrow: Component
+source: src/components/widget.css
+---
+<h2>A sidebar</h2>
+{{#example surface=true}}
+<div class="im-grid-auto" style="--im-grid-min: 17rem; align-items: start">
+	<aside class="im-widgets" aria-label="About the author">
+		<section class="im-widget im-widget-author" style="background-color: var(--im-canvas)">
+			<h2 class="im-widget-title">Written by</h2>
+			{{> "components/avatar" size="xl" src=demo.author.profile_image name=demo.author.name}}
+			<div><a class="im-widget-author-name" href="#a-sidebar">{{demo.author.name}}</a><p class="im-widget-author-role">Engineer · {{demo.author.location}}</p></div>
+			<p>{{demo.author.bio}}</p>
+			<div class="im-cluster"><a class="im-btn im-btn-primary im-btn-sm" href="#a-sidebar">Follow</a><a class="im-btn im-btn-icon im-btn-sm" href="#a-sidebar" aria-label="X">{{> "icons/brand-x"}}</a><a class="im-btn im-btn-icon im-btn-sm" href="#a-sidebar" aria-label="GitHub">{{> "icons/brand-github"}}</a><a class="im-btn im-btn-icon im-btn-sm" href="#a-sidebar" aria-label="YouTube">{{> "icons/brand-youtube"}}</a></div>
+			<div class="im-widget-stats"><div><strong>{{demo.author.count.posts}}</strong><span>posts</span></div><div><strong>12.4k</strong><span>readers</span></div><div><strong>7</strong><span>years</span></div></div>
+		</section>
+
+		<section class="im-widget im-widget-accent">
+			<h2 class="im-widget-title">Newsletter</h2>
+			<p class="im-widget-heading">One email when something lands.</p>
+			<p>Nothing else, ever. Unsubscribe in one click.</p>
+			<a class="im-btn im-btn-ink im-btn-block" href="#a-sidebar">Subscribe {{> "icons/arrow-right"}}</a>
+		</section>
+	</aside>
+
+	<aside class="im-widgets" aria-label="More to read">
+		<section class="im-widget" style="background-color: var(--im-canvas)">
+			<h2 class="im-widget-title">Most read <a href="#a-sidebar">All →</a></h2>
+			<ol class="im-widget-list im-widget-list-ranked">
+				{{#foreach demo.four}}<li><a href="#a-sidebar">{{title}}<small>{{primary_tag.name}} · {{reading_time}} min</small></a></li>{{/foreach}}
+			</ol>
+		</section>
+
+		<section class="im-widget" style="background-color: var(--im-canvas)">
+			<h2 class="im-widget-title">Topics</h2>
+			<div class="im-cluster" style="--im-cluster-gap: .375rem">{{#foreach fixtures.tags}}<a class="im-tag" href="#a-sidebar">{{name}} <small class="text-muted">{{count.posts}}</small></a>{{/foreach}}</div>
+		</section>
+	</aside>
+
+	<aside class="im-widgets" aria-label="This post">
+		<section class="im-widget" style="background-color: var(--im-canvas)">
+			<h2 class="im-widget-title">On this page</h2>
+			<nav class="im-toc" data-toc="#article" data-toc-title="" aria-label="On this page (widget)"></nav>
+		</section>
+
+		<section class="im-widget" style="background-color: var(--im-canvas)">
+			<h2 class="im-widget-title">About this post</h2>
+			<dl class="im-widget-facts"><dt>Published</dt><dd>17 Sep 2026</dd><dt>Reading time</dt><dd>8 min</dd><dt>Topic</dt><dd>Travel</dd><dt>Access</dt><dd><span class="im-badge im-badge-success">Public</span></dd></dl>
+		</section>
+
+		<section class="im-widget" style="background-color: var(--im-canvas)">
+			<h2 class="im-widget-title">Latest</h2>
+			<ul class="im-widget-list im-widget-list-thumbs">
+				{{#foreach demo.three}}<li><a href="#a-sidebar"><img src="{{feature_image}}" alt="" loading="lazy">{{title}}<small>{{date format="D MMM"}}</small></a></li>{{/foreach}}
+			</ul>
+		</section>
+	</aside>
+</div>
+{{/example}}
+
+<h2>The frame</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Class</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>im-widgets</code></td><td>The column. Put it in the rail of <code>im-with-aside</code>.</td></tr>
+		<tr><td><code>im-widget</code></td><td>One ruled block. <code>-fill</code> for a surface, <code>-accent</code> for the one that should be seen.</td></tr>
+		<tr><td><code>im-widget-title</code></td><td>A mono caption. May hold a link on the right ("All →").</td></tr>
+		<tr><td><code>im-widget-heading</code></td><td>A larger line, for a promotional widget.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>Contents</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Widget</th><th>Built from</th></tr></thead>
+	<tbody>
+		<tr><td>Author</td><td><code>im-widget-author</code> + an <a href="/components/avatar/">avatar</a>, <code>im-widget-author-name</code>, social <a href="/components/share/">buttons</a>, <code>im-widget-stats</code></td></tr>
+		<tr><td>Newsletter</td><td><code>im-widget-accent</code> + a button, or the <a href="/forms/inputs/#subscribe">subscribe form</a></td></tr>
+		<tr><td>Most read</td><td><code>im-widget-list im-widget-list-ranked</code> — mono numerals from a CSS counter</td></tr>
+		<tr><td>Latest</td><td><code>im-widget-list im-widget-list-thumbs</code></td></tr>
+		<tr><td>Topics</td><td>a <code>im-cluster</code> of <a href="/components/badge/#tag">tags</a></td></tr>
+		<tr><td>On this page</td><td>the <a href="/navigation/toc/">table of contents</a>, with <code>data-toc-title=""</code> since the widget has its own</td></tr>
+		<tr><td>About this post</td><td><code>im-widget-facts</code> — a definition list</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>In a Ghost theme</h2>
+{{{{code "hbs"}}}}
+<aside class="im-widgets">
+	{{#primary_author}}
+	<section class="im-widget im-widget-author">
+		<h2 class="im-widget-title">{{t "Written by"}}</h2>
+		{{> "components/avatar" size="xl" src=profile_image name=name}}
+		<a class="im-widget-author-name" href="{{url}}">{{name}}</a>
+		{{#if bio}}<p>{{bio}}</p>{{/if}}
+	</section>
+	{{/primary_author}}
+
+	{{#get "posts" filter="featured:true" limit="5" as |popular|}}
+	<section class="im-widget">
+		<h2 class="im-widget-title">{{t "Most read"}}</h2>
+		<ol class="im-widget-list im-widget-list-ranked">
+			{{#foreach popular}}<li><a href="{{url}}">{{title}}<small>{{reading_time}}</small></a></li>{{/foreach}}
+		</ol>
+	</section>
+	{{/get}}
+</aside>
+{{{{/code}}}}
+<p><strong>Keep a sidebar short.</strong> Three widgets is a sidebar; seven is a second page nobody reads. On a phone the column drops under the article — put the one that matters first.</p>

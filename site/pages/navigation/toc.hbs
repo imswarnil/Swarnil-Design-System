@@ -1,0 +1,59 @@
+---
+title: Table of contents
+description: A nav that fills itself from an article's headings and marks the one in view. It is the rail on the right of this page.
+eyebrow: Navigation
+source: src/components/toc.css · src/js/im.js
+---
+<h2>Use it</h2>
+{{{{code "hbs"}}}}
+<article id="article"> … <h2 id="setup">Setup</h2> … <h3 id="options">Options</h3> … </article>
+
+<nav class="im-toc" data-toc="#article" aria-label="On this page"></nav>
+{{{{/code}}}}
+<p><code>data-toc</code> is a selector for the element to read. <code>im.js</code> collects its <code>h2[id]</code> and <code>h3[id]</code>, builds the links, and on scroll marks the last heading above the top bar with <code>aria-current="true"</code>. With fewer than two headings it renders nothing, and the empty <code>&lt;nav&gt;</code> hides itself.</p>
+<p>Ghost gives every heading in a post an <code>id</code>, so in a theme this needs no preparation: point it at the element wrapping <code>\{{content}}</code>.</p>
+
+<h2>In a rail</h2>
+<p><code>im-with-aside</code> is an article plus a sticky rail. Below <code>lg</code> the rail moves above the article.</p>
+{{{{code "hbs"}}}}
+<div class="im-with-aside">
+	<article class="im-prose" id="article">{{content}}</article>
+	<aside><div class="im-sticky-rail">
+		<nav class="im-toc" data-toc="#article" aria-label="{{t "On this page"}}"></nav>
+	</div></aside>
+</div>
+{{{{/code}}}}
+
+<h2>As a disclosure</h2>
+<p>For a phone, or inside the article itself: wrap it in <code>&lt;details class="im-toc-box"&gt;</code>. This one reads this page.</p>
+{{#example style="max-width: 24rem"}}
+<details class="im-toc-box" open>
+	<summary>On this page</summary>
+	<nav class="im-toc" data-toc="#article" aria-label="On this page (box)"></nav>
+</details>
+{{/example}}
+
+<h2>Numbered</h2>
+{{#example style="max-width: 24rem"}}
+<nav class="im-toc im-toc-numbered" data-toc="#article" data-toc-title="Contents" aria-label="Contents"></nav>
+{{/example}}
+<p>The numbers are CSS counters, so the markup stays a flat list of links.</p>
+
+<h2>Options</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Attribute</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>data-toc="#id"</code></td><td>The element whose headings to read. Required.</td></tr>
+		<tr><td><code>data-toc-title="…"</code></td><td>The heading above the list. Default "On this page".</td></tr>
+		<tr><td><code>data-toc-label="…"</code> <small>on a heading</small></td><td>A shorter label for a long heading.</td></tr>
+		<tr><td><code>data-toc-skip</code> <small>on any ancestor</small></td><td>Leave out the headings inside — examples, embeds, comments.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h3>A third-level heading</h3>
+<p>So that this page's own table of contents has one to show: <code>h3</code>s are indented under their <code>h2</code> and set lighter.</p>
+
+<h2>Anchor offset</h2>
+<p>The base styles set <code>scroll-padding-top</code> on <code>&lt;html&gt;</code> from <code>--im-bar-height</code>, so a heading reached from the table of contents lands <em>below</em> the sticky bar, not under it. The scroll-spy reads the same value — change the bar's height and both follow.</p>

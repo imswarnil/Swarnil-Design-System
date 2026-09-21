@@ -1,0 +1,72 @@
+---
+title: Add a component
+description: One CSS file built from tokens, its knobs exposed as variables; a partial if it has real markup; a docs page. About ten minutes.
+eyebrow: Guide
+---
+<h2>1 · The stylesheet</h2>
+<p><code>src/components/stat.css</code> — a figure and what it counts:</p>
+{{{{code}}}}
+/* Stat   <div class="stat"><strong>246</strong><span>posts</span></div> */
+
+.stat {
+	--im-stat-figure: var(--im-ink);
+
+	display: flex;
+	flex-direction: column;
+	gap: 0.125rem;
+}
+
+.stat > strong {
+	color: var(--im-stat-figure);
+	font-size: var(--im-text-h1);
+	font-variant-numeric: tabular-nums;
+	line-height: 1.1;
+}
+
+.stat > span {
+	color: var(--im-muted);
+	font-size: var(--im-text-sm);
+}
+
+.stat-accent { --im-stat-figure: var(--im-accent); }
+{{{{/code}}}}
+<p>Import it in <code>src/components/index.css</code>. That file is loaded into the <code>components</code> layer, so yours needs no <code>@layer</code> of its own — and must not be imported anywhere else.</p>
+
+<h2>2 · A partial, if it has markup</h2>
+<p>If the component is more than a class on an element, give it a Ghost partial in <code>partials/components/</code>. Pass content as parameters; read Ghost data from the context.</p>
+{{{{code}}}}
+{{!-- partials/components/stat.hbs — params: figure, label, accent --}}
+<div class="stat{{#if accent}} stat-accent{{/if}}"><strong>{{figure}}</strong><span>{{label}}</span></div>
+{{{{/code}}}}
+
+<h2>3 · The docs page</h2>
+<p><code>site/pages/components/stat.hbs</code>. Whatever is inside an <code>example</code> block is rendered <em>and</em> shown as source. Then add a line to <code>site/site.config.mjs</code>.</p>
+{{{{code}}}}
+---
+title: Stat
+description: A figure and what it counts.
+eyebrow: Component
+source: src/components/stat.css
+---
+<h2>Default</h2>
+{{#example center=true}}
+{{> "components/stat" figure="246" label="posts"}}
+{{/example}}
+{{{{/code}}}}
+
+<h2>The conventions, and why</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Rule</th><th>Because</th></tr></thead>
+	<tbody>
+		<tr><td>Tokens only — no hex, no bare px for colour, type or radius</td><td>Dark mode and any re-skin then reach it for free.</td></tr>
+		<tr><td>Knobs as <code>--im-name-prop</code> variables</td><td>Variants become a few assignments, and a caller can adjust one instance inline.</td></tr>
+		<tr><td>Variants are extra classes, state is an attribute</td><td><code>btn btn-primary</code>; <code>aria-busy</code>, <code>aria-current</code>, <code>:disabled</code>. Nothing to keep in sync.</td></tr>
+		<tr><td>One file per component</td><td>Removing a component is deleting a file and an import.</td></tr>
+		<tr><td>Written here, from a blank file</td><td>See <a href="/provenance/">provenance</a>. Look at other products for ideas; never paste their code.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>Component or utility?</h2>
+<p>If a designer would say its name — badge, card, menu — it is a component. If it does one CSS thing and combines with others — <code>im-ring-line</code>, <code>im-stack</code>, <code>im-grid-auto</code> — it is a utility: add it to <code>src/utilities/index.css</code> with <code>@utility</code>, so <code>md:</code> and <code>hover:</code> work on it. A utility reads its knobs with a fallback (<code>var(--im-grid-min, 16rem)</code>) and never declares them, or it would outrank a component trying to set them.</p>

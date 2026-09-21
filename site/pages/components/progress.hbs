@@ -1,0 +1,59 @@
+---
+title: Progress
+description: How far along — as a bar, as discrete steps, or as a ring. All read one variable, --im-value, from 0 to 1.
+eyebrow: Component
+source: src/components/progress.css
+---
+<h2>Bar</h2>
+{{#example}}
+<div class="im-stack" style="--im-stack-gap: 1.25rem; max-width: 28rem">
+	<div class="im-progress" role="progressbar" aria-label="Upload" aria-valuenow="64" aria-valuemin="0" aria-valuemax="100" style="--im-value: .64"></div>
+	<div class="im-progress im-progress-sm" role="progressbar" aria-label="Small" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="--im-value: .4"></div>
+	<div class="im-progress im-progress-lg" role="progressbar" aria-label="Large" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="--im-value: .8"></div>
+	<div class="im-progress im-progress-line" role="progressbar" aria-label="Line" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100" style="--im-value: .55"></div>
+</div>
+{{/example}}
+<p><code>-sm</code> · <code>-lg</code> · <code>-line</code> (a 2px square-ended rule — the Swiss one). Keep <code>aria-valuenow</code> in step with <code>--im-value</code>.</p>
+
+<h3>With a label</h3>
+{{#example style="max-width: 28rem"}}
+<div class="im-stack" style="--im-stack-gap: 1.125rem">
+	<div class="im-progress-field"><span>Storage</span><output>6.4 of 10 GB</output><div class="im-progress" role="progressbar" aria-label="Storage" aria-valuenow="64" aria-valuemin="0" aria-valuemax="100" style="--im-value: .64"></div></div>
+	<div class="im-progress-field"><span>Members</span><output>92%</output><div class="im-progress" role="progressbar" aria-label="Members" aria-valuenow="92" aria-valuemin="0" aria-valuemax="100" style="--im-value: .92; --im-progress-color: var(--im-danger)"></div></div>
+	<div class="im-progress-field"><span>Course</span><output>7 of 12 lessons</output><div class="im-progress" role="progressbar" aria-label="Course" aria-valuenow="58" aria-valuemin="0" aria-valuemax="100" style="--im-value: .58; --im-progress-color: var(--im-success)"></div></div>
+</div>
+{{/example}}
+
+<h3>Working</h3>
+{{#example style="max-width: 28rem"}}
+<div class="im-stack" style="--im-stack-gap: 1.25rem">
+	<div class="im-progress im-progress-striped" role="progressbar" aria-label="Uploading" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="--im-value: .45"></div>
+	<div class="im-progress im-progress-indeterminate" role="progressbar" aria-label="Working"></div>
+</div>
+{{/example}}
+<p><code>-striped</code>: it is happening right now. <code>-indeterminate</code>: no value, unknown duration — leave <code>aria-valuenow</code> off.</p>
+
+<h2>Steps</h2>
+{{#example style="max-width: 28rem"}}
+<div class="im-stack" style="--im-stack-gap: 1.125rem">
+	<div class="im-progress-steps" role="progressbar" aria-label="Step 3 of 5" aria-valuenow="3" aria-valuemin="0" aria-valuemax="5" style="--im-steps: 5"><i data-on></i><i data-on></i><i data-on></i><i></i><i></i></div>
+	<div class="im-progress-steps" role="progressbar" aria-label="Password strength: good" aria-valuenow="3" aria-valuemin="0" aria-valuemax="4" style="--im-steps: 4; --im-progress-color: var(--im-success)"><i data-on></i><i data-on></i><i data-on></i><i></i></div>
+</div>
+{{/example}}
+<p>One <code>&lt;i&gt;</code> per step; <code>data-on</code> on the ones reached. For an onboarding, a password meter, a rating.</p>
+
+<h2>Ring</h2>
+{{#example center=true}}
+<span class="im-ring im-ring-sm" style="--im-value: .4" role="img" aria-label="40%"></span>
+<span class="im-ring" style="--im-value: .25">25%</span>
+<span class="im-ring" style="--im-value: .72">72%</span>
+<span class="im-ring" style="--im-value: 1; --im-progress-color: var(--im-success)">{{> "icons/check"}}</span>
+<span class="im-ring im-ring-lg" style="--im-value: .6">60%</span>
+<span class="im-ring im-ring-xl" style="--im-value: .86; --im-progress-color: var(--im-ink)"><span class="im-pixel">86</span></span>
+<span class="im-ring im-ring-spin" role="status" aria-label="Loading"></span>
+{{/example}}
+<p><code>-sm</code> · <code>-lg</code> · <code>-xl</code>, or set <code>--im-ring-size</code> and <code>--im-ring-width</code>. <code>-spin</code> is a spinner. On a surface other than the canvas, set <code>--im-ring-ground</code> to that surface's colour.</p>
+{{#example center=true title="With a caption"}}
+<span class="im-ring-field"><span class="im-ring im-ring-lg" style="--im-value: .58">58%</span>Course complete</span>
+<span class="im-ring-field"><span class="im-ring im-ring-lg" style="--im-value: .92; --im-progress-color: var(--im-danger)">92%</span>Storage used</span>
+{{/example}}

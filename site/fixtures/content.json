@@ -1,0 +1,185 @@
+{
+	"_note": "Sample content for the docs preview. Post titles and excerpts are the site owner's own; images are Unsplash URLs (Unsplash License).",
+	"posts": [
+		{
+			"title": "What four years of consulting taught me about saying no",
+			"slug": "saying-no",
+			"excerpt": "Every bad project I have been on was visible in week one. I said yes anyway, four times, and this is what I learned to look for.",
+			"feature_image": "https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?auto=format&fit=crop&w=1600&h=900&q=80",
+			"featured": true,
+			"published_at": "2026-09-17 08:00:00",
+			"reading_time": 2,
+			"tags": [
+				{
+					"name": "Career",
+					"slug": "career"
+				}
+			]
+		},
+		{
+			"title": "How this site is put together",
+			"slug": "how-this-site-is-put-together",
+			"excerpt": "One Ghost install, somebody else's theme, and the rules that keep the two from destroying each other. Also the post I load to check the theme still works.",
+			"feature_image": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1600&h=900&q=80",
+			"featured": true,
+			"published_at": "2026-09-16 07:58:51",
+			"reading_time": 5,
+			"tags": [
+				{
+					"name": "Craft",
+					"slug": "craft"
+				}
+			]
+		},
+		{
+			"title": "The real cost of moving to Amsterdam",
+			"slug": "the-real-cost-of-moving-to-amsterdam",
+			"excerpt": "Every number, no rounding.",
+			"feature_image": "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=1600&q=80",
+			"featured": true,
+			"published_at": "2026-09-15 23:09:01",
+			"reading_time": 2,
+			"tags": [
+				{
+					"name": "Moving to Europe",
+					"slug": "moving-to-europe"
+				}
+			]
+		},
+		{
+			"title": "The comment that explains why, not what",
+			"slug": "comments-that-explain-why",
+			"excerpt": "A comment restating the code is noise. A comment saying why the obvious thing was wrong is the most valuable line in the file.",
+			"feature_image": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1600&h=900&q=80",
+			"featured": false,
+			"published_at": "2026-09-12 08:00:00",
+			"reading_time": 2,
+			"tags": [
+				{
+					"name": "Craft",
+					"slug": "craft"
+				}
+			]
+		},
+		{
+			"title": "The org is a codebase, and nobody reviews it",
+			"slug": "the-org-is-a-codebase",
+			"excerpt": "Clicks are changes. Changes need review. Almost nowhere does the second sentence follow the first.",
+			"feature_image": "https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=1600&h=900&q=80",
+			"featured": false,
+			"published_at": "2026-09-05 08:00:00",
+			"reading_time": 2,
+			"tags": [
+				{
+					"name": "Salesforce",
+					"slug": "salesforce"
+				}
+			]
+		},
+		{
+			"title": "Delete it and see who shouts",
+			"slug": "delete-it-and-see",
+			"excerpt": "The cheapest way to find out whether a feature is used. It is also the one nobody wants to sign off.",
+			"feature_image": "https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=1600&h=900&q=80",
+			"featured": false,
+			"published_at": "2026-08-29 08:00:00",
+			"reading_time": 2,
+			"tags": [
+				{
+					"name": "Craft",
+					"slug": "craft"
+				}
+			]
+		},
+		{
+			"title": "Every integration is a contract somebody will forget",
+			"slug": "integrations-are-contracts",
+			"excerpt": "The field is called Status__c on one side and state on the other, and the person who knew why left in March.",
+			"feature_image": "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=1600&h=900&q=80",
+			"featured": false,
+			"published_at": "2026-08-21 08:00:00",
+			"reading_time": 2,
+			"tags": [
+				{
+					"name": "Salesforce",
+					"slug": "salesforce"
+				}
+			]
+		},
+		{
+			"title": "Writing is how I find out whether I understood it",
+			"slug": "writing-to-understand",
+			"excerpt": "I do not write things down because I understand them. I write them down and discover, most of the time, that I did not.",
+			"feature_image": "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1600&h=900&q=80",
+			"featured": false,
+			"published_at": "2026-08-14 08:00:00",
+			"reading_time": 2,
+			"tags": [
+				{
+					"name": "Craft",
+					"slug": "craft"
+				}
+			]
+		},
+		{
+			"title": "Moving to Europe, part four — a year in",
+			"slug": "moving-part-four-a-year-in",
+			"excerpt": "The part nobody warns you about is not the first six months. It is the second year, when it has stopped being an adventure.",
+			"feature_image": "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=1600&h=900&q=80",
+			"featured": false,
+			"published_at": "2026-07-17 08:00:00",
+			"reading_time": 2,
+			"tags": [
+				{
+					"name": "Moving to Europe",
+					"slug": "moving-to-europe"
+				}
+			]
+		},
+		{
+			"title": "Moving to Europe, part three — landing",
+			"slug": "moving-part-three-landing",
+			"excerpt": "A bank account you cannot open without an address, and an address you cannot rent without a bank account.",
+			"feature_image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1600&h=900&q=80",
+			"featured": false,
+			"published_at": "2026-07-03 08:00:00",
+			"reading_time": 2,
+			"tags": [
+				{
+					"name": "Moving to Europe",
+					"slug": "moving-to-europe"
+				}
+			]
+		},
+		{
+			"title": "Moving to Europe, part one — deciding",
+			"slug": "moving-part-one-deciding",
+			"excerpt": "Six months of arguing with myself, compressed into the four questions that actually decided it.",
+			"feature_image": "https://images.unsplash.com/photo-1499678329028-101435549a4e?auto=format&fit=crop&w=1600&h=900&q=80",
+			"featured": false,
+			"published_at": "2026-06-05 08:00:00",
+			"reading_time": 2,
+			"tags": [
+				{
+					"name": "Moving to Europe",
+					"slug": "moving-to-europe"
+				}
+			]
+		},
+		{
+			"title": "Driving the Amalfi Coast — the whole road in 8 minutes",
+			"slug": "amalfi-coast-drive-video",
+			"excerpt": "Sorrento to Amalfi from the passenger seat, with the bits the brochures leave out.",
+			"feature_image": "https://images.unsplash.com/photo-1534445867742-43195f401b6c?auto=format&fit=crop&w=1600&q=80",
+			"featured": true,
+			"published_at": "2026-09-17 20:51:12",
+			"reading_time": 2,
+			"tags": [
+				{
+					"name": "Travel",
+					"slug": "travel"
+				}
+			]
+		}
+	]
+}

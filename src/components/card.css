@@ -1,0 +1,350 @@
+/* Card — a surface, and a small vocabulary of parts to put on it.
+
+   <article class="im-card">
+     <div class="im-card-media"> <img …> <span class="im-card-badge">New</span> </div>
+     <div class="im-card-body">
+       <span class="im-card-icon">…</span>
+       <p   class="im-card-eyebrow">Guide</p>
+       <h3  class="im-card-title"><a href="…">Title</a></h3>
+       <p   class="im-card-text">…</p>
+       <div class="im-card-meta"><span>…</span><span>…</span></div>
+     </div>
+     <div class="im-card-footer"> <a class="im-card-cta" href="…">Read {{> "icons/arrow-right"}}</a> </div>
+   </article>
+
+   Every part is optional and they work in any order. Parts that touch the
+   card's edge (media, footer) handle their own padding; .im-card-body pads
+   itself. A bare card with no parts pads its content — so the simplest card is
+   still <div class="im-card">…</div>. */
+
+.im-card {
+	--im-card-pad: 1.25rem;
+	--im-card-radius: var(--im-radius-xl);
+	--im-card-bg: var(--im-surface);
+	--im-card-gap: 0.5rem;
+
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: var(--im-card-gap);
+	min-width: 0;
+	padding: var(--im-card-pad);
+	border-radius: var(--im-card-radius);
+	background-color: var(--im-card-bg);
+	color: var(--im-body);
+	text-decoration: none;
+}
+
+/* With structural parts, the card stops padding and the parts take over. */
+.im-card:has(> :is(.im-card-media, .im-card-body, .im-card-footer, .im-card-header)) {
+	gap: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+/* ---- surfaces ---- */
+.im-card-outline {
+	--im-card-bg: transparent;
+
+	box-shadow: inset 0 0 0 1px var(--im-line);
+}
+
+.im-card-plain {
+	--im-card-bg: transparent;
+	--im-card-pad: 0;
+
+	overflow: visible;
+}
+
+/* THE card interaction (there is one): the edge sharpens from a hairline to
+   ink, and the card's CTA arrow leans. No lift, no shadow, no tilt — a card in
+   this system is a ruled box, and it answers by drawing its rule. */
+.im-card-link,
+.im-card:has(.im-card-title > a) {
+	transition: background-color 160ms, box-shadow 160ms;
+}
+
+.im-card-link:hover,
+.im-card-link:focus-visible,
+.im-card:has(.im-card-title > a):is(:hover, :focus-within) {
+	box-shadow: inset 0 0 0 1px var(--im-ink);
+	color: var(--im-body);
+}
+
+.im-card-link:not(.im-card-outline, .im-card-plain):hover {
+	--im-card-bg: var(--im-surface-2);
+
+	box-shadow: none;
+}
+
+.im-card-plain:is(:hover, :focus-within) {
+	box-shadow: none;
+}
+
+/* ---- parts ---- */
+.im-card-media {
+	position: relative;
+	flex: none;
+	aspect-ratio: var(--im-card-ratio, 16 / 10);
+	overflow: hidden;
+	background-color: var(--im-surface-2);
+}
+
+.im-card-media > :is(img, video, iframe) {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: scale 500ms var(--im-ease-out);
+}
+
+.im-card:hover .im-card-media > img {
+	scale: 1.03;
+}
+
+/* A plain card has no surface to clip the media, so the media rounds itself. */
+.im-card-plain > .im-card-media {
+	border-radius: var(--im-card-radius);
+}
+
+.im-card-badge {
+	position: absolute;
+	top: 0.75rem;
+	left: 0.75rem;
+	z-index: 1;
+}
+
+.im-card-badge-end {
+	right: 0.75rem;
+	left: auto;
+}
+
+.im-card-header,
+.im-card-body,
+.im-card-footer {
+	padding-inline: var(--im-card-pad);
+}
+
+.im-card-header {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	padding-top: var(--im-card-pad);
+}
+
+.im-card-body {
+	display: flex;
+	flex: 1 1 auto;
+	flex-direction: column;
+	gap: var(--im-card-gap, 0.5rem);
+	min-width: 0;
+	padding-block: var(--im-card-pad);
+}
+
+.im-card-plain > .im-card-body,
+.im-card-plain > .im-card-footer,
+.im-card-plain > .im-card-header {
+	padding-inline: 0;
+}
+
+.im-card-header + .im-card-body {
+	padding-top: 0.75rem;
+}
+
+.im-card-icon {
+	display: grid;
+	place-items: center;
+	flex: none;
+	width: 2.5rem;
+	height: 2.5rem;
+	margin-bottom: 0.25rem;
+	border-radius: var(--im-radius-lg);
+	background-color: var(--im-accent-tint);
+	color: var(--im-accent);
+	font-size: 1.25rem;
+}
+
+.im-card-header > .im-card-icon {
+	margin-bottom: 0;
+}
+
+.im-card-eyebrow {
+	color: var(--im-accent);
+	font-size: var(--im-text-sm);
+	font-weight: 500;
+}
+
+.im-card-title {
+	color: var(--im-ink);
+	font-family: var(--im-font-heading);
+	font-size: var(--im-text-h4);
+	font-weight: 600;
+	line-height: var(--im-leading-h4);
+	letter-spacing: var(--im-tracking-tight);
+}
+
+.im-card-title > a {
+	color: inherit;
+	text-decoration: none;
+}
+
+/* Stretch the title's link over the whole card; other links sit above it. */
+.im-card-title > a::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+}
+
+.im-card :is(.im-card-footer, .im-card-meta) :is(a, button),
+.im-card .im-card-eyebrow[href] {
+	position: relative;
+	z-index: 2;
+}
+
+.im-card-text {
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+}
+
+.im-card-clamp {
+	display: -webkit-box;
+	overflow: hidden;
+	-webkit-line-clamp: var(--im-card-lines, 3);
+	-webkit-box-orient: vertical;
+}
+
+.im-card-meta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.25rem 0.875rem;
+	margin-top: auto;
+	padding-top: 0.25rem;
+	color: var(--im-muted);
+	font-size: var(--im-text-sm);
+}
+
+.im-card-meta > * {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
+}
+
+.im-card-meta a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.im-card-meta a:hover {
+	color: var(--im-ink);
+}
+
+.im-card-footer {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.5rem 0.75rem;
+	padding-block: 0.875rem;
+	border-top: 1px solid var(--im-line);
+}
+
+.im-card-plain > .im-card-footer {
+	border-top: 0;
+	padding-top: 0;
+}
+
+.im-card-cta {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
+	color: var(--im-ink);
+	font-size: var(--im-text-sm);
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.im-card-cta > .im-icon {
+	transition: translate 160ms var(--im-ease-out);
+}
+
+.im-card:hover .im-card-cta > .im-icon,
+.im-card-cta:hover > .im-icon {
+	translate: 3px 0;
+}
+
+.im-card-cta:hover {
+	color: var(--im-accent);
+}
+
+/* ---- orientation ----
+   Vertical is the default. Horizontal puts the media beside the body; it
+   goes back to vertical when its OWN width is small (im-card-wrap supplies
+   the container), so it is safe in any column. */
+.im-card-wrap {
+	container-type: inline-size;
+}
+
+.im-card-horizontal {
+	flex-direction: row;
+}
+
+.im-card-horizontal > .im-card-media {
+	flex: 0 0 var(--im-card-media-width, 40%);
+	aspect-ratio: auto;
+	min-height: 9rem;
+}
+
+/* Out of flow: the card is as tall as its TEXT, and the image fills whatever
+   that turns out to be. In flow, the image's own height would set the card's. */
+.im-card-horizontal > .im-card-media > :is(img, video, iframe) {
+	position: absolute;
+	inset: 0;
+}
+
+.im-card-horizontal > .im-card-body {
+	justify-content: center;
+}
+
+.im-card-horizontal.im-card-reverse > .im-card-media {
+	order: 1;
+}
+
+.im-card-horizontal > .im-card-footer {
+	flex-direction: column;
+	justify-content: center;
+	border-top: 0;
+	border-left: 1px solid var(--im-line);
+}
+
+.im-card-horizontal.im-card-plain {
+	gap: 1.25rem;
+	align-items: center;
+}
+
+@container (width < 30rem) {
+	.im-card-horizontal {
+		flex-direction: column;
+	}
+
+	.im-card-horizontal > .im-card-media {
+		flex: none;
+		aspect-ratio: var(--im-card-ratio, 16 / 10);
+		min-height: 0;
+		order: 0;
+	}
+
+	.im-card-horizontal > .im-card-media > :is(img, video, iframe) {
+		position: static;
+	}
+
+	.im-card-horizontal > .im-card-footer {
+		flex-direction: row;
+		border-top: 1px solid var(--im-line);
+		border-left: 0;
+	}
+}
+
+/* ---- sizes ---- */
+.im-card-sm { --im-card-pad: 0.875rem; --im-card-radius: var(--im-radius-lg); }
+.im-card-lg { --im-card-pad: 1.75rem; --im-card-radius: var(--im-radius-2xl); }

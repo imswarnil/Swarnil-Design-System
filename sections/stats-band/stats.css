@@ -1,0 +1,117 @@
+/* Stats band — layout only. The figures, captions, sparklines and bars are the
+   system's own components (im-stat-*, im-caption, im-spark, im-bars); this
+   file places them in a ruled band.
+
+   1  the band       rules above and below, its own container
+   2  the grid       copy | figures, stacked when the band is narrow
+   3  the figures    cells that share 1px borders
+   4  the bar row
+
+   Knobs:  --im-statband-pad   inner padding of every cell
+           --im-statband-split the copy column's share (default 0.8fr) */
+
+/* 1 ── the band */
+.im-statband {
+	--im-statband-pad: clamp(1.25rem, 0.9rem + 1.6vw, 2.25rem);
+	--im-statband-split: 0.8fr;
+
+	container: im-statband / inline-size;
+	border-block: 1px solid var(--im-line);
+	background-color: var(--im-canvas);
+}
+
+/* 2 ── the grid */
+.im-statband__grid {
+	display: grid;
+	gap: 1px;
+	background-color: var(--im-line);
+}
+
+.im-statband__copy {
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+	gap: 0.75rem;
+	padding: var(--im-statband-pad);
+	background-color: var(--im-canvas);
+}
+
+.im-statband__title {
+	max-width: 18ch;
+	margin: 0;
+	color: var(--im-ink);
+	font-size: var(--im-text-h2);
+	font-weight: 600;
+	line-height: 1.1;
+	letter-spacing: var(--im-tracking-tight);
+	text-wrap: balance;
+}
+
+.im-statband__text {
+	max-width: 42ch;
+	margin: 0;
+	color: var(--im-body);
+}
+
+.im-statband__copy > .im-card-cta {
+	margin-top: auto;
+	padding-top: 0.5rem;
+}
+
+/* 3 ── the figures: the grid's background is the line colour, the gap is 1px,
+   and each cell paints the canvas back in — so every border is shared. */
+.im-statband__figures {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(13rem, 100%), 1fr));
+	gap: 1px;
+	background-color: var(--im-line);
+}
+
+.im-statband__stat {
+	display: flex;
+	flex-direction: column;
+	gap: 0.625rem;
+	min-width: 0;
+	padding: var(--im-statband-pad);
+	background-color: var(--im-canvas);
+}
+
+.im-statband__stat .im-spark {
+	flex: 0 1 6rem;
+	min-width: 3rem;
+}
+
+@container im-statband (width >= 56rem) {
+	.im-statband__grid {
+		grid-template-columns: minmax(0, var(--im-statband-split)) minmax(0, 1.2fr);
+	}
+
+	.im-statband__figures {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+/* 4 ── the bar row */
+.im-statband__chart {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	padding: var(--im-statband-pad);
+	border-top: 1px solid var(--im-line);
+}
+
+.im-statband__bars {
+	--im-bars-height: clamp(7rem, 5rem + 8vw, 11rem);
+}
+
+/* Bars grow from the baseline once, when the script has built them. */
+@media (prefers-reduced-motion: no-preference) {
+	.im-statband__bars > i {
+		animation: im-statband-grow var(--im-duration-slow, 480ms) var(--im-ease-out, ease-out) both;
+		animation-delay: calc(var(--i, 0) * 28ms);
+	}
+}
+
+@keyframes im-statband-grow {
+	from { scale: 1 0; }
+}

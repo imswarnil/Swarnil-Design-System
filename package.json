@@ -1,94 +1,26 @@
 {
-  "name": "@imswarnil/swarnil-design",
-  "version": "0.2.0",
-  "description": "A token-first design system built on Tailwind CSS 4 and daisyUI. Almost monochrome, so one colour can mean something — plus a broadcast layer for thumbnails, scenes and streams.",
-  "keywords": [
-    "css",
-    "design-system",
-    "tailwind",
-    "tailwindcss",
-    "tailwind-plugin",
-    "daisyui",
-    "ui-kit",
-    "tokens",
-    "design-tokens",
-    "component-library",
-    "oklch",
-    "dark-mode",
-    "obs",
-    "stream-overlay",
-    "thumbnail",
-    "creator"
-  ],
-  "homepage": "https://design.imswarnil.com",
-  "bugs": "https://github.com/imswarnil/Swarnil-Design-System/issues",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/imswarnil/Swarnil-Design-System.git"
-  },
-  "author": {
-    "name": "Swarnil Singhai",
-    "url": "https://imswarnil.com"
-  },
-  "license": "MIT",
+  "name": "im-design-system",
+  "version": "0.6.0",
+  "private": true,
+  "description": "A Tailwind CSS design system for Ghost themes: tokens, layout, components and reusable sections.",
   "type": "module",
-  "sideEffects": [
-    "*.css"
-  ],
-  "style": "dist/swarnil-design.css",
-  "main": "dist/swarnil-design.css",
-  "files": [
-    "src",
-    "dist",
-    "templates",
-    "README.md",
-    "LICENSE",
-    "CHANGELOG.md"
-  ],
-  "devDependencies": {
-    "@tailwindcss/cli": "^4.3.3",
-    "stylelint": "^16.0.0",
-    "stylelint-config-standard": "^36.0.0",
-    "tailwindcss": "^4.3.3"
-  },
   "engines": {
-    "node": ">=20"
-  },
-  "funding": [
-    {
-      "type": "github",
-      "url": "https://github.com/sponsors/imswarnil"
-    }
-  ],
-  "exports": {
-    ".": "./src/index.css",
-    "./broadcast": "./src/broadcast.css",
-    "./css": "./dist/swarnil-design.css",
-    "./css/min": "./dist/swarnil-design.min.css",
-    "./broadcast/css": "./dist/swarnil-broadcast.css",
-    "./broadcast/css/min": "./dist/swarnil-broadcast.min.css",
-    "./theme": "./src/0-config/theme.css",
-    "./src/*": "./src/*",
-    "./package.json": "./package.json"
+    "node": ">=22"
   },
   "scripts": {
-    "build": "npm run css && npm run docs",
-    "css": "tailwindcss -i src/bundle.css -o dist/swarnil-design.css && tailwindcss -i src/bundle.css -o dist/swarnil-design.min.css --minify && tailwindcss -i src/bundle-broadcast.css -o dist/swarnil-broadcast.css && tailwindcss -i src/bundle-broadcast.css -o dist/swarnil-broadcast.min.css --minify",
-    "docs": "python3 docs/build.py && tailwindcss -i docs/assets/site.css -o site/assets/site.min.css --minify",
-    "dev": "npm run build && node scripts/serve.mjs",
-    "lint": "stylelint \"src/**/*.css\"",
-    "audit": "python3 scripts/audit-mono.py --strict && python3 scripts/audit-classes.py --strict",
-    "size": "node scripts/size.mjs",
-    "check": "npm run lint && npm run build && npm run audit && npm run size",
-    "clean": "rm -rf dist site",
-    "prepublishOnly": "npm run css",
-    "serve": "node scripts/serve.mjs",
-    "stop": "node scripts/stop.mjs"
+    "dev": "node site/dev.mjs",
+    "preview": "node site/dev.mjs",
+    "build": "node site/build.mjs",
+    "serve": "node site/dev.mjs --no-watch",
+    "vendor": "node scripts/vendor.mjs"
   },
-  "dependencies": {
-    "daisyui": "^5.7.32"
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "geist": "^1.7.2",
+    "handlebars": "^4.7.9",
+    "lucide-static": "^1.47.0",
+    "simple-icons": "^16.32.0",
+    "tailwindcss": "^4.3.3"
   },
-  "peerDependencies": {
-    "tailwindcss": "^4.3.0"
-  }
+  "license": "UNLICENSED"
 }

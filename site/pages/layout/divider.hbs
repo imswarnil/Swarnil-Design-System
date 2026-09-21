@@ -1,0 +1,102 @@
+---
+title: Divider
+description: A rule between things — horizontal or vertical, plain or animated. Drawn as line work, like the rest of the system: a hairline, a ruler with ticks, a run of dots, a rule with registration marks.
+eyebrow: Layout
+source: src/components/divider.css
+---
+<h2>The ruler</h2>
+<p>The system's own divider: <strong>minor ticks every half rem, major every 2.5</strong> — the same ruler as the <a href="/effects/border/#ticks">ticks</a> border effect.</p>
+{{#example}}
+<div class="im-divider im-divider-ticks" role="separator"></div>
+{{/example}}
+{{#example title="In the accent, and sliding — as if being measured against"}}
+<div class="im-stack" style="--im-stack-gap: 2rem">
+	<div class="im-divider im-divider-ticks" role="separator" style="--im-divider-tick: var(--im-accent)"></div>
+	<div class="im-divider im-divider-ticks im-divider-slide" role="separator"></div>
+</div>
+{{/example}}
+
+<h2>Styles</h2>
+{{#example}}
+<div class="im-stack" style="--im-stack-gap: 1.75rem">
+	<hr class="im-divider">
+	<div class="im-divider im-divider-dashed" role="separator"></div>
+	<div class="im-divider im-divider-dotted" role="separator"></div>
+	<div class="im-divider im-divider-double" role="separator"></div>
+	<div class="im-divider im-divider-fade" role="separator"></div>
+	<div class="im-divider im-divider-marks" role="separator"></div>
+	<div class="im-divider im-divider-hatch" role="separator"></div>
+	<div class="im-divider im-divider-accent" role="separator"></div>
+</div>
+{{/example}}
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Class</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>im-divider</code></td><td>A hairline. Works on an <code>&lt;hr&gt;</code>.</td></tr>
+		<tr><td><code>-ticks</code></td><td>The ruler. <code>--im-divider-tick</code> colours the ticks.</td></tr>
+		<tr><td><code>-dashed</code> · <code>-dotted</code> · <code>-double</code></td><td>Lighter, lighter still, heavier.</td></tr>
+		<tr><td><code>-fade</code></td><td>Fades out at both ends — between sections of a centred page.</td></tr>
+		<tr><td><code>-marks</code></td><td>A registration <code>+</code> at each end. Pairs with the <a href="/layout/swiss/">Swiss frame</a>.</td></tr>
+		<tr><td><code>-hatch</code></td><td>A band of hatching: a full stop, not a comma.</td></tr>
+		<tr><td><code>-accent</code></td><td>Two pixels, in the accent: the end of a chapter.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>With a label</h2>
+<p>Put anything inside and the rule splits around it. <code>-start</code> / <code>-end</code> push the label to a side.</p>
+{{#example}}
+<div class="im-stack" style="--im-stack-gap: 1.75rem">
+	<div class="im-divider" role="separator"><span>or</span></div>
+	<div class="im-divider im-divider-start" role="separator"><span>01 — Foundation</span></div>
+	<div class="im-divider im-divider-end" role="separator"><span>Continue reading</span></div>
+	<div class="im-divider" role="separator"><span class="im-badge im-badge-accent">New this week</span></div>
+	<div class="im-divider" role="separator">{{> "icons/sparkles"}}</div>
+	<div class="im-divider" role="separator"><button class="im-btn im-btn-sm im-btn-outline" type="button">Load 12 more {{> "icons/chevron-down"}}</button></div>
+</div>
+{{/example}}
+
+<h2>Animated</h2>
+{{#example}}
+<div class="im-stack" style="--im-stack-gap: 2rem">
+	<div><p class="im-caption mb-3">-draw · draws in when scrolled to</p><div class="im-divider im-divider-draw im-divider-accent" role="separator" data-im-reveal="none"></div></div>
+	<div><p class="im-caption mb-3">-draw -center · from the middle</p><div class="im-divider im-divider-draw im-divider-center" role="separator" data-im-reveal="none" style="--im-divider-ink: var(--im-ink)"></div></div>
+	<div><p class="im-caption mb-3">-scan · a light travels the rule</p><div class="im-divider im-divider-scan" role="separator"></div></div>
+	<div><p class="im-caption mb-3">-march · marching dashes</p><div class="im-divider im-divider-march" role="separator"></div></div>
+	<div><p class="im-caption mb-3">-ticks -slide · the ruler slides</p><div class="im-divider im-divider-ticks im-divider-slide" role="separator"></div></div>
+</div>
+{{/example}}
+<p><code>-draw</code> needs <code>data-im-reveal="none"</code> and <code>im-motion.js</code>; the rest are pure CSS. All of them hold still under reduced motion. <code>--im-divider-speed</code> and <code>--im-divider-light</code> tune the scan.</p>
+
+<h2>Vertical</h2>
+<p><code>im-divider-vertical</code>, in a flex row: it stretches to the row's height. Every style and the scan work upright too.</p>
+{{#example}}
+<div class="flex flex-wrap items-stretch gap-5">
+	<div class="im-stat"><span class="im-stat-figure">12.4k</span><span class="im-stat-label">readers</span></div>
+	<div class="im-divider im-divider-vertical" role="separator" aria-orientation="vertical"></div>
+	<div class="im-stat"><span class="im-stat-figure">246</span><span class="im-stat-label">posts</span></div>
+	<div class="im-divider im-divider-vertical im-divider-dashed" role="separator" aria-orientation="vertical"></div>
+	<div class="im-stat"><span class="im-stat-figure">41%</span><span class="im-stat-label">open rate</span></div>
+	<div class="im-divider im-divider-vertical im-divider-ticks" role="separator" aria-orientation="vertical"></div>
+	<div class="im-stat"><span class="im-stat-figure">7</span><span class="im-stat-label">years</span></div>
+	<div class="im-divider im-divider-vertical im-divider-scan" role="separator" aria-orientation="vertical"></div>
+	<div class="im-stat"><span class="im-stat-figure">3</span><span class="im-stat-label">countries</span></div>
+</div>
+{{/example}}
+{{#example title="In a toolbar"}}
+<div class="im-cluster">
+	<button class="im-btn im-btn-ghost im-btn-icon im-btn-sm" type="button" aria-label="Bold"><b>B</b></button>
+	<button class="im-btn im-btn-ghost im-btn-icon im-btn-sm" type="button" aria-label="Italic"><i>I</i></button>
+	<div class="im-divider im-divider-vertical" role="separator" aria-orientation="vertical" style="min-height: 1.25rem; align-self: center; height: 1.25rem"></div>
+	<button class="im-btn im-btn-ghost im-btn-icon im-btn-sm" type="button" aria-label="Link">{{> "icons/link"}}</button>
+	<button class="im-btn im-btn-ghost im-btn-icon im-btn-sm" type="button" aria-label="Code">{{> "icons/code"}}</button>
+</div>
+{{/example}}
+
+<h2>Which element?</h2>
+<ul>
+	<li><code>&lt;hr&gt;</code> when it separates <strong>content</strong> — a change of topic in an article. It is announced as a separator.</li>
+	<li><code>&lt;div role="separator"&gt;</code> when it needs a label inside, or is vertical (add <code>aria-orientation="vertical"</code>).</li>
+	<li>If it is purely decorative — a flourish under a heading — add <code>aria-hidden="true"</code> instead.</li>
+</ul>

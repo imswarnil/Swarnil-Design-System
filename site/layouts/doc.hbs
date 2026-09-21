@@ -1,0 +1,21 @@
+<div class="im-with-aside shell-doc">
+	<article class="doc" id="article">
+		<header class="doc-head">
+			{{#if page.eyebrow}}<p class="im-eyebrow">{{page.eyebrow}}</p>{{/if}}
+			<h1>{{page.title}}</h1>
+			{{#if page.description}}<p class="im-lede">{{page.description}}</p>{{/if}}
+			{{#if page.source}}<p class="doc-source"><code>{{page.source}}</code></p>{{/if}}
+		</header>
+
+		{{{doc_body}}}
+
+		<nav class="doc-pager" aria-label="Pages">
+			{{#if prev}}<a class="im-card im-card-outline im-card-link" href="{{prev.url}}"><span class="im-eyebrow">Previous</span><span class="im-card-title">{{prev.label}}</span></a>{{else}}<span></span>{{/if}}
+			{{#if next}}<a class="im-card im-card-outline im-card-link doc-pager-next" href="{{next.url}}"><span class="im-eyebrow">Next</span><span class="im-card-title">{{next.label}}</span></a>{{/if}}
+		</nav>
+	</article>
+
+	<aside>
+		<div class="im-sticky-rail"><nav class="im-toc" data-toc="#article" aria-label="On this page"></nav></div>
+	</aside>
+</div>

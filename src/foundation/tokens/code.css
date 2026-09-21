@@ -1,0 +1,38 @@
+/* "Im" — the syntax theme. A code block is DARK in both colour schemes: code
+   reads best as light-on-dark, and a dark slab gives a page of prose a clear
+   change of voice. Eight roles; js/im-code.js wraps each token in
+   <span class="im-tok-ROLE">. Warm keywords (kin to the accent), cool strings,
+   so the two most frequent roles never blur together.
+
+   The block carries its own chrome colours (line, muted, hover) because the
+   page's --im-line / --im-muted are tuned for the page's background, not this
+   one. For a light block, add class="im-code-light" (see components/code.css). */
+
+:root {
+	--im-code-bg: var(--im-gray-950);
+	--im-code-fg: var(--im-gray-100);
+	--im-code-line: rgb(255 255 255 / 10%);
+	--im-code-muted: var(--im-gray-400);
+	--im-code-hover: rgb(255 255 255 / 9%);
+	--im-code-comment: var(--im-gray-500);
+	--im-code-punct: var(--im-gray-400);
+	--im-code-keyword: #ff8a5c;
+	--im-code-string: #5eead4;
+	--im-code-number: #c4b5fd;
+	--im-code-function: #93c5fd;
+	--im-code-tag: #fda4af;
+	--im-code-attr: #fcd34d;
+	--im-code-variable: #7dd3fc;
+}
+
+/* On a dark page the canvas is already gray-950, so the block steps UP one
+   shade to stay a distinct surface. Everything else is unchanged. */
+:root[data-theme="dark"] {
+	--im-code-bg: var(--im-gray-900);
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme]) {
+		--im-code-bg: var(--im-gray-900);
+	}
+}
