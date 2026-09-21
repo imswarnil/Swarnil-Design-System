@@ -1,0 +1,181 @@
+---
+title: Post single
+layout: home
+description: The one post layout — an article and a column of widgets on the right, with a switch that turns the column off. And the same layout for a post that is part of a series, where the rail earns its place.
+eyebrow: Collections · Post
+source: src/layout/page.css · src/components/widget.css
+---
+<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+	<p class="im-eyebrow">Collections · Post · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+
+	<div class="demo-controls">
+		<p class="im-caption">Sidebar</p>
+		<div class="im-btn-group" role="group" aria-label="Sidebar"
+			data-demo-attr="#single" data-demo-attr-name="data-sidebar">
+			<button class="im-btn im-btn-sm" type="button" aria-pressed="true" data-demo-value="on">On</button>
+			<button class="im-btn im-btn-sm" type="button" data-demo-value="off">Off</button>
+		</div>
+		<code class="doc-source" style="margin-left: auto">data-sidebar</code>
+	</div>
+</section>
+
+{{#with demo.post}}{{> "components/post-hero" style="wide" crumbs=true zoom=true section="Journal" section_url="/collections/post/"}}{{/with}}
+
+<div class="im-single im-wrap" id="single" data-sidebar="on" style="margin-top: 2rem">
+	<article>
+		<section class="im-content im-content-flush im-content-lede" data-im-zoom>
+			<p>Sorrento to Amalfi is forty kilometres and takes two hours, because nobody on it wants to arrive. The road was cut into the cliff in the 1840s and has not been widened since; buses fold their mirrors in to pass.</p>
+			<p>Press <strong>Off</strong> above. The aside does not move or reflow — it is hidden, and the article takes the reading width and centres itself rather than stretching into the space the column gave up. A 70rem line of body text is not a wider page; it is an unreadable one.</p>
+
+			<h2>Why an attribute and not a class</h2>
+			<p>Because a theme exposes it as a <strong>setting</strong>. <code>data-sidebar="{{"{{@custom.post_sidebar}}"}}"</code> — the editor gets a switch, and the theme gets one template instead of two. The aside stays in the markup either way, so turning it back on is one value and not a rebuild.</p>
+
+			<blockquote class="kg-blockquote-alt">One layout, one switch, no second template.</blockquote>
+
+			<h2>What goes in the rail</h2>
+			<p>Three widgets is a rail; seven is a second page nobody reads. On a post page the order is the author, then what else to read, then the newsletter — and on a phone the whole column drops below the article, so whatever is first had better be worth waiting for.</p>
+			<p>If the answer is "nothing worth putting there", the switch is the answer: turn it off and let the words have the page.</p>
+		</section>
+	</article>
+
+	<aside>
+		<div class="im-sticky-rail">
+			<div class="im-widgets">
+				<section class="im-widget im-widget-author" aria-labelledby="s-author">
+					<h2 class="im-widget-title" id="s-author">Written by</h2>
+					<div class="im-cluster">
+						{{> "components/avatar" src=demo.author.profile_image name=demo.author.name}}
+						<span class="im-stack" style="--im-stack-gap: .125rem">
+							<a class="im-widget-author-name" href="/components/avatar/">{{demo.author.name}}</a>
+							<span class="im-widget-author-role">{{demo.author.location}}</span>
+						</span>
+					</div>
+					<p>{{demo.author.bio}}</p>
+				</section>
+
+				<section class="im-widget" aria-labelledby="s-popular">
+					<h2 class="im-widget-title" id="s-popular">Popular <a href="/collections/post/">All</a></h2>
+					<ul class="im-widget-list im-widget-list-ranked">
+						{{#each demo.four}}<li><a href="/collections/post/article/">{{title}}<small>{{date published_at format="D MMM YYYY"}}</small></a></li>{{/each}}
+					</ul>
+				</section>
+
+				<section class="im-widget im-widget-fill" aria-labelledby="s-news">
+					<h2 class="im-widget-title" id="s-news">Newsletter</h2>
+					<p class="im-widget-heading">One email when something lands.</p>
+					{{> "components/subscribe" id="single-email" button="Join"}}
+				</section>
+			</div>
+		</div>
+	</aside>
+</div>
+
+<section class="im-section im-wrap">
+	<div class="im-prose">
+		<h2>The switch</h2>
+		{{{{code "hbs"}}}}
+<div class="im-single" data-sidebar="{{@custom.post_sidebar}}">
+	<article>
+		<section class="im-content im-content-lede" data-im-zoom>{{content}}</section>
+		{{> "components/post-footer" author=true newsletter=true nav=true}}
+	</article>
+	<aside>
+		<div class="im-sticky-rail"><div class="im-widgets">{{> "sidebar"}}</div></div>
+	</aside>
+</div>
+		{{{{/code}}}}
+		<div class="im-table-scroll">
+		<table>
+			<thead><tr><th></th><th></th></tr></thead>
+			<tbody>
+				<tr><td><code>data-sidebar="on"</code></td><td>Article and a 19rem rail, capped at the page width. The rail follows the side nav: collapse the nav and the space it gives up goes to the content.</td></tr>
+				<tr><td><code>data-sidebar="off"</code></td><td>One column at the reading width, centred. The aside is hidden, not deleted.</td></tr>
+				<tr><td><code>--im-single-aside</code></td><td>19rem. <code>--im-single-gap</code> is the gutter between them.</td></tr>
+			</tbody>
+		</table>
+		</div>
+		<p>Under <code>lg</code> it is one column whatever the switch says — there is no room for a rail on a phone, and the widgets fall below the article in reading order.</p>
+	</div>
+</section>
+
+<section class="im-section im-wrap-wide">
+	<div class="im-prose" style="max-width: none">
+		<h2>A post in a series</h2>
+		<p>The same layout, with the one piece of furniture a series post has that a single post does not: a <strong>series bar</strong> above the article saying which run this is, which part, and where the next one is. It goes at the top, because a reader who has landed on part three needs to know before they start rather than after.</p>
+	</div>
+</section>
+
+<div class="im-single im-wrap" data-sidebar="on">
+	<article class="im-stack" style="--im-stack-gap: 1.5rem">
+		<nav class="im-seriesbar" aria-label="Series">
+			<p class="im-seriesbar-label">
+				<strong>Part 3 of 4</strong>
+				<a href="/collections/post/">The Amalfi road</a>
+				<span class="im-seriesbar-dots" aria-hidden="true"><span data-state="done"></span><span data-state="done"></span><span aria-current="true"></span><span></span></span>
+			</p>
+			<div class="im-seriesbar-nav">
+				<a class="im-btn im-btn-sm" href="/collections/post/article/">{{icon "arrow-left"}}Previous</a>
+				<a class="im-btn im-btn-sm im-btn-primary" href="/collections/post/article/">Next{{icon "arrow-right"}}</a>
+			</div>
+		</nav>
+
+		<section class="im-content im-content-flush">
+			<h2 style="margin-top: 0">What it costs</h2>
+			<p>Part three of four. The bar above says so, the rail beside it shows the whole run, and the two buttons are the only navigation a reader needs — everything else about this page is exactly the post layout.</p>
+			<p>The series lives in the rail as well as at the top, because the bar answers "where am I" and the rail answers "what else is there". They are different questions and a reader asks them at different moments.</p>
+		</section>
+	</article>
+
+	<aside>
+		<div class="im-sticky-rail">
+			<div class="im-widgets">
+				<section class="im-widget" aria-labelledby="s-series">
+					<h2 class="im-widget-title" id="s-series">This series <a href="/collections/post/">4 parts</a></h2>
+					<ol class="im-timeline im-timeline-compact im-widget-series">
+						{{#each demo.series}}
+						<li class="im-timeline-item" data-state="{{state}}">
+							<span class="im-timeline-marker">{{part}}</span>
+							<h3 class="im-timeline-title">{{#if url}}<a href="{{url}}">{{title}}</a>{{else}}<span>{{title}}</span>{{/if}}</h3>
+						</li>
+						{{/each}}
+					</ol>
+				</section>
+
+				<section class="im-widget" aria-labelledby="s-about">
+					<h2 class="im-widget-title" id="s-about">About this part</h2>
+					<dl class="im-widget-facts">
+						<dt>Published</dt><dd>17 Sep 2026</dd>
+						<dt>Reading time</dt><dd>8 min</dd>
+						<dt>Part</dt><dd>3 of 4</dd>
+					</dl>
+				</section>
+			</div>
+		</div>
+	</aside>
+</div>
+
+<section class="im-section im-wrap">
+	<div class="im-prose">
+		<h2>The series bar</h2>
+		{{{{code "hbs"}}}}
+<nav class="im-seriesbar" aria-label="{{t "Series"}}">
+	<p class="im-seriesbar-label">
+		<strong>{{t "Part"}} {{n}} {{t "of"}} {{total}}</strong>
+		<a href="{{series.url}}">{{series.name}}</a>
+		<span class="im-seriesbar-dots" aria-hidden="true">
+			{{#foreach series.posts}}<span{{#if current}} aria-current="true"{{else}}{{#if read}} data-state="done"{{/if}}{{/if}}></span>{{/foreach}}
+		</span>
+	</p>
+	<div class="im-seriesbar-nav"> … previous · next … </div>
+</nav>
+		{{{{/code}}}}
+		<ul>
+			<li><strong>The dots are the logo's mark, doing a job.</strong> One per part, the current one in the accent, the ones already read in the faint grey. They are <code>aria-hidden</code> — the words beside them already say "Part 3 of 4".</li>
+			<li><strong>The bar is at the top, the rail is beside.</strong> The bar answers "where am I"; the rail answers "what else is there". Different questions, different moments.</li>
+			<li><strong>Next is the primary button.</strong> Somebody on part three of four is going to part four.</li>
+			<li><strong>A series is not a tag.</strong> Order matters, so it comes from an ordered list a theme keeps — not from <code>{{"{{#get \"posts\" filter=\"tag:series\"}}"}}</code> sorted by date, which is the same list in the wrong order half the time.</li>
+		</ul>
+	</div>
+</section>

@@ -1,19 +1,11 @@
 /* Page furniture that sits inside .im-shell-main. */
 
-/* A block of the page: optional head (title + action), then a body. */
+/* A block of the page. */
 .im-section {
 	display: flex;
 	flex-direction: column;
 	gap: 1.25rem;
 	min-width: 0;
-}
-
-.im-section-head {
-	display: flex;
-	flex-wrap: wrap;
-	align-items: end;
-	justify-content: space-between;
-	gap: 0.75rem 1.5rem;
 }
 
 .im-section-title {
@@ -26,6 +18,35 @@
 	color: var(--im-body);
 	font-size: var(--im-text-lg);
 	line-height: var(--im-leading-lg);
+}
+
+/* ---- caption ----
+   <p class="im-caption" data-index="01">Foundation</p>
+   Small, mono, upper-case — the label over a block of a page. (Not `im-label`,
+   which is the form field's label.) `data-index` prints a number in the accent
+   before it; `-rule` draws a short rule after it. */
+.im-caption {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.625rem;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	font-weight: 500;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.im-caption[data-index]::before {
+	content: attr(data-index);
+	color: var(--im-accent);
+}
+
+.im-caption-rule::after {
+	content: "";
+	width: 2rem;
+	height: 1px;
+	background-color: var(--im-line);
 }
 
 /* Article + aside: a reading column with a slim sticky rail beside it.
@@ -49,17 +70,166 @@
 }
 
 /* Anything else that is capped at the page width widens the same way. */
-[data-nav="rail"] :is(.im-wrap, .im-frame:not(.im-frame-wide)) {
+[data-nav="rail"] .im-wrap {
 	--im-wrap: calc(var(--im-width-page) + var(--im-nav-width) - var(--im-nav-rail));
-	--im-frame-width: calc(var(--im-width-page) + var(--im-nav-width) - var(--im-nav-rail));
 }
 
-.im-with-aside > aside > .im-sticky-rail {
+/* Anything that should follow the reader down a column. It stands on its own,
+   so both the two- and the three-column layout use the same class.
+
+   ONE inset decides everything: the distance from the top bar, and the
+   distance the rail keeps from the bottom of the window. A contents rail on
+   the left and a column of widgets on the right therefore sit at exactly the
+   same height and leave exactly the same gap, whatever is in them — which is
+   the whole reason a reader reads the two as a pair. */
+.im-sticky-rail {
+	--im-rail-inset: 1.25rem;
+	--im-rail-top: calc(var(--im-bar-height) + var(--im-rail-inset));
+
 	position: sticky;
-	top: calc(var(--im-bar-height) + 1.25rem);
-	max-height: calc(100dvh - var(--im-bar-height) - 2.5rem);
+	top: var(--im-rail-top);
+	max-height: calc(100dvh - var(--im-rail-top) - var(--im-rail-inset));
 	overflow-y: auto;
+	overscroll-behavior: contain;
 	scrollbar-width: thin;
+}
+
+/* The aside on the LEFT instead — for a reading sidebar rather than a
+   contents rail. Nothing moves in the markup; only the columns swap. */
+.im-with-aside-start {
+	grid-template-columns: var(--im-aside-width) minmax(0, 1fr);
+}
+
+.im-with-aside-start > aside {
+	order: -1;
+}
+
+/* Wide enough for real widgets — an author card, a newsletter, a top-five —
+   rather than the slim rail a table of contents needs. */
+.im-with-aside-wide {
+	--im-aside-width: 19rem;
+}
+
+/* ---- one post layout, with the rail on a switch ----
+   The universal single: an article and a column of widgets on the right, and
+   ONE attribute that decides whether the column is there.
+
+     <div class="im-single" data-sidebar="on">   <article>…</article> <aside>…</aside> </div>
+     <div class="im-single" data-sidebar="off">  …the same markup, one column…        </div>
+
+   It is an attribute and not a second class because a theme exposes it as a
+   SETTING: `data-sidebar="{{@custom.post_sidebar}}"`, and the editor gets a
+   switch rather than the theme getting two templates. The aside stays in the
+   markup either way — hidden, not deleted — so turning it back on is one
+   value and not a rebuild.
+
+   With the rail off the article takes the reading width and centres, rather
+   than stretching to fill a column that is suddenly 19rem wider: a 70rem line
+   of body text is not a wider page, it is an unreadable one. */
+.im-single {
+	--im-single-aside: 19rem;
+	--im-single-gap: clamp(1.5rem, 3vw, 3.5rem);
+
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) var(--im-single-aside);
+	gap: 2rem var(--im-single-gap);
+	width: 100%;
+	max-width: var(--im-width-page);
+	margin-inline: auto;
+	align-items: start;
+	transition: max-width 220ms var(--im-ease-out), grid-template-columns 220ms var(--im-ease-out);
+}
+
+[data-nav="rail"] .im-single {
+	max-width: calc(var(--im-width-page) + var(--im-nav-width) - var(--im-nav-rail));
+}
+
+.im-single > article {
+	min-width: 0;
+}
+
+.im-single > aside {
+	min-width: 0;
+}
+
+.im-single[data-sidebar="off"] {
+	grid-template-columns: minmax(0, 1fr);
+	max-width: calc(var(--im-width-prose) + var(--im-gutter) * 2);
+}
+
+.im-single[data-sidebar="off"] > aside {
+	display: none;
+}
+
+@media (width < 64rem) {
+	.im-single {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+/* ---- three columns: contents · article · widgets ----
+   For a long post on a wide screen, where the contents and the further
+   reading are both worth having and neither should be stacked on the other.
+
+   <div class="im-with-rails">
+     <nav>     <div class="im-sticky-rail"><nav class="im-toc" …></nav></div>  </nav>
+     <article> <section class="im-content">…</section>                         </article>
+     <aside>   <div class="im-sticky-rail"><div class="im-widgets">…</div></div> </aside>
+   </div>
+
+   The columns are named areas, so they re-arrange without the markup moving:
+   under xl the contents rail sits above the article and the widgets keep
+   their column; under lg everything stacks in reading order. */
+.im-with-rails {
+	--im-rail-width: 12.5rem;
+	--im-aside-width: 18rem;
+	/* One gap, used on both sides: the article sits the same distance from the
+	   contents rail as from the widgets. Two values here is how a three-column
+	   page starts looking lopsided. */
+	--im-rail-gap: clamp(1.5rem, 2.5vw, 3rem);
+
+	display: grid;
+	grid-template-columns: var(--im-rail-width) minmax(0, 1fr) var(--im-aside-width);
+	grid-template-areas: "toc main side";
+	gap: 2rem var(--im-rail-gap);
+	width: 100%;
+	max-width: var(--im-width-wide);
+	margin-inline: auto;
+	align-items: start;
+}
+
+.im-with-rails > nav {
+	grid-area: toc;
+	min-width: 0;
+}
+
+.im-with-rails > article {
+	grid-area: main;
+	min-width: 0;
+}
+
+.im-with-rails > aside {
+	grid-area: side;
+	min-width: 0;
+}
+
+@media (width < 80rem) {
+	.im-with-rails {
+		grid-template-columns: minmax(0, 1fr) var(--im-aside-width);
+		grid-template-areas:
+			"toc  side"
+			"main side";
+	}
+}
+
+@media (width < 64rem) {
+	.im-with-rails {
+		grid-template-columns: minmax(0, 1fr);
+		grid-template-areas:
+			"toc"
+			"main"
+			"side";
+	}
 }
 
 @media (width < 64rem) {
@@ -67,11 +237,21 @@
 		grid-template-columns: minmax(0, 1fr);
 	}
 
+	.im-with-aside-start {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
 	.im-with-aside > aside {
 		order: -1;
 	}
 
-	.im-with-aside > aside > .im-sticky-rail {
+	/* …but a column of WIDGETS belongs after the article, not before it: it is
+	   further reading, where a contents rail is a way in. */
+	.im-with-aside-wide > aside {
+		order: 0;
+	}
+
+	.im-sticky-rail {
 		position: static;
 		max-height: none;
 	}

@@ -1,0 +1,86 @@
+---
+title: Navbar demo
+layout: home
+shell: frame
+---
+{{!-- Loaded in an iframe by /navigation/navbar/. ?bar=island|float|plain picks
+	the arrangement; the script at the bottom is the docs' way of switching it
+	without three near-identical pages. --}}
+<header class="im-topbar im-topbar-site im-topbar-float" id="bar" data-im-stick="8">
+	<div class="im-topbar-start">
+		<button class="im-btn im-btn-ghost im-btn-icon lg:hidden" type="button" data-drawer-open="#demo-frame-panel" aria-label="Open navigation">{{> "icons/menu"}}</button>
+		<a class="im-brand" href="#top">{{> "components/logo" text="Publication"}}</a>
+		<nav class="im-topbar-nav" aria-label="Primary">
+			<a class="im-toplink" href="#top" aria-current="page">Home</a>
+			<a class="im-toplink" href="#top">Journal</a>
+			<button class="im-toplink" type="button" popovertarget="frame-mega" aria-expanded="false">Explore {{> "icons/chevron-down"}}</button>
+			<a class="im-toplink" href="#top">About</a>
+		</nav>
+	</div>
+	<div class="im-topbar-end">
+		<button class="im-btn im-btn-ghost im-btn-icon" type="button" aria-label="Search">{{> "icons/search"}}</button>
+		{{> "components/theme-button"}}
+		<a class="im-star im-star-sm max-sm:hidden" href="https://github.com/imswarnil" target="_blank" rel="noopener noreferrer">{{> "icons/brand-github"}}<span>Star</span><b>1.2k</b></a>
+		<a class="im-btn im-btn-primary im-btn-sm" href="#top">Subscribe</a>
+	</div>
+</header>
+
+<div class="im-mega" id="frame-mega" popover data-align="center">
+	<div class="im-navcols">
+		<div class="im-navcol">
+			<p class="im-navcol-title">Writing</p>
+			<a class="im-navitem" href="#top">{{> "icons/book-open"}}<span>Journal<small>Essays, twice a month</small></span></a>
+			<a class="im-navitem" href="#top">{{> "icons/text-quote"}}<span>Notes<small>Short, unedited</small></span></a>
+		</div>
+		<div class="im-navcol">
+			<p class="im-navcol-title">Work</p>
+			<a class="im-navitem" href="#top">{{> "icons/briefcase"}}<span>Projects<small>What I am building</small></span></a>
+			<a class="im-navitem" href="#top">{{> "icons/file-code"}}<span>Open source<small>Repos and releases</small></span></a>
+		</div>
+		<div class="im-navcol im-navcol-compact">
+			<p class="im-navcol-title">Elsewhere</p>
+			<a class="im-navitem" href="#top"><span>YouTube</span></a>
+			<a class="im-navitem" href="#top"><span>X</span></a>
+			<a class="im-navitem" href="#top"><span>RSS</span></a>
+		</div>
+	</div>
+	<div class="im-mega-foot"><span>Everything, in one place.</span><a class="im-btn im-btn-primary im-btn-sm" href="#top">Browse</a></div>
+</div>
+
+<main id="top">
+	<section class="im-wrap im-bar-offset" style="padding-inline: var(--im-gutter); padding-bottom: 3rem">
+		<h1 style="font-size: var(--im-text-display); line-height: var(--im-leading-display); letter-spacing: var(--im-tracking-tight); margin-block: 2rem 1rem">Scroll me.</h1>
+		<p class="im-lede">The bar above starts as a full-width band. Once the page moves it pulls in, rounds off and lifts — the island. Scroll back to the top and it lays itself out flat again.</p>
+	</section>
+	<section class="im-wrap" style="padding-inline: var(--im-gutter); padding-bottom: 6rem">
+		<div class="im-grid-auto" style="--im-grid-min: 15rem">
+			{{#each demo.six}}
+			<a class="im-post-card" href="#top">
+				<span class="im-post-card-media"><img src="{{feature_image}}" alt="" width="600" height="375" loading="lazy"></span>
+				<span class="im-post-card-body"><span class="im-post-card-title">{{title}}</span><span class="im-post-card-meta"><span>{{date published_at format="D MMM YYYY"}}</span></span></span>
+			</a>
+			{{/each}}
+		</div>
+	</section>
+</main>
+
+<dialog class="im-navpanel" id="demo-frame-panel" aria-label="Navigation">
+	<div class="im-navpanel-head"><a class="im-brand" href="#top">{{> "components/logo" text="Publication"}}</a><button class="im-btn im-btn-ghost im-btn-icon" type="button" data-drawer-close aria-label="Close">{{> "icons/x"}}</button></div>
+	<nav class="im-navpanel-cols" aria-label="Primary">
+		<div class="im-navcols">
+			<div class="im-navcol im-navcol-compact"><p class="im-navcol-title">Site</p><a class="im-navitem" href="#top"><span>Home</span></a><a class="im-navitem" href="#top"><span>Journal</span></a><a class="im-navitem" href="#top"><span>Projects</span></a><a class="im-navitem" href="#top"><span>About</span></a></div>
+			<div class="im-navcol im-navcol-compact"><p class="im-navcol-title">More</p><a class="im-navitem" href="#top"><span>Newsletter</span></a><a class="im-navitem" href="#top"><span>Colophon</span></a><a class="im-navitem" href="#top"><span>RSS</span></a></div>
+		</div>
+	</nav>
+	<div class="im-navpanel-foot">{{> "components/theme-switch" size="sm"}}<a class="im-btn im-btn-primary im-btn-sm" style="margin-left: auto" href="#top">Subscribe</a></div>
+</dialog>
+
+<script>
+	// Docs only: ?bar= picks which arrangement this frame shows.
+	(() => {
+		const bar = document.getElementById('bar');
+		const which = new URLSearchParams(location.search).get('bar');
+		if (which === 'island') bar.className = bar.className.replace('im-topbar-float', 'im-topbar-island');
+		if (which === 'plain') { bar.className = bar.className.replace('im-topbar-float', 'im-topbar-line'); bar.removeAttribute('data-im-stick'); }
+	})();
+</script>

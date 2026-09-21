@@ -1,0 +1,111 @@
+---
+title: Menu panel
+description: What the ☰ button opens — a rounded sheet centred in the window, over a blurred page. It is not a phone drawer that happens to appear on a laptop: it grows with the window, from two columns to four.
+eyebrow: Navigation
+source: src/layout/shell.css · partials/shell/navbar.hbs
+---
+<h2>Columns</h2>
+<p>The default, and the one to reach for. Plain links grouped under headings — <a href="/navigation/mega/"><code>im-navcols</code></a>, the same markup the mega menu uses, so a site writes its navigation once and it is right at every width.</p>
+{{#example center=true}}
+<button class="im-btn im-btn-primary" type="button" data-drawer-open="#panel-cols">{{> "icons/menu"}} Open the menu</button>
+<dialog class="im-navpanel" id="panel-cols" aria-label="Menu">
+	<div class="im-navpanel-head">
+		<a class="im-brand" href="#columns">{{> "components/logo" text="Publication"}}</a>
+		<button class="im-btn im-btn-ghost im-btn-icon" type="button" data-drawer-close aria-label="Close">{{> "icons/x"}}</button>
+	</div>
+	<nav class="im-navpanel-cols" aria-label="Demo">
+		{{> "docs/mega-demo"}}
+	</nav>
+	<div class="im-navpanel-foot">
+		{{> "components/theme-switch" size="sm"}}
+		<a class="im-star im-star-sm" href="#columns">{{> "icons/brand-github"}}<span>Star</span><b>1.2k</b></a>
+		<a class="im-btn im-btn-primary im-btn-sm" style="margin-left: auto" href="#columns">Subscribe</a>
+	</div>
+</dialog>
+{{/example}}
+{{{{code "hbs"}}}}
+<button class="im-btn im-btn-ghost im-btn-icon lg:hidden" type="button"
+	data-drawer-open="#menu" aria-label="Open navigation">{{> "icons/menu"}}</button>
+
+<dialog class="im-navpanel" id="menu" aria-label="Navigation">
+	<div class="im-navpanel-head">
+		<a class="im-brand" href="/">{{> "components/logo"}}</a>
+		<button class="im-btn im-btn-ghost im-btn-icon" type="button"
+			data-drawer-close aria-label="Close">{{> "icons/x"}}</button>
+	</div>
+	<nav class="im-navpanel-cols" aria-label="Primary">
+		<div class="im-navcols">
+			<div class="im-navcol im-navcol-compact">
+				<p class="im-navcol-title">Site</p>
+				{{navigation as="items"}}
+			</div>
+		</div>
+	</nav>
+	<div class="im-navpanel-foot"> theme · accounts · a CTA </div>
+</dialog>
+{{{{/code}}}}
+
+<h2>It grows with the window</h2>
+<p>One sheet, centred on both axes, sized to the window it is in. Nothing about it is "the phone menu".</p>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Width</th><th>Sheet</th><th>Columns</th></tr></thead>
+	<tbody>
+		<tr><td>&lt; 20rem</td><td>The window, less a margin</td><td>1</td></tr>
+		<tr><td>&lt; 48rem (<code>md</code>)</td><td>up to 34rem</td><td>2</td></tr>
+		<tr><td>48–64rem</td><td>up to 48rem</td><td>3</td></tr>
+		<tr><td>≥ 64rem (<code>lg</code>)</td><td>up to 60rem</td><td>4</td></tr>
+	</tbody>
+</table>
+</div>
+<p>It is at most <code>48rem</code> tall and scrolls inside itself; in a short window (a laptop in landscape, a phone with the keyboard up) it takes the height it can get. Override either with <code>--im-navpanel-width</code> and <code>--im-navpanel-columns</code> on the dialog.</p>
+
+<h2>Tiles</h2>
+<p>The other way to fill it: each link a filled cell. Right for a <strong>short</strong> menu of destinations with icons — wrong for thirty links, which is why it is not the default. A group of links is a tile that opens across the row; give the groups one shared <code>name</code> and the browser keeps only one open.</p>
+{{#example center=true}}
+<button class="im-btn im-btn-outline" type="button" data-drawer-open="#panel-tiles">{{> "icons/menu"}} Open a tile menu</button>
+<dialog class="im-navpanel" id="panel-tiles" aria-label="Menu" style="--im-navpanel-width: 34rem; --im-navpanel-columns: 2">
+	<div class="im-navpanel-head"><a class="im-brand" href="#tiles">{{> "components/logo" text="Publication"}}</a><button class="im-btn im-btn-ghost im-btn-icon" type="button" data-drawer-close aria-label="Close">{{> "icons/x"}}</button></div>
+	<nav class="im-navpanel-grid" aria-label="Demo">
+		<a class="im-navtile im-navtile-stacked" href="#tiles" aria-current="page">{{> "icons/house"}}<span>Home</span></a>
+		<a class="im-navtile im-navtile-stacked" href="#tiles">{{> "icons/pencil"}}<span>Writing</span></a>
+		<details class="im-navtile-group" name="panel-tiles">
+			<summary class="im-navtile">{{> "icons/layers"}}<span>Projects</span><small>4</small></summary>
+			<div class="im-navtile-items"><a href="#tiles">Case studies</a><a href="#tiles">Open source</a><a href="#tiles">Talks</a><a href="#tiles">Experiments</a></div>
+		</details>
+		<details class="im-navtile-group" name="panel-tiles">
+			<summary class="im-navtile">{{> "icons/graduation-cap"}}<span>Courses</span><small>3</small></summary>
+			<div class="im-navtile-items"><a href="#tiles">CRM Analytics</a><a href="#tiles">Job seekers</a><a href="#tiles">Salesforce</a></div>
+		</details>
+		<a class="im-navtile" href="#tiles">{{> "icons/user"}}<span>About</span></a>
+		<a class="im-navtile" href="#tiles">{{> "icons/mail"}}<span>Contact</span></a>
+		<p class="im-caption">More</p>
+		<a class="im-navtile im-navtile-wide" href="#tiles">{{> "icons/rss"}}<span>RSS feed</span><small>/rss/</small></a>
+	</nav>
+	<div class="im-navpanel-foot">{{> "components/theme-switch" size="sm"}}<a class="im-btn im-btn-primary im-btn-sm" style="margin-left: auto" href="#tiles">Subscribe</a></div>
+</dialog>
+{{/example}}
+
+<h2>Parts</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Class</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>im-navpanel</code></td><td>The sheet — a native <code>&lt;dialog&gt;</code>, so the focus trap, <kbd>Esc</kbd>, the backdrop and scroll locking all come from the browser.</td></tr>
+		<tr><td><code>im-navpanel-head</code> · <code>-foot</code></td><td>Brand and the cross; theme, accounts and a call to action.</td></tr>
+		<tr><td><code>im-navpanel-cols</code></td><td>Holds an <code>im-navcols</code>. The columns mode.</td></tr>
+		<tr><td><code>im-navpanel-grid</code></td><td>The tile grid. <code>grid-auto-flow: dense</code>, so no cell is left empty beside an open group.</td></tr>
+		<tr><td><code>im-navtile</code></td><td>One tile: optional icon, label, optional <code>&lt;small&gt;</code> count. <code>-stacked</code> puts the icon above the label; <code>-wide</code> spans the row. The current page is filled with ink.</td></tr>
+		<tr><td><code>im-navtile-group</code></td><td>A <code>&lt;details&gt;</code> whose <code>&lt;summary&gt;</code> is a tile.</td></tr>
+	</tbody>
+</table>
+</div>
+<p>Any element with <code>data-drawer-open="#id"</code> opens it; <code>data-drawer-close</code>, <kbd>Esc</kbd>, or a click on the blurred surround closes it.</p>
+
+<h2>Details that matter</h2>
+<ul>
+	<li><strong>Centred is <code>inset: 0</code> plus <code>margin: auto</code></strong> on the dialog — not a translate, which would fight the open animation.</li>
+	<li><strong>It opens by growing, not by dropping in from the top.</strong> A sheet in the middle of the window that arrives from an edge reads as a notification.</li>
+	<li><strong>Which button opens it is a utility on the button</strong> (<code>lg:hidden</code>), not a rule in the panel's CSS — <code>im-btn</code> sets <code>display</code> in a later layer and would win.</li>
+	<li><strong>The backdrop blurs the page</strong> rather than dimming it, so the reader keeps their place.</li>
+</ul>

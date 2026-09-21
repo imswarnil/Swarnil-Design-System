@@ -1,8 +1,26 @@
-{{!-- Post card. Context: a post. Params:
-	layout   "cover" | "row"    (default: stacked)
-	excerpt  true               show the excerpt
-	eager    true               for cards above the fold --}}
-<article class="im-post-card{{#if layout}} im-post-card-{{layout}}{{/if}} {{post_class}}">
+{{!-- Post card — the blog card. Context: a post.
+
+	Params
+	  layout   row · row-end · cover · plain     (omitted: vertical)
+	  size     lg · sm
+	  dot      true — the dot hover: the card fills from the corner
+	           soft — the same movement, in a surface rather than the accent
+	           ink  — the whole card goes to the page's darkest value
+	  hide     a space-separated list of parts to leave out:
+	           media kicker title excerpt meta author date time flags
+	  excerpt  true      show the excerpt
+	  time     true      the reading time in the meta line as well as on the
+	                     picture — for a card with no picture
+	  eager    true      for cards above the fold
+	  top      true      row layouts: align the picture to the top
+	  kind     "post" — the identifier chip on the picture, for a mixed feed
+	  class    anything else
+	  style    inline variables, e.g. "--im-post-card-media-width: 8rem"
+
+	Every part is printed and then hidden in CSS, rather than each one being a
+	condition here: that way `hide` is one attribute a theme can set from a
+	setting, and the partial does not grow a boolean per part. --}}
+<article class="im-post-card{{#if layout}} im-post-card-{{layout}}{{/if}}{{#if size}} im-post-card-{{size}}{{/if}}{{#if top}} im-post-card-row-top{{/if}}{{#if dot}} im-post-card-dot{{#match dot "!=" true}} im-post-card-dot-{{dot}}{{/match}}{{/if}}{{#if class}} {{class}}{{/if}} {{post_class}}"{{#if hide}} data-im-hide="{{hide}}"{{/if}}{{#if style}} style="{{style}}"{{/if}}>
 	<div class="im-post-card-media"{{#unless feature_image}} data-initial="{{title.[0]}}"{{/unless}}>
 		{{#if feature_image}}
 			<img
@@ -15,8 +33,10 @@
 			>
 		{{/if}}
 
+		{{#if kind}}<span class="im-kind im-kind-over" data-kind="{{kind}}">{{> "icons/file-text"}}{{kind}}</span>{{/if}}
+
 		<div class="im-post-card-flags">
-			{{#if reading_time}}<span class="im-post-card-flag">{{reading_time minute=(t "1 min") minutes=(t "% min")}}</span>{{/if}}
+			{{#if reading_time}}<span class="im-post-card-flag" data-part="time">{{reading_time minute=(t "1 min") minutes=(t "% min")}}</span>{{/if}}
 			{{#if featured}}<span class="im-post-card-flag" title="{{t "Featured"}}">{{> "icons/flame"}}</span>{{/if}}
 			{{#unless access}}<span class="im-post-card-flag" title="{{t "Members only"}}">{{> "icons/lock"}}</span>{{/unless}}
 		</div>
@@ -27,8 +47,12 @@
 		<h3 class="im-post-card-title"><a href="{{url}}">{{title}}</a></h3>
 		{{#if excerpt}}<p class="im-post-card-excerpt">{{excerpt words="28"}}</p>{{/if}}
 		<div class="im-post-card-meta">
-			{{#primary_author}}<a href="{{url}}">{{name}}</a>{{/primary_author}}
-			<time datetime="{{date format="YYYY-MM-DD"}}">{{date format="D MMM YYYY"}}</time>
+			{{#primary_author}}<a href="{{url}}" data-part="author">{{name}}</a>{{/primary_author}}
+			<time datetime="{{date format="YYYY-MM-DD"}}" data-part="date">{{date format="D MMM YYYY"}}</time>
+			{{!-- The reading time has two homes and takes ONE: the flag on the
+			      picture by default, or here when a theme asks for it with
+			      `time=true` — a card with no picture has no flag to carry it. --}}
+			{{#if time}}{{#if reading_time}}<span data-part="time">{{reading_time minute=(t "1 min read") minutes=(t "% min read")}}</span>{{/if}}{{/if}}
 		</div>
 	</div>
 </article>

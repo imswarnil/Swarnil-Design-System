@@ -1,56 +1,88 @@
-/* Menu — a popover list of actions, opened by a button.
-   <button class="btn btn-icon" popovertarget="m1">…</button>
-   <div class="menu" id="m1" popover> <a class="menu-item">…</a> </div>
-   The Popover API gives light-dismiss, Esc and top-layer; im.js positions it. */
+/* Menu — a popover list of actions, opened by a button. It is the MENU PANEL
+   in miniature, and deliberately so: the same rounded sheet, the same hairline
+   ring over the float shadow, the same rows with an icon, a label and an
+   optional description, the same mono caption over a group. A reader who has
+   opened the ☰ panel already knows how this works.
+
+     <button class="im-btn" popovertarget="m1" aria-expanded="false">…</button>
+     <div class="im-menu" id="m1" popover>
+       <p class="im-menu-title">Account</p>
+       <a class="im-menu-item" href="…">
+         {{> "icons/user"}}<span>Profile<small>Name, photo, bio</small></span>
+       </a>
+       <div class="im-menu-sep"></div>
+       <div class="im-menu-foot"> … </div>
+     </div>
+
+   The Popover API gives light-dismiss, Esc and the top layer; im.js positions
+   it under its button and keeps aria-expanded in step. */
 
 .im-menu {
+	--im-menu-width: 15rem;
+
 	position: fixed;
 	inset: auto;
 	margin: 0;
-	min-width: 13rem;
-	padding: 0.375rem;
+	width: max-content;
+	min-width: var(--im-menu-width);
+	max-width: min(22rem, calc(100vw - 1.5rem));
+	padding: 0.4375rem;
+	border: 0;
 	border-radius: var(--im-radius-xl);
 	background-color: var(--im-canvas);
 	box-shadow: inset 0 0 0 1px var(--im-line), var(--im-shadow-float);
 	color: var(--im-body);
+	overscroll-behavior: contain;
 }
 
+/* Wide enough for descriptions — the panel's rows, in a dropdown. */
+.im-menu-wide {
+	--im-menu-width: 19rem;
+}
+
+/* A long menu scrolls inside itself rather than running off the window. */
+.im-menu-scroll {
+	max-height: min(24rem, calc(100dvh - var(--im-bar-height) - 2rem));
+	overflow-y: auto;
+	scrollbar-width: thin;
+}
+
+/* The panel's entrance, shortened: a dropdown is a small thing near its
+   button, so it travels less and settles sooner. */
 .im-menu:popover-open {
-	animation: im-menu-in 140ms var(--im-ease-out);
+	animation: im-menu-in 200ms var(--im-ease-glide);
 }
 
-.im-menu-item {
-	display: flex;
-	align-items: center;
-	gap: 0.625rem;
-	width: 100%;
-	min-height: 2.25rem;
-	padding: 0.375rem 0.625rem;
-	border-radius: var(--im-radius-md);
-	color: var(--im-ink);
-	font-size: var(--im-text-sm);
+/* Flipped above its button (im.js sets this), it should arrive from below. */
+.im-menu[data-side="top"]:popover-open {
+	animation-name: im-menu-in-up;
+}
+
+@keyframes im-menu-in {
+	from {
+		opacity: 0;
+		scale: 0.97;
+		translate: 0 -0.375rem;
+	}
+}
+
+@keyframes im-menu-in-up {
+	from {
+		opacity: 0;
+		scale: 0.97;
+		translate: 0 0.375rem;
+	}
+}
+
+/* ---- a group, and its caption ---- */
+.im-menu-title {
+	padding: 0.5rem 0.625rem 0.3125rem;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: 0.6875rem;
 	font-weight: 500;
-	text-align: left;
-	text-decoration: none;
-	cursor: pointer;
-}
-
-.im-menu-item:hover,
-.im-menu-item:focus-visible {
-	background-color: var(--im-surface);
-	color: var(--im-ink);
-}
-
-.im-menu-item > .im-icon {
-	color: var(--im-muted);
-	font-size: 1.0625rem;
-}
-
-.im-menu-item > small {
-	margin-left: auto;
-	color: var(--im-muted);
-	font-size: var(--im-text-xs);
-	font-weight: 400;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
 }
 
 .im-menu-sep {
@@ -59,9 +91,176 @@
 	background-color: var(--im-line);
 }
 
-@keyframes im-menu-in {
-	from {
-		opacity: 0;
-		translate: 0 -4px;
+/* ---- a row ----
+   align-items: flex-start, so a row with a description keeps its icon level
+   with the LABEL rather than floating to the middle of two lines. */
+.im-menu-item {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.625rem;
+	width: 100%;
+	min-height: 2.25rem;
+	padding: 0.4375rem 0.625rem;
+	border: 0;
+	border-radius: var(--im-radius-md);
+	background: none;
+	color: var(--im-ink);
+	font-family: inherit;
+	font-size: var(--im-text-sm);
+	font-weight: 500;
+	line-height: 1.35;
+	text-align: left;
+	text-decoration: none;
+	cursor: pointer;
+	transition: background-color 120ms, color 120ms;
+}
+
+.im-menu-item > .im-icon {
+	flex: none;
+	margin-top: 0.0625rem;
+	color: var(--im-muted);
+	font-size: 1.125rem;
+	stroke-width: 1.7;
+	transition: color 120ms;
+}
+
+.im-menu-item > span {
+	display: flex;
+	flex-direction: column;
+	gap: 0.125rem;
+	min-width: 0;
+}
+
+.im-menu-item small {
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+	font-weight: 400;
+	line-height: 1.45;
+	text-wrap: pretty;
+}
+
+/* A <small> that is a SIBLING of the label is a trailing value — a count, a
+   shortcut, the current setting — and goes to the far end of the row. */
+.im-menu-item > small,
+.im-menu-item > kbd {
+	flex: none;
+	margin-top: 0.0625rem;
+	margin-left: auto;
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+	font-weight: 400;
+}
+
+.im-menu-item:hover,
+.im-menu-item:focus-visible {
+	background-color: var(--im-surface);
+	color: var(--im-ink);
+}
+
+.im-menu-item:hover > .im-icon {
+	color: var(--im-ink);
+}
+
+.im-menu-item[aria-current="page"],
+.im-menu-item[aria-checked="true"] {
+	background-color: var(--im-current-bg);
+	color: var(--im-current-fg);
+	font-weight: var(--im-current-weight);
+}
+
+.im-menu-item[aria-current="page"] > .im-icon,
+.im-menu-item[aria-checked="true"] > .im-icon {
+	color: var(--im-ink);
+}
+
+/* Chosen: a tick at the end, for a menu used to pick one of several. It is a
+   MASK of the row's own colour, not a coloured SVG — a data URI cannot read
+   currentColor, and a black tick would disappear in dark mode. */
+.im-menu-item[aria-checked]::after {
+	content: "";
+	flex: none;
+	align-self: center;
+	width: 0.875rem;
+	height: 0.875rem;
+	margin-left: auto;
+	background-color: transparent;
+}
+
+.im-menu-item[aria-checked="true"]::after {
+	--im-check-mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E");
+
+	background-color: currentcolor;
+	-webkit-mask: var(--im-check-mark) center / contain no-repeat;
+	mask: var(--im-check-mark) center / contain no-repeat;
+}
+
+/* Destructive. A real state, not an inline colour on the one that deletes. */
+.im-menu-item-danger,
+.im-menu-item-danger > .im-icon {
+	color: var(--im-danger);
+}
+
+.im-menu-item-danger:hover,
+.im-menu-item-danger:focus-visible {
+	background-color: var(--im-danger-tint);
+	color: var(--im-danger);
+}
+
+.im-menu-item-danger:hover > .im-icon {
+	color: var(--im-danger);
+}
+
+.im-menu-item[aria-disabled="true"],
+.im-menu-item:disabled {
+	color: var(--im-faint);
+	pointer-events: none;
+}
+
+/* ---- head and foot ----
+   The panel has them; a menu that signs somebody in, or shows who is signed
+   in, wants the same two slots. */
+.im-menu-head {
+	display: flex;
+	align-items: center;
+	gap: 0.625rem;
+	padding: 0.5rem 0.625rem 0.625rem;
+	border-bottom: 1px solid var(--im-line);
+	margin-bottom: 0.375rem;
+}
+
+.im-menu-head > span {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+}
+
+.im-menu-head strong {
+	color: var(--im-ink);
+	font-size: var(--im-text-sm);
+	font-weight: 600;
+}
+
+.im-menu-head small {
+	overflow: hidden;
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+	text-overflow: ellipsis;
+}
+
+.im-menu-foot {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem;
+	margin-top: 0.375rem;
+	padding: 0.625rem 0.5rem 0.25rem;
+	border-top: 1px solid var(--im-line);
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.im-menu:popover-open {
+		animation-duration: 1ms;
 	}
 }

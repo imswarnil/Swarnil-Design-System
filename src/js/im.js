@@ -2,10 +2,13 @@
  * im.js — the Im Design System's behaviour. No dependencies, ~3 KB, progressive: every
  * feature is opted into with a data attribute and does nothing without one.
  *
- *   theme     [data-theme-toggle]            cycles light → dark → system
+ *   theme     [data-theme-toggle]            light ⇄ dark  ([data-theme-set] picks one)
  *   nav       [data-nav-toggle]              side nav ↔ icon rail
  *   drawer    [data-drawer-open="#id"]       opens a <dialog class="drawer">
  *   menu      <div class="im-menu" popover>  positioned under its button
+ *   mega      <div class="im-mega" popover>  the same, centred and wide
+ *   bar       [data-im-stick]                sets data-im-stuck once the page moves
+ *   stars     [data-im-stars="owner/repo"]   fills in a GitHub star count, or does not
  *   copy      [data-im-copy="text"]          copies text (or the page URL) and confirms
  *   share     [data-im-share]                opens the OS share sheet where there is one
  *   toc       <nav data-toc="#article">      built from h2/h3, scroll-spied
@@ -37,33 +40,39 @@
 	};
 
 	/* ── theme ─────────────────────────────────────────────────────────── */
+	/* Two themes, light and dark. There is no third "follow the system" state
+	   to store: someone who has never chosen is shown what their system asks
+	   for and keeps following it, and the first press settles it for good. */
 	const dark = matchMedia('(prefers-color-scheme: dark)');
-	const ORDER = ['light', 'dark', 'system'];
-	const LABEL = { light: 'Light', dark: 'Dark', system: 'System' };
-	const choice = () => (ORDER.includes(store.get('theme')) ? store.get('theme') : 'system');
+	const THEMES = ['light', 'dark'];
+	const LABEL = { light: 'Light', dark: 'Dark' };
+	const stored = () => (THEMES.includes(store.get('theme')) ? store.get('theme') : null);
+	const theme = () => stored() || (dark.matches ? 'dark' : 'light');
 
 	function applyTheme() {
-		const c = choice();
-		root.dataset.theme = c === 'system' ? (dark.matches ? 'dark' : 'light') : c;
-		root.dataset.themeChoice = c;
-		for (const el of document.querySelectorAll('[data-theme-label]')) el.textContent = LABEL[c];
-		for (const el of document.querySelectorAll('input[data-theme-set]')) el.checked = el.dataset.themeSet === c;
+		const t = theme();
+		root.dataset.theme = t;
+		for (const el of document.querySelectorAll('[data-theme-label]')) el.textContent = LABEL[t];
+		for (const el of document.querySelectorAll('input[data-theme-set]')) el.checked = el.dataset.themeSet === t;
 	}
 
-	dark.addEventListener('change', applyTheme);
+	// Only while nothing has been chosen does the system's setting still count.
+	dark.addEventListener('change', () => stored() || applyTheme());
+
 	document.addEventListener('click', (e) => {
-		const t = e.target.closest('[data-theme-toggle]');
-		if (!t) return;
-		store.set('theme', ORDER[(ORDER.indexOf(choice()) + 1) % ORDER.length]);
-		// [data-theme-set="dark"] picks one outright — for a switcher with three options.
+		if (!e.target.closest('[data-theme-toggle]')) return;
+		store.set('theme', theme() === 'dark' ? 'light' : 'dark');
+		applyTheme();
+	});
+
+	// [data-theme-set="dark"] picks one outright — the two-option switcher.
 	document.addEventListener('change', (e) => {
 		const v = e.target.closest?.('[data-theme-set]')?.dataset.themeSet;
-		if (!ORDER.includes(v)) return;
+		if (!THEMES.includes(v)) return;
 		store.set('theme', v);
 		applyTheme();
 	});
-	applyTheme();
-	});
+
 	applyTheme();
 
 	/* ── side nav: open ↔ rail ─────────────────────────────────────────── */
@@ -103,7 +112,13 @@
 		if (e.target === dialog || e.target.closest('[data-drawer-close], [data-im-dialog-close]')) dialog.close();
 	});
 
-	/* ── menus ─────────────────────────────────────────────────────────── */
+	/* ── menus and mega menus ──────────────────────────────────────────── */
+	/* data-align: "end" (default) right edges line up · "start" left edges ·
+	   "center" centred on the VIEWPORT, which is what a wide mega menu wants —
+	   a 58rem panel hung off a 6rem link would otherwise run off the screen. */
+	const POPOVERS = '.im-menu[popover], .im-mega[popover]';
+	const OPEN_POPOVERS = '.im-menu:popover-open, .im-mega:popover-open';
+
 	function place(menu) {
 		const btn = document.querySelector(`[popovertarget="${menu.id}"]`);
 		if (!btn) return;
@@ -111,20 +126,60 @@
 		const w = menu.offsetWidth;
 		const h = menu.offsetHeight;
 		const gap = 8;
-		const left = Math.min(Math.max(gap, menu.dataset.align === 'start' ? b.left : b.right - w), innerWidth - w - gap);
+		const align = menu.dataset.align;
+		const wanted = align === 'center' ? (innerWidth - w) / 2 : align === 'start' ? b.left : b.right - w;
+		const left = Math.min(Math.max(gap, wanted), Math.max(gap, innerWidth - w - gap));
 		const below = b.bottom + gap + h <= innerHeight;
 		menu.style.left = `${left}px`;
 		menu.style.top = `${below ? b.bottom + gap : Math.max(gap, b.top - gap - h)}px`;
+		// Which side it ended up on, so it can arrive FROM the button rather
+		// than always from above it.
+		menu.dataset.side = below ? 'bottom' : 'top';
 	}
-	for (const menu of document.querySelectorAll('.im-menu[popover]')) {
+
+	for (const menu of document.querySelectorAll(POPOVERS)) {
 		menu.addEventListener('toggle', (e) => {
 			const open = e.newState === 'open';
 			document.querySelector(`[popovertarget="${menu.id}"]`)?.setAttribute('aria-expanded', String(open));
 			if (open) place(menu);
 		});
 	}
-	addEventListener('resize', () => document.querySelectorAll('.im-menu:popover-open').forEach(place));
-	addEventListener('scroll', () => document.querySelectorAll('.im-menu:popover-open').forEach((m) => m.hidePopover()), { passive: true });
+	addEventListener('resize', () => document.querySelectorAll(OPEN_POPOVERS).forEach(place));
+	addEventListener('scroll', () => document.querySelectorAll(OPEN_POPOVERS).forEach((m) => m.hidePopover()), { passive: true });
+
+	/* ── a bar that knows the page has moved ───────────────────────────── */
+	/* [data-im-stick] gets data-im-stuck once the page is scrolled past
+	   data-im-stick (a number of pixels, default 8). That is all: what it
+	   LOOKS like belongs to CSS — .im-topbar-float turns into an island.
+	   A scroll listener, not an observer: an IntersectionObserver never fires
+	   in a tab that is not being painted, and this decides how the bar looks. */
+	const sticky = [...document.querySelectorAll('[data-im-stick]')];
+	if (sticky.length) {
+		let pending = false;
+		const measure = () => {
+			pending = false;
+			for (const el of sticky) el.toggleAttribute('data-im-stuck', scrollY > (Number(el.dataset.imStick) || 8));
+		};
+		addEventListener('scroll', () => pending || ((pending = true), requestAnimationFrame(measure)), { passive: true });
+		measure();
+	}
+
+	/* ── GitHub star count ─────────────────────────────────────────────── */
+	/* Opt-in, and only ever additive: [data-im-stars="owner/repo"] asks
+	   GitHub's public API once and writes the number into [data-im-star-count].
+	   No key, no third-party script, nothing that can identify a reader — and
+	   if the call fails or is rate-limited, whatever the markup already said
+	   simply stands. */
+	for (const el of document.querySelectorAll('[data-im-stars]')) {
+		const slot = el.querySelector('[data-im-star-count]') || el;
+		fetch(`https://api.github.com/repos/${el.dataset.imStars}`, { headers: { Accept: 'application/vnd.github+json' } })
+			.then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+			.then(({ stargazers_count: n }) => {
+				if (typeof n !== 'number') return;
+				slot.textContent = n >= 1000 ? `${(n / 1000).toFixed(1).replace(/\.0$/, '')}k` : String(n);
+			})
+			.catch(() => {});
+	}
 
 	/* ── copy ──────────────────────────────────────────────────────────── */
 	/* data-im-copy="text" copies that text; an empty value copies the page URL.
@@ -353,7 +408,9 @@
 	/* ── table of contents ─────────────────────────────────────────────── */
 	for (const toc of document.querySelectorAll('[data-toc]')) {
 		const scope = document.querySelector(toc.dataset.toc);
-		const heads = scope ? [...scope.querySelectorAll('h2[id], h3[id]')].filter((h) => !h.closest('[data-toc-skip]')) : [];
+		// A heading inside a <dialog> belongs to that dialog, not to the page:
+		// a member gate's title is not a place the reader can be scrolled to.
+		const heads = scope ? [...scope.querySelectorAll('h2[id], h3[id]')].filter((h) => !h.closest('[data-toc-skip], dialog')) : [];
 		if (heads.length < 2) continue;
 
 		const list = document.createElement('div');

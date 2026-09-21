@@ -1,0 +1,232 @@
+/* Comments — the thread under a post.
+
+   <section class="im-comments">
+     <div class="im-comments-head"> <h2>12 comments</h2> …sort… </div>
+     <form class="im-comment-form"> avatar · a box · a button </form>
+     <ol class="im-comment-list">
+       <li class="im-comment">
+         <span class="im-avatar">…</span>
+         <div class="im-comment-body">
+           <p class="im-comment-head"><b class="im-comment-name">…</b><time class="im-comment-time">…</time></p>
+           <div class="im-comment-text"> …the comment… </div>
+           <div class="im-comment-actions"> like · reply </div>
+         </div>
+         <ol class="im-comment-replies"> …more .im-comment… </ol>
+       </li>
+     </ol>
+   </section>
+
+   Ghost renders its own comments with {{comments}}, inside an iframe it
+   styles itself. This is the markup for a theme that prints a thread of its
+   own — from the Members API, or from anything else — and it is also what the
+   editor's own comment count and sign-in states hang on.
+
+   A reply nests ONCE. A thread that indents forever is unreadable on a phone
+   long before it is deep. */
+
+.im-comments {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+	min-width: 0;
+}
+
+.im-comments-head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 0.75rem;
+}
+
+.im-comments-count {
+	color: var(--im-ink);
+	font-size: var(--im-text-h4);
+	font-weight: 600;
+	line-height: var(--im-leading-h4);
+	letter-spacing: var(--im-tracking-tight);
+}
+
+.im-comments-count > span {
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-sm);
+	font-weight: 400;
+}
+
+/* ---- the list ---- */
+.im-comment-list {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.im-comment {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr);
+	gap: 0.75rem;
+	min-width: 0;
+}
+
+.im-comment > .im-avatar {
+	grid-row: span 2;
+}
+
+.im-comment-body {
+	display: flex;
+	flex-direction: column;
+	gap: 0.375rem;
+	min-width: 0;
+}
+
+.im-comment-head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 0.5rem;
+	font-size: var(--im-text-sm);
+}
+
+.im-comment-name {
+	color: var(--im-ink);
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.im-comment-badge {
+	color: var(--im-accent);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+.im-comment-time {
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+}
+
+.im-comment-text {
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+	line-height: 1.6;
+	text-wrap: pretty;
+}
+
+.im-comment-text > p + p {
+	margin-top: 0.625rem;
+}
+
+/* ---- actions: a bare row, nothing that competes with the post ---- */
+.im-comment-actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.25rem;
+	margin-left: -0.5rem;
+	padding-top: 0.125rem;
+}
+
+.im-comment-action {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
+	min-height: 1.75rem;
+	padding: 0 0.5rem;
+	border: 0;
+	border-radius: var(--im-radius-md);
+	background: none;
+	color: var(--im-muted);
+	font-family: inherit;
+	font-size: var(--im-text-xs);
+	font-weight: 500;
+	text-decoration: none;
+	cursor: pointer;
+	transition: background-color 120ms, color 120ms;
+}
+
+.im-comment-action > .im-icon {
+	font-size: 0.9375rem;
+}
+
+.im-comment-action:is(:hover, :focus-visible) {
+	background-color: var(--im-surface);
+	color: var(--im-ink);
+}
+
+.im-comment-action[aria-pressed="true"] {
+	color: var(--im-accent);
+}
+
+.im-comment-action[aria-pressed="true"] > .im-icon {
+	fill: currentcolor;
+}
+
+/* ---- replies: one level, on a rule ---- */
+.im-comment-replies {
+	display: flex;
+	flex-direction: column;
+	gap: 1.25rem;
+	grid-column: 2;
+	margin: 0.375rem 0 0;
+	padding: 0 0 0 1rem;
+	border-left: 1px solid var(--im-line);
+	list-style: none;
+}
+
+/* The author of the post, answering. */
+.im-comment-mine > .im-comment-body > .im-comment-head > .im-comment-name {
+	color: var(--im-accent);
+}
+
+/* ---- the box you write in ---- */
+.im-comment-form {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr);
+	gap: 0.75rem;
+	align-items: start;
+}
+
+.im-comment-form textarea {
+	min-height: 3rem;
+	field-sizing: content;
+	resize: vertical;
+}
+
+.im-comment-form-actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 0.5rem;
+	grid-column: 2;
+}
+
+.im-comment-form-note {
+	margin-right: auto;
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+}
+
+/* ---- states ---- */
+.im-comments-gate {
+	display: grid;
+	gap: 0.75rem;
+	justify-items: center;
+	padding: clamp(1.25rem, 3vw, 1.75rem);
+	border: 1px dashed var(--im-line);
+	border-radius: var(--im-radius-lg);
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+	text-align: center;
+}
+
+.im-comments-empty {
+	padding: 1.5rem 0;
+	color: var(--im-muted);
+	font-size: var(--im-text-sm);
+	text-align: center;
+}

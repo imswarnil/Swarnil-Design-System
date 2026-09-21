@@ -1,0 +1,176 @@
+---
+title: Video collection
+layout: home
+description: A channel page — the banner, the mark, the numbers, the tabs, and the videos as a grid. The same page as a playlist or a search result, with a different list.
+eyebrow: Collections · Video
+source: src/components/video-card.css · partials/components/video-card.hbs
+---
+<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+	<p class="im-eyebrow">Collections · Video · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+
+	<div class="demo-controls">
+		<p class="im-caption">Layout</p>
+		<div class="im-btn-group" role="group" aria-label="Video grid"
+			data-demo-target="#vids" data-demo-label="#vids-class">
+			<button class="im-btn im-btn-sm" type="button" aria-pressed="true" data-demo-class="im-vidgrid">Grid</button>
+			<button class="im-btn im-btn-sm" type="button" data-demo-class="im-vidgrid im-vidgrid-list">List</button>
+		</div>
+		<code class="doc-source" id="vids-class" style="margin-left: auto"></code>
+	</div>
+</section>
+
+<div class="im-wrap-wide im-stack" style="--im-stack-gap: 1.75rem">
+	<section class="im-channel">
+		<div class="im-channel-banner"><img src="{{demo.six.[4].feature_image}}" alt="" loading="eager"></div>
+		<div class="im-channel-head">
+			{{> "components/avatar" size="xl" src=demo.author.profile_image name=demo.author.name}}
+			<div class="im-channel-id">
+				<h1 class="im-channel-name">{{demo.author.name}}<i class="im-vidcard-tick" aria-hidden="true"></i></h1>
+				<p class="im-channel-meta"><span>@imswarnil</span><span>128k subscribers</span><span>{{demo.videos.length}} videos</span></p>
+				<p class="im-channel-text">Roads, tools and the things that survived the year. New film most Thursdays.</p>
+			</div>
+			<div class="im-channel-actions">
+				<button class="im-btn im-btn-primary" type="button">Subscribe</button>
+				<button class="im-btn im-btn-icon" type="button" aria-label="More">{{icon "ellipsis"}}</button>
+			</div>
+		</div>
+	</section>
+
+	<div class="im-collbar">
+		<div class="im-collbar-filters">
+			<a class="im-tag" href="#vids" aria-current="page">Videos</a>
+			<a class="im-tag" href="#vids">Shorts</a>
+			<a class="im-tag" href="#vids">Live</a>
+			<a class="im-tag" href="#vids">Playlists</a>
+			<a class="im-tag" href="#vids">About</a>
+		</div>
+		<div class="im-cluster" style="--im-cluster-gap: .375rem">
+			<button class="im-btn im-btn-sm" type="button">{{icon "list-filter"}}Latest</button>
+		</div>
+	</div>
+
+	<div class="im-vidgrid" id="vids">
+		{{#each demo.videos}}
+			{{> "components/video-card" hide_by=true}}
+		{{/each}}
+	</div>
+
+	<div class="im-loadmore">
+		<button class="im-btn" type="button">Load more</button>
+		<p>8 of 214</p>
+	</div>
+
+	{{!-- The other three tabs. A channel is four lists of the same thing, so
+	      they are four uses of the same card — not four components. --}}
+	<section class="im-section">
+		<div class="home-head"><p class="im-caption" data-index="shorts">Shorts</p><a class="im-card-cta" href="/collections/video/short/">The short layout {{> "icons/arrow-right"}}</a></div>
+		<div class="im-vidgrid" style="--im-vidgrid-min: 11rem">
+			{{#each demo.videos}}{{#match @index "<" 6}}{{> "components/video-card" class="im-vidcard-tall" hide_by=true kind="short"}}{{/match}}{{/each}}
+		</div>
+	</section>
+
+	<section class="im-section">
+		<div class="home-head"><p class="im-caption" data-index="live">Live</p><a class="im-card-cta" href="#live">All streams {{> "icons/arrow-right"}}</a></div>
+		<div class="im-vidgrid">
+			{{#with demo.videos.[5]}}{{> "components/video-card" hide_by=true}}{{/with}}
+			{{#with demo.videos.[3]}}{{> "components/video-card" hide_by=true time="1:42:08"}}{{/with}}
+			{{#with demo.videos.[7]}}{{> "components/video-card" hide_by=true time="58:20"}}{{/with}}
+		</div>
+	</section>
+
+	<section class="im-section">
+		<div class="home-head"><p class="im-caption" data-index="lists">Playlists</p><a class="im-card-cta" href="#playlists">All playlists {{> "icons/arrow-right"}}</a></div>
+		<div class="im-vidgrid">
+			{{#with demo.videos.[1]}}
+			<article class="im-vidcard im-playlist">
+				<a class="im-vidcard-thumb" href="#playlists" tabindex="-1" aria-hidden="true">
+					<img src="{{thumb}}" alt="" loading="lazy">
+					<span class="im-playlist-count">{{> "icons/list"}}12</span>
+				</a>
+				<div class="im-vidcard-body"><div>
+					<h3 class="im-vidcard-title"><a href="#playlists">Everything about moving to Europe</a></h3>
+					<p class="im-vidcard-meta"><span>12 videos</span><span>Updated last week</span></p>
+				</div></div>
+			</article>
+			{{/with}}
+			{{#with demo.videos.[4]}}
+			<article class="im-vidcard im-playlist">
+				<a class="im-vidcard-thumb" href="#playlists" tabindex="-1" aria-hidden="true">
+					<img src="{{thumb}}" alt="" loading="lazy">
+					<span class="im-playlist-count">{{> "icons/list"}}7</span>
+				</a>
+				<div class="im-vidcard-body"><div>
+					<h3 class="im-vidcard-title"><a href="#playlists">Building this design system</a></h3>
+					<p class="im-vidcard-meta"><span>7 videos</span><span>Updated 3 days ago</span></p>
+				</div></div>
+			</article>
+			{{/with}}
+			{{#with demo.videos.[2]}}
+			<article class="im-vidcard im-playlist">
+				<a class="im-vidcard-thumb" href="#playlists" tabindex="-1" aria-hidden="true">
+					<img src="{{thumb}}" alt="" loading="lazy">
+					<span class="im-playlist-count">{{> "icons/list"}}24</span>
+				</a>
+				<div class="im-vidcard-body"><div>
+					<h3 class="im-vidcard-title"><a href="#playlists">The road series</a></h3>
+					<p class="im-vidcard-meta"><span>24 videos</span><span>Complete</span></p>
+				</div></div>
+			</article>
+			{{/with}}
+		</div>
+	</section>
+</div>
+
+<section class="im-section im-wrap">
+	<div class="im-prose">
+		<h2>The channel head</h2>
+		<p>A banner, the mark, the name with its tick, the numbers, one line, and the thing a visitor came to press. Then a bar of tabs — which is the same <code>im-collbar</code> the <a href="/collections/post/">post collection</a> uses, so the filters on a channel and the topics on a blog are one component.</p>
+		<div class="im-table-scroll">
+		<table>
+			<thead><tr><th>Class</th><th></th></tr></thead>
+			<tbody>
+				<tr><td><code>im-channel</code></td><td>The whole head.</td></tr>
+				<tr><td><code>im-channel-banner</code></td><td>6:1 by default — <code>--im-channel-ratio</code>. It has a minimum height, so it never becomes a stripe on a phone.</td></tr>
+				<tr><td><code>im-channel-head</code></td><td>The row: avatar, identity, and the actions pushed to the far end.</td></tr>
+				<tr><td><code>im-channel-meta</code></td><td>Handle, subscribers, count — drawn dots between them, as everywhere else in the system.</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<h2>The grid</h2>
+		<p><code>im-vidgrid</code> — as many columns as fit at <code>--im-vidgrid-min</code> (17rem), with a taller row gap than column gap, because a still and its two lines of title need air above the next row and not beside it.</p>
+		<p><code>hide_by=true</code> takes the channel's mark and name off every card: on a channel's own page they are the same name eight times, and it is already at the top of the page.</p>
+
+		<h2>As a list</h2>
+		<p><code>im-vidgrid-list</code> with <code>layout="row"</code> — the search-result shape, where there is room for a line of description.</p>
+		{{#example}}
+		<div class="im-vidgrid im-vidgrid-list">
+			{{#each demo.videos}}{{#match @index "<" 3}}{{> "components/video-card" layout="row" text="Sorrento to Amalfi from the passenger seat, with the bits the brochures leave out — and what it actually costs."}}{{/match}}{{/each}}
+		</div>
+		{{/example}}
+
+		<h2>Four tabs, one card</h2>
+		<p>A channel is four lists of the same thing, so they are four <em>uses</em> of the same card and not four components.</p>
+		<div class="im-table-scroll">
+		<table>
+			<thead><tr><th>Tab</th><th>What it is</th></tr></thead>
+			<tbody>
+				<tr><td>Videos</td><td>The card, as it comes.</td></tr>
+				<tr><td>Shorts</td><td><code>im-vidcard-tall</code> — one variable, <code>--im-vidcard-ratio: 9 / 16</code>. The page one opens on is the <a href="/collections/video/short/">short layout</a>.</td></tr>
+				<tr><td>Live</td><td>The same card with <code>live=true</code>: the length becomes a LIVE chip, and the views become people watching now.</td></tr>
+				<tr><td>Playlists</td><td><code>im-playlist</code> — the card with two edges stacked behind the still and a panel down its side saying how many. It is a <em>set</em>, and it should look like one before it is read.</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<h2>Details that matter</h2>
+		<ul>
+			<li><strong>The length goes bottom-right.</strong> Every viewer looks for it there before they look at anything else. Moving it is not a design decision, it is a tax.</li>
+			<li><strong>A live video has no length</strong> — it has <code>im-vidcard-time-live</code>, and its "views" are people watching now.</li>
+			<li><strong>The progress bar is the viewer's, not yours.</strong> Only draw it if you actually know where they got to.</li>
+			<li><strong>The still is <code>aria-hidden</code> and not focusable.</strong> The title's link is the one tab stop; a keyboard user should not meet every video twice.</li>
+		</ul>
+	</div>
+</section>

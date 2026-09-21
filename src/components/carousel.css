@@ -490,7 +490,7 @@
 	letter-spacing: -0.12em;
 }
 
-/* Pixel numerals — the Swiss take. */
+/* Pixel numerals. */
 .im-carousel-ranked-pixel .im-rank::before {
 	color: var(--im-ink);
 	font-family: var(--im-font-pixel);

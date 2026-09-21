@@ -133,9 +133,13 @@
 	color: var(--im-ink);
 }
 
+/* The page you are on: the same light fill and bolder label as the side nav,
+   the menu and every other list of places in the system. --im-current-* is
+   where that look is defined. */
 .im-toplink[aria-current="page"] {
-	color: var(--im-ink);
-	font-weight: 600;
+	background-color: var(--im-current-bg);
+	color: var(--im-current-fg);
+	font-weight: var(--im-current-weight);
 }
 
 .im-toplink > .im-icon {
@@ -171,5 +175,74 @@
 
 	.im-topbar-site .im-topbar-start {
 		gap: 0.25rem;
+	}
+}
+
+/* The logo itself is components/logo.css — letters and a dot, not a picture.
+   This file only says how the LINK around it behaves.
+
+   Mark only, no words — for an island bar or a narrow phone. A theme that
+   passes its own <img> keeps a <span> with the name beside it; this hides it. */
+.im-brand-mark > span {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+
+/* ---- island ----
+   A bar that floats over the page instead of spanning it: a pill, centred,
+   with the page visible on either side.
+
+   <header class="im-topbar im-topbar-site im-topbar-island"> … </header>
+
+   It is FIXED, so it overlays whatever follows — that is the point, and a hero
+   is usually meant to run under it. Give the next block `im-bar-offset` if it
+   should start below instead. Knobs: --im-island-width, --im-island-gap,
+   --im-island-height. */
+.im-topbar-island,
+.im-topbar-float {
+	--im-island-width: 64rem;
+	--im-island-gap: 0.75rem;
+	--im-island-height: 3.25rem;
+
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 40;
+	height: var(--im-bar-height);
+	border-radius: 0;
+	background-color: color-mix(in oklab, var(--im-canvas) 86%, transparent);
+	box-shadow: none;
+	transition: top 280ms var(--im-ease-out), left 280ms var(--im-ease-out), right 280ms var(--im-ease-out), height 280ms var(--im-ease-out), border-radius 280ms var(--im-ease-out), box-shadow 280ms var(--im-ease-out), background-color 280ms;
+}
+
+/* The island proper — and what the floating bar becomes once the page moves. */
+.im-topbar-island,
+.im-topbar-float[data-im-stuck] {
+	top: var(--im-island-gap);
+	left: max(var(--im-gutter), calc(50% - var(--im-island-width) / 2));
+	right: max(var(--im-gutter), calc(50% - var(--im-island-width) / 2));
+	height: var(--im-island-height);
+	padding-inline: 0.625rem;
+	border-radius: var(--im-radius-full);
+	background-color: color-mix(in oklab, var(--im-canvas) 78%, transparent);
+	box-shadow: inset 0 0 0 1px var(--im-line), var(--im-shadow-float);
+}
+
+/* Squared off rather than a pill, for a system that is not round. */
+.im-topbar-island-square,
+.im-topbar-float-square[data-im-stuck] {
+	border-radius: var(--im-radius-xl);
+}
+
+/* Reduced motion: it should still change, just not slide. */
+@media (prefers-reduced-motion: reduce) {
+	.im-topbar-island,
+	.im-topbar-float {
+		transition-duration: 1ms;
 	}
 }

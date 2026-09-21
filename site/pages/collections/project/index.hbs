@@ -1,0 +1,117 @@
+---
+title: Project collection
+layout: home
+description: The page a portfolio opens on — who you are, what you have built, and the work itself as a grid of repo cards. The same page as a tag or a language filter, with a different list.
+eyebrow: Collections · Project
+source: src/components/repo-card.css · partials/components/repo-card.hbs
+---
+<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+	<p class="im-eyebrow">Collections · Project · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+
+	<div class="demo-controls">
+		<p class="im-caption">Grid</p>
+		<div class="im-btn-group" role="group" aria-label="Project grid"
+			data-demo-target="#repos" data-demo-label="#repos-class">
+			<button class="im-btn im-btn-sm" type="button" aria-pressed="true" data-demo-class="im-repos">Cards</button>
+			<button class="im-btn im-btn-sm" type="button" data-demo-class="im-repos im-repos-list">List</button>
+		</div>
+		<code class="doc-source" id="repos-class" style="margin-left: auto"></code>
+	</div>
+</section>
+
+<div class="im-wrap-wide im-stack" style="--im-stack-gap: 1.75rem">
+	<header class="im-collhead">
+		<p class="im-eyebrow">Work</p>
+		<h1 class="im-collhead-title">Projects</h1>
+		<p class="im-collhead-text">Things I have built and kept building. Everything here is open, and everything here is used by somebody — including me.</p>
+		<p class="im-collhead-meta">
+			<span>{{demo.projects.length}} repositories</span>
+			<a href="#projects">4.2k stars</a>
+			<a href="#projects">GitHub</a>
+		</p>
+	</header>
+
+	<div class="im-collbar">
+		<div class="im-collbar-filters">
+			<a class="im-tag" href="#projects" aria-current="page">All</a>
+			<a class="im-tag" href="#projects">CSS</a>
+			<a class="im-tag" href="#projects">TypeScript</a>
+			<a class="im-tag" href="#projects">Handlebars</a>
+			<a class="im-tag" href="#projects">Python</a>
+			<a class="im-tag" href="#projects">Archived</a>
+		</div>
+		<div class="im-cluster" style="--im-cluster-gap: .375rem">
+			<button class="im-btn im-btn-sm" type="button">{{icon "list-filter"}}Most stars</button>
+		</div>
+	</div>
+
+	<div class="im-repos" id="repos">
+		{{#each demo.projects}}{{> "components/repo-card" cta=true}}{{/each}}
+	</div>
+
+	<div class="im-loadmore">
+		<button class="im-btn" type="button">Load more</button>
+		<p>6 of 24</p>
+	</div>
+
+	{{!-- A collection of projects is not only a grid of them: the writing about
+	      the work belongs on the same page as the work. These are ordinary
+	      POSTS, tagged, in the ordinary post card. --}}
+	<section class="im-section">
+		<div class="home-head"><p class="im-caption" data-index="log">From the project log</p><a class="im-card-cta" href="/collections/post/">All posts {{> "icons/arrow-right"}}</a></div>
+		<div class="im-feed">
+			{{#foreach demo.three}}{{> "components/post-card" excerpt=true}}{{/foreach}}
+		</div>
+	</section>
+</div>
+
+<section class="im-section im-wrap">
+	<div class="im-prose">
+		<h2>The same page as the post collection</h2>
+		<p>A head, a bar of filters, a grid, a way to the next page. It is the <a href="/collections/post/">post collection</a> with a different card in the grid — <code>im-collhead</code>, <code>im-collbar</code> and the load-more are all the same components — and that is the point: a site where the writing and the work are laid out by two different sets of rules reads as two different sites.</p>
+		<p>What changes is the <strong>card</strong>, because a project is not a post. A post wants a picture and an excerpt; a project wants a name, one line, what it is written in, how many people starred it and when it last moved. See <a href="/collections/project/card/">Project card</a>.</p>
+		<div class="im-table-scroll">
+		<table>
+			<thead><tr><th>Class</th><th></th></tr></thead>
+			<tbody>
+				<tr><td><code>im-repos</code></td><td>The grid. As many columns as fit at <code>--im-repos-min</code> (19rem).</td></tr>
+				<tr><td><code>im-repos-list</code></td><td>One column. Pair it with <code>layout="bare"</code> on the cards and it becomes a ruled list — what a profile's repository tab looks like, and right for forty of them.</td></tr>
+			</tbody>
+		</table>
+		</div>
+		{{{{code "hbs"}}}}
+<div class="im-repos">
+	{{#get "posts" filter="tag:project" limit="all"}}
+		{{#foreach posts}}{{> "components/repo-card"}}{{/foreach}}
+	{{/get}}
+</div>
+		{{{{/code}}}}
+		<p>Ghost has no "repository" content type, so a theme builds one: a post tagged <code>#project</code>, with the numbers in its code injection or fetched once at build time from a host's public API. The card does not care where the data came from.</p>
+
+		<h2>A ruled list instead</h2>
+		<p><code>im-repos-list</code> with <code>layout="bare"</code>. No boxes, a rule between rows, and the whole thing reads as a table of contents rather than as a wall of cards.</p>
+		{{#example}}
+		<div class="im-repos im-repos-list">
+			{{#each demo.projects}}{{#match @index "<" 3}}{{> "components/repo-card" layout="bare"}}{{/match}}{{/each}}
+		</div>
+		{{/example}}
+
+		<h2>Pinned</h2>
+		<p><code>layout="lg"</code>, in a two-column grid: the three or four you want looked at first, above everything else.</p>
+		{{#example}}
+		<div class="im-repos" style="--im-repos-min: 22rem">
+			{{#each demo.projects}}{{#match @index "<" 2}}{{> "components/repo-card" layout="lg"}}{{/match}}{{/each}}
+		</div>
+		{{/example}}
+
+		<h2>Details that matter</h2>
+		<ul>
+			<li><strong>The owner is quiet and the name is not.</strong> <code>owner/<b>name</b></code> — one is context, one is the thing.</li>
+			<li><strong>The language dot's colour comes from the data</strong>, not from a table in this repository. A design system has no business knowing about two hundred programming languages.</li>
+			<li><strong>Archived is a state, not a strikethrough.</strong> <code>visibility="Archived"</code> tints the chip; the card is otherwise exactly as readable, because an archived project is still a project somebody may want.</li>
+			<li><strong>The whole card is the link.</strong> The stars, the forks and the topics sit above that hit area, so they can go somewhere else.</li>
+		</ul>
+	</div>
+</section>

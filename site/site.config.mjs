@@ -21,7 +21,7 @@ export const site = {
 	// What Ghost would hand {{navigation}} — used by the navbar examples.
 	navigation: [
 		{ label: 'Home', url: '/' },
-		{ label: 'Journal', url: '/components/post-card/' },
+		{ label: 'Journal', url: '/collections/post/' },
 		{ label: 'Videos', url: '/sections/home-hero-full/' },
 		{ label: 'Projects', url: '/components/card/' },
 		{ label: 'About', url: '/getting-started/' },
@@ -33,7 +33,9 @@ export const site = {
 	],
 };
 
-/** `icon` is a file in partials/icons/ (a Lucide name). */
+/** `icon` is a file in partials/icons/ (a Lucide name).
+ *  An item with `children` is a group INSIDE a group — one more level of the
+ *  tree, for a family of pages (a collection) that belongs under one name. */
 export const navigation = [
 	{
 		items: [
@@ -46,6 +48,7 @@ export const navigation = [
 		icon: 'layers',
 		items: [
 			{ label: 'Principles', url: '/foundation/principles/' },
+			{ label: 'Logo', url: '/foundation/logo/' },
 			{ label: 'Color', url: '/foundation/color/' },
 			{ label: 'Typography', url: '/foundation/typography/' },
 			{ label: 'Space, radius, shadow', url: '/foundation/space/' },
@@ -58,7 +61,7 @@ export const navigation = [
 		items: [
 			{ label: 'Shell', url: '/layout/shell/' },
 			{ label: 'Containers & grid', url: '/layout/grid/' },
-			{ label: 'Swiss grid', url: '/layout/swiss/' },
+			{ label: 'Footer', url: '/layout/footer/' },
 			{ label: 'Divider', url: '/layout/divider/' },
 		],
 	},
@@ -67,6 +70,8 @@ export const navigation = [
 		icon: 'navigation',
 		items: [
 			{ label: 'Navbar', url: '/navigation/navbar/' },
+			{ label: 'Menu panel', url: '/navigation/panel/' },
+			{ label: 'Mega menu', url: '/navigation/mega/' },
 			{ label: 'Sidebar', url: '/navigation/sidebar/' },
 			{ label: 'Dropdown menu', url: '/navigation/menu/' },
 			{ label: 'Table of contents', url: '/navigation/toc/' },
@@ -85,8 +90,8 @@ export const navigation = [
 			{ label: 'Badge & tag', url: '/components/badge/' },
 			{ label: 'Callout', url: '/components/callout/' },
 			{ label: 'Card', url: '/components/card/' },
-			{ label: 'Post card', url: '/components/post-card/' },
 			{ label: 'Widgets', url: '/components/widgets/' },
+			{ label: 'Ads & sponsors', url: '/components/ads/' },
 			{ label: 'Accordion & tabs', url: '/components/disclosure/' },
 			{ label: 'Switch & switcher', url: '/components/switch/' },
 			{ label: 'Tooltip & hover card', url: '/components/tooltip/' },
@@ -117,7 +122,7 @@ export const navigation = [
 			{ label: 'Quotes, tables & notes', url: '/content/blocks/' },
 			{ label: 'Media cards', url: '/content/media/' },
 			{ label: 'Editor cards', url: '/content/cards/' },
-			{ label: 'A full article', url: '/content/article/' },
+			{ label: 'Mockups', url: '/content/mockups/' },
 		],
 	},
 	{
@@ -156,6 +161,57 @@ export const navigation = [
 			{ label: 'All sections', url: '/sections/' },
 			{ label: 'Home hero, full', url: '/sections/home-hero-full/' },
 			{ label: 'Stats band', url: '/sections/stats-band/' },
+		],
+	},
+	{
+		title: 'Collections',
+		icon: 'library',
+		items: [
+			{
+				label: 'Post',
+				icon: 'newspaper',
+				children: [
+					{ label: 'Post collection', url: '/collections/post/' },
+					{ label: 'Post card', url: '/collections/post/card/' },
+					{ label: 'Post single', url: '/collections/post/single/' },
+					{ label: 'Post page', url: '/collections/post/article/' },
+				],
+			},
+			{
+				label: 'Project',
+				icon: 'folder',
+				children: [
+					{ label: 'Project collection', url: '/collections/project/' },
+					{ label: 'Project card', url: '/collections/project/card/' },
+					{ label: 'Project page', url: '/collections/project/page/' },
+				],
+			},
+			{
+				label: 'Newsletter',
+				icon: 'mail',
+				children: [
+					{ label: 'Issue collection', url: '/collections/newsletter/' },
+					{ label: 'Issue page', url: '/collections/newsletter/issue/' },
+				],
+			},
+			{
+				label: 'Tag',
+				icon: 'tag',
+				children: [
+					{ label: 'All tags', url: '/collections/tag/' },
+					{ label: 'Tag page', url: '/collections/tag/page/' },
+				],
+			},
+			{
+				label: 'Video',
+				icon: 'video',
+				children: [
+					{ label: 'Video collection', url: '/collections/video/' },
+					{ label: 'Video card', url: '/collections/video/card/' },
+					{ label: 'Video page', url: '/collections/video/page/' },
+					{ label: 'Short (9:16)', url: '/collections/video/short/' },
+				],
+			},
 		],
 	},
 	{

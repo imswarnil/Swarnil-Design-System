@@ -80,7 +80,9 @@
 }
 
 .im-navlink[aria-current="page"] {
-	background-color: var(--im-surface-2);
+	background-color: var(--im-current-bg);
+	color: var(--im-current-fg);
+	font-weight: var(--im-current-weight);
 }
 
 /* A count or a badge at the end of a link. */
@@ -151,8 +153,25 @@
 }
 
 .im-navtree-items > .im-navlink[aria-current="page"] {
+	color: var(--im-current-fg);
+	font-weight: var(--im-current-weight);
+}
+
+/* A tree inside a tree — Collections › Post › a page. The nested summary is a
+   child row like any other, and its own items indent once more. */
+.im-navtree-items > .im-navtree > summary {
+	min-height: 2rem;
+	color: var(--im-body);
+	font-weight: 400;
+}
+
+.im-navtree-items > .im-navtree:has([aria-current="page"]) > summary {
 	color: var(--im-ink);
 	font-weight: 500;
+}
+
+.im-navtree-items > .im-navtree > .im-navtree-items {
+	margin-left: 0.5rem;
 }
 
 /* The group that holds the current page reads as current too. */

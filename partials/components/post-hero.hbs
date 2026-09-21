@@ -1,0 +1,57 @@
+{{!-- The head of an article. Context: a post. One partial, six arrangements.
+	Params
+	  style      stack (default) · wide · split · side · cover · minimal
+	  center     true, with style="cover" — the copy sits in the middle
+	  crumbs     true — a breadcrumb above the title: home · section · topic
+	  section    what the breadcrumb calls the collection ("Writing")
+	  section_url  where that crumb goes ("/blog/")
+	  zoom       true — the feature image opens in the lightbox
+	  caption    the picture's caption; omitted, there is none
+	  id         an id on the <header>, if something needs to reach it
+	Everything else comes from the post, so a theme calls it with nothing but a
+	style and the whole header changes.
+
+	The byline is a HOVER CARD: the name and the avatar are the trigger, and
+	who the author is — bio, where, how many posts, where else to find them —
+	is revealed rather than printed under every headline. The trigger, the
+	panel and the closing tag must TOUCH: .im-hovercard is display: inline, so
+	any whitespace between them prints as a space. --}}
+<header class="im-posthero im-posthero-{{#if style}}{{style}}{{else}}stack{{/if}}{{#if center}} im-posthero-cover-center{{/if}}"{{#if id}} id="{{id}}"{{/if}}>
+	<div class="im-posthero-copy">
+		{{#if crumbs}}
+			<nav class="im-posthero-crumbs" aria-label="{{t "Breadcrumb"}}">
+				<ol class="im-breadcrumb im-breadcrumb-chevron im-breadcrumb-scroll">
+					<li><a href="{{@site.url}}">{{> "icons/house"}}<span>{{t "Home"}}</span></a></li>
+					<li><a href="{{#if section_url}}{{section_url}}{{else}}/{{/if}}">{{> "icons/newspaper"}}<span>{{#if section}}{{section}}{{else}}{{t "Writing"}}{{/if}}</span></a></li>
+					{{#primary_tag}}<li><a href="{{url}}">{{> "icons/tag"}}<span>{{name}}</span></a></li>{{/primary_tag}}
+					<li><span aria-current="page">{{title}}</span></li>
+				</ol>
+			</nav>
+		{{/if}}
+
+		{{#if primary_tag}}
+			<p class="im-posthero-kicker">
+				{{#foreach tags limit="2"}}<a class="im-tag" href="{{url}}">{{name}}</a>{{/foreach}}
+				{{#if reading_time}}<span>{{reading_time}}</span>{{/if}}
+			</p>
+		{{/if}}
+		<h1 class="im-posthero-title">{{title}}</h1>
+		{{#if custom_excerpt}}<p class="im-posthero-excerpt">{{custom_excerpt}}</p>{{/if}}
+		<div class="im-posthero-meta">
+			{{#primary_author}}<span class="im-hovercard im-hovercard-center im-hovercard-below"><a class="im-posthero-byline" href="{{url}}">{{> "components/avatar" size="sm" src=profile_image name=name}}<span>{{name}}</span></a><span class="im-hovercard-panel" role="tooltip"><span class="im-hovercard-person">{{> "components/avatar" size="lg" src=profile_image name=name}}<span><span class="im-hovercard-title">{{name}}</span><span class="im-hovercard-meta">{{#if location}}<span>{{location}}</span>{{/if}}{{#if count.posts}}<span>{{count.posts}} {{t "posts"}}</span>{{/if}}</span></span></span>{{#if bio}}<span class="im-hovercard-bio">{{bio}}</span>{{/if}}<span class="im-hovercard-actions"><a class="im-btn im-btn-sm im-btn-primary" href="{{url}}">{{t "All posts"}}</a>{{#if website}}<a class="im-btn im-btn-sm im-btn-icon" href="{{website}}" rel="noopener noreferrer" aria-label="{{t "Website"}}">{{> "icons/globe"}}</a>{{/if}}{{#if twitter}}<a class="im-btn im-btn-sm im-btn-icon" href="https://x.com/{{twitter}}" rel="noopener noreferrer" aria-label="X">{{> "icons/brand-x"}}</a>{{/if}}{{#if facebook}}<a class="im-btn im-btn-sm im-btn-icon" href="https://www.facebook.com/{{facebook}}" rel="noopener noreferrer" aria-label="Facebook">{{> "icons/brand-facebook"}}</a>{{/if}}</span></span></span>{{/primary_author}}
+			<time datetime="{{date format="YYYY-MM-DD"}}">{{date format="D MMMM YYYY"}}</time>
+			{{#unless primary_tag}}{{#if reading_time}}<span>{{reading_time}}</span>{{/if}}{{/unless}}
+		</div>
+	</div>
+
+	{{#if feature_image}}
+		<figure class="im-posthero-media"{{#if zoom}} data-im-lightbox{{/if}}>
+			<img src="{{img_url feature_image size="xl"}}" alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}" width="1600" height="900">
+			{{!-- The link COVERS the picture rather than wrapping it: the layout
+			     reaches for .im-posthero-media > img, and a wrapper would break
+			     the two-column arrangements. It carries the frame mark. --}}
+			{{#if zoom}}<a class="im-zoom-cover" href="{{img_url feature_image}}" aria-label="{{t "View full size"}}"{{#if caption}} data-caption="{{caption}}"{{/if}}></a>{{/if}}
+			{{#if caption}}<figcaption>{{caption}}</figcaption>{{/if}}
+		</figure>
+	{{/if}}
+</header>

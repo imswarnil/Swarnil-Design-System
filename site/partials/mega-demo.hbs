@@ -1,0 +1,34 @@
+{{!-- Docs only: what a theme would write in its own mega-menu partial and
+	hand to shell/navbar as `mega`. Plain .im-navcols — nothing docs-specific
+	about the markup, only the links. --}}
+<div class="im-navcols">
+	<div class="im-navcol">
+		<p class="im-navcol-title">Writing</p>
+		<a class="im-navitem" href="/collections/post/card/">{{> "icons/book-open"}}<span>Journal<small>Essays, twice a month</small></span></a>
+		<a class="im-navitem" href="/content/text/">{{> "icons/text-quote"}}<span>Notes<small>Short, unedited</small></span></a>
+		<a class="im-navitem" href="/navigation/pagination/">{{> "icons/library"}}<span>Archive<small>Everything, by year</small></span></a>
+	</div>
+	<div class="im-navcol">
+		<p class="im-navcol-title">Work</p>
+		<a class="im-navitem" href="/components/card/">{{> "icons/briefcase"}}<span>Projects<small>What I am building</small></span></a>
+		<a class="im-navitem" href="/components/code/">{{> "icons/file-code"}}<span>Open source<small>Repos and releases</small></span></a>
+		<a class="im-navitem" href="/navigation/curriculum/">{{> "icons/graduation-cap"}}<span>Courses<small>Three, self-paced</small></span></a>
+	</div>
+	<div class="im-navcol">
+		<p class="im-navcol-title">Elsewhere</p>
+		<a class="im-navitem" href="/media/video/">{{> "icons/brand-youtube"}}<span>YouTube</span></a>
+		<a class="im-navitem" href="/components/share/">{{> "icons/brand-x"}}<span>X</span></a>
+		<a class="im-navitem" href="/components/icons/">{{> "icons/rss"}}<span>RSS</span></a>
+		<a class="im-navitem" href="/getting-started/">{{> "icons/mail"}}<span>Email</span></a>
+	</div>
+	<div class="im-navcol im-mega-feature">
+		<p class="im-navcol-title">Latest</p>
+		<a class="im-post-card" href="/collections/post/article/">
+			<span class="im-post-card-media"><img src="{{demo.post.feature_image}}" alt="" width="600" height="338" loading="lazy"></span>
+			<span class="im-post-card-body">
+				<span class="im-post-card-title">{{demo.post.title}}</span>
+				<span class="im-post-card-meta"><span>{{date demo.post.published_at format="D MMM"}}</span><span>6 min read</span></span>
+			</span>
+		</a>
+	</div>
+</div>

@@ -6,9 +6,9 @@
 	<title>{{meta_title}}</title>
 	<meta name="description" content="{{#if page.description}}{{page.description}}{{else}}{{@site.description}}{{/if}}">
 	{{> "shell/head-script"}}
-	{{!-- Docs only: which STYLE SCOPE the site is shown in. A theme would simply
-	     write <html data-im-style="swiss"> — or leave it off for the soft look. --}}
-	<script>(function(){var s;try{s=localStorage.getItem('im-style')}catch(e){}document.documentElement.dataset.imStyle=s==='soft'?'soft':'swiss';var t;try{t=localStorage.getItem('im-transition')}catch(e){}document.documentElement.dataset.imTransition=t||'rise'})();</script>
+	{{!-- Docs only: which page transition is being demonstrated. --}}
+	<script>(function(){var t;try{t=localStorage.getItem('im-transition')}catch(e){}document.documentElement.dataset.imTransition=t||'rise'})();</script>
+	<link rel="icon" href="/assets/brand/mark.svg" type="image/svg+xml">
 	<link rel="preload" href="/assets/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
 	{{ghost_head}}
 	<link rel="stylesheet" href="/assets/im.css">
@@ -19,7 +19,7 @@
 	<a class="im-btn im-btn-ink skip-link" href="#main">{{t "Skip to content"}}</a>
 
 	<div class="im-shell">
-		{{#> "shell/topbar" search_custom=true github="https://github.com/imswarnil" end="docs/topbar-end"}}
+		{{#> "shell/topbar" search_custom=true github="https://github.com/imswarnil/Swarnil-Design-System"}}
 			<span class="im-badge im-badge-outline max-sm:hidden">v0.6</span>
 		{{/"shell/topbar"}}
 
@@ -32,21 +32,18 @@
 			{{{body}}}
 		</main>
 
-		<footer class="im-shell-foot">
-			<span>© {{name}}. Original work — see <a href="/provenance/">provenance</a>.</span>
-			<span class="im-cluster"><a href="/getting-started/">Getting started</a><a href="/sections/">Sections</a></span>
-		</footer>
+		{{> "docs/footer"}}
 	</div>
 
 	<dialog class="im-navpanel" id="drawer" aria-label="{{t "Navigation"}}">
 		<div class="im-navpanel-head">
-			<a class="im-brand" href="/">{{@site.title}}</a>
+			<a class="im-brand" href="/">{{> "components/logo" mark=true size="2rem" label=name}}<span>{{name}}</span></a>
 			<button class="im-btn im-btn-ghost im-btn-icon" type="button" data-drawer-close aria-label="{{t "Close"}}">{{> "icons/x"}}</button>
 		</div>
-		<nav class="im-navpanel-grid" aria-label="{{t "Documentation"}}">{{> "docs/nav-panel"}}</nav>
+		<nav class="im-navpanel-cols" aria-label="{{t "Documentation"}}">{{> "docs/nav-panel"}}</nav>
 		<div class="im-navpanel-foot">
-			{{> "components/theme-button"}}
-			<a class="im-btn im-btn-ghost im-btn-icon" href="https://github.com/imswarnil" target="_blank" rel="noopener noreferrer" aria-label="GitHub">{{> "icons/brand-github"}}</a>
+			{{> "components/theme-switch" size="sm"}}
+			<a class="im-star im-star-sm" href="https://github.com/imswarnil/Swarnil-Design-System" target="_blank" rel="noopener noreferrer">{{> "icons/brand-github"}}<span>Star</span><b data-im-star-count></b></a>
 			<a class="im-btn im-btn-primary im-btn-sm" style="margin-left: auto" href="/getting-started/">Get started {{> "icons/arrow-right"}}</a>
 		</div>
 	</dialog>
@@ -67,6 +64,7 @@
 	<script src="/assets/im-media.js"></script>
 	<script src="/assets/im-charts.js"></script>
 	<script src="/assets/im-content.js"></script>
+	<script src="/assets/im-ads.js"></script>
 	<script src="/assets/docs.js"></script>
 	{{{block "scripts"}}}
 </body>

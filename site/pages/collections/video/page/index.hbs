@@ -1,0 +1,107 @@
+---
+title: Video page
+layout: home
+description: One video, whole — the player, the title and what a viewer can do with it, the channel with its subscribe, the description folded, the chapters, what people said, and what to watch next.
+eyebrow: Collections · Video
+source: src/components/video.css · video-card.css · comments.css
+---
+<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+	<p class="im-eyebrow">Collections · Video · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+</section>
+
+<div class="im-with-aside im-with-aside-wide im-wrap-wide">
+	<article class="im-stack" style="--im-stack-gap: 1.25rem">
+		{{#with demo.videos.[0]}}
+		<div class="im-video im-video-full" id="watch" data-im-video="aqz-KE-bpKQ" data-im-video-title="{{title}}">
+			<img class="im-video-poster" src="{{thumb}}" alt="" loading="eager">
+			<button class="im-video-play" type="button" aria-label="Play">{{> "icons/play"}}</button>
+		</div>
+
+		<header class="im-vidhead">
+			<h1 class="im-vidhead-title">{{title}}</h1>
+			<div class="im-vidhead-bar">
+				<div class="im-vidhead-by">
+					{{> "components/avatar" src=avatar name=channel}}
+					<div>
+						<strong>{{channel}}<i class="im-vidcard-tick" aria-hidden="true"></i></strong>
+						<small>128k subscribers</small>
+					</div>
+					<button class="im-btn im-btn-primary im-btn-sm" type="button" style="margin-left: .5rem">Subscribe</button>
+				</div>
+				<div class="im-vidhead-actions">
+					<div class="im-btn-group" role="group" aria-label="Rate">
+						<button class="im-btn im-btn-sm" type="button">{{icon "thumbs-up"}}12k</button>
+						<button class="im-btn im-btn-sm im-btn-icon" type="button" aria-label="Dislike" style="rotate: 180deg">{{icon "thumbs-up"}}</button>
+					</div>
+					<button class="im-btn im-btn-sm" type="button" data-im-share="#watch">{{icon "share"}}Share</button>
+					<button class="im-btn im-btn-sm" type="button">{{icon "bookmark"}}Save</button>
+					<button class="im-btn im-btn-sm im-btn-icon" type="button" popovertarget="watch-menu" aria-label="More" aria-expanded="false">{{icon "ellipsis"}}</button>
+					<div class="im-menu" id="watch-menu" popover>
+						<a class="im-menu-item" href="#watch">{{icon "triangle-alert"}}<span>Report</span></a>
+						<a class="im-menu-item" href="#watch">{{icon "clock"}}<span>Watch later</span></a>
+						<a class="im-menu-item" href="#watch">{{icon "download"}}<span>Download</span></a>
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<details class="im-viddesc" open>
+			<summary><span>{{views}} views</span><span>{{when}}</span><span class="im-topic">#travel</span></summary>
+			<div class="im-viddesc-body">Sorrento to Amalfi is forty kilometres and takes two hours, because nobody on it wants to arrive. The road was cut into the cliff in the 1840s and has not been widened since.
+
+Shot over four days in November with one lens. Everything it cost is in the pinned comment.</div>
+		</details>
+		{{/with}}
+
+		<section class="im-section" style="--im-section-gap: 1rem">
+			<h2 class="im-caption">Chapters</h2>
+			<ol class="im-chapters" data-im-chapters="#watch" data-im-duration="8:12" aria-label="Chapters">
+				<li><button type="button" data-t="0:00"><time>0:00</time><span>Leaving Sorrento</span></button></li>
+				<li><button type="button" data-t="1:40"><time>1:40</time><span>The first tunnel</span></button></li>
+				<li><button type="button" data-t="3:55"><time>3:55</time><span>Positano, and the parking</span></button></li>
+				<li><button type="button" data-t="6:10"><time>6:10</time><span>Amalfi</span></button></li>
+			</ol>
+		</section>
+
+		{{> "components/comments" thread=demo.comments count="1,204"}}
+	</article>
+
+	<aside>
+		<div class="im-sticky-rail">
+			<div class="im-stack" style="--im-stack-gap: .75rem">
+				<p class="im-caption">Up next</p>
+				{{#each demo.videos}}{{#match @index ">" 0}}{{> "components/video-card" layout="compact"}}{{/match}}{{/each}}
+			</div>
+		</div>
+	</aside>
+</div>
+
+<section class="im-section im-wrap">
+	<div class="im-prose">
+		<h2>The shape of a watch page</h2>
+		<p>The player, the title, then one row that holds two different kinds of thing: <strong>who made it</strong> on the left and <strong>what you can do with it</strong> on the right. Everything below is ordinary components — the <a href="/media/video/#chapters">chapters</a>, the <a href="/collections/post/article/#after-the-last-paragraph">comment thread</a>, and a rail of <a href="/collections/video/card/#compact">compact cards</a>.</p>
+		<div class="im-table-scroll">
+		<table>
+			<thead><tr><th>Class</th><th></th></tr></thead>
+			<tbody>
+				<tr><td><code>im-video im-video-full</code></td><td>The player. It costs nothing until it is pressed — a poster and a button, and the iframe is only built on the press.</td></tr>
+				<tr><td><code>im-vidhead</code></td><td>Title, then <code>im-vidhead-bar</code>: the channel and the actions, the second pushed to the far end.</td></tr>
+				<tr><td><code>im-viddesc</code></td><td>The description, folded. A <code>&lt;details&gt;</code> — the browser owns the state, the keyboard and find-in-page, and it works before any script runs. The summary carries the views, the date and the tags, which is the line a viewer actually reads.</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<h2>Why a &lt;details&gt; and not a script</h2>
+		<p>A "show more" that a script toggles is three things that can go wrong: the state, the height animation, and what a screen reader is told. A <code>&lt;details&gt;</code> is none of them — and find-in-page opens it, which is how somebody looking for a link in a long description actually finds it.</p>
+
+		<h2>Details that matter</h2>
+		<ul>
+			<li><strong>The player is a facade.</strong> No YouTube script loads until the poster is pressed, and the embed goes to <code>youtube-nocookie.com</code>. A watch page that loads three hundred kilobytes of somebody else's JavaScript before anybody has pressed play is a page that has sold its readers.</li>
+			<li><strong>Chapters are links, not a script's state.</strong> Each one seeks the player through its documented <code>postMessage</code> commands, and the list follows along.</li>
+			<li><strong>The "up next" rail is the same card</strong> as the grid, one size down. Not a second component.</li>
+			<li><strong>The same shell as every other page.</strong> Article and a widget rail — the same one a post and a project use.</li>
+		</ul>
+	</div>
+</section>

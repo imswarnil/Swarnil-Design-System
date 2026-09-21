@@ -1,0 +1,92 @@
+---
+title: Project card
+description: A project, the way a code host shows one — a name, a line, the language, the stars and when it last moved. A convention every developer already reads, drawn in this system's hairlines, radii and type.
+eyebrow: Collections · Project
+source: src/components/repo-card.css · partials/components/repo-card.hbs
+---
+<p>The shape is borrowed on purpose. A developer looking at a portfolio has read ten thousand repository rows and knows exactly where to find the language, the star count and the date — so a card that puts them somewhere else is not original, it is slower. What is drawn here is this system's: its hairlines, its radii, its type, its one hover, in both themes.</p>
+
+<h2>The card</h2>
+{{#example}}
+<div class="im-repos">
+	{{#each demo.projects}}{{#match @index "<" 3}}{{> "components/repo-card"}}{{/match}}{{/each}}
+</div>
+{{/example}}
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Part</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>im-repo-name</code></td><td>The link, in the accent. The owner is plain and the repo is a <code>&lt;b&gt;</code> — one is context, one is the thing. It carries the whole card's hit area.</td></tr>
+		<tr><td><code>im-repo-visibility</code></td><td>Public, Private, Template, Archived. <code>-warn</code> tints it for a state that is not the usual one.</td></tr>
+		<tr><td><code>im-repo-text</code></td><td>One line about it. Two at the most — this is a list, not a README.</td></tr>
+		<tr><td><code>im-topic</code></td><td>A topic chip, in the accent tint. Its own link, above the card's hit area.</td></tr>
+		<tr><td><code>im-repo-lang</code></td><td>The language, with a dot in <code>--im-repo-lang</code>.</td></tr>
+		<tr><td><code>im-repo-stat</code></td><td>Stars, forks, watchers — an icon, a tabular number, its own link.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>Three sizes</h2>
+{{#example}}
+<div class="im-stack" style="--im-stack-gap: 2rem">
+	<div class="im-repos" style="--im-repos-min: 22rem">{{#with demo.projects.[5]}}{{> "components/repo-card" layout="lg"}}{{/with}}</div>
+	<div class="im-repos">{{#with demo.projects.[1]}}{{> "components/repo-card"}}{{/with}}</div>
+	<div class="im-repos im-repos-list">{{#each demo.projects}}{{#match @index "<" 3}}{{> "components/repo-card" layout="bare"}}{{/match}}{{/each}}</div>
+</div>
+{{/example}}
+<p><code>lg</code> is the pinned card, the default is the grid card, and <code>bare</code> has no box at all — a rule between rows, for a list of forty where forty boxes is forty boxes.</p>
+
+<h2>Archived, and other states</h2>
+<p>An archived project is still a project somebody may want. The chip is tinted; nothing is struck through, dimmed or half-hidden.</p>
+{{#example}}
+<div class="im-repos">
+	{{#with demo.projects.[3]}}{{> "components/repo-card"}}{{/with}}
+	{{#with demo.projects.[4]}}{{> "components/repo-card"}}{{/with}}
+</div>
+{{/example}}
+
+<h2>With a shot, and somewhere to go</h2>
+<p>A portfolio project rather than a bare repository: the same card with a picture bled to its top edge and a row of <strong>calls to action</strong> at the foot. Everything else is unchanged, so one grid can hold both kinds.</p>
+{{#example}}
+<div class="im-repos">
+	{{#with demo.projects.[0]}}{{> "components/repo-card" cta=true}}{{/with}}
+	{{#with demo.projects.[2]}}{{> "components/repo-card" cta=true}}{{/with}}
+</div>
+{{/example}}
+<p><code>cta=true</code> prints <strong>Overview</strong> (the project's own page, in the accent — it is the one a portfolio wants pressed), then <strong>Demo</strong> and <strong>Code</strong> if <code>demo_url</code> and <code>code_url</code> are there. They sit above the card's own hit area, so each one goes where it says rather than swallowing the press.</p>
+<p>Leave the buttons off a long list. Six cards each wearing three buttons is eighteen decisions on one screen, and the card is already a link.</p>
+{{#example}}
+<div class="im-repos">
+	{{#with demo.projects.[4]}}{{> "components/repo-card" image=false cta=true}}{{/with}}
+	{{#with demo.projects.[1]}}{{> "components/repo-card" image=false}}{{/with}}
+</div>
+{{/example}}
+
+<h2>The data</h2>
+<p>Ghost has no "repository" content type. A theme builds one — a post tagged <code>#project</code> with the numbers in its code injection, or a JSON file fetched once at build time — and hands the object to the partial.</p>
+{{{{code "hbs"}}}}
+{{> "components/repo-card"}}          {{!-- the context IS the project --}}
+{{> "components/repo-card" layout="bare"}}
+{{{{/code}}}}
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Field</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>name</code> · <code>owner</code> · <code>url</code></td><td>What it is called and where it goes.</td></tr>
+		<tr><td><code>text</code></td><td>The one line.</td></tr>
+		<tr><td><code>lang</code> · <code>lang_color</code></td><td>The language and its dot. The colour comes from the data, never from a table in this repository.</td></tr>
+		<tr><td><code>stars</code> · <code>forks</code> · <code>updated</code></td><td>Already formatted — "1.2k", "3 days ago". Formatting a number is the theme's job, not the card's.</td></tr>
+		<tr><td><code>topics</code></td><td>A list. Three or four; a card wearing eleven chips is a tag cloud.</td></tr>
+		<tr><td><code>visibility</code> · <code>image</code></td><td>The chip, and an optional shot.</td></tr>
+		<tr><td><code>demo_url</code> · <code>code_url</code></td><td>With <code>cta=true</code>, the second and third buttons. Without either, the row is just Overview.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>Choosing</h2>
+<ul>
+	<li><strong>Do not invent a shape for this.</strong> The convention is the feature: a developer finds the star count without looking for it.</li>
+	<li><strong>One line of description.</strong> If it needs two, the second one belongs on the <a href="/collections/project/page/">project page</a>.</li>
+	<li><strong>Stars are not a scoreboard.</strong> Show them if they help; a portfolio of four honest projects with 12 stars each is worth more than a wall of forks.</li>
+	<li><strong>Keep the numbers current or leave them out.</strong> "Updated 3 days ago" that has said so for a year is worse than no date.</li>
+</ul>

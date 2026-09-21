@@ -119,6 +119,173 @@
 	opacity: 1;
 }
 
+/* ---- 3D: a wall of cards, leaning ----
+   Two or three rows on a perspective, each going the other way. It is the one
+   arrangement that makes a testimonial wall read as a WALL rather than as a
+   list — and it is the wrapper that tilts, so the rows inside stay ordinary
+   marquees that a script does not have to know about.
+
+     <div class="im-marquee-3d">
+       <div class="im-marquee im-marquee-fade" data-im-marquee> … </div>
+       <div class="im-marquee im-marquee-fade im-marquee-reverse" …> … </div>
+     </div>                                                                */
+.im-marquee-3d {
+	--im-marquee-tilt: 18deg;
+	--im-marquee-turn: -14deg;
+
+	display: flex;
+	flex-direction: column;
+	gap: var(--im-marquee-3d-gap, 1rem);
+	perspective: 1600px;
+	perspective-origin: 50% 40%;
+	/* The rows are wider than the box and lean into it, so nothing shows an
+	   end. The mask is on the wrapper because the rows are now rotated. */
+	-webkit-mask-image: radial-gradient(ellipse 80% 90% at 50% 45%, #000 45%, transparent);
+	mask-image: radial-gradient(ellipse 80% 90% at 50% 45%, #000 45%, transparent);
+}
+
+.im-marquee-3d > .im-marquee {
+	transform: rotateX(var(--im-marquee-tilt)) rotateY(var(--im-marquee-turn)) rotateZ(4deg) scale(1.15);
+	transform-style: preserve-3d;
+}
+
+/* Flat: the same rows without the lean, for a page that has enough going on. */
+.im-marquee-3d-flat {
+	--im-marquee-tilt: 0deg;
+	--im-marquee-turn: 0deg;
+}
+
+.im-marquee-3d-flat > .im-marquee {
+	transform: none;
+}
+
+@media (width < 48rem) {
+	.im-marquee-3d {
+		--im-marquee-tilt: 0deg;
+		--im-marquee-turn: 0deg;
+	}
+
+	.im-marquee-3d > .im-marquee {
+		transform: none;
+	}
+}
+
+/* ---- a card in a marquee ----
+   A testimonial, a quote, a note. Fixed width, because a row of cards of
+   different widths reads as a mistake once it is moving. */
+.im-marquee-card {
+	display: flex;
+	flex: none;
+	flex-direction: column;
+	gap: 0.75rem;
+	width: var(--im-marquee-card, 20rem);
+	padding: 1.125rem;
+	border-radius: var(--im-radius-lg);
+	background-color: var(--im-canvas);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+	text-align: left;
+	white-space: normal;
+}
+
+.im-marquee-card-text {
+	color: var(--im-ink);
+	line-height: 1.55;
+	text-wrap: pretty;
+}
+
+.im-marquee-card-by {
+	display: flex;
+	align-items: center;
+	gap: 0.625rem;
+	margin-top: auto;
+}
+
+.im-marquee-card-by strong {
+	display: block;
+	color: var(--im-ink);
+	font-size: var(--im-text-sm);
+	font-weight: 600;
+}
+
+.im-marquee-card-by small {
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+}
+
+/* ---- a comment in a marquee ----
+   The shape of a comment under a video: avatar, name and when, the comment,
+   then a like count. It is a card of the same width so the row still reads as
+   a row, and it is the one marquee that belongs going UP a column rather than
+   across a page — a wall of what people said, beside what they said it about. */
+.im-marquee-comment {
+	display: grid;
+	flex: none;
+	grid-template-columns: auto minmax(0, 1fr);
+	gap: 0.25rem 0.75rem;
+	width: var(--im-marquee-card, 20rem);
+	padding: 1rem 1.125rem;
+	border-radius: var(--im-radius-lg);
+	background-color: var(--im-canvas);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+	text-align: left;
+	white-space: normal;
+}
+
+.im-marquee-comment > .im-avatar {
+	grid-row: span 3;
+}
+
+.im-marquee-comment-who {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 0.5rem;
+	color: var(--im-ink);
+	font-size: var(--im-text-xs);
+	font-weight: 600;
+}
+
+.im-marquee-comment-who > time {
+	color: var(--im-muted);
+	font-weight: 400;
+}
+
+.im-marquee-comment-text {
+	line-height: 1.55;
+	text-wrap: pretty;
+}
+
+.im-marquee-comment-likes {
+	display: flex;
+	align-items: center;
+	gap: 0.375rem;
+	padding-top: 0.25rem;
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+}
+
+.im-marquee-comment-likes .im-icon {
+	font-size: 0.875rem;
+}
+
+/* ---- a window in a marquee ----
+   A row of screens going past — a product page's "made with this" strip. The
+   mockup component does the frame; this only fixes the width and stops the
+   shadow being clipped by the marquee's own overflow. */
+.im-marquee-window {
+	flex: none;
+	width: var(--im-marquee-window, 22rem);
+	white-space: normal;
+}
+
+.im-marquee:has(.im-marquee-window) {
+	padding-block: 0.75rem;
+}
+
 /* Reduced motion: it stops, and becomes an ordinary scrollable row. The clone
    is hidden so nothing is shown twice. */
 @media (prefers-reduced-motion: reduce) {

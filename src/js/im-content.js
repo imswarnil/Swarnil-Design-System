@@ -9,7 +9,8 @@
  *   video     the big play button, then the browser's own controls
  *   tables    wrapped in .im-table-scroll so a wide one scrolls in its own box
  *   zoom      <section class="im-content" data-im-zoom> turns each picture into
- *             a link the lightbox (im-media.js) opens
+ *             an .im-zoom-link — a frame mark in the corner, the lightbox
+ *             (im-media.js) on a click
  *
  * Nothing here is needed to READ a post: without it, galleries are even
  * columns, toggles are open, audio and video fall back to native controls.
@@ -122,7 +123,9 @@
 				const a = document.createElement('a');
 				a.href = img.currentSrc || img.src;
 				a.dataset.caption = caption || img.alt;
-				a.style.cssText = 'display:block;height:100%;cursor:zoom-in';
+				// .im-zoom-link draws the frame mark in the corner — the same
+				// one a gallery tile and a carousel slide carry.
+				a.className = 'im-zoom-link';
 				img.replaceWith(a);
 				a.append(img);
 			}

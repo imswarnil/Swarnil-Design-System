@@ -2,7 +2,13 @@
 	control first, then the accounts. The control is an icon only — its words
 	live in `title` and `aria-label`, which hero.js swaps with the state.
 	A sibling of .im-hero__still, not a child: the still clips to keep its
-	corners round and would cut the column in half. --}}
+	corners round and would cut the column in half.
+
+	The brand icon is the BLOCK form of a dynamic partial. A platform Ghost
+	adds tomorrow would otherwise ask for an icon that does not exist and take
+	the page down with it; the block body is what renders instead. gscan
+	requires it too ("Use the block form for dynamic partials"), so the plain
+	form fails a theme that ships this section. --}}
 <div class="im-hero__controls">
 	<button type="button" class="im-hero__toggle" data-stage-toggle aria-label="{{t "Watch video"}}" title="{{t "Watch video"}}" data-label-watch="{{t "Watch video"}}" data-label-close="{{t "Close video"}}">
 		<span class="im-hero__toggle-ico im-hero__toggle-ico--play">{{> "icons/play"}}</span>
@@ -12,7 +18,7 @@
 	<ul class="im-hero__social" aria-label="{{t "Social links"}}">
 		{{#social_accounts @site}}
 			<li>
-				<a class="im-hero__social-link" href="{{href}}" target="_blank" rel="noopener noreferrer" aria-label="{{name}}" title="{{name}}">{{> (concat "icons/brand-" type)}}</a>
+				<a class="im-hero__social-link" href="{{href}}" target="_blank" rel="noopener noreferrer" aria-label="{{name}}" title="{{name}}">{{#> (concat "icons/brand-" type)}}<span class="im-icon">{{name.[0]}}</span>{{/undefined}}</a>
 			</li>
 		{{/social_accounts}}
 	</ul>

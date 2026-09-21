@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Im">
+	<!-- The square lockup, drawn.
+
+	     Everywhere else the logo is live text (src/components/logo.css): the
+	     letter in the brand typeface with the recording dot at its top right.
+	     A browser tab cannot run CSS or wait for a webfont, so the mark is a
+	     shape here — the stem of the "I" and the dot, at the same proportions,
+	     thickened enough to survive 16px.
+
+	     The tile flips with the browser's colour scheme; the dot is the accent
+	     in both, because the accent IS the brand. -->
+	<style>
+		.tile { fill: oklch(14.5% 0 0) }
+		.glyph { fill: #fff }
+		@media (prefers-color-scheme: dark) {
+			.tile { fill: #fff }
+			.glyph { fill: oklch(14.5% 0 0) }
+		}
+	</style>
+	<rect class="tile" width="32" height="32" rx="8.3"/>
+	<rect class="glyph" x="10.1" y="9.2" width="4" height="13.6" rx="2"/>
+	<circle cx="19" cy="12.1" r="2.9" fill="#ff5a1f"/>
+</svg>

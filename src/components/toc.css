@@ -48,7 +48,8 @@
 
 .im-toc-link[aria-current="true"] {
 	border-left-color: var(--im-ink);
-	color: var(--im-ink);
+	color: var(--im-current-fg);
+	font-weight: var(--im-current-weight);
 }
 
 /* ---- as a disclosure ----

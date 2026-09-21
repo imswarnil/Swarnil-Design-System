@@ -247,7 +247,7 @@
 :is(.im-in-unfold, [data-im-in="unfold"][data-im-revealed]) { animation-name: im-in-unfold; }
 @keyframes im-in-unfold { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(-2%); } }
 
-/* 25 frame — the Swiss one: a hairline frame draws itself round the block in
+/* 25 frame — a hairline frame draws itself round the block in
    ink, then the content arrives inside it and the frame relaxes to a rule. */
 :is(.im-in-frame, [data-im-in="frame"]) {
 	position: relative;

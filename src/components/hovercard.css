@@ -139,8 +139,27 @@
 	gap: 0.75rem;
 }
 
-.im-hovercard-person > div {
+.im-hovercard-person > :is(div, span) {
 	display: flex;
 	flex-direction: column;
 	min-width: 0;
+}
+
+/* An author card: a line of bio under the person, and a row of ways to follow
+   them. Both are spans — the panel lives inside an inline trigger, where a
+   <div> is not allowed. */
+.im-hovercard-bio {
+	display: block;
+	color: var(--im-body);
+}
+
+.im-hovercard-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.375rem;
+	padding-top: 0.125rem;
+}
+
+.im-hovercard-actions > .im-btn:first-child {
+	margin-right: auto;
 }

@@ -1,0 +1,14 @@
+{{!-- Light and dark as a two-option switcher, with a thumb that slides. Real
+	radio buttons, so the arrow keys move it and a screen reader announces
+	"1 of 2". im.js reads data-theme-set and applies the choice.
+	Params: size ("sm" | "lg"), icons (true = icons only, labels hidden). --}}
+<fieldset class="im-switcher{{#if icons}} im-switcher-icons{{/if}}{{#if size}} im-switcher-{{size}}{{/if}}" aria-label="{{t "Theme"}}">
+	<label>
+		<input type="radio" name="im-theme" value="light" data-theme-set="light">
+		{{> "icons/sun"}}<span>{{t "Light"}}</span>
+	</label>
+	<label>
+		<input type="radio" name="im-theme" value="dark" data-theme-set="dark">
+		{{> "icons/moon"}}<span>{{t "Dark"}}</span>
+	</label>
+</fieldset>

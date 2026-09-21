@@ -43,25 +43,38 @@ source: src/effects/image.css
 {{/example}}
 <p>To open a picture full-screen on click, that is the <a href="/media/gallery/">gallery &amp; lightbox</a>.</p>
 
-<h2>Tone</h2>
+<h2>Scan</h2>
+<p>One bright line travels down the picture and the fine rule it leaves behind fades after it — a document going through a scanner, a sensor reading. <strong>Not</strong> the old CRT overlay of dark stripes laid over everything, which only ever made a photograph look worse and dated the page with it. It runs on hover; <code>im-fx-scan-loop</code> runs it forever, for one picture in a hero.</p>
 {{#example}}
 <div class="im-grid-auto" style="--im-grid-min: 13rem">
-	<figure class="im-fx-img im-fx-duotone" style="aspect-ratio: 4 / 3"><img src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></figure>
-	<figure class="im-fx-img im-fx-duotone" style="aspect-ratio: 4 / 3; --im-fx-to: #4ac26b; --im-fx-from: #06281a"><img src="{{demo.three.[1].feature_image}}" alt="" loading="lazy"></figure>
-	<figure class="im-fx-img im-fx-duotone" style="aspect-ratio: 4 / 3; --im-fx-to: #6ea8fe; --im-fx-from: #0b1b3a"><img src="{{demo.three.[2].feature_image}}" alt="" loading="lazy"></figure>
+	<figure class="im-fx-img im-fx-scan" style="aspect-ratio: 4 / 3"><img src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></figure>
+	<figure class="im-fx-img im-fx-scan" style="aspect-ratio: 4 / 3; --im-fx-ink: #6ee7ff; --im-fx-speed: 1.1s"><img src="{{demo.three.[1].feature_image}}" alt="" loading="lazy"></figure>
+	<figure class="im-fx-img im-fx-scan im-fx-scan-loop" style="aspect-ratio: 4 / 3"><img src="{{demo.three.[2].feature_image}}" alt="" loading="lazy"></figure>
 </div>
 {{/example}}
-<p><code>im-fx-duotone</code> maps shadows to <code>--im-fx-from</code> and highlights to <code>--im-fx-to</code> (the accent by default). It makes a set of unrelated photographs look like one series — useful for a feed of mixed stock and personal pictures.</p>
+<p><code>--im-fx-ink</code> is the line's colour, <code>--im-fx-speed</code> one pass, <code>--im-fx-scan-band</code> how tall the light is. The line is <code>mix-blend-mode: screen</code>, so it brightens the picture rather than painting over it — which is why it reads as light and not as a stripe.</p>
 
-<h2>Overlays</h2>
+<h2>Slices</h2>
+<p>The picture is cut into vertical bands by hairlines of the page's own canvas, and pushes in a little under the pointer. An editorial treatment for a grid of pictures that would otherwise be a wall of rectangles.</p>
 {{#example}}
 <div class="im-grid-auto" style="--im-grid-min: 13rem">
-	<figure class="im-fx-img im-fx-vignette" style="aspect-ratio: 4 / 3"><img src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></figure>
-	<figure class="im-fx-img im-fx-scanlines" style="aspect-ratio: 4 / 3"><img src="{{demo.three.[1].feature_image}}" alt="" loading="lazy"></figure>
-	<figure class="im-fx-img im-fx-scanlines im-fx-vignette im-fx-colour" style="aspect-ratio: 4 / 3"><img src="{{demo.three.[2].feature_image}}" alt="" loading="lazy"></figure>
+	<figure class="im-fx-img im-fx-slices" style="aspect-ratio: 4 / 3"><img src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></figure>
+	<figure class="im-fx-img im-fx-slices" style="aspect-ratio: 4 / 3; --im-fx-slices: 9"><img src="{{demo.three.[1].feature_image}}" alt="" loading="lazy"></figure>
+	<figure class="im-fx-img im-fx-slices im-fx-colour" style="aspect-ratio: 4 / 3; --im-fx-slices: 3"><img src="{{demo.three.[2].feature_image}}" alt="" loading="lazy"></figure>
 </div>
 {{/example}}
-<p><code>im-fx-vignette</code> darkens the corners, which helps white text sit on a busy picture. <code>im-fx-scanlines</code> is a CRT texture. They combine with each other and with the hover effects.</p>
+<p><code>--im-fx-slices</code> is how many bands, 5 by default. The bands are drawn in <code>--im-canvas</code>, so they read as the page showing through rather than as lines on top.</p>
+
+<h2>Fade edge</h2>
+<p>The picture dissolves into the page along an edge instead of stopping at a hard line — for a picture that runs under a bar, behind a heading, or off the bottom of a hero. It is a mask, so it works over any background and in both themes.</p>
+{{#example}}
+<div class="im-grid-auto" style="--im-grid-min: 13rem">
+	<figure class="im-fx-img im-fx-fade-edge" style="aspect-ratio: 4 / 3"><img src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></figure>
+	<figure class="im-fx-img im-fx-fade-edge-top" style="aspect-ratio: 4 / 3"><img src="{{demo.three.[1].feature_image}}" alt="" loading="lazy"></figure>
+	<figure class="im-fx-img im-fx-fade-edge-sides" style="aspect-ratio: 4 / 3"><img src="{{demo.three.[2].feature_image}}" alt="" loading="lazy"></figure>
+</div>
+{{/example}}
+<p><code>--im-fx-fade</code> is how much of the picture goes — 35% down, 22% in from each side. Pair it with <code>im-fx-kenburns</code> for a hero that has no bottom edge at all.</p>
 
 <h2>Motion</h2>
 {{#example}}
@@ -92,7 +105,7 @@ source: src/effects/image.css
 <h2>With video</h2>
 <p>Everything works on a <code>&lt;video&gt;</code> too. For a poster that previews its video on hover, use the <a href="/components/carousel/#video-tiles">tile</a>.</p>
 {{#example style="max-width: 28rem"}}
-<figure class="im-fx-img im-fx-scanlines im-fx-vignette" style="aspect-ratio: 16 / 9"><video src="{{demo.video}}" muted loop playsinline autoplay></video></figure>
+<figure class="im-fx-img im-fx-scan im-fx-scan-loop im-fx-fade-edge" style="aspect-ratio: 16 / 9"><video src="{{demo.video}}" muted loop playsinline autoplay></video></figure>
 {{/example}}
 
 <h2>Always</h2>

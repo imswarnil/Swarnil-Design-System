@@ -1,0 +1,32 @@
+{{!-- Orbit — a ring of type that turns, with the brand's recording dot at its
+	centre. "Est. 2026 · Scroll · Est. 2026 · Scroll" round a badge; "Open for
+	work" round an avatar; a seal at the end of an about page.
+
+	Params
+	  id      required, and unique on the page — the <textPath> points at it
+	  text    what goes round. Repeat it yourself with separators so it fills
+	          the path: "Read the journal · Read the journal · "
+	  shape   circle (default) · square — a rounded square path
+	  size    the ring's width and height. Default 9rem.
+	  speed   one turn. Default 18s.
+	  back    true — it turns the other way
+	  label   the accessible name. Default: `text`.
+	  style   extra inline variables (--im-orbit-text, --im-orbit-tracking…)
+
+	The letters are set on the path by the browser's own text engine, so they
+	sit on the curve exactly and stay crisp at any size — nothing here rotates
+	one letter at a time and hopes.
+
+	A BLOCK partial: whatever you put inside replaces the centre dot.
+	  {{#> "components/orbit" id="seal" text="…"}}<img …>{{/"components/orbit"}} --}}
+<span class="im-orbit{{#if back}} im-orbit-back{{/if}}{{#if class}} {{class}}{{/if}}" role="img" aria-label="{{#if label}}{{label}}{{else}}{{text}}{{/if}}" style="{{#if size}}--im-orbit-size: {{size}}; {{/if}}{{#if speed}}--im-orbit-speed: {{speed}}; {{/if}}{{#if style}}{{style}}{{/if}}">
+	<svg viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+		{{#match shape "=" "square"}}
+			<path id="{{id}}" fill="none" d="M 26 8 H 74 A 18 18 0 0 1 92 26 V 74 A 18 18 0 0 1 74 92 H 26 A 18 18 0 0 1 8 74 V 26 A 18 18 0 0 1 26 8 Z"/>
+		{{else}}
+			<path id="{{id}}" fill="none" d="M 50 8 A 42 42 0 1 1 49.99 8"/>
+		{{/match}}
+		<text><textPath href="#{{id}}" startOffset="0">{{text}}</textPath></text>
+	</svg>
+	{{#if @partial-block}}<span class="im-orbit-center">{{> @partial-block}}</span>{{else}}<i class="im-orbit-dot" aria-hidden="true"></i>{{/if}}
+</span>

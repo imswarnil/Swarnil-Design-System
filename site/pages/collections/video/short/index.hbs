@@ -1,0 +1,88 @@
+---
+title: Short (9:16)
+description: A vertical video on a page that is exactly one viewport and never scrolls. The whole trick is sizing the clip from both constraints at once, so nothing overflows and there is nothing for a scrollbar to appear about.
+eyebrow: Collections · Video
+source: src/components/video-card.css
+---
+<p>A 16:9 video sits <em>in</em> a page. A 9:16 one <strong>is</strong> the page: the clip, what it is called, who made it, and a column of things to press. Nothing is below the fold because there is no fold — and that is a layout problem, not a styling one.</p>
+
+<h2>The page</h2>
+<p>Loaded here in an iframe, because that is the only honest way to show a layout whose whole claim is "it fits". Resize the frame and nothing ever scrolls.</p>
+{{#example flush=true code=false}}
+<iframe class="demo-frame" src="/demos/short/" title="A vertical video page" style="height: 40rem" loading="lazy"></iframe>
+{{/example}}
+
+<h2>How it fits</h2>
+<p>The one thing that matters is sizing the player from <strong>both</strong> constraints at once:</p>
+{{{{code "css"}}}}
+.im-short {
+	--im-short-gutter: clamp(0.75rem, 2vh, 2rem);
+	--im-short-room: calc(100dvh - var(--im-bar-height) - var(--im-short-gutter) * 2);
+
+	height: calc(100dvh - var(--im-bar-height));
+	display: grid;
+	place-items: center;
+	overflow: hidden;
+}
+
+.im-short-player {
+	width: min(100%, calc(var(--im-short-room) * 9 / 16));
+	aspect-ratio: 9 / 16;
+}
+{{{{/code}}}}
+<p>The clip is as tall as the room allows <em>until</em> the room is narrower than that, and then it is as wide as the room allows. <code>aspect-ratio</code> supplies the other dimension either way. Nothing overflows, so there is nothing for a scrollbar to appear about.</p>
+<ul>
+	<li><strong>A height in <code>vh</code> with <code>overflow: hidden</code> is not the same thing.</strong> That hides the overflow rather than preventing it: the controls end up off the bottom of the screen on a laptop, and nobody can reach them.</li>
+	<li><strong><code>100dvh</code>, not <code>100vh</code>.</strong> On a phone the browser's own bars come and go, and <code>vh</code> is the tallest the viewport ever gets — which is the one number that is wrong while those bars are showing.</li>
+	<li><strong>The gutter is in <code>vh</code> too</strong> (<code>clamp(0.75rem, 2vh, 2rem)</code>), so a short window gives up its padding before it gives up the picture.</li>
+</ul>
+
+<h2>Parts</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Class</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>im-short</code></td><td>The stage: one viewport, centred, clipped. <code>im-short-full</code> when there is no top bar above it.</td></tr>
+		<tr><td><code>im-short-player</code></td><td>The 9:16 frame. Takes an <code>&lt;img&gt;</code>, a <code>&lt;video&gt;</code> or an <code>&lt;iframe&gt;</code>.</td></tr>
+		<tr><td><code>im-short-over</code></td><td>What is written over the clip — channel, title, tags — on a gradient scrim, so the picture survives.</td></tr>
+		<tr><td><code>im-short-bar</code></td><td>The scrubber, on the clip's bottom edge.</td></tr>
+		<tr><td><code>im-short-rail</code></td><td>The actions. <strong>Beside</strong> the clip on a wide screen, where they do not cover the picture; under 40rem there is no room beside it, so they move inside and sit on the scrim.</td></tr>
+		<tr><td><code>im-short-act</code></td><td>One action: a round mark and a number under it. <code>aria-pressed</code> is the liked state.</td></tr>
+		<tr><td><code>im-short-step</code></td><td>Up and down — the whole of a short feed's navigation. Hidden on a phone, where the gesture is the swipe.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>In a theme</h2>
+{{{{code "hbs"}}}}
+{{!-- short.hbs — a post tagged #short, with the vertical clip --}}
+{{#post}}
+<div class="im-short im-short-full">
+	<div class="im-short-stage">
+		<div class="im-short-player">
+			<video src="{{@custom.clip}}" poster="{{img_url feature_image}}" muted loop playsinline autoplay></video>
+			<div class="im-short-over"> … </div>
+			<span class="im-short-bar"><span></span></span>
+		</div>
+		<div class="im-short-rail"> … </div>
+	</div>
+</div>
+{{/post}}
+{{{{/code}}}}
+<p>Give it no footer and no sidebar: a page that is one viewport has no room for either, and a footer that can only be reached by scrolling defeats the whole layout. If the site needs those, the short belongs in a <a href="/collections/video/">collection</a> and this page belongs behind a link from it.</p>
+
+<h2>In a grid</h2>
+<p>A vertical card is the same <a href="/collections/video/card/">video card</a> with one variable changed — <code>im-vidcard-tall</code> sets <code>--im-vidcard-ratio: 9 / 16</code>. Not a second component.</p>
+{{#example}}
+<div class="im-vidgrid" style="--im-vidgrid-min: 11rem">
+	{{#each demo.videos}}{{#match @index "<" 5}}{{> "components/video-card" class="im-vidcard-tall" hide_by=true}}{{/match}}{{/each}}
+</div>
+{{/example}}
+
+<h2>Details that matter</h2>
+<ul>
+	<li><strong>Autoplay muted, looping, <code>playsinline</code>.</strong> Anything else is blocked, and <code>playsinline</code> is what stops iOS taking the clip full-screen out from under the layout.</li>
+	<li><strong>The rail is buttons, not icons.</strong> Each one has a label under it; a column of six unlabelled glyphs is a guessing game.</li>
+	<li><strong>Do not hide the title behind a tap.</strong> It is the only thing telling a viewer what they are looking at.</li>
+	<li><strong>One viewport means one viewport.</strong> If the design needs a description, comments and related clips, it is not a short page — it is a <a href="/collections/video/page/">video page</a> with a vertical player.</li>
+</ul>

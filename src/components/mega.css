@@ -1,0 +1,212 @@
+/* Mega menu — a wide panel of link COLUMNS under a top-bar link, and the same
+   columns reused inside the menu panel on a phone.
+
+   <button class="im-toplink" popovertarget="m-work" aria-expanded="false">
+     Work {{> "icons/chevron-down"}}
+   </button>
+   <div class="im-mega" id="m-work" popover data-align="center">
+     <div class="im-navcols">
+       <div class="im-navcol">
+         <p class="im-navcol-title">Writing</p>
+         <a class="im-navitem" href="…">
+           {{> "icons/book-open"}}<span>Journal<small>Essays, twice a month</small></span>
+         </a>
+       </div>
+       …
+       <div class="im-navcol im-mega-feature"> a card, a post, a promo </div>
+     </div>
+     <div class="im-mega-foot"> a line of small print · a call to action </div>
+   </div>
+
+   The Popover API gives light-dismiss, Esc and the top layer; im.js sizes and
+   centres it. A link here is an .im-navitem — a plain row, NOT a button: no
+   fill, no border, just an icon, a label and an optional description. */
+
+.im-mega {
+	--im-mega-width: 58rem;
+
+	position: fixed;
+	inset: auto;
+	margin: 0;
+	width: min(var(--im-mega-width), calc(100vw - 2 * var(--im-gutter)));
+	padding: 1.25rem;
+	border-radius: var(--im-radius-2xl);
+	background-color: var(--im-canvas);
+	box-shadow: inset 0 0 0 1px var(--im-line), var(--im-shadow-float);
+	color: var(--im-body);
+}
+
+.im-mega:popover-open {
+	animation: im-mega-in 180ms var(--im-ease-out);
+}
+
+@keyframes im-mega-in {
+	from {
+		opacity: 0;
+		translate: 0 -6px;
+	}
+}
+
+.im-mega-foot {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.75rem 1.25rem;
+	margin-top: 1.125rem;
+	padding-top: 1rem;
+	border-top: 1px solid var(--im-line);
+	color: var(--im-muted);
+	font-size: var(--im-text-sm);
+}
+
+/* A column that is a panel rather than a list — a featured post, a promo. */
+.im-mega-feature {
+	padding: 1rem;
+	border-radius: var(--im-radius-xl);
+	background-color: var(--im-surface);
+}
+
+/* Nothing in a menu is running text, so nothing in one is underlined — not a
+   card in the feature slot, not a link inside a card's title. */
+.im-mega a,
+.im-navpanel a {
+	text-decoration: none;
+}
+
+.im-mega a:hover,
+.im-navpanel a:hover {
+	text-decoration: none;
+}
+
+/* ---- columns ----
+   Used by the mega menu AND by the menu panel. Columns are laid out by width,
+   not by breakpoint, so the same markup works in a 58rem panel and on a phone. */
+.im-navcols {
+	--im-navcol-min: 12rem;
+
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(var(--im-navcol-min), 100%), 1fr));
+	gap: 1.25rem 1.5rem;
+	align-items: start;
+}
+
+.im-navcol {
+	display: flex;
+	flex-direction: column;
+	gap: 0.125rem;
+	min-width: 0;
+}
+
+.im-navcol-title {
+	padding: 0.25rem 0.625rem 0.375rem;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: 0.6875rem;
+	font-weight: 500;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+/* A second level inside a column: a family of pages under one name. In a flat
+   column a disclosure would save nothing, so it is a heading, not a dropdown. */
+.im-navcol-subtitle {
+	padding: 0.5rem 0.625rem 0.125rem;
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+	font-weight: 600;
+}
+
+/* One link. Icon, label, and — if you give it a <small> — a description. */
+.im-navitem {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.625rem;
+	min-width: 0;
+	padding: 0.5rem 0.625rem;
+	border-radius: var(--im-radius-md);
+	color: var(--im-ink);
+	font-size: var(--im-text-sm);
+	font-weight: 500;
+	line-height: 1.35;
+	text-decoration: none;
+	transition: background-color 120ms, color 120ms;
+}
+
+.im-navitem > .im-icon {
+	flex: none;
+	margin-top: 0.0625rem;
+	color: var(--im-muted);
+	font-size: 1.125rem;
+	stroke-width: 1.7;
+	transition: color 120ms;
+}
+
+.im-navitem > span {
+	display: flex;
+	flex-direction: column;
+	gap: 0.125rem;
+	min-width: 0;
+}
+
+.im-navitem small {
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+	font-weight: 400;
+	line-height: 1.45;
+	text-wrap: pretty;
+}
+
+.im-navitem:hover,
+.im-navitem:focus-visible {
+	background-color: var(--im-surface);
+	color: var(--im-ink);
+}
+
+.im-navitem:hover > .im-icon {
+	color: var(--im-ink);
+}
+
+.im-navitem[aria-current="page"] {
+	background-color: var(--im-current-bg);
+	color: var(--im-current-fg);
+	font-weight: var(--im-current-weight);
+}
+
+.im-navitem[aria-current="page"] > .im-icon {
+	color: var(--im-ink);
+}
+
+/* Flow — the same columns, packed. A grid gives every column the height of
+   the tallest one in its row, which leaves holes when a menu has a group of
+   two links beside a group of eighteen. Multi-column layout has no rows, so
+   the groups simply fill downward; break-inside keeps one whole. Use it for a
+   long menu, and the grid for a short, deliberate one. */
+.im-navcols-flow {
+	display: block;
+	columns: var(--im-navcols-columns, 3);
+	column-gap: 1.5rem;
+}
+
+.im-navcols-flow > .im-navcol {
+	break-inside: avoid;
+	padding-bottom: 1.25rem;
+}
+
+/* Compact: no description, tighter rows — for a long list of plain links. */
+.im-navcol-compact .im-navitem {
+	align-items: center;
+	min-height: 2rem;
+	padding-block: 0.25rem;
+	font-weight: 400;
+	color: var(--im-body);
+}
+
+.im-navcol-compact .im-navitem:hover {
+	color: var(--im-ink);
+}
+
+.im-navcol-compact .im-navitem[aria-current="page"] {
+	color: var(--im-current-fg);
+	font-weight: var(--im-current-weight);
+}

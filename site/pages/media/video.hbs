@@ -91,3 +91,65 @@ source: src/components/video.css · src/js/im-media.js
 </table>
 </div>
 <p>In a Ghost post, authors can keep writing timestamps as a plain list — <code>2:15 The problem</code> — and a few lines of theme script can turn any list whose items start with a time into this component.</p>
+
+<h2>Full width</h2>
+<p>A player that runs the whole width of its column, with the system's own frame round it — a hairline, the page's radius, the float shadow — so it sits <em>on</em> the page rather than in a hole cut out of it. The ratio is the knob, because a 21:9 trailer and a 9:16 clip are the same component.</p>
+{{#example flush=true}}
+<div class="im-video im-video-full im-video-wide" data-im-video="aqz-KE-bpKQ" data-im-video-title="A wide clip">
+	<img class="im-video-poster" src="{{demo.six.[2].feature_image}}" alt="" loading="lazy">
+	<button class="im-video-play" type="button" aria-label="Play">{{> "icons/play"}}</button>
+	<div class="im-video-meta"><strong>The whole road, in eight minutes</strong><small>8:12</small></div>
+</div>
+{{/example}}
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Class</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>im-video-full</code></td><td>Full width of the column, framed. <code>--im-video-max</code> caps it.</td></tr>
+		<tr><td><code>im-video-bleed</code></td><td>Edge to edge, corners squared — a band, not a card.</td></tr>
+		<tr><td><code>im-video-wide</code> · <code>-square</code> · <code>-vertical</code></td><td>21:9, 1:1, and 9:16 capped at 24rem.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>Video as a background</h2>
+<p>A band of the page with a clip running behind it. The clip is <strong>decoration</strong>: muted, looping, <code>playsinline</code>, and never the only place anything is said. A gradient scrim — dark where the words are, clear above — keeps the copy readable whatever frame the clip is on.</p>
+{{#example flush=true}}
+<section class="im-videobg" style="--im-videobg-min: 22rem">
+	<video class="im-videobg-media" src="{{demo.video}}" muted loop playsinline autoplay></video>
+	<div class="im-videobg-body">
+		<p class="im-caption" data-index="01">Sections</p>
+		<h3 class="im-videobg-title">Forty kilometres, two hours, nobody in a hurry.</h3>
+		<p class="im-videobg-text">The clip sits behind the words and never asks to be watched.</p>
+		<div class="im-cluster"><a class="im-btn im-btn-primary" href="#video-as-a-background">Read it {{> "icons/arrow-right"}}</a><a class="im-btn im-btn-ink" href="#video-as-a-background">Watch</a></div>
+	</div>
+</section>
+{{/example}}
+
+<h2>Words blended into the clip</h2>
+<p>Two ways, and both are <strong>one blend mode</strong> doing the work. There is no way to pour a <code>&lt;video&gt;</code> into the letters of a heading with <code>background-clip: text</code>, because a video is not a background image — so the sheet gets blended instead of the letters.</p>
+{{#example flush=true}}
+<section class="im-videobg im-videobg-clear" style="--im-videobg-min: 20rem">
+	<video class="im-videobg-media" src="{{demo.video}}" muted loop playsinline autoplay></video>
+	<div class="im-videobg-knockout"><h3>THE LONG WAY ROUND</h3></div>
+</section>
+{{/example}}
+<p><strong>Knockout</strong> — <code>im-videobg-knockout</code> — is a sheet of white with black words on it, blended <code>screen</code>. Screen keeps white white and lets black through entirely, so the sheet stays solid and the <em>words</em> become windows onto the clip. Dark mode flips both: a black sheet, white words, blended <code>multiply</code>. Use <code>im-videobg-clear</code> with it, since the sheet is doing the scrim's job.</p>
+{{#example flush=true}}
+<section class="im-videobg im-videobg-clear im-videobg-center" style="--im-videobg-min: 18rem">
+	<video class="im-videobg-media" src="{{demo.video}}" muted loop playsinline autoplay></video>
+	<div class="im-videobg-body">
+		<h3 class="im-videobg-title im-videobg-blend">Sorrento → Amalfi</h3>
+	</div>
+</section>
+{{/example}}
+<p><strong>Blend</strong> — <code>im-videobg-blend</code> — puts the words themselves on <code>difference</code>. They invert whatever passes under them, so they stay legible over a bright frame and a dark one with no scrim at all. It is the louder of the two: right for one line, wrong for a paragraph.</p>
+<p>Both need something to blend <em>with</em>: the band sets <code>isolation: isolate</code>, so a blended child mixes with the clip behind it and not with the whole page underneath.</p>
+
+<h2>Rules for a background clip</h2>
+<ul>
+	<li><strong>Muted, looping, <code>playsinline</code>, and short.</strong> A background clip that cannot loop cleanly is a distraction with a seam in it.</li>
+	<li><strong>Give it a poster.</strong> It is the first frame a reader sees and the only one they see on a slow connection.</li>
+	<li><strong>Never put anything in it that is only in it.</strong> A reader with data saving on, reduced motion set, or a blocked autoplay sees the poster and nothing else.</li>
+	<li><strong>Weigh it.</strong> A 12MB hero clip is the whole page's budget spent on the part nobody came for.</li>
+</ul>

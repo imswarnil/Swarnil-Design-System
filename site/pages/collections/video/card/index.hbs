@@ -1,0 +1,82 @@
+---
+title: Video card
+description: A video, the way a video site shows one — a 16:9 still with the length in its corner, the channel's mark, the title, then views and when. Three layouts from one markup.
+eyebrow: Collections · Video
+source: src/components/video-card.css · partials/components/video-card.hbs
+---
+<p>Like the <a href="/collections/project/card/">project card</a>, the shape is borrowed on purpose. A viewer has read ten thousand of these and finds the length without looking for it. What is drawn here is this system's: its radii, its hairlines, its type, and the same <strong>fill</strong> hover every other card in it uses.</p>
+
+<h2>Vertical</h2>
+{{#example}}
+<div class="im-vidgrid">
+	{{#each demo.videos}}{{#match @index "<" 4}}{{> "components/video-card"}}{{/match}}{{/each}}
+</div>
+{{/example}}
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Part</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>im-vidcard-thumb</code></td><td>The still, 16:9. It is <code>aria-hidden</code> and not focusable — the title's link is the one tab stop, so a keyboard user does not meet every video twice.</td></tr>
+		<tr><td><code>im-vidcard-time</code></td><td>The length, bottom right, on a dark chip. Every viewer looks for it there; moving it is not a design decision, it is a tax.</td></tr>
+		<tr><td>… <code>im-vidcard-time-live</code></td><td>LIVE instead, with a pulse-free white dot. A live video has no length.</td></tr>
+		<tr><td><code>im-vidcard-progress</code></td><td>How far the viewer got last time. Only draw it if you actually know.</td></tr>
+		<tr><td><code>im-vidcard-title</code></td><td>Clamped to two lines, so a row of cards keeps its shape whatever the titles do.</td></tr>
+		<tr><td><code>im-vidcard-tick</code></td><td>A verified mark — a mask of the row's own colour, so it is right in both themes.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>Row</h2>
+<p>The search-result shape: a wider still and room for a line or two of description.</p>
+{{#example}}
+<div class="im-vidgrid im-vidgrid-list">
+	{{#each demo.videos}}{{#match @index "<" 3}}{{> "components/video-card" layout="row" text="Sorrento to Amalfi from the passenger seat, with the bits the brochures leave out — and what it actually costs in August."}}{{/match}}{{/each}}
+</div>
+{{/example}}
+<p><code>--im-vidcard-thumb-width</code> is how much of the row the still takes, <code>clamp(9rem, 38%, 22rem)</code>. Under 30rem it stacks.</p>
+
+<h2>Compact</h2>
+<p>The "up next" rail beside a player. No channel mark, a smaller still, everything one size down.</p>
+{{#example style="max-width: 26rem"}}
+<div class="im-stack" style="--im-stack-gap: .75rem">
+	{{#each demo.videos}}{{#match @index ">" 3}}{{> "components/video-card" layout="compact"}}{{/match}}{{/each}}
+</div>
+{{/example}}
+
+<h2>Live, and half-watched</h2>
+{{#example}}
+<div class="im-vidgrid">
+	{{#with demo.videos.[5]}}{{> "components/video-card"}}{{/with}}
+	{{#with demo.videos.[0]}}{{> "components/video-card"}}{{/with}}
+	{{#with demo.videos.[2]}}{{> "components/video-card"}}{{/with}}
+</div>
+{{/example}}
+
+<h2>The data</h2>
+{{{{code "hbs"}}}}
+{{> "components/video-card"}}                    {{!-- the context IS the video --}}
+{{> "components/video-card" layout="row" text="…"}}
+{{> "components/video-card" layout="compact"}}
+{{> "components/video-card" hide_by=true}}       {{!-- on the channel's own page --}}
+{{{{/code}}}}
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Field</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>title</code> · <code>url</code> · <code>thumb</code></td><td>The three that are never optional.</td></tr>
+		<tr><td><code>time</code> · <code>live</code></td><td>The length, or LIVE.</td></tr>
+		<tr><td><code>views</code> · <code>when</code></td><td>Already formatted — "412k", "3 days ago". Formatting a number is the theme's job, not the card's.</td></tr>
+		<tr><td><code>channel</code> · <code>avatar</code></td><td>Who made it. <code>hide_by=true</code> leaves both out.</td></tr>
+		<tr><td><code>watched</code></td><td>A percentage, for the progress bar.</td></tr>
+	</tbody>
+</table>
+</div>
+<p>Ghost has no "video" content type either: a theme makes one out of a post tagged <code>#video</code> with the YouTube id in its code injection, and the numbers fetched at build time from the Data API. The card does not care where any of it came from.</p>
+
+<h2>Choosing</h2>
+<ul>
+	<li><strong>One layout per page.</strong> A grid of verticals or a list of rows — not both, in the same list, at different widths.</li>
+	<li><strong>Two lines of title, always.</strong> The clamp is what keeps a row of cards the same height; letting one run to four lines is how a grid starts to look broken.</li>
+	<li><strong>Do not put a play button on the still.</strong> The whole card is the link, and a triangle on every thumbnail is eight triangles.</li>
+	<li><strong>The channel's name is not needed eight times.</strong> On its own page, <code>hide_by</code>.</li>
+</ul>

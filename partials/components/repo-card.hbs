@@ -1,0 +1,49 @@
+{{!-- Repo card — a project, the way a code host shows one. Its context is a
+	project object; Ghost has no "repository" content type, so a theme builds
+	one out of a post's tags and codeinjection, or out of a JSON file, and
+	hands it here.
+
+	Context   name · owner · url · text · lang · lang_color · stars · forks ·
+	          updated · topics (a list) · visibility · image ·
+	          demo_url · code_url
+	Params
+	  layout  bare — no box, a rule between rows (for a long list)
+	          lg   — the pinned size
+	  cta     true — a row of buttons: Overview, Demo, Code. They sit ABOVE
+	                 the card's own hit area, so each one goes where it says.
+	  class   anything else
+
+	The language dot takes its colour from the data, not from a table in this
+	repository: a design system has no business knowing about two hundred
+	programming languages. --}}
+<article class="im-repo{{#if layout}} im-repo-{{layout}}{{/if}}{{#if class}} {{class}}{{/if}}"{{#if lang_color}} style="--im-repo-lang: {{lang_color}}"{{/if}}>
+	{{#if image}}<span class="im-repo-media"><img src="{{image}}" alt="" loading="lazy"></span>{{/if}}
+
+	{{#if kind}}<p><span class="im-kind" data-kind="{{kind}}">{{> "icons/folder"}}{{kind}}</span></p>{{/if}}
+
+	<p class="im-repo-head">
+		<a class="im-repo-name" href="{{#if url}}{{url}}{{else}}#{{/if}}">{{> "icons/folder"}}{{#if owner}}{{owner}}/{{/if}}<b>{{name}}</b></a>
+		{{#if visibility}}<span class="im-repo-visibility{{#match visibility "=" "Archived"}} im-repo-visibility-warn{{/match}}">{{visibility}}</span>{{/if}}
+	</p>
+
+	{{#if text}}<p class="im-repo-text">{{text}}</p>{{/if}}
+
+	{{#if topics}}
+		<p class="im-repo-topics">{{#foreach topics}}<a class="im-topic" href="#">{{this}}</a>{{/foreach}}</p>
+	{{/if}}
+
+	<p class="im-repo-meta">
+		{{#if lang}}<span class="im-repo-lang">{{lang}}</span>{{/if}}
+		{{#if stars}}<a class="im-repo-stat" href="#" aria-label="{{stars}} stars">{{> "icons/star"}}{{stars}}</a>{{/if}}
+		{{#if forks}}<a class="im-repo-stat" href="#" aria-label="{{forks}} forks">{{> "icons/git-commit-vertical"}}{{forks}}</a>{{/if}}
+		{{#if updated}}<span>Updated {{updated}}</span>{{/if}}
+	</p>
+
+	{{#if cta}}
+		<div class="im-repo-actions">
+			<a class="im-btn im-btn-sm im-btn-primary" href="{{#if url}}{{url}}{{else}}#{{/if}}">{{t "Overview"}} {{> "icons/arrow-right"}}</a>
+			{{#if demo_url}}<a class="im-btn im-btn-sm" href="{{demo_url}}" rel="noopener">{{> "icons/external-link"}}{{t "Demo"}}</a>{{/if}}
+			{{#if code_url}}<a class="im-btn im-btn-sm" href="{{code_url}}" rel="noopener">{{> "icons/brand-github"}}{{t "Code"}}</a>{{/if}}
+		</div>
+	{{/if}}
+</article>

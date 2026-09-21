@@ -1,15 +1,16 @@
 /**
  * im-media.js — optional. Pictures and video.
  *
- *   lightbox   [data-im-lightbox]       a gallery (or one link) opens in a full-screen viewer
+ *   lightbox   [data-im-lightbox]       a gallery (or one link) opens on a plain sheet
  *   video      [data-im-video="ID"]     a poster that becomes a YouTube player when pressed
  *   chapters   [data-im-chapters="#v"]  timestamps that seek that player, and follow it
  *   lazy       .im-lazy > img           marks the picture loaded, so it can sharpen in
  *   drop       .im-drop                 marks a file drop zone while something is over it
  *
- * The lightbox is ONE native <dialog>, built on first use: focus trap, Esc and
- * scroll-lock come from the browser. Thumbnails are links to the large image,
- * so with this file missing a click still opens the picture.
+ * The lightbox is ONE native <dialog>, built on first use: focus trap and
+ * scroll-lock come from the browser, Esc is caught so it can leave the way it
+ * arrived. Thumbnails are links to the large image, so with this file missing
+ * a click still opens the picture.
  */
 (() => {
 	const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -30,19 +31,24 @@
 		box.className = 'im-lightbox';
 		box.setAttribute('aria-label', 'Image viewer');
 		box.innerHTML = `
-			<div class="im-lightbox-bar"><span class="im-lightbox-count"></span><button class="im-btn im-btn-icon" type="button" data-close aria-label="Close">${svg(ICON.x)}</button></div>
 			<div class="im-lightbox-stage">
-				<button class="im-btn im-btn-icon im-lightbox-prev" type="button" aria-label="Previous image">${svg(ICON.left)}</button>
-				<img alt="">
-				<button class="im-btn im-btn-icon im-lightbox-next" type="button" aria-label="Next image">${svg(ICON.right)}</button>
+				<button class="im-lightbox-prev" type="button" aria-label="Previous image">${svg(ICON.left)}</button>
+				<figure class="im-lightbox-figure">
+					<img alt="">
+					<button class="im-lightbox-close" type="button" data-close aria-label="Close">${svg(ICON.x)}</button>
+				</figure>
+				<button class="im-lightbox-next" type="button" aria-label="Next image">${svg(ICON.right)}</button>
 			</div>
-			<p class="im-lightbox-caption" aria-live="polite"></p>`;
+			<div class="im-lightbox-foot"><p class="im-lightbox-caption" aria-live="polite"></p><span class="im-lightbox-count"></span></div>`;
 		document.body.append(box);
 
-		box.querySelector('[data-close]').addEventListener('click', () => box.close());
+		box.querySelector('[data-close]').addEventListener('click', close);
 		box.querySelector('.im-lightbox-prev').addEventListener('click', () => show(at - 1));
 		box.querySelector('.im-lightbox-next').addEventListener('click', () => show(at + 1));
-		box.addEventListener('click', (e) => e.target.matches('.im-lightbox, .im-lightbox-stage') && box.close());
+		// The sheet and the space around the picture close it; the picture does not.
+		box.addEventListener('click', (e) => e.target.matches('.im-lightbox, .im-lightbox-stage, .im-lightbox-foot') && close());
+		// Esc: close it OURSELVES, so it leaves the way it arrived.
+		box.addEventListener('cancel', (e) => (e.preventDefault(), close()));
 		box.addEventListener('keydown', (e) => {
 			if (e.key === 'ArrowRight') show(at + 1);
 			else if (e.key === 'ArrowLeft') show(at - 1);
@@ -60,10 +66,33 @@
 		});
 	}
 
+	const calm = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+	function open() {
+		box.showModal();
+		// The entrance lives on the figure, which is not replaced between
+		// pictures: take the animation away and give it back to replay it.
+		const fig = box.querySelector('.im-lightbox-figure');
+		fig.style.animation = 'none';
+		void fig.offsetWidth;
+		fig.style.animation = '';
+	}
+
+	function close() {
+		if (box.hasAttribute('data-closing')) return;
+		box.setAttribute('data-closing', '');
+		// A timer, not animationend: an animation in a tab that is not being
+		// painted never ends, and the viewer would be stuck open.
+		setTimeout(() => {
+			box.removeAttribute('data-closing');
+			box.close();
+		}, calm() ? 0 : 200);
+	}
+
 	function show(i) {
 		at = (i + set.length) % set.length;
 		const item = set[at];
-		const img = box.querySelector('.im-lightbox-stage > img');
+		const img = box.querySelector('.im-lightbox-figure > img');
 		const next = img.cloneNode(); // a fresh node restarts the entrance animation
 		next.src = item.src;
 		next.alt = item.alt;
@@ -93,8 +122,8 @@
 		const links = root.matches('a') ? [root] : $$('a[href]', root);
 		set = links.map(describe);
 		if (!box) build();
-		box.showModal();
 		show(links.indexOf(link));
+		open();
 	});
 
 	/* ── video + chapters ──────────────────────────────────────────────── */

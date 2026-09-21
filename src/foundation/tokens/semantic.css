@@ -35,6 +35,21 @@
 	--im-info-tint: color-mix(in oklab, var(--im-info) 10%, var(--im-canvas));
 	--im-accent-tint: color-mix(in oklab, var(--im-accent) 10%, var(--im-canvas));
 
+	/* ---- Two states, defined once -------------------------------------------
+	   CURRENT — "you are here". A light fill and a bolder label, on every kind
+	   of navigation in the system: the side nav, the top bar, a menu row, a
+	   mega-menu link, a tile, a contents entry, a page number. One look, so a
+	   reader learns it once; three values, so changing it changes all of them.
+
+	   HOVER — "this answers". The same idea one step quieter: the thing FILLS.
+	   A card, a row, a tile, a menu item — nothing sharpens a border, nothing
+	   grows 3%, nothing lifts. A component that already sits on --im-surface
+	   overrides --im-hover-bg to the next step down.                          */
+	--im-current-bg: var(--im-surface-2);
+	--im-current-fg: var(--im-ink);
+	--im-current-weight: 600;
+	--im-hover-bg: var(--im-surface);
+
 	/* ---- Shadow: only for things that float -------------------------------- */
 	--im-shadow-float: 0 1px 2px rgb(0 0 0 / 6%), 0 12px 32px -8px rgb(0 0 0 / 18%);
 

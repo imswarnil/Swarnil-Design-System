@@ -1,0 +1,200 @@
+---
+title: Post card
+description: The blog card — one set of markup, every shape a feed needs, and a declarative list of what it shows. Vertical, horizontal either way round, over the picture, or no picture at all; and the hover is the brand's dot opening into the card.
+eyebrow: Collections · Post
+source: partials/components/post-card.hbs · src/components/post-card.css
+---
+<p>The generic <a href="/components/card/">card</a> is a box you put anything in. This is the <strong>blog card</strong>: its context is a Ghost post, it knows what a post has, and it adds the reading time, the featured flame and the members-only lock without being told. It is what the <a href="/collections/post/">collection</a> is made of, and it is the one component on this site that a reader meets a hundred times — so it is worth getting right.</p>
+
+<h2>Vertical</h2>
+<p>Picture over the words. The default, and what a grid wants.</p>
+{{#example}}
+<div class="im-grid-auto" style="--im-grid-min: 14rem">{{#foreach demo.three}}{{> "components/post-card"}}{{/foreach}}</div>
+{{/example}}
+{{#example title="With an excerpt"}}
+<div class="im-grid-auto" style="--im-grid-min: 15rem">{{#foreach demo.three}}{{> "components/post-card" excerpt=true}}{{/foreach}}</div>
+{{/example}}
+
+<h2>Horizontal</h2>
+<p>Picture beside the words, either way round. <code>im-post-card-row-end</code> moves the picture to the right with one <code>order</code> and no second template — and the words still come first in the markup, so they still read first for anyone who cannot see the picture.</p>
+{{#example}}
+<div class="im-stack" style="--im-stack-gap: 1.5rem">
+	{{#with demo.three.[0]}}{{> "components/post-card" layout="row" excerpt=true}}{{/with}}
+	{{#with demo.three.[1]}}{{> "components/post-card" layout="row-end" excerpt=true}}{{/with}}
+</div>
+{{/example}}
+<p><code>--im-post-card-media-width</code> is how much of the row the picture takes — <code>clamp(7rem, 32%, 17rem)</code> — and <code>top=true</code> aligns the picture to the top instead of the middle, which a long excerpt needs. Under 30rem every row stacks, because a picture and a paragraph side by side on a phone is two columns of nothing.</p>
+{{#example}}
+<div class="im-stack" style="--im-stack-gap: 1.5rem">
+	{{#with demo.three.[2]}}{{> "components/post-card" layout="row" excerpt=true top=true size="sm" style="--im-post-card-media-width: 8rem"}}{{/with}}
+	{{#with demo.four.[3]}}{{> "components/post-card" layout="row" excerpt=true top=true size="sm"}}{{/with}}
+</div>
+{{/example}}
+
+<h2>Over the picture</h2>
+<p>The words on a gradient, over the image. For a featured row, a hero strip, a carousel — never for a dense grid, where five of them is five photographs shouting at once.</p>
+{{#example}}
+<div class="im-grid-auto" style="--im-grid-min: 13rem">{{#foreach demo.three}}{{> "components/post-card" layout="cover"}}{{/foreach}}</div>
+{{/example}}
+
+<h2>No picture</h2>
+<p>A title, its meta and a rule. For an archive, a search result, a "more in this tag" list — anywhere a column of grey placeholder blocks would be worse than no pictures at all. Pass <code>time=true</code> to put the reading time in the meta line, since there is no picture left to carry the flag.</p>
+{{#example style="max-width: 34rem"}}
+<div>{{#foreach demo.four}}{{> "components/post-card" layout="plain" size="sm" time=true}}{{/foreach}}</div>
+{{/example}}
+
+<h2 id="what-it-shows">What it shows</h2>
+<p>What the card <em>is</em> and what it <em>shows</em> are two different decisions, so they are two different attributes. <code>data-im-hide</code> takes a space-separated list and CSS matches one word of it at a time with <code>~=</code>:</p>
+{{{{code "hbs"}}}}
+<article class="im-post-card" data-im-hide="author excerpt">
+
+{{!-- or, from the partial, from a theme setting --}}
+{{> "components/post-card" hide=@custom.card_hide}}
+{{{{/code}}}}
+<p>Any of <code>media</code> · <code>kicker</code> · <code>title</code> · <code>excerpt</code> · <code>meta</code> · <code>author</code> · <code>date</code> · <code>time</code> · <code>flags</code>, in any combination, in any layout. Every part is printed and then hidden in CSS rather than each one being a condition in the template — which is what keeps this one attribute instead of nine booleans, and what lets a theme expose it as a single setting.</p>
+{{#example}}
+<div class="im-grid-auto" style="--im-grid-min: 14rem">
+	{{#with demo.three.[0]}}{{> "components/post-card" excerpt=true hide="kicker"}}{{/with}}
+	{{#with demo.three.[1]}}{{> "components/post-card" excerpt=true hide="author"}}{{/with}}
+	{{#with demo.three.[2]}}{{> "components/post-card" excerpt=true hide="meta flags"}}{{/with}}
+	{{#with demo.four.[3]}}{{> "components/post-card" excerpt=true hide="media"}}{{/with}}
+</div>
+{{/example}}
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Word</th><th>Takes away</th></tr></thead>
+	<tbody>
+		<tr><td><code>media</code></td><td>The picture, and the flags on it. The card becomes words only, keeping its gap and its grid cell.</td></tr>
+		<tr><td><code>kicker</code></td><td>The primary tag above the title.</td></tr>
+		<tr><td><code>excerpt</code></td><td>The two clamped lines.</td></tr>
+		<tr><td><code>meta</code></td><td>The whole byline row.</td></tr>
+		<tr><td><code>author</code> · <code>date</code> · <code>time</code></td><td>One item of it. <code>time</code> also takes the reading-time flag off the picture.</td></tr>
+		<tr><td><code>flags</code></td><td>Reading time, featured and members-only, together.</td></tr>
+		<tr><td><code>title</code></td><td>Possible, and almost always wrong. It is here because a card of nothing but a picture is a real thing in a gallery.</td></tr>
+	</tbody>
+</table>
+</div>
+<p><strong>The separators stay right.</strong> The dots between the meta items are drawn on every item but the first, so hiding the first one would otherwise leave the <em>second</em> wearing a leading dot. Three chained rules take the separator off whatever now comes first — hide the author and the date, and the reading time loses its dot through the date's rule.</p>
+{{#example style="max-width: 30rem"}}
+<div class="im-stack" style="--im-stack-gap: .75rem">
+	{{#with demo.post}}{{> "components/post-card" layout="plain" size="sm" time=true}}{{/with}}
+	{{#with demo.post}}{{> "components/post-card" layout="plain" size="sm" time=true hide="author"}}{{/with}}
+	{{#with demo.post}}{{> "components/post-card" layout="plain" size="sm" time=true hide="author date"}}{{/with}}
+</div>
+{{/example}}
+
+<h2>The hover</h2>
+<p>A picture nudging 3% larger is what every theme does, and it is not an interaction — it is a twitch. This one uses the <a href="/foundation/logo/">brand's dot</a>, and it uses it as the <em>mechanism</em> rather than as a decoration bolted on top.</p>
+<p>At rest the card is a quiet filled block with the dot in its top-right corner. Under the pointer the dot does not light up, or wobble, or grow a shadow — <strong>it opens</strong>, and the colour it is made of floods the whole card out of that one corner. The dot is the seed; the fill is what it opens into. Hover one:</p>
+{{#example}}
+<div class="im-grid-auto" style="--im-grid-min: 15rem">
+	{{#with demo.three.[0]}}{{> "components/post-card" dot=true excerpt=true}}{{/with}}
+	{{#with demo.three.[1]}}{{> "components/post-card" dot="soft" excerpt=true}}{{/with}}
+	{{#with demo.three.[2]}}{{> "components/post-card" dot="ink" excerpt=true}}{{/with}}
+</div>
+{{/example}}
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Class</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>im-post-card-dot</code></td><td>Floods with the accent, and everything inside inverts onto it.</td></tr>
+		<tr><td><code>im-post-card-dot-soft</code></td><td>The same movement in a surface. Nothing inverts, because nothing needs to — this is the one for a dense feed, where twenty cards flooding orange is a fairground.</td></tr>
+		<tr><td><code>im-post-card-dot-ink</code></td><td>The whole card goes to the page's darkest value. For <em>one</em> card in a row — the featured one.</td></tr>
+	</tbody>
+</table>
+</div>
+<p>It works on every layout, including the horizontal one, where the flood crosses the picture as well:</p>
+{{#example}}
+<div class="im-stack" style="--im-stack-gap: 1rem">
+	{{#with demo.four.[2]}}{{> "components/post-card" layout="row" dot=true excerpt=true top=true}}{{/with}}
+	{{#with demo.four.[3]}}{{> "components/post-card" layout="row-end" dot="soft" excerpt=true top=true}}{{/with}}
+</div>
+{{/example}}
+
+<h3>How it is built, and the two traps in it</h3>
+<p>The flood is a <code>clip-path: circle()</code> on a layer behind the card's content, centred exactly on the dot and grown from <code>0%</code> to <code>150%</code> — past the far corner from wherever the dot is.</p>
+{{{{code "css"}}}}
+@property --im-post-card-flood {
+	syntax: "<percentage>";
+	initial-value: 0%;
+	inherits: false;
+}
+
+.im-post-card-dot::before {
+	clip-path: circle(var(--im-post-card-flood) at <the dot> );
+	transition: --im-post-card-flood 620ms var(--im-ease-glide);
+}
+
+.im-post-card-dot:is(:hover, :focus-within) {
+	--im-post-card-flood: 150%;
+}
+{{{{/code}}}}
+<ul>
+	<li><strong>The radius has to be a registered property.</strong> <code>@property</code> with a <code>&lt;percentage&gt;</code> syntax is what gives the browser something to interpolate; without it the circle jumps from nothing to everything in one frame. It is the same reason the <a href="/effects/border/">corner brackets</a> declare <code>--im-fx-arm</code>.</li>
+	<li><strong>The card restates its semantic tokens, not its colours.</strong> <code>--im-ink</code>, <code>--im-body</code>, <code>--im-muted</code>, <code>--im-faint</code> and <code>--im-line</code> are redefined on hover, so a rule, a badge, an avatar's initial and anything drawn in <code>currentColor</code> all follow onto the accent without being named.</li>
+	<li><strong>But it must not restate <code>--im-accent</code></strong> — the flood is <em>made</em> of it. A fill declared as <code>var(--im-accent)</code>, on an element that has just redefined <code>--im-accent</code>, resolves to the new value: the card would flood white on white. The pair to set is <code>--im-post-card-fill</code> and <code>--im-post-card-on-fill</code>, and the kicker — the one part painted in the accent rather than in a semantic token — is recoloured by name.</li>
+	<li><strong>And <code>soft</code> cannot simply undo the inversion.</strong> Undoing it would mean <code>--im-ink: var(--im-ink)</code>, a cycle, which CSS throws away entirely rather than resolving to the inherited value. So the inversion is written on <code>:not(.im-post-card-dot-soft)</code> instead of being written and then cancelled.</li>
+</ul>
+<p>Under <code>prefers-reduced-motion</code> the fill still arrives — it simply arrives at once.</p>
+
+<h2>Edge cases</h2>
+<p>No feature image: the title's initial in Geist Pixel holds the shape, so a grid never has a hole. Members-only: a lock flag. Both still work inside a flooding card, because the picture's well is a wash of the card's own ink rather than a fixed grey.</p>
+{{#example}}
+<div class="im-grid-auto" style="--im-grid-min: 14rem">
+	{{#with demo.noImage}}{{> "components/post-card"}}{{/with}}
+	{{#with demo.locked}}{{> "components/post-card"}}{{/with}}
+	{{#with demo.noImage}}{{> "components/post-card" dot=true}}{{/with}}
+</div>
+{{/example}}
+
+<h2>Parameters</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Param</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>layout</code></td><td><code>row</code> · <code>row-end</code> · <code>cover</code> · <code>plain</code>. Omitted: vertical.</td></tr>
+		<tr><td><code>size</code></td><td><code>lg</code> · <code>sm</code>. The title, the excerpt and the meta together.</td></tr>
+		<tr><td><code>dot</code></td><td><code>true</code> · <code>soft</code> · <code>ink</code> — the hover.</td></tr>
+		<tr><td><code>hide</code></td><td>The space-separated list above.</td></tr>
+		<tr><td><code>excerpt</code></td><td>Show the excerpt, clamped to two lines (three at <code>lg</code>).</td></tr>
+		<tr><td><code>time</code></td><td>The reading time in the meta line as well as on the picture.</td></tr>
+		<tr><td><code>top</code></td><td>Row layouts: align the picture to the top.</td></tr>
+		<tr><td><code>eager</code></td><td>For cards above the fold — <code>eager=@first</code> in a loop.</td></tr>
+	</tbody>
+</table>
+</div>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Variable</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>--im-post-card-ratio</code></td><td>16 / 10; 4 / 3 in a row, 4 / 5 on a cover.</td></tr>
+		<tr><td><code>--im-post-card-radius</code></td><td>The picture's corners, and the card's when it is filled.</td></tr>
+		<tr><td><code>--im-post-card-media-width</code></td><td>Row layouts: how much of the row the picture takes.</td></tr>
+		<tr><td><code>--im-post-card-fill</code> · <code>-on-fill</code></td><td>The flood's colour and what reads on it.</td></tr>
+		<tr><td><code>--im-post-card-seed</code> · <code>-inset</code> · <code>-pad</code> · <code>-speed</code></td><td>The dot's size, how far in it sits, the filled card's padding, and how long the flood takes.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>In a Ghost theme</h2>
+{{{{code "hbs"}}}}
+{{#foreach posts}}
+	{{> "components/post-card"
+		layout=@custom.card_layout
+		dot=@custom.card_hover
+		hide=@custom.card_hide
+		excerpt=true
+		eager=@first}}
+{{else}}
+	<p class="im-feed-empty">{{t "Nothing here yet."}}</p>
+{{/foreach}}
+{{{{/code}}}}
+<p>Four settings, and the feed changes shape, hover and content without a second template anywhere in the theme. Put it in <a href="/collections/post/#the-feed">the feed</a>, in a <a href="/components/carousel/">carousel</a>, in a <a href="/components/widgets/">widget</a>, or in the "more like this" row at the foot of <a href="/collections/post/article/">a post</a>.</p>
+
+<h2>Choosing</h2>
+<ul>
+	<li><strong>One layout per feed, and the same one on every page of it.</strong> A reader scanning a list should not have to relearn it between the home page and a tag.</li>
+	<li><strong>One hover per site.</strong> Pick <code>dot</code> or <code>dot-soft</code> and use it everywhere; <code>dot-ink</code> is for the one card that is different.</li>
+	<li><strong>The excerpt is not free.</strong> Two lines of it is a third of the card's height and most of the reason a grid of six becomes a page of scrolling.</li>
+	<li><strong>Hide the author on a single-author blog.</strong> It is the same name a hundred times, and it is already in the top bar.</li>
+</ul>

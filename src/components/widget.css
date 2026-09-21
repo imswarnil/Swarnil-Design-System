@@ -46,6 +46,13 @@
 	color: var(--im-ink);
 }
 
+/* Bare — no frame at all. For a widget used somewhere that already has one:
+   a footer column, a card, the menu panel. */
+.im-widget-bare {
+	padding: 0;
+	border: 0;
+}
+
 .im-widget-fill {
 	border-color: transparent;
 	background-color: var(--im-surface);
@@ -183,4 +190,319 @@
 	color: var(--im-ink);
 	font-weight: 500;
 	text-align: right;
+}
+
+/* ---- media: a picture that fills the top of the widget ---- */
+.im-widget-media {
+	aspect-ratio: var(--im-widget-media, 16 / 9);
+	margin: -1.125rem -1.125rem 0;
+	overflow: hidden;
+	border-radius: calc(var(--im-radius-lg) - 1px) calc(var(--im-radius-lg) - 1px) 0 0;
+	background-color: var(--im-surface-2);
+}
+
+.im-widget-media > img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.im-widget-bare > .im-widget-media {
+	margin: 0;
+	border-radius: var(--im-radius-md);
+}
+
+/* ---- series: where this post sits in a run of them ----
+   The timeline component, tuned for a 19rem column: no descriptions, the
+   current part marked, the ones before it done. A reader who arrives in the
+   middle of a series can see that they have, and where the start is. */
+.im-widget-series {
+	/* Only the gap: the marker and the gutter are decided by the timeline's own
+	   :has() rule for markers with something in them, which is more specific
+	   than anything a class here can say. Numbered markers are what this wants
+	   anyway — a series is parts, and a part has a number. */
+	--im-timeline-gap: 0.75rem;
+
+	font-size: var(--im-text-sm);
+}
+
+.im-widget-series .im-timeline-title {
+	font-size: var(--im-text-sm);
+	font-weight: 500;
+	line-height: 1.35;
+}
+
+.im-widget-series .im-timeline-title > a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.im-widget-series .im-timeline-title > a:hover {
+	color: var(--im-accent);
+}
+
+.im-widget-series .im-timeline-marker {
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+}
+
+.im-widget-series .im-timeline-item[data-state="current"] .im-timeline-title {
+	color: var(--im-ink);
+	font-weight: 600;
+}
+
+/* The one the reader is on is not a link to itself. */
+.im-widget-series .im-timeline-item[data-state="current"] .im-timeline-title > span {
+	color: var(--im-ink);
+}
+
+/* ---- products: the things you actually use ----
+   A name, what it is for, and where to get it. The mark on the left is an
+   <img> if there is a logo and the initial if there is not — the same trick
+   the post card uses, so a row never collapses. */
+.im-widget-products {
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+}
+
+.im-widget-product {
+	display: grid;
+	grid-template-columns: 2rem minmax(0, 1fr) auto;
+	gap: 0 0.75rem;
+	align-items: center;
+	margin-inline: -0.375rem;
+	padding: 0.5rem 0.375rem;
+	border-radius: var(--im-radius-md);
+	color: var(--im-ink);
+	text-decoration: none;
+	transition: background-color 120ms;
+}
+
+.im-widget-product:hover {
+	background-color: var(--im-surface);
+}
+
+.im-widget-product > :is(img, .im-widget-product-mark) {
+	grid-row: span 2;
+	width: 2rem;
+	height: 2rem;
+	border-radius: var(--im-radius-sm);
+	object-fit: cover;
+}
+
+.im-widget-product-mark {
+	display: grid;
+	place-items: center;
+	background-color: var(--im-surface-2);
+	color: var(--im-muted);
+	font-family: var(--im-font-pixel, var(--im-font-mono));
+	font-size: var(--im-text-sm);
+}
+
+.im-widget-product-name {
+	font-size: var(--im-text-sm);
+	font-weight: 500;
+	line-height: 1.3;
+}
+
+.im-widget-product-note {
+	grid-column: 2;
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+}
+
+.im-widget-product > .im-icon {
+	grid-row: span 2;
+	color: var(--im-faint);
+	transition: color 120ms, translate 200ms var(--im-ease-out);
+}
+
+.im-widget-product:hover > .im-icon {
+	color: var(--im-ink);
+	translate: 0.125rem -0.125rem;
+}
+
+/* ---- support: the small version of the panel under the post ---- */
+.im-widget-support-amounts {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.375rem;
+}
+
+/* ---- now: what you are doing at the moment ---- */
+.im-widget-now {
+	display: flex;
+	flex-direction: column;
+	gap: 0.625rem;
+}
+
+.im-widget-now > li {
+	display: grid;
+	grid-template-columns: 1.125rem minmax(0, 1fr);
+	gap: 0.625rem;
+	align-items: start;
+}
+
+.im-widget-now .im-icon {
+	margin-top: 0.125rem;
+	color: var(--im-muted);
+}
+
+.im-widget-now b {
+	color: var(--im-ink);
+	font-weight: 500;
+}
+
+/* ---- quote: one line from the post, or from someone else ---- */
+.im-widget-quote {
+	border-left: 2px solid var(--im-accent);
+	padding-left: 0.875rem;
+	color: var(--im-ink);
+	font-family: var(--im-font-heading);
+	font-size: var(--im-text-lg);
+	line-height: 1.35;
+	letter-spacing: var(--im-tracking-tight);
+	text-wrap: pretty;
+}
+
+.im-widget-quote-by {
+	display: block;
+	padding-top: 0.5rem;
+	color: var(--im-muted);
+	font-family: var(--im-font-body);
+	font-size: var(--im-text-xs);
+	letter-spacing: normal;
+}
+
+/* ---- sponsor: a slot that says what it is ---- */
+.im-widget-sponsor {
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+}
+
+.im-widget-sponsor-label {
+	color: var(--im-faint);
+	font-family: var(--im-font-mono);
+	font-size: 0.625rem;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+
+/* ---- archive: a year, and how much of it there is ---- */
+.im-widget-archive {
+	display: flex;
+	flex-direction: column;
+}
+
+.im-widget-archive a {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	padding: 0.4375rem 0;
+	color: var(--im-ink);
+	font-size: var(--im-text-sm);
+	font-variant-numeric: tabular-nums;
+	text-decoration: none;
+}
+
+.im-widget-archive a + a {
+	border-top: 1px solid var(--im-line);
+}
+
+.im-widget-archive a:hover {
+	color: var(--im-accent);
+}
+
+/* The bar is the SHARE of the busiest year, set inline as --im-share. */
+.im-widget-archive a::after {
+	content: "";
+	flex: 1;
+	height: 2px;
+	border-radius: 1px;
+	background: linear-gradient(to right, var(--im-line) 0 var(--im-share, 50%), transparent var(--im-share, 50%));
+}
+
+.im-widget-archive a > small {
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+}
+
+/* ---- series bar ----
+   Above a post that is part of a run: which run, which part, and the way to
+   the next one. It is the one piece of furniture a series post has that a
+   single post does not, and it belongs at the TOP — a reader who has landed
+   on part four needs to know before they start, not after.
+
+     <nav class="im-seriesbar">
+       <p class="im-seriesbar-label">Part 3 of 4 · <a href="…">The Amalfi road</a></p>
+       <div class="im-seriesbar-nav"> … prev / next … </div>
+     </nav>                                                                  */
+.im-seriesbar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.75rem 1rem;
+	padding: 0.75rem 1rem;
+	border-radius: var(--im-radius-lg);
+	background-color: var(--im-surface);
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+}
+
+.im-seriesbar-label {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem;
+	min-width: 0;
+}
+
+.im-seriesbar-label > strong {
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	font-weight: 500;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.im-seriesbar-label > a {
+	color: var(--im-ink);
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.im-seriesbar-label > a:hover {
+	color: var(--im-accent);
+}
+
+/* A row of dots, one per part, the current one filled — the same mark the
+   logo uses, as a position indicator. */
+.im-seriesbar-dots {
+	display: flex;
+	gap: 0.3125rem;
+}
+
+.im-seriesbar-dots > span {
+	width: 0.4375rem;
+	height: 0.4375rem;
+	border-radius: 50%;
+	background-color: var(--im-line);
+}
+
+.im-seriesbar-dots > span[data-state="done"] {
+	background-color: var(--im-faint);
+}
+
+.im-seriesbar-dots > span[aria-current="true"] {
+	background-color: var(--im-accent);
+}
+
+.im-seriesbar-nav {
+	display: flex;
+	align-items: center;
+	gap: 0.375rem;
+	margin-left: auto;
 }

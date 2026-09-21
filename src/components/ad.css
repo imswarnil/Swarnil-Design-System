@@ -1,0 +1,838 @@
+/* Ads, sponsors and affiliate links — the three ways a site takes money, and
+   the one rule they share: SAY WHAT THEY ARE.
+
+   Every block here carries an .im-ad-label. It is not decoration and it is not
+   optional — a paid placement that looks like editorial is the fastest way to
+   lose a reader for good, and in most places it is also the law. The label is
+   part of the component so that removing it takes deliberate effort.
+
+     <aside class="im-ad im-ad-leaderboard" aria-label="Advertisement">
+       <p class="im-ad-label">Ad</p>
+       <button class="im-ad-close" type="button" data-im-ad-close aria-label="Close">…</button>
+       <a class="im-ad-slot" href="…"> …the creative… </a>
+       <button class="im-ad-remove" type="button" data-im-ad-remove>Remove ads</button>
+     </aside>
+
+   Formats are RATIOS, not pixel sizes. A 728×90 leaderboard on a 390px phone
+   is a 728px page with a scrollbar; here it is a shape that shrinks, capped so
+   it never eats the screen. js/im-ads.js is optional and only adds behaviour:
+   the close button, the sticky one's entrance, the interstitial's timing, and
+   the member gate. */
+
+.im-ad {
+	--im-ad-ratio: 728 / 90;
+	--im-ad-max: 100%;
+	--im-ad-pad: 0.75rem;
+
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	width: 100%;
+	max-width: var(--im-ad-max);
+	margin-inline: auto;
+	padding: var(--im-ad-pad);
+	border: 1px solid var(--im-line);
+	border-radius: var(--im-radius-lg);
+	background-color: var(--im-surface);
+	color: var(--im-body);
+}
+
+/* Bare: no frame at all, for a slot inside something that already has one. */
+.im-ad-bare {
+	--im-ad-pad: 0px;
+
+	border: 0;
+	background: none;
+}
+
+/* ---- the label ----
+   Mono, small, and never in the accent: it is a disclosure, not a badge to be
+   looked at. `-sponsored`, `-promoted`, `-affiliate` change the word's tone
+   without changing its size. */
+.im-ad-label {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
+	align-self: flex-start;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: 0.625rem;
+	font-weight: 500;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+}
+
+.im-ad-label::before {
+	content: "";
+	width: 0.3125rem;
+	height: 0.3125rem;
+	border-radius: 50%;
+	background-color: currentcolor;
+	opacity: 0.6;
+}
+
+/* A boxed label, for a creative that fills its frame edge to edge. */
+.im-ad-label-chip {
+	position: absolute;
+	top: var(--im-ad-pad);
+	left: var(--im-ad-pad);
+	z-index: 2;
+	padding: 0.1875rem 0.4375rem;
+	border-radius: var(--im-radius-xs);
+	background-color: color-mix(in oklab, var(--im-canvas) 78%, transparent);
+	-webkit-backdrop-filter: blur(6px);
+	backdrop-filter: blur(6px);
+	color: var(--im-body);
+}
+
+/* ---- the cross ----
+   Bare, in the corner, like the lightbox's: over a creative, a chip with a
+   border is furniture. The hit area is 2rem; the cross is not. */
+.im-ad-close {
+	position: absolute;
+	top: var(--im-ad-pad);
+	right: var(--im-ad-pad);
+	z-index: 3;
+	display: grid;
+	place-items: center;
+	width: 2rem;
+	height: 2rem;
+	padding: 0;
+	border: 0;
+	border-radius: var(--im-radius-md);
+	background: none;
+	color: var(--im-muted);
+	cursor: pointer;
+	transition: background-color 160ms, color 160ms, rotate 320ms var(--im-ease-glide);
+}
+
+.im-ad-close > .im-icon {
+	font-size: 1rem;
+}
+
+.im-ad-close:is(:hover, :focus-visible) {
+	background-color: color-mix(in oklab, var(--im-canvas) 70%, transparent);
+	color: var(--im-ink);
+	rotate: 90deg;
+}
+
+/* Over a picture the cross needs to survive any creative underneath it. */
+.im-ad-close-over {
+	color: #fff;
+	filter: drop-shadow(0 1px 3px rgb(0 0 0 / 55%));
+}
+
+.im-ad-close-over:is(:hover, :focus-visible) {
+	background-color: rgb(20 20 20 / 45%);
+	color: #fff;
+}
+
+/* ---- the slot ----
+   Where the creative goes. It holds the SHAPE, so an empty slot and a full one
+   are the same size and the page never jumps when one fails to load. */
+.im-ad-slot {
+	position: relative;
+	display: grid;
+	place-items: center;
+	overflow: hidden;
+	aspect-ratio: var(--im-ad-ratio);
+	width: 100%;
+	border-radius: var(--im-radius-md);
+	background-color: var(--im-surface-2);
+	color: inherit;
+	text-decoration: none;
+}
+
+.im-ad-slot > :is(img, video, iframe) {
+	width: 100%;
+	height: 100%;
+	border: 0;
+	object-fit: cover;
+}
+
+/* Nothing sold this week: a dashed box that says so, rather than a hole. */
+.im-ad-empty {
+	border: 1px dashed var(--im-line);
+	background-color: transparent;
+	color: var(--im-faint);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	text-align: center;
+}
+
+/* ---- remove ads ----
+   The way out. It is a real offer, not a dark pattern: press it and the member
+   gate opens. Quiet, at the foot of the block. */
+.im-ad-remove {
+	align-self: flex-end;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: var(--im-muted);
+	font-family: inherit;
+	font-size: var(--im-text-xs);
+	text-decoration: underline;
+	text-decoration-color: color-mix(in oklab, currentcolor 35%, transparent);
+	text-underline-offset: 0.2em;
+	cursor: pointer;
+	transition: color 140ms, text-decoration-color 140ms;
+}
+
+.im-ad-remove:hover {
+	color: var(--im-ink);
+	text-decoration-color: currentcolor;
+}
+
+.im-ad-remove > .im-icon {
+	font-size: 0.875rem;
+}
+
+/* ---- formats ----
+   Each is a ratio and a cap. The cap is what keeps an ad an ad: a leaderboard
+   that may grow to the full width of a 90rem page is a billboard nobody asked
+   for. */
+.im-ad-leaderboard { --im-ad-ratio: 728 / 90; --im-ad-max: 48rem; }
+.im-ad-billboard   { --im-ad-ratio: 970 / 250; --im-ad-max: 62rem; }
+.im-ad-banner      { --im-ad-ratio: 320 / 50; --im-ad-max: 24rem; }
+.im-ad-rectangle   { --im-ad-ratio: 300 / 250; --im-ad-max: 20rem; }
+.im-ad-square      { --im-ad-ratio: 1; --im-ad-max: 18rem; }
+.im-ad-half        { --im-ad-ratio: 300 / 600; --im-ad-max: 20rem; }
+.im-ad-skyscraper  { --im-ad-ratio: 160 / 600; --im-ad-max: 11rem; }
+.im-ad-portrait    { --im-ad-ratio: 300 / 1050; --im-ad-max: 20rem; }
+.im-ad-video       { --im-ad-ratio: 16 / 9; --im-ad-max: 44rem; }
+
+/* Below 40rem a leaderboard is unreadable: it becomes the mobile banner it
+   should always have been on a phone. Nothing in the markup changes. */
+@media (width < 40rem) {
+	.im-ad-leaderboard,
+	.im-ad-billboard {
+		--im-ad-ratio: 320 / 100;
+		--im-ad-max: 100%;
+	}
+
+	.im-ad-skyscraper,
+	.im-ad-half,
+	.im-ad-portrait {
+		--im-ad-ratio: 300 / 250;
+		--im-ad-max: 100%;
+	}
+}
+
+/* ---- video ----
+   A creative that plays. The countdown is the honest part: a reader can see
+   how long this lasts. --im-ad-seconds drives it. */
+.im-ad-video .im-ad-slot {
+	background-color: #000;
+}
+
+.im-ad-countdown {
+	position: absolute;
+	right: 0.625rem;
+	bottom: 0.625rem;
+	z-index: 2;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
+	padding: 0.1875rem 0.5rem;
+	border-radius: var(--im-radius-full);
+	background-color: rgb(20 20 20 / 62%);
+	-webkit-backdrop-filter: blur(6px);
+	backdrop-filter: blur(6px);
+	color: #fff;
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	font-variant-numeric: tabular-nums;
+}
+
+.im-ad-skip {
+	position: absolute;
+	right: 0.625rem;
+	bottom: 0.625rem;
+	z-index: 2;
+}
+
+/* A hairline that empties as the creative plays. */
+.im-ad-progress {
+	position: absolute;
+	inset: auto 0 0;
+	z-index: 2;
+	height: 2px;
+	background-color: rgb(255 255 255 / 25%);
+}
+
+.im-ad-progress > span {
+	display: block;
+	height: 100%;
+	background-color: var(--im-accent);
+	animation: im-ad-countdown var(--im-ad-seconds, 15s) linear forwards;
+}
+
+@keyframes im-ad-countdown {
+	from { width: 0; }
+	to { width: 100%; }
+}
+
+/* ---- in-feed ----
+   A row that sits between posts. It borrows the post card's shape on purpose
+   — that is what "native" means — and is told apart by the label and by the
+   rule above and below it, which no post has. */
+.im-ad-infeed {
+	--im-ad-pad: 1rem;
+
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) 9rem;
+	gap: 0.375rem 1.25rem;
+	align-items: center;
+	border-inline: 0;
+	border-block: 1px solid var(--im-line);
+	border-radius: 0;
+	background-color: transparent;
+}
+
+.im-ad-infeed > .im-ad-label {
+	grid-column: 1;
+}
+
+.im-ad-infeed > .im-ad-slot {
+	--im-ad-ratio: 16 / 10;
+
+	grid-column: 2;
+	grid-row: 1 / span 3;
+}
+
+.im-ad-infeed-title {
+	grid-column: 1;
+	color: var(--im-ink);
+	font-size: var(--im-text-h5);
+	font-weight: 600;
+	line-height: var(--im-leading-h5);
+	letter-spacing: var(--im-tracking-tight);
+	text-wrap: pretty;
+}
+
+.im-ad-infeed-text {
+	grid-column: 1;
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+}
+
+.im-ad-infeed-by {
+	grid-column: 1;
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+}
+
+@media (width < 34rem) {
+	.im-ad-infeed {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.im-ad-infeed > .im-ad-slot {
+		grid-column: 1;
+		grid-row: auto;
+	}
+}
+
+/* ---- sticky: the anchor ad ----
+   Fixed to the bottom of the window, full width, above everything. It is the
+   most intrusive format here, so it is also the one with the largest cross and
+   the only one that keeps the page's own bottom padding clear
+   (--im-ad-sticky-height, for a theme to reserve room). */
+.im-ad-sticky {
+	--im-ad-ratio: 728 / 90;
+	--im-ad-max: 44rem;
+
+	position: fixed;
+	inset: auto 0 0;
+	z-index: 60;
+	width: min(var(--im-ad-max), calc(100vw - 1rem));
+	margin: 0 auto 0.5rem;
+	border-radius: var(--im-radius-lg);
+	background-color: color-mix(in oklab, var(--im-canvas) 88%, transparent);
+	-webkit-backdrop-filter: blur(14px) saturate(1.3);
+	backdrop-filter: blur(14px) saturate(1.3);
+	box-shadow: var(--im-shadow-float);
+}
+
+/* It arrives when the reader has got somewhere, not on load: im-ads.js sets
+   data-im-ad-shown once the page has been scrolled. */
+.im-ad-sticky:not([data-im-ad-shown]) {
+	translate: 0 calc(100% + 1rem);
+	opacity: 0;
+	pointer-events: none;
+}
+
+.im-ad-sticky {
+	transition:
+		translate 420ms var(--im-ease-glide),
+		opacity 300ms;
+}
+
+@media (width < 40rem) {
+	.im-ad-sticky {
+		--im-ad-ratio: 320 / 50;
+	}
+}
+
+/* ---- floating: a corner unit ---- */
+.im-ad-floating {
+	position: fixed;
+	right: 1rem;
+	bottom: 1rem;
+	z-index: 60;
+	width: min(20rem, calc(100vw - 2rem));
+	margin: 0;
+	border-radius: var(--im-radius-xl);
+	background-color: var(--im-canvas);
+	box-shadow: inset 0 0 0 1px var(--im-line), var(--im-shadow-float);
+	transition:
+		translate 420ms var(--im-ease-glide),
+		opacity 300ms;
+}
+
+.im-ad-floating:not([data-im-ad-shown]) {
+	translate: 0 calc(100% + 1.5rem);
+	opacity: 0;
+	pointer-events: none;
+}
+
+/* ---- interstitial: the full-page one ----
+   A <dialog>, so the browser gives the top layer, the focus trap and Esc. It
+   is the format a reader hates most, so: it is dismissible from the first
+   frame, the cross is large, and the way out is next to it. */
+.im-ad-popup {
+	width: min(34rem, calc(100vw - 2rem));
+	max-height: calc(100dvh - 2rem);
+	margin: auto;
+	padding: 1rem;
+	border: 0;
+	border-radius: var(--im-radius-2xl);
+	background-color: var(--im-canvas);
+	box-shadow: inset 0 0 0 1px var(--im-line), var(--im-shadow-float);
+	color: var(--im-body);
+}
+
+.im-ad-popup::backdrop {
+	background-color: var(--im-scrim);
+	-webkit-backdrop-filter: blur(4px);
+	backdrop-filter: blur(4px);
+}
+
+.im-ad-popup[open] {
+	animation: im-ad-popup-in 360ms var(--im-ease-glide);
+}
+
+.im-ad-popup[open]::backdrop {
+	animation: im-fade-in 300ms;
+}
+
+@keyframes im-ad-popup-in {
+	from {
+		opacity: 0;
+		scale: 0.95;
+		translate: 0 1rem;
+	}
+}
+
+/* ---- a rail of them ---- */
+.im-ad-rail {
+	position: sticky;
+	top: calc(var(--im-bar-height) + 1.25rem);
+}
+
+/* ---- sponsor card ----
+   Not an ad slot: somebody who pays for the whole thing, named, with a line
+   about what they do. It looks like the site because it is part of the site. */
+.im-sponsor {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+	padding: 1.125rem;
+	border: 1px solid var(--im-line);
+	border-radius: var(--im-radius-lg);
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+}
+
+.im-sponsor-head {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+}
+
+.im-sponsor-logo {
+	display: grid;
+	place-items: center;
+	flex: none;
+	width: 2.75rem;
+	height: 2.75rem;
+	overflow: hidden;
+	border-radius: var(--im-radius-md);
+	background-color: var(--im-surface);
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-base);
+	font-weight: 600;
+}
+
+.im-sponsor-logo > img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+}
+
+.im-sponsor-name {
+	color: var(--im-ink);
+	font-size: var(--im-text-h5);
+	font-weight: 600;
+	line-height: var(--im-leading-h5);
+	letter-spacing: var(--im-tracking-tight);
+	text-decoration: none;
+}
+
+.im-sponsor-name:hover {
+	color: var(--im-accent);
+}
+
+.im-sponsor-text {
+	text-wrap: pretty;
+}
+
+/* A row of logos — "this month's sponsors" — where one card each would be a
+   page of its own. */
+.im-sponsors {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(8rem, 100%), 1fr));
+	gap: 1px;
+	overflow: hidden;
+	border: 1px solid var(--im-line);
+	border-radius: var(--im-radius-lg);
+	background-color: var(--im-line);
+}
+
+.im-sponsors > a {
+	display: grid;
+	place-items: center;
+	min-height: 5rem;
+	padding: 1rem;
+	background-color: var(--im-canvas);
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-sm);
+	text-decoration: none;
+	transition: color 140ms, background-color 140ms;
+}
+
+.im-sponsors > a:hover {
+	background-color: var(--im-surface);
+	color: var(--im-ink);
+}
+
+.im-sponsors img {
+	max-width: 100%;
+	height: auto;
+	max-height: 2rem;
+	/* Somebody else's logo, made to sit in this page's palette rather than
+	   bringing seven brand colours into a quiet footer. */
+	filter: grayscale(1);
+	opacity: 0.7;
+	transition: filter 200ms, opacity 200ms;
+}
+
+.im-sponsors > a:hover img {
+	filter: none;
+	opacity: 1;
+}
+
+/* ---- affiliate product card ----
+   A thing you recommend and are paid for. Everything a reader needs to decide
+   is on the card, including that last part. */
+.im-affiliate {
+	position: relative;
+	display: grid;
+	grid-template-columns: 6.5rem minmax(0, 1fr);
+	gap: 0.25rem 1.125rem;
+	align-items: start;
+	padding: 1.125rem;
+	border: 1px solid var(--im-line);
+	border-radius: var(--im-radius-lg);
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+}
+
+.im-affiliate-media {
+	grid-row: 1 / span 5;
+	display: grid;
+	place-items: center;
+	aspect-ratio: 1;
+	overflow: hidden;
+	border-radius: var(--im-radius-md);
+	background-color: var(--im-surface);
+}
+
+.im-affiliate-media > img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.im-affiliate-name {
+	color: var(--im-ink);
+	font-size: var(--im-text-h5);
+	font-weight: 600;
+	line-height: var(--im-leading-h5);
+	letter-spacing: var(--im-tracking-tight);
+	text-decoration: none;
+}
+
+.im-affiliate-name:hover {
+	color: var(--im-accent);
+}
+
+.im-affiliate-by {
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+}
+
+.im-affiliate-text {
+	padding-top: 0.25rem;
+	text-wrap: pretty;
+}
+
+.im-affiliate-meta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem 0.875rem;
+	padding-top: 0.5rem;
+}
+
+.im-affiliate-price {
+	color: var(--im-ink);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-base);
+	font-weight: 600;
+}
+
+.im-affiliate-was {
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+	text-decoration: line-through;
+}
+
+.im-affiliate-actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem;
+	padding-top: 0.75rem;
+}
+
+/* The disclosure. Its own row, at the bottom, in the same mono as every other
+   label here — so a reader who has learnt what that type means on one block
+   knows what it means on all of them. */
+.im-affiliate-note {
+	grid-column: 1 / -1;
+	margin-top: 0.875rem;
+	padding-top: 0.75rem;
+	border-top: 1px solid var(--im-line);
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: 0.625rem;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+}
+
+@media (width < 30rem) {
+	.im-affiliate {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.im-affiliate-media {
+		grid-row: auto;
+		aspect-ratio: 16 / 9;
+	}
+}
+
+/* A row of them, for a "things I use" page. */
+.im-affiliates {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(19rem, 100%), 1fr));
+	gap: 1rem;
+}
+
+/* ---- the member gate ----
+   What "remove ads" opens: Ghost's own offer, in this system's clothes. A
+   <dialog>, because it is modal and the browser is better at that than we are.
+
+     <dialog class="im-gate" id="ad-gate"> … </dialog>  */
+.im-gate {
+	width: min(27rem, calc(100vw - 2rem));
+	margin: auto;
+	padding: 0;
+	border: 0;
+	border-radius: var(--im-radius-2xl);
+	background-color: var(--im-canvas);
+	box-shadow: inset 0 0 0 1px var(--im-line), var(--im-shadow-float);
+	color: var(--im-body);
+	overflow: hidden;
+}
+
+.im-gate::backdrop {
+	background-color: var(--im-scrim);
+	-webkit-backdrop-filter: blur(6px);
+	backdrop-filter: blur(6px);
+}
+
+.im-gate[open] {
+	animation: im-ad-popup-in 380ms var(--im-ease-glide);
+}
+
+.im-gate[open]::backdrop {
+	animation: im-fade-in 300ms;
+}
+
+.im-gate-head {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.625rem;
+	padding: 2rem 1.75rem 1.25rem;
+	text-align: center;
+}
+
+.im-gate-close {
+	position: absolute;
+	top: 0.625rem;
+	right: 0.625rem;
+	display: grid;
+	place-items: center;
+	width: 2.25rem;
+	height: 2.25rem;
+	padding: 0;
+	border: 0;
+	border-radius: var(--im-radius-md);
+	background: none;
+	color: var(--im-muted);
+	cursor: pointer;
+	transition: background-color 160ms, color 160ms, rotate 320ms var(--im-ease-glide);
+}
+
+.im-gate-close:is(:hover, :focus-visible) {
+	background-color: var(--im-surface);
+	color: var(--im-ink);
+	rotate: 90deg;
+}
+
+.im-gate-title {
+	color: var(--im-ink);
+	font-size: var(--im-text-h3);
+	font-weight: 600;
+	line-height: var(--im-leading-h3);
+	letter-spacing: var(--im-tracking-tight);
+	text-wrap: balance;
+}
+
+.im-gate-text {
+	max-width: 32ch;
+	font-size: var(--im-text-sm);
+	text-wrap: pretty;
+}
+
+.im-gate-body {
+	padding: 0 1.75rem 1.5rem;
+}
+
+/* What you get. A tick against each line, drawn as a mask of the accent so it
+   is one colour to change and correct in both themes. */
+.im-gate-list {
+	display: flex;
+	flex-direction: column;
+	gap: 0.625rem;
+	padding: 1rem 0 1.25rem;
+	font-size: var(--im-text-sm);
+}
+
+.im-gate-list > li {
+	display: grid;
+	grid-template-columns: 1.125rem minmax(0, 1fr);
+	gap: 0.625rem;
+	align-items: start;
+}
+
+.im-gate-list > li::before {
+	content: "";
+	width: 1.125rem;
+	height: 1.125rem;
+	background-color: var(--im-accent);
+	-webkit-mask: var(--im-check-mark, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E")) center / contain no-repeat;
+	mask: var(--im-check-mark, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E")) center / contain no-repeat;
+}
+
+.im-gate-list strong {
+	color: var(--im-ink);
+	font-weight: 600;
+}
+
+/* The price, if there is one. */
+.im-gate-price {
+	display: flex;
+	align-items: baseline;
+	justify-content: center;
+	gap: 0.375rem;
+	padding-bottom: 1rem;
+	color: var(--im-ink);
+}
+
+.im-gate-price > strong {
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-h2);
+	font-weight: 600;
+	line-height: 1;
+}
+
+.im-gate-price > span {
+	color: var(--im-muted);
+	font-size: var(--im-text-sm);
+}
+
+.im-gate-actions {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.im-gate-foot {
+	padding: 1rem 1.75rem;
+	border-top: 1px solid var(--im-line);
+	background-color: var(--im-surface);
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+	text-align: center;
+}
+
+.im-gate-foot a {
+	color: var(--im-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.im-ad-sticky,
+	.im-ad-floating {
+		transition: none;
+	}
+
+	.im-ad-popup[open],
+	.im-gate[open] {
+		animation-duration: 1ms;
+	}
+
+	.im-ad-progress > span {
+		animation: none;
+		width: 100%;
+	}
+}

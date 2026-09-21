@@ -1,0 +1,111 @@
+---
+title: Mega menu
+description: A wide panel of link columns under a top-bar link. The same columns fill the menu panel on a phone, so a site writes its navigation once and it is right at every width.
+eyebrow: Navigation
+source: src/components/mega.css · partials/shell/navbar.hbs
+---
+<h2>The panel</h2>
+<p>A <code>&lt;div class="im-mega" popover&gt;</code> opened by a <code>&lt;button class="im-toplink" popovertarget&gt;</code>. The Popover API supplies light dismiss, <kbd>Esc</kbd> and the top layer; <code>im.js</code> only decides where it goes. Press <strong>Explore</strong>:</p>
+{{#example center=true}}
+<button class="im-toplink" type="button" popovertarget="mega-demo" aria-expanded="false">Explore {{> "icons/chevron-down"}}</button>
+<div class="im-mega" id="mega-demo" popover data-align="center">
+	{{> "docs/mega-demo"}}
+	<div class="im-mega-foot">
+		<span>Everything, in one place.</span>
+		<a class="im-btn im-btn-primary im-btn-sm" href="/sections/">Browse sections {{> "icons/arrow-right"}}</a>
+	</div>
+</div>
+{{/example}}
+{{{{code "hbs"}}}}
+<button class="im-toplink" type="button" popovertarget="m-work" aria-expanded="false">
+	Explore {{> "icons/chevron-down"}}
+</button>
+
+<div class="im-mega" id="m-work" popover data-align="center">
+	<div class="im-navcols">
+		<div class="im-navcol">
+			<p class="im-navcol-title">Writing</p>
+			<a class="im-navitem" href="/journal/">
+				{{> "icons/book-open"}}<span>Journal<small>Essays, twice a month</small></span>
+			</a>
+		</div>
+		<div class="im-navcol im-mega-feature"> …a featured post… </div>
+	</div>
+	<div class="im-mega-foot"> <span>Small print</span> <a class="im-btn im-btn-sm">A CTA</a> </div>
+</div>
+{{{{/code}}}}
+
+<h2>Where it opens</h2>
+<p><code>data-align</code> decides, and <code>im.js</code> keeps the panel on screen whatever it says.</p>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Value</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>center</code></td><td>Centred on the <strong>viewport</strong>. What a wide panel wants: 58rem hung off a 6rem link would run off the edge.</td></tr>
+		<tr><td><code>start</code></td><td>Left edges line up with the button.</td></tr>
+		<tr><td>omitted</td><td>Right edges line up — the default, and right for a narrow <a href="/navigation/menu/">dropdown</a>.</td></tr>
+	</tbody>
+</table>
+</div>
+<p>If there is no room below, it opens upward instead. It closes on scroll, because a panel anchored to a button that has moved is worse than no panel.</p>
+
+<h2>A link is a row, not a button</h2>
+<p><code>im-navitem</code> has no fill and no border: an icon, a label, and an optional <code>&lt;small&gt;</code> description under it. That is what makes twenty of them readable — twenty filled tiles is a keypad.</p>
+{{#example}}
+<div class="im-navcols" style="--im-navcol-min: 14rem">
+	<div class="im-navcol">
+		<p class="im-navcol-title">With a description</p>
+		<a class="im-navitem" href="#a-link-is-a-row-not-a-button">{{> "icons/compass"}}<span>Start here<small>The ten-minute tour</small></span></a>
+		<a class="im-navitem" href="#a-link-is-a-row-not-a-button" aria-current="page">{{> "icons/layers"}}<span>Foundation<small>Tokens, type, colour</small></span></a>
+	</div>
+	<div class="im-navcol im-navcol-compact">
+		<p class="im-navcol-title">Compact</p>
+		<a class="im-navitem" href="#a-link-is-a-row-not-a-button"><span>Buttons</span></a>
+		<a class="im-navitem" href="#a-link-is-a-row-not-a-button"><span>Cards</span></a>
+		<a class="im-navitem" href="#a-link-is-a-row-not-a-button"><span>Forms</span></a>
+		<a class="im-navitem" href="#a-link-is-a-row-not-a-button"><span>Icons</span></a>
+	</div>
+</div>
+{{/example}}
+
+<h2>Columns that fit, not columns that are counted</h2>
+<p><code>im-navcols</code> is <code>auto-fit</code> at <code>--im-navcol-min</code> (12rem), so the same markup is four columns in a 58rem panel and one on a phone — no breakpoint anywhere in it. That is why the <a href="/navigation/panel/">menu panel</a> can reuse it unchanged.</p>
+<p>A menu with very uneven groups gets holes, because a grid row is as tall as its tallest cell. <code>im-navcols-flow</code> swaps the grid for multi-column layout: no rows, so the groups pack down, and <code>break-inside: avoid</code> keeps each one whole. This site's own menu panel uses it — ninety links, eleven groups.</p>
+{{#example}}
+<div class="im-navcols im-navcols-flow" style="--im-navcols-columns: 3">
+	<div class="im-navcol im-navcol-compact"><p class="im-navcol-title">Two</p><a class="im-navitem" href="#columns-that-fit-not-columns-that-are-counted"><span>One</span></a><a class="im-navitem" href="#columns-that-fit-not-columns-that-are-counted"><span>Two</span></a></div>
+	<div class="im-navcol im-navcol-compact"><p class="im-navcol-title">Six</p><a class="im-navitem" href="#columns-that-fit-not-columns-that-are-counted"><span>One</span></a><a class="im-navitem" href="#columns-that-fit-not-columns-that-are-counted"><span>Two</span></a><a class="im-navitem" href="#columns-that-fit-not-columns-that-are-counted"><span>Three</span></a><a class="im-navitem" href="#columns-that-fit-not-columns-that-are-counted"><span>Four</span></a><a class="im-navitem" href="#columns-that-fit-not-columns-that-are-counted"><span>Five</span></a><a class="im-navitem" href="#columns-that-fit-not-columns-that-are-counted"><span>Six</span></a></div>
+	<div class="im-navcol im-navcol-compact"><p class="im-navcol-title">Three</p><a class="im-navitem" href="#columns-that-fit-not-columns-that-are-counted"><span>One</span></a><a class="im-navitem" href="#columns-that-fit-not-columns-that-are-counted"><span>Two</span></a><a class="im-navitem" href="#columns-that-fit-not-columns-that-are-counted"><span>Three</span></a></div>
+	<div class="im-navcol im-navcol-compact"><p class="im-navcol-title">Four</p><a class="im-navitem" href="#columns-that-fit-not-columns-that-are-counted"><span>One</span></a><a class="im-navitem" href="#columns-that-fit-not-columns-that-are-counted"><span>Two</span></a><a class="im-navitem" href="#columns-that-fit-not-columns-that-are-counted"><span>Three</span></a><a class="im-navitem" href="#columns-that-fit-not-columns-that-are-counted"><span>Four</span></a></div>
+</div>
+{{/example}}
+
+<h2>Parts</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Class</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>im-mega</code></td><td>The panel. <code>--im-mega-width</code> (58rem); it never exceeds the window less two gutters.</td></tr>
+		<tr><td><code>im-mega-foot</code></td><td>A line under a rule: small print at the start, a call to action at the end.</td></tr>
+		<tr><td><code>im-mega-feature</code></td><td>A column that is a panel — a featured post, a promo.</td></tr>
+		<tr><td><code>im-navcols</code> · <code>-flow</code></td><td>The columns. <code>--im-navcol-min</code> sets when one more fits; <code>-flow</code> packs them instead of lining them up.</td></tr>
+		<tr><td><code>im-navcol</code> · <code>-title</code> · <code>-compact</code></td><td>One column, its mono heading, and the tighter rows for a list with no descriptions.</td></tr>
+		<tr><td><code>im-navitem</code></td><td>One link: icon, label, optional <code>&lt;small&gt;</code>. <code>aria-current="page"</code> marks the current one.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>In a theme</h2>
+<p>Write the columns once, in a partial of your own, and hand its name to the navbar. The same partial fills the mega menu on a laptop and the menu panel on a phone:</p>
+{{{{code "hbs"}}}}
+{{> "shell/navbar" mega="menus/explore" mega_label="Explore"
+	github="https://github.com/you/repo" stars="you/repo"}}
+{{{{/code}}}}
+
+<h2>Details that matter</h2>
+<ul>
+	<li><strong>It is a popover, not a hover menu.</strong> A panel that opens on hover cannot be reached from a keyboard or a touchscreen, and opens by accident on the way to somewhere else. This one opens on a press and the button carries <code>aria-expanded</code>.</li>
+	<li><strong>One panel per button.</strong> Two buttons pointing at one <code>id</code> would fight over where it goes.</li>
+	<li><strong>The featured column is a link, not a picture with a link in it</strong> — the whole card is one target.</li>
+	<li><strong>It closes on scroll</strong>, which also means it never has to be re-placed mid-gesture.</li>
+</ul>

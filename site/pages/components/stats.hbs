@@ -15,13 +15,13 @@ source: src/components/stats.css · src/js/im-charts.js
 <p>A figure, what it counts, how it moved. <code>data-im-count</code> counts it up on scroll (<a href="/motion/animation/#counting-up">Animation</a>); the final number stays in the markup for search engines and no-script readers.</p>
 
 <h2>A stats band</h2>
-<p>Stats in a row of <a href="/layout/swiss/#cells">cells</a>, each with its own small chart — a ready-made section for a home or an about page.</p>
+<p>Stats in a row, each with its own small chart — a ready-made section for a home or an about page.</p>
 {{#example flush=true}}
-<div class="im-cells im-cells-4" style="border: 0">
-	<div class="im-cell"><p class="im-caption" data-index="01">Readers</p><div class="im-stat-row"><span class="im-stat-figure" data-im-count="12480">12,480</span><svg class="im-spark" data-im-spark="4,6,5,8,7,11,10,14,13,17" data-im-area></svg></div><span class="im-stat-delta">{{> "icons/trending-up"}} 12%</span></div>
-	<div class="im-cell"><p class="im-caption" data-index="02">Open rate</p><div class="im-stat-row"><span class="im-stat-figure">41%</span><span class="im-ring" style="--im-value: .41">41</span></div><span class="im-stat-delta" data-trend="down">{{> "icons/trending-down"}} 1.4 pts</span></div>
-	<div class="im-cell"><p class="im-caption" data-index="03">Posts</p><div class="im-stat-row"><span class="im-stat-figure im-pixel">246</span><svg class="im-spark" data-im-spark="12,9,14,8,11,16,10,18" style="--im-chart-color: var(--im-ink)"></svg></div><span class="im-stat-delta" data-trend="flat">18 this quarter</span></div>
-	<div class="im-cell"><p class="im-caption" data-index="04">Paid</p><div class="im-stat-row"><span class="im-stat-figure">$3.2k</span><span class="im-ring" style="--im-value: .64; --im-progress-color: var(--im-success)">64</span></div><span class="im-stat-delta">{{> "icons/trending-up"}} of $5k goal</span></div>
+<div class="tiles tiles-4">
+	<div class="tile"><p class="im-caption" data-index="01">Readers</p><div class="im-stat-row"><span class="im-stat-figure" data-im-count="12480">12,480</span><svg class="im-spark" data-im-spark="4,6,5,8,7,11,10,14,13,17" data-im-area></svg></div><span class="im-stat-delta">{{> "icons/trending-up"}} 12%</span></div>
+	<div class="tile"><p class="im-caption" data-index="02">Open rate</p><div class="im-stat-row"><span class="im-stat-figure">41%</span><span class="im-ring" style="--im-value: .41">41</span></div><span class="im-stat-delta" data-trend="down">{{> "icons/trending-down"}} 1.4 pts</span></div>
+	<div class="tile"><p class="im-caption" data-index="03">Posts</p><div class="im-stat-row"><span class="im-stat-figure im-pixel">246</span><svg class="im-spark" data-im-spark="12,9,14,8,11,16,10,18" style="--im-chart-color: var(--im-ink)"></svg></div><span class="im-stat-delta" data-trend="flat">18 this quarter</span></div>
+	<div class="tile"><p class="im-caption" data-index="04">Paid</p><div class="im-stat-row"><span class="im-stat-figure">$3.2k</span><span class="im-ring" style="--im-value: .64; --im-progress-color: var(--im-success)">64</span></div><span class="im-stat-delta">{{> "icons/trending-up"}} of $5k goal</span></div>
 </div>
 {{/example}}
 

@@ -27,6 +27,34 @@ Popover and form controls — no lightbox, chart, form or player library. The Yo
 YouTube's own public iframe embed on the `youtube-nocookie.com` host, driven by its documented
 `postMessage` commands; none of YouTube's script is bundled.
 
+**The logo.** Original to this repository, and — unusually — almost none of it is artwork. The
+lockup is the site's own name set in Geist with a dot at the top right of the last letter
+(`src/components/logo.css`, `partials/components/logo.hbs`): live text, laid out in CSS, so there is
+no drawing to license. The one drawn file is `assets/brand/mark.svg`, the favicon, which is a
+rounded rectangle, a rounded rectangle and a circle — geometry written by hand here, because a
+browser tab cannot run CSS or wait for a webfont. Setting a name in a licensed typeface is ordinary
+use of that typeface, and Geist ships under the SIL Open Font License (see the table above), which
+places no restriction on what is set in it, logos included. No logo, mark, icon or favicon from any
+other product is in this repository.
+
+**The ad formats.** `src/components/ad.css` names the standard advertising sizes — leaderboard,
+billboard, rectangle, skyscraper and the rest. Those names and their proportions are an industry
+convention published by the IAB and used by every ad network; a ratio is a fact, not an expression,
+and nothing here is copied from any network's stylesheet, SDK or template. No ad network's script,
+pixel or endpoint is referenced anywhere in this repository: what fills a slot is a decision the
+theme makes with its own eyes open.
+
+**The window mockups.** `src/components/mockup.css` draws a desktop window, a browser, a terminal
+and a phone out of this system's own tokens — a hairline, a radius from the scale, one shadow. They
+are shapes, not renderings of anybody's hardware or operating system: no brand, no buttons, no
+camera, and the three window dots are the system's own greys unless a caller explicitly asks for
+the coloured ones.
+
+**The GitHub star count.** `[data-im-stars="owner/repo"]` makes one request to GitHub's public REST
+API (`api.github.com`) at runtime and writes the number into the button. It is opt-in — without the
+attribute nothing is fetched — needs no key, sends no reader data, bundles no GitHub script or
+iframe, and fails silently. GitHub's own "star" button widget is not used.
+
 **Ghost's editor cards.** `src/components/koenig.css` and `src/js/im-content.js` style and drive the
 markup Ghost's editor prints inside a post (`kg-card`, `kg-bookmark-card`, `kg-callout-card` …).
 Those class names and that markup are Ghost's public theme interface (Ghost is MIT-licensed) and

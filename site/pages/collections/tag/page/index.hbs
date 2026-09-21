@@ -1,0 +1,107 @@
+---
+title: Tag page
+layout: home
+description: One topic — a hero that says what it is and how much there is, the posts under it, and the archive of everything else it touches. The same page as an author page, with a different list.
+eyebrow: Collections · Tag
+source: src/components/collection.css · tag.css
+---
+<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+	<p class="im-eyebrow">Collections · Tag · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+</section>
+
+<div class="im-wrap-wide im-stack" style="--im-stack-gap: 2rem">
+	{{#with fixtures.tags.[0]}}
+	<header class="im-taghero" style="--im-tag-dot: #ff5a1f">
+		<nav aria-label="Breadcrumb">
+			<ol class="im-breadcrumb im-breadcrumb-chevron">
+				<li><a href="/">{{> "icons/house"}}<span>Home</span></a></li>
+				<li><a href="/collections/tag/">{{> "icons/tag"}}<span>Topics</span></a></li>
+				<li><span aria-current="page">{{name}}</span></li>
+			</ol>
+		</nav>
+		<h1 class="im-taghero-name">{{name}}</h1>
+		<p class="im-collhead-text">Roads, the places at the end of them, and what they actually cost. Mostly Italy, mostly in November, mostly by accident.</p>
+		<p class="im-collhead-meta">
+			<span>{{count.posts}} posts</span>
+			<span>First in March 2024</span>
+			<a href="#posts">RSS</a>
+		</p>
+		<p class="im-cluster" style="--im-cluster-gap: .375rem">
+			<span class="im-kind" data-kind="tag">{{icon "tag"}}Topic</span>
+			<a class="im-tag" href="/collections/tag/page/">Moving to Europe</a>
+			<a class="im-tag" href="/collections/tag/page/">Craft</a>
+			<a class="im-tag" href="/collections/tag/page/">Career</a>
+		</p>
+	</header>
+	{{/with}}
+
+	<section class="im-section" id="posts">
+		<div class="home-head"><p class="im-caption" data-index="01">Latest</p><a class="im-card-cta" href="/collections/post/">All posts {{> "icons/arrow-right"}}</a></div>
+		<div class="im-feed im-feed-lead">
+			{{#foreach demo.six}}{{> "components/post-card" excerpt=true kind="post"}}{{/foreach}}
+		</div>
+	</section>
+
+	<section class="im-section">
+		<div class="home-head"><p class="im-caption" data-index="02">Elsewhere in this topic</p></div>
+		<div class="im-archive">
+			<div class="im-archive-year">
+				<p class="im-archive-head"><strong>2025</strong><span>9 pieces</span></p>
+				{{#each demo.four}}
+				<a class="im-archive-row" href="/collections/post/article/">
+					<span class="im-archive-date">{{date published_at format="D MMM"}}</span>
+					<span class="im-archive-title">{{title}}</span>
+					<span class="im-kind" data-kind="post">{{icon "file-text"}}Post</span>
+				</a>
+				{{/each}}
+				<a class="im-archive-row" href="/collections/video/page/">
+					<span class="im-archive-date">2 Nov</span>
+					<span class="im-archive-title">Driving the Amalfi Coast — the whole road in 8 minutes</span>
+					<span class="im-kind" data-kind="video">{{icon "video"}}Video</span>
+				</a>
+			</div>
+		</div>
+	</section>
+</div>
+
+<section class="im-section im-wrap">
+	<div class="im-prose">
+		<h2>A hero, and then the collection</h2>
+		<p>A tag page is the <a href="/collections/post/">post collection</a> with a head that says what the topic <em>is</em>. Ghost hands it a different list and a <code>{{"{{#tag}}"}}</code> block with the name, the description and the count; nothing else about the page changes, which is the whole point — a reader who has used the blog index already knows how this works.</p>
+		<div class="im-table-scroll">
+		<table>
+			<thead><tr><th>Class</th><th></th></tr></thead>
+			<tbody>
+				<tr><td><code>im-taghero</code></td><td>The head: breadcrumb, name, description, counts, and the topics next to it.</td></tr>
+				<tr><td><code>im-taghero-name</code></td><td>The <code>&lt;h1&gt;</code>, with the tag's own dot before it — <code>--im-tag-dot</code>, from the data, the same colour the <a href="/collections/tag/">index card</a> uses.</td></tr>
+				<tr><td><code>im-feed im-feed-lead</code></td><td>The list. The newest piece takes the top row and lies down.</td></tr>
+				<tr><td><code>im-archive</code></td><td>Everything older, as rows — with <code>im-kind</code> on each one, because a topic's history usually has more than posts in it.</td></tr>
+			</tbody>
+		</table>
+		</div>
+		{{{{code "hbs"}}}}
+{{!-- tag.hbs --}}
+{{#tag}}
+<header class="im-taghero" style="--im-tag-dot: {{accent_color}}">
+	<h1 class="im-taghero-name">{{name}}</h1>
+	{{#if description}}<p class="im-collhead-text">{{description}}</p>{{/if}}
+	<p class="im-collhead-meta"><span>{{plural ../pagination.total empty="No posts" singular="% post" plural="% posts"}}</span></p>
+</header>
+{{/tag}}
+
+<div class="im-feed im-feed-lead">
+	{{#foreach posts}}{{> "components/post-card" excerpt=true kind="post" eager=@first}}{{/foreach}}
+</div>
+		{{{{/code}}}}
+
+		<h2>Details that matter</h2>
+		<ul>
+			<li><strong>The description is the tag's, not a guess.</strong> Ghost has a field for it. A topic page with no description is a list of titles with a word on top.</li>
+			<li><strong>The colour comes from the tag</strong> — Ghost stores an accent colour per tag. One inline variable, and the dot, the index card and the hero all agree.</li>
+			<li><strong>Sibling topics belong near the top</strong>, not in a cloud at the bottom: somebody on the wrong tag page wants out of it immediately.</li>
+			<li><strong>An author page is this page.</strong> Swap the head for the author's and the list for theirs; nothing else needs writing.</li>
+		</ul>
+	</div>
+</section>

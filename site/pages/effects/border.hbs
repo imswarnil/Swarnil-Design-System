@@ -1,28 +1,19 @@
 ---
 title: Border effects
-description: Four, and they are the system's own line work. The design language here is the ruled grid — hairlines, registration marks, rulers — so an edge is drawn the same way. Nothing glows; nothing is a rainbow.
+description: Two, and they are the system's own line work. The design language here is hairlines and printer's marks, so an edge is drawn the same way. Nothing glows; nothing is a rainbow.
 eyebrow: Effects
 source: src/effects/border.css
 ---
 <h2>Corners</h2>
-<p>Four brackets instead of a box — the mark a designer puts round something to say <em>this</em>. With <code>im-fx-corners-close</code> they run along the edges on hover until they meet: the same gesture as a card's edge sharpening.</p>
+<p>Four brackets instead of a box — the mark a designer puts round something to say <em>this</em>. Under the pointer the arms run along the edges until they meet and the brackets become a frame; it is one movement on one long glide, so the frame <strong>arrives</strong> rather than snapping shut.</p>
 {{#example}}
 <div class="im-grid-fit" style="--im-grid-min: 15rem; --im-grid-gap: 1.5rem">
-	<div class="im-fx-corners p-6"><p class="im-caption" data-index="01">im-fx-corners</p><p class="mt-2 text-sm">Brackets, at rest.</p></div>
-	<a class="im-fx-corners im-fx-corners-close block p-6 no-underline" href="#corners"><p class="im-caption" data-index="02">-close</p><p class="mt-2 text-sm text-body">Hover: the brackets close into a frame.</p></a>
-	<figure class="im-fx-corners im-fx-corners-close p-2" style="--im-fx-ink: var(--im-accent); --im-fx-length: 1.25rem; --im-fx-width: 2px"><img class="block w-full" style="aspect-ratio: 16 / 10; object-fit: cover" src="{{demo.post.feature_image}}" alt="" loading="lazy"></figure>
+	<a class="im-fx-corners block p-6 no-underline" href="#corners"><p class="im-caption" data-index="01">im-fx-corners</p><p class="mt-2 text-sm text-body">Hover: the brackets close into a frame.</p></a>
+	<a class="im-fx-corners block p-6 no-underline" href="#corners" style="--im-fx-ink: var(--im-accent); --im-fx-length: 1.5rem; --im-fx-speed: 900ms"><p class="im-caption" data-index="02">Longer arms, slower</p><p class="mt-2 text-sm text-body"><code>--im-fx-length</code>, <code>--im-fx-speed</code>.</p></a>
+	<figure class="im-fx-corners p-2" style="--im-fx-ink: var(--im-accent); --im-fx-length: 1.25rem; --im-fx-width: 2px"><img class="block w-full" style="aspect-ratio: 16 / 10; object-fit: cover" src="{{demo.post.feature_image}}" alt="" loading="lazy"></figure>
 </div>
 {{/example}}
-
-<h2>Ticks</h2>
-<p>A ruler along an edge: minor ticks every half rem, major every 2.5. The same ruler as the <a href="/layout/divider/#the-ruler">divider</a>.</p>
-{{#example}}
-<div class="im-grid-fit" style="--im-grid-min: 15rem; --im-grid-gap: 1.5rem">
-	<div class="im-fx-ticks ring-line px-6 pb-6"><p class="im-caption" data-index="cm">im-fx-ticks</p><p class="mt-2 text-sm">Along the top.</p></div>
-	<div class="im-fx-ticks im-fx-ticks-bottom ring-line px-6 pt-6"><p class="im-caption">-bottom</p><p class="mt-2 text-sm">Along the bottom.</p></div>
-	<div class="im-fx-ticks im-fx-ticks-left ring-line py-6 pr-6" style="--im-fx-ink: var(--im-accent)"><p class="im-caption">-left, in the accent</p><p class="mt-2 text-sm">Down the side.</p></div>
-</div>
-{{/example}}
+<p>The arms are animated through <code>--im-fx-arm</code>, a <strong>registered</strong> custom property — <code>@property</code> with a <code>&lt;length-percentage&gt;</code> syntax. Without that the browser has nothing to interpolate between <code>0.875rem</code> and <code>100%</code> and the frame would step. Where a browser cannot animate the property at all, the frame still closes; it simply arrives at once.</p>
 
 <h2>Trace</h2>
 <p>A hairline box with one bright segment travelling round it — a scanner, a "live" state, the one plan in a pricing row you want looked at first. <strong>One per view</strong>; it never stops moving.</p>
@@ -34,21 +25,11 @@ source: src/effects/border.css
 {{/example}}
 <p>It paints the border with a second background, so the box keeps a solid fill — set <code>--im-fx-bg</code> if it is not on the page canvas. Where a browser cannot animate the angle, it is a still hairline.</p>
 
-<h2>Draw</h2>
-<p>The rule draws itself round the box on hover — from the top-left and the bottom-right at once.</p>
-{{#example}}
-<div class="im-grid-fit" style="--im-grid-min: 15rem; --im-grid-gap: 1.5rem">
-	<a class="im-fx-draw block p-6 no-underline" href="#draw"><p class="im-caption">im-fx-draw</p><p class="mt-2 text-sm text-body">From nothing.</p></a>
-	<a class="im-fx-draw ring-line block p-6 no-underline" href="#draw" style="--im-fx-ink: var(--im-accent)"><p class="im-caption">Over a hairline</p><p class="mt-2 text-sm text-body">The accent is drawn over a resting rule.</p></a>
-</div>
-{{/example}}
-
 <h2>On components</h2>
 {{#example}}
 <div class="im-grid-fit" style="--im-grid-min: 15rem; --im-grid-gap: 1.5rem">
-	<a class="im-card im-card-plain im-fx-corners im-fx-corners-close p-5" href="#on-components"><span class="im-card-title">A quiet card</span><span>Brackets, no surface.</span><span class="im-card-cta">Read {{> "icons/arrow-right"}}</span></a>
 	<div class="im-card im-card-plain im-fx-trace p-5" style="border-radius: var(--im-radius-xl)"><span class="im-badge im-badge-accent" style="align-self: start">Pro</span><span class="im-card-title">The plan to look at</span><span>Trace, on the one card that should be seen first.</span></div>
-	<div class="im-cell im-fx-ticks ring-line"><p class="im-caption" data-index="03">A measured cell</p><span>Ticks on a Swiss cell.</span></div>
+	<a class="im-card im-card-plain im-fx-corners p-5" href="#on-components"><span class="im-card-title">Brackets, no surface</span><span>The frame closes as the pointer arrives.</span><span class="im-card-cta">Read {{> "icons/arrow-right"}}</span></a>
 </div>
 {{/example}}
 
@@ -57,11 +38,12 @@ source: src/effects/border.css
 <table>
 	<thead><tr><th>Variable</th><th></th></tr></thead>
 	<tbody>
-		<tr><td><code>--im-fx-ink</code></td><td>The line's colour. Ink by default; the accent for trace.</td></tr>
+		<tr><td><code>--im-fx-ink</code></td><td>The line's colour. Ink for corners; the accent for trace.</td></tr>
 		<tr><td><code>--im-fx-width</code></td><td>Its thickness. 1–1.5px.</td></tr>
-		<tr><td><code>--im-fx-length</code></td><td>Corners: how long each bracket arm is. 0.875rem.</td></tr>
-		<tr><td><code>--im-fx-speed</code></td><td>Trace: one lap. 5s.</td></tr>
+		<tr><td><code>--im-fx-length</code></td><td>Corners: how long each bracket arm is at rest. 0.875rem.</td></tr>
+		<tr><td><code>--im-fx-speed</code></td><td>Corners: how long the frame takes to close, 620ms. Trace: one lap, 5s.</td></tr>
+		<tr><td><code>--im-fx-bg</code></td><td>Trace: the fill behind the border, if it is not the page canvas.</td></tr>
 	</tbody>
 </table>
 </div>
-<p>Earlier versions also had gradient, glow, marching-dash and offset borders. They looked like a different product, so they were removed; the marching dashes live on where they mean something — the <a href="/forms/controls/#file-drop">file drop</a>.</p>
+<p>Earlier versions also had a ruler of ticks along an edge, a rule that drew itself round the box, and gradient, glow, marching-dash and offset borders. They were four ways of saying the same thing as these two, so they were removed; the marching dashes live on where they mean something — the <a href="/forms/controls/#file-drop">file drop</a>.</p>

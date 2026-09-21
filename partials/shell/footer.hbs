@@ -1,0 +1,75 @@
+{{!-- Site footer. A lead column (mark, blurb, social), the site's navigation
+	as link columns, a newsletter, and the strip along the bottom.
+
+	Params
+	  columns     3, 4 or 5 — how many cells the row has. Default 4.
+	  no_lead     true = no brand column; the links then fill the width
+	  tagline     the line under the mark. Defaults to the site description
+	  newsletter  true = the last column is the signup form (needs members)
+	  skin        "fill" (surface) · "ink" (inverted) · omitted (canvas + hairline)
+	  wide        true = the footer uses the wide measure, not the page measure
+	  github      repo URL, for the star button in the strip
+	  stars       "owner/repo" — fills that button's count in
+	  strip_only  true = just the bottom strip, nothing above it
+
+	Anything in {{#> "shell/footer"}}…{{/"shell/footer"}} is added as one more
+	column — that is where a site puts its own list. --}}
+<footer class="im-footer{{#if columns}} im-footer-{{columns}}{{else}} im-footer-4{{/if}}{{#match skin "fill"}} im-footer-fill{{/match}}{{#match skin "ink"}} im-footer-ink{{/match}}{{#unless skin}} im-footer-line{{/unless}}{{#if wide}} im-footer-wide{{/if}}{{#if class}} {{class}}{{/if}}">
+	{{#unless strip_only}}
+	<div class="im-footer-cols">
+		{{#unless no_lead}}
+		<div class="im-footer-lead">
+			<a class="im-brand" href="{{@site.url}}">
+				{{#if @site.logo}}<img src="{{@site.logo}}" alt="{{@site.title}}"><span>{{@site.title}}</span>{{else}}{{> "components/logo" size="2rem"}}{{/if}}
+			</a>
+			<p class="im-footer-text">{{#if tagline}}{{tagline}}{{else}}{{@site.description}}{{/if}}</p>
+			<ul class="im-footer-social" aria-label="{{t "Social links"}}">
+				{{#social_accounts @site}}
+					<li><a href="{{href}}" target="_blank" rel="noopener noreferrer" aria-label="{{name}}" title="{{name}}">{{> (concat "icons/brand-" type)}}</a></li>
+				{{/social_accounts}}
+				<li><a href="{{@site.url}}rss/" aria-label="{{t "RSS"}}" title="{{t "RSS"}}">{{> "icons/rss"}}</a></li>
+			</ul>
+		</div>
+		{{/unless}}
+
+		<nav class="im-footer-col" aria-label="{{t "Site"}}">
+			<h2 class="im-footer-title">{{t "Site"}}</h2>
+			<ul class="im-footer-links">
+				{{#foreach navigation}}<li><a href="{{url absolute="true"}}"{{#if current}} aria-current="page"{{/if}}>{{label}}</a></li>{{/foreach}}
+			</ul>
+		</nav>
+
+		{{#if @site.secondary_navigation}}
+		<nav class="im-footer-col" aria-label="{{t "More"}}">
+			<h2 class="im-footer-title">{{t "More"}}</h2>
+			<ul class="im-footer-links">
+				{{#foreach navigation type="secondary"}}<li><a href="{{url absolute="true"}}">{{label}}</a></li>{{/foreach}}
+			</ul>
+		</nav>
+		{{/if}}
+
+		{{#if @partial-block}}{{> @partial-block}}{{/if}}
+
+		{{#if newsletter}}
+		<div class="im-footer-col">
+			<h2 class="im-footer-title">{{t "Newsletter"}}</h2>
+			<p class="im-footer-text">{{#if newsletter_note}}{{newsletter_note}}{{else}}{{t "One email when something lands. Nothing else, ever."}}{{/if}}</p>
+			{{> "components/subscribe" id="footer-email"}}
+		</div>
+		{{/if}}
+	</div>
+	{{/unless}}
+
+	<div class="im-footer-strip">
+		<span>© {{date format="YYYY"}} {{@site.title}}{{#if rights}} · {{rights}}{{/if}}</span>
+		<div class="im-footer-strip-end">
+			<ul class="im-footer-note">
+				<li><a href="{{@site.url}}privacy/">{{t "Privacy"}}</a></li>
+				<li><a href="{{@site.url}}terms/">{{t "Terms"}}</a></li>
+				<li><a href="{{@site.url}}rss/">{{t "RSS"}}</a></li>
+			</ul>
+			{{#if github}}<a class="im-star im-star-sm" href="{{github}}" target="_blank" rel="noopener noreferrer"{{#if stars}} data-im-stars="{{stars}}"{{/if}}>{{> "icons/brand-github"}}<span>{{t "Star"}}</span><b data-im-star-count></b></a>{{/if}}
+			<a class="im-footer-top" href="#">{{t "Top"}}{{> "icons/arrow-up"}}</a>
+		</div>
+	</div>
+</footer>

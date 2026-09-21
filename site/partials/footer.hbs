@@ -1,0 +1,55 @@
+{{!-- The docs site's own footer — the system's im-footer, used as a theme
+	would use it, so the page you are reading is the demonstration. --}}
+<footer class="im-footer im-footer-4 im-footer-line im-footer-wide">
+	<div class="im-footer-cols">
+		<div class="im-footer-lead">
+			<a class="im-brand" href="/">{{> "components/logo" mark=true size="2rem" label=name}}<span>{{name}}</span></a>
+			<p class="im-footer-text">{{@site.description}}</p>
+			<ul class="im-footer-social" aria-label="Social links">
+				<li><a href="https://github.com/imswarnil" target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub">{{> "icons/brand-github"}}</a></li>
+				<li><a href="https://x.com/imswarnil" target="_blank" rel="noopener noreferrer" aria-label="X" title="X">{{> "icons/brand-x"}}</a></li>
+				<li><a href="https://www.youtube.com/@imswarnil" target="_blank" rel="noopener noreferrer" aria-label="YouTube" title="YouTube">{{> "icons/brand-youtube"}}</a></li>
+				<li><a href="/rss/" aria-label="RSS" title="RSS">{{> "icons/rss"}}</a></li>
+			</ul>
+		</div>
+
+		<nav class="im-footer-col" aria-label="Start here">
+			<h2 class="im-footer-title">Start here</h2>
+			<ul class="im-footer-links">
+				<li><a href="/getting-started/">Getting started</a></li>
+				<li><a href="/foundation/principles/">Principles</a></li>
+				<li><a href="/layout/shell/">The shell</a></li>
+				<li><a href="/sections/">Sections</a></li>
+			</ul>
+		</nav>
+
+		<nav class="im-footer-col" aria-label="Build">
+			<h2 class="im-footer-title">Build</h2>
+			<ul class="im-footer-links">
+				<li><a href="/guides/add-a-token/">Add a token</a></li>
+				<li><a href="/guides/add-a-component/">Add a component</a></li>
+				<li><a href="/guides/add-a-section/">Add a section</a></li>
+				<li><a href="/provenance/">Provenance</a></li>
+			</ul>
+		</nav>
+
+		<div class="im-footer-col">
+			<h2 class="im-footer-title">Newsletter</h2>
+			<p class="im-footer-text">One email when a version ships. Nothing else.</p>
+			{{> "components/subscribe" id="footer-email" button="Join"}}
+		</div>
+	</div>
+
+	<div class="im-footer-strip">
+		<span>© {{date format="YYYY"}} {{name}} · original work, see <a href="/provenance/">provenance</a></span>
+		<div class="im-footer-strip-end">
+			<ul class="im-footer-note">
+				<li>Tailwind 4</li>
+				<li>Ghost 6</li>
+				<li>Geist</li>
+			</ul>
+			<a class="im-star im-star-sm" href="https://github.com/imswarnil/Swarnil-Design-System" target="_blank" rel="noopener noreferrer">{{> "icons/brand-github"}}<span>Star</span><b data-im-star-count></b></a>
+			<a class="im-footer-top" href="#">Top {{> "icons/arrow-up"}}</a>
+		</div>
+	</div>
+</footer>

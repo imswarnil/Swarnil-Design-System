@@ -1,0 +1,228 @@
+---
+title: Footer
+description: The band at the foot of a site. A row of columns — three, four, five, or a wide lead column and the rest — over a strip carrying the copyright. Every column takes whatever you put in it, and the whole thing folds down to one column on a phone.
+eyebrow: Layout
+source: src/components/footer.css · partials/shell/footer.hbs
+---
+<h2>Four columns</h2>
+<p>The default. A <strong>lead</strong> column — mark, a line about the site, social — at <code>1.4fr</code>, then three equal columns of links. This is the footer at the bottom of this page.</p>
+{{#example flush=true}}
+<footer class="im-footer im-footer-4 im-footer-line" style="--im-footer-width: 64rem; --im-footer-pad: 2.5rem">
+	<div class="im-footer-cols">
+		<div class="im-footer-lead">
+			<a class="im-brand" href="#four-columns">{{> "components/logo" size="2rem" text="Publication"}}</a>
+			<p class="im-footer-text">Field notes on building things, sent when there is something worth sending.</p>
+			<ul class="im-footer-social" aria-label="Social">
+				<li><a href="#four-columns" aria-label="X">{{> "icons/brand-x"}}</a></li>
+				<li><a href="#four-columns" aria-label="GitHub">{{> "icons/brand-github"}}</a></li>
+				<li><a href="#four-columns" aria-label="YouTube">{{> "icons/brand-youtube"}}</a></li>
+				<li><a href="#four-columns" aria-label="RSS">{{> "icons/rss"}}</a></li>
+			</ul>
+		</div>
+		<nav class="im-footer-col" aria-label="Writing">
+			<h2 class="im-footer-title">Writing</h2>
+			<ul class="im-footer-links">
+				<li><a href="#four-columns">Journal</a></li>
+				<li><a href="#four-columns">Essays</a></li>
+				<li><a href="#four-columns">Notes <small>new</small></a></li>
+				<li><a href="#four-columns">Archive</a></li>
+			</ul>
+		</nav>
+		<nav class="im-footer-col" aria-label="Work">
+			<h2 class="im-footer-title">Work</h2>
+			<ul class="im-footer-links">
+				<li><a href="#four-columns">Projects</a></li>
+				<li><a href="#four-columns">Open source</a></li>
+				<li><a href="#four-columns">Talks</a></li>
+				<li><a href="#four-columns">Uses</a></li>
+			</ul>
+		</nav>
+		<nav class="im-footer-col" aria-label="Elsewhere">
+			<h2 class="im-footer-title">Elsewhere</h2>
+			<ul class="im-footer-links">
+				<li><a href="#four-columns">{{> "icons/brand-youtube"}}YouTube</a></li>
+				<li><a href="#four-columns">{{> "icons/brand-github"}}GitHub</a></li>
+				<li><a href="#four-columns">{{> "icons/mail"}}Email</a></li>
+				<li><a href="#four-columns">{{> "icons/rss"}}RSS</a></li>
+			</ul>
+		</nav>
+	</div>
+	<div class="im-footer-strip">
+		<span>© 2026 Publication</span>
+		<div class="im-footer-strip-end">
+			<ul class="im-footer-note"><li><a href="#four-columns">Privacy</a></li><li><a href="#four-columns">Terms</a></li></ul>
+			<a class="im-footer-top" href="#four-columns">Top {{> "icons/arrow-up"}}</a>
+		</div>
+	</div>
+</footer>
+{{/example}}
+
+<h2>Three columns</h2>
+<p>No lead column: three equal ones, and a newsletter taking the last. Add <code>im-footer-3</code> instead of <code>-4</code>; the <code>:has()</code> rule that widens the first cell only fires when a <code>im-footer-lead</code> is actually there, so nothing else changes.</p>
+{{#example flush=true}}
+<footer class="im-footer im-footer-3 im-footer-fill" style="--im-footer-width: 60rem; --im-footer-pad: 2.5rem">
+	<div class="im-footer-cols">
+		<nav class="im-footer-col" aria-label="Read">
+			<h2 class="im-footer-title">Read</h2>
+			<ul class="im-footer-links">
+				<li><a href="#three-columns">Latest</a></li>
+				<li><a href="#three-columns">Popular</a></li>
+				<li><a href="#three-columns">Topics</a></li>
+			</ul>
+		</nav>
+		<nav class="im-footer-col" aria-label="About">
+			<h2 class="im-footer-title">About</h2>
+			<ul class="im-footer-links">
+				<li><a href="#three-columns">Who writes this</a></li>
+				<li><a href="#three-columns">Now</a></li>
+				<li><a href="#three-columns">Contact</a></li>
+			</ul>
+		</nav>
+		<div class="im-footer-col">
+			<h2 class="im-footer-title">Newsletter</h2>
+			<p class="im-footer-text">One email a month. Unsubscribe in a click.</p>
+			{{> "components/subscribe" id="footer-demo-3" button="Join"}}
+		</div>
+	</div>
+	<div class="im-footer-strip">
+		<span>© 2026 Publication</span>
+		<div class="im-footer-strip-end"><ul class="im-footer-note"><li><a href="#three-columns">RSS</a></li><li><a href="#three-columns">Privacy</a></li></ul></div>
+	</div>
+</footer>
+{{/example}}
+
+<h2>Widgets in a column</h2>
+<p>A column is a <code>flex</code> stack, so it holds anything. A <a href="/components/widgets/">widget</a> works unchanged as long as it is <code>im-widget-bare</code> — the framed version belongs in a sidebar, not here, where the column already is the frame. <code>im-footer-col-2</code> gives a column two cells when one is not enough.</p>
+{{#example flush=true}}
+<footer class="im-footer im-footer-4 im-footer-line" style="--im-footer-width: 64rem; --im-footer-pad: 2.5rem">
+	<div class="im-footer-cols">
+		<section class="im-widget im-widget-bare im-footer-col-2" aria-labelledby="fw-latest">
+			<h2 class="im-widget-title" id="fw-latest">Latest posts <a href="#widgets-in-a-column">All</a></h2>
+			<ul class="im-widget-list im-widget-list-thumbs">
+				{{#each demo.three}}
+				<li><a href="#widgets-in-a-column"><img src="{{feature_image}}" alt="" width="52" height="52" loading="lazy">{{title}}<small>{{date published_at format="D MMM YYYY"}}</small></a></li>
+				{{/each}}
+			</ul>
+		</section>
+		<section class="im-widget im-widget-bare" aria-labelledby="fw-author">
+			<h2 class="im-widget-title" id="fw-author">Written by</h2>
+			<div class="im-cluster">
+				{{> "components/avatar" src=demo.author.profile_image name=demo.author.name}}
+				<span class="im-stack" style="--im-stack-gap: .125rem">
+					<a class="im-widget-author-name" href="#widgets-in-a-column">{{demo.author.name}}</a>
+					<span class="im-widget-author-role">{{demo.author.location}}</span>
+				</span>
+			</div>
+			<dl class="im-widget-facts">
+				<dt>Posts</dt><dd>128</dd>
+				<dt>Since</dt><dd>2019</dd>
+			</dl>
+		</section>
+		<nav class="im-footer-col" aria-label="Site">
+			<h2 class="im-footer-title">Site</h2>
+			<ul class="im-footer-links">
+				<li><a href="#widgets-in-a-column">Home</a></li>
+				<li><a href="#widgets-in-a-column">Archive</a></li>
+				<li><a href="#widgets-in-a-column">Tags</a></li>
+				<li><a href="#widgets-in-a-column">Search</a></li>
+			</ul>
+		</nav>
+	</div>
+	<div class="im-footer-strip"><span>© 2026 Publication</span></div>
+</footer>
+{{/example}}
+
+<h2>The strip, on its own</h2>
+<p>For a site that needs nothing above it. The strip is a full component: copyright at the start, small print and a back-to-top at the end, and it wraps into a stack on a phone. As the only child of the footer it drops its top rule.</p>
+{{#example flush=true}}
+<footer class="im-footer im-footer-line" style="--im-footer-width: 64rem; --im-footer-pad: 1.75rem">
+	<div class="im-footer-strip">
+		<span>© 2026 Publication · <a href="#the-strip-on-its-own">Built with Im</a></span>
+		<div class="im-footer-strip-end">
+			<ul class="im-footer-note">
+				<li><a href="#the-strip-on-its-own">Privacy</a></li>
+				<li><a href="#the-strip-on-its-own">Terms</a></li>
+				<li><a href="#the-strip-on-its-own">RSS</a></li>
+			</ul>
+			<a class="im-star im-star-sm" href="#the-strip-on-its-own">{{> "icons/brand-github"}}<span>Star</span><b>1.2k</b></a>
+			<a class="im-footer-top" href="#the-strip-on-its-own">Top {{> "icons/arrow-up"}}</a>
+		</div>
+	</div>
+</footer>
+{{/example}}
+
+<h2>Skins</h2>
+<p>Three, and no more: the footer is the quietest part of a page. <code>im-footer-line</code> is a hairline on the canvas, <code>im-footer-fill</code> sits on the surface colour, <code>im-footer-ink</code> inverts. The inverted one re-points <code>--im-line</code> at a tint of the canvas so its rules stay visible — it changes tokens, not properties.</p>
+{{#example flush=true}}
+<footer class="im-footer im-footer-ink im-footer-center im-footer-3" style="--im-footer-width: 54rem; --im-footer-pad: 2.5rem">
+	<div class="im-footer-cols">
+		<div class="im-footer-lead">
+			<a class="im-brand" href="#skins">{{> "components/logo" size="2rem" text="Publication"}}</a>
+			<p class="im-footer-text">Inverted, and centred with <code>im-footer-center</code>.</p>
+			<ul class="im-footer-social" aria-label="Social">
+				<li><a href="#skins" aria-label="X">{{> "icons/brand-x"}}</a></li>
+				<li><a href="#skins" aria-label="GitHub">{{> "icons/brand-github"}}</a></li>
+				<li><a href="#skins" aria-label="Instagram">{{> "icons/brand-instagram"}}</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="im-footer-strip"><span>© 2026 Publication</span><div class="im-footer-strip-end"><ul class="im-footer-note"><li><a href="#skins">Privacy</a></li><li><a href="#skins">Terms</a></li></ul></div></div>
+</footer>
+{{/example}}
+
+<h2>What happens as it narrows</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Width</th><th>Columns</th></tr></thead>
+	<tbody>
+		<tr><td>≥ 64rem (<code>lg</code>)</td><td>As set — 3, 4 or 5, with the lead column wider.</td></tr>
+		<tr><td>48–64rem</td><td>At most 3. A 4- or 5-up footer's lead column takes the whole first row.</td></tr>
+		<tr><td>&lt; 48rem (<code>md</code>)</td><td>Two columns of links, the lead across both. The strip becomes a stack.</td></tr>
+		<tr><td>&lt; 22rem</td><td>One column — narrower than any ordinary phone.</td></tr>
+	</tbody>
+</table>
+</div>
+<p>Add <code>im-footer-cols-stack</code> to go straight to one column below <code>md</code> — right when the labels are long.</p>
+
+<h2>Parts</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Class</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>im-footer</code></td><td>The band. Every direct child is centred on <code>--im-footer-width</code>, so the strip lines up with the columns. <code>im-footer-wide</code> uses the wide measure.</td></tr>
+		<tr><td><code>im-footer-2</code> … <code>-5</code></td><td>How many cells the row has — or set <code>--im-footer-columns</code>.</td></tr>
+		<tr><td><code>im-footer-cols</code></td><td>The grid.</td></tr>
+		<tr><td><code>im-footer-lead</code></td><td>The wide first column: mark, blurb, social. <code>--im-footer-lead</code> is its width (<code>1.4fr</code>).</td></tr>
+		<tr><td><code>im-footer-col</code></td><td>One column. <code>im-footer-col-2</code> spans two cells, <code>-full</code> the row.</td></tr>
+		<tr><td><code>im-footer-title</code> · <code>-heading</code> · <code>-text</code></td><td>A column's mono label; a larger heading; muted prose.</td></tr>
+		<tr><td><code>im-footer-links</code></td><td>A <code>&lt;ul&gt;</code> of links. An icon or a <code>&lt;small&gt;</code> marker inside one is styled for you.</td></tr>
+		<tr><td><code>im-footer-social</code></td><td>The round icon links.</td></tr>
+		<tr><td><code>im-footer-strip</code></td><td>The bottom bar. <code>im-footer-strip-end</code> is its right-hand group, <code>im-footer-note</code> a dot-separated list, <code>im-footer-top</code> the back-to-top.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>In a theme</h2>
+<p>One partial builds all of it from Ghost's settings — the navigation, the secondary navigation, the social accounts, the description:</p>
+{{{{code "hbs"}}}}
+{{!-- default.hbs, after {{{body}}} --}}
+{{> "shell/footer" columns=4 newsletter=true
+	github="https://github.com/you/repo" stars="you/repo"}}
+
+{{!-- or one more column of your own --}}
+{{#> "shell/footer" columns=5}}
+	<nav class="im-footer-col" aria-label="Courses">
+		<h2 class="im-footer-title">Courses</h2>
+		<ul class="im-footer-links"><li><a href="/courses/">All courses</a></li></ul>
+	</nav>
+{{/"shell/footer"}}
+{{{{/code}}}}
+<p>Parameters: <code>columns</code>, <code>no_lead</code>, <code>tagline</code>, <code>newsletter</code>, <code>newsletter_note</code>, <code>skin</code> (<code>fill</code> / <code>ink</code>), <code>wide</code>, <code>github</code>, <code>stars</code>, <code>rights</code>, <code>strip_only</code>.</p>
+
+<h2>Details that matter</h2>
+<ul>
+	<li><strong>The lead column is found, not declared.</strong> <code>.im-footer-cols:has(&gt; .im-footer-lead)</code> is what re-sizes the first track — drop the lead column and the row is equal again, with no second class to remember.</li>
+	<li><strong>Each column is a <code>&lt;nav&gt;</code> with its own <code>aria-label</code></strong>, so a screen-reader user can tell "Writing" from "Work" in a list of landmarks.</li>
+	<li><strong>The dots between small-print links are drawn</strong>, not typed, so nothing reads them aloud.</li>
+	<li><strong>No margins.</strong> The footer sets none: spacing is the grid's, which is what lets it sit in the shell's <code>foot</code> row or straight after <code>&lt;main&gt;</code> without a correction either way.</li>
+</ul>

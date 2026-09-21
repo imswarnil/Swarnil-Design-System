@@ -1,0 +1,226 @@
+/* Logo — one idea in two lockups: LETTERS, and a dot at the top right of the
+   last one. The dot is the recording light: the site is on air.
+
+   wordmark   <span class="im-logo"><b class="im-logo-type">Swarnil</b><i class="im-logo-dot"></i></span>
+   square     <span class="im-logo im-logo-mark"><b class="im-logo-type">S</b><i class="im-logo-dot"></i></span>
+
+   It is LIVE TEXT, not a picture: it takes the brand typeface, it is sharp at
+   any size and on any screen, it inherits the theme's ink, it can be selected
+   and searched, and it weighs nothing. The only drawn file in the system is
+   the favicon (assets/brand/mark.svg), because a browser tab cannot run CSS.
+
+   Everything is sized from ONE knob, --im-logo-size — the height of the
+   lockup — and everything inside it is in em, so the whole thing scales by
+   setting a single length. */
+
+.im-logo {
+	--im-logo-size: 1.625rem;
+	/* The dot, relative to the type size. A recording light is small: big
+	   enough to read as deliberate, never big enough to read as punctuation. */
+	--im-logo-dot: 0.235em;
+	--im-logo-gap: 0.085em;
+	/* How far below the top of the letter's box the dot sits. It lands the dot
+	   on the CAP LINE, which is where the eye expects it — the box is taller
+	   than the capital, by the font's ascender. */
+	--im-logo-drop: 0.055em;
+	/* How far the letter is lifted inside the square, for the same reason: a
+	   capital sits low in a box that also has room for a descender. */
+	--im-logo-lift: -0.06em;
+	--im-logo-dot-color: var(--im-accent);
+
+	display: inline-flex;
+	flex: none;
+	align-items: center;
+	gap: var(--im-logo-gap);
+	color: var(--im-ink);
+	font-family: var(--im-font-heading);
+	font-size: calc(var(--im-logo-size) * 0.8);
+	font-weight: 600;
+	font-style: normal;
+	line-height: 1;
+	letter-spacing: -0.035em;
+	text-decoration: none;
+	white-space: nowrap;
+	-webkit-font-smoothing: antialiased;
+}
+
+.im-logo-type {
+	display: block;
+	/* The letters are usually a <b>, which base/elements.css colours INK — and
+	   on the square that is the tile's own colour, so the letter disappears. */
+	color: inherit;
+	font: inherit;
+	letter-spacing: inherit;
+}
+
+.im-logo-dot {
+	flex: none;
+	align-self: flex-start;
+	width: var(--im-logo-dot);
+	height: var(--im-logo-dot);
+	margin-top: var(--im-logo-drop);
+	border-radius: 50%;
+	background-color: var(--im-logo-dot-color);
+}
+
+/* Where the browser can trim the box to the capital, both nudges are zero:
+   the box IS the capital, so its top is the cap line and centring it centres
+   the letter. The fallback numbers above are what the same font needs when
+   the box still carries the ascender and the descender. */
+@supports (text-box-edge: cap alphabetic) {
+	.im-logo {
+		--im-logo-drop: 0em;
+		--im-logo-lift: 0em;
+	}
+
+	.im-logo-type {
+		text-box-trim: trim-both;
+		text-box-edge: cap alphabetic;
+	}
+}
+
+/* ---- the square ----
+   One letter on a tile, with the same dot at its top right. For a favicon, an
+   avatar, an island bar, a phone — anywhere the name will not fit. The tile is
+   INK, so it is a solid shape in both themes rather than a hole in the page. */
+.im-logo-mark {
+	/* A GRID, not the flex row above: in a flex row as tall as the tile, the
+	   dot's flex-start is the TILE's top, and the dot floats away from the
+	   letter. Here the row is only as tall as the letter and the grid centres
+	   it, so the dot sits on the cap line exactly as it does in the wordmark. */
+	display: inline-grid;
+	grid-auto-flow: column;
+	place-content: center;
+	width: var(--im-logo-size);
+	height: var(--im-logo-size);
+	/* The radius is a share of the tile, so it stays the same shape at 20px and
+	   at 200px — a fixed radius makes a small mark look square and a large one
+	   look like a pill. */
+	border-radius: 26%;
+	background-color: var(--im-ink);
+	color: var(--im-canvas);
+	font-size: calc(var(--im-logo-size) * 0.6);
+	/* The letter is optically centred: the pair leans right by the dot, so the
+	   ink, not the box, sits in the middle of the tile. */
+	padding-right: var(--im-logo-dot);
+}
+
+.im-logo-mark > .im-logo-type {
+	margin-top: var(--im-logo-lift);
+}
+
+.im-logo-outline {
+	background-color: transparent;
+	box-shadow: inset 0 0 0 max(1px, 0.055em) var(--im-line);
+	color: var(--im-ink);
+}
+
+.im-logo-accent {
+	--im-logo-dot-color: var(--im-on-accent);
+
+	background-color: var(--im-accent);
+	color: var(--im-on-accent);
+}
+
+/* ---- on air ----
+   The dot pulses, the way a recording light does. One ring, drawn OUTSIDE the
+   dot with a box-shadow so it cannot change the lockup's size and cannot move
+   a letter by a pixel. */
+.im-logo-live > .im-logo-dot {
+	animation: im-logo-pulse 2.4s var(--im-ease-out) infinite;
+}
+
+@keyframes im-logo-pulse {
+	0%, 70%, 100% {
+		box-shadow: 0 0 0 0 color-mix(in oklab, var(--im-logo-dot-color) 45%, transparent);
+	}
+
+	35% {
+		box-shadow: 0 0 0 0.28em color-mix(in oklab, var(--im-logo-dot-color) 0%, transparent);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.im-logo-live > .im-logo-dot {
+		animation: none;
+	}
+}
+
+/* ---- in a brand link ----
+   .im-brand is the link around it (layout/topbar.css). A wordmark already IS
+   the name, so there is nothing beside it to space. */
+.im-brand > .im-logo {
+	color: inherit;
+}
+
+.im-brand > .im-logo-mark {
+	color: var(--im-canvas);
+}
+
+/* ---- the dot, as a marker ----------------------------------------------
+   The same mark the logo carries, reused wherever something is NEW, LIVE or
+   UNREAD: the top-right corner of a card, a button, an avatar.
+
+     <a class="im-card im-dotted">…</a>          inside the corner
+     <button class="im-btn im-dotted-corner">…   sitting ON the corner
+     <span class="im-dot"></span>                on its own, in a line of text
+
+   It is NOT the "you are here" state. That is a light fill and a bolder
+   label — --im-current-* — everywhere in the system, because a dot beside a
+   nav link is a notification everywhere else on the web, and a reader should
+   not have to learn two meanings for one mark.
+
+   Knobs: --im-dot-size, --im-dot-inset, --im-dot-color. */
+.im-dotted,
+.im-dotted-corner {
+	position: relative;
+}
+
+.im-dotted::after,
+.im-dotted-corner::after {
+	content: "";
+	position: absolute;
+	top: var(--im-dot-inset, 0.625rem);
+	right: var(--im-dot-inset, 0.625rem);
+	z-index: 1;
+	width: var(--im-dot-size, 0.4375rem);
+	height: var(--im-dot-size, 0.4375rem);
+	border-radius: 50%;
+	background-color: var(--im-dot-color, var(--im-accent));
+	pointer-events: none;
+}
+
+/* On the corner rather than inside it — for a button or an avatar, where
+   there is no padding to sit in. A ring of the surface behind keeps it
+   legible over whatever the corner is sitting on. */
+.im-dotted-corner {
+	--im-dot-inset: 0px;
+}
+
+.im-dotted-corner::after {
+	translate: 35% -35%;
+	box-shadow: 0 0 0 2px var(--im-dot-ring, var(--im-canvas));
+}
+
+/* A dot on its own, in a line of text — "live", "new", a status. */
+.im-dot {
+	display: inline-block;
+	flex: none;
+	width: var(--im-dot-size, 0.4375rem);
+	height: var(--im-dot-size, 0.4375rem);
+	border-radius: 50%;
+	background-color: var(--im-dot-color, var(--im-accent));
+	vertical-align: middle;
+}
+
+.im-dot-live,
+.im-dotted-live::after {
+	animation: im-logo-pulse 2.4s var(--im-ease-out) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.im-dot-live,
+	.im-dotted-live::after {
+		animation: none;
+	}
+}

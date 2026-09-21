@@ -3,12 +3,12 @@
    <fieldset class="im-switcher" aria-label="Theme">
      <label><input type="radio" name="theme" value="light" data-theme-set="light">{{> "icons/sun"}}<span>Light</span></label>
      <label><input type="radio" name="theme" value="dark" data-theme-set="dark">{{> "icons/moon"}}<span>Dark</span></label>
-     <label><input type="radio" name="theme" value="system" data-theme-set="system" checked>{{> "icons/monitor"}}<span>Auto</span></label>
    </fieldset>
 
    Real radio buttons: a form can submit it, the arrow keys move it, a screen
-   reader announces "2 of 3". The thumb is positioned by CSS alone, from WHICH
-   radio is checked — up to five options. data-theme-set wires one to the theme. */
+   reader announces "2 of 2". The thumb is positioned by CSS alone, from WHICH
+   radio is checked — up to five options. data-theme-set wires one to the
+   theme; there are two, light and dark, and no third state to store. */
 
 .im-switcher {
 	--im-switcher-pad: 0.1875rem;

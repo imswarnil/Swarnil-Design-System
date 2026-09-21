@@ -1,6 +1,7 @@
-{{!-- An icon button that cycles light → dark → system and shows which one is
-	chosen. The three icons are all in the markup; CSS shows the one matching
-	<html data-theme-choice>, which the head script sets before first paint. --}}
-<button class="im-btn im-btn-ghost im-btn-icon im-theme-button" type="button" data-theme-toggle aria-label="{{t "Change theme"}}" title="{{t "Change theme"}}">
-	<span data-for="light">{{> "icons/sun"}}</span><span data-for="dark">{{> "icons/moon"}}</span><span data-for="system">{{> "icons/monitor"}}</span>
+{{!-- An icon button that switches between LIGHT and DARK. Both icons are in
+	the markup; CSS shows the one matching <html data-theme>, which the head
+	script sets before first paint. A visitor who has never chosen gets their
+	system's setting, and the first press settles it for good. --}}
+<button class="im-btn im-btn-ghost im-btn-icon im-theme-button" type="button" data-theme-toggle aria-label="{{t "Switch theme"}}" title="{{t "Switch theme"}}">
+	<span data-for="light">{{> "icons/sun"}}</span><span data-for="dark">{{> "icons/moon"}}</span>
 </button>

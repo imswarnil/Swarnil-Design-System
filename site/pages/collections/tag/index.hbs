@@ -1,0 +1,112 @@
+---
+title: All tags
+layout: home
+description: Every topic on the site, with how much there is of each — and the archive under it, so a reader who does not know what they are looking for can still find it.
+eyebrow: Collections · Tag
+source: src/components/collection.css · tag.css
+---
+<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+	<p class="im-eyebrow">Collections · Tag · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+</section>
+
+<div class="im-wrap im-stack" style="--im-stack-gap: 2.5rem">
+	<header class="im-collhead">
+		<p class="im-eyebrow">Index</p>
+		<h1 class="im-collhead-title">Topics</h1>
+		<p class="im-collhead-text">Everything here, sorted by what it is about. A tag with three posts in it is a tag that should not exist — these are the ones that earned their name.</p>
+		<p class="im-collhead-meta"><span>{{fixtures.tags.length}} topics</span><span>{{fixtures.posts.length}} posts</span></p>
+	</header>
+
+	<section class="im-section">
+		<div class="im-tagcards">
+			{{#each fixtures.tags}}
+			<article class="im-tagcard" style="--im-tag-dot: {{#match @index "=" 0}}#ff5a1f{{else}}{{#match @index "=" 1}}#3178c6{{else}}{{#match @index "=" 2}}#4ac26b{{else}}{{#match @index "=" 3}}#a855f7{{else}}#f59e0b{{/match}}{{/match}}{{/match}}{{/match}}">
+				<a class="im-tagcard-name" href="/collections/tag/page/">{{name}}<span class="im-tagcard-count">{{count.posts}}</span></a>
+				<p>Everything filed under {{name}}.</p>
+				<p><span class="im-kind" data-kind="tag">{{icon "tag"}}Topic</span></p>
+			</article>
+			{{/each}}
+		</div>
+	</section>
+
+	<section class="im-section">
+		<div class="home-head"><p class="im-caption" data-index="archive">The archive</p><a class="im-card-cta" href="/collections/post/">Everything {{> "icons/arrow-right"}}</a></div>
+		<div class="im-archive">
+			<div class="im-archive-year">
+				<p class="im-archive-head"><strong>2026</strong><span>{{demo.six.length}} pieces</span></p>
+				{{#each demo.six}}
+				<a class="im-archive-row" href="/collections/post/article/">
+					<span class="im-archive-date">{{date published_at format="D MMM"}}</span>
+					<span class="im-archive-title">{{title}}</span>
+					<span class="im-kind" data-kind="post">{{icon "file-text"}}Post</span>
+				</a>
+				{{/each}}
+				<a class="im-archive-row" href="/collections/project/page/">
+					<span class="im-archive-date">14 Sep</span>
+					<span class="im-archive-title">im-design-system — v0.7</span>
+					<span class="im-kind" data-kind="project">{{icon "folder"}}Project</span>
+				</a>
+				<a class="im-archive-row" href="/collections/video/page/">
+					<span class="im-archive-date">9 Sep</span>
+					<span class="im-archive-title">Driving the Amalfi Coast — the whole road in 8 minutes</span>
+					<span class="im-kind" data-kind="video">{{icon "video"}}Video</span>
+				</a>
+				<a class="im-archive-row" href="/collections/newsletter/issue/">
+					<span class="im-archive-date">4 Sep</span>
+					<span class="im-archive-title">Field Notes 040 — What a design system is actually for</span>
+					<span class="im-kind" data-kind="issue">{{icon "mail"}}Issue</span>
+				</a>
+			</div>
+			<div class="im-archive-year">
+				<p class="im-archive-head"><strong>2025</strong><span>28 pieces</span></p>
+				{{#each demo.three}}
+				<a class="im-archive-row" href="/collections/post/article/">
+					<span class="im-archive-date">{{date published_at format="D MMM"}}</span>
+					<span class="im-archive-title">{{title}}</span>
+					<span class="im-kind" data-kind="post">{{icon "file-text"}}Post</span>
+				</a>
+				{{/each}}
+			</div>
+		</div>
+	</section>
+</div>
+
+<section class="im-section im-wrap">
+	<div class="im-prose">
+		<h2>Every row says what it is</h2>
+		<p>A site with posts, projects, videos, newsletter issues and shorts in the same archive needs every row to say which it is, or the archive is a list of titles that all look the same. <code>im-kind</code> is one chip, in one place, on every card and every row in the system.</p>
+		{{#example center=true}}
+		<span class="im-kind" data-kind="post">{{icon "file-text"}}Post</span>
+		<span class="im-kind" data-kind="project">{{icon "folder"}}Project</span>
+		<span class="im-kind" data-kind="video">{{icon "video"}}Video</span>
+		<span class="im-kind" data-kind="short">{{icon "square-play"}}Short</span>
+		<span class="im-kind" data-kind="issue">{{icon "mail"}}Issue</span>
+		<span class="im-kind" data-kind="tag">{{icon "tag"}}Topic</span>
+		{{/example}}
+		<p>It is a <strong>label</strong>, not a badge: mono, small, quiet. The icon carries most of it at a glance and the word settles it. Only the icon takes a colour, and only because six neutral chips on one screen are six things nobody can tell apart at speed — six <em>coloured</em> chips would be a colour chart.</p>
+		<p>On a card with a picture it goes top-left, over the image, on its own frosted ground: <code>im-kind-over</code>. The top-<em>right</em> belongs to the <a href="/components/card/#the-dot">dot</a> and to the reading time, and two chips in one corner is a corner nobody reads.</p>
+		{{#example}}
+		<div class="im-feed">
+			{{#with demo.three.[0]}}{{> "components/post-card" kind="post" excerpt=true}}{{/with}}
+			{{#with demo.videos.[1]}}{{> "components/video-card" kind="video"}}{{/with}}
+			{{#with demo.projects.[0]}}{{> "components/repo-card" kind="project"}}{{/with}}
+		</div>
+		{{/example}}
+
+		<h2>The archive</h2>
+		<div class="im-table-scroll">
+		<table>
+			<thead><tr><th>Class</th><th></th></tr></thead>
+			<tbody>
+				<tr><td><code>im-archive</code></td><td>The whole list, grouped by year.</td></tr>
+				<tr><td><code>im-archive-year</code> · <code>-head</code></td><td>One year and its heading — the year in Geist Pixel, with the count beside it.</td></tr>
+				<tr><td><code>im-archive-row</code></td><td>Date, title, kind. Rows, not cards: an archive is for finding a thing you half remember, and forty pictures do not help with that.</td></tr>
+				<tr><td><code>im-tagcards</code> · <code>im-tagcard</code></td><td>The topic index. The dot is the tag's own colour, from <code>--im-tag-dot</code>.</td></tr>
+			</tbody>
+		</table>
+		</div>
+		<p>Ghost gives the whole list with <code>{{"{{#get \"posts\" limit=\"all\"}}"}}</code>; group it by year in the template and print a row each. It is one request and one page, and it is the most useful page on most sites.</p>
+	</div>
+</section>

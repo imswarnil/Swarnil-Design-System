@@ -8,7 +8,8 @@
 	min-height: 1.75rem;
 	padding: 0 0.75rem;
 	border-radius: var(--im-radius-full);
-	background-color: var(--im-surface);
+	background-color: transparent;
+	box-shadow: inset 0 0 0 1px var(--im-line);
 	color: var(--im-ink);
 	font-size: var(--im-text-sm);
 	font-weight: 500;
@@ -17,14 +18,20 @@
 	transition: background-color 120ms;
 }
 
+/* A chip has three steps and they are the system's three: a hairline at rest,
+   the hover fill when it is pointed at, and the current fill with a bolder
+   label when it is the one chosen. Filled at rest, there would be nowhere
+   left for the other two to go. */
+
 .im-tag:hover {
-	background-color: var(--im-surface-2);
+	background-color: var(--im-hover-bg);
 	color: var(--im-ink);
 }
 
 .im-tag[aria-current="page"] {
-	background-color: var(--im-ink);
-	color: var(--im-canvas);
+	background-color: var(--im-current-bg);
+	color: var(--im-current-fg);
+	font-weight: var(--im-current-weight);
 }
 
 .im-tag-dot::before {

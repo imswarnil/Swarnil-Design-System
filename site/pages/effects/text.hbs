@@ -72,9 +72,10 @@ source: src/effects/text.css · src/js/im-motion.js
 
 <h2>Typewriter</h2>
 {{#example}}
-<p class="text-h2"><span class="im-fx-typewriter" data-replay style="--im-fx-chars: 26">npm install im-design-system</span></p>
+<p class="text-h2"><span class="im-fx-typewriter" data-replay style="--im-fx-chars: 28">npm install im-design-system</span></p>
 {{/example}}
-<p>Types itself once, with a caret. It is set in Geist Mono because it <em>needs</em> a monospaced face — the width is counted in characters: <code>style="--im-fx-chars: 26"</code>.</p>
+<p>Types itself once, with a caret. It is set in Geist Mono because it <em>needs</em> a monospaced face — the reveal is counted in characters: <code>style="--im-fx-chars: 28"</code>.</p>
+<p>The count only has to be <em>close</em>. The width is borrowed for the length of the animation and given back afterwards (<code>animation-fill-mode: backwards</code>), so a count that is short makes the last few letters arrive in one step rather than clipping them off the end for good — which is how this used to fail, silently, and why the demo above was missing two characters.</p>
 
 <h2>Glitch</h2>
 {{#example}}
@@ -94,6 +95,30 @@ source: src/effects/text.css · src/js/im-motion.js
 <p class="font-mono text-h2 text-ink" data-im-scramble>Resolving out of noise…</p>
 {{/example}}
 <p><code>data-im-scramble</code>: the text resolves, left to right, out of random glyphs when revealed. Monospace keeps it from jittering.</p>
+
+<h2>Orbit</h2>
+<p>A ring of type that turns, with the logo's recording dot at its centre — a seal at the end of an about page, "open for work" round an avatar, "scroll" under a hero. The letters are set on the path by the browser's own text engine, so they sit on the curve exactly and stay crisp at any size; nothing here rotates one letter at a time and hopes.</p>
+{{#example center=true style="padding-block: 2.5rem"}}
+<div class="im-cluster" style="--im-cluster-gap: 3rem; align-items: center">
+	{{> "components/orbit" id="orbit-a" text="Im Design System · Tailwind 4 · Ghost 6 · "}}
+	{{> "components/orbit" id="orbit-b" shape="square" text="Read the journal · Read the journal · " speed="26s" back=true style="--im-orbit-dot-color: var(--im-ink)"}}
+	{{#> "components/orbit" id="orbit-c" text="Open for work · Open for work · " size="7.5rem" speed="14s"}}{{> "components/avatar" size="lg" src=demo.author.profile_image name=demo.author.name}}{{/"components/orbit"}}
+</div>
+{{/example}}
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Param</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>id</code></td><td>Required, and unique on the page — the <code>&lt;textPath&gt;</code> points at it.</td></tr>
+		<tr><td><code>text</code></td><td>What goes round. Repeat it yourself with separators so it fills the path.</td></tr>
+		<tr><td><code>shape</code></td><td><code>circle</code> (default) or <code>square</code> — a rounded square path.</td></tr>
+		<tr><td><code>size</code> · <code>speed</code> · <code>back</code></td><td>9rem, 18s, and which way it turns.</td></tr>
+		<tr><td><code>--im-orbit-text</code></td><td>The letters' size, 0.72rem; <code>--im-orbit-tracking</code> their spacing, 0.34em. Wide tracking is what makes a ring of type read as a ring and not as a squeezed sentence.</td></tr>
+		<tr><td><code>--im-orbit-dot</code></td><td>The centre dot, 0.5rem, in <code>--im-orbit-dot-color</code>. Put anything inside the partial instead and it replaces the dot.</td></tr>
+	</tbody>
+</table>
+</div>
+<p>It stands still under <code>prefers-reduced-motion</code>, and the whole ring carries one <code>aria-label</code> so a screen reader reads the words once instead of spelling a circle.</p>
 
 <h2>Combining, and restraint</h2>
 {{#example}}

@@ -14,16 +14,17 @@ source: src/components/button.css · card.css · src/motion/micro.css
 {{/example}}
 <p>Only an icon that comes <em>after</em> the label leans: that is the one that says "this goes somewhere". A leading icon names the action and stays put.</p>
 
-<h2>Two · the edge sharpens</h2>
-<p>A card is a ruled box, and it answers by <strong>drawing its rule</strong>: the hairline turns to ink, and its CTA arrow leans — the same lean as the button. No lift, no shadow, no tilt. Also automatic, for any card that is a link or holds a title link.</p>
+<h2>Two · the card fills</h2>
+<p>A card answers by <strong>filling</strong> — one surface deeper than wherever it already is — and its CTA arrow leans, the same lean as the button. No border sharpening to ink, no picture growing three per cent, no lift on a shadow. Those are three different ideas competing for the same moment, and a feed of twenty of them is a page that twitches. Automatic, for any card that is a link or holds a title link.</p>
 {{#example}}
 <div class="im-grid-auto" style="--im-grid-min: 14rem">
-	<a class="im-card im-card-outline im-card-link" href="#two-the-edge-sharpens"><span class="im-card-title">An outlined card</span><span>Hover me: hairline → ink.</span><span class="im-card-cta">Read {{> "icons/arrow-right"}}</span></a>
-	<article class="im-card im-card-outline"><div class="im-card-media"><img src="{{demo.post.feature_image}}" alt="" loading="lazy"></div><div class="im-card-body"><h3 class="im-card-title"><a href="#two-the-edge-sharpens">A card with media</a></h3><span class="im-card-cta">Read {{> "icons/arrow-right"}}</span></div></article>
-	<a class="im-card im-card-link" href="#two-the-edge-sharpens"><span class="im-card-title">A filled card</span><span>Has no edge to sharpen, so it steps up one surface shade instead.</span></a>
+	<a class="im-card im-card-outline im-card-link" href="#two-the-card-fills"><span class="im-card-title">An outlined card</span><span>Hover me: it fills.</span><span class="im-card-cta">Read {{> "icons/arrow-right"}}</span></a>
+	<article class="im-card im-card-outline"><div class="im-card-media"><img src="{{demo.post.feature_image}}" alt="" loading="lazy"></div><div class="im-card-body"><h3 class="im-card-title"><a href="#two-the-card-fills">A card with media</a></h3><span class="im-card-cta">Read {{> "icons/arrow-right"}}</span></div></article>
+	<a class="im-card im-card-link" href="#two-the-card-fills"><span class="im-card-title">A filled card</span><span>Already on a surface, so it steps to the next one down.</span></a>
 </div>
 {{/example}}
-<p>The same gesture runs through the system: the <a href="/navigation/pagination/#previous-next-article">post nav</a> arrows lean, the <a href="/effects/border/#corners">corner brackets</a> run along their edges, an <a href="/forms/inputs/#states">input</a>'s hairline becomes a 2px rule on focus. One idea, repeated, is what makes a site feel like one thing.</p>
+<p>The fill is not only the card's: a row in the side nav, a menu item, a nav tile, a topic chip and a <a href="/collections/post/card/">post card</a> all answer the same way, and <code>--im-hover-bg</code> is where that one step is defined. <strong>Being current</strong> is the same idea one step further — <code>--im-current-bg</code>, plus a bolder label — so "you could go here" and "you are here" are the same signal at two weights.</p>
+<p>The leaning arrow runs through the system too: the <a href="/navigation/pagination/#previous-next-article">post nav</a> arrows lean, the <a href="/effects/border/#corners">corner brackets</a> run along their edges, an <a href="/forms/inputs/#states">input</a>'s hairline becomes a 2px rule on focus. One idea, repeated, is what makes a site feel like one thing.</p>
 
 <h2>The small remainder</h2>
 <p>For things that are not buttons or cards.</p>

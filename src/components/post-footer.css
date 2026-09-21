@@ -1,0 +1,264 @@
+/* Post footer — everything after the last paragraph of a post.
+
+   <footer class="im-postfoot">
+     <div class="im-postfoot-bar"> tags … share </div>
+     <section class="im-postfoot-block">
+       <h2 class="im-postfoot-title">More like this <a href="…">All</a></h2>
+       <div class="im-related"> …post cards… </div>
+     </section>
+   </footer>
+
+   The blocks themselves are ordinary components — post cards, the author box,
+   a support panel, the newsletter form, .im-postnav, the comment thread — and
+   the footer is only the rhythm between them: one rule at the top, one gap,
+   one caption style. A theme prints the blocks it wants in the order it wants
+   and nothing here has to know. */
+
+.im-postfoot {
+	--im-postfoot-gap: clamp(2rem, 1rem + 3vw, 3.25rem);
+	/* The same formula as .im-content's main column, so the footer lines up
+	   with the last paragraph rather than with the column the paragraph sits
+	   in. Widen it — for a related grid that wants three cards — with
+	   --im-postfoot-measure, and set --im-postfoot-gutter to 0 where the
+	   column already has padding of its own. */
+	--im-postfoot-measure: var(--im-width-prose);
+	--im-postfoot-gutter: var(--im-gutter, 1rem);
+
+	display: flex;
+	flex-direction: column;
+	gap: var(--im-postfoot-gap);
+	width: min(var(--im-postfoot-measure), 100% - var(--im-postfoot-gutter) * 2);
+	margin-top: clamp(2rem, 4vw, 3rem);
+	margin-inline: auto;
+	padding-top: 1.75rem;
+	border-top: 1px solid var(--im-line);
+}
+
+/* Tags on one side, the ways to pass it on at the other. */
+.im-postfoot-bar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+}
+
+/* .im-share is an inline-size CONTAINER, so it cannot be sized by what is in
+   it — left to `auto` it comes out 0 wide and its buttons stack in a column.
+   It is given a basis and the rest of the row instead, and its buttons sit at
+   the far end of it. */
+.im-postfoot-bar > .im-share {
+	flex: 1 1 20rem;
+}
+
+.im-postfoot-bar > .im-share .im-share-list {
+	justify-content: flex-end;
+}
+
+.im-postfoot-bar > .im-cluster {
+	flex: 1 1 8rem;
+	min-width: 0;
+}
+
+.im-postfoot-block {
+	display: flex;
+	flex-direction: column;
+	gap: 1.125rem;
+	min-width: 0;
+}
+
+/* The same mono caption as a widget's title, so the column beside the article
+   and the blocks under it read as one page. */
+.im-postfoot-title {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.75rem;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: 0.6875rem;
+	font-weight: 500;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.im-postfoot-title > a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.im-postfoot-title > a:hover {
+	color: var(--im-ink);
+}
+
+/* ---- related: "more like this" ----
+   Its own grid rather than im-grid-auto, so a theme can set how many fit
+   without touching a utility that everything else uses. */
+.im-related {
+	--im-related-min: 13rem;
+
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-related-min), 100%), 1fr));
+	gap: 1.25rem;
+}
+
+/* ---- the author, at full size ----
+   The hover card in the byline is a glance; this is the whole answer. */
+.im-author-card {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr);
+	gap: 0.25rem clamp(1rem, 2vw, 1.5rem);
+	padding: clamp(1.25rem, 3vw, 1.75rem);
+	border: 1px solid var(--im-line);
+	border-radius: var(--im-radius-xl);
+	color: var(--im-body);
+}
+
+.im-author-card > .im-avatar {
+	grid-row: span 4;
+}
+
+.im-author-card-name {
+	color: var(--im-ink);
+	font-size: var(--im-text-h4);
+	font-weight: 600;
+	line-height: var(--im-leading-h4);
+	letter-spacing: var(--im-tracking-tight);
+	text-decoration: none;
+}
+
+.im-author-card-name:hover {
+	color: var(--im-accent);
+}
+
+.im-author-card-role {
+	color: var(--im-muted);
+	font-size: var(--im-text-sm);
+}
+
+.im-author-card-bio {
+	max-width: 58ch;
+	padding-top: 0.5rem;
+	font-size: var(--im-text-sm);
+	text-wrap: pretty;
+}
+
+.im-author-card-links {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.375rem;
+	padding-top: 0.875rem;
+}
+
+.im-author-card-links > .im-btn:first-child {
+	margin-right: auto;
+}
+
+/* Under 34rem the avatar takes the row above rather than a column beside. */
+@media (width < 34rem) {
+	.im-author-card {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.im-author-card > .im-avatar {
+		grid-row: auto;
+		margin-bottom: 0.5rem;
+	}
+}
+
+/* ---- support ----
+   Buy a coffee, send a tip, become a member. One panel, three shapes: the
+   amounts are ordinary buttons, so whatever a theme wires them to — a
+   payment link, a Ghost tier, a form — is the theme's business. */
+.im-support {
+	display: grid;
+	gap: 0.875rem;
+	padding: clamp(1.25rem, 3vw, 1.75rem);
+	border: 1px solid var(--im-line);
+	border-radius: var(--im-radius-xl);
+	color: var(--im-body);
+}
+
+.im-support-heading {
+	display: flex;
+	align-items: center;
+	gap: 0.625rem;
+	color: var(--im-ink);
+	font-size: var(--im-text-h4);
+	font-weight: 600;
+	line-height: var(--im-leading-h4);
+	letter-spacing: var(--im-tracking-tight);
+}
+
+.im-support-heading > .im-icon {
+	flex: none;
+	color: var(--im-accent);
+}
+
+.im-support-text {
+	max-width: 58ch;
+	font-size: var(--im-text-sm);
+	text-wrap: pretty;
+}
+
+.im-support-amounts {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.375rem;
+}
+
+.im-support-actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem;
+	padding-top: 0.25rem;
+}
+
+/* Filled, for the one block on the page that is asking for something. */
+.im-support-fill {
+	border-color: transparent;
+	background-color: var(--im-surface);
+}
+
+.im-support-accent {
+	border-color: transparent;
+	background-color: var(--im-accent);
+	color: var(--im-on-accent);
+}
+
+.im-support-accent :is(.im-support-heading, .im-support-heading > .im-icon) {
+	color: inherit;
+}
+
+/* ---- a call to action: the newsletter, at the end of a post ---- */
+.im-postcta {
+	display: grid;
+	gap: 0.875rem;
+	justify-items: center;
+	padding: clamp(1.5rem, 4vw, 2.5rem);
+	border-radius: var(--im-radius-xl);
+	background-color: var(--im-surface);
+	text-align: center;
+}
+
+.im-postcta-title {
+	color: var(--im-ink);
+	font-size: var(--im-text-h3);
+	font-weight: 600;
+	line-height: var(--im-leading-h3);
+	letter-spacing: var(--im-tracking-tight);
+	text-wrap: balance;
+}
+
+.im-postcta-text {
+	max-width: 46ch;
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+	text-wrap: pretty;
+}
+
+.im-postcta > .im-subscribe {
+	width: min(26rem, 100%);
+}

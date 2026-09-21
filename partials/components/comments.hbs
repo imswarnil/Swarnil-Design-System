@@ -1,0 +1,77 @@
+{{!-- A comment thread, printed by the theme.
+
+	Params
+	  thread   a list — each item: name, avatar, url, when, text, likes,
+	           badge, mine (the post's author), replies (a list of the same)
+	           `when`, not `date`: {{date}} is a Ghost HELPER and would win
+	           over a field of that name.
+	  count    how many, if the number is not simply the list's length
+	  gated    true — members only: a gate instead of the box to write in
+	  form     false — no box at all (comments closed)
+
+	Ghost's OWN comments are one helper, {{comments}}, and they arrive in an
+	iframe Ghost styles itself — nothing here reaches inside it. This is for a
+	theme that prints its own thread, from the Members API or from anywhere
+	else, and wants it to look like the rest of the page. --}}
+<section class="im-comments" aria-labelledby="comments-title">
+	<div class="im-comments-head">
+		<h2 class="im-comments-count" id="comments-title">{{t "Comments"}} <span>{{#if count}}{{count}}{{else}}{{thread.length}}{{/if}}</span></h2>
+		<a class="im-btn im-btn-sm" href="#comment-box">{{> "icons/message-circle"}}{{t "Join the conversation"}}</a>
+	</div>
+
+	{{#if gated}}
+		<div class="im-comments-gate">
+			{{> "icons/lock"}}
+			<p>{{t "Comments are for members. It is free, and it takes a moment."}}</p>
+			<div class="im-cluster"><a class="im-btn im-btn-primary im-btn-sm" href="/#/portal/signup">{{t "Sign up"}}</a><a class="im-btn im-btn-sm" href="/#/portal/signin">{{t "Sign in"}}</a></div>
+		</div>
+	{{else}}
+		{{#match form "!=" false}}
+		<form class="im-comment-form" id="comment-box">
+			{{> "components/avatar" src=@member.avatar_image name=@member.name}}
+			<label class="sr-only" for="comment-text">{{t "Your comment"}}</label>
+			<textarea class="im-input" id="comment-text" rows="3" placeholder="{{t "Say something…"}}"></textarea>
+			<div class="im-comment-form-actions">
+				<span class="im-comment-form-note">{{t "Be kind. Markdown is not parsed."}}</span>
+				<button class="im-btn im-btn-primary im-btn-sm" type="submit">{{t "Post"}}</button>
+			</div>
+		</form>
+		{{/match}}
+	{{/if}}
+
+	{{#if thread}}
+		<ol class="im-comment-list">
+			{{#foreach thread}}
+			<li class="im-comment{{#if mine}} im-comment-mine{{/if}}">
+				{{> "components/avatar" src=avatar name=name}}
+				<div class="im-comment-body">
+					<p class="im-comment-head"><b class="im-comment-name">{{name}}</b>{{#if badge}}<span class="im-comment-badge">{{badge}}</span>{{/if}}<time class="im-comment-time">{{when}}</time></p>
+					<div class="im-comment-text"><p>{{text}}</p></div>
+					<div class="im-comment-actions">
+						<button class="im-comment-action" type="button" aria-pressed="false">{{> "icons/heart"}}<span>{{#if likes}}{{likes}}{{else}}0{{/if}}</span></button>
+						<a class="im-comment-action" href="#comment-box">{{> "icons/message-square"}}<span>{{t "Reply"}}</span></a>
+					</div>
+				</div>
+				{{#if replies}}
+				<ol class="im-comment-replies">
+					{{#foreach replies}}
+					<li class="im-comment{{#if mine}} im-comment-mine{{/if}}">
+						{{> "components/avatar" size="sm" src=avatar name=name}}
+						<div class="im-comment-body">
+							<p class="im-comment-head"><b class="im-comment-name">{{name}}</b>{{#if badge}}<span class="im-comment-badge">{{badge}}</span>{{/if}}<time class="im-comment-time">{{when}}</time></p>
+							<div class="im-comment-text"><p>{{text}}</p></div>
+							<div class="im-comment-actions">
+								<button class="im-comment-action" type="button" aria-pressed="false">{{> "icons/heart"}}<span>{{#if likes}}{{likes}}{{else}}0{{/if}}</span></button>
+							</div>
+						</div>
+					</li>
+					{{/foreach}}
+				</ol>
+				{{/if}}
+			</li>
+			{{/foreach}}
+		</ol>
+	{{else}}
+		<p class="im-comments-empty">{{t "No comments yet. Yours would be the first."}}</p>
+	{{/if}}
+</section>

@@ -1,0 +1,30 @@
+{{!-- Video card — a video, the way a video site shows one. Its context is a
+	video object.
+
+	Context   title · url · thumb · time · live · views · when · watched (a
+	          percentage) · channel · avatar · text
+	Params
+	  layout  row     — the search-result shape, with room for a description
+	          compact — the "up next" rail
+	  hide_by true    — no channel mark or name, for a channel's own page,
+	                    where every video on it is by the same person
+	  kind    "video" / "short" — the identifier chip, for a mixed feed
+	  class   anything else --}}
+<article class="im-vidcard{{#if layout}} im-vidcard-{{layout}}{{/if}}{{#if class}} {{class}}{{/if}}">
+	<a class="im-vidcard-thumb" href="{{#if url}}{{url}}{{else}}#{{/if}}" tabindex="-1" aria-hidden="true">
+		{{#if thumb}}<img src="{{thumb}}" alt="" loading="lazy">{{/if}}
+		{{#if kind}}<span class="im-kind im-kind-over" data-kind="{{kind}}">{{> "icons/video"}}{{kind}}</span>{{/if}}
+		<span class="im-vidcard-time{{#if live}} im-vidcard-time-live{{/if}}">{{#if time}}{{time}}{{else}}0:00{{/if}}</span>
+		{{#if watched}}<span class="im-vidcard-progress"><span style="width: {{watched}}%"></span></span>{{/if}}
+	</a>
+
+	<div class="im-vidcard-body">
+		{{#unless hide_by}}{{> "components/avatar" size="sm" src=avatar name=channel}}{{/unless}}
+		<div>
+			<h3 class="im-vidcard-title"><a href="{{#if url}}{{url}}{{else}}#{{/if}}">{{title}}</a></h3>
+			{{#unless hide_by}}<p class="im-vidcard-by"><a href="#">{{#if channel}}{{channel}}{{else}}{{@site.title}}{{/if}}<i class="im-vidcard-tick" aria-hidden="true"></i></a></p>{{/unless}}
+			<p class="im-vidcard-meta">{{#if views}}<span>{{views}}{{#unless live}} views{{/unless}}</span>{{/if}}{{#if when}}<span>{{when}}</span>{{/if}}</p>
+			{{#if text}}<p class="im-vidcard-text">{{text}}</p>{{/if}}
+		</div>
+	</div>
+</article>

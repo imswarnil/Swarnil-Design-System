@@ -4,6 +4,8 @@ description: A surface and a small vocabulary of parts — media, badge, header,
 eyebrow: Component
 source: src/components/card.css
 ---
+<p>This is the general card: a surface you put anything in. The <strong>blog card</strong> — the one whose context is a Ghost post, which knows what a post has — is its own component, under <a href="/collections/post/card/">Collections › Post › Post card</a>.</p>
+
 <h2>Anatomy</h2>
 {{#example style="max-width: 24rem"}}
 <article class="im-card">
@@ -107,6 +109,25 @@ source: src/components/card.css
 </div>
 {{/example}}
 
+<h2>The dot</h2>
+<p>The same mark the <a href="/foundation/logo/">logo</a> carries, in the top-right corner: this one is <strong>new, live or unread</strong>. <code>im-dotted</code> puts it inside the corner, where a card has padding for it; <code>im-dotted-corner</code> sits it <em>on</em> the corner with a ring of the page behind it, for something with no padding to spare.</p>
+<p>It is <strong>not</strong> the "you are here" state — that is a light fill and a bolder label, everywhere in the system. A dot beside a nav link means a notification everywhere else on the web, and a reader should not have to learn two meanings for one mark.</p>
+{{#example}}
+<div class="im-grid-auto" style="--im-grid-min: 14rem">
+	<a class="im-card im-card-outline im-card-link im-dotted" href="#the-dot"><span class="im-card-eyebrow">Journal</span><span class="im-card-title">Something new</span><span>The dot sits inside the corner.</span></a>
+	<a class="im-card im-card-link im-dotted im-dotted-live" href="#the-dot"><span class="im-card-eyebrow">Live</span><span class="im-card-title">Happening now</span><span><code>im-dotted-live</code> — it pulses, like the logo's.</span></a>
+	<div class="im-card im-card-plain im-dotted" style="--im-dot-color: var(--im-success); --im-dot-inset: .25rem"><span class="im-card-title">Any colour, any inset</span><span><code>--im-dot-color</code>, <code>--im-dot-size</code>, <code>--im-dot-inset</code>.</span></div>
+</div>
+{{/example}}
+{{#example center=true}}
+<button class="im-btn im-dotted-corner" type="button">{{> "icons/bell"}}Notifications</button>
+<button class="im-btn im-btn-primary im-dotted-corner" type="button">Inbox</button>
+<button class="im-btn im-btn-icon im-dotted-corner" type="button" aria-label="Messages">{{> "icons/message-circle"}}</button>
+<span class="im-avatar im-avatar-lg im-dotted-corner" data-initial="S"></span>
+<span>Live <i class="im-dot im-dot-live"></i></span>
+{{/example}}
+<p><code>im-dot</code> on its own is the same mark in a line of text. The ring behind the corner version is <code>--im-dot-ring</code>, the canvas by default — set it to whatever the corner is actually sitting on.</p>
+
 <h2>Sizes &amp; variables</h2>
 {{#example}}
 <div class="im-grid-auto" style="--im-grid-min: 13rem">
@@ -129,4 +150,4 @@ source: src/components/card.css
 	</tbody>
 </table>
 </div>
-<p>For a Ghost post, <a href="/components/post-card/">Post card</a> is a ready-made partial with the same ideas wired to a post's fields.</p>
+<p>For a Ghost post, <a href="/collections/post/card/">Post card</a> is a ready-made partial with the same ideas wired to a post's fields.</p>

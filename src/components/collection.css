@@ -1,0 +1,560 @@
+/* Collection — the page that lists posts: /blog, a tag, an author, the home
+   feed. Three parts, and none of them knows what is in the list.
+
+   <header class="im-collhead">
+     <h1 class="im-collhead-title">Journal</h1>
+     <p class="im-collhead-text">…</p>
+     <p class="im-collhead-meta"> 128 posts · RSS · subscribe </p>
+   </header>
+
+   <div class="im-collbar">
+     <div class="im-collbar-filters"> …tags… </div>
+     <div class="im-cluster"> …sort, view… </div>
+   </div>
+
+   <div class="im-feed"> …post cards… </div>
+
+   The feed is ONE grid with three dressings — cards, a list, a lead item that
+   takes the top — because a reader scanning a list of posts should not have
+   to relearn it between a tag page and the home page. */
+
+.im-collhead {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+	max-width: 52rem;
+	min-width: 0;
+}
+
+.im-collhead-title {
+	color: var(--im-ink);
+	font-family: var(--im-font-heading);
+	font-size: clamp(2rem, 1.4rem + 2.4vw, 3rem);
+	font-weight: 600;
+	line-height: 1.08;
+	letter-spacing: var(--im-tracking-tight);
+	text-wrap: balance;
+}
+
+.im-collhead-text {
+	color: var(--im-body);
+	font-size: var(--im-text-lg);
+	line-height: var(--im-leading-lg);
+	text-wrap: pretty;
+}
+
+.im-collhead-meta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem 0.875rem;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	letter-spacing: 0.04em;
+}
+
+.im-collhead-meta a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.im-collhead-meta a:hover {
+	color: var(--im-ink);
+}
+
+/* A drawn dot between the facts, as in the post's byline. */
+.im-collhead-meta > * + *::before {
+	content: "";
+	display: inline-block;
+	width: 3px;
+	height: 3px;
+	margin-right: 0.875rem;
+	border-radius: 50%;
+	background-color: currentcolor;
+	opacity: 0.55;
+	vertical-align: middle;
+}
+
+/* ---- the bar: what to filter by, and how to look at it ----
+   The filters SCROLL sideways rather than wrapping: a site with forty tags
+   would otherwise push the first post below the fold. */
+.im-collbar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.75rem 1rem;
+	padding-block: 0.75rem;
+	border-bottom: 1px solid var(--im-line);
+}
+
+.im-collbar-filters {
+	display: flex;
+	flex: 1 1 18rem;
+	align-items: center;
+	gap: 0.375rem;
+	min-width: 0;
+	overflow-x: auto;
+	overscroll-behavior-x: contain;
+	scrollbar-width: none;
+	mask-image: linear-gradient(to right, #000 calc(100% - 2rem), transparent);
+}
+
+.im-collbar-filters::-webkit-scrollbar {
+	display: none;
+}
+
+.im-collbar-filters > * {
+	flex: none;
+}
+
+/* Stuck under the top bar while the feed scrolls past it. */
+.im-collbar-sticky {
+	position: sticky;
+	top: var(--im-bar-height);
+	z-index: 10;
+	background-color: var(--im-canvas);
+}
+
+/* ---- the feed ---- */
+.im-feed {
+	--im-feed-min: 16rem;
+	--im-feed-gap: clamp(1.75rem, 3vw, 2.5rem);
+
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-feed-min), 100%), 1fr));
+	gap: var(--im-feed-gap);
+	min-width: 0;
+}
+
+/* One column of row cards — a tag page, an archive, a search result. */
+.im-feed-list {
+	grid-template-columns: minmax(0, 1fr);
+	gap: 0;
+}
+
+.im-feed-list > * {
+	padding-block: var(--im-feed-gap);
+}
+
+.im-feed-list > * + * {
+	border-top: 1px solid var(--im-line);
+}
+
+/* The first post takes the top, at full width. On one column there is no
+   difference to make, so the rule waits for two. */
+@media (width >= 48rem) {
+	.im-feed-lead > :first-child {
+		grid-column: 1 / -1;
+	}
+
+	/* …and it lies down. A 16:10 picture stretched across three columns is a
+	   billboard. This is the shape of .im-post-card-row, which the card can
+	   only take from its own class — and the class it is given has to be the
+	   same one on every page of the feed. */
+	.im-feed-lead > .im-post-card:first-child {
+		flex-direction: row;
+		align-items: center;
+		gap: clamp(1.25rem, 3vw, 2rem);
+	}
+
+	.im-feed-lead > .im-post-card:first-child > .im-post-card-media {
+		flex: 0 0 clamp(14rem, 46%, 30rem);
+	}
+
+	.im-feed-lead > .im-post-card:first-child .im-post-card-title {
+		font-size: var(--im-text-h2);
+		line-height: var(--im-leading-h2);
+	}
+}
+
+.im-feed-empty {
+	grid-column: 1 / -1;
+	padding: clamp(2rem, 6vw, 4rem) 1rem;
+	border: 1px dashed var(--im-line);
+	border-radius: var(--im-radius-xl);
+	color: var(--im-muted);
+	text-align: center;
+}
+
+/* ---- what kind of thing is this? ----------------------------------------
+   A site with posts, projects, videos, shorts, newsletter issues and tags in
+   the same feeds needs every card to say which it is. One chip, one place —
+   the top-left of the card's picture, or the head of a card with none.
+
+     <span class="im-kind" data-kind="project">{{> "icons/folder"}}Project</span>
+
+   It is a LABEL, not a badge: mono, small, quiet. The icon carries most of it
+   at a glance and the word settles it. --}}                                */
+.im-kind {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.3125rem;
+	min-height: 1.5rem;
+	padding: 0 0.5rem;
+	border-radius: var(--im-radius-full);
+	background-color: var(--im-surface-2);
+	color: var(--im-body);
+	font-family: var(--im-font-mono);
+	font-size: 0.625rem;
+	font-weight: 500;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	text-decoration: none;
+	white-space: nowrap;
+}
+
+.im-kind > .im-icon {
+	font-size: 0.8125rem;
+}
+
+/* On a picture, where it needs its own ground. */
+.im-kind-over {
+	position: absolute;
+	top: 0.5rem;
+	left: 0.5rem;
+	z-index: 2;
+	background-color: rgb(20 20 20 / 62%);
+	-webkit-backdrop-filter: blur(8px);
+	backdrop-filter: blur(8px);
+	color: #fff;
+}
+
+/* Each kind gets the accent of its own only where it helps tell them apart in
+   a mixed feed. Everything else stays neutral, because six coloured chips on
+   one screen is a colour chart. */
+.im-kind[data-kind="post"] > .im-icon { color: var(--im-accent); }
+.im-kind[data-kind="project"] > .im-icon { color: var(--im-info); }
+.im-kind[data-kind="video"] > .im-icon { color: var(--im-danger); }
+.im-kind[data-kind="short"] > .im-icon { color: var(--im-danger); }
+.im-kind[data-kind="issue"] > .im-icon { color: var(--im-success); }
+.im-kind[data-kind="tag"] > .im-icon { color: var(--im-warning); }
+
+.im-kind-over > .im-icon {
+	color: #fff !important;
+}
+
+/* ---- playlist card ------------------------------------------------------
+   A set of videos. The still is the first one, with the rest suggested by two
+   edges stacked behind it and a panel down the side saying how many. */
+.im-playlist .im-vidcard-thumb {
+	position: relative;
+}
+
+.im-playlist .im-vidcard-thumb::before,
+.im-playlist .im-vidcard-thumb::after {
+	content: "";
+	position: absolute;
+	inset: auto 0 100%;
+	z-index: -1;
+	height: 0.375rem;
+	border-radius: var(--im-radius-md) var(--im-radius-md) 0 0;
+	background-color: var(--im-surface-3);
+}
+
+.im-playlist .im-vidcard-thumb::before {
+	inset-inline: 0.375rem;
+	bottom: calc(100% + 0.25rem);
+	opacity: 0.6;
+}
+
+.im-playlist .im-vidcard-thumb::after {
+	inset-inline: 0.75rem;
+	bottom: calc(100% + 0.5rem);
+	opacity: 0.3;
+}
+
+.im-playlist {
+	margin-top: 0.75rem;
+}
+
+/* The count, down the right-hand third of the still. */
+.im-playlist-count {
+	position: absolute;
+	inset: 0 0 0 auto;
+	z-index: 2;
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+	align-items: center;
+	justify-content: center;
+	width: 38%;
+	background-color: rgb(20 20 20 / 72%);
+	-webkit-backdrop-filter: blur(6px);
+	backdrop-filter: blur(6px);
+	color: #fff;
+	font-size: var(--im-text-sm);
+	font-weight: 600;
+}
+
+.im-playlist-count > .im-icon {
+	font-size: 1.125rem;
+}
+
+/* ---- newsletter issue ---------------------------------------------------
+   An issue of a letter: its number, when it went out, what was in it. The
+   number is the thing a reader navigates by, so it is set like one. */
+.im-issue {
+	--im-hover-bg: var(--im-surface);
+
+	position: relative;
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr);
+	gap: 0.25rem 1.25rem;
+	align-items: baseline;
+	padding: 1.25rem;
+	border-radius: var(--im-radius-lg);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+	transition: background-color var(--im-duration-fast) var(--im-ease-out);
+}
+
+.im-issue:is(:hover, :focus-within) {
+	background-color: var(--im-hover-bg);
+}
+
+.im-issue-num {
+	grid-row: span 4;
+	align-self: start;
+	min-width: 3rem;
+	color: var(--im-faint);
+	font-family: var(--im-font-pixel, var(--im-font-mono));
+	font-size: var(--im-text-h2);
+	font-variant-numeric: tabular-nums;
+	line-height: 1;
+}
+
+.im-issue-date {
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+.im-issue-title {
+	color: var(--im-ink);
+	font-size: var(--im-text-h4);
+	font-weight: 600;
+	line-height: var(--im-leading-h4);
+	letter-spacing: var(--im-tracking-tight);
+}
+
+.im-issue-title > a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.im-issue-title > a::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+}
+
+.im-issue-text {
+	max-width: 62ch;
+	text-wrap: pretty;
+}
+
+.im-issue-meta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.25rem 0.875rem;
+	padding-top: 0.375rem;
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+}
+
+.im-issues {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+}
+
+@media (width < 34rem) {
+	.im-issue {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.im-issue-num {
+		grid-row: auto;
+		font-size: var(--im-text-h4);
+	}
+}
+
+/* ---- tag card -----------------------------------------------------------
+   One topic: what it is called, how many there are, and a line about it. The
+   dot is the tag's own colour, set inline from the data. */
+.im-tagcard {
+	--im-hover-bg: var(--im-surface);
+
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	padding: 1.125rem;
+	border-radius: var(--im-radius-lg);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+	transition: background-color var(--im-duration-fast) var(--im-ease-out);
+}
+
+.im-tagcard:is(:hover, :focus-within) {
+	background-color: var(--im-hover-bg);
+}
+
+.im-tagcard-name {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	color: var(--im-ink);
+	font-size: var(--im-text-h5);
+	font-weight: 600;
+	line-height: var(--im-leading-h5);
+	letter-spacing: var(--im-tracking-tight);
+	text-decoration: none;
+}
+
+.im-tagcard-name::before {
+	content: "";
+	flex: none;
+	width: 0.625rem;
+	height: 0.625rem;
+	border-radius: 50%;
+	background-color: var(--im-tag-dot, var(--im-accent));
+}
+
+.im-tagcard-name::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+}
+
+.im-tagcard-count {
+	margin-left: auto;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	font-variant-numeric: tabular-nums;
+}
+
+.im-tagcards {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(15rem, 100%), 1fr));
+	gap: 0.75rem;
+}
+
+/* ---- the tag page's head ---- */
+.im-taghero {
+	display: flex;
+	flex-direction: column;
+	gap: 0.875rem;
+	max-width: 52rem;
+}
+
+.im-taghero-name {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.75rem;
+	color: var(--im-ink);
+	font-family: var(--im-font-heading);
+	font-size: clamp(2rem, 1.4rem + 2.4vw, 3rem);
+	font-weight: 600;
+	line-height: 1.08;
+	letter-spacing: var(--im-tracking-tight);
+}
+
+.im-taghero-name::before {
+	content: "";
+	flex: none;
+	width: 0.875rem;
+	height: 0.875rem;
+	border-radius: 50%;
+	background-color: var(--im-tag-dot, var(--im-accent));
+}
+
+/* ---- archive ------------------------------------------------------------
+   Every post there has ever been, by year, as rows rather than cards. A tag
+   page's tail, and a site's whole history on one page. */
+.im-archive {
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+}
+
+.im-archive-year {
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+}
+
+.im-archive-head {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 1rem;
+	padding-bottom: 0.5rem;
+	border-bottom: 1px solid var(--im-line);
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.im-archive-head > strong {
+	color: var(--im-ink);
+	font-family: var(--im-font-pixel, var(--im-font-mono));
+	font-size: var(--im-text-h3);
+	letter-spacing: normal;
+}
+
+.im-archive-row {
+	display: grid;
+	grid-template-columns: 5.5rem minmax(0, 1fr) auto;
+	gap: 0.25rem 1rem;
+	align-items: baseline;
+	padding: 0.625rem 0.5rem;
+	margin-inline: -0.5rem;
+	border-radius: var(--im-radius-md);
+	color: var(--im-ink);
+	text-decoration: none;
+	transition: background-color 120ms;
+}
+
+.im-archive-row:hover {
+	background-color: var(--im-hover-bg);
+}
+
+.im-archive-date {
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	font-variant-numeric: tabular-nums;
+}
+
+.im-archive-title {
+	font-weight: 500;
+	line-height: 1.4;
+}
+
+.im-archive-row > .im-kind {
+	justify-self: end;
+}
+
+@media (width < 34rem) {
+	.im-archive-row {
+		grid-template-columns: minmax(0, 1fr) auto;
+	}
+
+	.im-archive-date {
+		grid-column: 1 / -1;
+	}
+}

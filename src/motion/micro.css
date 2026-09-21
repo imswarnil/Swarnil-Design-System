@@ -3,7 +3,7 @@
    The system has TWO signature interactions, and they are built into the
    components, not added by hand:
      · a BUTTON gives under the press, and its trailing icon leans   (button.css)
-     · a CARD sharpens its edge to ink, and its CTA arrow leans      (card.css)
+     · a CARD fills, and its CTA arrow leans                        (card.css)
 
    What is here is the small remainder — for things that are not buttons or
    cards. If you are reaching for a third flourish on one element, stop. */

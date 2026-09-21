@@ -195,22 +195,35 @@ a:hover .im-fx-outline-fill {
 		0.14em 0.14em 0 var(--im-fx-to, var(--im-accent));
 }
 
-/* Typewriter: types itself once, with a caret. Needs a monospaced face and the
-   character count:  style="--im-fx-chars: 18" */
+/* Typewriter: types itself once, with a caret. Monospaced, and counted in
+   characters:  style="--im-fx-chars: 18"
+
+   The fill is BACKWARDS, not both: the width is only borrowed for the length
+   of the animation and the element goes back to sizing itself afterwards. A
+   count that is one short would otherwise clip the last letters off for good,
+   which is the one way this effect can fail silently — and did. */
 .im-fx-typewriter {
 	display: inline-block;
-	width: calc(var(--im-fx-chars, 20) * 1ch);
+	max-width: 100%;
 	overflow: hidden;
 	border-right: 2px solid var(--im-accent);
 	font-family: var(--im-font-mono);
-	white-space: nowrap;
+	white-space: pre;
+	vertical-align: bottom;
 	animation:
-		im-fx-type calc(var(--im-fx-chars, 20) * 70ms) steps(var(--im-fx-chars, 20)) both,
+		im-fx-type calc(var(--im-fx-chars, 20) * 70ms) steps(var(--im-fx-chars, 20)) backwards,
 		im-blink 900ms steps(1) infinite;
 }
 
 @keyframes im-fx-type {
 	from { width: 0; }
+	to { width: calc(var(--im-fx-chars, 20) * 1ch); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.im-fx-typewriter {
+		animation: im-blink 900ms steps(1) infinite;
+	}
 }
 
 /* Glitch: two offset, clipped copies. Needs the text again: data-text="…" */
@@ -270,5 +283,74 @@ a:hover .im-fx-outline-fill {
 	[data-im-js] [data-im-split][data-im-reveal]:not([data-im-revealed]) {
 		opacity: 1;
 		translate: none;
+	}
+}
+
+/* ---- orbit: text set round a ring, turning, with the brand dot at its centre
+   ----------------------------------------------------------------------------
+   An SVG <textPath> on a circle or on a rounded square, so the letters sit on
+   the curve exactly and stay crisp at any size — a ring of type set by the
+   browser's own text engine rather than by rotating each letter a few degrees
+   and hoping. partials/components/orbit.hbs writes the markup.
+
+   <span class="im-orbit"><svg …><path id="…"/><text><textPath …>…</textPath></text></svg><i class="im-orbit-dot"></i></span>  */
+.im-orbit {
+	--im-orbit-size: 9rem;
+	--im-orbit-speed: 18s;
+	--im-orbit-dot: 0.5rem;
+
+	position: relative;
+	display: inline-grid;
+	place-items: center;
+	width: var(--im-orbit-size);
+	height: var(--im-orbit-size);
+	color: var(--im-ink);
+	flex: none;
+}
+
+.im-orbit > svg {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+	animation: im-orbit-turn var(--im-orbit-speed) linear infinite;
+}
+
+.im-orbit-back > svg {
+	animation-direction: reverse;
+}
+
+.im-orbit text {
+	fill: currentcolor;
+	font-family: var(--im-font-mono);
+	font-size: var(--im-orbit-text, 0.72rem);
+	font-weight: 500;
+	letter-spacing: var(--im-orbit-tracking, 0.34em);
+	text-transform: uppercase;
+}
+
+/* The centre is the logo's recording dot, so a ring of type reads as the
+   brand's mark and not as a sticker from somewhere else. */
+.im-orbit-dot {
+	position: absolute;
+	width: var(--im-orbit-dot);
+	height: var(--im-orbit-dot);
+	border-radius: 50%;
+	background-color: var(--im-orbit-dot-color, var(--im-accent));
+}
+
+/* Something else in the middle instead — a letter, an icon, a picture. */
+.im-orbit-center {
+	position: absolute;
+	display: grid;
+	place-items: center;
+}
+
+@keyframes im-orbit-turn {
+	to { rotate: 360deg; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.im-orbit > svg {
+		animation: none;
 	}
 }

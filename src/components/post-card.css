@@ -1,16 +1,79 @@
-/* Post card — partials/components/post-card.hbs. Three layouts from one
-   markup:  post-card (stacked) · post-card-cover (text over the image) ·
-   post-card-row (image beside the text). */
+/* Post card — the blog card. partials/components/post-card.hbs writes it, and
+   ONE set of markup takes every shape a feed needs:
+
+     im-post-card            vertical: picture over the words   (the default)
+     im-post-card-row        horizontal: picture beside them
+     im-post-card-row-end    horizontal, picture on the right
+     im-post-card-cover      the words over the picture
+     im-post-card-plain      no picture at all — a title and its meta
+
+   What it SHOWS is separate from what shape it is, and it is declarative:
+
+     <article class="im-post-card" data-im-hide="author excerpt">
+
+   Any of `media kicker title excerpt meta author date time flags` can go, in
+   any combination, without a second template and without the partial growing
+   a boolean for each one. The separators between the meta items are kept
+   right as parts disappear — see "the meta line" below.
+
+   The hover is the brand's DOT: see the bottom of this file. */
+
+/* The card is usually an <article> with the link inside its title. Where the
+   WHOLE card is the link — a mega menu's feature slot, a related row — it is
+   still a card and not a sentence: base/elements.css underlines every <a>, and
+   an underlined card looks broken. */
+a.im-post-card {
+	color: inherit;
+	text-decoration: none;
+}
 
 .im-post-card {
 	--im-post-card-radius: var(--im-radius-xl);
 	--im-post-card-ratio: 16 / 10;
+	--im-post-card-bleed: 1rem;
 
 	position: relative;
 	display: flex;
 	flex-direction: column;
 	gap: 0.875rem;
 	min-width: 0;
+	/* Its own stacking context, so the hover panel's z-index: -1 is clamped to
+	   this card: without it the panel would slide behind whatever ancestor
+	   happens to have a background and never be seen. */
+	isolation: isolate;
+}
+
+/* ---- THE hover ----------------------------------------------------------
+   The same one every card in this system uses: it FILLS. No border sharpening
+   to ink, no picture growing three per cent — a feed of twenty cards that
+   each twitch a photograph is a page nobody can read.
+
+   A post card has no box to fill, though: it is a picture and some words with
+   nothing round them. So the fill is a panel drawn BEHIND it and bleeding
+   --im-post-card-bleed past its edges, which means nothing in the layout
+   moves, nothing is padded at rest, and the card still lines up with the grid
+   it sits in. Only one card is hovered at a time, so two panels overlapping
+   in a tight gap is not a situation that happens. */
+.im-post-card:not(.im-post-card-dot, .im-post-card-cover)::before {
+	content: "";
+	position: absolute;
+	inset: calc(var(--im-post-card-bleed) * -1);
+	z-index: -1;
+	border-radius: calc(var(--im-post-card-radius) + var(--im-post-card-bleed) * 0.75);
+	background-color: var(--im-hover-bg);
+	opacity: 0;
+	transition: opacity var(--im-duration-fast) var(--im-ease-out);
+	pointer-events: none;
+}
+
+.im-post-card:not(.im-post-card-dot, .im-post-card-cover):is(:hover, :focus-within)::before {
+	opacity: 1;
+}
+
+/* No picture and a rule underneath: the panel would swallow the rule, so the
+   bleed is trimmed to the row it actually occupies. */
+.im-post-card-plain {
+	--im-post-card-bleed: 0.75rem;
 }
 
 .im-post-card-media {
@@ -26,11 +89,6 @@
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
-	transition: scale 500ms var(--im-ease-out);
-}
-
-.im-post-card:hover .im-post-card-media > img {
-	scale: 1.03;
 }
 
 /* No image: the title's first letter, large, so a grid never has a hole. */
@@ -153,11 +211,18 @@
 	border-radius: 0;
 }
 
+/* A cover card is already filled — by a photograph. So its hover fills the
+   same way the others do: the scrim deepens under the words. */
 .im-post-card-cover .im-post-card-media::after {
 	content: "";
 	position: absolute;
 	inset: 35% 0 0;
-	background-image: linear-gradient(to bottom, transparent, rgb(0 0 0 / 78%));
+	background-image: linear-gradient(to bottom, transparent, rgb(0 0 0 / var(--im-post-card-scrim, 78%)));
+	transition: background-image var(--im-duration-fast) var(--im-ease-out);
+}
+
+.im-post-card-cover:is(:hover, :focus-within) {
+	--im-post-card-scrim: 92%;
 }
 
 .im-post-card-cover .im-post-card-body {
@@ -181,15 +246,18 @@
 	display: none;
 }
 
-/* ---- row: image beside the text ---- */
+/* ---- horizontal: picture beside the words ---- */
 .im-post-card-row {
+	--im-post-card-media-width: clamp(7rem, 32%, 17rem);
+	--im-post-card-ratio: 4 / 3;
+
 	flex-direction: row;
 	align-items: center;
 	gap: 1.25rem;
 }
 
 .im-post-card-row .im-post-card-media {
-	flex: 0 0 clamp(7rem, 32%, 17rem);
+	flex: 0 0 var(--im-post-card-media-width);
 }
 
 .im-post-card-row .im-post-card-title {
@@ -197,10 +265,234 @@
 	line-height: var(--im-leading-h3);
 }
 
+/* The picture on the right instead. One `order`, no second markup — and the
+   text keeps reading first for anyone who cannot see the picture. */
+.im-post-card-row-end .im-post-card-media {
+	order: 1;
+}
+
+/* Top-aligned, for a row with an excerpt: a tall block of text next to a
+   centred picture leaves the picture stranded in the middle. */
+.im-post-card-row-top {
+	align-items: flex-start;
+}
+
 /* On a phone the row stacks like the default card. */
 @media (width < 30rem) {
 	.im-post-card-row {
 		flex-direction: column;
 		align-items: stretch;
+	}
+
+	.im-post-card-row-end .im-post-card-media {
+		order: 0;
+	}
+}
+
+/* ---- sizes ---- */
+.im-post-card-lg .im-post-card-title {
+	font-size: var(--im-text-h2);
+	line-height: var(--im-leading-h2);
+}
+
+.im-post-card-lg .im-post-card-excerpt {
+	font-size: var(--im-text-base);
+	-webkit-line-clamp: 3;
+}
+
+.im-post-card-sm {
+	gap: 0.625rem;
+}
+
+.im-post-card-sm .im-post-card-title {
+	font-size: var(--im-text-h5);
+	line-height: var(--im-leading-h5);
+}
+
+.im-post-card-sm .im-post-card-meta,
+.im-post-card-sm .im-post-card-excerpt {
+	font-size: var(--im-text-xs);
+}
+
+/* ---- no picture ----
+   A title, its meta, and a rule. For an archive, a search result, a "more in
+   this tag" list — anywhere a row of grey placeholder blocks would be worse
+   than no pictures at all. */
+.im-post-card-plain > .im-post-card-media {
+	display: none;
+}
+
+.im-post-card-plain {
+	padding-bottom: 1.125rem;
+	border-bottom: 1px solid var(--im-line);
+}
+
+/* ---- what it shows ----
+   data-im-hide takes a space-separated list, and ~= matches one word of it.
+   A part that is hidden is hidden in every layout. */
+.im-post-card[data-im-hide~="media"] > .im-post-card-media,
+.im-post-card[data-im-hide~="kicker"] .im-post-card-kicker,
+.im-post-card[data-im-hide~="title"] .im-post-card-title,
+.im-post-card[data-im-hide~="excerpt"] .im-post-card-excerpt,
+.im-post-card[data-im-hide~="meta"] .im-post-card-meta,
+.im-post-card[data-im-hide~="flags"] .im-post-card-flags,
+.im-post-card[data-im-hide~="author"] .im-post-card-meta > [data-part="author"],
+.im-post-card[data-im-hide~="date"] .im-post-card-meta > [data-part="date"],
+.im-post-card[data-im-hide~="time"] .im-post-card-meta > [data-part="time"],
+.im-post-card[data-im-hide~="time"] .im-post-card-flag[data-part="time"] {
+	display: none;
+}
+
+/* Hiding the first item in the meta line would leave the SECOND one wearing a
+   leading separator. Each rule takes the separator off whatever now comes
+   first, and they chain: hide the author and the date, and the reading time
+   loses its dot through the date's rule. */
+.im-post-card[data-im-hide~="author"] .im-post-card-meta > [data-part="author"] + *::before,
+.im-post-card[data-im-hide~="date"] .im-post-card-meta > [data-part="date"] + *::before,
+.im-post-card[data-im-hide~="time"] .im-post-card-meta > [data-part="time"] + *::before {
+	content: none;
+}
+
+/* ---- THE HOVER ----------------------------------------------------------
+   The dot is not decoration on this card; it is the interaction.
+
+   At rest the card is a quiet filled block with the brand's dot in its
+   top-right corner. Under the pointer the dot does not light up or wobble —
+   it GROWS, and the colour it is made of floods the whole card out of that
+   one corner. The dot is the seed and the fill is what it opens into.
+
+   Everything the card contains then reads on the accent, because the card
+   restates its SEMANTIC TOKENS rather than recolouring each part: a kicker,
+   a rule, a badge or a mark drawn in currentColor all follow without being
+   told. What it must NOT restate is --im-accent, because the flood is made
+   of it: a fill that is `var(--im-accent)` on an element that has just
+   redefined --im-accent resolves to the new value and the card floods with
+   white on white. --im-post-card-fill and -on-fill are the pair to set. */
+/* inherits: TRUE, and it matters. The radius is declared on the CARD, on
+   hover, and read by the card's ::before — and a pseudo-element inherits from
+   the element it belongs to. Registered as non-inheriting, the ::before would
+   quietly fall back to the initial 0% and the card would never fill: the text
+   would invert onto a surface that had not changed colour. */
+@property --im-post-card-flood {
+	syntax: "<percentage>";
+	initial-value: 0%;
+	inherits: true;
+}
+
+.im-post-card-dot {
+	--im-post-card-pad: 1rem;
+	--im-post-card-seed: 0.4375rem;
+	--im-post-card-inset: 0.9375rem;
+	--im-post-card-fill: var(--im-accent);
+	--im-post-card-on-fill: var(--im-on-accent);
+	--im-post-card-speed: 620ms;
+
+	padding: var(--im-post-card-pad);
+	overflow: hidden;
+	border-radius: var(--im-post-card-radius);
+	background-color: var(--im-surface);
+	isolation: isolate;
+}
+
+/* The flood. A clip-path circle centred on the seed, grown from nothing to
+   past the far corner. The radius is a registered property, or there is
+   nothing for the browser to interpolate and it would snap. */
+.im-post-card-dot::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	background-color: var(--im-post-card-fill);
+	clip-path: circle(
+		var(--im-post-card-flood) at
+		calc(100% - var(--im-post-card-inset) - var(--im-post-card-seed) / 2)
+		calc(var(--im-post-card-inset) + var(--im-post-card-seed) / 2)
+	);
+	transition: --im-post-card-flood var(--im-post-card-speed) var(--im-ease-glide);
+}
+
+/* The seed itself, over the flood, so it is still a dot on the filled card. */
+.im-post-card-dot::after {
+	content: "";
+	position: absolute;
+	top: var(--im-post-card-inset);
+	right: var(--im-post-card-inset);
+	z-index: 3;
+	width: var(--im-post-card-seed);
+	height: var(--im-post-card-seed);
+	border-radius: 50%;
+	background-color: var(--im-post-card-fill);
+	transition: background-color 260ms 140ms;
+	pointer-events: none;
+}
+
+.im-post-card-dot:is(:hover, :focus-within) {
+	--im-post-card-flood: 150%;
+}
+
+/* The inversion, and only for the variants that actually invert.
+
+   It goes on the card's CHILDREN, not on the card. `ink` fills with
+   `var(--im-ink)`, and a card that had just redefined --im-ink for itself
+   would read its own new value back: the fill resolved to the canvas and the
+   card flooded white on white. One combinator down, the fill still sees the
+   page's real ink and everything inside still inverts.
+
+   It also cannot be written on the base rule and undone by `soft`, because
+   undoing it would mean `--im-ink: var(--im-ink)` — a cycle, which CSS throws
+   away rather than resolving to the inherited value. */
+.im-post-card-dot:not(.im-post-card-dot-soft):is(:hover, :focus-within) > * {
+	--im-ink: var(--im-post-card-on-fill);
+	--im-body: color-mix(in oklab, var(--im-post-card-on-fill) 84%, transparent);
+	--im-muted: color-mix(in oklab, var(--im-post-card-on-fill) 70%, transparent);
+	--im-faint: color-mix(in oklab, var(--im-post-card-on-fill) 45%, transparent);
+	--im-line: color-mix(in oklab, var(--im-post-card-on-fill) 28%, transparent);
+}
+
+.im-post-card-dot:is(:hover, :focus-within)::after {
+	background-color: var(--im-post-card-on-fill);
+}
+
+/* The kicker is the one part painted in the accent rather than in a semantic
+   token, so it is the one part named here. */
+.im-post-card-dot:not(.im-post-card-dot-soft):is(:hover, :focus-within) .im-post-card-kicker {
+	color: var(--im-post-card-on-fill);
+}
+
+/* The picture sits in a wash of the card's own ink, so a card with no image
+   is a tinted block that floods with the rest instead of a grey hole in it. */
+.im-post-card-dot .im-post-card-media {
+	border-radius: var(--im-radius-md);
+	background-color: color-mix(in oklab, var(--im-ink) 8%, transparent);
+}
+
+.im-post-card-dot .im-post-card-media[data-initial]::before {
+	color: color-mix(in oklab, var(--im-ink) 22%, transparent);
+}
+
+/* Quiet: the same movement, filling with a surface instead of the accent, and
+   nothing inverts because nothing needs to. For a dense feed, where twenty
+   cards flooding orange is a fairground. */
+.im-post-card-dot-soft {
+	--im-post-card-fill: var(--im-surface-2);
+
+	background-color: transparent;
+	box-shadow: inset 0 0 0 1px var(--im-line);
+}
+
+.im-post-card-dot-soft::after {
+	background-color: var(--im-accent);
+}
+
+/* Ink: the whole card goes to the page's darkest value. For one card in a row
+   — the featured one. */
+.im-post-card-dot-ink {
+	--im-post-card-fill: var(--im-ink);
+	--im-post-card-on-fill: var(--im-canvas);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.im-post-card-dot::before {
+		transition-duration: 1ms;
 	}
 }

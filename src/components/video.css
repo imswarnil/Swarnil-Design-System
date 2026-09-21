@@ -239,3 +239,192 @@
 .im-chapters-chips :is(button, a)[aria-current="true"]::after {
 	display: none;
 }
+
+/* ---- full width ----
+   A player that runs the whole width of its column, or the whole width of the
+   page, with the system's own frame round it: a hairline, the page's radius,
+   and the float shadow so it sits ON the page rather than in a hole cut out
+   of it. The ratio is the knob, because a 21:9 trailer and a 4:5 vertical
+   clip are the same component. */
+.im-video-full {
+	--im-video-ratio: 16 / 9;
+
+	width: 100%;
+	max-width: var(--im-video-max, none);
+	margin-inline: auto;
+	aspect-ratio: var(--im-video-ratio);
+	border-radius: var(--im-radius-xl);
+	box-shadow: inset 0 0 0 1px var(--im-line), var(--im-shadow-float);
+}
+
+.im-video-full > :is(iframe, video, .im-video-poster) {
+	border-radius: inherit;
+}
+
+/* Edge to edge of the window, corners squared — a band, not a card. */
+.im-video-bleed {
+	border-radius: 0;
+	box-shadow: none;
+}
+
+.im-video-wide { --im-video-ratio: 21 / 9; }
+.im-video-square { --im-video-ratio: 1; }
+.im-video-vertical { --im-video-ratio: 9 / 16; --im-video-max: 24rem; }
+
+/* ---- video as a background ----
+   A band of the page with a clip running behind it. The clip is DECORATION:
+   muted, looping, playsinline, and never the only place anything is said.
+
+     <section class="im-videobg">
+       <video class="im-videobg-media" … muted loop playsinline autoplay></video>
+       <div class="im-videobg-body"> …heading, copy, buttons… </div>
+     </section>                                                              */
+.im-videobg {
+	--im-videobg-min: 24rem;
+
+	position: relative;
+	display: grid;
+	align-content: center;
+	min-height: var(--im-videobg-min);
+	overflow: hidden;
+	isolation: isolate;
+	border-radius: var(--im-radius-2xl);
+	background-color: var(--im-ink);
+}
+
+.im-videobg-bleed {
+	border-radius: 0;
+}
+
+.im-videobg-media {
+	position: absolute;
+	inset: 0;
+	z-index: -2;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+/* A scrim, so words over a moving picture stay readable whatever frame it is
+   on. A gradient, not a flat dim: dark where the words are, clear above. */
+.im-videobg::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	background: var(--im-videobg-scrim, linear-gradient(to top, rgb(0 0 0 / 72%), rgb(0 0 0 / 28%) 60%, rgb(0 0 0 / 8%)));
+	pointer-events: none;
+}
+
+.im-videobg-clear::after {
+	background: none;
+}
+
+.im-videobg-body {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 1rem;
+	padding: clamp(1.5rem, 1rem + 3vw, 3.5rem);
+	color: #fff;
+}
+
+.im-videobg-center {
+	justify-items: center;
+	text-align: center;
+}
+
+.im-videobg-center .im-videobg-body {
+	align-items: center;
+}
+
+.im-videobg-title {
+	max-width: 22ch;
+	font-family: var(--im-font-heading);
+	font-size: clamp(2rem, 1.2rem + 3.4vw, 4rem);
+	font-weight: 600;
+	line-height: 1.04;
+	letter-spacing: var(--im-tracking-tighter);
+	text-wrap: balance;
+}
+
+.im-videobg-text {
+	max-width: 46ch;
+	color: color-mix(in oklab, #fff 84%, transparent);
+	font-size: var(--im-text-lg);
+	line-height: var(--im-leading-lg);
+	text-wrap: pretty;
+}
+
+/* ---- text blended with the clip ----
+   Two ways, and both are ONE blend mode doing the work — there is no way to
+   pour a <video> into the letters of a heading with background-clip, because
+   a video is not a background image.
+
+   KNOCKOUT: a sheet of white with black words on it, blended `screen`. Screen
+   keeps white white and lets black through entirely, so the sheet stays solid
+   and the WORDS become windows onto the clip. Dark mode flips both: a black
+   sheet with white words, blended `multiply`.
+
+   BLEND: the words themselves on `difference` — they invert whatever passes
+   under them, so they are legible over a dark frame and a bright one without
+   a scrim at all. Louder, and right for one line, not a paragraph.          */
+/* The letters ARE the clip, so a washed-out clip gives washed-out letters.
+   Behind a knockout the picture is darkened and its contrast lifted, which is
+   the only way the words get a shape. */
+.im-videobg:has(.im-videobg-knockout) .im-videobg-media {
+	filter: brightness(0.58) contrast(1.2) saturate(1.05);
+}
+
+:root[data-theme="dark"] .im-videobg:has(.im-videobg-knockout) .im-videobg-media {
+	filter: brightness(1.35) contrast(1.1) saturate(1.05);
+}
+
+.im-videobg-knockout {
+	display: grid;
+	place-items: center;
+	padding: clamp(1.5rem, 1rem + 3vw, 3.5rem);
+	background-color: var(--im-canvas);
+	color: #000;
+	mix-blend-mode: screen;
+}
+
+.im-videobg-knockout > * {
+	max-width: 18ch;
+	font-family: var(--im-font-heading);
+	font-size: clamp(2.5rem, 1rem + 7vw, 7rem);
+	font-weight: 700;
+	line-height: 0.95;
+	letter-spacing: var(--im-tracking-tighter);
+	text-align: center;
+	text-wrap: balance;
+}
+
+/* The same trick, the other way up. */
+:root[data-theme="dark"] .im-videobg-knockout {
+	color: #fff;
+	mix-blend-mode: multiply;
+}
+
+.im-videobg-blend {
+	color: #fff;
+	mix-blend-mode: difference;
+}
+
+/* A blend mode needs something to blend WITH: the band has `isolation`, so a
+   blended child mixes with the clip behind it and not with the whole page. */
+.im-videobg-knockout,
+.im-videobg-blend {
+	position: relative;
+	z-index: 0;
+}
+
+/* Nothing moving behind words for a reader who asked for that — the poster
+   frame stays, the clip does not play. im-media.js does not autoplay it. */
+@media (prefers-reduced-motion: reduce) {
+	.im-videobg-media {
+		animation: none;
+	}
+}

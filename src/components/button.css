@@ -276,14 +276,15 @@
 }
 
 /* ---- theme button ---- partials/components/theme-button.hbs
-   Three icons in the markup; the one for the current CHOICE shows. */
+   Both icons are in the markup; the one for the theme in force shows. It keys
+   off <html data-theme>, which the head script always sets, so the right icon
+   is painted on the first frame — including for a visitor who has never
+   chosen and is being shown their system's setting. */
 .im-theme-button > span {
 	display: none;
 }
 
-[data-theme-choice="light"] .im-theme-button > [data-for="light"],
-[data-theme-choice="dark"] .im-theme-button > [data-for="dark"],
-[data-theme-choice="system"] .im-theme-button > [data-for="system"],
-:root:not([data-theme-choice]) .im-theme-button > [data-for="system"] {
+[data-theme="light"] .im-theme-button > [data-for="light"],
+[data-theme="dark"] .im-theme-button > [data-for="dark"] {
 	display: contents;
 }

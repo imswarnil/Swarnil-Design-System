@@ -1,0 +1,72 @@
+{{!-- The end of a post. Context: a post.
+
+	Params — every block is opt-in, and a theme prints only what it has:
+	  author      true          the author at full size, under the article
+	  support     true          a panel asking for support; support_url, support_text
+	  newsletter  true          the subscribe form, as a call to action
+	  related     a list        "more like this" — pass what {{#get}} returned
+	  related_url where "All" goes
+	  nav         true          previous / next post, from Ghost's own helpers
+	  thread      a list        comments; thread_url is where "Join" goes
+	  gated       true          members-only: the thread is replaced by a gate
+
+	The tags and the share row are not optional: they are printed whenever the
+	post has tags, because a post with no way out of it is a dead end. --}}
+<footer class="im-postfoot">
+	<div class="im-postfoot-bar">
+		{{#if tags}}<div class="im-cluster" style="--im-cluster-gap: .375rem">{{#foreach tags}}<a class="im-tag" href="{{url}}">{{name}}</a>{{/foreach}}</div>{{/if}}
+		{{> "components/share" compact=true soft=true}}
+	</div>
+
+	{{#if author}}
+		{{#primary_author}}
+			<div class="im-author-card">
+				{{> "components/avatar" size="xl" src=profile_image name=name}}
+				<a class="im-author-card-name" href="{{url}}">{{name}}</a>
+				<p class="im-author-card-role">{{#if location}}{{location}}{{#if count.posts}} · {{/if}}{{/if}}{{#if count.posts}}{{count.posts}} {{t "posts"}}{{/if}}</p>
+				{{#if bio}}<p class="im-author-card-bio">{{bio}}</p>{{/if}}
+				<div class="im-author-card-links">
+					<a class="im-btn im-btn-sm im-btn-primary" href="{{url}}">{{t "All posts"}} {{> "icons/arrow-right"}}</a>
+					{{#if website}}<a class="im-btn im-btn-sm im-btn-icon" href="{{website}}" rel="noopener noreferrer" aria-label="{{t "Website"}}">{{> "icons/globe"}}</a>{{/if}}
+					{{#if twitter}}<a class="im-btn im-btn-sm im-btn-icon" href="https://x.com/{{twitter}}" rel="noopener noreferrer" aria-label="X">{{> "icons/brand-x"}}</a>{{/if}}
+					{{#if facebook}}<a class="im-btn im-btn-sm im-btn-icon" href="https://www.facebook.com/{{facebook}}" rel="noopener noreferrer" aria-label="Facebook">{{> "icons/brand-facebook"}}</a>{{/if}}
+				</div>
+			</div>
+		{{/primary_author}}
+	{{/if}}
+
+	{{#if support}}
+		<section class="im-support im-support-fill" aria-labelledby="postfoot-support">
+			<h2 class="im-support-heading" id="postfoot-support">{{> "icons/heart"}}{{#if support_title}}{{support_title}}{{else}}{{t "Found this useful?"}}{{/if}}</h2>
+			<p class="im-support-text">{{#if support_text}}{{support_text}}{{else}}{{t "This is written in the open and paid for by nobody. If it saved you an afternoon, you can send something back."}}{{/if}}</p>
+			<div class="im-support-actions">
+				<a class="im-btn im-btn-primary" href="{{#if support_url}}{{support_url}}{{else}}#{{/if}}">{{> "icons/wallet"}}{{t "Buy me a coffee"}}</a>
+				{{#if @site.members_enabled}}<a class="im-btn" href="/#/portal/signup">{{> "icons/sparkles"}}{{t "Become a member"}}</a>{{/if}}
+			</div>
+		</section>
+	{{/if}}
+
+	{{#if related}}
+		<section class="im-postfoot-block" aria-labelledby="postfoot-related">
+			<h2 class="im-postfoot-title" id="postfoot-related">{{t "More like this"}}{{#if related_url}} <a href="{{related_url}}">{{t "All"}} →</a>{{/if}}</h2>
+			<div class="im-related">{{#foreach related}}{{> "components/post-card"}}{{/foreach}}</div>
+		</section>
+	{{/if}}
+
+	{{#if newsletter}}
+		<section class="im-postcta" aria-labelledby="postfoot-news">
+			<h2 class="im-postcta-title" id="postfoot-news">{{#if newsletter_title}}{{newsletter_title}}{{else}}{{t "One email when something lands"}}{{/if}}</h2>
+			<p class="im-postcta-text">{{#if newsletter_text}}{{newsletter_text}}{{else}}{{t "No schedule, no filler, no list swapping. Unsubscribe in one click."}}{{/if}}</p>
+			{{> "components/subscribe" id="postfoot-email" button=(t "Subscribe")}}
+		</section>
+	{{/if}}
+
+	{{#if nav}}
+		<nav class="im-postnav" aria-label="{{t "More posts"}}">
+			{{#prev_post}}<a href="{{url}}" rel="prev"><small>{{> "icons/arrow-left"}} {{t "Previous"}}</small>{{title}}</a>{{/prev_post}}
+			{{#next_post}}<a href="{{url}}" rel="next"><small>{{t "Next"}} {{> "icons/arrow-right"}}</small>{{title}}</a>{{/next_post}}
+		</nav>
+	{{/if}}
+
+	{{#if thread}}{{> "components/comments" thread=thread gated=gated}}{{/if}}
+</footer>

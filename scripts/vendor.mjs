@@ -32,6 +32,7 @@ const ICONS = [
 	'minus', 'images', 'square-play', 'graduation-cap', 'panel-right', 'message-square', 'toggle-left', 'gauge',
 	'chart-column', 'square-check', 'list-filter', 'clipboard-list', 'circle-check', 'shield', 'truck', 'folder',
 	'quote', 'lightbulb', 'circle-alert', 'circle-x', 'terminal', 'wallet', 'at-sign', 'key-round', 'globe',
+	'arrow-up', 'chevron-up', 'compass', 'file-code', 'text-quote', 'library', 'newspaper',
 ];
 
 // Ghost's social account types → simple-icons slugs.

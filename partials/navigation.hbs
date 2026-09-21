@@ -1,10 +1,13 @@
-{{!-- Ghost renders THIS file for {{navigation}}. One template, three looks,
+{{!-- Ghost renders THIS file for {{navigation}}. One template, four looks,
 	chosen by the `as` option:   {{navigation as="menu"}}
-	  (default)  top-bar links          as="menu"  items of an .im-menu
-	  as="side"  side-nav links         as="tiles" tiles of the phone menu panel --}}
+	  (default)  top-bar links          as="menu"   items of an .im-menu
+	  as="side"  side-nav links         as="items"  rows of a menu panel / mega menu
+	  as="tiles" tiles of the phone menu panel --}}
 {{#foreach navigation}}
 	{{#match ../as "menu"}}
 		<a class="im-menu-item" href="{{url absolute="true"}}"{{#if current}} aria-current="page"{{/if}}><span>{{label}}</span></a>
+	{{else match ../as "items"}}
+		<a class="im-navitem" href="{{url absolute="true"}}"{{#if current}} aria-current="page"{{/if}}><span>{{label}}</span></a>
 	{{else match ../as "tiles"}}
 		<a class="im-navtile" href="{{url absolute="true"}}"{{#if current}} aria-current="page"{{/if}}><span>{{label}}</span></a>
 	{{else match ../as "side"}}

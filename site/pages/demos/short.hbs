@@ -1,0 +1,35 @@
+---
+title: Short demo
+layout: home
+shell: frame
+---
+{{!-- Loaded in an iframe by /collections/video/short/. It is the whole page a
+	theme would render: one viewport, no scrollbar, nothing below the fold
+	because there is no fold. --}}
+{{#with demo.videos.[0]}}
+<div class="im-short im-short-full">
+	<div class="im-short-stage">
+		<div class="im-short-player">
+			<img src="{{thumb}}" alt="">
+			<div class="im-short-over">
+				<p class="im-short-by">{{> "components/avatar" size="sm" src=avatar name=channel}}<a href="#">{{channel}}</a><button class="im-btn im-btn-sm im-btn-ink" type="button">Subscribe</button></p>
+				<p class="im-short-title">{{title}}</p>
+				<p class="im-short-tags"><span>#amalfi</span><span>#travel</span><span>#shorts</span></p>
+			</div>
+			<span class="im-short-bar"><span style="width: 38%"></span></span>
+		</div>
+
+		<div class="im-short-rail">
+			<button class="im-short-act" type="button" aria-pressed="true" data-im-toggle>{{> "icons/heart"}}<span>12k</span></button>
+			<button class="im-short-act" type="button">{{> "icons/message-circle"}}<span>318</span></button>
+			<button class="im-short-act" type="button">{{> "icons/share"}}<span>Share</span></button>
+			<button class="im-short-act" type="button">{{> "icons/ellipsis"}}<span>More</span></button>
+		</div>
+
+		<div class="im-short-step">
+			<button class="im-btn im-btn-icon" type="button" aria-label="Previous">{{> "icons/chevron-up"}}</button>
+			<button class="im-btn im-btn-icon" type="button" aria-label="Next">{{> "icons/chevron-down"}}</button>
+		</div>
+	</div>
+</div>
+{{/with}}

@@ -144,30 +144,6 @@
 	}
 }
 
-/* Duotone: shadows to ink, highlights to the accent. */
-.im-fx-duotone > :is(img, video) {
-	filter: grayscale(1) contrast(1.1);
-}
-
-.im-fx-duotone::before,
-.im-fx-duotone::after {
-	content: "";
-	position: absolute;
-	inset: 0;
-	z-index: 1;
-	pointer-events: none;
-}
-
-.im-fx-duotone::before {
-	background-color: var(--im-fx-to, var(--im-accent));
-	mix-blend-mode: multiply;
-}
-
-.im-fx-duotone::after {
-	background-color: var(--im-fx-from, #1a1033);
-	mix-blend-mode: lighten;
-}
-
 /* Ken Burns: a slow push, for a hero or a slide. */
 .im-fx-kenburns > :is(img, video) {
 	animation: im-fx-kenburns 22s var(--im-ease-in-out) infinite alternate;
@@ -200,23 +176,128 @@
 	}
 }
 
-/* Scanlines & vignette: overlays. */
-.im-fx-scanlines::after {
+/* ---- three that are not from 1998 ----
+
+   Scan: a SINGLE bright line travels down the picture and the fine rule it
+   leaves behind fades after it — a document being scanned, or a sensor
+   reading. Not the old CRT overlay of dark stripes over everything, which
+   only ever made a picture look worse and dated the page with it. It runs on
+   hover; add -loop to have it run forever.  */
+.im-fx-scan::before,
+.im-fx-scan::after {
 	content: "";
 	position: absolute;
 	inset: 0;
 	z-index: 1;
-	background-image: repeating-linear-gradient(to bottom, rgb(0 0 0 / 22%) 0 1px, transparent 1px 3px);
+	opacity: 0;
 	pointer-events: none;
 }
 
-.im-fx-vignette::after {
+/* The rule it leaves behind: hairlines, visible only while the pass is on. */
+.im-fx-scan::before {
+	background-image: repeating-linear-gradient(
+		to bottom,
+		color-mix(in oklab, var(--im-fx-ink, var(--im-accent)) 22%, transparent) 0 1px,
+		transparent 1px 0.375rem
+	);
+	transition: opacity var(--im-duration-base) var(--im-ease-out);
+}
+
+/* The line itself: a bright edge with a short glow under it. */
+.im-fx-scan::after {
+	background: linear-gradient(
+		to bottom,
+		transparent 0,
+		color-mix(in oklab, var(--im-fx-ink, var(--im-accent)) 14%, transparent) 42%,
+		var(--im-fx-ink, var(--im-accent)) 50%,
+		color-mix(in oklab, var(--im-fx-ink, var(--im-accent)) 14%, transparent) 58%,
+		transparent 100%
+	);
+	background-repeat: no-repeat;
+	background-size: 100% var(--im-fx-scan-band, 14%);
+	mix-blend-mode: screen;
+}
+
+.im-fx-scan:is(:hover, :focus-within)::before {
+	opacity: 1;
+}
+
+.im-fx-scan:is(:hover, :focus-within)::after,
+.im-fx-scan-loop::after {
+	opacity: 1;
+	animation: im-fx-scan var(--im-fx-speed, 1.6s) var(--im-ease-in-out);
+}
+
+.im-fx-scan-loop::before {
+	opacity: 1;
+}
+
+.im-fx-scan-loop::after {
+	animation-iteration-count: infinite;
+}
+
+@keyframes im-fx-scan {
+	from { background-position: 0 -20%; }
+	to { background-position: 0 120%; }
+}
+
+/* Slices: the picture is cut into vertical bands that stagger apart under the
+   pointer and close again. One <img>, no clones — each band is a copy of the
+   same background, shifted, and clipped to its own column. */
+.im-fx-slices {
+	--im-fx-slices: 5;
+}
+
+.im-fx-slices > :is(img, video) {
+	transition: clip-path var(--im-duration-base) var(--im-ease-glide);
+}
+
+.im-fx-slices::after {
 	content: "";
 	position: absolute;
 	inset: 0;
 	z-index: 1;
-	background-image: radial-gradient(ellipse at center, transparent 45%, rgb(0 0 0 / 55%));
+	background-image: repeating-linear-gradient(
+		to right,
+		transparent 0 calc(100% / var(--im-fx-slices) - 1px),
+		var(--im-canvas) calc(100% / var(--im-fx-slices) - 1px) calc(100% / var(--im-fx-slices))
+	);
+	opacity: 0;
+	transition: opacity var(--im-duration-base) var(--im-ease-out);
 	pointer-events: none;
+}
+
+.im-fx-slices:is(:hover, :focus-within)::after {
+	opacity: 1;
+}
+
+.im-fx-slices:is(:hover, :focus-within) > :is(img, video) {
+	scale: 1.04;
+}
+
+/* Fade edge: the picture dissolves into the page along one edge instead of
+   stopping at a hard line. For a picture that runs under a bar, behind a
+   heading, or off the bottom of a hero. --im-fx-fade is how much of it goes. */
+.im-fx-fade-edge > :is(img, video) {
+	-webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - var(--im-fx-fade, 35%)), transparent);
+	mask-image: linear-gradient(to bottom, #000 calc(100% - var(--im-fx-fade, 35%)), transparent);
+}
+
+.im-fx-fade-edge-top > :is(img, video) {
+	-webkit-mask-image: linear-gradient(to top, #000 calc(100% - var(--im-fx-fade, 35%)), transparent);
+	mask-image: linear-gradient(to top, #000 calc(100% - var(--im-fx-fade, 35%)), transparent);
+}
+
+.im-fx-fade-edge-sides > :is(img, video) {
+	-webkit-mask-image: linear-gradient(to right, transparent, #000 var(--im-fx-fade, 22%) calc(100% - var(--im-fx-fade, 22%)), transparent);
+	mask-image: linear-gradient(to right, transparent, #000 var(--im-fx-fade, 22%) calc(100% - var(--im-fx-fade, 22%)), transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.im-fx-scan::after,
+	.im-fx-scan-loop::after {
+		animation: none;
+	}
 }
 
 /* Parallax: the picture drifts inside its frame as the page scrolls. */

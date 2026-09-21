@@ -2,7 +2,7 @@
 
    The kg-* class names are Ghost's, not ours: they are what the editor writes,
    and a theme's job is to style them. Every rule here is this system's own —
-   hairline boxes, mono captions, the one hover (the edge sharpens to ink).
+   hairline boxes, mono captions, the one hover (the card fills).
 
    THE THEME MUST OWN THE CARDS.  Ghost can inject a default card stylesheet;
    it is unlayered, so it would beat everything in this file. Turn it off in

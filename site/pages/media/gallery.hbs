@@ -11,7 +11,25 @@ source: src/components/gallery.css · src/js/im-media.js
 	{{#foreach demo.six}}<a class="im-gallery-item" href="{{feature_image}}" data-caption="{{title}}"><img src="{{feature_image}}" alt="{{title}}" loading="lazy"></a>{{/foreach}}
 </div>
 {{/example}}
-<p>In the viewer: <kbd>←</kbd> <kbd>→</kbd> move, <kbd>Esc</kbd> closes, a swipe moves on touch, and the cross — or a click anywhere on the frosted surround — closes. The surround is a blurred veil of the canvas colour, so the page stays faintly there behind the picture: white in light mode, near-black in dark. It is one native <code>&lt;dialog&gt;</code>, built the first time it is needed, so focus is trapped, the page behind cannot scroll, and focus returns to the thumbnail afterwards — all from the browser. Neighbouring images are warmed in the background so the arrows feel instant.</p>
+<p>In the viewer: <kbd>←</kbd> <kbd>→</kbd> move, <kbd>Esc</kbd> closes, a swipe moves on touch, and the cross — or a click anywhere around the picture — closes it.</p>
+<p>The surround is a <strong>plain sheet</strong>, not a frosted pane: the canvas colour, opaque, white in light mode and near-black in dark. Nothing of the page shows through, because a page showing through is a page still asking to be read. It arrives on a long bezier — <code>--im-ease-glide</code>, half a second of which most is the settle — with the sheet fading and the picture rising into it, and it leaves the same way in a third of the time.</p>
+<p>The way out is a <strong>bare cross on the picture's own top-right corner</strong>. Not a button: over a photograph, a chip with a border and a fill is furniture. It is white with a drop shadow so it survives a bright sky, it turns ninety degrees under the pointer, and its hit area is 2.75rem — the cross is small, the target is not.</p>
+<p>It is one native <code>&lt;dialog&gt;</code>, built the first time it is needed, so focus is trapped, the page behind cannot scroll, and focus returns to the thumbnail afterwards — all from the browser. <kbd>Esc</kbd> is caught rather than left to the browser, so the viewer leaves the way it arrived. Neighbouring images are warmed in the background so the arrows feel instant.</p>
+
+<h2>The frame mark</h2>
+<p>Every picture that opens carries the <strong>same mark</strong> in its top-right corner: four corner brackets, a frame. A gallery tile, a single picture, a slide in a carousel, a photograph in the middle of a post — one thing to learn, not four. It sits at 72% and comes up to full under the pointer.</p>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Class</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>im-gallery-item</code></td><td>A tile in a gallery.</td></tr>
+		<tr><td><code>im-zoomable</code></td><td>A single picture that opens — the link <em>wraps</em> the image.</td></tr>
+		<tr><td><code>im-zoom-link</code></td><td>What <code>im-content.js</code> wraps each picture in a post body with.</td></tr>
+		<tr><td><code>im-zoom-cover</code></td><td>A link that <em>covers</em> a picture instead of wrapping it — for markup that cannot take a wrapper, such as the post hero's feature image.</td></tr>
+		<tr><td><code>--im-expand-idle</code></td><td>0.72. Set it to <code>0</code> to hide the mark until the picture is hovered; <code>--im-expand-size</code> and <code>--im-expand-inset</code> are the other two knobs.</td></tr>
+	</tbody>
+</table>
+</div>
 
 <h2>Layouts</h2>
 {{#example title="im-gallery-mosaic — the first picture large"}}
@@ -49,18 +67,23 @@ source: src/components/gallery.css · src/js/im-media.js
 </figure>
 {{/example}}
 
+<h2>In a carousel</h2>
+<p>A slide is a picture like any other: put <code>data-im-lightbox</code> on the track and make each slide an <code>im-zoomable</code> link. The viewer then holds the whole set, in the carousel's order, and the arrows in the viewer step through it — which is the point, because a carousel only ever shows three of eleven.</p>
+{{#example}}
+<div data-im-lightbox>
+	{{#> "components/carousel" label="Pictures from the road" style="--im-slides: 1.4; --im-slides-sm: 2.4; --im-slides-md: 3.4"}}
+		{{#foreach demo.six}}<a class="im-zoomable" href="{{feature_image}}" data-caption="{{title}}"><img src="{{feature_image}}" alt="{{title}}" loading="lazy" style="aspect-ratio: 4 / 3; width: 100%; object-fit: cover"></a>{{/foreach}}
+	{{/"components/carousel"}}
+</div>
+{{/example}}
+<p>The attribute goes on a wrapper <em>around</em> the carousel, not on the track: the track sizes its own direct children, and anything between it and the slides takes that away from them.</p>
+
 <h2>With Ghost's own galleries</h2>
-<p>Ghost's editor outputs gallery and image cards as plain <code>&lt;img&gt;</code>s, not links. Wrap the post body once, and a few lines in your theme turn each one into a link the lightbox understands:</p>
-{{{{code "js"}}}}
-// theme.js — make every content image openable
-for (const img of document.querySelectorAll('.im-prose :is(.kg-image-card, .kg-gallery-image) img')) {
-	const a = document.createElement('a');
-	a.href = img.src.replace(/\/size\/w\d+\//, '/');     // Ghost's full-size original
-	img.replaceWith(a);
-	a.append(img);
-}
-document.querySelector('.im-prose')?.setAttribute('data-im-lightbox', '');
+<p>Ghost's editor outputs gallery and image cards as plain <code>&lt;img&gt;</code>s, not links. <code>im-content.js</code> does the rest: put <code>data-im-zoom</code> on the post body and every picture in it becomes an <code>im-zoom-link</code> — the frame mark in its corner, the viewer on a click, the figure's caption carried across.</p>
+{{{{code "hbs"}}}}
+<section class="im-content im-content-lede" data-im-zoom>{{content}}</section>
 {{{{/code}}}}
+<p>It is one attribute, and it is the whole of it. See <a href="/collections/post/article/">a post, whole</a>.</p>
 
 <h2>Captions and alt text</h2>
 <ul>

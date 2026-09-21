@@ -1,9 +1,11 @@
 {{!-- In <head>, before any stylesheet: applies the saved theme and nav state
-	before first paint so nothing flashes. It also marks the page as scripted
-	(data-im-js), which is what lets scroll reveals start hidden — and only then. Pair with assets/im.js. --}}
+	before first paint so nothing flashes. The theme is LIGHT or DARK — there is
+	no third "system" state to remember; a visitor who has never chosen is shown
+	what their system prefers, and follows it until they press the switch.
+	It also marks the page as scripted (data-im-js), which is what lets scroll
+	reveals start hidden — and only then. Pair with assets/im.js. --}}
 <script>
 (function(){var d=document.documentElement,g=function(k){try{return localStorage.getItem(k)}catch(e){return null}},t=g('theme');
-d.dataset.themeChoice=(t==='light'||t==='dark')?t:'system';
 if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
 d.dataset.theme=t;d.dataset.imJs='';d.dataset.nav=g('nav')==='rail'?'rail':'open'})();
 </script>

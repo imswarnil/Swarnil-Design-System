@@ -1,13 +1,13 @@
 ---
 title: Navbar
-description: The bar across the top. Two arrangements of the same parts — an app bar that sits above a side nav, and a site navbar that carries the links itself — and both fold into a menu panel on a phone.
+description: The bar across the top. Three arrangements of the same parts — an app bar above a side nav, a site navbar that carries the links itself, and an island that floats over the page — plus the mark, the star button and the menu they all share.
 eyebrow: Navigation
 source: src/layout/topbar.css · partials/shell/topbar.hbs · partials/shell/navbar.hbs
 ---
 <h2>Site navbar</h2>
-<p>For a site without a side nav. Brand, primary links and a "More" menu on the left; search, settings and a call to action on the right. It is one partial:</p>
+<p>For a site without a side nav. Brand, primary links, an optional <a href="/navigation/mega/">mega menu</a> and a "More" menu on the left; search, theme, a star button and a call to action on the right. It is one partial:</p>
 {{#example flush=true}}
-<div style="--im-gutter: 1rem">{{> "shell/navbar" id="demo" line=true}}</div>
+<div style="--im-gutter: 1rem">{{> "shell/navbar" id="demo" line=true github="https://github.com/imswarnil"}}</div>
 {{/example}}
 <p>The links come from Ghost's <strong>Navigation</strong> setting and the "More" menu from <strong>Secondary navigation</strong> — both rendered by <code>partials/navigation.hbs</code>. The current page is <code>aria-current="page"</code>.</p>
 
@@ -16,15 +16,15 @@ source: src/layout/topbar.css · partials/shell/topbar.hbs · partials/shell/nav
 <table>
 	<thead><tr><th>Width</th><th>Left</th><th>Right</th></tr></thead>
 	<tbody>
-		<tr><td>≥ 64rem (<code>lg</code>)</td><td>brand · links · More ▾</td><td>search · settings · CTA</td></tr>
-		<tr><td>&lt; 64rem</td><td>☰ · brand</td><td>search · settings · CTA</td></tr>
-		<tr><td>&lt; 40rem (<code>sm</code>)</td><td>☰ · brand</td><td>search · CTA — theme moves into the menu panel</td></tr>
+		<tr><td>≥ 64rem (<code>lg</code>)</td><td>mark · brand · links · Explore ▾ · More ▾</td><td>search · theme · Star · CTA</td></tr>
+		<tr><td>&lt; 64rem</td><td>☰ · mark · brand</td><td>search · theme · Star · CTA</td></tr>
+		<tr><td>&lt; 48rem (<code>md</code>)</td><td>☰ · mark · brand</td><td>search · theme · GitHub icon · CTA</td></tr>
 	</tbody>
 </table>
 </div>
-<p>☰ opens the <a href="#menu-panel">menu panel</a> holding the same primary and secondary links and the theme switch. Narrow this window to see it — or open it here:</p>
+<p>☰ opens the <a href="/navigation/panel/">menu panel</a> — centred, and wider on a laptop than on a phone — holding the same links, the theme switch and the star button. Open it here:</p>
 {{#example center=true}}
-<button class="im-btn im-btn-outline" type="button" data-drawer-open="#demo-drawer">{{> "icons/menu"}} Open the menu panel</button>
+<button class="im-btn im-btn-outline" type="button" data-drawer-open="#demo-panel">{{> "icons/menu"}} Open the menu panel</button>
 {{/example}}
 
 <h3>Parameters</h3>
@@ -34,24 +34,93 @@ source: src/layout/topbar.css · partials/shell/topbar.hbs · partials/shell/nav
 	<tbody>
 		<tr><td><code>id</code></td><td>Prefix for the menu and panel ids. Default <code>"nav"</code>; only needed for two navbars on one page.</td></tr>
 		<tr><td><code>line</code></td><td><code>true</code> — a hairline under the bar.</td></tr>
+		<tr><td><code>island</code> · <code>float</code></td><td>The floating arrangements, below.</td></tr>
+		<tr><td><code>mega</code> · <code>mega_label</code></td><td>A partial rendering <code>im-navcols</code>, and the link that opens it. The same partial also fills the menu panel.</td></tr>
+		<tr><td><code>github</code> · <code>stars</code></td><td>The repo URL, and <code>"owner/repo"</code> to fill the count in.</td></tr>
 		<tr><td><code>cta_label</code>, <code>cta_url</code></td><td>The button. Defaults to "Subscribe" → Ghost's signup portal; hidden for signed-in members.</td></tr>
 	</tbody>
 </table>
 </div>
+
+<h2>Island</h2>
+<p>A bar that floats over the page rather than spanning it: a pill, centred, with the page visible on either side. It is <code>position: fixed</code>, so a hero runs under it — which is the point. Anything that should start below it gets <code>im-bar-offset</code>.</p>
+{{#example flush=true title="im-topbar-island — scroll inside the frame"}}
+<iframe class="demo-frame" src="/demos/navbar/?bar=island" title="An island navbar" loading="lazy"></iframe>
+{{/example}}
+{{{{code "hbs"}}}}
+{{> "shell/navbar" island=true github="https://github.com/you/repo" stars="you/repo"}}
+{{{{/code}}}}
+
+<h2>On scroll</h2>
+<p>The same island, arrived at. <code>im-topbar-float</code> starts as a full-width band and <strong>becomes</strong> the pill once the page moves: <code>im.js</code> sets <code>data-im-stuck</code> past <code>data-im-stick</code> pixels (8 by default) and CSS does the rest — the inset, the height, the radius and the shadow all transition. Scroll the frame:</p>
+{{#example flush=true title="im-topbar-float — scroll inside the frame"}}
+<iframe class="demo-frame" src="/demos/navbar/?bar=float" title="A navbar that floats on scroll" loading="lazy"></iframe>
+{{/example}}
+{{{{code "hbs"}}}}
+{{> "shell/navbar" float=true}}
+
+{{!-- or by hand, on any bar --}}
+<header class="im-topbar im-topbar-site im-topbar-float" data-im-stick="8"> … </header>
+{{{{/code}}}}
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Knob</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>--im-island-width</code></td><td>How wide the pill gets. Default 64rem; it never exceeds the window less two gutters.</td></tr>
+		<tr><td><code>--im-island-gap</code></td><td>Its distance from the top. Default 0.75rem.</td></tr>
+		<tr><td><code>--im-island-height</code></td><td>Default 3.25rem — a little shorter than the band it came from.</td></tr>
+		<tr><td><code>im-topbar-island-square</code></td><td>A rounded rectangle rather than a pill. <code>im-topbar-float-square</code> for the scrolled one.</td></tr>
+	</tbody>
+</table>
+</div>
+<p>Under <code>prefers-reduced-motion</code> the change still happens; it simply does not slide.</p>
+
+<h2>The brand</h2>
+<p>The bar carries the <a href="/foundation/logo/">logo</a> — the name in the brand typeface with the recording dot at its top right. It is live text, so it needs no image and is sharp at any size. An <strong>island</strong> bar has no room for a name and gets the square instead: the same lockup with one letter.</p>
+{{#example center=true}}
+<span class="im-brand">{{> "components/logo"}}</span>
+<span class="im-brand">{{> "components/logo" size="2.5rem" text="Swarnil"}}</span>
+<span class="im-brand">{{> "components/logo" mark=true size="2rem"}}</span>
+{{/example}}
+{{{{code "hbs"}}}}
+<a class="im-brand" href="{{@site.url}}">
+	{{#if @site.logo}}<img src="{{@site.logo}}" alt="{{@site.title}}"><span>{{@site.title}}</span>
+	{{else}}{{> "components/logo" mark=island}}{{/if}}
+</a>
+
+{{!-- in <head> --}}
+<link rel="icon" href="{{asset "brand/mark.svg"}}" type="image/svg+xml">
+{{{{/code}}}}
+<p>A Ghost site that has uploaded a logo gets the image and its name beside it, which is what Ghost's own settings expect; everything else gets the lockup. <code>im-brand-mark</code> hides the words of that <em>image</em> version and keeps them for screen readers.</p>
+
+<h2>Star on GitHub</h2>
+<p>A link with the count in its own well. The count is <strong>opt-in</strong>: without <code>data-im-stars</code> nothing is fetched and whatever number is in the markup stands. With it, <code>im.js</code> asks GitHub's public API once and writes the number in — no key, no third-party script, no iframe, nothing that can identify a reader. If the call fails or is rate-limited, the button is left exactly as it was.</p>
+{{#example center=true}}
+<a class="im-star" href="https://github.com/imswarnil" target="_blank" rel="noopener noreferrer">{{> "icons/brand-github"}}<span>Star</span><b>1.2k</b></a>
+<a class="im-star im-star-sm" href="https://github.com/imswarnil" target="_blank" rel="noopener noreferrer">{{> "icons/brand-github"}}<span>Star</span><b>1.2k</b></a>
+<a class="im-star im-star-sm" href="https://github.com/imswarnil" target="_blank" rel="noopener noreferrer">{{> "icons/brand-github"}}<span>Star</span><b></b></a>
+<a class="im-star im-star-icon" href="https://github.com/imswarnil" target="_blank" rel="noopener noreferrer" aria-label="GitHub">{{> "icons/brand-github"}}<span>Star</span><b></b></a>
+{{/example}}
+{{{{code "hbs"}}}}
+<a class="im-star" href="https://github.com/owner/repo" data-im-stars="owner/repo">
+	{{> "icons/brand-github"}}<span>Star</span><b data-im-star-count></b>
+</a>
+{{{{/code}}}}
+<p>An empty count collapses, so the button is a plain pill until the number arrives — it never jumps a step wider. <code>im-star-sm</code> for a bar, <code>im-star-icon</code> for a phone.</p>
 
 <h2>App bar</h2>
 <p>For a layout <em>with</em> a side nav — this site. Three columns: the nav toggle and brand, a centred search, actions. The links live in the side nav, so the bar stays quiet.</p>
 {{#example flush=true}}
 <div style="--im-gutter: 1rem">
 	<header class="im-topbar" style="position: static">
-		<div class="im-topbar-start"><button class="im-btn im-btn-ghost im-btn-icon" type="button" aria-label="Collapse navigation">{{> "icons/panel-left"}}</button><a class="im-brand" href="#app-bar">Publication</a><span class="im-badge im-badge-outline">Beta</span></div>
+		<div class="im-topbar-start"><button class="im-btn im-btn-ghost im-btn-icon" type="button" aria-label="Collapse navigation">{{> "icons/panel-left"}}</button><a class="im-brand" href="#app-bar">{{> "components/logo" text="Publication"}}</a><span class="im-badge im-badge-outline">Beta</span></div>
 		<div class="im-topbar-search"><button class="im-searchbar" type="button">{{> "icons/search"}}<span>Search</span><kbd>/</kbd></button></div>
 		<div class="im-topbar-end"><button class="im-btn im-btn-ghost im-btn-icon" type="button" aria-label="Notifications">{{> "icons/bell"}}</button><a class="im-btn im-btn-sm im-btn-primary" href="#app-bar">Subscribe</a></div>
 	</header>
 </div>
 {{/example}}
 {{{{code "hbs"}}}}
-{{#> "shell/topbar"}}
+{{#> "shell/topbar" github="https://github.com/you/repo" stars="you/repo"}}
 	<span class="im-badge im-badge-outline">Beta</span>      {{!-- optional: anything after the brand --}}
 {{/"shell/topbar"}}
 {{{{/code}}}}
@@ -63,58 +132,21 @@ source: src/layout/topbar.css · partials/shell/topbar.hbs · partials/shell/nav
 	<thead><tr><th>Class</th><th></th></tr></thead>
 	<tbody>
 		<tr><td><code>im-topbar</code></td><td>The bar: sticky, translucent, blurred. <code>im-topbar-site</code> for the two-column site arrangement; <code>im-topbar-line</code> for a hairline.</td></tr>
+		<tr><td><code>im-topbar-island</code> · <code>-float</code></td><td>The floating pill, and the band that becomes it.</td></tr>
 		<tr><td><code>im-topbar-start</code> · <code>-search</code> · <code>-end</code></td><td>The columns.</td></tr>
-		<tr><td><code>im-brand</code></td><td>Logo image or site title.</td></tr>
-		<tr><td><code>im-topbar-nav</code> · <code>im-toplink</code></td><td>Primary links; hidden below <code>lg</code>. A <code>&lt;button class="im-toplink" popovertarget="…"&gt;</code> opens a <a href="/navigation/menu/">menu</a> and its chevron turns.</td></tr>
+		<tr><td><code>im-brand</code> · <code>im-logo</code></td><td>The brand link; the mark inside it. <code>im-brand-mark</code> hides the words.</td></tr>
+		<tr><td><code>im-topbar-nav</code> · <code>im-toplink</code></td><td>Primary links; hidden below <code>lg</code>. A <code>&lt;button class="im-toplink" popovertarget="…"&gt;</code> opens a <a href="/navigation/menu/">menu</a> or a <a href="/navigation/mega/">mega menu</a> and its chevron turns.</td></tr>
 		<tr><td><code>im-searchbar</code></td><td>The search button.</td></tr>
+		<tr><td><code>im-star</code></td><td>The GitHub star button.</td></tr>
 	</tbody>
 </table>
 </div>
-
-<h2>Menu panel</h2>
-<p>On a phone the menu is not a drawer sliding in from the side: it is a <strong>rounded sheet that opens inside the viewport</strong>, over a blurred page, with the links as <strong>tiles in two columns</strong>. A group of links is a tile that opens across both columns; only one is open at a time.</p>
-{{#example center=true}}
-<button class="im-btn im-btn-primary" type="button" data-drawer-open="#panel-demo">{{> "icons/menu"}} Open a menu panel</button>
-<dialog class="im-navpanel" id="panel-demo" aria-label="Menu">
-	<div class="im-navpanel-head"><a class="im-brand" href="#menu-panel">{{@site.title}}</a><button class="im-btn im-btn-ghost im-btn-icon" type="button" data-drawer-close aria-label="Close">{{> "icons/x"}}</button></div>
-	<nav class="im-navpanel-grid" aria-label="Demo">
-		<a class="im-navtile im-navtile-stacked" href="#menu-panel" aria-current="page">{{> "icons/house"}}<span>Home</span></a>
-		<a class="im-navtile im-navtile-stacked" href="#menu-panel">{{> "icons/pencil"}}<span>Writing</span></a>
-		<details class="im-navtile-group" name="panel-demo">
-			<summary class="im-navtile">{{> "icons/layers"}}<span>Projects</span><small>4</small></summary>
-			<div class="im-navtile-items"><a href="#menu-panel">Case studies</a><a href="#menu-panel">Open source</a><a href="#menu-panel">Talks</a><a href="#menu-panel">Experiments</a></div>
-		</details>
-		<details class="im-navtile-group" name="panel-demo">
-			<summary class="im-navtile">{{> "icons/graduation-cap"}}<span>Courses</span><small>3</small></summary>
-			<div class="im-navtile-items"><a href="#menu-panel">CRM Analytics</a><a href="#menu-panel">Job seekers</a><a href="#menu-panel">Salesforce</a></div>
-		</details>
-		<a class="im-navtile" href="#menu-panel">{{> "icons/user"}}<span>About</span></a>
-		<a class="im-navtile" href="#menu-panel">{{> "icons/mail"}}<span>Contact</span></a>
-		<p class="im-caption">More</p>
-		<a class="im-navtile" href="#menu-panel"><span>Newsletter</span></a>
-		<a class="im-navtile" href="#menu-panel"><span>Now</span></a>
-		<a class="im-navtile im-navtile-wide" href="#menu-panel">{{> "icons/rss"}}<span>RSS feed</span><small>/rss/</small></a>
-	</nav>
-	<div class="im-navpanel-foot">{{> "components/theme-button"}}<a class="im-btn im-btn-ghost im-btn-icon" href="#menu-panel" aria-label="GitHub">{{> "icons/brand-github"}}</a><a class="im-btn im-btn-primary im-btn-sm" style="margin-left: auto" href="#menu-panel">Subscribe</a></div>
-</dialog>
-{{/example}}
-<div class="im-table-scroll">
-<table>
-	<thead><tr><th>Class</th><th></th></tr></thead>
-	<tbody>
-		<tr><td><code>im-navpanel</code></td><td>The sheet — a native <code>&lt;dialog&gt;</code>, so the focus trap, <kbd>Esc</kbd>, the backdrop and scroll locking all come from the browser. <code>--im-navpanel-width</code> (34rem), <code>--im-navpanel-columns</code> (2; becomes 1 under 20rem).</td></tr>
-		<tr><td><code>im-navpanel-head</code> · <code>-grid</code> · <code>-foot</code></td><td>Brand and the cross; the tiles; theme, accounts and a call to action. An <code>im-caption</code> in the grid names a run of tiles.</td></tr>
-		<tr><td><code>im-navtile</code></td><td>One link: optional icon, label, optional <code>&lt;small&gt;</code> count. <code>-stacked</code> puts the icon above the label, for a short menu; <code>-wide</code> spans both columns. The current page is filled with ink.</td></tr>
-		<tr><td><code>im-navtile-group</code></td><td>A <code>&lt;details&gt;</code> whose <code>&lt;summary&gt;</code> is a tile. Open, it takes the whole row and lays <code>im-navtile-items</code> out in the same columns; the grid packs densely, so no cell is left empty beside it. Give the groups one shared <code>name</code> and the browser keeps only one open.</td></tr>
-	</tbody>
-</table>
-</div>
-<p>Any element with <code>data-drawer-open="#id"</code> opens it; <code>data-drawer-close</code>, or a click on the blurred surround, closes it. In a Ghost theme, <code>\{{navigation as="tiles"}}</code> prints the site's links as tiles — that is what <code>partials/shell/navbar.hbs</code> does.</p>
 
 <h2>Details that matter</h2>
 <ul>
 	<li><strong>Which buttons show is set with utilities on the element</strong> (<code>lg:hidden</code>, <code>max-sm:hidden</code>), not in the bar's CSS — <code>im-btn</code> sets <code>display</code> in a later layer and would win.</li>
 	<li><strong>Sticky offset:</strong> the bar's height is <code>--im-bar-height</code>. Anything else sticky, and <code>scroll-padding-top</code> for anchor links, is derived from it.</li>
+	<li><strong>The island's padding is on the bar, not on the mark.</strong> <code>.im-icon</code> is <code>1em</code> wide in a border box, so padding an icon eats the icon.</li>
 	<li><strong>A skip link</strong> should be the first thing in <code>&lt;body&gt;</code> — see this site's layout.</li>
 	<li><strong>One <code>&lt;nav&gt;</code> per set of links</strong>, each with an <code>aria-label</code>, so a screen-reader user can tell "Primary" from "More".</li>
 </ul>

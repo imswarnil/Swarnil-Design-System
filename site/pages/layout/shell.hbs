@@ -12,7 +12,7 @@ source: src/layout/ · partials/shell/topbar.hbs
     <header class="im-topbar">…</header>
     <aside  class="im-sidenav">…</aside>
     <main   class="im-shell-main" id="main">…</main>
-    <footer class="im-shell-foot">…</footer>
+    <footer class="im-footer">…</footer>
   </div>
   <dialog class="im-navpanel" id="drawer">…</dialog>
 </body>
@@ -59,6 +59,17 @@ source: src/layout/ · partials/shell/topbar.hbs
 
 <h2>Article with a rail</h2>
 <p><code>.im-with-aside</code> is a reading column plus a sticky rail — this page. Below <code>lg</code> the rail moves above the article. Put <code>&lt;nav class="im-toc" data-toc="#article"&gt;</code> in it and <code>im.js</code> builds the table of contents from the article's <code>h2</code> and <code>h3</code>.</p>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Class</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>im-with-aside</code></td><td>Reading column, then a 13.5rem rail. Its width <strong>follows the side nav</strong>: collapse the nav and the space it gives up goes to the content.</td></tr>
+		<tr><td><code>im-with-aside-wide</code></td><td>A 19rem column — wide enough for real <a href="/components/widgets/">widgets</a> rather than a contents rail.</td></tr>
+		<tr><td><code>im-with-aside-start</code></td><td>The column on the left. Only the tracks swap; nothing moves in the markup.</td></tr>
+	</tbody>
+</table>
+</div>
+<p>Below <code>lg</code> both fold to one column. A <strong>contents</strong> rail moves above the article, because it is a way in; a <strong>wide</strong> column stays below it, because it is further reading. <a href="/collections/post/article/">A full article</a> has all three on a switch.</p>
 
 <h2>Metrics</h2>
 <div class="im-table-scroll">

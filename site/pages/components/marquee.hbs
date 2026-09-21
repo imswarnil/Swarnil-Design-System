@@ -64,16 +64,69 @@ source: src/components/marquee.css · src/js/im.js
 </div>
 {{/example}}
 
-<h2>In a Swiss row</h2>
+<h2>As a band</h2>
 <p>A marquee between two rules is the classic use: a band across the page.</p>
 {{#example flush=true}}
-<div class="im-frame" style="--im-frame-width: 100%; border-inline: 0">
-	<div class="im-frame-row im-frame-row-flush im-frame-marks" style="border-top: 0">
-		<div class="im-marquee im-marquee-text py-4" data-im-marquee style="font-size: 1.5rem; --im-marquee-speed: 28s">
-			<div class="im-marquee-group"><span class="im-pixel">Now shipping</span><span class="im-marquee-sep"></span><span>Carousel</span><span class="im-marquee-sep"></span><span class="im-pixel">Marquee</span><span class="im-marquee-sep"></span><span>Swiss grid</span><span class="im-marquee-sep"></span></div>
+<div style="border-block: 1px solid var(--im-line)">
+	<div class="im-marquee im-marquee-text py-4" data-im-marquee style="font-size: 1.5rem; --im-marquee-speed: 28s">
+		<div class="im-marquee-group"><span class="im-pixel">Now shipping</span><span class="im-marquee-sep"></span><span>Carousel</span><span class="im-marquee-sep"></span><span class="im-pixel">Marquee</span><span class="im-marquee-sep"></span><span>Testimonials</span><span class="im-marquee-sep"></span></div>
+	</div>
+</div>
+{{/example}}
+
+<h2>A wall of testimonials, in 3D</h2>
+<p>Two rows on a perspective, going opposite ways. It is the one arrangement that makes a set of quotes read as a <strong>wall</strong> rather than as a list — and it is the <em>wrapper</em> that leans, so the rows inside stay ordinary marquees that the script does not have to know anything about. Below <code>48rem</code> the lean is dropped: a tilted row on a phone is unreadable.</p>
+{{#example flush=true}}
+<div class="im-marquee-3d">
+	<div class="im-marquee im-marquee-pause" data-im-marquee style="--im-marquee-gap: 1rem; --im-marquee-speed: 70s">
+		<div class="im-marquee-group" style="align-items: stretch">
+			<figure class="im-marquee-card"><p class="im-marquee-card-text">"The tokens carried our rebrand in an afternoon. I had budgeted a fortnight and a fight."</p><figcaption class="im-marquee-card-by">{{> "components/avatar" size="sm" name="Mara Lindqvist"}}<span><strong>Mara Lindqvist</strong><small>Design lead, Nordvik</small></span></figcaption></figure>
+			<figure class="im-marquee-card"><p class="im-marquee-card-text">"I deleted a section by deleting a folder. That was the whole job."</p><figcaption class="im-marquee-card-by">{{> "components/avatar" size="sm" name="Tobias Reinhardt"}}<span><strong>Tobias Reinhardt</strong><small>Freelance developer</small></span></figcaption></figure>
+			<figure class="im-marquee-card"><p class="im-marquee-card-text">"Dark mode just worked. Every component, first try, no second stylesheet."</p><figcaption class="im-marquee-card-by">{{> "components/avatar" size="sm" name="Ines Duarte"}}<span><strong>Ines Duarte</strong><small>Founder, Cadence</small></span></figcaption></figure>
 		</div>
 	</div>
-	<div class="im-frame-row"><p class="im-caption" data-index="01">The row below the band</p></div>
+	<div class="im-marquee im-marquee-reverse im-marquee-pause" data-im-marquee style="--im-marquee-gap: 1rem; --im-marquee-speed: 82s">
+		<div class="im-marquee-group" style="align-items: stretch">
+			<figure class="im-marquee-card"><p class="im-marquee-card-text">"It reads like a poster and behaves like an app. I did not know you could have both."</p><figcaption class="im-marquee-card-by">{{> "components/avatar" size="sm" name="Joon Park"}}<span><strong>Joon Park</strong><small>Editor, The Long Way</small></span></figcaption></figure>
+			<figure class="im-marquee-card"><p class="im-marquee-card-text">"Two variables and the whole site was ours. Nothing to fork, nothing to fight."</p><figcaption class="im-marquee-card-by">{{> "components/avatar" size="sm" name="Amelie Roux"}}<span><strong>Amelie Roux</strong><small>Art director</small></span></figcaption></figure>
+			<figure class="im-marquee-card"><p class="im-marquee-card-text">"The documentation is the product. I have never said that about a theme before."</p><figcaption class="im-marquee-card-by">{{> "components/avatar" size="sm" name="Sam Okonkwo"}}<span><strong>Sam Okonkwo</strong><small>Ghost developer</small></span></figcaption></figure>
+		</div>
+	</div>
+</div>
+{{/example}}
+<p><code>--im-marquee-tilt</code> and <code>--im-marquee-turn</code> are the two angles; <code>im-marquee-3d-flat</code> turns the lean off for a page that already has enough going on. The mask is on the wrapper, not the rows — a rotated row's own edges are no longer where the box's edges are.</p>
+
+<h2>Comments</h2>
+<p>The shape of a comment under a video: avatar, name and when, what they said, a like count. It is the one marquee that belongs going <strong>up a column</strong> rather than across a page — a wall of what people said, beside the thing they said it about.</p>
+{{#example}}
+<div class="im-grid-auto" style="--im-grid-min: 18rem; align-items: start">
+	<div class="im-marquee im-marquee-vertical im-marquee-fade im-marquee-pause" data-im-marquee style="--im-marquee-gap: .75rem; --im-marquee-height: 22rem; --im-marquee-speed: 34s; --im-marquee-card: 100%">
+		<div class="im-marquee-group" style="align-items: stretch">
+			<article class="im-marquee-comment">{{> "components/avatar" size="sm" name="Mara L"}}<p class="im-marquee-comment-who">@maralindqvist <time>2 days ago</time></p><p class="im-marquee-comment-text">The bit about the road being cut in the 1840s and never widened explains everything about that drive.</p><p class="im-marquee-comment-likes">{{> "icons/thumbs-up"}}412</p></article>
+			<article class="im-marquee-comment">{{> "components/avatar" size="sm" name="Tobias R"}}<p class="im-marquee-comment-who">@treinhardt <time>5 days ago</time></p><p class="im-marquee-comment-text">Drove it east to west on your advice. Sea side the whole way. Thank you.</p><p class="im-marquee-comment-likes">{{> "icons/thumbs-up"}}188</p></article>
+			<article class="im-marquee-comment">{{> "components/avatar" size="sm" name="Ines D"}}<p class="im-marquee-comment-who">@inesduarte <time>1 week ago</time></p><p class="im-marquee-comment-text">The SITA bus is the answer and nobody wants to hear it 😅</p><p class="im-marquee-comment-likes">{{> "icons/thumbs-up"}}96</p></article>
+			<article class="im-marquee-comment">{{> "components/avatar" size="sm" name="Joon P"}}<p class="im-marquee-comment-who">@joonpark <time>2 weeks ago</time></p><p class="im-marquee-comment-text">Parking in Positano was fifteen an hour in August, for anyone going this summer.</p><p class="im-marquee-comment-likes">{{> "icons/thumbs-up"}}51</p></article>
+		</div>
+	</div>
+	<div class="im-prose">
+		<p><code>im-marquee-comment</code> is a grid: the avatar spans the rows, the name and time sit on one baseline, and the like count closes it. Put it in a <code>im-marquee-vertical</code> beside a <a href="/media/video/">video</a> and set <code>--im-marquee-card: 100%</code> so the cards fill the column rather than keeping their own width.</p>
+		<p><strong>Pause it.</strong> Anything with a name in it will be read, and a reader cannot read a moving line — <code>im-marquee-pause</code> stops it on hover and on keyboard focus.</p>
+	</div>
+</div>
+{{/example}}
+
+<h2>Windows</h2>
+<p>A row of screens going past — "made with this", a gallery of work, a changelog of releases. The frame is the <a href="/content/mockups/">mockup</a> component; the marquee only fixes the width and gives the row room so the shadows are not clipped by its own overflow.</p>
+{{#example flush=true}}
+<div class="im-marquee im-marquee-fade im-marquee-pause" data-im-marquee style="--im-marquee-gap: 1.25rem; --im-marquee-speed: 64s">
+	<div class="im-marquee-group" style="align-items: stretch">
+		{{#foreach demo.four}}
+		<figure class="im-mock im-mock-browser im-marquee-window">
+			<div class="im-mock-bar"><span class="im-mock-dots"><i></i></span><span class="im-mock-url">{{> "icons/lock"}}example.com/{{slug}}</span></div>
+			<div class="im-mock-body"><img src="{{feature_image}}" alt="" loading="lazy"></div>
+		</figure>
+		{{/foreach}}
+	</div>
 </div>
 {{/example}}
 

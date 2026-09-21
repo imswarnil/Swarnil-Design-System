@@ -1,0 +1,211 @@
+---
+title: Project page
+layout: home
+description: One project as a case study — the head, a carousel of screenshots, the numbers, the brief and what came of it, the project log as a stepper, the comments, and a rail of widgets beside all of it.
+eyebrow: Collections · Project
+source: src/components/repo-card.css · content.css · carousel.css · comments.css
+---
+<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+	<p class="im-eyebrow">Collections · Project · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+</section>
+
+<div class="im-with-aside im-with-aside-wide im-wrap-wide">
+	<article class="im-stack" style="--im-stack-gap: clamp(2rem, 4vw, 3rem)">
+
+		{{#with demo.projects.[0]}}
+		<header class="im-projecthero">
+			<nav aria-label="Breadcrumb">
+				<ol class="im-breadcrumb im-breadcrumb-chevron">
+					<li><a href="/">{{> "icons/house"}}<span>Home</span></a></li>
+					<li><a href="/collections/project/">{{> "icons/folder"}}<span>Projects</span></a></li>
+					<li><span aria-current="page">{{name}}</span></li>
+				</ol>
+			</nav>
+			<h1 class="im-projecthero-title">{{name}}<span class="im-repo-visibility">{{visibility}}</span></h1>
+			<p class="im-projecthero-text">{{text}}</p>
+			<p class="im-repo-topics">{{#foreach topics}}<a class="im-topic" href="#">{{this}}</a>{{/foreach}}</p>
+			<div class="im-projecthero-actions">
+				<a class="im-btn im-btn-primary" href="#">{{> "icons/external-link"}}Live demo</a>
+				<a class="im-btn" href="#">{{> "icons/brand-github"}}Source</a>
+				<a class="im-btn" href="#">{{> "icons/book-open"}}Docs</a>
+				<a class="im-star im-star-sm" href="#">{{> "icons/brand-github"}}<span>Star</span><b>{{stars}}</b></a>
+			</div>
+		</header>
+		{{/with}}
+
+		{{!-- The screenshots. A carousel wrapped in data-im-lightbox, so every
+		      shot opens on the plain sheet at full size — a case study is the
+		      one place a reader genuinely wants to look closely. --}}
+		<section class="im-section" style="--im-section-gap: .75rem">
+			<div data-im-lightbox>
+				{{#> "components/carousel" label="Screenshots" dots=true style="--im-slides: 1.05; --im-slides-sm: 1.6; --im-slides-md: 2.1"}}
+					{{#foreach demo.six}}<a class="im-zoomable" href="{{feature_image}}" data-caption="{{title}}"><img src="{{feature_image}}" alt="{{title}}" loading="lazy" style="aspect-ratio: 16 / 10; width: 100%; object-fit: cover"></a>{{/foreach}}
+				{{/"components/carousel"}}
+			</div>
+		</section>
+
+		<div class="im-projectstats">
+			<span><strong>Design system</strong>Role</span>
+			<span><strong>2026</strong>Year</span>
+			<span><strong>Tailwind 4</strong>Built on</span>
+			<a href="#"><strong>1,204</strong>Stars</a>
+			<span><strong>MIT</strong>Licence</span>
+		</div>
+
+		<section class="im-content im-content-flush im-content-lede" data-im-zoom style="--im-content-main: 100%">
+			<p>A design system a Ghost theme can be built on and sold with — tokens, a page shell, forty components and ready-made sections, written from a blank file so that nothing in it belongs to anybody else.</p>
+
+			<h2>The brief</h2>
+			<p>The site ran on a paid theme whose licence forbids redistribution and modification for resale. Anything built on it could never be sold. The brief was therefore not "make a nicer theme": it was <strong>own every line</strong>, and be able to prove it.</p>
+
+			<h2>What I did</h2>
+			<ul>
+				<li><strong>Split the tokens in two.</strong> Primitives have no meaning; semantic tokens say what a value is <em>for</em>. A component names the second kind only, which is what made dark mode a change to one file instead of forty.</li>
+				<li><strong>Wrote one interaction and deleted the rest.</strong> Everything fills. A border sharpening, a picture growing and a shadow lifting were three ideas competing for the same moment.</li>
+				<li><strong>Made the docs the product.</strong> Every example on the site renders the real partial, so a page breaks if a component does.</li>
+			</ul>
+
+			<figure class="im-shot kg-card kg-width-wide">
+				<img src="{{demo.six.[2].feature_image}}" alt="" loading="lazy">
+				<figcaption><b>The token layer</b> One file per kind, and a bridge that hands them to Tailwind.</figcaption>
+			</figure>
+
+			<h2>How it works</h2>
+			<p>Everything is a cascade layer, in one order, low to high:</p>
+			<pre><code class="language-css">@layer theme, tokens, base, layout, components, effects, utilities;</code></pre>
+			<p>A component can never accidentally beat a utility, and a utility can never accidentally beat a state — which is the whole reason a design system stops being a pile of overrides in its second year.</p>
+
+			<figure class="im-case-quote kg-card kg-width-wide">
+				<p>The tokens carried our rebrand in an afternoon. I had budgeted a fortnight and a fight.</p>
+				<figcaption>{{> "components/avatar" size="sm" name="Mara Lindqvist"}}Mara Lindqvist · Design lead, Nordvik</figcaption>
+			</figure>
+
+			<h2>What happened</h2>
+			<p>Three sites run on it, the theme it was written for is in the shop, and the thing I actually wanted — being able to answer "where did this come from?" about every file — is a two-line audit that comes back empty.</p>
+		</section>
+
+		{{!-- The log: the timeline component, tuned. A project's history is a
+		      list of dated things in order, which is what a timeline is. --}}
+		<section class="im-section" style="--im-section-gap: 1.25rem">
+			<h2 class="im-caption" data-index="log">Project log</h2>
+			<ol class="im-timeline im-timeline-numbered im-log">
+				{{#each demo.log}}
+				<li class="im-timeline-item" data-state="{{state}}">
+					<span class="im-timeline-marker"></span>
+					<time class="im-timeline-time">{{when}}</time>
+					<h3 class="im-timeline-title">{{title}}</h3>
+					<p class="im-timeline-text">{{text}}</p>
+					{{#if shot}}<figure class="im-log-shot"><img src="{{shot}}" alt="" loading="lazy"><figcaption>{{title}}</figcaption></figure>{{/if}}
+					{{#if tag}}<p class="im-log-meta"><span class="im-badge im-badge-outline">{{tag}}</span></p>{{/if}}
+				</li>
+				{{/each}}
+			</ol>
+		</section>
+
+		{{> "components/comments" thread=demo.comments}}
+	</article>
+
+	<aside>
+		<div class="im-sticky-rail">
+			<div class="im-widgets">
+				<section class="im-widget" aria-labelledby="w-links">
+					<h2 class="im-widget-title" id="w-links">Links</h2>
+					<div class="im-widget-products">
+						<a class="im-widget-product" href="#"><span class="im-widget-product-mark">{{icon "external-link"}}</span><span class="im-widget-product-name">Live demo</span><span class="im-widget-product-note">design.imswarnil.com</span>{{icon "arrow-up-right"}}</a>
+						<a class="im-widget-product" href="#"><span class="im-widget-product-mark">{{icon "brand-github"}}</span><span class="im-widget-product-name">Source</span><span class="im-widget-product-note">1.2k stars · MIT</span>{{icon "arrow-up-right"}}</a>
+						<a class="im-widget-product" href="#"><span class="im-widget-product-mark">{{icon "book-open"}}</span><span class="im-widget-product-name">Documentation</span><span class="im-widget-product-note">77 pages</span>{{icon "arrow-up-right"}}</a>
+					</div>
+				</section>
+
+				<section class="im-widget" aria-labelledby="w-about">
+					<h2 class="im-widget-title" id="w-about">About</h2>
+					<dl class="im-widget-facts">
+						<dt>Role</dt><dd>Everything</dd>
+						<dt>Year</dt><dd>2026</dd>
+						<dt>Latest</dt><dd>v0.7</dd>
+						<dt>Status</dt><dd><span class="im-badge im-badge-success">Active</span></dd>
+					</dl>
+				</section>
+
+				<section class="im-widget" aria-labelledby="w-langs">
+					<h2 class="im-widget-title" id="w-langs">Built with</h2>
+					<span class="im-langbar">
+						<span style="--im-repo-lang: #563d7c; width: 64%"></span>
+						<span style="--im-repo-lang: #f1e05a; width: 21%"></span>
+						<span style="--im-repo-lang: #f7931e; width: 11%"></span>
+						<span style="--im-repo-lang: var(--im-faint); width: 4%"></span>
+					</span>
+					<p class="im-langkeys">
+						<span class="im-repo-lang" style="--im-repo-lang: #563d7c">CSS 64%</span>
+						<span class="im-repo-lang" style="--im-repo-lang: #f1e05a">JavaScript 21%</span>
+						<span class="im-repo-lang" style="--im-repo-lang: #f7931e">Handlebars 11%</span>
+						<span class="im-repo-lang">Other 4%</span>
+					</p>
+				</section>
+
+				<section class="im-widget" aria-labelledby="w-more">
+					<h2 class="im-widget-title" id="w-more">More projects <a href="/collections/project/">All</a></h2>
+					<ul class="im-widget-list">
+						{{#each demo.projects}}{{#match @index ">" 2}}<li><a href="/collections/project/page/">{{name}}<small>{{lang}} · ★ {{stars}}</small></a></li>{{/match}}{{/each}}
+					</ul>
+				</section>
+
+				<section class="im-widget im-widget-fill" aria-labelledby="w-rel">
+					<h2 class="im-widget-title" id="w-rel">Releases</h2>
+					<p class="im-widget-heading">One email when a version ships.</p>
+					{{> "components/subscribe" id="project-email" button="Join"}}
+				</section>
+			</div>
+		</div>
+	</aside>
+</div>
+
+<section class="im-section im-wrap">
+	<div class="im-prose">
+		<h2>A repo card, opened out into a case study</h2>
+		<p>The head is the <a href="/collections/project/card/">card</a> given room: the name becomes the page's title, the one line becomes a paragraph, the topics stay exactly as they were, and the numbers move from a meta line into <code>im-projectstats</code>. Everything after it is a component that already existed — a carousel, the post body's canvas, the timeline, the comment thread — which is the test a page like this has to pass. If a project page needs eight new classes, the system did not have enough in it.</p>
+		<div class="im-table-scroll">
+		<table>
+			<thead><tr><th>Block</th><th>Built from</th></tr></thead>
+			<tbody>
+				<tr><td>The head</td><td><code>im-projecthero</code> + <a href="/navigation/breadcrumb/">breadcrumb</a>, <code>im-topic</code> chips, <code>im-projecthero-actions</code>. <strong>Three buttons at most</strong>: a row of nine is a row nobody presses.</td></tr>
+				<tr><td>Screenshots</td><td>The <a href="/components/carousel/">carousel</a> wrapped in <code>data-im-lightbox</code>, slides as <code>im-zoomable</code>. Every shot opens on the plain sheet at full size — a case study is the one place a reader genuinely wants to look closely.</td></tr>
+				<tr><td>The facts</td><td><code>im-projectstats</code> — role, year, stack, stars, licence. Cells sharing a hairline; any of them may be a link.</td></tr>
+				<tr><td>The case</td><td><code>im-content</code>, the same canvas a <a href="/collections/post/article/">post</a> uses, with <code>im-shot</code> for a wide screenshot and <code>im-case-quote</code> for the one line somebody said.</td></tr>
+				<tr><td>The log</td><td><code>im-timeline im-timeline-numbered im-log</code> — the <a href="/components/timeline/">timeline</a>, tuned. A log is a list of dated things in order, which is exactly what a timeline is; a second component that drew the same line would be a second component to keep in step.</td></tr>
+				<tr><td>Comments</td><td><code>im-comments</code>, the same thread as a post's.</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<h3>The log is a stepper</h3>
+		<p>Numbered marks down a line, and each entry carries <code>data-state</code>: <code>done</code> fills the mark in ink and draws a solid line to the next one, <code>current</code> puts it in the accent with a ring, <code>upcoming</code> fades the entry and dashes the line. A reader can see at a glance where the project got to and whether it is still moving.</p>
+		{{{{code "hbs"}}}}
+<ol class="im-timeline im-timeline-numbered im-log">
+	{{#foreach log}}
+	<li class="im-timeline-item" data-state="{{state}}">
+		<span class="im-timeline-marker"></span>
+		<time class="im-timeline-time">{{when}}</time>
+		<h3 class="im-timeline-title">{{title}}</h3>
+		<p class="im-timeline-text">{{text}}</p>
+		{{#if shot}}<figure class="im-log-shot"><img src="{{shot}}" alt=""></figure>{{/if}}
+	</li>
+	{{/foreach}}
+</ol>
+		{{{{/code}}}}
+		<p>The writing <em>about</em> a project is a different thing again, and it belongs in the <a href="/collections/post/">post collection</a> as ordinary posts — the <a href="/collections/project/">project collection</a> prints the latest few of them under the grid. A log entry is "this changed"; a post is "here is why".</p>
+
+		<h3>The rail keeps one distance</h3>
+		<p>The widgets are an <code>im-widgets</code> column in an <code>im-sticky-rail</code>, which is the same pair the <a href="/collections/post/article/#both-rails-keep-the-same-distance">post page</a> uses. <strong>One</strong> variable does it: <code>--im-rail-inset</code> is the distance under the top bar <em>and</em> the gap the rail keeps above the bottom of the window, and <code>im-widgets</code> has one gap between every block. Nothing on a project page is spaced by hand.</p>
+
+		<h2>Details that matter</h2>
+		<ul>
+			<li><strong>The widest column wins for code.</strong> <code>--im-content-main: 100%</code> — a README or a case study is mostly commands and lists, and nobody reads an install line as prose.</li>
+			<li><strong>Screenshots get captions that say what is being looked at.</strong> "The token layer", not "Screenshot 3".</li>
+			<li><strong>One quote, in the middle.</strong> Where it answers the paragraph above it — not a wall of testimonials at the bottom that nobody reaches.</li>
+			<li><strong>Comments on a project are worth more than on a post.</strong> They are usually the bug report.</li>
+		</ul>
+	</div>
+</section>

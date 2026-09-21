@@ -26,7 +26,7 @@
 .im-progress-sm { --im-progress-height: 0.1875rem; }
 .im-progress-lg { --im-progress-height: 0.625rem; }
 
-/* A hairline track and a square end: the Swiss bar. */
+/* A hairline track and a square end. */
 .im-progress-line {
 	--im-progress-height: 2px;
 

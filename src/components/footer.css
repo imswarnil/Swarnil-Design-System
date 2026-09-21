@@ -1,0 +1,380 @@
+/* Footer — the band at the foot of a site. One frame, any number of columns.
+
+   <footer class="im-footer im-footer-4">
+     <div class="im-footer-cols">
+       <div class="im-footer-lead"> brand · blurb · social </div>
+       <nav class="im-footer-col">
+         <h2 class="im-footer-title">Writing</h2>
+         <ul class="im-footer-links"> <li><a href="…">Journal</a></li> … </ul>
+       </nav>
+       …
+     </div>
+     <div class="im-footer-strip"> © · legal links · back to top </div>
+   </footer>
+
+   Columns:  im-footer-2 · -3 · -4 · -5   (or set --im-footer-columns).
+             The LEAD column is wider by --im-footer-lead (1.4 columns).
+             Below md everything stacks; between md and lg a 4-up becomes 2-up.
+   Skins:    im-footer-fill (surface) · im-footer-ink (inverted) ·
+             im-footer-line (hairline above, the default look on canvas).
+   Anything can go in a column — a link list, a newsletter, an im-widget-bare. */
+
+.im-footer {
+	--im-footer-columns: 4;
+	--im-footer-lead: 1.4fr;
+	--im-footer-gap: clamp(1.75rem, 1rem + 2.4vw, 3.5rem);
+	--im-footer-pad: clamp(2.5rem, 1.6rem + 3vw, 4.5rem);
+	--im-footer-width: var(--im-width-page);
+
+	display: flex;
+	flex-direction: column;
+	gap: var(--im-footer-gap);
+	padding: var(--im-footer-pad) var(--im-gutter) 1.25rem;
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+}
+
+/* Every direct child is centred on the same measure, so the strip lines up
+   with the columns however wide the window is. */
+.im-footer > * {
+	width: 100%;
+	max-width: var(--im-footer-width);
+	margin-inline: auto;
+}
+
+.im-footer-line {
+	border-top: 1px solid var(--im-line);
+}
+
+.im-footer-fill {
+	background-color: var(--im-surface);
+}
+
+/* Inverted — always the opposite of the page it is on. It restates the
+   SEMANTIC TOKENS rather than setting colours, so everything inside it (the
+   brand mark, a button, a widget, a form field) follows without knowing. The
+   two blocks are the light and dark token sets, swapped; there is no way to
+   say "the other theme's values" in CSS without a reference cycle. */
+.im-footer-ink {
+	color-scheme: dark;
+
+	--im-canvas: var(--im-gray-950);
+	--im-surface: var(--im-gray-900);
+	--im-surface-2: var(--im-gray-800);
+	--im-surface-3: var(--im-gray-700);
+	--im-line: color-mix(in oklab, var(--im-gray-400) 26%, transparent);
+	--im-ink: var(--im-white);
+	--im-body: var(--im-gray-400);
+	--im-muted: var(--im-gray-500);
+	--im-faint: var(--im-gray-600);
+
+	background-color: var(--im-canvas);
+	color: var(--im-body);
+}
+
+:root[data-theme="dark"] .im-footer-ink {
+	color-scheme: light;
+
+	--im-canvas: var(--im-white);
+	--im-surface: var(--im-gray-100);
+	--im-surface-2: var(--im-gray-200);
+	--im-surface-3: var(--im-gray-300);
+	--im-line: color-mix(in oklab, var(--im-gray-500) 24%, transparent);
+	--im-ink: var(--im-gray-950);
+	--im-body: var(--im-gray-600);
+	--im-muted: var(--im-gray-500);
+	--im-faint: var(--im-gray-400);
+}
+
+.im-footer-wide {
+	--im-footer-width: var(--im-width-wide);
+}
+
+/* ---- the columns ---- */
+.im-footer-cols {
+	display: grid;
+	grid-template-columns: repeat(var(--im-footer-columns), minmax(0, 1fr));
+	gap: var(--im-footer-gap);
+	align-items: start;
+}
+
+.im-footer-2 { --im-footer-columns: 2; }
+.im-footer-3 { --im-footer-columns: 3; }
+.im-footer-4 { --im-footer-columns: 4; }
+.im-footer-5 { --im-footer-columns: 5; }
+
+/* A lead column — brand, blurb, social — wider than the link columns beside
+   it. It is the first cell, and the rest of the row shares what is left. */
+.im-footer-cols:has(> .im-footer-lead) {
+	grid-template-columns: var(--im-footer-lead) repeat(calc(var(--im-footer-columns) - 1), minmax(0, 1fr));
+}
+
+.im-footer-col,
+.im-footer-lead {
+	display: flex;
+	flex-direction: column;
+	gap: 0.875rem;
+	min-width: 0;
+}
+
+.im-footer-lead {
+	gap: 1.125rem;
+	max-width: 32rem;
+}
+
+/* One column that should take two cells — a newsletter, usually. */
+.im-footer-col-2 {
+	grid-column: span 2;
+}
+
+.im-footer-col-full {
+	grid-column: 1 / -1;
+}
+
+.im-footer-title {
+	color: var(--im-ink);
+	font-family: var(--im-font-mono);
+	font-size: 0.6875rem;
+	font-weight: 500;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.im-footer-heading {
+	color: var(--im-ink);
+	font-size: var(--im-text-h4);
+	font-weight: 600;
+	line-height: var(--im-leading-h4);
+	letter-spacing: var(--im-tracking-tight);
+}
+
+.im-footer-text {
+	color: var(--im-muted);
+	line-height: var(--im-leading-base);
+	text-wrap: pretty;
+}
+
+/* ---- link lists ---- */
+.im-footer-links {
+	display: flex;
+	flex-direction: column;
+	gap: 0.125rem;
+	list-style: none;
+	padding: 0;
+}
+
+.im-footer-links a {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	min-height: 1.875rem;
+	color: inherit;
+	text-decoration: none;
+	transition: color 120ms;
+}
+
+.im-footer-links a:hover,
+.im-footer-links a:focus-visible {
+	color: var(--im-ink);
+}
+
+.im-footer-links a > .im-icon {
+	color: var(--im-faint);
+	font-size: 0.9375rem;
+}
+
+.im-footer-links a > .im-badge {
+	margin-left: 0.125rem;
+}
+
+/* A new / external marker after a link. */
+.im-footer-links a > small {
+	color: var(--im-faint);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+}
+
+/* ---- social row ---- */
+.im-footer-social {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.375rem;
+	list-style: none;
+	padding: 0;
+}
+
+.im-footer-social a {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 2.25rem;
+	height: 2.25rem;
+	border-radius: var(--im-radius-full);
+	color: var(--im-muted);
+	transition: background-color 140ms, color 140ms;
+}
+
+.im-footer-social a:hover,
+.im-footer-social a:focus-visible {
+	background-color: var(--im-surface-2);
+	color: var(--im-ink);
+}
+
+.im-footer-ink .im-footer-social a:hover {
+	background-color: color-mix(in oklab, var(--im-canvas) 16%, transparent);
+}
+
+/* ---- the strip ----
+   The slim bar under the columns: copyright at the start, small print and a
+   back-to-top at the end. Also usable ON ITS OWN as the whole footer. */
+.im-footer-strip {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.75rem 1.5rem;
+	padding-top: 1.25rem;
+	border-top: 1px solid var(--im-line);
+	color: var(--im-muted);
+	font-size: var(--im-text-sm);
+}
+
+/* On its own, with no columns above it, it needs its own room. */
+.im-footer > .im-footer-strip:only-child {
+	padding-top: 0;
+	border-top: 0;
+}
+
+.im-footer-strip-end {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem 1.25rem;
+	margin-left: auto;
+}
+
+.im-footer-strip a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.im-footer-strip a:hover {
+	color: var(--im-ink);
+}
+
+/* A dotted separator between small-print links, drawn rather than typed. */
+.im-footer-note {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem 1rem;
+	list-style: none;
+	padding: 0;
+}
+
+.im-footer-note > li + li::before {
+	content: "";
+	display: inline-block;
+	width: 3px;
+	height: 3px;
+	margin-right: 1rem;
+	border-radius: 50%;
+	background-color: currentcolor;
+	opacity: 0.5;
+	vertical-align: middle;
+}
+
+.im-footer-top {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
+	color: inherit;
+	text-decoration: none;
+}
+
+.im-footer-top > .im-icon {
+	transition: translate 160ms var(--im-ease-out);
+}
+
+.im-footer-top:hover > .im-icon {
+	translate: 0 -2px;
+}
+
+/* ---- centred: a small site with one row of links ---- */
+.im-footer-center .im-footer-cols,
+.im-footer-center .im-footer-strip {
+	justify-items: center;
+	justify-content: center;
+	text-align: center;
+}
+
+.im-footer-center .im-footer-lead {
+	align-items: center;
+	margin-inline: auto;
+}
+
+.im-footer-center .im-footer-strip-end {
+	margin-inline: auto;
+}
+
+/* ---- responsive ----
+   4- and 5-up fold to 2-up on a tablet before stacking, so a link column is
+   never one word wide. The lead column takes the full row as soon as the grid
+   is no longer the one it was sized for. */
+@media (width >= 48rem) and (width < 64rem) {
+	.im-footer-cols,
+	.im-footer-cols:has(> .im-footer-lead) {
+		grid-template-columns: repeat(min(var(--im-footer-columns), 3), minmax(0, 1fr));
+	}
+
+	.im-footer-4 .im-footer-cols:has(> .im-footer-lead) > .im-footer-lead,
+	.im-footer-5 .im-footer-cols:has(> .im-footer-lead) > .im-footer-lead {
+		grid-column: 1 / -1;
+		max-width: 44rem;
+	}
+}
+
+@media (width < 48rem) {
+	.im-footer {
+		--im-footer-gap: 1.75rem;
+	}
+
+	.im-footer-cols,
+	.im-footer-cols:has(> .im-footer-lead) {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.im-footer-col-2,
+	.im-footer-col-full {
+		grid-column: auto;
+	}
+
+	/* Link columns become a pair before they become one. */
+	.im-footer-cols:not(.im-footer-cols-stack) {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.im-footer-cols:not(.im-footer-cols-stack) > .im-footer-lead {
+		grid-column: 1 / -1;
+	}
+
+	.im-footer-strip {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.875rem;
+	}
+
+	.im-footer-strip-end {
+		margin-left: 0;
+	}
+}
+
+/* Narrower than any ordinary phone: one column. 22rem is 352px — below the
+   375px a small phone gives, so a real phone still gets the pair.
+   `.im-footer .im-footer-cols` has the same specificity as the pair rule
+   above and comes later, so it wins without an !important. */
+@media (width < 22rem) {
+	.im-footer .im-footer-cols {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}

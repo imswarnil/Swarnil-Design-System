@@ -1,0 +1,123 @@
+---
+title: Mockups
+description: A screenshot in something that looks like a screen — a desktop window, a browser, a terminal, a phone. Drawn from this system's tokens rather than from a photograph of somebody's hardware, so they follow dark mode, print at any size, and weigh nothing.
+eyebrow: Content
+source: src/components/mockup.css
+---
+<p>Four frames. Each is a hairline, one radius from the scale, one shadow and a line of light along the top edge — and nothing else. There is no 400KB PNG of a laptop on a desk, no brand in the corner, and no device that will look three years old in three years.</p>
+
+<h2>Window</h2>
+<p>The plain desktop window: three dots, a centred title, the screen. The title is centred against the <strong>window</strong>, not against what is left after the dots — which is what an auto margin gives you, and is off by the width of the dots.</p>
+{{#example}}
+<div class="im-grid-auto" style="--im-grid-min: 18rem; align-items: start">
+	<figure class="im-mock im-mock-mac">
+		<div class="im-mock-bar"><span class="im-mock-dots"><i></i></span><span class="im-mock-title">Journal — Drafts</span></div>
+		<div class="im-mock-body"><img src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></div>
+	</figure>
+	<figure class="im-mock im-mock-mac im-mock-lights">
+		<div class="im-mock-bar"><span class="im-mock-dots"><i></i></span><span class="im-mock-title">Preview</span><span class="im-mock-end">{{> "icons/settings"}}</span></div>
+		<div class="im-mock-body"><img src="{{demo.three.[1].feature_image}}" alt="" loading="lazy"></div>
+	</figure>
+</div>
+{{/example}}
+<p>The dots are <strong>drawn</strong>, not typed, and they are the system's own muted greys by default. Coloured traffic lights are Apple's, and a screenshot of your own product does not need somebody else's brand in the corner of it — <code>im-mock-lights</code> paints them where the context genuinely is macOS.</p>
+
+<h2>Browser</h2>
+<p>Dots, an address pill, and optionally a row of tabs. The pill is mono and truncates, so a long URL narrows rather than bursting the frame.</p>
+{{#example}}
+<figure class="im-mock im-mock-browser" style="max-width: 44rem">
+	<div class="im-mock-tabs">
+		<span class="im-mock-tab" aria-current="page">{{> "icons/file-text"}}The Amalfi Coast</span>
+		<span class="im-mock-tab">{{> "icons/image"}}Photos</span>
+		<span class="im-mock-tab">{{> "icons/code"}}Theme</span>
+	</div>
+	<div class="im-mock-bar"><span class="im-mock-dots"><i></i></span><span class="im-mock-url">{{> "icons/lock"}}example.com/driving-the-amalfi-coast</span><span class="im-mock-end">{{> "icons/refresh-cw"}}</span></div>
+	<div class="im-mock-body"><img src="{{demo.post.feature_image}}" alt="" loading="lazy"></div>
+</figure>
+{{/example}}
+
+<h2>Terminal</h2>
+<p>Its own dark, always: a terminal that follows the page into light mode is not a terminal. The body is mono, pre-wrapped, and <code>im-mock-cmd</code> puts an accent prompt before a command line.</p>
+{{#example}}
+<figure class="im-mock im-mock-terminal" style="max-width: 36rem">
+	<div class="im-mock-bar"><span class="im-mock-dots"><i></i></span><span class="im-mock-title">zsh — im-design-system</span></div>
+	<div class="im-mock-body"><span class="im-mock-cmd">npm run build</span>
+<span class="im-mock-out">  css      assets/im.css 312KB · assets/docs.css 18KB</span>
+<span class="im-mock-out">  pages    71 · 2 section(s) · 138 icons · 103 tokens</span>
+<span class="im-mock-out">  helpers  every Ghost helper the partials use is modelled</span>
+<b>  done     468ms</b></div>
+</figure>
+{{/example}}
+
+<h2>Phone</h2>
+<p>A thick bezel, a very round corner, an island at the top and a home bar at the bottom. It is a <strong>shape</strong>, not a device: no brand, no buttons, no camera. <code>im-mock-flat</code> drops the island for a screen that starts at the very top; <code>im-mock-tablet</code> is the same idea, wider.</p>
+{{#example}}
+<div class="im-cluster" style="--im-cluster-gap: 2rem; align-items: flex-start">
+	<figure class="im-mock im-mock-phone" style="--im-mock-width: 13rem">
+		<div class="im-mock-body"><img src="{{demo.three.[2].feature_image}}" alt="" loading="lazy"></div>
+	</figure>
+	<figure class="im-mock im-mock-phone im-mock-flat" style="--im-mock-width: 13rem">
+		<div class="im-mock-body im-mock-body-pad" style="aspect-ratio: 390 / 844">
+			{{#with demo.three.[1]}}{{> "components/post-card"}}{{/with}}
+		</div>
+	</figure>
+	<figure class="im-mock im-mock-tablet" style="--im-mock-width: 15rem">
+		<div class="im-mock-body"><img src="{{demo.six.[4].feature_image}}" alt="" loading="lazy"></div>
+	</figure>
+</div>
+{{/example}}
+<p>The island and the home bar are drawn <em>on</em> the screen rather than cut out of it, which is what they look like in life — and it means the screen can be any picture, any markup, or a live component, without a hole punched through it.</p>
+
+<h2>Real markup inside one</h2>
+<p><code>im-mock-body-pad</code> drops the fixed ratio and gives the content room, so the frame can hold the actual thing rather than a picture of it. This is how the docs show a component at phone width without a screenshot to keep in step.</p>
+{{#example}}
+<figure class="im-mock im-mock-mac" style="max-width: 32rem">
+	<div class="im-mock-bar"><span class="im-mock-dots"><i></i></span><span class="im-mock-title">A live card, not a screenshot</span></div>
+	<div class="im-mock-body im-mock-body-pad">
+		{{#with demo.post}}{{> "components/post-card" excerpt=true}}{{/with}}
+	</div>
+</figure>
+{{/example}}
+
+<h2>Staged, and tilted</h2>
+<p><code>im-mock-stage</code> stands a phone in front of a window, the way a product shot is staged; under 34rem it stops overlapping and stacks, because a phone over a window on a phone is two things in the same place. <code>im-mock-tilt</code> leans a frame back for a hero and straightens it under the pointer.</p>
+{{#example}}
+<div class="im-mock-stage">
+	<figure class="im-mock im-mock-mac">
+		<div class="im-mock-bar"><span class="im-mock-dots"><i></i></span><span class="im-mock-title">example.com</span></div>
+		<div class="im-mock-body"><img src="{{demo.six.[0].feature_image}}" alt="" loading="lazy"></div>
+	</figure>
+	<figure class="im-mock im-mock-phone">
+		<div class="im-mock-body"><img src="{{demo.six.[1].feature_image}}" alt="" loading="lazy"></div>
+	</figure>
+</div>
+{{/example}}
+{{#example style="padding-block: 3rem"}}
+<figure class="im-mock im-mock-mac im-mock-tilt" style="max-width: 30rem; margin-inline: auto">
+	<div class="im-mock-bar"><span class="im-mock-dots"><i></i></span><span class="im-mock-title">Hover me</span></div>
+	<div class="im-mock-body"><img src="{{demo.six.[2].feature_image}}" alt="" loading="lazy"></div>
+</figure>
+{{/example}}
+
+<h2>Parts and knobs</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th></th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>im-mock</code></td><td>The frame. <code>-mac</code> · <code>-browser</code> · <code>-terminal</code> · <code>-phone</code> · <code>-tablet</code>.</td></tr>
+		<tr><td><code>im-mock-bar</code></td><td>The title bar. Holds <code>im-mock-dots</code>, <code>im-mock-title</code>, <code>im-mock-url</code> and an <code>im-mock-end</code> for a control at the far end.</td></tr>
+		<tr><td><code>im-mock-tabs</code></td><td>A row of <code>im-mock-tab</code>s above the bar. The open one carries <code>aria-current="page"</code>.</td></tr>
+		<tr><td><code>im-mock-body</code></td><td>The screen. It holds the ratio, so an image that has not loaded leaves the frame exactly the right shape.</td></tr>
+		<tr><td><code>--im-mock-ratio</code></td><td>16 / 10 for a window, 390 / 844 for the phone.</td></tr>
+		<tr><td><code>--im-mock-radius</code> · <code>--im-mock-bar</code> · <code>--im-mock-bezel</code> · <code>--im-mock-width</code></td><td>The shape, the bar's height, the phone's bezel, and how wide a phone is allowed to be.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>Using them</h2>
+<ul>
+	<li><strong>Write the <code>alt</code> for what is <em>in</em> the screen</strong>, not "a screenshot in a laptop". The frame is decoration; the picture is the content.</li>
+	<li><strong>Put the real thing inside where you can.</strong> A live component in a frame never goes stale; a screenshot of one does, quietly, and usually before anybody notices.</li>
+	<li><strong>One tilt per page.</strong> Two leaning frames is a stock photo.</li>
+	<li><strong>The dots are grey until they need not be.</strong> Colour them only when the thing being shown really is a Mac.</li>
+</ul>

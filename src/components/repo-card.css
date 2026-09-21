@@ -1,0 +1,502 @@
+/* Repo card — a project, the way a code host shows one.
+
+     <article class="im-repo">
+       <p class="im-repo-head">
+         <a class="im-repo-name">{{> "icons/folder"}}owner/<b>name</b></a>
+         <span class="im-repo-visibility">Public</span>
+       </p>
+       <p class="im-repo-text">…what it is…</p>
+       <div class="im-repo-topics"> <a class="im-topic">tailwind</a> … </div>
+       <p class="im-repo-meta">
+         <span class="im-repo-lang" style="--im-repo-lang: #f1e05a">JavaScript</span>
+         <a class="im-repo-stat">★ 1.2k</a>
+         <a class="im-repo-stat">⑂ 84</a>
+         <span>Updated 3 days ago</span>
+       </p>
+     </article>
+
+   It is a convention, not a copy: a name, one line about it, what it is
+   written in, how many people starred it, when it last moved. Every developer
+   already reads that shape, which is the whole reason to use it — and it is
+   drawn here in this system's own hairlines, radii and type, in both themes,
+   with this system's one hover.
+
+   The language dot takes its colour inline, from --im-repo-lang, because a
+   design system has no business holding a table of two hundred programming
+   languages. */
+
+.im-repo {
+	--im-repo-pad: 1.375rem;
+	--im-hover-bg: var(--im-surface);
+
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	/* A project card carries six things — a name, a line, chips, three
+	   numbers, a date and two or three buttons — and they are all small. The
+	   gap is what stops that reading as a receipt. */
+	gap: 0.875rem;
+	min-width: 0;
+	padding: var(--im-repo-pad);
+	border-radius: var(--im-radius-lg);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+	transition: background-color var(--im-duration-fast) var(--im-ease-out);
+}
+
+.im-repo:is(:hover, :focus-within) {
+	background-color: var(--im-hover-bg);
+}
+
+.im-repo-head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem;
+	min-width: 0;
+}
+
+.im-repo-name {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	min-width: 0;
+	color: var(--im-accent);
+	font-size: var(--im-text-h5);
+	font-weight: 600;
+	line-height: var(--im-leading-h5);
+	letter-spacing: var(--im-tracking-tight);
+	text-decoration: none;
+}
+
+/* The owner is context and the repo is the thing: one is quiet, one is not.
+   <a class="im-repo-name">owner/<b>name</b></a> */
+.im-repo-name > b {
+	font-weight: 700;
+}
+
+.im-repo-name > .im-icon {
+	flex: none;
+	color: var(--im-muted);
+	font-size: 1.0625rem;
+}
+
+/* The whole card is the link's hit area; anything else in it sits above. */
+.im-repo-name::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+}
+
+.im-repo :is(.im-repo-stat, .im-topic, .im-repo-actions) {
+	position: relative;
+	z-index: 2;
+}
+
+.im-repo-visibility {
+	padding: 0.0625rem 0.5rem;
+	border-radius: var(--im-radius-full);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+	font-weight: 500;
+}
+
+/* Archived, forked, a template — the state a repo is in. */
+.im-repo-visibility-warn {
+	background-color: var(--im-warning-tint);
+	box-shadow: none;
+	color: var(--im-warning);
+}
+
+.im-repo-text {
+	min-width: 0;
+	color: var(--im-body);
+	line-height: 1.6;
+	text-wrap: pretty;
+}
+
+/* ---- topics ---- */
+.im-repo-topics {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.375rem;
+}
+
+.im-topic {
+	display: inline-flex;
+	align-items: center;
+	min-height: 1.625rem;
+	padding: 0 0.5rem;
+	border-radius: var(--im-radius-full);
+	background-color: var(--im-accent-tint);
+	color: var(--im-accent);
+	font-size: var(--im-text-xs);
+	font-weight: 500;
+	text-decoration: none;
+	white-space: nowrap;
+	transition: background-color 120ms;
+}
+
+.im-topic:hover {
+	background-color: color-mix(in oklab, var(--im-accent) 18%, var(--im-canvas));
+	color: var(--im-accent);
+}
+
+/* ---- the meta line ---- */
+/* Pushed to the bottom of the card, so a row of cards with descriptions of
+   different lengths still lines its numbers up. */
+.im-repo-meta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.375rem 1rem;
+	margin-top: auto;
+	padding-top: 0.25rem;
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+}
+
+.im-repo-lang {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
+}
+
+.im-repo-lang::before {
+	content: "";
+	width: 0.625rem;
+	height: 0.625rem;
+	border-radius: 50%;
+	background-color: var(--im-repo-lang, var(--im-faint));
+}
+
+.im-repo-stat {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.3125rem;
+	color: inherit;
+	font-variant-numeric: tabular-nums;
+	text-decoration: none;
+}
+
+.im-repo-stat:hover {
+	color: var(--im-accent);
+}
+
+.im-repo-stat > .im-icon {
+	font-size: 0.875rem;
+}
+
+/* The buttons are a FOOTER, not another row of content: a rule across the
+   whole card separates what the project is from what you can do about it, and
+   gives the numbers above it room to be read. */
+.im-repo-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	margin: 0.25rem calc(var(--im-repo-pad) * -1) calc(var(--im-repo-pad) * -1);
+	padding: 0.875rem var(--im-repo-pad);
+	border-top: 1px solid var(--im-line);
+}
+
+/* ---- variants ---- */
+/* Pinned: the card a profile puts at the top — same parts, more room. */
+.im-repo-lg {
+	--im-repo-pad: 1.625rem;
+
+	gap: 1rem;
+}
+
+.im-repo-lg .im-repo-name {
+	font-size: var(--im-text-h4);
+	line-height: var(--im-leading-h4);
+}
+
+/* Bare: no box, a rule between rows. For a long list — a profile's repo tab,
+   where forty boxes is forty boxes. */
+/* --im-repo-pad stays a SINGLE length: the media and the action footer both
+   negate it to bleed to the card's edge, and a two-value padding cannot be
+   multiplied by -1. The vertical space comes from padding-block instead. */
+.im-repo-bare {
+	--im-repo-pad: 0px;
+
+	padding-block: 1.25rem;
+	border-radius: 0;
+	box-shadow: none;
+	border-bottom: 1px solid var(--im-line);
+}
+
+.im-repo-bare .im-repo-actions {
+	margin-bottom: 0;
+	padding-inline: 0;
+}
+
+.im-repo-bare:is(:hover, :focus-within) {
+	background-color: transparent;
+}
+
+.im-repo-bare .im-repo-name {
+	color: var(--im-accent);
+}
+
+/* With a picture — a portfolio project rather than a repository. The shot
+   goes above everything and bleeds to the card's own edge. */
+.im-repo-media {
+	aspect-ratio: var(--im-repo-ratio, 16 / 9);
+	margin: calc(var(--im-repo-pad) * -1) calc(var(--im-repo-pad) * -1) 0;
+	overflow: hidden;
+	border-radius: calc(var(--im-radius-lg) - 1px) calc(var(--im-radius-lg) - 1px) 0 0;
+	background-color: var(--im-surface-2);
+}
+
+.im-repo-media > img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+/* ---- a grid of them ---- */
+.im-repos {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-repos-min, 19rem), 100%), 1fr));
+	gap: 1rem;
+	align-items: start;
+}
+
+.im-repos-list {
+	grid-template-columns: minmax(0, 1fr);
+	gap: 0;
+}
+
+/* ---- the project page's head ----
+   A repo card opened out: the name as the page's title, what it is, the two
+   or three links that matter, what it is built with, and the numbers. */
+.im-projecthero {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	min-width: 0;
+	max-width: var(--im-projecthero-measure, 52rem);
+}
+
+.im-projecthero-title {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.625rem 0.875rem;
+	color: var(--im-ink);
+	font-family: var(--im-font-heading);
+	font-size: clamp(1.875rem, 1.3rem + 2.2vw, 2.75rem);
+	font-weight: 600;
+	line-height: 1.08;
+	letter-spacing: var(--im-tracking-tight);
+}
+
+.im-projecthero-title > .im-repo-visibility {
+	font-size: var(--im-text-xs);
+}
+
+.im-projecthero-text {
+	max-width: 60ch;
+	color: var(--im-body);
+	font-size: var(--im-text-lg);
+	line-height: var(--im-leading-lg);
+	text-wrap: pretty;
+}
+
+.im-projecthero-actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem;
+	padding-top: 0.25rem;
+}
+
+/* The numbers, in a ruled row — stars, forks, issues, the licence, the size.
+   It is the one place a project page should be dense. */
+.im-projectstats {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(7rem, 100%), 1fr));
+	gap: 1px;
+	overflow: hidden;
+	border-radius: var(--im-radius-lg);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	background-color: var(--im-line);
+}
+
+.im-projectstats > * {
+	display: flex;
+	flex-direction: column;
+	gap: 0.125rem;
+	padding: 0.875rem 1rem;
+	background-color: var(--im-canvas);
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+	text-decoration: none;
+}
+
+.im-projectstats strong {
+	color: var(--im-ink);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-h5);
+	font-weight: 600;
+	font-variant-numeric: tabular-nums;
+	line-height: 1.1;
+}
+
+.im-projectstats a:hover strong {
+	color: var(--im-accent);
+}
+
+/* What it is built with: a row of language shares, as one bar. */
+.im-langbar {
+	display: flex;
+	gap: 2px;
+	height: 0.625rem;
+	overflow: hidden;
+	border-radius: var(--im-radius-full);
+}
+
+.im-langbar > span {
+	background-color: var(--im-repo-lang, var(--im-faint));
+}
+
+.im-langkeys {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.375rem 1rem;
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+}
+
+/* ---- project log ----
+   A stepper down the page: numbered marks on a line, each one an entry with a
+   date, a heading, what changed and — where it helps — a shot of it.
+
+   It IS the timeline component (components/timeline.css), tuned: a log is a
+   list of dated things in order, which is exactly what a timeline is, and a
+   second component that drew the same line would be a second component to
+   keep in step. This file only sets what a log needs that an event list does
+   not — room for a picture, and a heading with some weight to it.
+
+     <ol class="im-timeline im-timeline-numbered im-log">
+       <li class="im-timeline-item" data-state="done">
+         <span class="im-timeline-marker"></span>
+         <time class="im-timeline-time">March 2026</time>
+         <h3 class="im-timeline-title">Rebuilt the token layer</h3>
+         <p class="im-timeline-text">…</p>
+         <figure class="im-log-shot"><img …><figcaption>…</figcaption></figure>
+       </li>
+     </ol>                                                                   */
+.im-timeline.im-log {
+	--im-timeline-gap: 2.25rem;
+}
+
+.im-log .im-timeline-title {
+	font-size: var(--im-text-h4);
+	line-height: var(--im-leading-h4);
+}
+
+.im-log .im-timeline-text {
+	max-width: 62ch;
+	font-size: var(--im-text-base);
+}
+
+.im-log-shot {
+	margin: 0.75rem 0 0;
+	overflow: hidden;
+	border-radius: var(--im-radius-lg);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+}
+
+.im-log-shot > img {
+	display: block;
+	width: 100%;
+	height: auto;
+	aspect-ratio: var(--im-log-ratio, 16 / 9);
+	object-fit: cover;
+}
+
+.im-log-shot > figcaption {
+	padding: 0.625rem 0.875rem;
+	border-top: 1px solid var(--im-line);
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+}
+
+/* A row of small facts under an entry — the version, the commit, what shipped. */
+.im-log-meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.375rem;
+	padding-top: 0.5rem;
+}
+
+/* ---- case study ----
+   A screenshot given the weight of a figure: the picture, a hairline, and a
+   caption that says what is being looked at. Anything wider than the reading
+   column in a project page is one of these. */
+.im-shot {
+	margin: 0;
+	overflow: hidden;
+	border-radius: var(--im-radius-xl);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	background-color: var(--im-surface);
+}
+
+.im-shot > :is(img, video) {
+	display: block;
+	width: 100%;
+	height: auto;
+	aspect-ratio: var(--im-shot-ratio, 16 / 9);
+	object-fit: cover;
+	object-position: top center;
+}
+
+.im-shot > figcaption {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem 0.875rem;
+	padding: 0.75rem 1rem;
+	border-top: 1px solid var(--im-line);
+	color: var(--im-muted);
+	font-size: var(--im-text-sm);
+}
+
+.im-shot > figcaption > b {
+	color: var(--im-ink);
+	font-weight: 600;
+}
+
+/* The one line somebody said about it. Not a testimonial wall — one line, in
+   the middle of the case, where it answers the paragraph above it. */
+.im-case-quote {
+	display: flex;
+	flex-direction: column;
+	gap: 0.875rem;
+	margin: 0;
+	padding: clamp(1.25rem, 3vw, 2rem);
+	border-radius: var(--im-radius-xl);
+	background-color: var(--im-surface);
+}
+
+.im-case-quote > p {
+	color: var(--im-ink);
+	font-family: var(--im-font-heading);
+	font-size: var(--im-text-h4);
+	line-height: 1.4;
+	letter-spacing: var(--im-tracking-tight);
+	text-wrap: pretty;
+}
+
+.im-case-quote > figcaption {
+	display: flex;
+	align-items: center;
+	gap: 0.625rem;
+	color: var(--im-muted);
+	font-size: var(--im-text-sm);
+}

@@ -1,6 +1,6 @@
 ---
 title: Dropdown menu
-description: A list of actions in a popover. The browser's Popover API supplies the top layer, light-dismiss and Esc; im.js only positions it under its button and keeps aria-expanded in step.
+description: A list of actions in a popover — the menu panel in miniature, and deliberately so. The browser's Popover API supplies the top layer, light-dismiss and Esc; im.js positions it under its button and keeps aria-expanded in step.
 eyebrow: Navigation
 source: src/components/menu.css · src/js/im.js
 ---
@@ -24,7 +24,7 @@ source: src/components/menu.css · src/js/im.js
 	<a class="im-menu-item" href="#from-any-trigger">{{> "icons/pencil"}}<span>Edit</span></a>
 	<button class="im-menu-item" type="button" data-im-copy="">{{> "icons/link"}}<span data-im-copy-label>Copy link</span></button>
 	<div class="im-menu-sep"></div>
-	<a class="im-menu-item" href="#from-any-trigger" style="color: var(--im-danger)">{{> "icons/trash-2"}}<span>Delete</span></a>
+	<a class="im-menu-item im-menu-item-danger" href="#from-any-trigger">{{> "icons/trash-2"}}<span>Delete</span></a>
 </div>
 
 <button class="im-toplink" type="button" popovertarget="ex-menu-3" aria-expanded="false">More {{> "icons/chevron-down"}}</button>
@@ -41,6 +41,45 @@ source: src/components/menu.css · src/js/im.js
 {{/example}}
 <p>An icon button, a top-bar link (its chevron turns while open), and the second half of a split button. The third is filled by Ghost: <code>\{{navigation type="secondary" as="menu"}}</code>.</p>
 
+<h2>The panel's rows, in a dropdown</h2>
+<p>A menu is the <a href="/navigation/panel/">menu panel</a> scaled down: the same rounded sheet, the same hairline ring over the float shadow, the same rows with an icon, a label and an optional description, the same mono caption over a group. A reader who has opened the ☰ panel already knows how this one works.</p>
+{{#example center=true}}
+<button class="im-btn" type="button" popovertarget="ex-menu-rich" aria-expanded="false">{{> "icons/user"}}Account {{> "icons/chevron-down"}}</button>
+<div class="im-menu im-menu-wide" id="ex-menu-rich" popover data-align="start">
+	<div class="im-menu-head">
+		{{> "components/avatar" size="sm" src=demo.author.profile_image name=demo.author.name}}
+		<span><strong>{{demo.author.name}}</strong><small>swarnil@example.com</small></span>
+	</div>
+	<p class="im-menu-title">Account</p>
+	<a class="im-menu-item" href="#the-panels-rows-in-a-dropdown">{{> "icons/user"}}<span>Profile<small>Name, photo and bio</small></span></a>
+	<a class="im-menu-item" href="#the-panels-rows-in-a-dropdown">{{> "icons/mail"}}<span>Newsletters<small>Two of three</small></span></a>
+	<a class="im-menu-item" href="#the-panels-rows-in-a-dropdown">{{> "icons/bookmark"}}<span>Saved</span><small>12</small></a>
+	<div class="im-menu-sep"></div>
+	<p class="im-menu-title">Appearance</p>
+	<button class="im-menu-item" type="button" role="menuitemradio" aria-checked="true">{{> "icons/sun"}}<span>Light</span></button>
+	<button class="im-menu-item" type="button" role="menuitemradio" aria-checked="false">{{> "icons/moon"}}<span>Dark</span></button>
+	<div class="im-menu-sep"></div>
+	<button class="im-menu-item im-menu-item-danger" type="button">{{> "icons/log-in"}}<span>Sign out</span></button>
+	<div class="im-menu-foot">Member since 2024 · <a href="#the-panels-rows-in-a-dropdown">Manage billing</a></div>
+</div>
+{{/example}}
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th></th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>im-menu-title</code></td><td>A mono caption over a group — the same one the panel's columns use.</td></tr>
+		<tr><td><code>im-menu-head</code></td><td>Who is signed in. Avatar, name, email.</td></tr>
+		<tr><td><code>im-menu-foot</code></td><td>A line of small print under a rule.</td></tr>
+		<tr><td><code>&lt;small&gt;</code> inside the label</td><td>A description, under the label, like <code>im-navitem</code>'s.</td></tr>
+		<tr><td><code>&lt;small&gt;</code> beside the label</td><td>A trailing value — a count, a shortcut, the current setting — at the far end.</td></tr>
+		<tr><td><code>aria-checked</code></td><td>A chooser: a tick at the end of the chosen row, drawn as a mask of the row's own colour so it is right in both themes.</td></tr>
+		<tr><td><code>im-menu-item-danger</code></td><td>The destructive one, as a real state rather than an inline colour.</td></tr>
+		<tr><td><code>im-menu-wide</code> · <code>im-menu-scroll</code></td><td>19rem instead of 15; and a long menu that scrolls inside itself rather than off the window.</td></tr>
+	</tbody>
+</table>
+</div>
+<p>It arrives <strong>from its button</strong>: <code>im.js</code> writes <code>data-side</code> when it places the menu, so one flipped above its trigger rises instead of dropping.</p>
+
 <h2>Parts</h2>
 <div class="im-table-scroll">
 <table>
@@ -49,6 +88,7 @@ source: src/components/menu.css · src/js/im.js
 		<tr><td><code>im-menu</code> + <code>popover</code></td><td>The panel. <code>data-align="start"</code> lines it up with the button's left edge; the default is the right edge, which suits the end of a top bar.</td></tr>
 		<tr><td><code>im-menu-item</code></td><td>A link or a button. Optional leading icon; a trailing <code>&lt;small&gt;</code> for a count, a shortcut or a current value.</td></tr>
 		<tr><td><code>im-menu-sep</code></td><td>A rule between groups.</td></tr>
+		<tr><td><code>im-menu-title</code> · <code>-head</code> · <code>-foot</code></td><td>A group's caption, and the two slots at either end. See above.</td></tr>
 	</tbody>
 </table>
 </div>
@@ -56,7 +96,7 @@ source: src/components/menu.css · src/js/im.js
 <h2>Theme switch</h2>
 <p><code>partials/components/theme-toggle.hbs</code> is a menu item that cycles light → dark → system. Any element with <code>data-theme-toggle</code> does the same, and a <code>data-theme-label</code> inside the page receives the current choice as text.</p>
 {{#example center=true}}
-<button class="im-btn im-btn-outline" type="button" data-theme-toggle>{{> "icons/sun"}} Theme: <span data-theme-label>System</span></button>
+<button class="im-btn im-btn-outline" type="button" data-theme-toggle>{{> "icons/sun"}} Theme: <span data-theme-label>Light</span></button>
 {{/example}}
 
 <h2>Browser support</h2>

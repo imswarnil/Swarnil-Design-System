@@ -1,12 +1,25 @@
 {{!-- The docs sidebar. A titled group is an ordinary menu item that opens — the
 	same .im-navlink as every other row, with a chevron — using the system's
-	own im-navtree (a native <details>). The group holding this page is open. --}}
+	own im-navtree (a native <details>). The group holding this page is open.
+	An item with `children` is a tree inside a tree: a family of pages under
+	one name (Collections › Post › …). --}}
 {{#each nav}}
 {{#if title}}
 <details class="im-navtree"{{#if open}} open{{/if}}>
 	<summary class="im-navlink" title="{{title}}">{{icon icon}}<span>{{title}}</span></summary>
 	<div class="im-navtree-items">
-		{{#each items}}<a class="im-navlink" href="{{url}}"{{#if current}} aria-current="page"{{/if}}><span>{{label}}</span></a>{{/each}}
+		{{#each items}}
+		{{#if children}}
+		<details class="im-navtree"{{#if open}} open{{/if}}>
+			<summary class="im-navlink" title="{{label}}">{{icon icon}}<span>{{label}}</span></summary>
+			<div class="im-navtree-items">
+				{{#each children}}<a class="im-navlink" href="{{url}}"{{#if current}} aria-current="page"{{/if}}><span>{{label}}</span></a>{{/each}}
+			</div>
+		</details>
+		{{else}}
+		<a class="im-navlink" href="{{url}}"{{#if current}} aria-current="page"{{/if}}><span>{{label}}</span></a>
+		{{/if}}
+		{{/each}}
 	</div>
 </details>
 {{else}}

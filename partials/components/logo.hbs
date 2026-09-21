@@ -1,0 +1,31 @@
+{{!-- Brand logo. One idea in two lockups: LETTERS, and a dot at the top right
+	of the last one — the recording light.
+
+	  {{> "components/logo"}}                    Im •      the wordmark
+	  {{> "components/logo" text="Swarnil"}}     Swarnil •
+	  {{> "components/logo" mark=true}}          [I•]      the square
+
+	Params
+	  text    what to set. Default: the site's title.
+	  mark    true — the square: the FIRST letter on a tile, the dot in the
+	          corner. For an island bar, a phone, an avatar, a favicon.
+	  size    the lockup's height. Default 1.625rem. Everything inside is in
+	          em, so this one length scales the whole thing.
+	  live    true — the dot pulses, the way a recording light does.
+	  class   extra classes: im-logo-outline · im-logo-accent (mark only).
+	  label   the accessible name. Default: `text`, else the site's title —
+	          so the square for "Swarnil" is still announced as "Swarnil" and
+	          not as the letter S.
+
+	It is live text, not a picture: it takes the brand typeface, stays sharp at
+	any size, follows the theme's ink and weighs nothing. The letters are
+	aria-hidden and the lockup carries one label, so a screen reader reads the
+	name once rather than spelling it. --}}
+<span class="im-logo{{#if mark}} im-logo-mark{{/if}}{{#if live}} im-logo-live{{/if}}{{#if class}} {{class}}{{/if}}" role="img" aria-label="{{#if label}}{{label}}{{else}}{{#if text}}{{text}}{{else}}{{@site.title}}{{/if}}{{/if}}"{{#if size}} style="--im-logo-size: {{size}}"{{/if}}>
+	{{~#if mark~}}
+		<b class="im-logo-type" aria-hidden="true">{{#if text}}{{text.[0]}}{{else}}{{@site.title.[0]}}{{/if}}</b>
+	{{~else~}}
+		<b class="im-logo-type" aria-hidden="true">{{#if text}}{{text}}{{else}}{{@site.title}}{{/if}}</b>
+	{{~/if~}}
+	<i class="im-logo-dot" aria-hidden="true"></i>
+</span>

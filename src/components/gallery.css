@@ -46,26 +46,64 @@
 	}
 }
 
-/* An expand mark in the corner. */
-.im-gallery-item::after {
-	content: "";
-	position: absolute;
-	top: 0.5rem;
-	right: 0.5rem;
-	width: 1.625rem;
-	height: 1.625rem;
-	border-radius: var(--im-radius-sm);
-	background:
-		linear-gradient(#fff, #fff) center / 0.625rem 1.5px no-repeat,
-		linear-gradient(#fff, #fff) center / 1.5px 0.625rem no-repeat,
-		rgb(20 20 20 / 55%);
-	backdrop-filter: blur(8px);
-	opacity: 0;
-	transition: opacity 200ms;
+/* ---- the expand mark ----
+   A FRAME in the top-right corner of anything a click opens. It is the same
+   mark everywhere — a gallery tile, a single picture, a carousel slide, a
+   picture in a post — so "this opens" is one thing to learn, not four.
+
+   It is drawn as an SVG tile rather than gradients: four corner brackets
+   cannot be confined on both axes by a gradient. Set --im-expand-idle: 0 to
+   hide it until the pointer is over the picture.  */
+:is(.im-gallery-item, .im-zoomable, .im-zoom-link, .im-zoom-cover) {
+	--im-expand-size: 1.75rem;
+	--im-expand-inset: 0.5rem;
+	--im-expand-idle: 0.72;
+
+	position: relative;
 }
 
-.im-gallery-item:is(:hover, :focus-visible)::after {
+:is(.im-gallery-item, .im-zoomable, .im-zoom-link, .im-zoom-cover)::after {
+	content: "";
+	position: absolute;
+	top: var(--im-expand-inset);
+	right: var(--im-expand-inset);
+	z-index: 2;
+	width: var(--im-expand-size);
+	height: var(--im-expand-size);
+	border-radius: var(--im-radius-sm);
+	background:
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 3H5.5A2.5 2.5 0 0 0 3 5.5V8M16 3h2.5A2.5 2.5 0 0 1 21 5.5V8M8 21H5.5A2.5 2.5 0 0 1 3 18.5V16M16 21h2.5a2.5 2.5 0 0 0 2.5-2.5V16'/%3E%3C/svg%3E")
+			center / 0.9375rem no-repeat,
+		rgb(20 20 20 / 55%);
+	-webkit-backdrop-filter: blur(8px);
+	backdrop-filter: blur(8px);
+	opacity: var(--im-expand-idle);
+	scale: 0.92;
+	transition:
+		opacity 200ms,
+		scale 260ms var(--im-ease-glide);
+	pointer-events: none;
+}
+
+:is(.im-gallery-item, .im-zoomable, .im-zoom-link, .im-zoom-cover):is(:hover, :focus-visible)::after {
 	opacity: 1;
+	scale: 1;
+}
+
+/* A picture inside a post body: im-content.js wraps each <img> in this link. */
+.im-zoom-link {
+	display: block;
+	height: 100%;
+	cursor: zoom-in;
+}
+
+/* …or the link covers a picture that must keep its own markup (a post hero,
+   where the <img> is a direct child the layout reaches for). */
+.im-zoom-cover {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	cursor: zoom-in;
 }
 
 .im-gallery-masonry {
@@ -121,27 +159,26 @@
 }
 
 /* ---- the lightbox (built by the script) ----
-   Frosted, not blacked-out: the page stays there, blurred, behind a veil of
-   the canvas colour — white in light mode, near-black in dark — and the
-   picture floats on it with a shadow. The cross is the top-right corner. */
+   A PLAIN SHEET, not a frosted pane: the canvas colour, opaque — white in
+   light mode, near-black in dark — so nothing of the page shows through and
+   the picture is the only thing in the room. It arrives on a long bezier:
+   the sheet fades, the picture rises and settles.
+
+   The way out is a bare cross ON THE PICTURE'S top-right corner. Not a
+   button: over a photograph, a chip with a border is furniture. The hit area
+   is still 2.75rem — the cross is small, the target is not. */
 .im-lightbox {
+	--im-lightbox-foot: 4.5rem;
+
 	width: 100vw;
 	max-width: none;
 	height: 100dvh;
 	max-height: none;
 	margin: 0;
 	padding: 0;
-	background-color: color-mix(in oklab, var(--im-canvas) 72%, transparent);
+	border: 0;
+	background-color: var(--im-canvas);
 	color: var(--im-ink);
-	-webkit-backdrop-filter: blur(28px) saturate(1.4);
-	backdrop-filter: blur(28px) saturate(1.4);
-}
-
-/* Where the blur is not available the veil is simply denser. */
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-	.im-lightbox {
-		background-color: color-mix(in oklab, var(--im-canvas) 96%, transparent);
-	}
 }
 
 .im-lightbox::backdrop {
@@ -150,28 +187,25 @@
 
 .im-lightbox[open] {
 	display: grid;
-	grid-template: "bar" auto "stage" minmax(0, 1fr) "caption" auto / minmax(0, 1fr);
-	animation: im-fade-in 220ms;
+	grid-template: "stage" minmax(0, 1fr) "foot" auto / minmax(0, 1fr);
+	animation: im-lightbox-sheet 260ms var(--im-ease-glide);
 }
 
-.im-lightbox-bar {
-	grid-area: bar;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	gap: 1rem;
-	padding: 0.75rem 1rem;
-	font-family: var(--im-font-mono);
-	font-size: var(--im-text-xs);
-	letter-spacing: 0.08em;
+.im-lightbox[data-closing] {
+	animation: im-lightbox-sheet 200ms var(--im-ease-in) reverse;
+	pointer-events: none;
+}
+
+@keyframes im-lightbox-sheet {
+	from { opacity: 0; }
 }
 
 .im-lightbox-stage {
 	grid-area: stage;
 	position: relative;
 	display: grid;
-	/* One definite track, so the picture's max-height: 100% has something to
-	   be a percentage of — an auto track would simply grow to the picture. */
+	/* One definite track, so anything sized against it has something to be a
+	   percentage of — an auto row would simply grow to the picture. */
 	grid-template: minmax(0, 1fr) / minmax(0, 1fr);
 	place-items: center;
 	min-height: 0;
@@ -179,70 +213,158 @@
 	touch-action: pan-y;
 }
 
-.im-lightbox-stage > img {
+/* Shrink-wraps the picture, so the cross sits on the PICTURE'S corner and not
+   in the corner of the window. Its height is bounded in viewport units rather
+   than 100%, which would resolve against an auto height and be dropped. */
+.im-lightbox-figure {
+	position: relative;
+	display: block;
+	max-width: 100%;
+	margin: 0;
+	animation: im-lightbox-in 520ms var(--im-ease-glide) backwards;
+}
+
+.im-lightbox-figure > img {
+	display: block;
 	width: auto;
 	height: auto;
 	max-width: 100%;
-	max-height: min(100%, calc(100dvh - 7.5rem));
-	object-fit: contain;
+	max-height: calc(100dvh - var(--im-lightbox-foot) - 2.5rem);
 	border-radius: var(--im-radius-lg);
 	box-shadow: 0 0 0 1px var(--im-line), 0 2.5rem 5rem -2rem rgb(0 0 0 / 35%);
-	animation: im-lightbox-in 320ms var(--im-ease-out);
 	user-select: none;
+	/* The script replaces this node to move between pictures, and a fresh node
+	   restarts the fade — so stepping through a gallery is not a hard cut. */
+	animation: im-lightbox-swap 300ms var(--im-ease-glide);
+}
+
+@keyframes im-lightbox-swap {
+	from { opacity: 0; }
 }
 
 @keyframes im-lightbox-in {
-	from { opacity: 0; scale: 0.97; }
+	from {
+		opacity: 0;
+		scale: 0.94;
+		translate: 0 1.5rem;
+	}
 }
 
-.im-lightbox-caption {
-	grid-area: caption;
-	min-height: 3rem;
-	padding: 0.875rem 1.25rem 1.25rem;
-	color: var(--im-body);
-	font-size: var(--im-text-sm);
-	text-align: center;
+.im-lightbox[data-closing] .im-lightbox-figure {
+	animation: im-lightbox-in 200ms var(--im-ease-in) reverse forwards;
 }
 
-.im-lightbox .im-btn {
-	--im-btn-bg: var(--im-canvas);
-	--im-btn-fg: var(--im-ink);
-	--im-btn-bg-hover: var(--im-ink);
-	--im-btn-fg-hover: var(--im-canvas);
-
-	box-shadow: inset 0 0 0 1px var(--im-line), var(--im-shadow-float);
-}
-
-/* The cross: larger than the arrows, because it is the way out. */
-.im-lightbox [data-close] {
+/* The cross. A button element, because it is one; nothing of a button about
+   it but the hit area. It is white over the picture and picks up a disc only
+   while it is hovered or focused. */
+.im-lightbox-close {
+	position: absolute;
+	top: 0;
+	right: 0;
+	display: grid;
+	place-items: center;
 	width: 2.75rem;
 	height: 2.75rem;
+	padding: 0;
+	border: 0;
+	border-radius: var(--im-radius-md);
+	background: none;
+	color: #fff;
+	cursor: pointer;
+	filter: drop-shadow(0 1px 3px rgb(0 0 0 / 55%));
+	transition: background-color 200ms, rotate 320ms var(--im-ease-glide);
 }
 
-.im-lightbox [data-close] > .im-icon {
-	font-size: 1.25rem;
-	transition: rotate 220ms var(--im-ease-out);
+.im-lightbox-close > .im-icon {
+	font-size: 1.375rem;
+	stroke-width: 1.75;
 }
 
-.im-lightbox [data-close]:hover > .im-icon {
+.im-lightbox-close:is(:hover, :focus-visible) {
+	background-color: rgb(20 20 20 / 45%);
 	rotate: 90deg;
 }
 
-.im-lightbox-count {
-	color: var(--im-muted);
+/* Caption and counter, under the picture. */
+.im-lightbox-foot {
+	grid-area: foot;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem;
+	min-height: var(--im-lightbox-foot);
+	padding: 1rem 1.25rem 1.5rem;
+	text-align: center;
 }
 
+.im-lightbox-caption {
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+	text-wrap: pretty;
+}
+
+.im-lightbox-count {
+	flex: none;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	font-variant-numeric: tabular-nums;
+	letter-spacing: 0.08em;
+}
+
+.im-lightbox-caption:not(:empty) + .im-lightbox-count::before {
+	content: "·";
+	margin-right: 1rem;
+	color: var(--im-faint);
+}
+
+/* The arrows: the same bare treatment as the cross, at the edges of the room. */
 .im-lightbox-prev,
 .im-lightbox-next {
 	position: absolute;
 	top: 50%;
 	z-index: 1;
+	display: grid;
+	place-items: center;
+	width: 3rem;
+	height: 3rem;
+	padding: 0;
+	border: 0;
+	border-radius: var(--im-radius-full);
+	background: none;
+	color: var(--im-muted);
 	translate: 0 -50%;
+	cursor: pointer;
+	transition: color 160ms, background-color 160ms, translate 260ms var(--im-ease-glide);
 }
 
-.im-lightbox-prev { left: 0.75rem; }
-.im-lightbox-next { right: 0.75rem; }
+.im-lightbox-prev > .im-icon,
+.im-lightbox-next > .im-icon {
+	font-size: 1.5rem;
+}
+
+.im-lightbox-prev:is(:hover, :focus-visible),
+.im-lightbox-next:is(:hover, :focus-visible) {
+	background-color: var(--im-surface);
+	color: var(--im-ink);
+}
+
+.im-lightbox-prev { left: 0.25rem; }
+.im-lightbox-next { right: 0.25rem; }
+
+.im-lightbox-prev:is(:hover, :focus-visible) { translate: -0.125rem -50%; }
+.im-lightbox-next:is(:hover, :focus-visible) { translate: 0.125rem -50%; }
 
 .im-lightbox[data-single] :is(.im-lightbox-prev, .im-lightbox-next, .im-lightbox-count) {
 	display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.im-lightbox[open],
+	.im-lightbox-figure,
+	.im-lightbox-figure > img,
+	.im-lightbox[data-closing],
+	.im-lightbox[data-closing] .im-lightbox-figure {
+		animation-duration: 1ms;
+	}
 }

@@ -1,0 +1,166 @@
+---
+title: Post collection
+layout: home
+description: The page a blog actually opens on — a head that says what the collection is, a bar of topics, a feed of posts in one of three dressings, and a way to the next page. This is /blog, a tag page and an author page, which are the same page with a different list.
+eyebrow: Collections · Post
+source: src/components/collection.css · post-card.css · pagination.css
+---
+{{!-- layout: home — the page's <h1> belongs to the collection being shown. --}}
+<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+	<p class="im-eyebrow">Collections · Post · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+
+	<div class="demo-controls">
+		<p class="im-caption">Feed</p>
+		<div class="im-btn-group" role="group" aria-label="Feed layout"
+			data-demo-target="#feed" data-demo-label="#feed-class">
+			<button class="im-btn im-btn-sm" type="button" aria-pressed="true"
+				data-demo-class="im-feed im-feed-lead">Lead</button>
+			<button class="im-btn im-btn-sm" type="button"
+				data-demo-class="im-feed">Grid</button>
+			<button class="im-btn im-btn-sm" type="button"
+				data-demo-class="im-feed im-feed-list">List</button>
+		</div>
+		<code class="doc-source" id="feed-class" style="margin-left: auto"></code>
+	</div>
+</section>
+
+<div class="im-wrap-wide im-stack" style="--im-stack-gap: 1.75rem">
+	<header class="im-collhead">
+		<p class="im-eyebrow">Collection</p>
+		<h1 class="im-collhead-title">Journal</h1>
+		<p class="im-collhead-text">Notes on building things, the roads in between, and the tools that survived the year. Long enough to be worth the trip; never longer.</p>
+		<p class="im-collhead-meta">
+			<span>{{fixtures.posts.length}} posts</span>
+			<a href="/components/icons/">RSS</a>
+			<a href="/forms/inputs/">Subscribe</a>
+		</p>
+	</header>
+
+	<div class="im-collbar">
+		<div class="im-collbar-filters">
+			<a class="im-tag" href="#feed" aria-current="page">All</a>
+			{{#each fixtures.tags}}<a class="im-tag" href="#feed">{{name}} <small>{{count.posts}}</small></a>{{/each}}
+		</div>
+		<div class="im-cluster" style="--im-cluster-gap: .375rem">
+			<button class="im-btn im-btn-sm" type="button">{{icon "list-filter"}}Newest</button>
+		</div>
+	</div>
+
+	<div class="im-feed im-feed-lead" id="feed">
+		{{#foreach demo.ten}}{{> "components/post-card" excerpt=true}}{{/foreach}}
+	</div>
+
+	<div class="im-loadmore">
+		<button class="im-btn" type="button">Load more</button>
+		<p>10 of {{fixtures.posts.length}}</p>
+	</div>
+
+	<nav class="im-pagination im-pagination-ruled" aria-label="Pages" style="justify-content: center">
+		<span class="im-page" aria-disabled="true">{{icon "chevron-left"}}</span>
+		<a class="im-page" href="#feed" aria-current="page">1</a>
+		<a class="im-page" href="#feed">2</a>
+		<a class="im-page" href="#feed">3</a>
+		<span class="im-page im-page-gap">…</span>
+		<a class="im-page" href="#feed">9</a>
+		<a class="im-page" href="#feed">{{icon "chevron-right"}}</a>
+	</nav>
+</div>
+
+<section class="im-section im-wrap">
+	<div class="im-prose">
+		<h2>One page, three lists</h2>
+		<p>A blog index, a tag page and an author page are the same page. Ghost hands each of them a different list through <code>&#123;&#123;#foreach posts&#125;&#125;</code> and a different <code>&#123;&#123;#is&#125;&#125;</code> context; nothing else about the page has to change. Build it once as <code>index.hbs</code> and let <code>tag.hbs</code> and <code>author.hbs</code> be four lines that set the head and include it.</p>
+		{{{{code "hbs"}}}}
+{{!-- index.hbs --}}
+<header class="im-collhead">
+	<h1 class="im-collhead-title">{{@site.title}}</h1>
+	<p class="im-collhead-text">{{@site.description}}</p>
+</header>
+{{> "feed"}}
+
+{{!-- tag.hbs — the same feed, a different head --}}
+{{#tag}}
+<header class="im-collhead">
+	<p class="im-eyebrow">{{t "Topic"}}</p>
+	<h1 class="im-collhead-title">{{name}}</h1>
+	{{#if description}}<p class="im-collhead-text">{{description}}</p>{{/if}}
+	<p class="im-collhead-meta"><span>{{plural ../pagination.total empty="No posts" singular="% post" plural="% posts"}}</span></p>
+</header>
+{{/tag}}
+{{> "feed"}}
+		{{{{/code}}}}
+
+		<h2>The head</h2>
+		<div class="im-table-scroll">
+		<table>
+			<thead><tr><th>Class</th><th></th></tr></thead>
+			<tbody>
+				<tr><td><code>im-collhead</code></td><td>The block. Capped at 52rem — a description thrown across a 90rem window is a banner, not a sentence.</td></tr>
+				<tr><td><code>im-collhead-title</code></td><td>The <code>&lt;h1&gt;</code>. Fluid, balanced, and smaller than a post's title: this is a shelf, not an article.</td></tr>
+				<tr><td><code>im-collhead-text</code></td><td>What the collection is. One or two sentences.</td></tr>
+				<tr><td><code>im-collhead-meta</code></td><td>Counts, RSS, subscribe — a mono line, with the dots drawn rather than typed.</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<h2>The bar</h2>
+		<p>Topics on the left, how to sort or look at the list on the right. The filters <strong>scroll sideways</strong> rather than wrapping — a site with forty tags would otherwise push the first post below the fold — and fade out at the right edge so it is clear there are more. Add <code>im-collbar-sticky</code> to keep it under the top bar while the feed scrolls past.</p>
+		{{#example}}
+		<div class="im-collbar">
+			<div class="im-collbar-filters">
+				<a class="im-tag" href="#the-bar" aria-current="page">All</a>
+				{{#each fixtures.tags}}<a class="im-tag" href="#the-bar">{{name}} <small>{{count.posts}}</small></a>{{/each}}
+			</div>
+			<div class="im-cluster" style="--im-cluster-gap: .375rem">
+				<button class="im-btn im-btn-sm" type="button">{{icon "list-filter"}}Newest</button>
+			</div>
+		</div>
+		{{/example}}
+
+		<h2>The feed</h2>
+		<p>One grid, three dressings — the buttons at the top of this page. Whichever one a theme picks, it picks it for <em>every</em> page of the feed: a reader scanning a list of posts should not have to relearn it between the home page and a tag.</p>
+		<div class="im-table-scroll">
+		<table>
+			<thead><tr><th>Class</th><th></th></tr></thead>
+			<tbody>
+				<tr><td><code>im-feed</code></td><td>As many columns as fit at <code>--im-feed-min</code> (16rem). No breakpoints.</td></tr>
+				<tr><td><code>im-feed-lead</code></td><td>The newest post takes the top row and <strong>lies down</strong> — picture beside the words — from 48rem up. Below that there is only one column, so there is no difference to make.</td></tr>
+				<tr><td><code>im-feed-list</code></td><td>One column, separated by rules rather than gaps. For a tag page, an archive, a search result. Give the cards <code>layout="row"</code>.</td></tr>
+				<tr><td><code>im-feed-empty</code></td><td>A dashed box for "nothing here yet" — which a tag page will hit.</td></tr>
+			</tbody>
+		</table>
+		</div>
+		{{{{code "hbs"}}}}
+<div class="im-feed im-feed-lead">
+	{{#foreach posts}}
+		{{> "components/post-card" excerpt=true eager=@first}}
+	{{else}}
+		<p class="im-feed-empty">{{t "Nothing here yet."}}</p>
+	{{/foreach}}
+</div>
+		{{{{/code}}}}
+		<p>The cards themselves are the <a href="/collections/post/card/">post card</a> — stacked, cover or row — and they carry the reading time, the featured flame and the members-only lock without being told.</p>
+
+		<h2>The way to the next page</h2>
+		<p>Three, from <a href="/navigation/pagination/">Pagination</a>, and a theme should pick <em>one</em>:</p>
+		<ul>
+			<li><strong>Numbered</strong> — <code>im-pagination</code>. Best for an archive somebody is working through, and the only one a search engine follows all the way.</li>
+			<li><strong>Load more</strong> — <code>im-loadmore</code>, with how many are left. Best for a feed somebody is browsing.</li>
+			<li><strong>Infinite</strong> — <code>im-infinite</code>. Cheapest to use and the hardest to leave; it also puts the footer out of reach, so anything in the footer is gone.</li>
+		</ul>
+
+		<h2>With a sidebar</h2>
+		<p>A collection can carry the same column of <a href="/components/widgets/">widgets</a> a post does: wrap the head, the bar and the feed in <code>im-with-aside im-with-aside-wide</code> and put the widgets in the <code>&lt;aside&gt;</code>. Drop <code>--im-feed-min</code> to about 13rem when you do — the feed has 19rem less to work with.</p>
+		<p>Put the newsletter first in that column on a collection page, and the author card first on a post page: on a list, a reader has not met anyone yet.</p>
+
+		<h2>Details that matter</h2>
+		<ul>
+			<li><strong>The first card loads eagerly, the rest lazily.</strong> <code>eager=@first</code> in the loop. It is the largest picture above the fold on most collection pages.</li>
+			<li><strong>An empty state is not optional.</strong> Every tag page can be empty, and a grid with nothing in it looks broken rather than empty.</li>
+			<li><strong>The filter bar is links, not JavaScript.</strong> Each topic is a real tag page, so it is shareable, crawlable and works before any script runs.</li>
+			<li><strong>The count in the head comes from <code>pagination.total</code></strong>, not from the length of the page's list — which is however many fit on page one.</li>
+		</ul>
+	</div>
+</section>

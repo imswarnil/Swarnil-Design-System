@@ -1,0 +1,271 @@
+---
+title: Ads & sponsors
+description: Every size of ad slot, the sponsor card, the affiliate product card — and the member gate that "remove ads" opens. Each one is labelled, each one can be closed, and none of them is a pixel size: they are ratios that shrink.
+eyebrow: Component
+source: src/components/ad.css · src/js/im-ads.js
+---
+<p>Three ways a site takes money, and one rule they share: <strong>say what they are</strong>. Every block on this page carries an <code>im-ad-label</code>. It is not decoration and it is not optional — a paid placement that looks like editorial is the fastest way to lose a reader for good, and in most places it is also the law. The label is part of the component so that removing it takes deliberate effort.</p>
+
+<h2>The anatomy</h2>
+{{#example style="max-width: 40rem"}}
+<aside class="im-ad im-ad-leaderboard" aria-label="Advertisement">
+	<p class="im-ad-label">Ad</p>
+	<button class="im-ad-close" type="button" data-im-ad-close aria-label="Close this ad">{{> "icons/x"}}</button>
+	<a class="im-ad-slot im-ad-empty" href="#the-anatomy">728 × 90</a>
+	<button class="im-ad-remove" type="button" data-im-ad-remove="#ad-gate">{{> "icons/sparkles"}}Remove ads</button>
+</aside>
+{{/example}}
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Part</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>im-ad</code></td><td>The block. An <code>&lt;aside&gt;</code> with an <code>aria-label</code>, so a screen reader can skip it. <code>im-ad-bare</code> drops the frame for a slot inside something that already has one.</td></tr>
+		<tr><td><code>im-ad-label</code></td><td>The disclosure. Mono, small, never in the accent — it is a statement, not a badge to be looked at.</td></tr>
+		<tr><td><code>im-ad-close</code></td><td>The cross, bare, in the corner. <code>im-ad-close-over</code> for a cross that sits on a picture.</td></tr>
+		<tr><td><code>im-ad-slot</code></td><td>Where the creative goes. It holds the <strong>shape</strong>, so an empty slot and a full one are the same size and the page never jumps when one fails to load. <code>im-ad-empty</code> is the dashed "nothing sold this week" state.</td></tr>
+		<tr><td><code>im-ad-remove</code></td><td>The way out. Quiet, at the foot; it opens the member gate.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>Every size</h2>
+<p>The formats are <strong>ratios</strong>, not pixel sizes. A 728×90 leaderboard on a 390px phone is a 728px page with a sideways scrollbar; here it is a shape that shrinks, capped so it never eats the screen. Below 40rem a leaderboard becomes the mobile banner it should always have been — nothing in the markup changes.</p>
+{{#example}}
+<div class="im-grid-auto" style="--im-grid-min: 15rem; align-items: start">
+	<aside class="im-ad im-ad-rectangle" aria-label="Advertisement"><p class="im-ad-label">Ad</p><button class="im-ad-close" type="button" data-im-ad-close aria-label="Close">{{> "icons/x"}}</button><span class="im-ad-slot im-ad-empty">300 × 250</span></aside>
+	<aside class="im-ad im-ad-square" aria-label="Advertisement"><p class="im-ad-label">Ad</p><span class="im-ad-slot im-ad-empty">250 × 250</span></aside>
+	<aside class="im-ad im-ad-banner" aria-label="Advertisement"><p class="im-ad-label">Ad</p><span class="im-ad-slot im-ad-empty">320 × 50</span></aside>
+	<aside class="im-ad im-ad-skyscraper" aria-label="Advertisement"><p class="im-ad-label">Ad</p><span class="im-ad-slot im-ad-empty">160 × 600</span></aside>
+	<aside class="im-ad im-ad-half" aria-label="Advertisement"><p class="im-ad-label">Ad</p><span class="im-ad-slot im-ad-empty">300 × 600</span></aside>
+</div>
+{{/example}}
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Class</th><th>Ratio</th><th>Capped at</th></tr></thead>
+	<tbody>
+		<tr><td><code>im-ad-leaderboard</code></td><td>728 × 90</td><td>48rem</td></tr>
+		<tr><td><code>im-ad-billboard</code></td><td>970 × 250</td><td>62rem</td></tr>
+		<tr><td><code>im-ad-banner</code></td><td>320 × 50</td><td>24rem</td></tr>
+		<tr><td><code>im-ad-rectangle</code></td><td>300 × 250</td><td>20rem</td></tr>
+		<tr><td><code>im-ad-square</code></td><td>1 : 1</td><td>18rem</td></tr>
+		<tr><td><code>im-ad-half</code></td><td>300 × 600</td><td>20rem</td></tr>
+		<tr><td><code>im-ad-skyscraper</code></td><td>160 × 600</td><td>11rem</td></tr>
+		<tr><td><code>im-ad-portrait</code></td><td>300 × 1050</td><td>20rem</td></tr>
+		<tr><td><code>im-ad-video</code></td><td>16 : 9</td><td>44rem</td></tr>
+	</tbody>
+</table>
+</div>
+<p>Or set <code>--im-ad-ratio</code> and <code>--im-ad-max</code> yourself for a size a network gave you.</p>
+
+<h2>With a creative</h2>
+{{#example}}
+<div class="im-grid-auto" style="--im-grid-min: 17rem; align-items: start">
+	<aside class="im-ad im-ad-rectangle" aria-label="Advertisement">
+		<p class="im-ad-label im-ad-label-chip">Ad</p>
+		<button class="im-ad-close im-ad-close-over" type="button" data-im-ad-close aria-label="Close">{{> "icons/x"}}</button>
+		<a class="im-ad-slot" href="#with-a-creative"><img src="{{demo.six.[3].feature_image}}" alt="An advertisement" loading="lazy"></a>
+		<button class="im-ad-remove" type="button" data-im-ad-remove="#ad-gate">Remove ads</button>
+	</aside>
+	<aside class="im-ad im-ad-video" aria-label="Advertisement">
+		<p class="im-ad-label im-ad-label-chip">Ad</p>
+		<button class="im-ad-close im-ad-close-over" type="button" data-im-ad-close aria-label="Close">{{> "icons/x"}}</button>
+		<span class="im-ad-slot" style="--im-ad-seconds: 15s">
+			<video src="{{demo.video}}" muted loop playsinline autoplay></video>
+			<span class="im-ad-countdown">{{> "icons/clock"}}0:15</span>
+			<span class="im-ad-progress"><span></span></span>
+		</span>
+		<button class="im-ad-remove" type="button" data-im-ad-remove="#ad-gate">Remove ads</button>
+	</aside>
+</div>
+{{/example}}
+<p>The video format is the only one that tells a reader <strong>how long this lasts</strong>: <code>im-ad-countdown</code> and a hairline <code>im-ad-progress</code> that empties over <code>--im-ad-seconds</code>. If there is a skip, it goes in <code>im-ad-skip</code>, in the same corner, and it is a real button from the first frame.</p>
+
+<h2>In feed</h2>
+<p>A row that sits between posts. It borrows the <a href="/collections/post/card/">post card</a>'s shape on purpose — that is what "native" means — and is told apart by the label and by the rules above and below it, which no post has.</p>
+{{#example}}
+<div class="im-stack" style="--im-stack-gap: 1.25rem">
+	{{#with demo.three.[0]}}{{> "components/post-card" layout="row" excerpt=true}}{{/with}}
+	<aside class="im-ad im-ad-infeed" aria-label="Advertisement">
+		<p class="im-ad-label">Sponsored</p>
+		<button class="im-ad-close" type="button" data-im-ad-close aria-label="Close">{{> "icons/x"}}</button>
+		<a class="im-ad-slot" href="#in-feed"><img src="{{demo.six.[4].feature_image}}" alt="" loading="lazy"></a>
+		<p class="im-ad-infeed-title"><a href="#in-feed" style="color: inherit; text-decoration: none">The notebook that survived four countries</a></p>
+		<p class="im-ad-infeed-text">Paper that takes fountain ink, a cover that takes a rucksack.</p>
+		<p class="im-ad-infeed-by">Paid for by Field Notes Co.</p>
+	</aside>
+	{{#with demo.three.[1]}}{{> "components/post-card" layout="row" excerpt=true}}{{/with}}
+</div>
+{{/example}}
+
+<h2>Sticky, floating, interstitial</h2>
+<p>The three that arrive uninvited. All three are opt-in behaviours of <code>im-ads.js</code>, and all three are dismissible from the first frame.</p>
+{{#example center=true}}
+<div class="im-cluster">
+	<button class="im-btn" type="button" data-demo-ad="sticky">Show the sticky ad</button>
+	<button class="im-btn" type="button" data-demo-ad="floating">Show the floating ad</button>
+	<button class="im-btn" type="button" data-im-dialog-open="#ad-interstitial">Show the interstitial</button>
+</div>
+{{/example}}
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Class</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>im-ad-sticky</code></td><td>Anchored to the bottom of the window, on a frosted bar. The script gives it <code>data-im-ad-shown</code> once the page has been scrolled past <code>data-im-ad-after</code> pixels (400 by default), so it arrives when the reader has got somewhere rather than on load.</td></tr>
+		<tr><td><code>im-ad-floating</code></td><td>A corner unit, same timing.</td></tr>
+		<tr><td><code>im-ad-popup</code></td><td>The interstitial, a <code>&lt;dialog&gt;</code>: the browser gives the top layer, the focus trap and Esc. <code>data-im-ad-popup="8"</code> opens it after eight seconds, <strong>once per session</strong>.</td></tr>
+		<tr><td><code>im-ad-rail</code></td><td>Sticky in a sidebar column, under the top bar.</td></tr>
+	</tbody>
+</table>
+</div>
+<p>Closing any of them is remembered for the session — <code>data-im-ad-key</code> and <code>sessionStorage</code>, nothing else. No cookie, no network call, nothing that can follow a reader off the page.</p>
+
+<h2>Remove ads → become a member</h2>
+<p>This is the part that makes the rest defensible. <code>data-im-ad-remove="#ad-gate"</code> on any control opens the gate: the site's own offer, in the site's own clothes, with the price and what it buys stated plainly. It is Ghost's members flow — the buttons go to <code>/#/portal/signup</code> and <code>/#/portal/signin</code> — so a theme wires it with two links and no script of its own.</p>
+{{#example center=true}}
+<button class="im-btn im-btn-primary" type="button" data-im-ad-remove="#ad-gate">{{> "icons/sparkles"}}Remove ads</button>
+{{/example}}
+{{{{code "hbs"}}}}
+<dialog class="im-gate" id="ad-gate" aria-labelledby="gate-title">
+	<div class="im-gate-head">
+		<button class="im-gate-close" type="button" data-im-gate-close aria-label="{{t "Close"}}">{{> "icons/x"}}</button>
+		{{> "components/logo" mark=true size="2.75rem"}}
+		<h2 class="im-gate-title" id="gate-title">{{t "Read it without the ads"}}</h2>
+		<p class="im-gate-text">{{t "Members get every post with nothing sold around it — and the archive, and the newsletter."}}</p>
+	</div>
+	<div class="im-gate-body">
+		<ul class="im-gate-list">
+			<li><span><strong>No ads, anywhere.</strong> Not in the feed, not in a post, not at the bottom of the window.</span></li>
+			<li><span><strong>The full archive</strong>, including members-only posts.</span></li>
+			<li><span><strong>The newsletter</strong>, one email when something lands.</span></li>
+		</ul>
+		<p class="im-gate-price"><strong>$5</strong><span>{{t "a month, cancel any time"}}</span></p>
+		<div class="im-gate-actions">
+			<a class="im-btn im-btn-primary im-btn-lg im-btn-block" href="/#/portal/signup">{{t "Become a member"}}</a>
+			<button class="im-btn im-btn-ghost im-btn-block" type="button" data-im-gate-close>{{t "Keep reading with ads"}}</button>
+		</div>
+	</div>
+	<p class="im-gate-foot">{{t "Already a member?"}} <a href="/#/portal/signin">{{t "Sign in"}}</a></p>
+</dialog>
+{{{{/code}}}}
+<p>The gate is a <code>&lt;dialog&gt;</code>, so Esc closes it, focus is trapped while it is open and returns afterwards, and the page behind it cannot scroll — all from the browser. A press on the sheet around the card closes it too. <strong>"Keep reading with ads" is a real button</strong>, the same size as the other one: a gate a reader cannot decline is not an offer.</p>
+
+<h2>Sponsor card</h2>
+<p>Not an ad slot — somebody who pays for the whole thing, named, with a line about what they do. It looks like the site because it is part of the site.</p>
+{{#example}}
+<div class="im-grid-auto" style="--im-grid-min: 17rem">
+	<section class="im-sponsor">
+		<p class="im-ad-label">This month's sponsor</p>
+		<div class="im-sponsor-head">
+			<span class="im-sponsor-logo">F</span>
+			<a class="im-sponsor-name" href="#sponsor-card">Field Notes Co.</a>
+		</div>
+		<p class="im-sponsor-text">Paper that takes fountain ink and a cover that takes a rucksack. Made in Leipzig since 1994.</p>
+		<a class="im-btn im-btn-sm" href="#sponsor-card" rel="sponsored noopener">Take a look {{> "icons/arrow-right"}}</a>
+	</section>
+	<section class="im-sponsor" style="background-color: var(--im-surface); border-color: transparent">
+		<p class="im-ad-label">Sponsored</p>
+		<div class="im-sponsor-head">
+			<span class="im-sponsor-logo"><img src="/assets/brand/mark.svg" alt=""></span>
+			<span><a class="im-sponsor-name" href="#sponsor-card">Im Design System</a><br><small class="text-muted">Tailwind 4 · Ghost 6</small></span>
+		</div>
+		<p class="im-sponsor-text">A design system you own, end to end.</p>
+		<a class="im-btn im-btn-sm im-btn-primary" href="#sponsor-card">Get it {{> "icons/arrow-right"}}</a>
+	</section>
+</div>
+{{/example}}
+<p>A row of logos instead, for "this month's sponsors", where a card each would be a page of its own. The logos are greyed until hovered, so a quiet footer does not pick up seven brand colours it did not choose.</p>
+{{#example}}
+<div class="im-sponsors">
+	<a href="#sponsor-card">Field Notes</a>
+	<a href="#sponsor-card">Aperture</a>
+	<a href="#sponsor-card">Northbound</a>
+	<a href="#sponsor-card">Kettle &amp; Co</a>
+	<a href="#sponsor-card">Verso</a>
+</div>
+{{/example}}
+
+<h2>Affiliate product card</h2>
+<p>A thing you recommend and are paid for. Everything a reader needs to decide is on the card, <strong>including that last part</strong> — <code>im-affiliate-note</code> is a row of its own at the bottom, in the same mono as every other label here, so a reader who has learnt what that type means on one block knows what it means on all of them.</p>
+{{#example}}
+<div class="im-affiliates">
+	<article class="im-affiliate">
+		<span class="im-affiliate-media"><img src="{{demo.six.[2].feature_image}}" alt="" loading="lazy"></span>
+		<a class="im-affiliate-name" href="#affiliate-product-card" rel="sponsored noopener">Fujifilm X100VI</a>
+		<p class="im-affiliate-by">Fujifilm · compact camera</p>
+		<p class="im-affiliate-text">Every picture on this site since March. Small enough to be in a pocket, good enough not to want the other one.</p>
+		<p class="im-affiliate-meta"><span class="im-affiliate-price">€1,599</span><span class="im-affiliate-was">€1,799</span><span class="im-badge im-badge-success">In stock</span></p>
+		<div class="im-affiliate-actions">
+			<a class="im-btn im-btn-primary im-btn-sm" href="#affiliate-product-card" rel="sponsored noopener">Buy it {{> "icons/arrow-up-right"}}</a>
+			<a class="im-btn im-btn-sm" href="#affiliate-product-card">Why this one</a>
+		</div>
+		<p class="im-affiliate-note">Affiliate link — I earn a little if you buy, at no cost to you</p>
+	</article>
+	<article class="im-affiliate">
+		<span class="im-affiliate-media"><img src="{{demo.six.[5].feature_image}}" alt="" loading="lazy"></span>
+		<a class="im-affiliate-name" href="#affiliate-product-card" rel="sponsored noopener">Roterfaden Taschenbegleiter</a>
+		<p class="im-affiliate-by">Roterfaden · notebook cover</p>
+		<p class="im-affiliate-text">Four years old, four countries, still closes properly.</p>
+		<p class="im-affiliate-meta"><span class="im-affiliate-price">€139</span></p>
+		<div class="im-affiliate-actions">
+			<a class="im-btn im-btn-primary im-btn-sm" href="#affiliate-product-card" rel="sponsored noopener">Buy it {{> "icons/arrow-up-right"}}</a>
+		</div>
+		<p class="im-affiliate-note">Affiliate link</p>
+	</article>
+</div>
+{{/example}}
+<p>Always put <code>rel="sponsored noopener"</code> on the outgoing link. Search engines ask for it, and it is the machine-readable half of the disclosure the card already makes in words.</p>
+
+<h2>Rules</h2>
+<ul>
+	<li><strong>The label is not optional.</strong> Every block here ships with one. If you take it out, you are the one who took it out.</li>
+	<li><strong>Two per page is a lot.</strong> A leaderboard and one in-feed unit is a publication; five is a portal nobody comes back to.</li>
+	<li><strong>Never between a heading and the paragraph it belongs to.</strong> Ads go between blocks, not inside one.</li>
+	<li><strong>Reserve the space.</strong> The slot holds the ratio whether or not a creative arrives, so nothing on the page moves when one does — or when one is blocked.</li>
+	<li><strong>Give a reader the way out.</strong> <code>im-ad-remove</code> on every block that can carry it. A site that sells the reader and offers them nothing else is the reason the blockers exist.</li>
+	<li><strong>Nothing here talks to an ad network.</strong> The components are markup and CSS; what fills a slot, and what that thing loads, is a decision the theme makes with its own eyes open.</li>
+</ul>
+
+{{!-- The live demos: the gate, the interstitial, and the two fixed units the
+     buttons above reveal. They sit outside every example so the fixed ones are
+     positioned against the window and not against a preview box. --}}
+<dialog class="im-gate" id="ad-gate" aria-labelledby="gate-title">
+	<div class="im-gate-head">
+		<button class="im-gate-close" type="button" data-im-gate-close aria-label="Close">{{> "icons/x"}}</button>
+		{{> "components/logo" mark=true size="2.75rem"}}
+		<h2 class="im-gate-title" id="gate-title">Read it without the ads</h2>
+		<p class="im-gate-text">Members get every post with nothing sold around it — and the archive, and the newsletter.</p>
+	</div>
+	<div class="im-gate-body">
+		<ul class="im-gate-list">
+			<li><span><strong>No ads, anywhere.</strong> Not in the feed, not in a post, not at the bottom of the window.</span></li>
+			<li><span><strong>The full archive</strong>, including members-only posts.</span></li>
+			<li><span><strong>The newsletter</strong>, one email when something lands.</span></li>
+		</ul>
+		<p class="im-gate-price"><strong>$5</strong><span>a month, cancel any time</span></p>
+		<div class="im-gate-actions">
+			<a class="im-btn im-btn-primary im-btn-lg im-btn-block" href="#remove-ads-become-a-member">Become a member</a>
+			<button class="im-btn im-btn-ghost im-btn-block" type="button" data-im-gate-close>Keep reading with ads</button>
+		</div>
+	</div>
+	<p class="im-gate-foot">Already a member? <a href="#remove-ads-become-a-member">Sign in</a></p>
+</dialog>
+
+<dialog class="im-ad-popup" id="ad-interstitial" aria-label="Advertisement">
+	<p class="im-ad-label im-ad-label-chip">Ad</p>
+	<button class="im-ad-close im-ad-close-over" type="button" data-im-ad-close aria-label="Close">{{> "icons/x"}}</button>
+	<a class="im-ad-slot" href="#sticky-floating-interstitial" style="--im-ad-ratio: 4 / 3"><img src="{{demo.six.[1].feature_image}}" alt="An advertisement" loading="lazy"></a>
+	<button class="im-ad-remove" type="button" data-im-ad-remove="#ad-gate" style="margin-top: .625rem">{{> "icons/sparkles"}}Remove ads</button>
+</dialog>
+
+<aside class="im-ad im-ad-sticky" id="ad-sticky-demo" aria-label="Advertisement" hidden>
+	<button class="im-ad-close" type="button" data-im-ad-close aria-label="Close">{{> "icons/x"}}</button>
+	<p class="im-ad-label">Ad</p>
+	<a class="im-ad-slot im-ad-empty" href="#sticky-floating-interstitial">728 × 90 — anchored to the window</a>
+</aside>
+
+<aside class="im-ad im-ad-floating" id="ad-floating-demo" aria-label="Advertisement" hidden>
+	<button class="im-ad-close" type="button" data-im-ad-close aria-label="Close">{{> "icons/x"}}</button>
+	<p class="im-ad-label">Ad</p>
+	<a class="im-ad-slot" href="#sticky-floating-interstitial" style="--im-ad-ratio: 16 / 10"><img src="{{demo.six.[0].feature_image}}" alt="An advertisement" loading="lazy"></a>
+	<button class="im-ad-remove" type="button" data-im-ad-remove="#ad-gate">Remove ads</button>
+</aside>

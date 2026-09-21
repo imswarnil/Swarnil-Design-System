@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="{{@site.locale}}">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>{{meta_title}}</title>
+	<meta name="robots" content="noindex">
+	{{> "shell/head-script"}}
+	<link rel="icon" href="/assets/brand/mark.svg" type="image/svg+xml">
+	{{ghost_head}}
+	<link rel="stylesheet" href="/assets/im.css">
+	<style>body { background-color: var(--im-canvas) }</style>
+	{{{block "styles"}}}
+</head>
+{{!-- Docs only: a page with NO docs chrome, for loading in an iframe. It is the
+	nearest thing here to a real theme's default.hbs — which is the point: a
+	floating navbar can only be shown over a page that actually scrolls. --}}
+<body>
+	{{{body}}}
+	<script src="/assets/im.js"></script>
+	<script src="/assets/im-motion.js"></script>
+	{{{block "scripts"}}}
+</body>
+</html>

@@ -1,0 +1,89 @@
+---
+title: Issue collection
+layout: home
+description: The archive of a letter — what it is, a form to join it, and every issue that has gone out, numbered. A newsletter's back catalogue is the best argument for subscribing to it.
+eyebrow: Collections · Newsletter
+source: src/components/collection.css · field.css
+---
+<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+	<p class="im-eyebrow">Collections · Newsletter · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+</section>
+
+<div class="im-wrap im-stack" style="--im-stack-gap: 2rem">
+	<header class="im-collhead">
+		<p class="im-eyebrow">Newsletter</p>
+		<h1 class="im-collhead-title">Field Notes</h1>
+		<p class="im-collhead-text">One email when something lands — what I built, what it cost and what I got wrong. No schedule, no filler, no list swapping.</p>
+		<p class="im-collhead-meta">
+			<span>{{demo.issues.length}} issues</span>
+			<span>4,100 readers</span>
+			<a href="#issues">RSS</a>
+		</p>
+	</header>
+
+	<section class="im-postcta" style="text-align: left; justify-items: stretch">
+		<h2 class="im-postcta-title" style="text-wrap: pretty">Join 4,100 readers</h2>
+		<p class="im-postcta-text" style="max-width: 52ch">Every issue is free and every issue stays up — the archive below is the whole of it.</p>
+		{{> "components/subscribe" id="news-email" button="Subscribe"}}
+	</section>
+
+	<section class="im-section" id="issues">
+		<div class="home-head"><p class="im-caption" data-index="all">Every issue</p><a class="im-card-cta" href="#issues">RSS {{> "icons/arrow-right"}}</a></div>
+		<div class="im-issues">
+			{{#each demo.issues}}
+			<article class="im-issue">
+				<p class="im-issue-num">{{n}}</p>
+				<p class="im-issue-date">{{date}}</p>
+				<h3 class="im-issue-title"><a href="/collections/newsletter/issue/">{{title}}</a></h3>
+				<p class="im-issue-text">{{text}}</p>
+				<p class="im-issue-meta">
+					<span class="im-kind" data-kind="issue">{{icon "mail"}}Issue</span>
+					<span>{{words}} words</span>
+					<span>{{read}} opened</span>
+				</p>
+			</article>
+			{{/each}}
+		</div>
+	</section>
+</div>
+
+<section class="im-section im-wrap">
+	<div class="im-prose">
+		<h2>Why the number is the biggest thing on the card</h2>
+		<p>A newsletter's issues are navigated by <strong>number</strong>, not by title: a reader looking for "the one about the move" scrolls until a number looks familiar, and somebody who has just subscribed wants to know how many there are before they read any of them. So it is set like a number — Geist Pixel, tabular, and quiet enough that the title still wins the row.</p>
+		<div class="im-table-scroll">
+		<table>
+			<thead><tr><th>Class</th><th></th></tr></thead>
+			<tbody>
+				<tr><td><code>im-issues</code></td><td>The column. Rows, not cards in a grid: an issue is a thing in a sequence.</td></tr>
+				<tr><td><code>im-issue</code></td><td>One issue. It fills on hover, like every other card in the system.</td></tr>
+				<tr><td><code>im-issue-num</code></td><td>The number, spanning the rows beside it.</td></tr>
+				<tr><td><code>im-issue-date</code> · <code>-title</code> · <code>-text</code> · <code>-meta</code></td><td>When, what it was called, what was in it, and the facts under it.</td></tr>
+			</tbody>
+		</table>
+		</div>
+		<p>Under 34rem the number moves above the title, because a 3rem column beside a wrapped headline on a phone is two columns of nothing.</p>
+
+		<h2>The signup is at the top, not the bottom</h2>
+		<p>The archive is the argument for subscribing — but somebody who has already decided should not have to scroll past forty issues to do it. Form first, proof under it. The form itself is the <a href="/forms/inputs/#subscribe">subscribe component</a>, wired to Ghost's members.</p>
+
+		<h2>In a theme</h2>
+		{{{{code "hbs"}}}}
+{{#get "posts" filter="tag:#issue" limit="all" order="published_at desc"}}
+	<div class="im-issues">
+		{{#foreach posts}}
+		<article class="im-issue">
+			<p class="im-issue-num">{{@number}}</p>
+			<p class="im-issue-date">{{date format="D MMM YYYY"}}</p>
+			<h3 class="im-issue-title"><a href="{{url}}">{{title}}</a></h3>
+			<p class="im-issue-text">{{excerpt words="26"}}</p>
+		</article>
+		{{/foreach}}
+	</div>
+{{/get}}
+		{{{{/code}}}}
+		<p>An issue is an ordinary post with an internal tag. It has a URL, it is in the RSS feed, and search engines can read it — which a newsletter archive locked inside a mail provider is not.</p>
+	</div>
+</section>

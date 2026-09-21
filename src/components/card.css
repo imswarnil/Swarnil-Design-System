@@ -56,29 +56,39 @@
 	overflow: visible;
 }
 
-/* THE card interaction (there is one): the edge sharpens from a hairline to
-   ink, and the card's CTA arrow leans. No lift, no shadow, no tilt — a card in
-   this system is a ruled box, and it answers by drawing its rule. */
+/* ---- THE hover ----------------------------------------------------------
+   There is ONE, and every card in the system uses it: the card FILLS.
+
+   It is the same answer a row in the side nav gives, and a menu item, and a
+   nav tile — so hovering anything here means the same thing, and a card is
+   not a special case. Nothing sharpens a border, nothing grows three per
+   cent, nothing lifts on a shadow. Those are three different ideas competing
+   for the same moment, and a feed of twenty of them is a page that twitches.
+
+   The step is one surface deeper than wherever the card already is, which is
+   what --im-hover-bg says: the page's default is --im-surface, and a card
+   already sitting on that surface overrides it to the next one down. The CTA
+   arrow still leans — that is the system's other signature, and it belongs to
+   the link, not to the box. */
+.im-card {
+	--im-hover-bg: var(--im-surface-2);
+}
+
+.im-card-outline,
+.im-card-plain {
+	--im-hover-bg: var(--im-surface);
+}
+
 .im-card-link,
 .im-card:has(.im-card-title > a) {
-	transition: background-color 160ms, box-shadow 160ms;
+	transition: background-color var(--im-duration-fast) var(--im-ease-out);
 }
 
-.im-card-link:hover,
-.im-card-link:focus-visible,
+.im-card-link:is(:hover, :focus-visible),
 .im-card:has(.im-card-title > a):is(:hover, :focus-within) {
-	box-shadow: inset 0 0 0 1px var(--im-ink);
+	--im-card-bg: var(--im-hover-bg);
+
 	color: var(--im-body);
-}
-
-.im-card-link:not(.im-card-outline, .im-card-plain):hover {
-	--im-card-bg: var(--im-surface-2);
-
-	box-shadow: none;
-}
-
-.im-card-plain:is(:hover, :focus-within) {
-	box-shadow: none;
 }
 
 /* ---- parts ---- */
@@ -94,11 +104,6 @@
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
-	transition: scale 500ms var(--im-ease-out);
-}
-
-.im-card:hover .im-card-media > img {
-	scale: 1.03;
 }
 
 /* A plain card has no surface to clip the media, so the media rounds itself. */

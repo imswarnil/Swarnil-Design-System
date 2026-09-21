@@ -102,6 +102,68 @@ export async function build({ quiet = false } = {}) {
 		locked: { ...fixtures.posts[2], access: false },
 		author: fixtures.author,
 		tags: fixtures.tags,
+		// Sample content for the blocks under a post and beside it. None of it
+		// is real; it is here so the docs can show a full page rather than an
+		// empty frame, and so a change to those components breaks this build.
+		comments: [
+			{
+				name: 'Mara Lindqvist', when: '3 days ago', likes: 12, avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&h=200&q=80',
+				text: 'Drove this in April on your advice and the east-to-west tip alone was worth it. The bus drivers fold their mirrors in without slowing down, which I am still thinking about.',
+				replies: [
+					{ name: fixtures.author.name, badge: 'Author', mine: true, when: '3 days ago', likes: 4, avatar: fixtures.author.profile_image, text: 'The mirrors are the single most impressive thing on that road. Glad it held up.' },
+				],
+			},
+			{ name: 'Tobias Reinhardt', when: '6 days ago', likes: 3, text: 'Parking in Positano at ten euro an hour is optimistic in August — we paid fifteen. Worth saying out loud for anyone going this summer.' },
+			{ name: 'Ines Duarte', when: '2 weeks ago', likes: 1, text: 'The SITA bus is the answer and nobody wants to hear it.' },
+		],
+		series: [
+			{ title: 'The road itself', url: '/collections/post/article/', state: 'done', part: '01' },
+			{ title: 'Where to stop', url: '/collections/post/article/', state: 'done', part: '02' },
+			{ title: 'What it costs', state: 'current', part: '03' },
+			{ title: 'The way back', url: '/collections/post/article/', state: 'upcoming', part: '04' },
+		],
+		products: [
+			{ name: 'Fujifilm X100VI', note: 'Every picture on this site', url: '#' },
+			{ name: 'iA Writer', note: 'Drafts, before they are posts', url: '#' },
+			{ name: 'Ghost', note: 'What this runs on', url: '#' },
+			{ name: 'Figma', note: 'Where the design system starts', url: '#' },
+		],
+		projects: [
+			{ name: 'im-design-system', owner: 'imswarnil', text: 'A Tailwind 4 design system for Ghost themes: tokens, layout, components and ready-made sections.', lang: 'CSS', langColor: '#563d7c', stars: '1.2k', forks: '84', updated: '3 days ago', topics: ['design-system', 'tailwindcss', 'ghost', 'css'], visibility: 'Public', image: fixtures.posts[0].feature_image, demo_url: '#', code_url: '#', url: '/collections/project/page/' },
+			{ name: 'ghost-swarnil-theme', owner: 'imswarnil', text: 'The theme this site runs on. One install, somebody else\u2019s Ghost, and the rules that keep the two from destroying each other.', lang: 'Handlebars', langColor: '#f7931e', stars: '486', forks: '31', updated: '1 week ago', topics: ['ghost-theme', 'handlebars'], visibility: 'Public', image: fixtures.posts[1].feature_image, demo_url: '#', code_url: '#', url: '/collections/project/page/' },
+			{ name: 'links', owner: 'imswarnil', text: 'A link page on Cloudflare Workers that fetches GitHub, Ghost and YouTube per request.', lang: 'TypeScript', langColor: '#3178c6', stars: '212', forks: '18', updated: '2 weeks ago', topics: ['nextjs', 'cloudflare'], visibility: 'Public', image: fixtures.posts[2].feature_image, demo_url: '#', code_url: '#', url: '/collections/project/page/' },
+			{ name: 'field-notes', owner: 'imswarnil', text: 'Ten years of notebooks, scanned, tagged and searchable. Archived \u2014 read only.', lang: 'Python', langColor: '#3572a5', stars: '97', forks: '6', updated: '8 months ago', topics: ['archive', 'ocr'], visibility: 'Archived', image: fixtures.posts[3].feature_image, demo_url: '#', code_url: '#', url: '/collections/project/page/' },
+			{ name: 'swarnil-icons', owner: 'imswarnil', text: 'The icon set, drawn on a 24px grid and shipped as partials rather than as a font.', lang: 'SVG', langColor: '#ff9e0f', stars: '340', forks: '22', updated: '5 days ago', topics: ['icons', 'svg'], visibility: 'Public', image: fixtures.posts[4].feature_image, demo_url: '#', code_url: '#', url: '/collections/project/page/' },
+			{ name: 'no-ai-content', owner: 'imswarnil', text: 'A badge, a manifesto and a verifier for pages written by a person.', lang: 'JavaScript', langColor: '#f1e05a', stars: '1.9k', forks: '140', updated: 'yesterday', topics: ['manifesto', 'web'], visibility: 'Public', image: fixtures.posts[5].feature_image, demo_url: '#', code_url: '#', url: '/collections/project/page/' },
+		],
+		log: [
+			{ when: 'March 2026', title: 'Rebuilt the token layer', text: 'Primitives and semantics split into two files. A component now names what a value is FOR and never what it is, which is what made dark mode a change to one file instead of forty.', state: 'done', tag: 'v0.4', shot: fixtures.posts[2].feature_image },
+			{ when: 'June 2026', title: 'Forty components, one hover', text: 'Every card, row, tile and chip answers the same way: it fills. Three competing ideas — a border sharpening, a picture growing, a shadow lifting — were removed in an afternoon and nothing was lost.', state: 'done', tag: 'v0.5' },
+			{ when: 'September 2026', title: 'Collections: post, project, video', text: 'The three page-shapes every site is made of, each one a collection, a card and a page, built from components that already existed. Nothing new was invented to make them.', state: 'current', tag: 'v0.7', shot: fixtures.posts[4].feature_image },
+			{ when: 'Next', title: 'Ship it', text: 'A licence, a landing page, and a price.', state: 'upcoming' },
+		],
+		videos: [
+			{ title: 'Driving the Amalfi Coast — the whole road in 8 minutes', time: '8:12', views: '412k', when: '3 days ago', watched: 40, thumb: fixtures.posts[0].feature_image, channel: fixtures.author.name, avatar: fixtures.author.profile_image },
+			{ title: 'I rebuilt my site on a design system I wrote myself', time: '18:47', views: '128k', when: '2 weeks ago', thumb: fixtures.posts[1].feature_image, channel: fixtures.author.name, avatar: fixtures.author.profile_image },
+			{ title: 'Why your Ghost theme fights you (and how to stop it)', time: '12:04', views: '96k', when: '1 month ago', watched: 100, thumb: fixtures.posts[2].feature_image, channel: fixtures.author.name, avatar: fixtures.author.profile_image },
+			{ title: 'Four years of consulting, in one honest list', time: '23:31', views: '210k', when: '2 months ago', thumb: fixtures.posts[3].feature_image, channel: fixtures.author.name, avatar: fixtures.author.profile_image },
+			{ title: 'The real cost of moving to Europe — every number', time: '15:58', views: '1.1M', when: '4 months ago', thumb: fixtures.posts[4].feature_image, channel: fixtures.author.name, avatar: fixtures.author.profile_image },
+			{ title: 'Building the comment wall live', time: 'LIVE', live: true, views: '2.4k watching', when: 'started 40 minutes ago', thumb: fixtures.posts[5].feature_image, channel: fixtures.author.name, avatar: fixtures.author.profile_image },
+			{ title: 'Every lens I own, ranked by how often I actually use it', time: '9:22', views: '74k', when: '5 months ago', thumb: fixtures.posts[0].feature_image, channel: fixtures.author.name, avatar: fixtures.author.profile_image },
+			{ title: 'A whole blog, from empty folder to deployed, in one sitting', time: '41:06', views: '303k', when: '7 months ago', thumb: fixtures.posts[1].feature_image, channel: fixtures.author.name, avatar: fixtures.author.profile_image },
+		],
+		issues: [
+			{ n: '042', date: '18 Sep 2026', title: 'The one where I deleted the theme', text: 'Why the site moved off a paid theme, what it cost, and the two-line audit that proves nothing came with it.', read: '62%', words: '1,240' },
+			{ n: '041', date: '11 Sep 2026', title: 'Forty components and one hover', text: 'Three competing interactions removed in an afternoon, and nothing was lost.', read: '58%', words: '980' },
+			{ n: '040', date: '4 Sep 2026', title: 'What a design system is actually for', text: 'Not consistency. Not speed. The ability to change your mind later.', read: '64%', words: '1,510' },
+			{ n: '039', date: '28 Aug 2026', title: 'Every number from the move', text: 'Rent, tax, the deposit nobody mentions, and the month it took to get a bank account.', read: '71%', words: '2,300' },
+		],
+		archive: [
+			{ year: '2026', posts: 34, share: '100%' },
+			{ year: '2025', posts: 28, share: '82%' },
+			{ year: '2024', posts: 19, share: '56%' },
+			{ year: '2023', posts: 11, share: '32%' },
+		],
 	};
 
 	/* -- docs helpers -- */
@@ -122,6 +184,7 @@ export async function build({ quiet = false } = {}) {
 	});
 	hbs.registerHelper('icon', (name) => new Handlebars.SafeString(ghost.partials.get(`icons/${name}`)?.source.trim() || ''));
 	hbs.registerHelper('eq', (a, b) => a === b);
+	// Notes for the page-frame tokens on the Shell and Space pages.
 	hbs.registerHelper('frame_note', (name) => ({
 		'--im-bar-height': 'Top bar. Also the offset for anything sticky, and for anchor scrolling.',
 		'--im-nav-width': 'Side nav, open.',
@@ -132,7 +195,10 @@ export async function build({ quiet = false } = {}) {
 	})[name] || '');
 
 	const layouts = Object.fromEntries(walk(path.join(SITE, 'layouts'), (f) => f.endsWith('.hbs')).map((f) => [path.basename(f, '.hbs'), fs.readFileSync(f, 'utf8')]));
-	const flat = navigation.flatMap((g) => g.items);
+	// A nav item may carry `children` — one more level of the tree. Everything
+	// that has a url is a page: prev/next and the search index read the leaves.
+	const leaves = (items) => items.flatMap((i) => i.children || [i]);
+	const flat = navigation.flatMap((g) => leaves(g.items));
 	const searchIndex = JSON.stringify(flat.map((n) => ({ t: n.label, u: n.url }))).replace(/</g, '\\u003c');
 
 	let count = 0;
@@ -160,8 +226,12 @@ export async function build({ quiet = false } = {}) {
 			// A section starts open if it holds this page; on the home page, the first two do.
 			nav: navigation.map((g, gi) => ({
 				...g,
-				open: g.items.some((i) => i.url === url) || (url === '/' && gi <= 2),
-				items: g.items.map((i) => ({ ...i, current: i.url === url })),
+				open: leaves(g.items).some((i) => i.url === url) || (url === '/' && gi <= 2),
+				items: g.items.map((i) => {
+					if (!i.children) return { ...i, current: i.url === url };
+					const children = i.children.map((c) => ({ ...c, current: c.url === url }));
+					return { ...i, children, open: children.some((c) => c.current) };
+				}),
 			})),
 			prev: here > 0 ? flat[here - 1] : null,
 			next: here > -1 && here < flat.length - 1 ? flat[here + 1] : null,
@@ -196,7 +266,9 @@ export async function build({ quiet = false } = {}) {
 
 		// `doc_body`, not `content`: {{content}} is a Ghost helper and would win.
 		const inner = ghost.render(layouts[layout], {}, { ...root, doc_body: content });
-		const html = ghost.render(layouts.shell, {}, { ...root, body: inner });
+		// `shell:` in the frontmatter picks a different outer document — a demo
+		// page meant to be loaded in an iframe uses the bare one.
+		const html = ghost.render(layouts[meta.shell] || layouts.shell, {}, { ...root, body: inner });
 		const out = path.join(DIST, url, 'index.html');
 		fs.mkdirSync(path.dirname(out), { recursive: true });
 		fs.writeFileSync(out, html);
@@ -205,9 +277,12 @@ export async function build({ quiet = false } = {}) {
 
 	/* -- assets: laid out exactly as a Ghost theme's assets/ would be -- */
 	fs.cpSync(path.join(ROOT, 'assets/fonts'), path.join(DIST, 'assets/fonts'), { recursive: true });
+	fs.cpSync(path.join(ROOT, 'assets/brand'), path.join(DIST, 'assets/brand'), { recursive: true });
+	// The brand mark is also the favicon, at the root where a browser looks for it.
+	fs.copyFileSync(path.join(ROOT, 'assets/brand/mark.svg'), path.join(DIST, 'favicon.svg'));
 	fs.copyFileSync(path.join(SRC, 'js/im.js'), path.join(DIST, 'assets/im.js'));
 	fs.copyFileSync(path.join(SRC, 'js/im-code.js'), path.join(DIST, 'assets/im-code.js'));
-	for (const f of ['im-motion.js', 'im-media.js', 'im-charts.js', 'im-content.js']) fs.copyFileSync(path.join(SRC, 'js', f), path.join(DIST, 'assets', f));
+	for (const f of ['im-motion.js', 'im-media.js', 'im-charts.js', 'im-content.js', 'im-ads.js']) fs.copyFileSync(path.join(SRC, 'js', f), path.join(DIST, 'assets', f));
 	fs.copyFileSync(path.join(SITE, 'site.js'), path.join(DIST, 'assets/docs.js'));
 	for (const s of sections) {
 		fs.cpSync(path.join(SECTIONS, s.slug), path.join(DIST, 'assets/sections', s.slug), {

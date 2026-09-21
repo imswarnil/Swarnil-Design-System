@@ -19,26 +19,28 @@ source: src/components/feedback.css · switcher.css
 {{/example}}
 
 <h3>As the theme switcher</h3>
-<p>Add <code>data-theme-set</code> to each radio and <code>im.js</code> wires it to the page's theme — and keeps it checked to match. This one is live.</p>
+<p>Add <code>data-theme-set</code> to each radio and <code>im.js</code> wires it to the page's theme — and keeps it checked to match. Both of these are live.</p>
 {{#example center=true}}
-<fieldset class="im-switcher" aria-label="Theme">
-	<label><input type="radio" name="sw-theme" data-theme-set="light">{{> "icons/sun"}}<span>Light</span></label>
-	<label><input type="radio" name="sw-theme" data-theme-set="dark">{{> "icons/moon"}}<span>Dark</span></label>
-	<label><input type="radio" name="sw-theme" data-theme-set="system">{{> "icons/monitor"}}<span>Auto</span></label>
-</fieldset>
-<fieldset class="im-switcher im-switcher-icons" aria-label="Theme, icons only">
-	<label><input type="radio" name="sw-theme-2" data-theme-set="light">{{> "icons/sun"}}<span>Light</span></label>
-	<label><input type="radio" name="sw-theme-2" data-theme-set="dark">{{> "icons/moon"}}<span>Dark</span></label>
-	<label><input type="radio" name="sw-theme-2" data-theme-set="system">{{> "icons/monitor"}}<span>Auto</span></label>
-</fieldset>
+{{> "components/theme-switch"}}
+{{> "components/theme-switch" icons=true}}
 {{/example}}
-<p>For a single button that cycles instead, there is <code>partials/components/theme-button.hbs</code> — the one in this site's top bar.</p>
+{{{{code "hbs"}}}}
+{{> "components/theme-switch"}}          {{!-- size="sm" | "lg" · icons=true --}}
+
+{{!-- which is this, written out --}}
+<fieldset class="im-switcher" aria-label="Theme">
+	<label><input type="radio" name="im-theme" value="light" data-theme-set="light">{{> "icons/sun"}}<span>Light</span></label>
+	<label><input type="radio" name="im-theme" value="dark" data-theme-set="dark">{{> "icons/moon"}}<span>Dark</span></label>
+</fieldset>
+{{{{/code}}}}
+<p><strong>Two themes, not three.</strong> There is no "Auto" option to choose and no third state to store: a visitor who has never chosen is shown what their system asks for and goes on following it, and the first press settles it for good. A switch with three options makes the reader answer a question about their own operating system that the page can answer for them.</p>
+<p>For a single button that flips between the two instead, there is <code>partials/components/theme-button.hbs</code> — the one in this site's top bar.</p>
 
 <h3>Variants</h3>
 {{#example}}
 <div class="im-stack" style="--im-stack-gap: 1rem; align-items: flex-start">
 	<fieldset class="im-switcher im-switcher-sm" aria-label="Small"><label><input type="radio" name="sw-a" checked><span>Day</span></label><label><input type="radio" name="sw-a"><span>Week</span></label><label><input type="radio" name="sw-a"><span>Month</span></label><label><input type="radio" name="sw-a"><span>Year</span></label></fieldset>
-	<fieldset class="im-switcher im-switcher-solid" aria-label="Solid"><label><input type="radio" name="sw-b" checked><span>Swiss</span></label><label><input type="radio" name="sw-b"><span>Soft</span></label></fieldset>
+	<fieldset class="im-switcher im-switcher-solid" aria-label="Solid"><label><input type="radio" name="sw-b" checked><span>Grid</span></label><label><input type="radio" name="sw-b"><span>List</span></label></fieldset>
 	<fieldset class="im-switcher im-switcher-lg" aria-label="Large"><label><input type="radio" name="sw-c"><span>For readers</span></label><label><input type="radio" name="sw-c" checked><span>For writers</span></label></fieldset>
 	<fieldset class="im-switcher im-switcher-block" aria-label="Full width" style="max-width: 24rem"><label><input type="radio" name="sw-d" checked><span>Sign in</span></label><label><input type="radio" name="sw-d"><span>Create account</span></label></fieldset>
 </div>

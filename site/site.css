@@ -96,6 +96,48 @@
 		box-shadow: none;
 	}
 
+	/* The post-layout demo keeps all three columns in the DOM — contents,
+	   article, widgets — and the preset decides which are laid out. display:
+	   none, not visibility or a class on the column itself, so the one that is
+	   not in use leaves the accessibility tree too: there is never a second
+	   table of contents for a screen reader to find. */
+	.article-no-toc > nav,
+	.article-no-side > aside {
+		display: none;
+	}
+
+	/* The controls above a demo that can be re-dressed. */
+	.demo-controls {
+		@apply flex flex-wrap items-center gap-3 mb-6 pb-5 border-b border-line;
+	}
+
+	.demo-controls > .im-caption {
+		@apply mr-1;
+	}
+
+	/* A button group cannot wrap — its buttons are joined along one edge — so
+	   on a narrow window it scrolls sideways instead. */
+	.demo-controls .im-btn-group {
+		max-width: 100%;
+		overflow-x: auto;
+		overscroll-behavior-x: contain;
+		scrollbar-width: none;
+	}
+
+	.demo-controls .im-btn-group > .im-btn {
+		flex: none;
+	}
+
+	/* A demo loaded as a real page, in an iframe — the only way to show a bar
+	   that floats over a page that scrolls. */
+	.demo-frame {
+		display: block;
+		width: 100%;
+		height: 28rem;
+		border: 0;
+		background-color: var(--im-canvas);
+	}
+
 	/* For demos whose content opens outside its box: hover cards, tooltips. */
 	.example:has(> .example-spill) {
 		overflow: visible;
@@ -234,37 +276,67 @@
 		}
 	}
 
-	/* ---- the page ground: a grid in Swiss, nothing in Soft ---- */
-	[data-im-style="swiss"] .im-shell-main {
-		background-image:
-			linear-gradient(to right, color-mix(in oklab, var(--im-line) 55%, transparent) 1px, transparent 1px),
-			linear-gradient(to bottom, color-mix(in oklab, var(--im-line) 55%, transparent) 1px, transparent 1px);
-		background-size: 3rem 3rem;
-		background-position: -1px -1px;
+	/* Docs-only: a grid of ruled tiles. It is what the old frame's cells were —
+	   one hairline shared between neighbours — kept here because several pages
+	   are laid out on it, and kept OUT of the product, which no longer ships a
+	   ruled-grid layout. */
+	.tiles {
+		@apply grid overflow-hidden rounded-xl border border-line bg-line;
+
+		grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
+		gap: 1px;
 	}
 
-	/* The article is one solid sheet laid on the grid — the grid is the margin,
-	   never a sliver between two blocks of the text. */
-	[data-im-style="swiss"] .doc {
-		background-color: var(--im-canvas);
-		box-shadow: 0 0 0 1rem var(--im-canvas);
+	.tiles-3 {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
+	.tiles-4 {
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+	}
+
+	@media (width < 56rem) {
+		.tiles-3,
+		.tiles-4 {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	@media (width < 36rem) {
+		.tiles-3,
+		.tiles-4 {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+
+	.tile {
+		@apply flex flex-col gap-2 bg-canvas p-5;
+	}
+
+	.tile-title {
+		@apply text-ink font-semibold tracking-tight;
 	}
 
 	/* ---- home ---- */
+	.home-page {
+		padding-block: clamp(1.5rem, 4vw, 3rem) clamp(3rem, 7vw, 5rem);
+	}
+
+	/* A ruled panel, not a frame row: one box with a hairline round it. */
 	.home-hero {
+		position: relative;
 		display: grid;
 		grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
 		align-items: stretch;
 		overflow: hidden;
 		isolation: isolate;
-	}
-
-	/* One grid only: the hero paints out the page ground, and its own grid is
-	   masked away from the middle — it survives at the corners and along the
-	   borders, and the words sit on clear canvas. */
-	.home-hero {
+		border: 1px solid var(--im-line);
+		border-radius: var(--im-radius-2xl);
 		background-color: var(--im-canvas);
 	}
+
+	/* The grid is masked away from the middle — it survives at the corners and
+	   along the borders, and the words sit on clear canvas. */
 
 	.home-hero-grid {
 		position: absolute;
@@ -277,7 +349,7 @@
 	.home-hero-copy {
 		@apply flex flex-col items-start justify-center gap-5;
 
-		padding: clamp(2rem, 1rem + 5vw, 5rem) var(--im-row-pad);
+		padding: clamp(2rem, 1rem + 5vw, 5rem) clamp(1.5rem, 1rem + 2.5vw, 3rem);
 
 		> h1 {
 			@apply text-display tracking-tighter;
@@ -332,9 +404,29 @@
 		}
 	}
 
+	/* A caption on the left, a link on the right — what the frame head was. */
+	.home-head {
+		@apply flex flex-wrap items-center justify-between gap-3 pb-1 border-b border-line;
+	}
+
+	.home-split {
+		@apply grid items-center gap-8;
+
+		grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+	}
+
+	@media (width < 56rem) {
+		.home-split {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+
 	.home-filler {
 		min-height: 10rem;
+		border-radius: var(--im-radius-xl);
 	}
+
+
 
 	.stat {
 		@apply flex flex-col;

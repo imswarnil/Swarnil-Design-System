@@ -37,8 +37,9 @@ a.im-page:hover {
 }
 
 .im-page[aria-current="page"] {
-	background-color: var(--im-ink);
-	color: var(--im-canvas);
+	background-color: var(--im-current-bg);
+	color: var(--im-current-fg);
+	font-weight: var(--im-current-weight);
 }
 
 .im-page[aria-disabled="true"],
@@ -51,7 +52,7 @@ a.im-page:hover {
 	color: var(--im-faint);
 }
 
-/* Outlined: every page in a ruled box, sharing edges — the Swiss one. */
+/* Outlined: every page in a ruled box, sharing edges. */
 .im-pagination-ruled {
 	gap: 0;
 }
@@ -65,9 +66,11 @@ a.im-page:hover {
 .im-pagination-ruled > .im-page:first-child { margin-left: 0; border-radius: var(--im-radius-md) 0 0 var(--im-radius-md); }
 .im-pagination-ruled > .im-page:last-child { border-radius: 0 var(--im-radius-md) var(--im-radius-md) 0; }
 
+/* The current page keeps its box — without it, the filled one would read as a
+   gap in the row rather than as the one you are on. */
 .im-pagination-ruled > .im-page[aria-current="page"] {
 	position: relative;
-	box-shadow: none;
+	box-shadow: inset 0 0 0 1px var(--im-line);
 }
 
 .im-pagination-spread {
@@ -173,6 +176,14 @@ a.im-page:hover {
 .im-postnav > a:last-child {
 	align-items: flex-end;
 	text-align: right;
+}
+
+/* The newest post has no "next", the oldest no "previous". One card takes the
+   whole box rather than leaving an empty half beside it. */
+.im-postnav > a:only-child {
+	grid-column: 1 / -1;
+	align-items: flex-start;
+	text-align: left;
 }
 
 @media (width < 36rem) {

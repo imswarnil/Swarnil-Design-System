@@ -114,6 +114,16 @@ source: src/components/button.css
 </div>
 {{/example}}
 
+<h2>The dot</h2>
+<p>A button that has something waiting behind it carries the brand's dot on its corner — the same mark as the <a href="/foundation/logo/">logo</a> and the same one a <a href="/components/card/#the-dot">card</a> uses. <code>im-dotted-corner</code> sits it on the edge with a ring of the page behind it, so it survives whatever the button is over. It means <em>new, live or unread</em>; it is never the "you are here" state.</p>
+{{#example center=true}}
+<button class="im-btn im-dotted-corner" type="button">{{> "icons/bell"}}Notifications</button>
+<button class="im-btn im-btn-primary im-dotted-corner" type="button">Inbox</button>
+<button class="im-btn im-btn-ghost im-btn-icon im-dotted-corner" type="button" aria-label="Messages">{{> "icons/message-circle"}}</button>
+<button class="im-btn im-btn-icon im-dotted-corner im-dotted-live" type="button" aria-label="Live">{{> "icons/video"}}</button>
+{{/example}}
+<p>It is a <strong>state</strong>, not a count: if the number matters, use a <a href="/components/badge/">badge</a>. A dot says "look here"; a badge says how much.</p>
+
 <h2>Variables</h2>
 <div class="im-table-scroll">
 <table>

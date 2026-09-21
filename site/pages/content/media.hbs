@@ -13,7 +13,7 @@ source: src/components/koenig.css · src/js/im-content.js
 {{/example}}
 
 <h3>Wide and full</h3>
-<p>The editor's width setting adds <code>kg-width-wide</code> or <code>kg-width-full</code>. <code>im-content</code> is a grid with three named widths, so those cards <strong>break out of the text column</strong> with no negative margins and no <code>100vw</code>: wide reaches <code>--im-content-wide</code> (10rem) past the text on each side; full goes edge to edge and loses its corners. It is easier seen than described — <a href="/content/article/">the full article</a>.</p>
+<p>The editor's width setting adds <code>kg-width-wide</code> or <code>kg-width-full</code>. <code>im-content</code> is a grid with three named widths, so those cards <strong>break out of the text column</strong> with no negative margins and no <code>100vw</code>: wide reaches <code>--im-content-wide</code> (10rem) past the text on each side; full goes edge to edge and loses its corners. It is easier seen than described — <a href="/collections/post/article/">the full article</a>.</p>
 
 <h2>Gallery</h2>
 <p>Up to nine pictures in rows of three. <code>im-content.js</code> gives each picture its share of the row from its proportions, so <strong>every picture in a row ends at the same height</strong> without cropping. Without the script they are even columns, cropped to fit.</p>
@@ -56,7 +56,7 @@ source: src/components/koenig.css · src/js/im-content.js
 <p>For a video with timestamps beside it, that is a component of its own: <a href="/media/video/">Video &amp; timestamps</a>.</p>
 
 <h2>File</h2>
-<p>A download. The whole card is the link; its edge sharpens to ink and the arrow leans the way the file goes — down.</p>
+<p>A download. The whole card is the link; it fills on hover and the arrow leans the way the file goes — down.</p>
 {{#example code=false}}
 <div class="im-content im-content-flush">
 	<div class="kg-card kg-file-card"><a class="kg-file-card-container" href="#file" title="Download" download><div class="kg-file-card-contents"><div class="kg-file-card-title">Moving to Europe — the checklist</div><div class="kg-file-card-caption">Everything to do, in the order to do it, from visa to first payslip.</div><div class="kg-file-card-metadata"><div class="kg-file-card-filename">moving-checklist.pdf</div><div class="kg-file-card-filesize">248 KB</div></div></div><div class="kg-file-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7.5 10.5L12 15l4.5-4.5M5 19h14"/></svg></div></a></div>

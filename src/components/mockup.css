@@ -1,0 +1,361 @@
+/* Mockups — a screenshot in something that looks like a screen.
+
+     <figure class="im-mock im-mock-mac">
+       <div class="im-mock-bar">
+         <span class="im-mock-dots"></span>
+         <span class="im-mock-title">Finder</span>
+       </div>
+       <div class="im-mock-body"><img src="…" alt=""></div>
+     </figure>
+
+   Four frames — a desktop window, a browser, a terminal, a phone — drawn from
+   this system's own tokens rather than from a picture of somebody's operating
+   system: a hairline, one radius from the scale, one shadow, and a line of
+   light along the top edge. They follow dark mode, they print at any size, and
+   there is no 400KB PNG of a laptop to ship.
+
+   The three dots are DRAWN, not typed, and they are the system's own muted
+   greys by default: coloured traffic lights are Apple's, and a screenshot of
+   your own product does not need somebody else's brand in the corner. Add
+   im-mock-lights for the coloured ones where the context genuinely is macOS.
+
+   Knobs: --im-mock-radius, --im-mock-bar, --im-mock-ratio. */
+
+.im-mock {
+	--im-mock-radius: var(--im-radius-lg);
+	--im-mock-bar: 2.25rem;
+	--im-mock-ratio: 16 / 10;
+
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+	margin: 0;
+	overflow: hidden;
+	border-radius: var(--im-mock-radius);
+	background-color: var(--im-canvas);
+	box-shadow:
+		inset 0 0 0 1px var(--im-line),
+		inset 0 1px 0 0 color-mix(in oklab, var(--im-canvas) 70%, #fff),
+		var(--im-shadow-float);
+	color: var(--im-body);
+}
+
+/* ---- the bar ---- */
+.im-mock-bar {
+	display: flex;
+	flex: none;
+	align-items: center;
+	gap: 0.625rem;
+	height: var(--im-mock-bar);
+	padding-inline: 0.75rem;
+	border-bottom: 1px solid var(--im-line);
+	background-color: var(--im-surface);
+}
+
+.im-mock-dots {
+	display: flex;
+	flex: none;
+	gap: 0.375rem;
+}
+
+.im-mock-dots::before,
+.im-mock-dots::after,
+.im-mock-dots > i {
+	content: "";
+	display: block;
+	width: 0.5rem;
+	height: 0.5rem;
+	border-radius: 50%;
+	background-color: var(--im-surface-3);
+}
+
+/* The coloured ones, when the context really is a Mac. */
+.im-mock-lights .im-mock-dots::before { background-color: #ff5f57; }
+.im-mock-lights .im-mock-dots > i { background-color: #febc2e; }
+.im-mock-lights .im-mock-dots::after { background-color: #28c840; }
+
+.im-mock-title {
+	min-width: 0;
+	overflow: hidden;
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+	font-weight: 500;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+/* Centred, as a desktop window's title is — and centred against the WINDOW,
+   not against what is left after the dots, which is what an auto margin would
+   give and is off by the width of the dots. */
+.im-mock-mac .im-mock-title {
+	position: absolute;
+	left: 50%;
+	translate: -50% 0;
+	max-width: 50%;
+}
+
+/* A control at the far end of the bar. */
+.im-mock-bar > .im-mock-end {
+	display: flex;
+	align-items: center;
+	gap: 0.375rem;
+	margin-left: auto;
+	color: var(--im-faint);
+}
+
+.im-mock-bar .im-icon {
+	font-size: 0.9375rem;
+}
+
+/* ---- the address pill, for a browser ---- */
+.im-mock-url {
+	display: flex;
+	align-items: center;
+	gap: 0.375rem;
+	flex: 1 1 auto;
+	min-width: 0;
+	height: 1.5rem;
+	padding-inline: 0.625rem;
+	border-radius: var(--im-radius-full);
+	background-color: var(--im-canvas);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: 0.6875rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.im-mock-url > .im-icon {
+	flex: none;
+	font-size: 0.75rem;
+}
+
+/* A row of tabs above the address bar. */
+.im-mock-tabs {
+	display: flex;
+	flex: none;
+	align-items: flex-end;
+	gap: 0.25rem;
+	height: 2rem;
+	padding: 0.25rem 0.75rem 0;
+	background-color: var(--im-surface-2);
+}
+
+.im-mock-tab {
+	display: flex;
+	align-items: center;
+	gap: 0.375rem;
+	max-width: 9rem;
+	min-width: 0;
+	height: 100%;
+	padding-inline: 0.625rem;
+	border-radius: var(--im-radius-sm) var(--im-radius-sm) 0 0;
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.im-mock-tab[aria-current="page"] {
+	background-color: var(--im-surface);
+	color: var(--im-current-fg);
+	font-weight: var(--im-current-weight);
+}
+
+/* ---- the body ---- */
+.im-mock-body {
+	position: relative;
+	flex: 1 1 auto;
+	min-height: 0;
+	aspect-ratio: var(--im-mock-ratio);
+	overflow: hidden;
+	background-color: var(--im-surface-2);
+}
+
+.im-mock-body > :is(img, video, iframe) {
+	display: block;
+	width: 100%;
+	height: 100%;
+	border: 0;
+	object-fit: cover;
+	object-position: top center;
+}
+
+/* Anything else inside — real markup, a live example — gets room to breathe
+   and scrolls rather than bursting the frame. */
+.im-mock-body-pad {
+	aspect-ratio: auto;
+	padding: clamp(0.875rem, 3%, 1.5rem);
+	overflow: auto;
+	background-color: var(--im-canvas);
+}
+
+/* ---- terminal ----
+   Its own dark, always: a terminal that follows the page into light mode is
+   not a terminal. */
+.im-mock-terminal {
+	--im-mock-radius: var(--im-radius-md);
+
+	background-color: #0b0b0c;
+	box-shadow: inset 0 0 0 1px rgb(255 255 255 / 12%), var(--im-shadow-float);
+	color: #d9d9de;
+}
+
+.im-mock-terminal .im-mock-bar {
+	border-bottom-color: rgb(255 255 255 / 10%);
+	background-color: rgb(255 255 255 / 5%);
+}
+
+.im-mock-terminal .im-mock-dots::before,
+.im-mock-terminal .im-mock-dots::after,
+.im-mock-terminal .im-mock-dots > i {
+	background-color: rgb(255 255 255 / 22%);
+}
+
+.im-mock-terminal .im-mock-title {
+	color: rgb(255 255 255 / 55%);
+}
+
+.im-mock-terminal .im-mock-body {
+	aspect-ratio: auto;
+	padding: 0.875rem 1rem;
+	background-color: transparent;
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	line-height: 1.7;
+	white-space: pre-wrap;
+}
+
+.im-mock-terminal .im-mock-body b {
+	color: #fff;
+	font-weight: 500;
+}
+
+/* A prompt mark before a command line. */
+.im-mock-cmd::before {
+	content: "❯ ";
+	color: var(--im-accent);
+}
+
+.im-mock-out {
+	color: rgb(217 217 222 / 62%);
+}
+
+/* ---- phone ----
+   A thick bezel, a very round corner, an island at the top and a home bar at
+   the bottom. It is a SHAPE, not a device: no brand, no button, no camera. */
+.im-mock-phone {
+	--im-mock-radius: 2.25rem;
+	--im-mock-ratio: 390 / 844;
+	--im-mock-bezel: 0.5rem;
+
+	width: min(var(--im-mock-width, 17rem), 100%);
+	padding: var(--im-mock-bezel);
+	background-color: var(--im-ink);
+	box-shadow:
+		inset 0 0 0 1px color-mix(in oklab, var(--im-ink) 70%, #fff),
+		var(--im-shadow-float);
+}
+
+.im-mock-phone > .im-mock-body {
+	aspect-ratio: var(--im-mock-ratio);
+	border-radius: calc(var(--im-mock-radius) - var(--im-mock-bezel));
+	background-color: var(--im-canvas);
+}
+
+/* The island, drawn on the screen rather than cut out of it — a pill that
+   floats over whatever is behind it, which is what it looks like. */
+.im-mock-phone > .im-mock-body::before {
+	content: "";
+	position: absolute;
+	top: 0.5rem;
+	left: 50%;
+	z-index: 2;
+	width: 30%;
+	height: 1.125rem;
+	border-radius: var(--im-radius-full);
+	background-color: var(--im-ink);
+	translate: -50% 0;
+}
+
+/* The home bar. */
+.im-mock-phone > .im-mock-body::after {
+	content: "";
+	position: absolute;
+	bottom: 0.4375rem;
+	left: 50%;
+	z-index: 2;
+	width: 34%;
+	height: 0.25rem;
+	border-radius: var(--im-radius-full);
+	background-color: color-mix(in oklab, var(--im-ink) 55%, transparent);
+	translate: -50% 0;
+}
+
+/* No island: a flat top edge, for a screen that starts at the very top. */
+.im-mock-flat > .im-mock-body::before {
+	display: none;
+}
+
+.im-mock-tablet {
+	--im-mock-radius: 1.5rem;
+	--im-mock-ratio: 820 / 1180;
+	--im-mock-bezel: 0.625rem;
+	--im-mock-width: 24rem;
+}
+
+.im-mock-tablet > .im-mock-body::before {
+	display: none;
+}
+
+/* ---- arrangements ---- */
+/* A phone standing in front of a window, the way a product shot is staged. */
+.im-mock-stage {
+	position: relative;
+	display: grid;
+	align-items: end;
+	padding-bottom: 2rem;
+}
+
+.im-mock-stage > .im-mock-phone {
+	position: absolute;
+	right: 4%;
+	bottom: 0;
+	z-index: 1;
+	--im-mock-width: 38%;
+}
+
+@media (width < 34rem) {
+	.im-mock-stage {
+		padding-bottom: 0;
+	}
+
+	.im-mock-stage > .im-mock-phone {
+		position: static;
+		justify-self: center;
+		margin-top: -2rem;
+		--im-mock-width: 60%;
+	}
+}
+
+/* Tilted, for a hero — the frame leans back a little and lifts on hover. */
+.im-mock-tilt {
+	transform: perspective(1400px) rotateX(9deg) rotateY(-12deg) rotateZ(2deg);
+	transition: transform 600ms var(--im-ease-glide);
+}
+
+.im-mock-tilt:hover {
+	transform: perspective(1400px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.im-mock-tilt,
+	.im-mock-tilt:hover {
+		transform: none;
+		transition: none;
+	}
+}

@@ -1,0 +1,363 @@
+/* Post hero — the head of an article: tags, title, excerpt, byline, picture.
+   One set of parts, six arrangements. Swap the modifier and nothing else.
+
+   <header class="im-posthero im-posthero-split">
+     <div class="im-posthero-copy">
+       <p class="im-posthero-kicker"> <a class="im-tag">Travel</a> </p>
+       <h1 class="im-posthero-title">…</h1>
+       <p class="im-posthero-excerpt">…</p>
+       <div class="im-posthero-meta"> avatar · name · date · reading time </div>
+     </div>
+     <figure class="im-posthero-media"><img …></figure>
+   </header>
+
+     im-posthero-stack     centred, picture underneath          (the default)
+     im-posthero-wide      left-aligned, picture underneath
+     im-posthero-split     copy left, picture right             (two columns)
+     im-posthero-side      picture left, copy right
+     im-posthero-cover     picture full-bleed, copy over it
+     im-posthero-minimal   no picture at all, a rule underneath
+
+   Two widths hold it together, whatever the arrangement and however wide the
+   page is: --im-posthero-measure caps the COPY at the reading width, and
+   --im-posthero-frame caps the PICTURE. A feature image allowed to fill a
+   90rem window is a wall, not a header.
+   --im-posthero-media sets the picture's aspect ratio; --im-posthero-gap the
+   space between the parts. In `split` and `side` there is no ratio: the
+   picture is as tall as the copy beside it, with --im-posthero-min as a
+   floor. */
+
+.im-posthero {
+	--im-posthero-gap: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+	--im-posthero-media: 16 / 9;
+	--im-posthero-measure: 46rem;
+	--im-posthero-frame: 56rem;
+
+	display: grid;
+	gap: var(--im-posthero-gap);
+	min-width: 0;
+}
+
+.im-posthero-copy {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	min-width: 0;
+	max-width: var(--im-posthero-measure);
+}
+
+/* The trail above the title. It scrolls sideways rather than wrapping to
+   three lines on a phone, and the last crumb — this post — is allowed to be
+   long, because it is the one thing the reader already knows. */
+.im-posthero-crumbs {
+	max-width: 100%;
+	margin-bottom: -0.25rem;
+}
+
+.im-posthero-crumbs .im-breadcrumb > li:last-child {
+	max-width: 22rem;
+	min-width: 0;
+}
+
+.im-posthero-crumbs .im-breadcrumb > li:last-child > span {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.im-posthero-kicker {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem;
+	color: var(--im-muted);
+	font-size: var(--im-text-sm);
+}
+
+.im-posthero-title {
+	color: var(--im-ink);
+	font-family: var(--im-font-heading);
+	font-size: clamp(2rem, 1.3rem + 2.8vw, 3.25rem);
+	font-weight: 600;
+	line-height: 1.06;
+	letter-spacing: var(--im-tracking-tight);
+	text-wrap: balance;
+}
+
+.im-posthero-excerpt {
+	color: var(--im-body);
+	font-size: var(--im-text-lg);
+	line-height: var(--im-leading-lg);
+	text-wrap: pretty;
+}
+
+.im-posthero-meta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem 0.875rem;
+	color: var(--im-muted);
+	font-size: var(--im-text-sm);
+}
+
+.im-posthero-meta a {
+	color: var(--im-ink);
+	font-weight: 500;
+	text-decoration: none;
+}
+
+.im-posthero-meta a:hover {
+	color: var(--im-accent);
+}
+
+/* The byline: avatar and name, the trigger of the author's hover card. */
+.im-posthero-byline {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	vertical-align: middle;
+}
+
+/* A dot between the facts, drawn rather than typed — so a screen reader does
+   not read "bullet" between the date and the reading time. */
+.im-posthero-meta > * + *::before {
+	content: "";
+	display: inline-block;
+	width: 3px;
+	height: 3px;
+	margin-right: 0.875rem;
+	border-radius: 50%;
+	background-color: currentcolor;
+	opacity: 0.55;
+	vertical-align: middle;
+}
+
+.im-posthero-media {
+	position: relative; /* the zoom link covers it */
+	min-width: 0;
+	max-width: var(--im-posthero-frame);
+	margin: 0;
+	overflow: hidden;
+	border-radius: var(--im-radius-xl);
+	background-color: var(--im-surface);
+}
+
+.im-posthero-media > img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	aspect-ratio: var(--im-posthero-media);
+	object-fit: cover;
+}
+
+.im-posthero-media > figcaption {
+	padding: 0.625rem 0.25rem 0;
+	color: var(--im-muted);
+	font-size: var(--im-text-sm);
+}
+
+/* In `cover` the picture IS the header, and a link over all of it would sit
+   on top of the words. There is nothing to open there. */
+.im-posthero-cover .im-zoom-cover {
+	display: none;
+}
+
+/* ---- stack: centred, picture underneath ---- */
+.im-posthero-stack {
+	justify-items: center;
+	text-align: center;
+}
+
+.im-posthero-stack .im-posthero-copy {
+	align-items: center;
+	margin-inline: auto;
+}
+
+.im-posthero-stack :is(.im-posthero-kicker, .im-posthero-meta) {
+	justify-content: center;
+}
+
+.im-posthero-stack .im-posthero-media {
+	width: 100%;
+	margin-inline: auto;
+}
+
+/* ---- wide: left-aligned, picture underneath ---- */
+.im-posthero-wide .im-posthero-media {
+	width: 100%;
+}
+
+/* ---- split / side: two columns ----
+   The picture is a column now, so the frame cap would fight the grid — and it
+   takes its height FROM THE COPY rather than from an aspect ratio: the two
+   columns end level whatever the headline runs to. --im-posthero-min is the
+   floor, for a two-line title with no excerpt. */
+.im-posthero-split,
+.im-posthero-side {
+	--im-posthero-frame: none;
+	--im-posthero-min: 24rem;
+
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+	align-items: stretch;
+	gap: clamp(1.5rem, 0.5rem + 3vw, 4rem);
+}
+
+.im-posthero-split > .im-posthero-copy,
+.im-posthero-side > .im-posthero-copy {
+	justify-content: center;
+	min-height: var(--im-posthero-min);
+	padding-block: 0.5rem;
+}
+
+/* The column is half as wide, so the title has to be smaller — at the
+   full-width size it wraps to four lines and drags the picture down with it. */
+.im-posthero-split .im-posthero-title,
+.im-posthero-side .im-posthero-title {
+	font-size: clamp(1.75rem, 1.1rem + 1.7vw, 2.5rem);
+}
+
+/* No ratio: the COPY sets the row height and the picture covers whatever that
+   turns out to be. The <img> must be OUT OF FLOW to do that — in flow it
+   contributes its own intrinsic height to the row, and a portrait photograph
+   would decide the header's height instead of the words. */
+.im-posthero-split > .im-posthero-media,
+.im-posthero-side > .im-posthero-media {
+	position: relative;
+	height: 100%;
+	min-height: var(--im-posthero-min);
+}
+
+.im-posthero-split > .im-posthero-media > img,
+.im-posthero-side > .im-posthero-media > img {
+	position: absolute;
+	inset: 0;
+	aspect-ratio: auto;
+}
+
+/* Nothing to caption: the picture has no edge of its own here. */
+.im-posthero-split > .im-posthero-media > figcaption,
+.im-posthero-side > .im-posthero-media > figcaption {
+	display: none;
+}
+
+.im-posthero-side > .im-posthero-media {
+	order: -1;
+}
+
+/* Below lg the second column would be a stamp: stack, and let the picture
+   take an aspect ratio again — nothing beside it to match. */
+@media (width < 64rem) {
+	.im-posthero-split,
+	.im-posthero-side {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.im-posthero-split > .im-posthero-copy,
+	.im-posthero-side > .im-posthero-copy {
+		min-height: 0;
+		padding-block: 0;
+	}
+
+	.im-posthero-split > .im-posthero-media,
+	.im-posthero-side > .im-posthero-media {
+		height: auto;
+		min-height: 0;
+	}
+
+	.im-posthero-split > .im-posthero-media > img,
+	.im-posthero-side > .im-posthero-media > img {
+		position: static;
+		aspect-ratio: var(--im-posthero-media);
+	}
+
+	.im-posthero-split > .im-posthero-media > figcaption,
+	.im-posthero-side > .im-posthero-media > figcaption {
+		display: block;
+	}
+
+	.im-posthero-side > .im-posthero-media {
+		order: 0;
+	}
+}
+
+/* ---- cover: the picture is the background ---- */
+.im-posthero-cover {
+	/* The frame caps the whole block here, since the picture IS the block. */
+	max-width: var(--im-posthero-frame);
+	margin-inline: auto;
+	position: relative;
+	align-content: end;
+	min-height: min(28rem, 66dvh);
+	padding: clamp(1.5rem, 1rem + 2vw, 3rem);
+	overflow: hidden;
+	border-radius: var(--im-radius-2xl);
+	isolation: isolate;
+}
+
+.im-posthero-cover > .im-posthero-media {
+	position: absolute;
+	inset: 0;
+	z-index: -2;
+	max-width: none;
+	border-radius: 0;
+}
+
+.im-posthero-cover > .im-posthero-media > img {
+	aspect-ratio: auto;
+}
+
+/* The scrim: dark at the bottom, clear at the top, so the copy holds up over
+   any photograph without dimming the whole picture. */
+.im-posthero-cover::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	background: linear-gradient(to top, rgb(0 0 0 / 78%), rgb(0 0 0 / 30%) 55%, rgb(0 0 0 / 5%));
+}
+
+.im-posthero-cover .im-posthero-title {
+	color: #fff;
+}
+
+.im-posthero-cover :is(.im-posthero-excerpt, .im-posthero-meta, .im-posthero-kicker) {
+	color: color-mix(in oklab, #fff 82%, transparent);
+}
+
+.im-posthero-cover .im-posthero-meta a {
+	color: #fff;
+}
+
+.im-posthero-cover .im-posthero-media > figcaption {
+	display: none;
+}
+
+/* Centred cover, for a title that should sit in the middle of the frame. */
+.im-posthero-cover-center {
+	align-content: center;
+	justify-items: center;
+	text-align: center;
+}
+
+.im-posthero-cover-center .im-posthero-copy {
+	align-items: center;
+	margin-inline: auto;
+}
+
+.im-posthero-cover-center :is(.im-posthero-kicker, .im-posthero-meta) {
+	justify-content: center;
+}
+
+/* ---- minimal: words only ---- */
+.im-posthero-minimal {
+	padding-bottom: var(--im-posthero-gap);
+	border-bottom: 1px solid var(--im-line);
+}
+
+.im-posthero-minimal .im-posthero-title {
+	font-size: clamp(1.75rem, 1.3rem + 2vw, 2.75rem);
+}
+
+.im-posthero-minimal > .im-posthero-media {
+	display: none;
+}

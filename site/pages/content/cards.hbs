@@ -19,7 +19,7 @@ source: src/components/koenig.css · src/js/im-content.js
 <p><code>im-content.js</code> (~2 KB) does what Ghost's script did — gallery proportions, the toggle, the audio and video players — and two things it did not: scrolling tables and click-to-zoom. A post is fully readable without it.</p>
 
 <h2>Bookmark</h2>
-<p>A link, previewed. The edge sharpens to ink on hover — the system's one hover. In a narrow column the picture moves above the words (a container query, so it answers to the column, not the screen).</p>
+<p>A link, previewed. It fills on hover — the system's one hover. In a narrow column the picture moves above the words (a container query, so it answers to the column, not the screen).</p>
 {{#example code=false}}
 <div class="im-content im-content-flush">
 	<figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="#bookmark"><div class="kg-bookmark-content"><div class="kg-bookmark-title">{{demo.three.[0].title}}</div><div class="kg-bookmark-description">{{demo.three.[0].excerpt}} The longer this description runs, the more clearly you can see that it is held to two lines and then cut with an ellipsis.</div><div class="kg-bookmark-metadata"><img class="kg-bookmark-icon" src="{{demo.author.profile_image}}" alt=""><span class="kg-bookmark-author">{{demo.author.name}}</span><span class="kg-bookmark-publisher">imswarnil.com</span></div></div><div class="kg-bookmark-thumbnail"><img src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></div></a></figure>
@@ -100,6 +100,6 @@ source: src/components/koenig.css · src/js/im-content.js
 <ul>
 	<li>A card gets <strong>1.5 ×</strong> <code>--im-flow</code> above and below — a little more air than a paragraph.</li>
 	<li>One radius (<code>--im-kg-radius</code>) and one padding (<code>--im-kg-pad</code>), set on <code>.kg-card</code>. Change them once.</li>
-	<li>Boxes are a hairline, never a shadow; a card that is a link answers by sharpening that hairline to ink.</li>
+	<li>Boxes are a hairline, never a shadow; a card that is a link answers by filling, one surface deeper than it already is.</li>
 	<li>Captions are centred, small, muted — and can hold links.</li>
 </ul>

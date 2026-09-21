@@ -6,7 +6,8 @@
    slow     a whole section arriving; a hero
    Curves: `out` for things ARRIVING (fast start, soft landing — the default),
    `in` for things LEAVING, `in-out` for things that travel and stay on screen,
-   `spring` for a little overshoot on something small and playful. */
+   `spring` for a little overshoot on something small and playful, `glide` for
+   something large that opens and settles. */
 
 :root {
 	--im-duration-instant: 120ms;
@@ -16,6 +17,10 @@
 
 	--im-ease-in: cubic-bezier(0.5, 0, 0.9, 0.4);
 	--im-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+	/* `glide`: a long, soft bezier for something that takes over the page — a
+	   lightbox, a sheet. It leaves rest quickly and spends the rest of its
+	   time settling, which is what reads as smooth at half a second. */
+	--im-ease-glide: cubic-bezier(0.22, 1, 0.36, 1);
 
 	/* How far an entering thing travels. Small: motion should be felt, not watched. */
 	--im-distance: 1rem;

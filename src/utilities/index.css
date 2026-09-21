@@ -84,3 +84,8 @@
 	font-weight: 400;
 	letter-spacing: 0;
 }
+
+/* Clearance for a bar that floats over the page (im-topbar-island / -float). */
+@utility im-bar-offset {
+	padding-top: calc(var(--im-bar-height) + var(--im-island-gap, 0.75rem));
+}
