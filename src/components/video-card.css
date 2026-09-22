@@ -511,7 +511,6 @@
      <div class="im-short">
        <div class="im-short-stage">
          <div class="im-short-player"> <video …> <div class="im-short-over">…</div> </div>
-         <div class="im-short-rail">   …like, comment, share, more…            </div>
        </div>
      </div>
 
@@ -669,13 +668,6 @@
 
 
 
-	.im-short-act > .im-icon {
-		background-color: rgb(20 20 20 / 45%);
-		box-shadow: none;
-		color: #fff;
-		-webkit-backdrop-filter: blur(8px);
-		backdrop-filter: blur(8px);
-	}
 
 	.im-short-over {
 		padding-right: 4rem;
