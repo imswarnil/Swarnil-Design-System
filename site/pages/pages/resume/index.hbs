@@ -1,7 +1,7 @@
 ---
 title: Résumé
 layout: home
-description: Two columns — the facts that fit on a card on the left, the story on the right — and a print stylesheet that keeps both.
+description: A real CV — a profile header on a pattern, the summary and the career timeline at seventy percent, the facts at thirty. Prints as it reads.
 eyebrow: Pages
 source: src/components/pages.css
 ---
@@ -11,49 +11,52 @@ source: src/components/pages.css
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
-<div class="im-wrap-wide im-resume">
-	<aside class="im-resume-side">
+<div class="im-wrap-wide im-stack" style="--im-stack-gap: 2rem">
+	<header class="im-cv-head">
+		<span class="im-cv-pattern im-bg-blueprint im-bg-accent" aria-hidden="true"></span>
 		{{> "components/avatar" size="xl" src=demo.author.profile_image name=demo.author.name}}
 		<div>
-			<h1 class="im-collhead-title" style="font-size: var(--im-text-h3)">{{demo.author.name}}</h1>
-			<p class="im-hint">Salesforce consultant · design systems · Amsterdam</p>
+			<h1 class="im-cv-name">{{demo.author.name}}</h1>
+			<p class="im-cv-role">Salesforce consultant · design systems · Amsterdam</p>
+			<p class="im-cv-contact"><span>{{icon "mail"}}hello@imswarnil.com</span><span>{{icon "globe"}}imswarnil.com</span><span>{{icon "brand-github"}}imswarnil</span><span>{{icon "map-pin"}}Amsterdam, NL</span></p>
 		</div>
-		<p class="im-cluster" style="--im-cluster-gap: .5rem"><a class="im-btn im-btn-primary im-btn-sm" href="#">{{icon "download"}}PDF</a><a class="im-btn im-btn-sm" href="/pages/contact/">{{icon "mail"}}Contact</a></p>
-		<dl class="im-widget-facts">
-			<dt>Available</dt><dd>Nov 2026</dd>
-			<dt>Rate</dt><dd>Per engagement</dd>
-			<dt>Languages</dt><dd>English, Hindi, Dutch (A2)</dd>
-			<dt>Elsewhere</dt><dd><a href="#">GitHub</a> · <a href="#">LinkedIn</a></dd>
-		</dl>
-		<div>
-			<p class="im-caption" style="margin-bottom: .5rem">Skills</p>
-			<p class="im-skills">{{#each demo.projects.[0].stack}}<span class="im-tag">{{icon this.icon}}{{this.name}}</span>{{/each}}<span class="im-tag">{{icon "zap"}}Salesforce</span><span class="im-tag">{{icon "rocket"}}Ghost</span><span class="im-tag">{{icon "component"}}Design systems</span></p>
-		</div>
-	</aside>
+		<p class="im-cluster" style="--im-cluster-gap: .5rem"><a class="im-btn im-btn-primary im-btn-sm" href="#">{{icon "download"}}PDF</a><a class="im-btn im-btn-sm" href="/pages/contact/">Contact</a></p>
+	</header>
 
-	<article>
-		<section class="im-resume-section">
-			<h2 class="im-caption" data-index="work">Experience</h2>
-			<div class="im-resume-role"><span class="im-resume-when">2022 — now</span><b>Independent consultant</b><small>Public sector, mostly. Two days a week, six weeks at a time.</small><p>Inherited orgs nobody documented; left every one with a document somebody who was not there can act on.</p></div>
-			<div class="im-resume-role"><span class="im-resume-when">2018 — 2022</span><b>Senior consultant, a Salesforce partner</b><small>Delivery lead on three multi-year programmes.</small><p>Learned what not to do, at scale, on somebody else's budget.</p></div>
-			<div class="im-resume-role"><span class="im-resume-when">2016 — 2018</span><b>Co-founder, a startup that did not survive</b><small>CRM for small clinics.</small><p>The market was real; our timing was not. The <a href="/collections/post/">write-up</a> is the most-read thing on this site.</p></div>
-		</section>
-		<section class="im-resume-section">
-			<h2 class="im-caption" data-index="made">Things made</h2>
-			<div class="im-repos" style="--im-repos-min: 16rem">{{#each demo.projects}}{{#match @index "<" 2}}{{> "components/repo-card"}}{{/match}}{{/each}}</div>
-		</section>
-		<section class="im-resume-section">
-			<h2 class="im-caption" data-index="edu">Education & certification</h2>
-			<div class="im-resume-role"><span class="im-resume-when">2024</span><b>Salesforce Application Architect</b><small>Plus the seven certifications under it.</small></div>
-			<div class="im-resume-role"><span class="im-resume-when">2012 — 2016</span><b>B.Tech, Computer Science</b><small>A degree I do not use, from a college I liked.</small></div>
-		</section>
-		<section class="im-resume-section">
-			<h2 class="im-caption" data-index="said">Said about the work</h2>
-			<div class="im-reviews">{{#each demo.testimonials}}{{#match @index "<" 2}}<article class="im-review"><p class="im-review-head"><span class="im-review-by">{{by}}</span><time class="im-review-when">{{role}}</time></p><p class="im-review-text">{{text}}</p></article>{{/match}}{{/each}}</div>
-		</section>
-	</article>
+	<div class="im-cv">
+		<article>
+			<section class="im-cv-section">
+				<h2>Summary</h2>
+				<p class="im-cv-summary">Eight years delivering Salesforce for public-sector teams, the last four independently. I take on the programmes that are already late, leave every one with a document a stranger can act on, and tell roughly a third of first conversations that they do not need me. On the side I built and sell a design system, and write a letter every fortnight about what things cost.</p>
+			</section>
+
+			<section class="im-cv-section">
+				<h2>Career</h2>
+				<ol class="im-timeline im-timeline-big" style="--im-timeline-gap: 1.75rem">
+					<li class="im-timeline-item" data-kind="job" data-state="current"><span class="im-timeline-marker">{{icon "briefcase"}}</span><time class="im-timeline-time">2022 — now</time><h3 class="im-timeline-title">Independent consultant</h3><p class="im-timeline-text">Public sector, mostly. Two days a week, six weeks at a time. Inherited orgs nobody documented; documented them.</p></li>
+					<li class="im-timeline-item" data-kind="job" data-state="done"><span class="im-timeline-marker">{{icon "briefcase"}}</span><time class="im-timeline-time">2018 — 2022</time><h3 class="im-timeline-title">Senior consultant, a Salesforce partner</h3><p class="im-timeline-text">Delivery lead on three multi-year programmes. Learned what not to do, at scale, on somebody else's budget.</p></li>
+					<li class="im-timeline-item" data-kind="job" data-state="done"><span class="im-timeline-marker">{{icon "rocket"}}</span><time class="im-timeline-time">2016 — 2018</time><h3 class="im-timeline-title">Co-founder, a clinic CRM</h3><p class="im-timeline-text">The market was real; our timing was not.</p></li>
+					<li class="im-timeline-item" data-kind="learning" data-state="done"><span class="im-timeline-marker">{{icon "graduation-cap"}}</span><time class="im-timeline-time">2012 — 2016</time><h3 class="im-timeline-title">B.Tech, Computer Science</h3><p class="im-timeline-text">A degree I do not use, from a college I liked.</p></li>
+				</ol>
+			</section>
+
+			<section class="im-cv-section">
+				<h2>Selected work</h2>
+				<div class="im-repos" style="--im-repos-min: 16rem">{{#each demo.projects}}{{#match @index "<" 2}}{{> "components/repo-card"}}{{/match}}{{/each}}</div>
+			</section>
+
+			<section class="im-cv-section">
+				<h2>Said about the work</h2>
+				<div class="im-reviews">{{#each demo.testimonials}}{{#match @index "<" 2}}<article class="im-review"><p class="im-review-head"><span class="im-review-by">{{by}}</span><time class="im-review-when">{{role}}</time></p><p class="im-review-text">{{text}}</p></article>{{/match}}{{/each}}</div>
+			</section>
+		</article>
+
+		<aside class="im-cv-side">
+			<div><h3>Skills</h3><div class="im-stack" style="--im-stack-gap: .5rem"><p class="im-cv-bar"><span>Salesforce</span><span style="--im-bar: 95%"></span></p><p class="im-cv-bar"><span>Design systems</span><span style="--im-bar: 85%"></span></p><p class="im-cv-bar"><span>CSS / Tailwind</span><span style="--im-bar: 90%"></span></p><p class="im-cv-bar"><span>Ghost themes</span><span style="--im-bar: 80%"></span></p><p class="im-cv-bar"><span>Writing</span><span style="--im-bar: 75%"></span></p></div></div>
+			<div><h3>Certifications</h3><ul><li>Application Architect (2024)</li><li>Platform Developer II</li><li>Sales & Service Cloud Consultant</li></ul></div>
+			<div><h3>Languages</h3><ul><li>English — fluent</li><li>Hindi — native</li><li>Dutch — A2</li></ul></div>
+			<div><h3>Tools</h3><p class="im-skills">{{#each demo.projects.[0].stack}}<span class="im-tag">{{icon this.icon}}{{this.name}}</span>{{/each}}</p></div>
+			<div><h3>Availability</h3><ul><li>Two days a week from November</li><li>Remote, or Amsterdam</li></ul></div>
+		</aside>
+	</div>
 </div>
-
-<section class="im-section im-wrap"><div class="im-prose">
-<p><code>im-resume</code>: a sticky left column of facts, roles as <code>im-resume-role</code> rows with the years in the mono face, and the existing repo and review components for the rest. Under 48rem it is one column and the years sit above each role.</p>
-</div></section>

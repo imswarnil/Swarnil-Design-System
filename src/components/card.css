@@ -425,20 +425,10 @@
 	background-color: #fff;
 }
 
-/* The word repeats and slides — a ticker. Give the badge the word twice. */
+/* The word stays still; only the edge moves. A badge that scrolls and an
+   edge that spins is two motions for one fact. */
 .im-featured-badge > span {
 	display: inline-flex;
-	gap: 1.25rem;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-	.im-featured-badge > span {
-		animation: im-ticker 6s linear infinite;
-	}
-}
-
-@keyframes im-ticker {
-	to { translate: calc(-50% - 0.625rem) 0; }
 }
 
 /* ---- micro-interactions ------------------------------------------------
@@ -466,11 +456,12 @@
 		background-size: 100% 1px;
 	}
 
-	:is(.im-card-link, .im-post-card, .im-repo, .im-product, .im-exp, .im-seriescard, .im-vidcard):is(:hover, :focus-within) {
+	/* Every card in the system, one list, one movement. */
+	:is(.im-card-link, .im-post-card, .im-repo, .im-product, .im-exp, .im-seriescard, .im-vidcard, .im-tagcard, .im-issue, .im-bucket, .im-done, .im-tool, .im-way, .im-guest, .im-lessonnav-item, .im-affiliate, .im-snipcard, .im-promptcard, .im-stream-item, .im-queue-item, .im-tier):is(:hover, :focus-within) {
 		translate: 0 -1px;
 	}
 
-	:is(.im-card-link, .im-post-card, .im-repo, .im-product, .im-exp, .im-seriescard, .im-vidcard) {
-		transition: background-color var(--im-duration-fast) var(--im-ease-out), translate var(--im-duration-fast) var(--im-ease-out);
+	:is(.im-card-link, .im-post-card, .im-repo, .im-product, .im-exp, .im-seriescard, .im-vidcard, .im-tagcard, .im-issue, .im-bucket, .im-done, .im-tool, .im-way, .im-guest, .im-lessonnav-item, .im-affiliate, .im-snipcard, .im-promptcard, .im-stream-item, .im-queue-item, .im-tier) {
+		transition: background-color var(--im-duration-fast) var(--im-ease-out), translate var(--im-duration-fast) var(--im-ease-out), box-shadow var(--im-duration-fast) var(--im-ease-out);
 	}
 }

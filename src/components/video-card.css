@@ -300,7 +300,7 @@
 .im-vidgrid {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-vidgrid-min, 17rem), 100%), 1fr));
-	gap: clamp(1.25rem, 2.5vw, 2rem) 1rem;
+	gap: var(--im-grid-gap);
 	align-items: start;
 }
 
@@ -827,7 +827,8 @@
    to the left looks left-of-centre when its bounding box is centred. */
 .im-thumb-play::after {
 	background-image: var(--im-play-glyph);
-	background-position: 56% 50%;
+	background-position: 58% 50%;
+	background-size: calc(var(--im-thumb-mark, 2.25rem) * 0.46);
 }
 
 .im-thumb-lock::after {
@@ -969,7 +970,7 @@
 .im-seriescards {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-seriescards-min, 24rem), 100%), 1fr));
-	gap: 1rem;
+	gap: var(--im-grid-gap);
 	align-items: stretch;
 }
 

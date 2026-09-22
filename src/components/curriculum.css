@@ -556,3 +556,32 @@
 .im-lessonnav-item[data-next] small {
 	justify-content: flex-end;
 }
+
+
+/* ---- with a still, and without ----
+   `im-lessons-shots` puts a 16:10 still on each row. Without it the row is
+   the mark, the title, the kind and the length — the version for a course
+   whose lessons are not filmed. */
+.im-lessons-shots .im-lesson-shot { width: 5rem; aspect-ratio: 16 / 10; }
+.im-lessons:not(.im-lessons-shots) .im-lesson-shot { display: none; }
+
+/* The offer widget: the price is the fact, the button is the act, and the
+   rest is one line each. */
+.im-offer {
+	display: grid;
+	gap: 0.75rem;
+	padding: 1.25rem;
+	border-radius: var(--im-radius-xl);
+	background-color: var(--im-ink);
+	color: var(--im-canvas);
+}
+
+.im-offer-price { display: flex; align-items: baseline; gap: 0.5rem; }
+.im-offer-price > b { font-family: var(--im-font-heading); font-size: 2.5rem; font-weight: 600; line-height: 1; letter-spacing: var(--im-tracking-tight); }
+.im-offer-price > s { color: color-mix(in oklab, var(--im-canvas) 55%, transparent); font-size: var(--im-text-base); }
+.im-offer-price > span { color: color-mix(in oklab, var(--im-canvas) 65%, transparent); font-size: var(--im-text-xs); }
+.im-offer-list { display: grid; gap: 0.375rem; color: color-mix(in oklab, var(--im-canvas) 80%, transparent); font-size: var(--im-text-sm); }
+.im-offer-list > li { display: flex; gap: 0.5rem; align-items: center; }
+.im-offer-list .im-icon { color: var(--im-success); font-size: 0.9375rem; }
+.im-offer > .im-btn { width: 100%; }
+.im-offer-note { color: color-mix(in oklab, var(--im-canvas) 55%, transparent); font-size: var(--im-text-xs); text-align: center; }

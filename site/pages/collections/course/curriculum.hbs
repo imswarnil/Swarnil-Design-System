@@ -99,3 +99,13 @@ source: src/components/curriculum.css · src/js/im.js
 		<p>A course is a tag; its modules are child tags or an internal-tag convention of your choosing; lessons are posts in order. The curriculum is then two nested <code>\{{#get}}</code> loops around one <code>im-lesson</code>, with <code>aria-current="page"</code> where <code>\{{#match slug ../post.slug}}</code>. "Done" is per reader, so it lives in <code>localStorage</code> (or member data) and is applied by a few lines of theme script that set <code>data-state="done"</code>.</p>
 	</div>
 </section>
+
+
+<h2>With a still, and without</h2>
+<p><code>im-lessons-shots</code> puts a 16:10 still on every row. Without it, a row is the mark, the title, the kind and the length — for a course whose lessons are written rather than filmed.</p>
+{{#example}}
+<div class="im-grid-auto" style="--im-grid-min: 18rem">
+	<ol class="im-lessons im-lessons-shots">{{#each demo.lessons}}{{#match @index "<" 3}}<li><a class="im-lesson" href="#" data-state="{{#if locked}}locked{{else}}{{state}}{{/if}}"><span class="im-lesson-mark" aria-hidden="true"></span><span class="im-lesson-shot"><img src="{{lookup ../demo.shots shot}}" alt="" loading="lazy"></span><span>{{title}}</span><span class="im-lesson-kind">{{#match kind "=" "video"}}{{icon "square-play"}}Video{{else}}{{icon "file-text"}}Article{{/match}}</span><small>{{time}}</small></a></li>{{/match}}{{/each}}</ol>
+	<ol class="im-lessons">{{#each demo.lessons}}{{#match @index "<" 3}}<li><a class="im-lesson" href="#" data-state="{{#if locked}}locked{{else}}{{state}}{{/if}}"><span class="im-lesson-mark" aria-hidden="true"></span><span>{{title}}</span><span class="im-lesson-kind">{{#match kind "=" "video"}}{{icon "square-play"}}Video{{else}}{{icon "file-text"}}Article{{/match}}</span><small>{{time}}</small></a></li>{{/match}}{{/each}}</ol>
+</div>
+{{/example}}

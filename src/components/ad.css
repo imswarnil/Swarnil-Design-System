@@ -656,7 +656,7 @@
 .im-affiliates {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(min(19rem, 100%), 1fr));
-	gap: 1rem;
+	gap: var(--im-grid-gap);
 }
 
 /* ---- the member gate ----

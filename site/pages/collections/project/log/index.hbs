@@ -48,7 +48,7 @@ source: src/components/repo-card.css · timeline.css
 	</article>
 
 	<aside>
-		<div class="im-sticky-rail">
+		<div class="im-sticky-rail im-sticky-rail-full">
 			<div class="im-widgets">
 				<section class="im-widget" aria-labelledby="l-proj">
 					<h2 class="im-widget-title" id="l-proj">The project</h2>
@@ -60,7 +60,7 @@ source: src/components/repo-card.css · timeline.css
 
 				<section class="im-widget" aria-labelledby="l-vers">
 					<h2 class="im-widget-title" id="l-vers">Versions</h2>
-					<ol class="im-timeline im-timeline-compact im-widget-series">
+					<ol class="im-timeline im-timeline-compact im-widget-series" style="--im-timeline-gap: 1.25rem; --im-timeline-marker: 1.75rem">
 						{{#each demo.log}}
 						<li class="im-timeline-item" data-state="{{state}}">
 							<span class="im-timeline-marker">{{day}}</span>

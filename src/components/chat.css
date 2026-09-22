@@ -222,7 +222,7 @@
 .im-promptcards {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-promptcards-min, 26rem), 100%), 1fr));
-	gap: 2rem 1.5rem;
+	gap: var(--im-grid-gap);
 	align-items: start;
 }
 

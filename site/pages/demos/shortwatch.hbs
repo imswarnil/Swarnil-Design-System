@@ -16,16 +16,10 @@ shell: frame
 			<img src="{{thumb}}" alt="">
 			<span class="im-short-bar"><span style="width: 38%"></span></span>
 		</div>
-		<div class="im-short-rail">
-			<button class="im-short-act" type="button" aria-pressed="true" data-im-toggle>{{> "icons/heart"}}<span>12k</span></button>
-			<button class="im-short-act" type="button">{{> "icons/message-circle"}}<span>318</span></button>
-			<button class="im-short-act" type="button">{{> "icons/share"}}<span>Share</span></button>
-			<button class="im-short-act" type="button">{{> "icons/ellipsis"}}<span>More</span></button>
-		</div>
 	</div>
 
 	<div class="im-shortwatch-panel">
-		<p class="im-snipcard-meta"><span class="im-kind" data-kind="short">{{> "icons/video"}}Short</span><span>{{views}} views</span><span>{{when}}</span></p>
+		<p class="im-snipcard-meta"><span class="im-kind" data-kind="short">{{> "icons/video"}}Reel</span><span>{{views}} views</span><span>{{when}}</span><span>{{time}}</span></p>
 		<h1 class="im-shortwatch-title">{{title}}</h1>
 
 		<div class="im-vidhead-by">
@@ -36,7 +30,8 @@ shell: frame
 
 		<p style="color: var(--im-body); font-size: var(--im-text-sm); line-height: 1.6">Forty kilometres that take two hours. The whole road, cut down to the bits where the bus folds its mirrors in. Full version on the channel.</p>
 
-		<p class="im-cluster" style="--im-cluster-gap: .375rem"><span class="im-topic">#amalfi</span><span class="im-topic">#travel</span><span class="im-topic">#shorts</span></p>
+		<dl class="im-widget-facts"><dt>Shot</dt><dd>Amalfi, Nov 2025</dd><dt>Camera</dt><dd><a href="/collections/uses/page/">X100VI</a></dd><dt>Full film</dt><dd><a href="/collections/video/page/">8:12 on the channel</a></dd><dt>Trip</dt><dd><a href="/collections/travel/trip/">The itinerary</a></dd></dl>
+		<p class="im-cluster" style="--im-cluster-gap: .375rem"><span class="im-topic">#amalfi</span><span class="im-topic">#travel</span></p>
 
 		{{> "components/comments" thread=../demo.comments count="318" lean=true limit="1"}}
 	</div>

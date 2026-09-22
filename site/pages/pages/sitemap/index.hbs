@@ -14,6 +14,7 @@ source: src/components/sitemap.css
 <section class="im-section im-wrap-wide">
 	<div class="im-collbar">
 		<p class="im-caption" data-index="tree" style="margin: 0">Everything</p>
+		<p class="im-cluster" style="--im-cluster-gap: .375rem"><button class="im-btn im-btn-sm" type="button" onclick="document.querySelectorAll('.im-sitemap details').forEach(d=>d.open=true)">Expand all</button><button class="im-btn im-btn-sm" type="button" onclick="document.querySelectorAll('.im-sitemap details').forEach(d=>d.open=false)">Collapse all</button></p>
 		<p class="im-snipcard-meta"><span>{{sitemap.length}} sections</span><a class="im-card-cta" href="/sitemap.xml">sitemap.xml {{icon "external-link"}}</a></p>
 	</div>
 
@@ -33,21 +34,26 @@ source: src/components/sitemap.css
 			{{#each sitemap}}
 			{{#unless title}}{{#each items}}<li><a class="im-sitemap-node im-sitemap-branch" href="{{url}}">{{icon icon}}{{label}}</a></li>{{/each}}{{else}}
 			<li>
-				<span class="im-sitemap-node im-sitemap-branch">{{icon icon}}{{title}}<span class="im-sitemap-count">{{count}}</span></span>
-				<ul>
+				<details open>
+				<summary><span class="im-sitemap-node im-sitemap-branch">{{icon icon}}{{title}}<span class="im-sitemap-count">{{count}}</span></span></summary>
+				<ul{{#match count ">" 6}} data-more{{/match}}>
 					{{#each items}}
 					{{#if children}}
 					<li>
-						<span class="im-sitemap-node im-sitemap-branch">{{icon icon}}{{label}}<span class="im-sitemap-count">{{children.length}}</span></span>
+						<details>
+						<summary><span class="im-sitemap-node im-sitemap-branch">{{icon icon}}{{label}}<span class="im-sitemap-count">{{children.length}}</span></span></summary>
 						<ul>
 							{{#each children}}<li><a class="im-sitemap-node" href="{{url}}">{{icon "file-text"}}{{label}}</a></li>{{/each}}
 						</ul>
+						</details>
 					</li>
 					{{else}}
 					<li><a class="im-sitemap-node" href="{{url}}">{{icon "file-text"}}{{label}}</a></li>
 					{{/if}}
 					{{/each}}
 				</ul>
+				{{#match count ">" 6}}<button class="im-sitemap-more" type="button" onclick="this.previousElementSibling.setAttribute('data-open','');this.hidden=true">Show all {{count}}</button>{{/match}}
+				</details>
 			</li>
 			{{/unless}}
 			{{/each}}

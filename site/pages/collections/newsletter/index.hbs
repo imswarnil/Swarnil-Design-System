@@ -1,5 +1,5 @@
 ---
-title: Issue collection
+title: Newsletter
 layout: home
 description: The archive of a letter — what it is, a form to join it, and every issue that has gone out, numbered. A newsletter's back catalogue is the best argument for subscribing to it.
 eyebrow: Collections · Newsletter
@@ -17,7 +17,7 @@ source: src/components/collection.css · field.css
 			<span class="im-collhead-art im-bg-lines" style="--im-art: #4ac26b" aria-hidden="true"></span>
 			<p class="im-eyebrow">Newsletter</p>
 			<h1 class="im-collhead-title">Field Notes</h1>
-			<p class="im-collhead-text">One email when something lands — what I built, what it cost and what I got wrong. No schedule, no filler, no list swapping.</p>
+			<p class="im-collhead-text">One letter when something lands — what I built, what it cost and what I got wrong. No schedule, no filler, no list swapping.</p>
 			<p class="im-collhead-meta">
 				<span>{{demo.issues.length}} issues</span>
 				<span>4,100 readers</span>
@@ -32,7 +32,7 @@ source: src/components/collection.css · field.css
 		</section>
 
 		<section class="im-section" id="issues">
-			<div class="home-head"><p class="im-caption" data-index="all">Every issue</p><a class="im-card-cta" href="#issues">RSS {{> "icons/arrow-right"}}</a></div>
+			<div class="home-head"><p class="im-caption" data-index="all">Every letter</p><a class="im-card-cta" href="#issues">RSS {{> "icons/arrow-right"}}</a></div>
 			<div class="im-issues">
 				{{#each demo.issues}}
 				<article class="im-issue">
@@ -45,7 +45,7 @@ source: src/components/collection.css · field.css
 					<h3 class="im-issue-title"><a href="/collections/newsletter/issue/">{{title}}</a></h3>
 					<p class="im-issue-text">{{text}}</p>
 					<p class="im-issue-meta">
-						<span class="im-kind" data-kind="issue">{{icon "mail"}}Issue</span>
+						<span class="im-kind" data-kind="issue">{{icon "mail"}}Letter</span>
 						<span>{{words}} words</span>
 						<span>{{read}} opened</span>
 					</p>
@@ -60,7 +60,7 @@ source: src/components/collection.css · field.css
 		<div class="im-widgets">
 			<section class="im-widget im-widget-fill" aria-labelledby="nw-sub">
 				<h2 class="im-widget-title" id="nw-sub">Subscribe</h2>
-				<p class="im-widget-heading">Free. One email when something lands.</p>
+				<p class="im-widget-heading">Free. One letter when something lands.</p>
 				{{> "components/subscribe" id="letters-email" button="Join"}}
 				<div class="im-widget-stats">
 					<div><strong>4,210</strong><span>Readers</span></div>

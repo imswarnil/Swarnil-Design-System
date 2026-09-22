@@ -54,9 +54,9 @@ source: src/components/life.css · timeline.css
 			<h2 class="im-caption" data-index="plan">The itinerary</h2>
 			<ol class="im-legs">
 				{{#each demo.itinerary}}
-				<li class="im-leg" id="day-{{day}}"{{#if state}} data-state="{{state}}"{{/if}}>
-					<span class="im-leg-day"><b>{{day}}</b>Day</span>
-					<p class="im-leg-route">{{#each legs}}<span>{{this}}</span>{{/each}}</p>
+				<li class="im-leg" id="day-{{day}}"{{#if state}} data-state="{{state}}"{{/if}}{{#match legs.length ">" 1}} data-move{{/match}}>
+					<span class="im-leg-day" title="{{kindlabel}}">{{#match kind "=" "start"}}{{icon "rocket"}}{{/match}}{{#match kind "=" "stay"}}{{icon "bookmark"}}{{/match}}{{#match kind "=" "road"}}{{icon "route"}}{{/match}}{{#match kind "=" "beach"}}{{icon "sun"}}{{/match}}{{#match kind "=" "climb"}}{{icon "trending-up"}}{{/match}}{{#match kind "=" "end"}}{{icon "house"}}{{/match}}</span>
+					<p class="im-leg-route"><span class="im-leg-n">Day {{day}} · {{kindlabel}}</span>{{#each legs}}<span>{{this}}</span>{{/each}}</p>
 					<h3 class="im-leg-title">{{title}}</h3>
 					<p class="im-leg-text">{{text}}</p>
 					{{#if shot}}<figure class="im-log-shot im-leg-shot"><img src="{{lookup ../demo.shots shot}}" alt="" loading="lazy"><figcaption>{{title}}</figcaption></figure>{{/if}}
@@ -85,15 +85,15 @@ source: src/components/life.css · timeline.css
 	</article>
 
 	<aside>
-		<div class="im-sticky-rail">
+		<div class="im-sticky-rail im-sticky-rail-full">
 			<div class="im-widgets">
 				<section class="im-widget" aria-labelledby="tr-plan">
 					<h2 class="im-widget-title" id="tr-plan">The days</h2>
 					<ol class="im-timeline im-timeline-compact im-widget-series">
 						{{#each demo.itinerary}}
 						<li class="im-timeline-item" data-state="done">
-							<span class="im-timeline-marker">{{day}}</span>
-							<h3 class="im-timeline-title"><a href="#day-{{day}}">{{title}}</a></h3>
+							<span class="im-timeline-marker">{{#match kind "=" "start"}}{{icon "rocket"}}{{/match}}{{#match kind "=" "stay"}}{{icon "bookmark"}}{{/match}}{{#match kind "=" "road"}}{{icon "route"}}{{/match}}{{#match kind "=" "beach"}}{{icon "sun"}}{{/match}}{{#match kind "=" "climb"}}{{icon "trending-up"}}{{/match}}{{#match kind "=" "end"}}{{icon "house"}}{{/match}}</span>
+							<h3 class="im-timeline-title"><a href="#day-{{day}}">{{kindlabel}} · {{title}}</a></h3>
 						</li>
 						{{/each}}
 					</ol>

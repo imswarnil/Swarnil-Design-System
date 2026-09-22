@@ -216,8 +216,8 @@ export const navigation = [
 				label: 'Newsletter',
 				icon: 'mail',
 				children: [
-					{ label: 'Issue collection', url: '/collections/newsletter/' },
-					{ label: 'Issue page', url: '/collections/newsletter/issue/' },
+					{ label: 'Newsletter', url: '/collections/newsletter/' },
+					{ label: 'Letter page', url: '/collections/newsletter/issue/' },
 				],
 			},
 			{

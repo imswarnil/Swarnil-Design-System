@@ -40,21 +40,18 @@ source: src/components/life.css
 		</div>
 	</div>
 
-	<div class="im-trips" id="trips">
+	<div class="im-trips" id="trips" style="--im-trips-min: 17rem">
 		{{#each demo.trips}}
-		<article class="im-exp im-trip" data-facet="{{country}}">
-			<span class="im-exp-media">
-				<img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy">
-				<span class="im-exp-figure">{{days}}<small>days</small></span>
-				<span class="im-kind im-kind-over" data-kind="tag">{{icon "map-pin"}}{{country}}</span>
+		<a class="im-tripcard" href="/collections/travel/trip/" data-facet="{{country}}">
+			<img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy">
+			<span class="im-kind im-kind-over" data-kind="tag">{{icon "map-pin"}}{{country}}</span>
+			<span class="im-exp-figure">{{days}}<small>days</small></span>
+			<span class="im-tripcard-body">
+				<span class="im-tripcard-title">{{title}}</span>
+				<span class="im-tripcard-meta"><span>{{when}}</span>{{#match state "=" "upcoming"}}<span>Planned</span>{{else}}<span>{{km}} km</span>{{/match}}</span>
+				<span class="im-tripcard-more"><span>{{text}}</span><span class="im-trip-route">{{#each route}}<span>{{this}}</span>{{/each}}</span></span>
 			</span>
-			<div class="im-exp-body">
-				<p class="im-exp-where"><span>{{when}}</span>{{#match state "=" "upcoming"}}<span>Planned</span>{{else}}<span>{{km}} km</span>{{/match}}</p>
-				<h2 class="im-exp-title"><a href="/collections/travel/trip/">{{title}}</a></h2>
-				<p class="im-exp-text">{{text}}</p>
-				<p class="im-trip-route">{{#each route}}<span>{{this}}</span>{{/each}}</p>
-			</div>
-		</article>
+		</a>
 		{{/each}}
 		<p class="im-feed-empty" data-facet-empty hidden>Nothing here yet.</p>
 	</div>

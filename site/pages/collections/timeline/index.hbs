@@ -30,6 +30,21 @@ source: src/components/stream.css
 			<a class="im-tag" href="#stream">{{icon "package"}}Bought</a>
 		</div>
 
+		<section class="im-section" style="--im-section-gap: 1rem">
+			<h2 class="im-caption" data-index="milestones">Milestones</h2>
+			<ol class="im-timeline im-timeline-big">
+				{{#each demo.milestones}}
+				<li class="im-timeline-item" data-kind="{{kind}}" data-state="done" data-im-in="rise">
+					<span class="im-timeline-marker">{{icon mark}}</span>
+					<time class="im-timeline-time"><span class="im-timeline-kind">{{kind}}</span>{{when}}</time>
+					<h3 class="im-timeline-title">{{title}}</h3>
+					<p class="im-timeline-text">{{text}}</p>
+					{{#if shot}}<img class="im-timeline-shot" src="{{lookup ../demo.shots shot}}" alt="" loading="lazy">{{/if}}
+				</li>
+				{{/each}}
+			</ol>
+		</section>
+
 		<div id="stream">
 			{{#each demo.stream}}
 			<p class="im-stream-month">{{month}}</p>

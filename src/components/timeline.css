@@ -269,3 +269,63 @@
 		height: auto;
 	}
 }
+
+/* ---- the big timeline: milestones ----------------------------------------
+   Bigger marks, room to breathe, and each entry arrives as it scrolls into
+   view (data-im-in, from im-motion.js — nothing is hidden without it). A
+   kind per entry: job, trip, learning, release, event, life. */
+.im-timeline-big {
+	--im-timeline-marker: 2.5rem;
+	--im-timeline-gutter: 1.5rem;
+	--im-timeline-gap: 2.5rem;
+}
+
+.im-timeline-big .im-timeline-marker {
+	background-color: var(--im-canvas);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	color: var(--im-kind-ink, var(--im-muted));
+}
+
+.im-timeline-big .im-timeline-marker > .im-icon { font-size: 1.125rem; }
+
+.im-timeline-big .im-timeline-title {
+	font-size: var(--im-text-h4);
+	line-height: var(--im-leading-h4);
+}
+
+.im-timeline-big .im-timeline-text {
+	font-size: var(--im-text-base);
+	max-width: 60ch;
+}
+
+.im-timeline-big .im-timeline-time {
+	font-size: var(--im-text-sm);
+}
+
+.im-timeline-item[data-kind="job"] { --im-kind-ink: var(--im-info); }
+.im-timeline-item[data-kind="trip"] { --im-kind-ink: var(--im-warning); }
+.im-timeline-item[data-kind="learning"] { --im-kind-ink: var(--im-success); }
+.im-timeline-item[data-kind="release"] { --im-kind-ink: var(--im-accent); }
+.im-timeline-item[data-kind="event"] { --im-kind-ink: var(--im-danger); }
+.im-timeline-item[data-kind="life"] { --im-kind-ink: var(--im-ink); }
+
+.im-timeline-kind {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
+	margin-right: 0.75rem;
+	color: var(--im-kind-ink, var(--im-muted));
+	font-weight: 600;
+	font-family: var(--im-font-body);
+	text-transform: none;
+	letter-spacing: 0;
+}
+
+.im-timeline-big .im-timeline-shot {
+	width: 100%;
+	max-width: 32rem;
+	margin-top: 0.75rem;
+	aspect-ratio: 16 / 9;
+	border-radius: var(--im-radius-lg);
+	object-fit: cover;
+}

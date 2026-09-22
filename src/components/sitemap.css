@@ -149,3 +149,37 @@
 		columns: 1;
 	}
 }
+
+
+/* ---- branches that open and close ----
+   A branch is a <details>; its summary is the branch node. Closed, a long
+   branch shows its first few pages and a count of the rest. */
+.im-sitemap details > summary { list-style: none; cursor: pointer; }
+.im-sitemap details > summary::-webkit-details-marker { display: none; }
+.im-sitemap details > summary .im-sitemap-node::after {
+	content: "";
+	width: 0.625rem;
+	height: 0.625rem;
+	margin-left: 0.25rem;
+	background-color: var(--im-faint);
+	-webkit-mask-image: var(--im-chevron-glyph);
+	mask-image: var(--im-chevron-glyph);
+	-webkit-mask-size: contain;
+	mask-size: contain;
+	-webkit-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+	transition: rotate var(--im-duration-fast) var(--im-ease-out);
+}
+.im-sitemap details[open] > summary .im-sitemap-node::after { rotate: 180deg; }
+
+/* Truncated: past the limit, items hide until the branch's "more" is opened. */
+.im-sitemap [data-more] > li:nth-child(n + 7) { display: none; }
+.im-sitemap [data-more][data-open] > li { display: list-item; }
+.im-sitemap-more {
+	padding: 0.25rem 0 0 1rem;
+	color: var(--im-accent);
+	font-size: var(--im-text-xs);
+	cursor: pointer;
+	background: none;
+}
+.im-sitemap [data-open] + .im-sitemap-more { display: none; }

@@ -126,13 +126,14 @@ source: src/components/curriculum.css · commerce.css
 	</article>
 
 	<aside>
-		<div class="im-sticky-rail">
+		<div class="im-sticky-rail im-sticky-rail-full">
 			<div class="im-widgets">
-				<section class="im-widget im-widget-accent" aria-labelledby="c-buy">
-					<h2 class="im-widget-title" id="c-buy">Get it</h2>
-					<p class="im-tier-price" style="border: 0; padding: 0"><b>€49</b><span>once, yours forever</span></p>
-					<a class="im-btn im-btn-primary" href="/pages/auth/" style="width: 100%">{{icon "play"}}Start the course</a>
-					<p class="im-hint" style="text-align: center">Free on <a href="/pages/membership/">Workshop</a>. 14-day refund.</p>
+				<section class="im-offer" aria-labelledby="c-buy">
+					<h2 class="im-widget-title" id="c-buy" style="color: inherit">Get the course</h2>
+					<p class="im-offer-price"><b>€49</b><s>€79</s><span>once · yours forever</span></p>
+					<ul class="im-offer-list"><li>{{icon "check"}}7 lessons, 81 minutes</li><li>{{icon "check"}}Every source file</li><li>{{icon "check"}}Lifetime updates</li><li>{{icon "check"}}14-day refund, no reason</li></ul>
+					<a class="im-btn im-btn-primary" href="/pages/auth/">{{icon "play"}}Start the course</a>
+					<p class="im-offer-note">Free on <a href="/pages/membership/" style="color: inherit">Workshop</a>. Two lessons free without an account.</p>
 				</section>
 
 				<section class="im-widget" aria-labelledby="c-by">

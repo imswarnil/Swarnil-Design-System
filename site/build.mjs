@@ -202,7 +202,7 @@ export async function build({ quiet = false } = {}) {
 		issues: [
 			{ n: '042', day: '18', month: 'Sep', year: '2026', sent: '18 Sep 2026', title: 'The one where I deleted the theme', text: 'Why the site moved off a paid theme, what it cost, and the two-line audit that proves nothing came with it.', read: '62%', words: '1,240', shot: 1 },
 			{ n: '041', day: '11', month: 'Sep', year: '2026', sent: '11 Sep 2026', title: 'Forty components and one hover', text: 'Three competing interactions removed in an afternoon, and nothing was lost.', read: '58%', words: '980' },
-			{ n: '040', day: '4', month: 'Sep', year: '2026', sent: '4 Sep 2026', title: 'What a design system is actually for', text: 'Not consistency. Not speed. The ability to change your mind later.', read: '64%', words: '1,510', shot: 2 },
+			{ n: '040', day: '4', kind: 'beach', kindlabel: 'Beach', month: 'Sep', year: '2026', sent: '4 Sep 2026', title: 'What a design system is actually for', text: 'Not consistency. Not speed. The ability to change your mind later.', read: '64%', words: '1,510', shot: 2 },
 			{ n: '039', day: '28', month: 'Aug', year: '2026', sent: '28 Aug 2026', title: 'Every number from the move', text: 'Rent, tax, the deposit nobody mentions, and the month it took to get a bank account.', read: '71%', words: '2,300' },
 		],
 		shop: [
@@ -253,12 +253,12 @@ export async function build({ quiet = false } = {}) {
 			{ title: 'Tromsø, for the lights', country: 'Norway', when: 'February 2027', days: '5', km: '—', route: ['Oslo', 'Tromsø', 'Sommarøy'], text: 'Booked. Three nights of standing in a field being cold and hopeful.', state: 'upcoming' },
 		],
 		itinerary: [
-			{ day: '1', shot: 1, legs: ['Naples', 'Sorrento'], title: 'Getting out of Naples', text: 'The Circumvesuviana takes an hour and is the single least pleasant part of the whole trip. Do it early and get it over with.', sleep: 'Sorrento', cost: '\u20ac64', km: '52', hours: '2h 10' },
-			{ day: '2', legs: ['Sorrento'], title: 'Doing nothing, on purpose', text: 'A day of walking the cliff path and eating too much. The town is the least interesting thing on this coast and the best place to be based on it.', sleep: 'Sorrento', cost: '\u20ac41', km: '9', hours: '0h 40' },
-			{ day: '3', shot: 0, legs: ['Sorrento', 'Positano'], title: 'The road', text: 'Two hours for forty kilometres, east to west, sea side. Buses fold their mirrors in to pass. Worth every minute.', sleep: 'Positano', cost: '\u20ac118', km: '41', hours: '2h 05', state: 'current', cta: 'The car we hired' },
-			{ day: '4', legs: ['Positano', 'Amalfi'], title: 'Parking, and other lies', text: 'Ten euro an hour is the published price and fifteen is the actual one in August. Take the SITA bus.', sleep: 'Amalfi', cost: '\u20ac96', km: '17', hours: '1h 15', cta: 'The bus timetable' },
-			{ day: '5', shot: 3, legs: ['Amalfi', 'Ravello'], title: 'Up the hill', text: 'Three hundred and forty metres above the sea and worth the climb for the view alone.', sleep: 'Ravello', cost: '\u20ac72', km: '7', hours: '0h 50' },
-			{ day: '6', legs: ['Ravello', 'Naples'], title: 'The way back', text: 'West to east this time, on the cliff side, which is a completely different drive.', sleep: '\u2014', cost: '\u20ac88', km: '68', hours: '2h 30' },
+			{ day: '1', kind: 'start', kindlabel: 'Start', shot: 1, legs: ['Naples', 'Sorrento'], title: 'Getting out of Naples', text: 'The Circumvesuviana takes an hour and is the single least pleasant part of the whole trip. Do it early and get it over with.', sleep: 'Sorrento', cost: '\u20ac64', km: '52', hours: '2h 10' },
+			{ day: '2', kind: 'stay', kindlabel: 'Stay', legs: ['Sorrento'], title: 'Doing nothing, on purpose', text: 'A day of walking the cliff path and eating too much. The town is the least interesting thing on this coast and the best place to be based on it.', sleep: 'Sorrento', cost: '\u20ac41', km: '9', hours: '0h 40' },
+			{ day: '3', kind: 'road', kindlabel: 'Road', shot: 0, legs: ['Sorrento', 'Positano'], title: 'The road', text: 'Two hours for forty kilometres, east to west, sea side. Buses fold their mirrors in to pass. Worth every minute.', sleep: 'Positano', cost: '\u20ac118', km: '41', hours: '2h 05', state: 'current', cta: 'The car we hired' },
+			{ day: '4', kind: 'beach', kindlabel: 'Beach', legs: ['Positano', 'Amalfi'], title: 'Parking, and other lies', text: 'Ten euro an hour is the published price and fifteen is the actual one in August. Take the SITA bus.', sleep: 'Amalfi', cost: '\u20ac96', km: '17', hours: '1h 15', cta: 'The bus timetable' },
+			{ day: '5', kind: 'climb', kindlabel: 'Climb', shot: 3, legs: ['Amalfi', 'Ravello'], title: 'Up the hill', text: 'Three hundred and forty metres above the sea and worth the climb for the view alone.', sleep: 'Ravello', cost: '\u20ac72', km: '7', hours: '0h 50' },
+			{ day: '6', kind: 'end', kindlabel: 'Home', legs: ['Ravello', 'Naples'], title: 'The way back', text: 'West to east this time, on the cliff side, which is a completely different drive.', sleep: '\u2014', cost: '\u20ac88', km: '68', hours: '2h 30' },
 		],
 		experience: [
 			{ title: 'Diving the Blue Hole', where: 'Dahab, Egypt', when: 'March 2026', figure: '30', unit: 'm', text: 'Eight minutes at thirty metres in water so clear the bottom looks close enough to touch, and is not. The most frightened I have been while perfectly safe.', kind: 'Diving', badge: 'First time', group: 'Under water', shot: 0 },
@@ -321,6 +321,16 @@ export async function build({ quiet = false } = {}) {
 				{ kind: 'project', mark: 'folder', label: 'Started a project', when: '14 Aug', title: 'links — a link page on Workers', text: 'Fetches GitHub, Ghost and YouTube per request. No build step, no data scripts.', url: '/collections/project/page/' },
 				{ kind: 'note', mark: 'message-square', label: 'Noted', when: '9 Aug', title: 'The dot is not a state', text: 'A dot beside a nav link means a notification everywhere else on the web. Changed it to a fill and a bolder label.' },
 			] },
+		],
+		milestones: [
+			{ kind: 'release', mark: 'rocket', when: 'Sep 2026', title: 'Im Design System v0.6', text: 'One look, nine collections, and the theme this site runs on.', shot: 0 },
+			{ kind: 'trip', mark: 'map-pin', when: 'Nov 2025', title: 'The Amalfi Coast, slowly', text: 'Six days, four towns, one road.' },
+			{ kind: 'learning', mark: 'graduation-cap', when: 'Apr 2025', title: 'Application Architect', text: 'The eighth certification, and the one that changed the conversations.' },
+			{ kind: 'life', mark: 'house', when: 'Jan 2025', title: 'Moved to Amsterdam', text: 'Every number from the move is in issue 39.' },
+			{ kind: 'job', mark: 'briefcase', when: 'Mar 2022', title: 'Went independent', text: 'Two days a week, six weeks at a time.' },
+			{ kind: 'event', mark: 'zap', when: 'Oct 2021', title: 'First talk', text: 'Forty minutes on why your Ghost theme fights you. Two a year was one too many.' },
+			{ kind: 'job', mark: 'briefcase', when: 'Jun 2018', title: 'Joined a Salesforce partner', text: 'Three programmes, four years.' },
+			{ kind: 'release', mark: 'rocket', when: 'Feb 2016', title: 'A startup', text: 'CRM for clinics. It did not survive its market; the write-up did.' },
 		],
 		archive: [
 			{ year: '2026', posts: 34, share: '100%' },

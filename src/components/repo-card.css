@@ -279,7 +279,7 @@
 .im-repos {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-repos-min, 19rem), 100%), 1fr));
-	gap: 1rem;
+	gap: var(--im-grid-gap);
 	align-items: stretch;
 }
 

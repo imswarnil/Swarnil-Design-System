@@ -133,7 +133,7 @@
 .im-exps {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-exps-min, 18rem), 100%), 1fr));
-	gap: clamp(1.75rem, 3vw, 2.5rem) 1.25rem;
+	gap: var(--im-grid-gap);
 	align-items: start;
 }
 
@@ -564,7 +564,7 @@
 .im-trips {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-trips-min, 20rem), 100%), 1fr));
-	gap: clamp(1rem, 0.6rem + 1.4vw, 1.75rem);
+	gap: var(--im-grid-gap);
 	align-items: stretch;
 }
 
@@ -843,4 +843,152 @@
 .im-leg-shot {
 	max-width: 30rem;
 	margin-top: 0.5rem;
+}
+
+/* ---- trip card, short, with a reveal --------------------------------------
+   Short on the page, taller on hover: the picture is the card, the facts
+   rise over its lower third on a dark scrim. Nothing moves on a touch
+   screen, where there is no hover — the facts are simply shown. */
+.im-tripcard {
+	position: relative;
+	display: block;
+	aspect-ratio: 4 / 3;
+	overflow: hidden;
+	border-radius: var(--im-radius-xl);
+	background-color: var(--im-surface-2);
+	color: #fff;
+	text-decoration: none;
+	isolation: isolate;
+}
+
+.im-tripcard > img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: scale var(--im-duration-slow) var(--im-ease-glide);
+}
+
+.im-tripcard-body {
+	position: absolute;
+	inset: auto 0 0;
+	display: grid;
+	gap: 0.25rem;
+	padding: 1rem;
+	background-image: linear-gradient(to top, rgb(10 10 10 / 92%), rgb(10 10 10 / 70%) 55%, transparent);
+}
+
+.im-tripcard-title {
+	font-size: var(--im-text-h5);
+	font-weight: 600;
+	line-height: var(--im-leading-h5);
+	letter-spacing: var(--im-tracking-tight);
+}
+
+.im-tripcard-meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.25rem 0.75rem;
+	color: color-mix(in oklab, #fff 72%, transparent);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+}
+
+/* The part that is hidden until asked for. */
+.im-tripcard-more {
+	display: grid;
+	gap: 0.25rem;
+	max-height: 0;
+	overflow: hidden;
+	color: color-mix(in oklab, #fff 84%, transparent);
+	font-size: var(--im-text-sm);
+	line-height: 1.5;
+	transition: max-height var(--im-duration-base) var(--im-ease-out), padding var(--im-duration-base) var(--im-ease-out);
+}
+
+.im-tripcard-more .im-trip-route { color: color-mix(in oklab, #fff 70%, transparent); }
+.im-tripcard-more .im-trip-route > * + *::before { background-color: currentColor; }
+
+@media (hover: hover) {
+	.im-tripcard:is(:hover, :focus-visible) .im-tripcard-more {
+		max-height: 8rem;
+		padding-top: 0.25rem;
+	}
+	.im-tripcard:is(:hover, :focus-visible) > img { scale: 1.04; }
+}
+
+@media (hover: none) {
+	.im-tripcard-more { max-height: none; padding-top: 0.25rem; }
+}
+
+.im-tripcard > .im-kind {
+	position: absolute;
+	top: 0.75rem;
+	left: 0.75rem;
+}
+
+.im-tripcard > .im-exp-figure {
+	top: 0.75rem;
+	right: 0.75rem;
+	left: auto;
+	bottom: auto;
+}
+
+/* ---- the itinerary, with the day's KIND as its mark ----------------------
+   A day starts, a day is a hotel, a day is a beach, a day is a road. The mark
+   says which, so the column can be read as a shape before it is read as
+   words. The rule between marks is solid for a day travelled and dashed for
+   a day stayed, which is how the plan looks from across the room. */
+.im-legs { --im-leg-mark: 2.75rem; }
+
+.im-leg {
+	grid-template-columns: var(--im-leg-mark) minmax(0, 1fr);
+	position: relative;
+	padding: 1.25rem 0;
+	border-top: 0;
+}
+
+.im-leg:last-child { border-bottom: 0; }
+
+.im-leg::before {
+	content: "";
+	position: absolute;
+	top: calc(1.25rem + var(--im-leg-mark));
+	bottom: -1.25rem;
+	left: calc(var(--im-leg-mark) / 2);
+	width: 2px;
+	background-image: linear-gradient(to bottom, var(--im-line) 0 6px, transparent 6px 12px);
+	background-size: 2px 12px;
+}
+
+.im-leg[data-move]::before { background-image: none; background-color: var(--im-line); }
+.im-leg:last-child::before { display: none; }
+
+.im-leg-day {
+	grid-row: 1 / span 5;
+	width: var(--im-leg-mark);
+	height: var(--im-leg-mark);
+	border-radius: var(--im-radius-full);
+	background-color: var(--im-surface);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	color: var(--im-ink);
+	place-content: center;
+}
+
+.im-leg-day > .im-icon { font-size: 1.125rem; }
+
+/* The number moved to a small chip beside the route. */
+.im-leg-n {
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+}
+
+.im-leg[data-state="current"] .im-leg-day {
+	background-color: var(--im-accent);
+	color: #fff;
+	box-shadow: 0 0 0 4px var(--im-accent-tint);
+}
+
+@media (width < 30rem) {
+	.im-legs { --im-leg-mark: 2.25rem; }
 }

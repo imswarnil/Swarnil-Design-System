@@ -82,9 +82,11 @@
 	position: sticky;
 	top: var(--im-rail-top);
 	max-height: calc(100dvh - var(--im-rail-top) - var(--im-rail-inset));
-	overflow-y: auto;
-	overscroll-behavior: contain;
-	scrollbar-width: thin;
+	/* No scrollbar of its own. A rail that scrolls inside itself catches the
+	   wheel whenever the pointer is over it, and the page appears to hang.
+	   What does not fit is clipped; a rail that needs more than a screen has
+	   too many widgets, and the one list allowed to be long uses im-rail-grow. */
+	overflow: hidden;
 }
 
 /* A rail that fills the window and does NOT scroll inside itself. The whole
@@ -113,7 +115,7 @@
 	flex: 1 1 auto;
 	min-height: 0;
 	overflow-y: auto;
-	overscroll-behavior: contain;
+	overscroll-behavior: auto; /* the wheel passes to the page at either end */
 	scrollbar-width: thin;
 }
 
@@ -122,8 +124,9 @@
 @media (height < 40rem), (width < 64rem) {
 	.im-sticky-rail-full {
 		height: auto;
-		max-height: calc(100dvh - var(--im-rail-top) - var(--im-rail-inset));
-		overflow-y: auto;
+		max-height: none;
+		overflow: visible;
+		position: static;
 	}
 }
 
