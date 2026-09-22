@@ -569,7 +569,7 @@
 }
 
 .im-affiliate-media {
-	grid-row: 1 / -1;
+	grid-row: 1 / span 5;
 	display: grid;
 	place-items: center;
 	aspect-ratio: 1;

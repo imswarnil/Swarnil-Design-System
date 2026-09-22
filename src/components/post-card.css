@@ -496,3 +496,29 @@ a.im-post-card {
 		transition-duration: 1ms;
 	}
 }
+
+/* The access state on the card. It is the one flag with a colour: everything
+   else in the corner of a picture is neutral, and a reader deciding whether
+   a link is worth following needs this one to be findable. */
+.im-post-card-flag-lock {
+	background-color: color-mix(in oklab, var(--im-warning) 82%, #000);
+	color: #fff;
+}
+
+.im-post-card-flag-free {
+	background-color: color-mix(in oklab, var(--im-success) 78%, #000);
+	color: #fff;
+}
+
+/* A locked card's picture is dimmed a little as well as marked. Not blurred:
+   blurring the feature image of a post somebody cannot read yet is a taunt,
+   and it costs a paint every scroll. */
+.im-post-card-media.im-thumb-lock > img {
+	opacity: 0.72;
+}
+
+/* The centre mark is smaller on a card than on a video thumbnail — the card
+   is mostly words, and the picture is not the offer. */
+.im-post-card-media.im-thumb-lock {
+	--im-thumb-mark: 2.25rem;
+}

@@ -11,91 +11,64 @@ source: src/components/life.css
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
-<div class="im-single im-wrap-wide" data-sidebar="on">
-	<article class="im-stack" style="--im-stack-gap: 2rem">
-		<header class="im-collhead">
-			<p class="im-eyebrow">Travel</p>
-			<h1 class="im-collhead-title">Where I have been</h1>
-			<p class="im-collhead-text">Trips, with the itinerary and what each day cost. Written down mostly so I can answer "how would you do it again" without inventing the answer.</p>
-			<p class="im-collhead-meta"><span>{{demo.trips.length}} trips</span><span>4 countries</span><span>Since 2023</span></p>
-		</header>
-
-		<div class="im-collbar">
-			<div class="im-collbar-filters">
-				<a class="im-tag" href="#trips" aria-current="page">All</a>
-				<a class="im-tag" href="#trips">Italy</a>
-				<a class="im-tag" href="#trips">Croatia</a>
-				<a class="im-tag" href="#trips">Slovakia</a>
-				<a class="im-tag" href="#trips">Planned</a>
-			</div>
-			<div class="im-cluster" style="--im-cluster-gap: .375rem">
-				<button class="im-btn im-btn-sm" type="button">{{icon "list-filter"}}Most recent</button>
-			</div>
+<div class="im-wrap-wide im-stack" style="--im-stack-gap: 2rem">
+	<header class="im-cinehero">
+		{{!-- The docs ship no clip: nothing in this repository may fetch a video
+		     from somewhere else, and a poster with no src is exactly what a
+		     reader on a slow connection or with motion turned down sees. Put
+		     the file in src= in a real theme. --}}
+		<video poster="{{demo.shots.[0]}}" muted loop playsinline autoplay preload="none" aria-hidden="true"></video>
+		<p class="im-cinehero-meta"><span>{{demo.trips.length}} trips</span><span>4 countries</span><span>Since 2023</span></p>
+		<h1 class="im-cinehero-title">Where I have been</h1>
+		<p class="im-cinehero-text">Trips, with the itinerary and what each day cost. Written down mostly so I can answer "how would you do it again" without inventing the answer.</p>
+		<div class="im-cinehero-controls">
+			<button type="button" aria-label="Mute" aria-pressed="true">{{icon "volume-x"}}</button>
+			<button type="button" aria-label="Pause">{{icon "pause"}}</button>
 		</div>
+	</header>
 
-		<div class="im-exps" id="trips" style="--im-exps-min: 19rem">
-			{{#each demo.trips}}
-			<article class="im-exp im-trip">
-				<span class="im-exp-media">
-					<img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy">
-					<span class="im-exp-figure">{{days}}<small>days</small></span>
-					<span class="im-kind im-kind-over" data-kind="tag">{{icon "map-pin"}}{{country}}</span>
-				</span>
-				<div class="im-exp-body">
-					<p class="im-exp-where"><span>{{when}}</span>{{#match state "=" "upcoming"}}<span>Planned</span>{{else}}<span>{{km}} km</span>{{/match}}</p>
-					<h2 class="im-exp-title"><a href="/collections/travel/trip/">{{title}}</a></h2>
-					<p class="im-exp-text">{{text}}</p>
-					<p class="im-trip-route">{{#each route}}<span>{{this}}</span>{{/each}}</p>
-				</div>
-			</article>
-			{{/each}}
+	<div class="im-collbar">
+		<div class="im-collbar-filters" role="group" aria-label="Which country" data-im-filter="#trips">
+			<button class="im-tag" type="button" value="all" aria-current="page">All</button>
+			<button class="im-tag" type="button" value="Italy" aria-current="false">Italy</button>
+			<button class="im-tag" type="button" value="Croatia" aria-current="false">Croatia</button>
+			<button class="im-tag" type="button" value="Slovakia" aria-current="false">Slovakia</button>
+			<button class="im-tag" type="button" value="Norway" aria-current="false">Norway</button>
 		</div>
-	</article>
+		<div class="im-cluster" style="--im-cluster-gap: .375rem">
+			<button class="im-btn im-btn-sm" type="button">{{icon "list-filter"}}Most recent</button>
+		</div>
+	</div>
 
-	<aside>
-		<div class="im-sticky-rail">
-			<div class="im-widgets">
-				<section class="im-widget" aria-labelledby="t-stats">
-					<h2 class="im-widget-title" id="t-stats">So far</h2>
-					<div class="im-widget-stats">
-						<div><strong>4</strong><span>Countries</span></div>
-						<div><strong>652</strong><span>km</span></div>
-						<div><strong>21</strong><span>Days</span></div>
-					</div>
-				</section>
-
-				<section class="im-widget" aria-labelledby="t-next">
-					<h2 class="im-widget-title" id="t-next">Next</h2>
-					<p class="im-widget-heading">Tromsø, February 2027</p>
-					<p>Five days, three of them standing in a field being cold and hopeful.</p>
-					<a class="im-btn im-btn-sm" href="/collections/wishlist/">On the bucket list {{icon "arrow-right"}}</a>
-				</section>
-
-				<section class="im-widget" aria-labelledby="t-map">
-					<h2 class="im-widget-title" id="t-map">Countries</h2>
-					<nav class="im-widget-archive" aria-label="By country">
-						<a href="#trips" style="--im-share: 100%">Italy<small>1</small></a>
-						<a href="#trips" style="--im-share: 100%">Croatia<small>1</small></a>
-						<a href="#trips" style="--im-share: 100%">Slovakia<small>1</small></a>
-						<a href="#trips" style="--im-share: 100%">Norway<small>0</small></a>
-					</nav>
-				</section>
-
-				<section class="im-widget" aria-labelledby="t-exp">
-					<h2 class="im-widget-title" id="t-exp">What happened on them <a href="/collections/experience/">All</a></h2>
-					<ul class="im-widget-list im-widget-list-thumbs">
-						{{#each demo.experience}}{{#match @index "<" 3}}<li><a href="/collections/experience/page/"><img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy">{{title}}<small>{{where}}</small></a></li>{{/match}}{{/each}}
-					</ul>
-				</section>
-
-				<section class="im-widget im-widget-fill" aria-labelledby="t-sub">
-					<h2 class="im-widget-title" id="t-sub">When I go somewhere</h2>
-					<p class="im-widget-heading">The itinerary, afterwards.</p>
-					{{> "components/subscribe" id="travel-email" button="Join"}}
-				</section>
+	<div class="im-trips" id="trips">
+		{{#each demo.trips}}
+		<article class="im-exp im-trip" data-facet="{{country}}">
+			<span class="im-exp-media">
+				<img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy">
+				<span class="im-exp-figure">{{days}}<small>days</small></span>
+				<span class="im-kind im-kind-over" data-kind="tag">{{icon "map-pin"}}{{country}}</span>
+			</span>
+			<div class="im-exp-body">
+				<p class="im-exp-where"><span>{{when}}</span>{{#match state "=" "upcoming"}}<span>Planned</span>{{else}}<span>{{km}} km</span>{{/match}}</p>
+				<h2 class="im-exp-title"><a href="/collections/travel/trip/">{{title}}</a></h2>
+				<p class="im-exp-text">{{text}}</p>
+				<p class="im-trip-route">{{#each route}}<span>{{this}}</span>{{/each}}</p>
 			</div>
+		</article>
+		{{/each}}
+		<p class="im-feed-empty" data-facet-empty hidden>Nothing here yet.</p>
+	</div>
+
+	<section class="im-section" style="--im-section-gap: 1rem">
+		<div class="home-head"><p class="im-caption" data-index="totals">In total</p></div>
+		<div class="im-expstats">
+			<span><strong>{{demo.trips.length}}</strong>Trips</span>
+			<span><strong>4</strong>Countries</span>
+			<span><strong>652 km</strong>By road</span>
+			<span><strong>21</strong>Days away</span>
+			<span><strong>1</strong>Booked</span>
 		</div>
-	</aside>
+	</section>
 </div>
 
 <section class="im-section im-wrap">

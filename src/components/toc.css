@@ -123,3 +123,83 @@
 	content: counter(im-toc-2) "." counter(im-toc-3) " ";
 	color: var(--im-faint);
 }
+
+/* ---- the phone version -------------------------------------------------
+   On a narrow screen there is no rail, so the contents go INLINE, directly
+   under the hero and above the first paragraph — the only place a reader
+   passes on the way in. It is collapsed, because an eighteen-item list
+   between the headline and the first sentence is a wall.
+
+     <details class="im-toc-inline" data-toc-inline>
+       <summary>Contents <span>8 sections</span></summary>
+       <div class="im-toc" data-toc="#article"></div>
+     </details>
+
+   A <details>: the browser owns the state, the keyboard and find-in-page,
+   and it works before any script runs. It is hidden from `md` up, where the
+   rail exists and this would be the same list twice. */
+.im-toc-inline {
+	border-radius: var(--im-radius-lg);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	background-color: var(--im-surface);
+}
+
+.im-toc-inline > summary {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.75rem 0.875rem;
+	color: var(--im-ink);
+	font-size: var(--im-text-sm);
+	font-weight: 600;
+	cursor: pointer;
+	list-style: none;
+}
+
+.im-toc-inline > summary::-webkit-details-marker {
+	display: none;
+}
+
+.im-toc-inline > summary > span {
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	font-weight: 400;
+}
+
+/* The chevron, drawn and rotated — no icon partial needed inside a summary
+   that a theme may be printing from a loop. */
+.im-toc-inline > summary::after {
+	content: "";
+	width: 0.6875rem;
+	height: 0.6875rem;
+	margin-left: auto;
+	background-color: var(--im-muted);
+	-webkit-mask-image: var(--im-chevron-glyph);
+	mask-image: var(--im-chevron-glyph);
+	-webkit-mask-size: contain;
+	mask-size: contain;
+	-webkit-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+	transition: rotate var(--im-duration-fast) var(--im-ease-out);
+}
+
+.im-toc-inline[open] > summary::after {
+	rotate: 180deg;
+}
+
+.im-toc-inline > .im-toc {
+	padding: 0 0.875rem 0.875rem;
+}
+
+.im-toc-inline .im-toc-title {
+	display: none;
+}
+
+/* From md up the rail has it, and two copies of the same list is one too
+   many — for a reader and for a screen reader both. */
+@media (width >= 48rem) {
+	.im-toc-inline {
+		display: none;
+	}
+}

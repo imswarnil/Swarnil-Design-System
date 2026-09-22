@@ -137,6 +137,20 @@ source: partials/components/post-card.hbs · src/components/post-card.css
 </ul>
 <p>Under <code>prefers-reduced-motion</code> the fill still arrives — it simply arrives at once.</p>
 
+<h2>Free, and members only</h2>
+<p>Ghost gives every post an <code>access</code> boolean for the current visitor. A card that does not print it sends people to a gate they were not warned about — and a card that prints only a padlock says nothing to a reader who does not yet know the site has tiers.</p>
+<p>So: the mark in the middle of the picture <strong>and</strong> the word in the corner. These two flags are the only coloured things on a card.</p>
+{{#example}}
+<div class="im-feed" style="--im-feed-min: 15rem">
+	{{#each demo.mixed}}{{#match @index "<" 3}}{{> "components/post-card" excerpt=true}}{{/match}}{{/each}}
+</div>
+{{/example}}
+<ul>
+	<li><strong>The picture is dimmed, not blurred.</strong> Blurring the feature image of a post somebody cannot read yet is a taunt, and it costs a paint on every scroll.</li>
+	<li><strong>"Free" is only worth printing on a site that also has paid posts.</strong> Everywhere else it is noise, so it is opt-in: pass <code>free_label</code>.</li>
+	<li><strong>On anything that plays, the lock replaces the play mark</strong> rather than joining it. The lock is the fact the reader needs first.</li>
+</ul>
+
 <h2>Edge cases</h2>
 <p>No feature image: the title's initial in Geist Pixel holds the shape, so a grid never has a hole. Members-only: a lock flag. Both still work inside a flooding card, because the picture's well is a wash of the card's own ink rather than a fixed grey.</p>
 {{#example}}

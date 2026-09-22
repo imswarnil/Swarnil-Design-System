@@ -43,20 +43,29 @@ source: src/components/life.css · timeline.css
 			<p>Six days, four towns and one road that takes two hours to drive forty kilometres. Everything below is what we actually did and what it actually cost, in the order it happened.</p>
 		</section>
 
+		<section class="im-section" style="--im-section-gap: 1rem">
+			<h2 class="im-caption" data-index="shots">The pictures</h2>
+			{{#> "components/carousel" label="Photographs" dots=true style="--im-slides: 1.15; --im-slides-sm: 1.8; --im-slides-md: 2.4"}}
+				{{#each demo.shots}}<a class="im-zoomable" href="{{this}}"><img src="{{this}}" alt="" loading="lazy" style="aspect-ratio: 4 / 3; width: 100%; object-fit: cover; border-radius: var(--im-radius-lg)"></a>{{/each}}
+			{{/"components/carousel"}}
+		</section>
+
 		<section class="im-section" style="--im-section-gap: 1.25rem">
 			<h2 class="im-caption" data-index="plan">The itinerary</h2>
-			<ol class="im-timeline im-itinerary">
+			<ol class="im-legs">
 				{{#each demo.itinerary}}
-				<li class="im-timeline-item" id="day-{{day}}">
-					<span class="im-timeline-marker">Day<b>{{day}}</b></span>
-					<time class="im-timeline-time">{{where}}</time>
-					<h3 class="im-timeline-title">{{title}}</h3>
-					<p class="im-timeline-text">{{text}}</p>
-					<p class="im-itinerary-facts">
-						<span>{{icon "bookmark"}}Slept: {{sleep}}</span>
-						<span>{{icon "wallet"}}{{cost}}</span>
-						<span>{{icon "navigation"}}{{km}} km</span>
+				<li class="im-leg" id="day-{{day}}"{{#if state}} data-state="{{state}}"{{/if}}>
+					<span class="im-leg-day"><b>{{day}}</b>Day</span>
+					<p class="im-leg-route">{{#each legs}}<span>{{this}}</span>{{/each}}</p>
+					<h3 class="im-leg-title">{{title}}</h3>
+					<p class="im-leg-text">{{text}}</p>
+					<p class="im-leg-facts">
+						<span>{{icon "bookmark"}}Slept <b>{{sleep}}</b></span>
+						<span>{{icon "wallet"}}<b>{{cost}}</b></span>
+						<span>{{icon "navigation"}}<b>{{km}} km</b></span>
+						<span>{{icon "clock"}}<b>{{hours}}</b> moving</span>
 					</p>
+					{{#if cta}}<p class="im-leg-cta"><a class="im-btn im-btn-sm" href="#day-{{day}}">{{icon "external-link"}}{{cta}}</a></p>{{/if}}
 				</li>
 				{{/each}}
 			</ol>
@@ -136,8 +145,10 @@ source: src/components/life.css · timeline.css
 			<thead><tr><th>Class</th><th></th></tr></thead>
 			<tbody>
 				<tr><td><code>data-state</code></td><td>On a trip that has not happened yet: <code>done</code> behind you, <code>current</code> on today, nothing ahead. On a trip that is over, leave it off — every day is done and marking them says nothing.</td></tr>
-				<tr><td><code>im-itinerary</code></td><td>The <a href="/components/timeline/">timeline</a>, tuned: a square mark with "Day" over a numeral.</td></tr>
-				<tr><td><code>im-itinerary-facts</code></td><td>Slept, cost, distance — the three facts a day has that a paragraph should not have to carry.</td></tr>
+				<tr><td><code>im-legs</code> · <code>im-leg</code></td><td>The itinerary. <strong>Not the timeline.</strong> An itinerary's rows are not dated events on a line, they are <em>legs</em>, and every leg has the same four facts. Drawn as ruled rows so the column can be scanned.</td></tr>
+				<tr><td><code>im-leg-day</code></td><td>A number over the word "Day". Somebody planning the same trip needs "day 3"; nobody needs 14 November 2025.</td></tr>
+				<tr><td><code>im-leg-facts</code></td><td>Slept, cost, distance, moving — the same four, in the same order, on every leg. A reader learns the positions once and then reads only the numbers.</td></tr>
+				<tr><td><code>im-leg-cta</code></td><td>The booking, the map, the ticket — the thing a reader would actually click.</td></tr>
 				<tr><td><code>im-trip-route</code></td><td>The stops in order, under the head.</td></tr>
 				<tr><td><code>im-expstats</code></td><td>Days, distance, total, per-day, stops — the same ruled row a <a href="/collections/experience/page/">experience</a> and a <a href="/collections/project/page/">project</a> use.</td></tr>
 			</tbody>

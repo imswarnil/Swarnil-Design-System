@@ -56,6 +56,16 @@ source: src/components/post-hero.css · content.css · widget.css · post-footer
 	</nav>
 
 	<article id="article">
+<section class="im-content" data-toc-skip style="padding-block: 1rem 0">
+	{{!-- The phone's contents: inline, under the hero, above the first
+	      paragraph — the only place a reader passes on the way in. Collapsed,
+	      and hidden from md up where the rail has the same list. --}}
+	<details class="im-toc-inline">
+		<summary>Contents <span>On this page</span></summary>
+		<div class="im-toc" data-toc="#article"></div>
+	</details>
+</section>
+
 <section class="im-content im-content-lede im-content-dropcap" data-im-zoom style="padding-block: 1rem 0">
 	<p>Sorrento to Amalfi is forty kilometres and takes two hours, because nobody on it wants to arrive. The road was cut into the cliff in the 1840s and has not been widened since; buses fold their mirrors in to pass.</p>
 	<p>This page is one <code>&lt;section class="im-content"&gt;</code>. The text you are reading sits in the <strong>main</strong> column — 44rem, the system's reading width. Nothing here has a width of its own; the grid places it.</p>

@@ -203,6 +203,10 @@ Add a token → `--im-*` in primitives/semantic, plus one bridge line if it shou
   intermediate box a definite width, or state the width as a definite length with a
   `max-width: 100%` beside it: `max-width` is ignored during the intrinsic-sizing pass, which is
   exactly what is wanted (`im-shortwatch-player`). It has now bitten three times.
+- **`grid-row: 1 / -1` does nothing useful when the rows are IMPLICIT.** `-1` counts back from
+  the end of the EXPLICIT grid, which is line 2 when no `grid-template-rows` is declared — so the
+  picture spans one row and everything else falls underneath it. Write `1 / span N`, or declare
+  the rows (`im-done-media`, `im-affiliate-media`).
 - **A snapping feed needs `scroll-snap-stop: always`.** Without it a hard flick skips three items,
   and a viewer who cannot land on the one they aimed at stops aiming.
 - **A docs page can drop the docs chrome**: `shell: frame` in its frontmatter picks

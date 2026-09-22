@@ -21,7 +21,7 @@
 	condition here: that way `hide` is one attribute a theme can set from a
 	setting, and the partial does not grow a boolean per part. --}}
 <article class="im-post-card{{#if layout}} im-post-card-{{layout}}{{/if}}{{#if size}} im-post-card-{{size}}{{/if}}{{#if top}} im-post-card-row-top{{/if}}{{#if dot}} im-post-card-dot{{#match dot "!=" true}} im-post-card-dot-{{dot}}{{/match}}{{/if}}{{#if class}} {{class}}{{/if}} {{post_class}}"{{#if hide}} data-im-hide="{{hide}}"{{/if}}{{#if style}} style="{{style}}"{{/if}}>
-	<div class="im-post-card-media"{{#unless feature_image}} data-initial="{{title.[0]}}"{{/unless}}>
+	<div class="im-post-card-media im-thumb{{#unless access}} im-thumb-lock{{/unless}}"{{#unless feature_image}} data-initial="{{title.[0]}}"{{/unless}}>
 		{{#if feature_image}}
 			<img
 				src="{{img_url feature_image size="m"}}"
@@ -38,7 +38,12 @@
 		<div class="im-post-card-flags">
 			{{#if reading_time}}<span class="im-post-card-flag" data-part="time">{{reading_time minute=(t "1 min") minutes=(t "% min")}}</span>{{/if}}
 			{{#if featured}}<span class="im-post-card-flag" title="{{t "Featured"}}">{{> "icons/flame"}}</span>{{/if}}
-			{{#unless access}}<span class="im-post-card-flag" title="{{t "Members only"}}">{{> "icons/lock"}}</span>{{/unless}}
+			{{!-- The access state, said in words as well as by the mark on the
+				picture. A lock glyph alone is read as "locked" by somebody who
+				already knows the site has tiers, and as nothing by everybody
+				else. --}}
+			{{#unless access}}<span class="im-post-card-flag im-post-card-flag-lock" data-part="access">{{> "icons/lock"}}{{t "Members"}}</span>{{/unless}}
+			{{#if free_label}}<span class="im-post-card-flag im-post-card-flag-free" data-part="access">{{t "Free"}}</span>{{/if}}
 		</div>
 	</div>
 
