@@ -58,12 +58,40 @@ source: src/components/pages.css
 
 	<section class="im-section" style="--im-section-gap: 1rem">
 		<div class="home-head"><p class="im-caption" data-index="travel">Travel</p><a class="im-card-cta" href="/collections/travel/">All trips {{> "icons/arrow-right"}}</a></div>
-		<div class="im-trips">{{#each demo.trips}}{{#match @index "<" 3}}<a class="im-tripcard" href="/collections/travel/trip/"><img src="{{lookup @root.demo.shots @index}}" alt="" loading="lazy"><span class="im-kind im-kind-over" data-kind="tag">{{icon "map-pin"}}{{country}}</span><span class="im-exp-figure">{{days}}<small>days</small></span><span class="im-tripcard-body"><span class="im-tripcard-title">{{title}}</span><span class="im-tripcard-meta"><span>{{when}}</span><span>{{km}} km</span></span><span class="im-tripcard-more"><span>{{text}}</span><span class="im-trip-route">{{#each route}}<span>{{this}}</span>{{/each}}</span></span></span></a>{{/match}}{{/each}}</div>
+		<div class="im-trips">{{#each demo.trips}}{{#match @index "<" 3}}<a class="im-tripcard" href="/collections/travel/trip/"><img src="{{lookup @root.demo.shots @index}}" alt="" loading="lazy"><span class="im-kind im-kind-over" data-kind="tag">{{icon "map-pin"}}{{country}}</span><span class="im-exp-figure">{{days}}<small>days</small></span><span class="im-tripcard-body"><span class="im-tripcard-title">{{title}}</span><span class="im-tripcard-meta"><span>{{when}}</span><span>{{km}} km</span></span><span class="im-tripcard-more"><span>{{text}}</span></span></span></a>{{/match}}{{/each}}</div>
 	</section>
 
 	<section class="im-section" style="--im-section-gap: 1rem">
 		<div class="home-head"><p class="im-caption" data-index="shop">In the shop</p><a class="im-card-cta" href="/collections/shop/">Everything {{> "icons/arrow-right"}}</a></div>
 		<div class="im-products">{{#each demo.shop}}{{#match @index "<" 3}}<article class="im-product"><span class="im-product-media"><img src="{{lookup @root.demo.shots @index}}" alt="" loading="lazy"></span><p><span class="im-kind">{{icon "package"}}{{kind}}</span></p><h3><a class="im-product-name" href="/collections/shop/product/">{{name}}</a></h3><p class="im-product-text">{{text}}</p><p class="im-product-foot"><span class="im-price">{{cost}}</span><a class="im-btn im-btn-sm im-btn-primary" href="/collections/shop/product/">Buy {{icon "arrow-right"}}</a></p></article>{{/match}}{{/each}}</div>
+	</section>
+
+	<section class="im-section" style="--im-section-gap: 1rem">
+		<div class="home-head"><p class="im-caption" data-index="series">Series</p><a class="im-card-cta" href="/collections/series/">All series {{> "icons/arrow-right"}}</a></div>
+		<div class="im-seriescards">{{#each demo.seriesall}}{{#match @index "<" 2}}<article class="im-seriescard" data-state="{{#match state "=" "Running"}}running{{else}}finished{{/match}}"><span class="im-seriescard-media"><img src="{{lookup @root.demo.shots @index}}" alt="" loading="lazy"></span><p><span class="im-kind" data-kind="series">{{icon "square-play"}}Series</span></p><a class="im-seriescard-name" href="/collections/series/">{{name}}</a><p class="im-seriescard-meta"><span class="im-seriescard-state">{{state}}</span><span>{{parts}} parts</span></p><p class="im-seriescard-text">{{text}}</p></article>{{/match}}{{/each}}</div>
+	</section>
+
+	<section class="im-section" style="--im-section-gap: 1rem">
+		<div class="home-head"><p class="im-caption" data-index="courses">Courses</p><a class="im-card-cta" href="/collections/course/">All courses {{> "icons/arrow-right"}}</a></div>
+		<div class="im-coursecards">{{#each demo.courses}}<article class="im-coursecard {{pattern}}" style="--im-pattern-color: color-mix(in oklab, var(--im-c-course) 30%, transparent)"><div class="im-coursecard-art" aria-hidden="true">{{{diagram}}}</div><div class="im-coursecard-body"><p class="im-coursecard-meta"><span class="im-kind" data-kind="course">{{icon "graduation-cap"}}{{level}}</span><span>{{lessons}} lessons</span></p><h3 class="im-coursecard-title"><a href="/collections/course/page/">{{name}}</a></h3><p class="im-coursecard-foot"><span class="im-rating" style="--im-rating: {{rating}}"><span class="im-rating-stars" aria-hidden="true"></span></span><b>{{cost}}</b></p></div></article>{{/each}}</div>
+	</section>
+
+	<section class="im-section" style="--im-section-gap: 1rem">
+		<div class="home-head"><p class="im-caption" data-index="code">Snippets & prompts</p><a class="im-card-cta" href="/collections/snippets/">All snippets {{> "icons/arrow-right"}}</a></div>
+		<div class="im-grid-auto" style="--im-grid-min: 20rem; --im-grid-gap: var(--im-grid-gap)">{{#each demo.snippets}}{{#match @index "<" 2}}{{> "components/snippet-card"}}{{/match}}{{/each}}{{#with demo.prompts.[0]}}{{> "components/prompt-card"}}{{/with}}</div>
+	</section>
+
+	<section class="im-section" style="--im-section-gap: 1rem">
+		<div class="home-head"><p class="im-caption" data-index="things">Things I use · things I did</p><a class="im-card-cta" href="/collections/uses/">Uses {{> "icons/arrow-right"}}</a></div>
+		<div class="im-grid-auto" style="--im-grid-min: 18rem; --im-grid-gap: var(--im-grid-gap)">
+			{{#each demo.uses}}{{#match @index "<" 2}}<article class="im-affiliate im-affiliate-compact"><span class="im-affiliate-media im-thumb"><img src="{{lookup @root.demo.shots @index}}" alt="" loading="lazy"></span><a class="im-affiliate-name" href="/collections/uses/page/">{{name}}</a><p class="im-affiliate-by">{{by}}</p><p class="im-affiliate-meta"><span class="im-affiliate-price">{{cost}}</span></p><a class="im-affiliate-go" href="/collections/uses/page/" aria-label="Open">{{icon "arrow-up-right"}}</a></article>{{/match}}{{/each}}
+			{{#each demo.experience}}{{#match @index "<" 2}}<article class="im-exp"><span class="im-exp-media"><img src="{{lookup @root.demo.shots shot}}" alt="" loading="lazy"><span class="im-exp-figure">{{figure}}<small>{{unit}}</small></span><span class="im-kind im-kind-over" data-kind="experience">{{icon "compass"}}{{kind}}</span></span><div class="im-exp-body"><p class="im-exp-where"><span>{{where}}</span><span>{{when}}</span></p><h3 class="im-exp-title"><a href="/collections/experience/page/">{{title}}</a></h3></div></article>{{/match}}{{/each}}
+		</div>
+	</section>
+
+	<section class="im-section" style="--im-section-gap: 1rem">
+		<div class="home-head"><p class="im-caption" data-index="letters">The letter</p><a class="im-card-cta" href="/collections/newsletter/">Every letter {{> "icons/arrow-right"}}</a></div>
+		<div class="im-letters">{{#each demo.issues}}{{#match @index "<" 3}}<article class="im-letter">{{#if shot}}<span class="im-letter-media"><img src="{{lookup @root.demo.shots shot}}" alt="" loading="lazy"><span class="im-letter-n">#{{n}}</span></span>{{else}}<span class="im-letter-media" style="display: grid; place-items: center"><span class="im-issue-tile" style="position: static"><b>{{n}}</b><strong>{{day}}</strong><span>{{month}}</span><small>{{year}}</small></span></span>{{/if}}<div class="im-letter-body"><p class="im-letter-date">{{sent}}</p><h3 class="im-letter-title"><a href="/collections/newsletter/issue/">{{title}}</a></h3></div></article>{{/match}}{{/each}}</div>
 	</section>
 
 	<section class="im-mediabg" data-blend="multiply" style="--im-mediabg-tint: #1d4ed8; --im-mediabg-min: 20rem">

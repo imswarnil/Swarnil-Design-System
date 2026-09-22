@@ -21,7 +21,7 @@ source: src/components/video-card.css · partials/components/video-card.hbs
 	</div>
 </section>
 
-<div class="im-single im-wrap-wide" data-sidebar="on">
+<div class="im-single im-wrap-wide" data-sidebar="off">
 	<article class="im-stack" style="--im-stack-gap: 1.75rem">
 		<section class="im-channel">
 			{{!-- The banner plays. Muted, looping, playsinline, a poster that is
@@ -57,6 +57,23 @@ source: src/components/video-card.css · partials/components/video-card.hbs
 				<button class="im-btn im-btn-sm" type="button">{{icon "list-filter"}}Latest</button>
 			</div>
 		</div>
+
+		<section class="im-section" style="--im-section-gap: 1rem">
+			<div class="home-head"><p class="im-caption" data-index="latest">Latest</p><a class="im-card-cta" href="#vids">All films {{> "icons/arrow-right"}}</a></div>
+			{{#> "components/carousel" label="Latest films" dots=true style="--im-slides: 1.1; --im-slides-sm: 2.1; --im-slides-md: 3.1"}}
+				{{#each demo.videos}}{{#match @index "<" 6}}{{> "components/video-card" hide_by=true kind="video"}}{{/match}}{{/each}}
+			{{/"components/carousel"}}
+		</section>
+
+		<section class="im-section" style="--im-section-gap: 1rem">
+			<div class="home-head"><p class="im-caption" data-index="schedule">Schedule</p><p class="im-hint" style="margin: 0">Films most Thursdays · live on the last Friday</p></div>
+			<ol class="im-schedule">
+				<li class="im-schedule-item" data-state="live"><time>Fri 26 Sep · 19:00</time><b>Building the comment wall, live</b><span class="im-kind" data-kind="video">{{icon "zap"}}Live</span></li>
+				<li class="im-schedule-item"><time>Thu 2 Oct</time><b>The high road — Season 2, episode 1</b><span class="im-kind" data-kind="series">{{icon "square-play"}}Series</span></li>
+				<li class="im-schedule-item"><time>Thu 9 Oct</time><b>Every lens I own, ranked (2026 edit)</b><span class="im-kind" data-kind="video">{{icon "video"}}Film</span></li>
+				<li class="im-schedule-item"><time>Thu 16 Oct</time><b>Course drop: the page shell, free lesson</b><span class="im-kind" data-kind="course">{{icon "graduation-cap"}}Lesson</span></li>
+			</ol>
+		</section>
 
 		<div class="im-vidgrid" id="vids">
 			{{#each demo.videos}}

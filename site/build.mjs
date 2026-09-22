@@ -252,6 +252,11 @@ export async function build({ quiet = false } = {}) {
 			{ title: 'The High Tatras, on foot', country: 'Slovakia', when: 'September 2023', days: '4', km: '62', route: ['Poprad', 'Štrbské Pleso', 'Gerlach', 'Tatranská Lomnica'], text: 'Four days, one night above the cloud layer, and more weather than the forecast promised.', state: 'done' },
 			{ title: 'Tromsø, for the lights', country: 'Norway', when: 'February 2027', days: '5', km: '—', route: ['Oslo', 'Tromsø', 'Sommarøy'], text: 'Booked. Three nights of standing in a field being cold and hopeful.', state: 'upcoming' },
 		],
+		courses: [
+			{ name: 'Design tokens, properly', level: 'intermediate', lessons: '7', time: '81 min', text: 'The layer that decides everything else. Dark mode as a change to one file.', rating: '4.8', cost: '\u20ac49', pattern: 'im-bg-blueprint', diagram: `<svg viewBox="0 0 200 120" fill="none" stroke="currentColor" stroke-width="2"><rect x="30" y="20" width="140" height="28" rx="6"/><rect x="30" y="72" width="140" height="28" rx="6"/><path class="im-dia-link" d="M100 48v24"/><circle class="im-dia-dot" cx="100" cy="60" r="5" fill="currentColor" stroke="none"/><text x="40" y="38" font-size="11" fill="currentColor" stroke="none" font-family="monospace">--im-gray-950</text><text x="40" y="90" font-size="11" fill="currentColor" stroke="none" font-family="monospace">--im-ink</text></svg>` },
+			{ name: 'A Ghost theme from an empty folder', level: 'beginner', lessons: '12', time: '2h 40', text: 'Every file a theme needs, in the order Ghost reads them, and the gscan run that decides whether it ships.', rating: '4.9', cost: '\u20ac79', pattern: 'im-bg-grid', diagram: `<svg viewBox="0 0 200 120" fill="none" stroke="currentColor" stroke-width="2"><rect x="20" y="16" width="160" height="88" rx="8"/><path d="M20 40h160"/><path d="M60 40v64"/><rect class="im-dia-dot" x="76" y="56" width="44" height="14" rx="3" fill="currentColor" stroke="none"/><rect x="128" y="56" width="36" height="14" rx="3"/></svg>` },
+			{ name: 'Making a slow site fast', level: 'advanced', lessons: '9', time: '1h 55', text: 'Measure, then cut. The five things that are always the problem and the numbers to prove each one.', rating: '4.7', cost: '\u20ac59', pattern: 'im-bg-lattice', diagram: `<svg viewBox="0 0 200 120" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 90 60 50 100 70 140 30 180 55"/><circle class="im-dia-dot" cx="140" cy="30" r="6" fill="currentColor" stroke="none"/><path d="M20 100h160" opacity=".4"/><path d="M20 20v80" opacity=".4"/></svg>` },
+		],
 		regions: [
 			{ name: 'Europe', trips: '4', countries: '4', shot: 1, mark: 'globe' },
 			{ name: 'Asia', trips: '0', countries: '0', shot: 2, mark: 'compass', state: 'next' },
@@ -339,6 +344,9 @@ export async function build({ quiet = false } = {}) {
 			] },
 		],
 		milestones: [
+			{ kind: 'learning', mark: 'graduation-cap', when: 'Oct 2026', title: 'Created a course: Design tokens, properly', text: 'Seven lessons, two of them free.' },
+			{ kind: 'learning', mark: 'square-play', when: 'Oct 2026', title: 'Added three lessons', text: 'The page shell, the top bar, components that read tokens.' },
+			{ kind: 'event', mark: 'video', when: 'Sep 2026', title: 'Started a series: The Amalfi Road', text: 'Four films about one road.' },
 			{ kind: 'release', mark: 'rocket', when: 'Sep 2026', title: 'Im Design System v0.6', text: 'One look, nine collections, and the theme this site runs on.', shot: 0 },
 			{ kind: 'trip', mark: 'map-pin', when: 'Nov 2025', title: 'The Amalfi Coast, slowly', text: 'Six days, four towns, one road.' },
 			{ kind: 'learning', mark: 'graduation-cap', when: 'Apr 2025', title: 'Application Architect', text: 'The eighth certification, and the one that changed the conversations.' },

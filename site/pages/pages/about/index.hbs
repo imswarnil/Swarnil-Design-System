@@ -27,13 +27,23 @@ source: src/layout/page.css · components/widget.css
 			</div>
 		</header>
 
-		<div class="im-expstats">
-			<span><strong>8</strong>Years</span>
-			<span><strong>{{demo.projects.length}}</strong>Projects</span>
-			<span><strong>34</strong>Posts this year</span>
-			<span><strong>4,210</strong>Readers</span>
-			<span><strong>6</strong>Countries</span>
+		<div class="im-tripstats">
+			<span class="im-tripstat">{{icon "briefcase"}}<strong data-im-count>8</strong><span>Years consulting</span></span>
+			<span class="im-tripstat">{{icon "folder"}}<strong data-im-count>{{demo.projects.length}}</strong><span>Projects</span></span>
+			<span class="im-tripstat">{{icon "pencil"}}<strong data-im-count>34</strong><span>Posts this year</span></span>
+			<span class="im-tripstat">{{icon "users"}}<strong data-im-count>4,210</strong><span>Readers</span></span>
+			<span class="im-tripstat">{{icon "map-pin"}}<strong data-im-count>6</strong><span>Countries</span></span>
 		</div>
+
+		<section class="im-section" style="--im-section-gap: 1rem">
+			<h2 class="im-caption" data-index="do">What I do</h2>
+			<div class="im-grid-auto" style="--im-grid-min: 15rem">
+				<div class="im-card im-card-outline"><span class="im-card-title">{{icon "zap"}} Salesforce consulting</span><span>Eight years, mostly public sector, mostly the programmes that are already late when I arrive.</span></div>
+				<div class="im-card im-card-outline"><span class="im-card-title">{{icon "component"}} Design systems & themes</span><span>This one, and the theme on top of it. Both for sale, both what this site runs on.</span></div>
+				<div class="im-card im-card-outline"><span class="im-card-title">{{icon "pencil"}} Writing & film</span><span>A post a fortnight, a letter to go with it, and a film most Thursdays.</span></div>
+				<div class="im-card im-card-outline"><span class="im-card-title">{{icon "graduation-cap"}} Teaching</span><span>Three courses, filmed and written, with every source file.</span></div>
+			</div>
+		</section>
 
 		<section class="im-content im-content-flush im-content-lede">
 			<p>I started writing this site because I kept answering the same questions in Slack and wanted somewhere to point. It turned into the thing I am best known for, which was not the plan and has been better than the plan.</p>
@@ -53,10 +63,25 @@ source: src/layout/page.css · components/widget.css
 		</section>
 
 		<section class="im-section" style="--im-section-gap: 1rem">
+			<h2 class="im-caption" data-index="now">Right now</h2>
+			<ul class="im-widget-now" style="max-width: 40rem">
+				<li>{{icon "component"}}<span>Building <b>Im Design System v0.7</b> — the collections and the theme on top of them.</span></li>
+				<li>{{icon "map-pin"}}<span>In <b>Amsterdam</b> until February; Tromsø after that.</span></li>
+				<li>{{icon "book-open"}}<span>Reading <b>The Timeless Way of Building</b>, slowly, for the second time.</span></li>
+			</ul>
+		</section>
+
+		<section class="im-section" style="--im-section-gap: 1rem">
 			<h2 class="im-caption" data-index="work">Selected work</h2>
 			<div class="im-repos" style="--im-repos-min: 18rem">
 				{{#each demo.projects}}{{#match @index "<" 3}}{{> "components/repo-card" cta=true}}{{/match}}{{/each}}
 			</div>
+		</section>
+
+		<section class="im-widget im-widget-accent" style="max-width: 40rem">
+			<h2 class="im-widget-title">Work with me</h2>
+			<p class="im-widget-heading">Two days a week, from November.</p>
+			<p class="im-cluster" style="--im-cluster-gap: .5rem"><a class="im-btn im-btn-primary" href="/pages/contact/">{{icon "mail"}}Start a conversation</a><a class="im-btn" href="/pages/resume/">{{icon "file-text"}}The résumé</a></p>
 		</section>
 	</article>
 

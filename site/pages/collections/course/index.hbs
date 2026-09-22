@@ -1,9 +1,9 @@
 ---
 title: Course collection
 layout: home
-description: A course — what it teaches, who it is for, the whole curriculum visible before anybody pays, and where you got to if you have already started.
+description: Every course — a tall card on a pattern, with a drawn diagram of the idea instead of a photograph, the level, the length and the price.
 eyebrow: Collections · Course
-source: src/components/curriculum.css · commerce.css
+source: src/components/coursenav.css
 ---
 <section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
 	<p class="im-eyebrow">Collections · Course · {{page.title}}</p>
@@ -12,149 +12,39 @@ source: src/components/curriculum.css · commerce.css
 </section>
 
 <div class="im-wrap-wide im-stack" style="--im-stack-gap: 2rem">
-	<nav aria-label="Breadcrumb">
-		<ol class="im-breadcrumb im-breadcrumb-chevron">
-			<li><a href="/">{{> "icons/house"}}<span>Home</span></a></li>
-			<li><a href="/collections/course/">{{> "icons/graduation-cap"}}<span>Courses</span></a></li>
-			<li><span aria-current="page">Design tokens, properly</span></li>
-		</ol>
-	</nav>
-
-	<header class="im-mediabg" style="--im-mediabg-min: 22rem">
-		<img src="{{demo.shots.[0]}}" alt="">
-		<div class="im-mediabg-scrim"></div>
-		<div class="im-mediabg-copy">
-			<p class="im-cinehero-meta"><span>Course</span><span>7 lessons · 81 min</span><span>2 free</span><span>Updated Sep 2026</span></p>
-			<h1 class="im-mediabg-title">Design tokens, properly</h1>
-			<p class="im-mediabg-text">The layer that decides everything else. By the end, dark mode is a change to one file — and you know why.</p>
-			<p class="im-cluster" style="--im-cluster-gap: .5rem; margin-top: 1.25rem"><a class="im-btn im-btn-primary" href="/collections/course/lesson/">{{icon "play"}}Start the course</a><a class="im-btn im-btn-ink" href="#curriculum">{{icon "list"}}Curriculum</a></p>
-		</div>
+	<header class="im-collhead im-collhead-patterned">
+		<span class="im-collhead-art im-bg-blueprint" style="--im-art: var(--im-c-course)" aria-hidden="true"></span>
+		<p class="im-eyebrow">Courses</p>
+		<h1 class="im-collhead-title">Things I teach</h1>
+		<p class="im-collhead-text">Filmed and written, one idea each, with every source file. Two lessons of every course are free.</p>
+		<p class="im-collhead-meta"><span>{{demo.courses.length}} courses</span><span>2,100 students</span><span>4.8 average</span></p>
 	</header>
-</div>
 
-<div class="im-single im-wrap-wide" data-sidebar="on" style="--im-single-aside: 21rem; margin-top: 2rem">
-	<article class="im-stack" style="--im-stack-gap: 2rem">
-		<div class="im-video im-video-full" id="trailer" data-im-video="aqz-KE-bpKQ" data-im-video-title="Trailer">
-			<img class="im-video-poster" src="{{demo.shots.[1]}}" alt="" loading="eager">
-			<button class="im-video-play" type="button" aria-label="Play the trailer">{{> "icons/play"}}</button>
+	<div class="im-collbar">
+		<div class="im-collbar-filters" role="group" aria-label="Level" data-im-filter="#courses">
+			<button class="im-tag" type="button" value="all" aria-current="page">All</button>
+			<button class="im-tag" type="button" value="beginner" aria-current="false">Beginner</button>
+			<button class="im-tag" type="button" value="intermediate" aria-current="false">Intermediate</button>
+			<button class="im-tag" type="button" value="advanced" aria-current="false">Advanced</button>
 		</div>
-		<p class="im-snipcard-meta" style="margin-top: -1rem"><span class="im-kind" data-kind="video">{{icon "square-play"}}Trailer</span><span>2:40</span><span class="im-rating" style="--im-rating: 4.8"><span class="im-rating-stars" aria-hidden="true"></span><span class="im-rating-value">4.8</span><a class="im-rating-count" href="#said">41 reviews</a></span></p>
+	</div>
 
-		<div class="im-bignums">
-			<span class="im-bignum"><strong data-im-count>7</strong><span>{{icon "square-play"}}Lessons</span></span>
-			<span class="im-bignum"><strong data-im-count>81</strong><small>min</small><span>{{icon "clock"}}Total</span></span>
-			<span class="im-bignum"><strong data-im-count>3</strong><span>{{icon "layers"}}Sections</span></span>
-			<span class="im-bignum"><strong data-im-count>1,240</strong><span>{{icon "users"}}Taken it</span></span>
-			<span class="im-bignum"><strong data-im-count>4.8</strong><span>{{icon "star"}}Rated</span></span>
-		</div>
-
-		<section class="im-content im-content-flush">
-			<h2>Who it is for</h2>
-			<ul>
-				<li><strong>Somebody who has built a theme and fought it.</strong> If you have ever changed a colour in nine places, this is the course.</li>
-				<li><strong>A designer who writes CSS.</strong> You do not need a build step, a framework or a preprocessor — only a browser that understands custom properties, which all of them do.</li>
-				<li><strong>Not a beginner.</strong> If you are not comfortable writing CSS by hand, start somewhere else and come back.</li>
-			</ul>
-
-			<h2>What you need first</h2>
-			<ul>
-				<li>CSS you can read without a reference — custom properties, cascade, specificity.</li>
-				<li>A text editor and a browser. Nothing is installed in this course.</li>
-				<li>Optionally a Ghost install, for the last section. Everything before it is plain CSS.</li>
-			</ul>
-		</section>
-
-		<section class="im-section" id="curriculum" style="--im-section-gap: 1rem">
-			<div class="home-head"><p class="im-caption" data-index="curriculum">The curriculum</p><p class="im-hint" style="margin: 0">3 units · 7 lessons · 81 min · 2 free</p></div>
-			<ol class="im-syllabus">
-				{{#each demo.sections}}
-				<li class="im-unit"{{#match n "=" "1"}} data-open{{/match}}>
-					<button class="im-unit-head" type="button" aria-expanded="{{#match n "=" "1"}}true{{else}}false{{/match}}">
-						<span class="im-unit-n">{{n}}</span>
-						<span class="im-unit-title">{{name}}</span>
-						<span class="im-unit-meta"><span>{{time}}</span><span>{{when}}</span></span>
-						<span class="im-unit-count">{{#match n "=" "1"}}2 / 3{{else}}0 / 2{{/match}}</span>
-						<span class="im-unit-chev" aria-hidden="true"></span>
-					</button>
-					<ol class="im-unit-lessons">
-						{{#each ../demo.lessons}}{{#match n ">=" ../from}}{{#match n "<=" ../to}}
-						<li class="im-lessonrow" data-state="{{#if locked}}locked{{else}}{{#if state}}{{state}}{{else}}{{#match n "<" "03"}}free{{else}}next{{/match}}{{/if}}{{/if}}">
-							<span class="im-lessonrow-shot"><img src="{{lookup @root.demo.shots shot}}" alt="" loading="lazy"></span>
-							<a class="im-lessonrow-title" href="/collections/course/lesson/"><small>{{n}}</small>{{title}}</a>
-							<span class="im-lessonrow-meta"><span>{{#match kind "=" "video"}}{{icon "square-play"}}Video{{else}}{{icon "file-text"}}Article{{/match}}</span><span>{{icon "clock"}}{{time}}</span></span>
-							<span class="im-lessonrow-state">{{#if locked}}Members{{else}}{{#match state "=" "done"}}Done{{/match}}{{#match state "=" "current"}}Playing{{/match}}{{#unless state}}{{#match n "<" "03"}}Free{{/match}}{{/unless}}{{/if}}</span>
-						</li>
-						{{/match}}{{/match}}{{/each}}
-					</ol>
-				</li>
-				{{/each}}
-			</ol>
-		</section>
-
-		<section class="im-section" id="said" style="--im-section-gap: 1rem">
-			<h2 class="im-caption" data-index="said">What students say</h2>
-			<div class="im-marquee im-marquee-pause" data-im-marquee style="--im-marquee-gap: 1rem; --im-marquee-speed: 60s">
-				<div class="im-marquee-group">
-					{{#each demo.testimonials}}<article class="im-review im-review-card"><p class="im-review-head"><span class="im-review-by">{{by}}</span><span class="im-rating" style="--im-rating: {{rating}}"><span class="im-rating-stars" aria-hidden="true"></span></span></p><p class="im-review-text">{{text}}</p><p class="im-review-when" style="margin: 0">{{role}}</p></article>{{/each}}
-					{{#each demo.reviews}}<article class="im-review im-review-card"><p class="im-review-head"><span class="im-review-by">{{by}}</span><span class="im-rating" style="--im-rating: {{rating}}"><span class="im-rating-stars" aria-hidden="true"></span></span></p><p class="im-review-text">{{text}}</p><p class="im-review-when" style="margin: 0">{{when}}</p></article>{{/each}}
-				</div>
+	<div class="im-coursecards" id="courses">
+		{{#each demo.courses}}
+		<article class="im-coursecard {{pattern}}" data-facet="{{level}}" style="--im-pattern-color: color-mix(in oklab, var(--im-c-course) 30%, transparent)">
+			<div class="im-coursecard-art" aria-hidden="true">{{{diagram}}}</div>
+			<div class="im-coursecard-body">
+				<p class="im-coursecard-meta"><span class="im-kind" data-kind="course">{{icon "graduation-cap"}}{{level}}</span><span>{{lessons}} lessons</span><span>{{time}}</span></p>
+				<h2 class="im-coursecard-title"><a href="/collections/course/page/">{{name}}</a></h2>
+				<p class="im-coursecard-text">{{text}}</p>
+				<p class="im-coursecard-foot"><span class="im-rating" style="--im-rating: {{rating}}"><span class="im-rating-stars" aria-hidden="true"></span><span class="im-rating-value">{{rating}}</span></span><b>{{cost}}</b></p>
 			</div>
-			<div class="im-reviews">
-				{{#each demo.testimonials}}
-				<article class="im-review">
-					<p class="im-review-head">
-						<span class="im-review-by">{{by}}</span>
-						<span class="im-rating" style="--im-rating: {{rating}}"><span class="im-rating-stars" aria-hidden="true"></span><span class="sr-only">{{rating}} out of 5</span></span>
-						<span class="im-review-verified">{{icon "circle-check"}}Took it</span>
-						<time class="im-review-when">{{role}}</time>
-					</p>
-					<p class="im-review-text">{{text}}</p>
-				</article>
-				{{/each}}
-			</div>
-		</section>
-
-		<section class="im-section" style="--im-section-gap: 1rem">
-			<h2 class="im-caption" data-index="q">Before you buy</h2>
-			<div class="im-accordion">
-				<details class="im-disclosure"><summary>How long do I have access?</summary><div class="im-disclosure-body"><p>Forever, including every revision. The token lesson has been rewritten twice and both rewrites were free to everybody who had already bought it.</p></div></details>
-				<details class="im-disclosure"><summary>Is there a refund?</summary><div class="im-disclosure-body"><p>Fourteen days, no reason needed. Watch the whole thing first if you like — I would rather you did.</p></div></details>
-				<details class="im-disclosure"><summary>Do I need Ghost?</summary><div class="im-disclosure-body"><p>Only for the last section. Everything before it is plain CSS in a browser.</p></div></details>
-			</div>
-		</section>
-	</article>
-
-	<aside>
-		<div class="im-sticky-rail">
-			<div class="im-widgets">
-				<section class="im-offer" aria-labelledby="c-buy">
-					<h2 class="im-widget-title" id="c-buy">Get the course</h2>
-					<p class="im-offer-price"><b>€49</b><s>€79</s><span>Once. Yours forever, every revision included.</span></p>
-					<a class="im-btn im-btn-primary" href="/pages/auth/">{{icon "play"}}Start the course</a>
-					<ul class="im-offer-list"><li>{{icon "check"}}7 lessons, 81 minutes</li><li>{{icon "check"}}Every source file, and the finished token set</li><li>{{icon "check"}}Lifetime updates</li><li>{{icon "check"}}14-day refund, no reason needed</li></ul>
-					<p class="im-offer-note">Free on <a href="/pages/membership/">Workshop</a> · two lessons free without an account</p>
-				</section>
-				{{#with demo.author}}{{> "components/author-widget" title="Who made it"}}{{/with}}
-				<section class="im-widget" aria-labelledby="c-facts">
-					<h2 class="im-widget-title" id="c-facts">At a glance</h2>
-					<dl class="im-widget-facts">
-						<dt>Level</dt><dd>Intermediate</dd>
-						<dt>Format</dt><dd>5 videos, 2 articles</dd>
-						<dt>Needs</dt><dd>CSS, a browser</dd>
-						<dt>Certificate</dt><dd>No</dd>
-						<dt>Language</dt><dd>English</dd>
-					</dl>
-				</section>
-				<section class="im-widget im-widget-fill" aria-labelledby="c-sub">
-					<h2 class="im-widget-title" id="c-sub">Not sure yet</h2>
-					<p class="im-widget-heading">Two lessons are free. Start there.</p>
-					{{> "components/subscribe" id="course-email" button="Send them"}}
-				</section>
-			</div>
-		</div>
-	</aside>
+		</article>
+		{{/each}}
+		<p class="im-feed-empty" data-facet-empty hidden>Nothing at that level yet.</p>
+	</div>
 </div>
 
 <section class="im-section im-wrap"><div class="im-prose">
-<p>What it is, who made it, how much there is, what somebody who took it says — in that order. The cover is a <a href="/media/backgrounds/">media background</a>, the numbers count up (<code>data-im-count</code>), the curriculum is sections (<code>im-module</code>) with a still per lesson and the kind on every row, and the instructor is a rail widget with their own numbers.</p>
+<p><code>im-coursecard</code>: tall, on a pattern in the collection's colour, with a drawn diagram of the idea in the upper half — a course is an idea, not a place, so there is no photograph. Level, lessons, length, the score and the price. The diagram animates on hover, not on load.</p>
 </div></section>

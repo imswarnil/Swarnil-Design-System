@@ -18,12 +18,15 @@ source: src/components/sitemap.css
 		<p class="im-snipcard-meta"><span>{{sitemap.length}} sections</span><a class="im-card-cta" href="/sitemap.xml">sitemap.xml {{icon "external-link"}}</a></p>
 	</div>
 
-	<div class="im-sitemap-cols" style="--im-sitemap-cols: 3">
+	<div class="im-sitemap-cols" style="--im-sitemap-cols: 1">
 		<ul class="im-sitemap">
 			<li>
 				<span class="im-sitemap-node im-sitemap-branch">{{icon "file-text"}}Pages<span class="im-sitemap-count">6</span></span>
 				<ul>
+					<li><a class="im-sitemap-node" href="/pages/home/">{{icon "house"}}Home</a></li>
 					<li><a class="im-sitemap-node" href="/pages/about/">{{icon "user"}}About</a></li>
+					<li><a class="im-sitemap-node" href="/pages/resume/">{{icon "briefcase"}}Résumé</a></li>
+					<li><a class="im-sitemap-node" href="/pages/guestbook/">{{icon "pencil"}}Guestbook</a></li>
 					<li><a class="im-sitemap-node" href="/pages/now/">{{icon "clock"}}Now</a></li>
 					<li><a class="im-sitemap-node" href="/pages/contact/">{{icon "mail"}}Contact</a></li>
 					<li><a class="im-sitemap-node" href="/pages/membership/">{{icon "credit-card"}}Membership</a></li>
@@ -57,6 +60,8 @@ source: src/components/sitemap.css
 			</li>
 			{{/unless}}
 			{{/each}}
+				</ul>
+			</li>
 		</ul>
 	</div>
 </section>

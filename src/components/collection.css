@@ -1219,3 +1219,6 @@
 	.im-archive-row { grid-template-columns: 3.25rem minmax(0, 1fr) auto; }
 	.im-archive-row > .im-archive-date { grid-column: 2 / -1; }
 }
+
+.im-archive-excerpt { display: none; color: var(--im-muted); font-size: var(--im-text-xs); font-weight: 400; line-height: 1.45; }
+[data-view="grid"].im-archive .im-archive-excerpt { display: block; margin-top: 0.25rem; }

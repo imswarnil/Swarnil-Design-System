@@ -382,3 +382,45 @@
 
 .im-lessonrow-title { text-decoration: none; }
 .im-lessonrow-title:hover { color: var(--im-accent); }
+
+/* ---- the course head: words left, the trailer right ---- */
+.im-coursehead { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(1.5rem, 1rem + 2.5vw, 3.5rem); align-items: center; }
+.im-coursehead-copy { display: grid; gap: 1rem; }
+.im-coursehead-meta { display: flex; flex-wrap: wrap; gap: 0.375rem 1rem; color: var(--im-muted); font-size: var(--im-text-sm); }
+.im-coursehead-meta > span { display: inline-flex; align-items: center; gap: 0.375rem; }
+.im-coursehead-meta .im-icon { color: var(--im-c-course); }
+@media (width < 56rem) { .im-coursehead { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---- course cards: tall, a pattern, a drawn idea ---- */
+.im-coursecards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(18rem, 100%), 1fr)); gap: var(--im-grid-gap); }
+.im-coursecard {
+	position: relative;
+	display: grid;
+	grid-template-rows: 13rem auto;
+	overflow: hidden;
+	border-radius: var(--im-radius-xl);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	background-color: var(--im-canvas);
+	transition: background-color var(--im-duration-fast) var(--im-ease-out), translate var(--im-duration-fast) var(--im-ease-out);
+}
+.im-coursecard:is(:hover, :focus-within) { translate: 0 -1px; }
+.im-coursecard-art { display: grid; place-items: center; padding: 1.5rem 2rem; color: var(--im-c-course); border-bottom: 1px solid var(--im-line); }
+.im-coursecard-art svg { width: 100%; max-width: 14rem; height: auto; }
+.im-coursecard-art .im-dia-dot { transform-origin: center; }
+.im-coursecard-art .im-dia-link { stroke-dasharray: 40; stroke-dashoffset: 0; }
+@media (prefers-reduced-motion: no-preference) {
+	.im-coursecard:is(:hover, :focus-within) .im-dia-dot { animation: im-dia-pulse 1.4s var(--im-ease-in-out) infinite; }
+	.im-coursecard:is(:hover, :focus-within) .im-dia-link { animation: im-dia-draw 1.4s var(--im-ease-out) infinite; }
+}
+@keyframes im-dia-pulse { 50% { transform: scale(1.5); opacity: 0.6; } }
+@keyframes im-dia-draw { from { stroke-dashoffset: 40; } to { stroke-dashoffset: 0; } }
+.im-coursecard-body { display: grid; gap: 0.5rem; padding: 1.125rem 1.25rem 1.25rem; background-color: var(--im-canvas); }
+.im-coursecard:is(:hover, :focus-within) .im-coursecard-body { background-color: var(--im-hover-bg); }
+.im-coursecard-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.75rem; color: var(--im-muted); font-size: var(--im-text-xs); }
+.im-coursecard-title { font-size: var(--im-text-h5); font-weight: 600; line-height: var(--im-leading-h5); letter-spacing: var(--im-tracking-tight); }
+.im-coursecard-title > a { color: var(--im-ink); text-decoration: none; }
+.im-coursecard-title > a::after { content: ""; position: absolute; inset: 0; }
+.im-coursecard:is(:hover, :focus-within) .im-coursecard-title > a { color: var(--im-accent); }
+.im-coursecard-text { color: var(--im-body); font-size: var(--im-text-sm); line-height: 1.55; }
+.im-coursecard-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 0.25rem; padding-top: 0.75rem; border-top: 1px solid var(--im-line); }
+.im-coursecard-foot > b { color: var(--im-ink); font-family: var(--im-font-heading); font-size: var(--im-text-h5); }

@@ -1215,3 +1215,9 @@
 .im-deck-card[data-pos="hidden"] { opacity: 0; pointer-events: none; }
 .im-deck-nav { display: flex; align-items: center; gap: 0.375rem; }
 .im-deck-nav > small { margin-left: auto; color: var(--im-muted); font-family: var(--im-font-mono); font-size: var(--im-text-xs); }
+
+.im-tripfeature-days-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 1rem; }
+.im-tripfeature-days-3 .im-tripfeature-day { grid-template-columns: 1.5rem minmax(0, 1fr); }
+.im-tripfeature-days-3 .im-tripfeature-day > small { display: none; }
+@media (width < 48rem) { .im-tripfeature-days-3 { grid-template-columns: minmax(0, 1fr); } }
+.im-tripcard-days { display: grid; gap: 0.125rem; font-family: var(--im-font-mono); font-size: var(--im-text-xs); color: color-mix(in oklab, #fff 72%, transparent); }

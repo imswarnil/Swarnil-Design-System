@@ -199,6 +199,7 @@ export const navigation = [
 				icon: 'graduation-cap',
 				children: [
 					{ label: 'Course collection', url: '/collections/course/' },
+					{ label: 'Course page', url: '/collections/course/page/' },
 					{ label: 'Curriculum', url: '/collections/course/curriculum/' },
 					{ label: 'Lesson page', url: '/collections/course/lesson/' },
 				],

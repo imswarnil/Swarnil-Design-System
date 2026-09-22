@@ -40,12 +40,11 @@ source: src/components/life.css
 				<p class="im-tripcard-meta" style="color: var(--im-muted)"><span>{{when}}</span><span>{{days}} days</span><span>{{km}} km</span></p>
 				<h2 class="im-tripfeature-title"><a href="/collections/travel/trip/" style="color: inherit; text-decoration: none">{{title}}</a></h2>
 				<p class="im-exp-text">{{text}}</p>
-				<div class="im-tripfeature-days">
+				<div class="im-tripfeature-days im-tripfeature-days-3">
 					{{#each ../demo.itinerary}}<p class="im-tripfeature-day">{{#match kind "=" "start"}}{{icon "rocket"}}{{/match}}{{#match kind "=" "stay"}}{{icon "bookmark"}}{{/match}}{{#match kind "=" "road"}}{{icon "route"}}{{/match}}{{#match kind "=" "beach"}}{{icon "sun"}}{{/match}}{{#match kind "=" "climb"}}{{icon "trending-up"}}{{/match}}{{#match kind "=" "end"}}{{icon "house"}}{{/match}}<b>Day {{day}}</b><span>{{title}}</span><small>{{cost}}</small></p>{{/each}}
 				</div>
 			</div>
 			<div class="im-tripfeature-foot">
-				<p class="im-trip-route">{{#each route}}<span>{{this}}</span>{{/each}}</p>
 				<a class="im-btn im-btn-primary im-btn-sm" href="/collections/travel/trip/">{{icon "route"}}The itinerary</a>
 				<a class="im-btn im-btn-sm" href="/collections/video/page/">{{icon "play"}}The film</a>
 			</div>
@@ -91,7 +90,7 @@ source: src/components/life.css
 			<span class="im-tripcard-body">
 				<span class="im-tripcard-title">{{title}}</span>
 				<span class="im-tripcard-meta"><span>{{when}}</span>{{#match state "=" "upcoming"}}<span>Planned</span>{{else}}<span>{{km}} km</span>{{/match}}</span>
-				<span class="im-tripcard-more"><span>{{text}}</span><span class="im-trip-route">{{#each route}}<span>{{this}}</span>{{/each}}</span></span>
+				<span class="im-tripcard-more"><span>{{text}}</span><span class="im-tripcard-days">{{#each @root.demo.itinerary}}{{#match @index "<" 3}}<span>Day {{day}} · {{title}}</span>{{/match}}{{/each}}</span></span>
 			</span>
 		</a>
 		{{/each}}

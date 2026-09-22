@@ -41,10 +41,24 @@ source: src/components/pages.css
 			</section>
 
 			<section class="im-cv-section">
-				<h2>Selected work</h2>
+				<h2>Projects</h2>
 				<div class="im-repos" style="--im-repos-min: 16rem">{{#each demo.projects}}{{#match @index "<" 2}}{{> "components/repo-card"}}{{/match}}{{/each}}</div>
 			</section>
 
+			<section class="im-cv-section">
+				<h2>Talks & teaching</h2>
+				<div class="im-resume-role"><span class="im-resume-when">2026</span><b>Design tokens, properly</b><small>A seven-lesson course · 1,240 students</small></div>
+				<div class="im-resume-role"><span class="im-resume-when">2021</span><b>Why your Ghost theme fights you</b><small>Forty minutes, a conference in Berlin</small></div>
+			</section>
+			<section class="im-cv-section">
+				<h2>Writing</h2>
+				<div class="im-resume-role"><span class="im-resume-when">2019 — now</span><b>Field Notes</b><small>A letter every fortnight · 4,210 readers · 42 issues</small></div>
+				<div class="im-resume-role"><span class="im-resume-when">2023 — now</span><b>The channel</b><small>Films about roads, tools and what things cost · 128k subscribers</small></div>
+			</section>
+			<section class="im-cv-section">
+				<h2>Education</h2>
+				<div class="im-resume-role"><span class="im-resume-when">2012 — 2016</span><b>B.Tech, Computer Science</b><small>A degree I do not use, from a college I liked.</small></div>
+			</section>
 			<section class="im-cv-section">
 				<h2>Said about the work</h2>
 				<div class="im-reviews">{{#each demo.testimonials}}{{#match @index "<" 2}}<article class="im-review"><p class="im-review-head"><span class="im-review-by">{{by}}</span><time class="im-review-when">{{role}}</time></p><p class="im-review-text">{{text}}</p></article>{{/match}}{{/each}}</div>
@@ -57,6 +71,8 @@ source: src/components/pages.css
 			<div><h3>Languages</h3><ul><li>English — fluent</li><li>Hindi — native</li><li>Dutch — A2</li></ul></div>
 			<div><h3>Tools</h3><p class="im-skills">{{#each demo.projects.[0].stack}}<span class="im-tag">{{icon this.icon}}{{this.name}}</span>{{/each}}</p></div>
 			<div><h3>Availability</h3><ul><li>Two days a week from November</li><li>Remote, or Amsterdam</li></ul></div>
+			<div><h3>Interests</h3><ul><li>Diving, freediving</li><li>Long roads, slowly</li><li>Cameras I can carry</li></ul></div>
+			<div><h3>References</h3><ul><li>On request — two clients, one partner</li></ul></div>
 		</aside>
 	</div>
 </div>
