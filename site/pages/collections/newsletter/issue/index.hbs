@@ -55,6 +55,7 @@ source: src/components/collection.css · content.css
 	<aside>
 		<div class="im-sticky-rail">
 			<div class="im-widgets">
+				{{#with demo.author}}{{> "components/author-widget"}}{{/with}}
 				<section class="im-widget" aria-labelledby="i-about">
 					<h2 class="im-widget-title" id="i-about">This issue</h2>
 					<dl class="im-widget-facts">

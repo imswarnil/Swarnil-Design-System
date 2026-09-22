@@ -73,13 +73,13 @@ source: src/components/curriculum.css · commerce.css
 			<div class="home-head"><p class="im-caption" data-index="curriculum">The curriculum</p><p class="im-hint" style="margin: 0">7 lessons · 81 minutes · 2 free</p></div>
 
 			{{#each demo.sections}}
-			<section class="im-module" aria-labelledby="mod-{{n}}">
-				<header class="im-module-head">
+			<details class="im-module" aria-labelledby="mod-{{n}}"{{#match n "=" "1"}} open{{/match}}>
+				<summary><header class="im-module-head">
 					<span class="im-module-n" aria-hidden="true">{{n}}</span>
 					<h3 class="im-module-title" id="mod-{{n}}">{{name}}</h3>
 					<p class="im-module-meta"><span>{{time}}</span><span>{{when}}</span></p>
 					<p class="im-module-text">{{text}}</p>
-				</header>
+				</header></summary>
 				<ol class="im-lessons im-lessons-shots">
 					{{#each ../demo.lessons}}{{#match n ">=" ../from}}{{#match n "<=" ../to}}
 					<li>
@@ -88,13 +88,13 @@ source: src/components/curriculum.css · commerce.css
 							<span class="im-lesson-shot"><img src="{{lookup ../../demo.shots shot}}" alt="" loading="lazy"></span>
 							<span>{{title}}</span>
 							<span class="im-lesson-kind">{{#match kind "=" "video"}}{{icon "square-play"}}Video{{else}}{{icon "file-text"}}Article{{/match}}</span>
-							{{#unless locked}}{{#match n "<" "03"}}<span class="im-lesson-free">Free preview</span>{{/match}}{{/unless}}
+							{{#if locked}}<span class="im-lesson-members">{{icon "lock"}}Members</span>{{else}}{{#match n "<" "03"}}<span class="im-lesson-free">Free preview</span>{{/match}}{{/if}}
 							<small>{{time}}</small>
 						</a>
 					</li>
 					{{/match}}{{/match}}{{/each}}
 				</ol>
-			</section>
+			</details>
 			{{/each}}
 		</section>
 

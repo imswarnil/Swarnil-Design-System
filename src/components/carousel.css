@@ -69,7 +69,7 @@
 	gap: var(--im-carousel-gap);
 	overflow-x: auto;
 	overscroll-behavior-x: contain;
-	scroll-snap-type: x mandatory;
+	scroll-snap-type: x proximity; /* mandatory snapping catches a diagonal trackpad gesture and the page seems to stick */
 	scroll-behavior: smooth;
 	scrollbar-width: none;
 	border-radius: var(--im-radius-xl);

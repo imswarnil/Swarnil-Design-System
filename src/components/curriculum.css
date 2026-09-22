@@ -604,3 +604,34 @@
 .im-offer-list .im-icon { color: var(--im-success); font-size: 0.9375rem; }
 .im-offer > .im-btn { width: 100%; }
 .im-offer-note { color: color-mix(in oklab, var(--im-canvas) 55%, transparent); font-size: var(--im-text-xs); text-align: center; }
+
+details.im-module > summary { list-style: none; cursor: pointer; }
+details.im-module > summary::-webkit-details-marker { display: none; }
+details.im-module > summary .im-module-head { padding-right: 2.5rem; position: relative; }
+details.im-module > summary .im-module-head::after {
+	content: "";
+	position: absolute;
+	top: 1.125rem;
+	right: 1.125rem;
+	width: 0.75rem;
+	height: 0.75rem;
+	background-color: var(--im-muted);
+	-webkit-mask-image: var(--im-chevron-glyph);
+	mask-image: var(--im-chevron-glyph);
+	-webkit-mask-size: contain;
+	mask-size: contain;
+	-webkit-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+	transition: rotate var(--im-duration-fast) var(--im-ease-out);
+}
+details.im-module[open] > summary .im-module-head::after { rotate: 180deg; }
+
+.im-lesson-members {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.25rem;
+	color: var(--im-warning);
+	font-size: var(--im-text-xs);
+	font-weight: 600;
+}
+.im-lesson-members > .im-icon { font-size: 0.8125rem; }

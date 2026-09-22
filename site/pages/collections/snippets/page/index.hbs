@@ -59,6 +59,7 @@ source: src/components/editor.css
 				<span>UTF-8</span>
 				<span>LF</span>
 				<span class="im-editor-push">Ln 1, Col 1</span>
+				<button class="im-editor-copy" type="button" data-im-copy="{{snippet}}" data-im-copied-label="Copied">{{icon "copy"}}<span data-im-copy-label>Copy</span></button>
 			</p>
 		</figure>
 		{{/with}}
@@ -86,7 +87,7 @@ source: src/components/editor.css
 		<h2>No sidebar, and no copy button</h2>
 		<p>Two deliberate absences.</p>
 		<p><strong>No widget rail.</strong> An author card, a newsletter box and a "popular posts" list are things a reader of an <em>essay</em> might want next. A reader who arrived at <code>fluid-type.css</code> wants the other files, which is why the left column is a file tree and the page is otherwise full width.</p>
-		<p><strong>No copy button.</strong> The four lines are not the value — the reason they are <em>those</em> four lines is, and it is in the paragraph underneath. A copy button is an invitation to skip it. The code is selectable, which is what copying was for.</p>
+		<p><strong>Copy lives on this page only.</strong> In the grid the code is selectable and nothing more — a copy button on a card invites skipping the paragraph that explains the code. Here, where the explanation is, the status bar has one.</p>
 		<div class="im-table-scroll">
 		<table>
 			<thead><tr><th>Class</th><th></th></tr></thead>

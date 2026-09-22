@@ -43,8 +43,16 @@ source: src/components/post-hero.css · content.css · widget.css · post-footer
 	{{!-- The real partial, with the docs' fixture post as its context — so this
 	     page breaks if the partial does. `crumbs` prints the trail, `zoom`
 	     makes the feature image open. --}}
-	{{#with demo.post}}{{> "components/post-hero" id="article-hero" style="wide" crumbs=true zoom=true section="Journal" section_url="/collections/post/"}}{{/with}}
 </section>
+
+{{!-- The hero lives on the same grid as the body, in the `main` area, so its
+     left edge is the article's left edge. A head that starts at the page
+     edge over a body that starts a rail further in reads as two pages. --}}
+<div class="im-with-rails im-wrap-wide" style="row-gap: 0">
+	<div style="grid-area: main">
+		{{#with demo.post}}{{> "components/post-hero" id="article-hero" style="stack" crumbs=true zoom=true section="Journal" section_url="/collections/post/"}}{{/with}}
+	</div>
+</div>
 
 {{!-- All three columns are in the markup; the preset above decides which are
 	laid out. A theme renders only the ones it wants and needs no such class. --}}
@@ -128,6 +136,7 @@ source: src/components/post-hero.css · content.css · widget.css · post-footer
 	<aside>
 		<div class="im-sticky-rail">
 			<div class="im-widgets">
+				{{#with demo.author}}{{> "components/author-widget"}}{{/with}}
 				{{!-- With a contents rail on the LEFT, this column opens with the
 				     series: the contents say where you are in the post, the
 				     series says where you are in the run of them. --}}

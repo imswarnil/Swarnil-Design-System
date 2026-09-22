@@ -87,16 +87,18 @@ source: src/components/life.css · timeline.css
 	<aside>
 		<div class="im-sticky-rail im-sticky-rail-full">
 			<div class="im-widgets">
+				{{#with demo.author}}{{> "components/author-widget"}}{{/with}}
 				<section class="im-widget" aria-labelledby="tr-plan">
 					<h2 class="im-widget-title" id="tr-plan">The days</h2>
-					<ol class="im-timeline im-timeline-compact im-widget-series">
+					<nav class="im-days" aria-labelledby="tr-plan">
 						{{#each demo.itinerary}}
-						<li class="im-timeline-item" data-state="done">
-							<span class="im-timeline-marker">{{#match kind "=" "start"}}{{icon "rocket"}}{{/match}}{{#match kind "=" "stay"}}{{icon "bookmark"}}{{/match}}{{#match kind "=" "road"}}{{icon "route"}}{{/match}}{{#match kind "=" "beach"}}{{icon "sun"}}{{/match}}{{#match kind "=" "climb"}}{{icon "trending-up"}}{{/match}}{{#match kind "=" "end"}}{{icon "house"}}{{/match}}</span>
-							<h3 class="im-timeline-title"><a href="#day-{{day}}">{{kindlabel}} · {{title}}</a></h3>
-						</li>
+						<a class="im-day" href="#day-{{day}}"{{#match state "=" "current"}} aria-current="true"{{/match}}>
+							<span class="im-day-mark">{{#match kind "=" "start"}}{{icon "rocket"}}{{/match}}{{#match kind "=" "stay"}}{{icon "bookmark"}}{{/match}}{{#match kind "=" "road"}}{{icon "route"}}{{/match}}{{#match kind "=" "beach"}}{{icon "sun"}}{{/match}}{{#match kind "=" "climb"}}{{icon "trending-up"}}{{/match}}{{#match kind "=" "end"}}{{icon "house"}}{{/match}}</span>
+							<span class="im-day-n">{{day}}</span>
+							<span class="im-day-where">{{title}}<small>{{kindlabel}} · slept {{sleep}} · {{cost}}</small></span>
+						</a>
 						{{/each}}
-					</ol>
+					</nav>
 				</section>
 
 				<section class="im-widget" aria-labelledby="tr-cost">

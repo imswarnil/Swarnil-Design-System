@@ -971,3 +971,33 @@
 		grid-template-columns: 4rem minmax(0, 1fr);
 	}
 }
+
+/* ---- compact affiliate row ----
+   The picture sets the height; everything else fits inside it: name, maker,
+   price, and one icon that goes where you can buy it. For a page of forty
+   things. */
+.im-affiliate-compact {
+	grid-template-columns: 4.5rem minmax(0, 1fr) auto;
+	grid-template-rows: auto auto auto;
+	gap: 0.125rem 0.875rem;
+	align-items: center;
+	padding: 0.625rem 0.75rem;
+}
+.im-affiliate-compact .im-affiliate-media { grid-row: 1 / span 3; width: 4.5rem; aspect-ratio: 1; }
+.im-affiliate-compact .im-affiliate-name { font-size: var(--im-text-sm); }
+.im-affiliate-compact .im-affiliate-by { font-size: var(--im-text-xs); }
+.im-affiliate-compact .im-affiliate-meta { gap: 0.5rem; font-size: var(--im-text-xs); }
+.im-affiliate-compact .im-affiliate-go {
+	grid-column: 3;
+	grid-row: 1 / span 3;
+	display: grid;
+	place-items: center;
+	width: 2.25rem;
+	height: 2.25rem;
+	border-radius: var(--im-radius-full);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	color: var(--im-ink);
+	transition: background-color var(--im-duration-fast) var(--im-ease-out), color var(--im-duration-fast) var(--im-ease-out);
+}
+.im-affiliate-compact .im-affiliate-go:hover { background-color: var(--im-accent); color: #fff; box-shadow: none; }
+.im-affiliate-compact .im-affiliate-text, .im-affiliate-compact .im-affiliate-actions { display: none; }

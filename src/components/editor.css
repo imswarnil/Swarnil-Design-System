@@ -38,6 +38,7 @@
 	color: var(--im-code-fg);
 }
 
+.im-editor.im-mock .im-mock-bar,
 .im-editor .im-mock-bar {
 	border-bottom-color: var(--im-code-line);
 	background-color: color-mix(in oklab, var(--im-code-bg) 82%, #000);
@@ -301,3 +302,20 @@
 		--im-editor-gutter: 2.25rem;
 	}
 }
+
+.im-editor .im-mock-tabs { background: none; }
+.im-editor .im-mock-bar, .im-editor .im-mock-bar * { color-scheme: dark; }
+
+/* A copy control in the status bar — only on the single page, never on a
+   card in a grid. */
+.im-editor-copy {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
+	padding: 0.125rem 0.5rem;
+	border-radius: var(--im-radius-sm);
+	color: var(--im-code-muted);
+	font-family: var(--im-font-body);
+	cursor: pointer;
+}
+.im-editor-copy:hover { background-color: var(--im-code-hover); color: var(--im-code-fg); }

@@ -564,7 +564,7 @@
 
 .im-trips {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-trips-min, 20rem), 100%), 1fr));
+	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-trips-min, 14rem), 100%), 1fr));
 	gap: var(--im-grid-gap);
 	align-items: stretch;
 }
@@ -854,7 +854,7 @@
 .im-tripcard {
 	position: relative;
 	display: block;
-	aspect-ratio: 4 / 3;
+	aspect-ratio: 9 / 16;
 	overflow: hidden;
 	border-radius: var(--im-radius-xl);
 	background-color: var(--im-surface-2);
@@ -994,3 +994,38 @@
 @media (width < 30rem) {
 	.im-legs { --im-leg-mark: 2.25rem; }
 }
+
+/* ---- the trip rail: the days as a strip ----
+   One row per day: the kind mark, the day, where you slept. It is the
+   itinerary's index, and it reads at a glance because every row is the
+   same three things. */
+.im-days { display: grid; gap: 0.25rem; }
+.im-day {
+	display: grid;
+	grid-template-columns: 2rem auto minmax(0, 1fr);
+	gap: 0.625rem;
+	align-items: center;
+	padding: 0.375rem 0.5rem;
+	border-radius: var(--im-radius-md);
+	color: var(--im-ink);
+	font-size: var(--im-text-sm);
+	text-decoration: none;
+	transition: background-color var(--im-duration-fast) var(--im-ease-out);
+}
+.im-day:hover { background-color: var(--im-hover-bg); }
+.im-day[aria-current="true"] { background-color: var(--im-current-bg); font-weight: var(--im-current-weight); }
+.im-day-mark {
+	display: grid;
+	place-items: center;
+	width: 2rem;
+	height: 2rem;
+	border-radius: var(--im-radius-full);
+	background-color: var(--im-surface);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	color: var(--im-muted);
+}
+.im-day-mark > .im-icon { font-size: 0.9375rem; }
+.im-day[aria-current="true"] .im-day-mark { background-color: var(--im-accent); color: #fff; box-shadow: none; }
+.im-day-n { color: var(--im-muted); font-family: var(--im-font-mono); font-size: var(--im-text-xs); }
+.im-day-where { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.im-day-where > small { display: block; color: var(--im-muted); font-size: var(--im-text-xs); font-weight: 400; }

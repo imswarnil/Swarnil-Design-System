@@ -1,0 +1,25 @@
+{{!-- The author, as a rail widget. Context: an author (the docs pass
+	demo.author). Params: title (default "Written by"), cta (a label for the
+	button to the author page). --}}
+<section class="im-widget" aria-label="{{#if title}}{{title}}{{else}}{{t "Written by"}}{{/if}}">
+	<h2 class="im-widget-title">{{#if title}}{{title}}{{else}}{{t "Written by"}}{{/if}} <a href="{{#if url}}{{url}}{{else}}/pages/about/{{/if}}">{{t "About"}}</a></h2>
+	<div class="im-widget-author">
+		{{> "components/avatar" size="lg" src=profile_image name=name}}
+		<div>
+			<p class="im-widget-author-name">{{name}}</p>
+			<p class="im-widget-author-role">{{#if location}}{{location}}{{else}}Amsterdam{{/if}} · {{#if count.posts}}{{count.posts}} {{t "posts"}}{{else}}34 {{t "posts"}}{{/if}}</p>
+		</div>
+	</div>
+	<p class="im-widget-sponsor">{{#if bio}}{{bio}}{{else}}Salesforce consultant and the author of the design system this site runs on. Writes down what things cost.{{/if}}</p>
+	<div class="im-widget-stats">
+		<div><strong>4,210</strong><span>{{t "Readers"}}</span></div>
+		<div><strong>128k</strong><span>{{t "Subscribers"}}</span></div>
+		<div><strong>8 yrs</strong><span>{{t "Consulting"}}</span></div>
+	</div>
+	<p class="im-cluster" style="--im-cluster-gap: .375rem; margin-top: .75rem">
+		<a class="im-btn im-btn-sm" href="#" aria-label="GitHub">{{> "icons/brand-github"}}</a>
+		<a class="im-btn im-btn-sm" href="#" aria-label="LinkedIn">{{> "icons/brand-linkedin"}}</a>
+		<a class="im-btn im-btn-sm" href="#" aria-label="YouTube">{{> "icons/brand-youtube"}}</a>
+		<a class="im-btn im-btn-sm im-btn-primary" href="/pages/contact/">{{> "icons/mail"}}{{#if cta}}{{cta}}{{else}}{{t "Say hello"}}{{/if}}</a>
+	</p>
+</section>

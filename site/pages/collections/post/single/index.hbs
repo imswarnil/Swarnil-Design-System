@@ -49,6 +49,7 @@ source: src/layout/page.css · src/components/widget.css
 	<aside>
 		<div class="im-sticky-rail">
 			<div class="im-widgets">
+				{{#with demo.author}}{{> "components/author-widget"}}{{/with}}
 				<section class="im-widget im-widget-author" aria-labelledby="s-author">
 					<h2 class="im-widget-title" id="s-author">Written by</h2>
 					<div class="im-cluster">

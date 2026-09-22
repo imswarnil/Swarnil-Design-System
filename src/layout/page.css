@@ -184,6 +184,16 @@
 	min-width: 0;
 }
 
+.im-single > aside,
+.im-with-aside > aside,
+.im-with-rails > aside,
+.im-with-rails > nav {
+	/* Stretch, not start: a sticky rail can only travel inside its parent's
+	   box. With the aside as tall as its own content the rail had nowhere to
+	   go and read as "not sticky" on every collection page. */
+	align-self: stretch;
+}
+
 .im-single > aside {
 	min-width: 0;
 }
