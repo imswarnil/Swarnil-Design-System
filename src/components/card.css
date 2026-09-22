@@ -430,16 +430,25 @@
 	}
 }
 
-/* The word, once, above the title — still. The edge is the only motion. */
+
+/* The word, once, on the card's top-right edge — still. The edge is the
+   only motion. */
 .im-featured-tag {
+	position: absolute;
+	top: -0.625rem;
+	right: 1rem;
+	z-index: 3;
 	display: inline-flex;
 	align-items: center;
 	gap: 0.375rem;
-	width: fit-content;
-	color: var(--im-accent);
-	font-size: var(--im-text-xs);
+	padding: 0.1875rem 0.5rem 0.1875rem 0.4375rem;
+	border-radius: var(--im-radius-full);
+	background-color: var(--im-accent);
+	color: #fff;
+	font-size: 0.625rem;
 	font-weight: 700;
 	letter-spacing: 0.08em;
 	text-transform: uppercase;
+	white-space: nowrap;
 }
-.im-featured-tag::before { content: ""; width: 0.375rem; height: 0.375rem; border-radius: var(--im-radius-full); background-color: currentColor; }
+.im-featured-tag::before { content: ""; width: 0.375rem; height: 0.375rem; border-radius: var(--im-radius-full); background-color: #fff; }

@@ -70,32 +70,30 @@ source: src/components/curriculum.css · commerce.css
 		</section>
 
 		<section class="im-section" id="curriculum" style="--im-section-gap: 1rem">
-			<div class="home-head"><p class="im-caption" data-index="curriculum">The curriculum</p><p class="im-hint" style="margin: 0">7 lessons · 81 minutes · 2 free</p></div>
-
-			{{#each demo.sections}}
-			<details class="im-module" aria-labelledby="mod-{{n}}"{{#match n "=" "1"}} open{{/match}}>
-				<summary><header class="im-module-head">
-					<span class="im-module-n" aria-hidden="true">{{n}}</span>
-					<h3 class="im-module-title" id="mod-{{n}}">{{name}}</h3>
-					<p class="im-module-meta"><span>{{time}}</span><span>{{when}}</span></p>
-					<p class="im-module-text">{{text}}</p>
-				</header></summary>
-				<ol class="im-lessons im-lessons-shots">
-					{{#each ../demo.lessons}}{{#match n ">=" ../from}}{{#match n "<=" ../to}}
-					<li>
-						<a class="im-lesson" href="/collections/course/lesson/" data-state="{{#if locked}}locked{{else}}{{state}}{{/if}}"{{#match state "=" "current"}} aria-current="page"{{/match}}>
-							<span class="im-lesson-mark" aria-hidden="true"></span>
-							<span class="im-lesson-shot"><img src="{{lookup ../../demo.shots shot}}" alt="" loading="lazy"></span>
-							<span>{{title}}</span>
-							<span class="im-lesson-kind">{{#match kind "=" "video"}}{{icon "square-play"}}Video{{else}}{{icon "file-text"}}Article{{/match}}</span>
-							{{#if locked}}<span class="im-lesson-members">{{icon "lock"}}Members</span>{{else}}{{#match n "<" "03"}}<span class="im-lesson-free">Free preview</span>{{/match}}{{/if}}
-							<small>{{time}}</small>
-						</a>
-					</li>
-					{{/match}}{{/match}}{{/each}}
-				</ol>
-			</details>
-			{{/each}}
+			<div class="home-head"><p class="im-caption" data-index="curriculum">The curriculum</p><p class="im-hint" style="margin: 0">3 units · 7 lessons · 81 min · 2 free</p></div>
+			<ol class="im-syllabus">
+				{{#each demo.sections}}
+				<li class="im-unit"{{#match n "=" "1"}} data-open{{/match}}>
+					<button class="im-unit-head" type="button" aria-expanded="{{#match n "=" "1"}}true{{else}}false{{/match}}">
+						<span class="im-unit-n">{{n}}</span>
+						<span class="im-unit-title">{{name}}</span>
+						<span class="im-unit-meta"><span>{{time}}</span><span>{{when}}</span></span>
+						<span class="im-unit-count">{{#match n "=" "1"}}2 / 3{{else}}0 / 2{{/match}}</span>
+						<span class="im-unit-chev" aria-hidden="true"></span>
+					</button>
+					<ol class="im-unit-lessons">
+						{{#each ../demo.lessons}}{{#match n ">=" ../from}}{{#match n "<=" ../to}}
+						<li class="im-lessonrow" data-state="{{#if locked}}locked{{else}}{{#if state}}{{state}}{{else}}{{#match n "<" "03"}}free{{else}}next{{/match}}{{/if}}{{/if}}">
+							<span class="im-lessonrow-shot"><img src="{{lookup @root.demo.shots shot}}" alt="" loading="lazy"></span>
+							<a class="im-lessonrow-title" href="/collections/course/lesson/"><small>{{n}}</small>{{title}}</a>
+							<span class="im-lessonrow-meta"><span>{{#match kind "=" "video"}}{{icon "square-play"}}Video{{else}}{{icon "file-text"}}Article{{/match}}</span><span>{{icon "clock"}}{{time}}</span></span>
+							<span class="im-lessonrow-state">{{#if locked}}Members{{else}}{{#match state "=" "done"}}Done{{/match}}{{#match state "=" "current"}}Playing{{/match}}{{#unless state}}{{#match n "<" "03"}}Free{{/match}}{{/unless}}{{/if}}</span>
+						</li>
+						{{/match}}{{/match}}{{/each}}
+					</ol>
+				</li>
+				{{/each}}
+			</ol>
 		</section>
 
 		<section class="im-section" id="said" style="--im-section-gap: 1rem">

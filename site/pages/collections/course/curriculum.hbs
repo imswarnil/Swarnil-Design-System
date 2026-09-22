@@ -101,11 +101,36 @@ source: src/components/curriculum.css · src/js/im.js
 </section>
 
 
-<h2>With a still, and without</h2>
-<p><code>im-lessons-shots</code> puts a 16:10 still on every row. Without it, a row is the mark, the title, the kind and the length — for a course whose lessons are written rather than filmed.</p>
+
+<h2>The syllabus, on the course page</h2>
+<p><code>im-syllabus</code>: units that open and close, a row per lesson — still, number and title, kind and length, and the state on the right as a mark with a word. Done, playing, free, members.</p>
 {{#example}}
-<div class="im-grid-auto" style="--im-grid-min: 18rem">
-	<ol class="im-lessons im-lessons-shots">{{#each demo.lessons}}{{#match @index "<" 3}}<li><a class="im-lesson" href="#" data-state="{{#if locked}}locked{{else}}{{state}}{{/if}}"><span class="im-lesson-mark" aria-hidden="true"></span><span class="im-lesson-shot"><img src="{{lookup ../demo.shots shot}}" alt="" loading="lazy"></span><span>{{title}}</span><span class="im-lesson-kind">{{#match kind "=" "video"}}{{icon "square-play"}}Video{{else}}{{icon "file-text"}}Article{{/match}}</span><small>{{time}}</small></a></li>{{/match}}{{/each}}</ol>
-	<ol class="im-lessons">{{#each demo.lessons}}{{#match @index "<" 3}}<li><a class="im-lesson" href="#" data-state="{{#if locked}}locked{{else}}{{state}}{{/if}}"><span class="im-lesson-mark" aria-hidden="true"></span><span>{{title}}</span><span class="im-lesson-kind">{{#match kind "=" "video"}}{{icon "square-play"}}Video{{else}}{{icon "file-text"}}Article{{/match}}</span><small>{{time}}</small></a></li>{{/match}}{{/each}}</ol>
+<ol class="im-syllabus">
+	{{#each demo.sections}}{{#match @index "<" 2}}
+	<li class="im-unit"{{#match n "=" "1"}} data-open{{/match}}>
+		<button class="im-unit-head" type="button" aria-expanded="{{#match n "=" "1"}}true{{else}}false{{/match}}"><span class="im-unit-n">{{n}}</span><span class="im-unit-title">{{name}}</span><span class="im-unit-meta"><span>{{time}}</span><span>{{when}}</span></span><span class="im-unit-count">{{#match n "=" "1"}}2 / 3{{else}}0 / 2{{/match}}</span><span class="im-unit-chev" aria-hidden="true"></span></button>
+		<ol class="im-unit-lessons">
+			{{#each ../demo.lessons}}{{#match n ">=" ../from}}{{#match n "<=" ../to}}
+			<li class="im-lessonrow" data-state="{{#if locked}}locked{{else}}{{#if state}}{{state}}{{else}}{{#match n "<" "03"}}free{{else}}next{{/match}}{{/if}}{{/if}}"><span class="im-lessonrow-shot"><img src="{{lookup @root.demo.shots shot}}" alt="" loading="lazy"></span><a class="im-lessonrow-title" href="#"><small>{{n}}</small>{{title}}</a><span class="im-lessonrow-meta"><span>{{#match kind "=" "video"}}{{icon "square-play"}}Video{{else}}{{icon "file-text"}}Article{{/match}}</span><span>{{icon "clock"}}{{time}}</span></span><span class="im-lessonrow-state">{{#if locked}}Members{{else}}{{#match state "=" "done"}}Done{{/match}}{{#match state "=" "current"}}Playing{{/match}}{{#unless state}}{{#match n "<" "03"}}Free{{/match}}{{/unless}}{{/if}}</span></li>
+			{{/match}}{{/match}}{{/each}}
+		</ol>
+	</li>
+	{{/match}}{{/each}}
+</ol>
+{{/example}}
+
+<h2>The rail, on the lesson page</h2>
+<p><code>im-coursenav</code>: the same states as marks, with a still per row or without (<code>im-coursenav-plain</code>, the sheet on a phone). Next up is pinned to the bottom.</p>
+{{#example}}
+<div class="im-grid-auto" style="--im-grid-min: 18rem; align-items: start">
+	<nav class="im-coursenav" aria-label="Lessons">
+		<div class="im-coursenav-head"><p class="im-coursenav-title">{{icon "graduation-cap"}}Design tokens, properly</p><p class="im-coursenav-progress"><span>2 of 7 done</span><span>29%</span><span class="im-progress" role="progressbar" aria-valuenow="29" aria-valuemin="0" aria-valuemax="100" style="--im-value: .29"></span></p></div>
+		<div class="im-coursenav-body">{{#each demo.sections}}{{#match @index "<" 2}}<details class="im-coursenav-unit" open><summary><b>{{n}}</b><span>{{name}}</span><small>{{time}}</small></summary>{{#each ../demo.lessons}}{{#match n ">=" ../from}}{{#match n "<=" ../to}}<a class="im-coursenav-lesson" href="#" data-state="{{#if locked}}locked{{else}}{{state}}{{/if}}"{{#match state "=" "current"}} aria-current="page"{{/match}}><span class="im-coursenav-mark" aria-hidden="true"></span><span class="im-coursenav-shot"><img src="{{lookup @root.demo.shots shot}}" alt="" loading="lazy"></span><span>{{title}}</span><small>{{time}}</small></a>{{/match}}{{/match}}{{/each}}</details>{{/match}}{{/each}}</div>
+		<a class="im-coursenav-next" href="#"><img src="{{demo.shots.[3]}}" alt=""><span><small>Next · Lesson 04</small><b>The page shell</b></span></a>
+	</nav>
+	<nav class="im-coursenav im-coursenav-plain" aria-label="Lessons, plain">
+		<div class="im-coursenav-head"><p class="im-coursenav-title">{{icon "graduation-cap"}}Without stills</p></div>
+		<div class="im-coursenav-body">{{#each demo.sections}}{{#match @index "<" 2}}<details class="im-coursenav-unit" open><summary><b>{{n}}</b><span>{{name}}</span><small>{{time}}</small></summary>{{#each ../demo.lessons}}{{#match n ">=" ../from}}{{#match n "<=" ../to}}<a class="im-coursenav-lesson" href="#" data-state="{{#if locked}}locked{{else}}{{state}}{{/if}}"{{#match state "=" "current"}} aria-current="page"{{/match}}><span class="im-coursenav-mark" aria-hidden="true"></span><span>{{title}}</span><small>{{time}}</small></a>{{/match}}{{/match}}{{/each}}</details>{{/match}}{{/each}}</div>
+	</nav>
 </div>
 {{/example}}

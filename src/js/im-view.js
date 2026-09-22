@@ -243,3 +243,15 @@
 	if (document.readyState === 'loading') addEventListener('DOMContentLoaded', start);
 	else start();
 })();
+
+/** im-syllabus: units open and close. The attribute does the work; this only toggles it. */
+(() => {
+	document.addEventListener('click', (e) => {
+		const head = e.target.closest('.im-unit-head');
+		if (!head) return;
+		const unit = head.closest('.im-unit');
+		const open = unit.hasAttribute('data-open');
+		unit.toggleAttribute('data-open', !open);
+		head.setAttribute('aria-expanded', String(!open));
+	});
+})();

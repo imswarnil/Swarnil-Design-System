@@ -21,6 +21,7 @@
 	condition here: that way `hide` is one attribute a theme can set from a
 	setting, and the partial does not grow a boolean per part. --}}
 <article class="im-post-card{{#if layout}} im-post-card-{{layout}}{{/if}}{{#if size}} im-post-card-{{size}}{{/if}}{{#if top}} im-post-card-row-top{{/if}}{{#if dot}} im-post-card-dot{{#match dot "!=" true}} im-post-card-dot-{{dot}}{{/match}}{{/if}}{{#if class}} {{class}}{{/if}}{{#if featured}} im-featured{{/if}} {{post_class}}"{{#if hide}} data-im-hide="{{hide}}"{{/if}}{{#if style}} style="{{style}}"{{/if}}>
+	{{#if featured}}<span class="im-featured-tag">{{t "Featured"}}</span>{{/if}}
 	<div class="im-post-card-media im-thumb{{#unless access}} im-thumb-lock{{/unless}}"{{#unless feature_image}} data-initial="{{title.[0]}}"{{/unless}}>
 		{{#if feature_image}}
 			<img
@@ -47,7 +48,6 @@
 	</div>
 
 	<div class="im-post-card-body">
-		{{#if featured}}<span class="im-featured-tag">{{t "Featured"}}</span>{{/if}}
 		{{#primary_tag}}<a class="im-post-card-kicker" href="{{url}}">{{name}}</a>{{/primary_tag}}
 		<h3 class="im-post-card-title"><a href="{{url}}">{{title}}</a></h3>
 		{{#if excerpt}}<p class="im-post-card-excerpt">{{excerpt words="28"}}</p>{{/if}}
