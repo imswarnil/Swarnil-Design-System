@@ -319,3 +319,39 @@
 	cursor: pointer;
 }
 .im-editor-copy:hover { background-color: var(--im-code-hover); color: var(--im-code-fg); }
+
+/* ---- plain: light, a title, the code ------------------------------------
+   A card in a grid does not need an editor's chrome. A title bar with the
+   file's name, then the code on a light ground; the dark editor stays for
+   the single page. */
+.im-editor-plain {
+	color-scheme: light;
+	background-color: var(--im-canvas);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	color: var(--im-ink);
+}
+.im-editor-plain .im-editor-head {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.625rem 0.875rem;
+	border-bottom: 1px solid var(--im-line);
+	background-color: var(--im-surface);
+	color: var(--im-ink);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	font-weight: 600;
+}
+.im-editor-plain .im-editor-head > .im-icon { color: var(--im-repo-lang, var(--im-muted)); }
+.im-editor-plain .im-editor-head > small { margin-left: auto; color: var(--im-muted); font-weight: 400; }
+.im-editor-plain .im-editor-lines { background-color: var(--im-canvas); border-right-color: var(--im-line); color: var(--im-faint); }
+.im-editor-plain .im-editor-body > :not(.im-editor-lines) { color: var(--im-ink); }
+.im-editor-plain .im-editor-body code { color: inherit; }
+.im-editor-plain .im-tok-comment { color: var(--im-muted); }
+.im-editor-plain .im-tok-keyword { color: #7c3aed; }
+.im-editor-plain .im-tok-string { color: #15803d; }
+.im-editor-plain .im-tok-number { color: #b45309; }
+.im-editor-plain .im-tok-function { color: #1d4ed8; }
+.im-editor-plain .im-tok-tag { color: #be123c; }
+.im-editor-plain .im-tok-attr { color: #0369a1; }
+.im-editor-plain .im-tok-punct { color: var(--im-muted); }

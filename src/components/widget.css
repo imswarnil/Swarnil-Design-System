@@ -60,14 +60,13 @@
 }
 
 .im-widget-accent {
-	border-color: transparent;
-	background-color: var(--im-accent);
-	color: var(--im-on-accent);
+	background-color: var(--im-accent-tint);
+	box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--im-accent) 25%, transparent);
+	color: var(--im-body);
 }
 
-.im-widget-accent :is(.im-widget-title, .im-widget-heading) {
-	color: inherit;
-}
+.im-widget-accent .im-widget-title { color: var(--im-accent); }
+.im-widget-accent .im-widget-heading { color: var(--im-ink); }
 
 .im-widget-heading {
 	color: var(--im-ink);
@@ -657,3 +656,12 @@
 .im-widget-person-stats strong { font-family: var(--im-font-mono); font-size: var(--im-text-sm); font-variant-numeric: tabular-nums; }
 .im-widget-person-stats span { color: var(--im-muted); font-size: 0.6875rem; }
 .im-widget-person .im-cluster { justify-content: center; }
+
+/* Collapsed by default: the face, the name, the role, a button. Open: the
+   line about them, the numbers, the socials. */
+details.im-widget-person > summary { list-style: none; cursor: pointer; display: grid; justify-items: center; gap: 0.125rem; }
+details.im-widget-person > summary::-webkit-details-marker { display: none; }
+details.im-widget-person > summary .im-btn { margin-top: 0.75rem; }
+details.im-widget-person[open] > summary .im-widget-person-open { display: none; }
+details.im-widget-person:not([open]) > summary .im-widget-person-close { display: none; }
+.im-widget-person-body { display: grid; gap: 0.5rem; margin-top: 0.75rem; }

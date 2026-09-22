@@ -340,6 +340,9 @@ export async function build({ quiet = false } = {}) {
 		],
 	};
 
+	// A prompt card shows one line of the prompt as a teaser, never the prompt.
+	for (const q of demo.prompts) q.excerpt_line = q.body.split('\n')[0].slice(0, 72);
+
 	// Each group carries its own list. Grouping in the template means a nested
 	// {{#each}} inside a partial BLOCK, where `../` cannot reliably reach the
 	// outer item — the fix belongs in the data, not in a path nobody can read.

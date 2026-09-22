@@ -571,7 +571,7 @@ a.im-post-card {
 .im-post-card:is(:hover, :focus-within) .im-post-card-featured > span { max-width: 6rem; opacity: 1; }
 
 /* ---- members only: the picture blurred, the gate written on it -------- */
-.im-post-card-media.im-thumb-lock::after { display: none; }
+.im-post-card-media.im-thumb-lock::after, .im-post-card-media.im-thumb-lock::before { display: none; }
 .im-post-card-media.im-thumb-lock > img { filter: blur(6px) saturate(0.7); opacity: 0.85; scale: 1.06; }
 
 .im-post-card-gate {

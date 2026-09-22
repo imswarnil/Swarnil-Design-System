@@ -748,40 +748,47 @@
 }
 
 .im-thumb-play::after,
-.im-thumb-lock::after {
+.im-thumb-lock::after,
+.im-thumb-play::before,
+.im-thumb-lock::before {
 	content: "";
 	position: absolute;
-	z-index: 2; /* above a positioned <img> and any flag row */
-	inset: 0;
-	margin: auto;
+	top: 50%;
+	left: 50%;
+	translate: -50% -50%;
+	z-index: 2;
+	pointer-events: none;
+}
+
+/* The circle. */
+.im-thumb-play::before,
+.im-thumb-lock::before {
 	width: var(--im-thumb-mark, 2.25rem);
 	height: var(--im-thumb-mark, 2.25rem);
-	border-radius: var(--im-radius-full);
-	background-color: rgb(20 20 20 / 60%);
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: calc(var(--im-thumb-mark, 2.75rem) * 0.42);
+	border-radius: 50%;
+	background-color: rgb(20 20 20 / 62%);
 	-webkit-backdrop-filter: blur(4px);
 	backdrop-filter: blur(4px);
-	transition: background-color var(--im-duration-fast) var(--im-ease-out), scale var(--im-duration-fast) var(--im-ease-out);
+	transition: background-color var(--im-duration-fast) var(--im-ease-out);
 }
 
-/* The triangle is optically centred, not geometrically: a shape with its mass
-   to the left looks left-of-centre when its bounding box is centred. */
-.im-thumb-play::after {
-	background-image: var(--im-play-glyph);
-	background-position: 58% 50%;
-	background-size: calc(var(--im-thumb-mark, 2.25rem) * 0.46);
-}
-
+/* The glyph, white, as a mask, sized from the circle. The triangle sits a
+   hair right of centre, where the eye puts a triangle's centre. */
+.im-thumb-play::after,
 .im-thumb-lock::after {
-	background-image: var(--im-lock-glyph);
-	background-size: calc(var(--im-thumb-mark, 2.75rem) * 0.46);
+	z-index: 3;
+	width: calc(var(--im-thumb-mark, 2.25rem) * 0.42);
+	height: calc(var(--im-thumb-mark, 2.25rem) * 0.42);
+	background-color: #fff;
+	-webkit-mask: var(--im-play-glyph) center / contain no-repeat;
+	mask: var(--im-play-glyph) center / contain no-repeat;
 }
 
-:is(a, button, .im-vidcard, .im-post-card, .im-stream-item):is(:hover, :focus-within) .im-thumb-play::after {
-	background-color: var(--im-danger);
-	scale: 1.06;
+.im-thumb-play::after { translate: calc(-50% + 6%) -50%; }
+.im-thumb-lock::after { -webkit-mask-image: var(--im-lock-glyph); mask-image: var(--im-lock-glyph); }
+
+:is(a, button, .im-vidcard, .im-post-card, .im-stream-item):is(:hover, :focus-within) .im-thumb-play::before {
+	background-color: var(--im-accent);
 }
 
 /* ---- series card -------------------------------------------------------
@@ -941,6 +948,7 @@
    that insists on fitting when it cannot is how controls end up off-screen. */
 .im-shortwatch {
 	--im-shortwatch-gutter: clamp(0.75rem, 2vh, 1.75rem);
+	align-items: center;
 	--im-shortwatch-room: calc(100dvh - var(--im-bar-height) - var(--im-shortwatch-gutter) * 2);
 	--im-shortwatch-panel: 24rem;
 
@@ -990,8 +998,9 @@
 .im-shortwatch-panel {
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
 	gap: 1rem;
-	height: 100%;
+	max-height: 100%;
 	overflow-y: auto;
 	overscroll-behavior: contain;
 	scrollbar-width: thin;

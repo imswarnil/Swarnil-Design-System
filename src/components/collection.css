@@ -938,13 +938,7 @@
    state in the system uses — never a coloured bar down the side. */
 .im-queue-item[aria-current="true"] {
 	background-color: var(--im-current-bg);
-	box-shadow: inset 3px 0 0 var(--im-accent);
 	font-weight: var(--im-current-weight);
-}
-
-.im-queue-item[aria-current="true"] .im-queue-thumb {
-	outline: 2px solid var(--im-accent);
-	outline-offset: 1px;
 }
 
 .im-queue-index {

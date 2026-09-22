@@ -100,7 +100,7 @@ source: src/components/commerce.css · video-card.css
 
 			<section class="im-widget" aria-labelledby="rw-parts">
 				<h2 class="im-widget-title" id="rw-parts">The parts</h2>
-				<ol class="im-timeline im-timeline-compact im-widget-series">
+				<ol class="im-timeline im-timeline-detailed im-widget-series">
 					{{#foreach demo.series}}
 					<li class="im-timeline-item" data-state="{{#match @number "<" 3}}done{{else}}{{#match @number "=" 3}}current{{else}}{{/match}}{{/match}}">
 						<span class="im-timeline-marker">{{@number}}</span>

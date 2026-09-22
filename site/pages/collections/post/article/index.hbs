@@ -142,7 +142,7 @@ source: src/components/post-hero.css · content.css · widget.css · post-footer
 				     series says where you are in the run of them. --}}
 				<section class="im-widget" aria-labelledby="w-series">
 					<h2 class="im-widget-title" id="w-series">This series <a href="/collections/post/">4 parts</a></h2>
-					<ol class="im-timeline im-timeline-compact im-widget-series">
+					<ol class="im-timeline im-timeline-detailed im-widget-series">
 						{{#each demo.series}}
 						<li class="im-timeline-item" data-state="{{state}}">
 							<span class="im-timeline-marker">{{part}}</span>
@@ -295,11 +295,11 @@ source: src/components/post-hero.css · content.css · widget.css · post-footer
 
 		<h3>Contents on the left means the series on the right</h3>
 		<p>When there <em>is</em> a contents rail, the widget column should open with the <strong>series</strong>, not with the author. The two rails then answer the same question at two scales: the contents say where you are in this post, the series says where you are in the run of them. Both are navigation; the author, the popular list and the newsletter are not, and they belong under that.</p>
-		<p>The series is the <a href="/components/timeline/">timeline</a> component in a widget — <code>im-timeline im-timeline-compact im-widget-series</code> — with <code>data-state</code> on each part: <code>done</code>, <code>current</code>, <code>upcoming</code>. The part you are reading is not a link to itself.</p>
+		<p>The series is the <a href="/components/timeline/">timeline</a> component in a widget — <code>im-timeline im-timeline-detailed im-widget-series</code> — with <code>data-state</code> on each part: <code>done</code>, <code>current</code>, <code>upcoming</code>. The part you are reading is not a link to itself.</p>
 		{{{{code "hbs"}}}}
 <section class="im-widget">
 	<h2 class="im-widget-title">{{t "This series"}} <a href="{{series.url}}">{{series.parts}} parts</a></h2>
-	<ol class="im-timeline im-timeline-compact im-widget-series">
+	<ol class="im-timeline im-timeline-detailed im-widget-series">
 		{{#foreach series.posts}}
 		<li class="im-timeline-item" data-state="{{#if current}}current{{else}}{{#if read}}done{{else}}upcoming{{/if}}{{/if}}">
 			<span class="im-timeline-marker">{{number}}</span>

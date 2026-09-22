@@ -275,9 +275,9 @@
    view (data-im-in, from im-motion.js — nothing is hidden without it). A
    kind per entry: job, trip, learning, release, event, life. */
 .im-timeline-big {
-	--im-timeline-marker: 2.5rem;
-	--im-timeline-gutter: 1.5rem;
-	--im-timeline-gap: 2.5rem;
+	--im-timeline-marker: 3rem;
+	--im-timeline-gutter: 1.75rem;
+	--im-timeline-gap: 3rem;
 }
 
 .im-timeline-big .im-timeline-marker {
@@ -289,9 +289,25 @@
 .im-timeline-big .im-timeline-marker > .im-icon { font-size: 1.125rem; }
 
 .im-timeline-big .im-timeline-title {
-	font-size: var(--im-text-h4);
-	line-height: var(--im-leading-h4);
+	font-size: var(--im-text-h3);
+	line-height: var(--im-leading-h3);
 }
+
+.im-timeline-big .im-timeline-marker > .im-icon { font-size: 1.375rem; }
+
+.im-timeline-cta { margin-top: 0.75rem; }
+
+/* Detailed: the widget stepper with room — a line per part and the date. */
+.im-timeline-detailed {
+	--im-timeline-marker: 1.75rem;
+	--im-timeline-gap: 1.25rem;
+	--im-timeline-gutter: 1rem;
+	font-size: var(--im-text-sm);
+}
+.im-timeline-detailed .im-timeline-title { font-size: var(--im-text-sm); font-weight: 600; line-height: 1.35; }
+.im-timeline-detailed .im-timeline-text { font-size: var(--im-text-xs); margin-top: 0.125rem; }
+.im-timeline-detailed .im-timeline-time { font-size: var(--im-text-xs); }
+.im-timeline-detailed .im-timeline-marker { font-family: var(--im-font-mono); font-size: var(--im-text-xs); }
 
 .im-timeline-big .im-timeline-text {
 	font-size: var(--im-text-base);
