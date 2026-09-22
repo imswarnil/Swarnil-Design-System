@@ -5,7 +5,8 @@
 
 	Context   name · owner · url · text · lang · lang_color · stars · forks ·
 	          updated · topics (a list) · visibility · image ·
-	          demo_url · code_url
+	          demo_url · code_url · state ("live" / "building" / "archived")
+	          state_label · stack (a list of icon names) · took · since
 	Params
 	  layout  bare — no box, a rule between rows (for a long list)
 	          lg   — the pinned size
@@ -23,13 +24,29 @@
 
 	<p class="im-repo-head">
 		<a class="im-repo-name" href="{{#if url}}{{url}}{{else}}#{{/if}}">{{> "icons/folder"}}{{#if owner}}{{owner}}/{{/if}}<b>{{name}}</b></a>
+		{{#if state}}<span class="im-repo-status" data-state="{{state}}">{{#if state_label}}{{state_label}}{{else}}{{state}}{{/if}}</span>{{/if}}
 		{{#if visibility}}<span class="im-repo-visibility{{#match visibility "=" "Archived"}} im-repo-visibility-warn{{/match}}">{{visibility}}</span>{{/if}}
 	</p>
 
 	{{#if text}}<p class="im-repo-text">{{text}}</p>{{/if}}
 
+	{{#if stack}}
+		<ul class="im-repo-stack" aria-label="Built with">
+			{{#foreach stack}}{{#match @number "<" 7}}<li title="{{this.name}}">{{icon this.icon}}<span class="sr-only">{{this.name}}</span></li>{{/match}}{{/foreach}}
+			{{#if more}}<li class="im-repo-stack-more" aria-hidden="true">+{{more}}</li>{{/if}}
+		</ul>
+	{{/if}}
+
 	{{#if topics}}
 		<p class="im-repo-topics">{{#foreach topics}}<a class="im-topic" href="#">{{this}}</a>{{/foreach}}</p>
+	{{/if}}
+
+	{{#if took}}
+		<p class="im-repo-facts">
+			<span>{{icon "clock"}}{{took}}</span>
+			{{#if since}}<span>{{icon "calendar"}}{{since}}</span>{{/if}}
+			{{#if commits}}<span>{{icon "git-commit-vertical"}}{{commits}}</span>{{/if}}
+		</p>
 	{{/if}}
 
 	<p class="im-repo-meta">

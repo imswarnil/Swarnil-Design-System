@@ -1,0 +1,296 @@
+/* Editor — a snippet shown the way its author saw it.
+
+     <figure class="im-editor im-mock im-mock-mac im-mock-lights">
+       <div class="im-mock-bar">
+         <span class="im-mock-dots"><i></i></span>
+         <div class="im-mock-tabs">
+           <button class="im-mock-tab" aria-current="page">fluid-type.css</button>
+         </div>
+       </div>
+       <div class="im-editor-body">
+         <pre class="im-editor-lines" aria-hidden="true">1 2 3</pre>
+         <pre><code class="language-css"> … </code></pre>
+       </div>
+       <div class="im-editor-status"> … language · line · spaces … </div>
+     </figure>
+
+   Why an editor and not a code block: a snippet collection is a set of FILES,
+   and a file has a name, a language and a place it came from. A bare <pre>
+   throws all three away and leaves the reader holding eight lines of CSS with
+   no idea what to call them.
+
+   There is deliberately no copy button. A snippet page is a place to READ a
+   technique — the four lines are not the value, the reason they are those
+   four lines is, and a copy button invites skipping straight past it. The
+   code is selectable; that is enough.
+
+   It reuses the window chrome from `im-mock` rather than drawing a second
+   one, and the colours are the same --im-code-* tokens the ordinary code
+   block uses, so a snippet and a documentation sample are the same colours. */
+
+.im-editor {
+	--im-editor-gutter: 2.75rem;
+	--im-editor-max: 22rem;
+
+	color-scheme: dark;
+	background-color: var(--im-code-bg);
+	box-shadow: inset 0 0 0 1px var(--im-code-line);
+	color: var(--im-code-fg);
+}
+
+.im-editor .im-mock-bar {
+	border-bottom-color: var(--im-code-line);
+	background-color: color-mix(in oklab, var(--im-code-bg) 82%, #000);
+	color: var(--im-code-muted);
+}
+
+.im-editor .im-mock-tab {
+	border-right: 1px solid var(--im-code-line);
+	color: var(--im-code-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+}
+
+/* The open file: the background of the code, not a coloured underline — the
+   tab and the pane it opens have to read as one surface. */
+.im-editor .im-mock-tab[aria-current="page"] {
+	background-color: var(--im-code-bg);
+	color: var(--im-code-fg);
+}
+
+/* A dot on a tab means unsaved, exactly as it does in an editor. Everywhere
+   else in this system a dot means new or live; here the convention people
+   already have is stronger, and the tab is the only place it applies. */
+.im-editor .im-mock-tab[data-dirty]::after {
+	content: "";
+	width: 0.4375rem;
+	height: 0.4375rem;
+	border-radius: var(--im-radius-full);
+	background-color: currentColor;
+}
+
+.im-editor-body {
+	display: grid;
+	grid-template-columns: var(--im-editor-gutter) minmax(0, 1fr);
+	max-height: var(--im-editor-max);
+	overflow: auto;
+	overscroll-behavior: contain;
+}
+
+/* The line numbers are their own block, not generated per line with a
+   counter: a counter on wrapped lines numbers the WRAP, and code wraps. */
+.im-editor-lines {
+	position: sticky;
+	left: 0;
+	z-index: 1;
+	margin: 0;
+	padding: 0.875rem 0.625rem 0.875rem 0;
+	border-right: 1px solid var(--im-code-line);
+	background-color: var(--im-code-bg);
+	color: var(--im-code-comment);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	line-height: 1.7;
+	text-align: right;
+	user-select: none;
+}
+
+.im-editor-body > :not(.im-editor-lines) {
+	margin: 0;
+	padding: 0.875rem 1rem;
+	background: none;
+	box-shadow: none;
+	font-size: var(--im-text-xs);
+	line-height: 1.7;
+	/* Code does not wrap. A wrapped line of CSS is a different line of CSS. */
+	white-space: pre;
+}
+
+.im-editor-body > :not(.im-editor-lines) code {
+	background: none;
+	color: inherit;
+	font-size: inherit;
+}
+
+/* The status bar — language, position, indentation. It is the row that makes
+   the whole thing read as an editor rather than as a terminal. */
+.im-editor-status {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.25rem 1rem;
+	padding: 0.375rem 0.875rem;
+	border-top: 1px solid var(--im-code-line);
+	background-color: color-mix(in oklab, var(--im-code-bg) 82%, #000);
+	color: var(--im-code-muted);
+	font-family: var(--im-font-mono);
+	font-size: 0.6875rem;
+}
+
+.im-editor-status > .im-editor-lang {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
+	color: var(--im-code-fg);
+}
+
+.im-editor-status > .im-editor-lang::before {
+	content: "";
+	width: 0.5rem;
+	height: 0.5rem;
+	border-radius: var(--im-radius-full);
+	background-color: var(--im-repo-lang, var(--im-code-muted));
+}
+
+.im-editor-status > .im-editor-push {
+	margin-left: auto;
+}
+
+/* ---- the card ----------------------------------------------------------
+   A snippet in a grid: what it is FOR above the window, the window under it.
+   The sentence goes on top because it is the part that decides whether the
+   code below is worth reading. */
+.im-snipcard {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 0.625rem;
+	min-width: 0;
+}
+
+.im-snipcard-title {
+	color: var(--im-ink);
+	font-size: var(--im-text-h5);
+	font-weight: 600;
+	line-height: var(--im-leading-h5);
+	letter-spacing: var(--im-tracking-tight);
+}
+
+.im-snipcard-title > a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.im-snipcard-title > a::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+}
+
+.im-snipcard:is(:hover, :focus-within) .im-snipcard-title > a {
+	color: var(--im-accent);
+}
+
+.im-snipcard-text {
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+	line-height: 1.6;
+	text-wrap: pretty;
+}
+
+.im-snipcard-meta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem;
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+}
+
+/* The window lifts a little on hover instead of filling — this card has no
+   box to fill, and the editor's own surface is the thing being offered. */
+.im-snipcard > .im-editor {
+	transition: translate var(--im-duration-fast) var(--im-ease-out), box-shadow var(--im-duration-fast) var(--im-ease-out);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.im-snipcard:is(:hover, :focus-within) > .im-editor {
+		translate: 0 -2px;
+		box-shadow: inset 0 0 0 1px var(--im-code-line), var(--im-shadow-float);
+	}
+}
+
+.im-snipcards {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-snipcards-min, 26rem), 100%), 1fr));
+	gap: 2rem 1.5rem;
+	align-items: start;
+}
+
+/* ---- the file tree -----------------------------------------------------
+   The other snippets, beside the one being read. It is a LIST OF FILES, not
+   a list of article titles, because that is what a reader of a snippet page
+   is looking for — and it means the page needs no second navigation.
+
+     <nav class="im-filetree">
+       <p class="im-filetree-group">css</p>
+       <a class="im-filetree-file" aria-current="page"> … </a>
+     </nav> */
+.im-filetree {
+	display: flex;
+	flex-direction: column;
+	gap: 0.0625rem;
+	padding: 0.5rem;
+	border-radius: var(--im-radius-lg);
+	box-shadow: inset 0 0 0 1px var(--im-code-line);
+	background-color: var(--im-code-bg);
+	color-scheme: dark;
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+}
+
+.im-filetree-head {
+	padding: 0.25rem 0.5rem 0.5rem;
+	color: var(--im-code-muted);
+	font-size: 0.625rem;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+
+.im-filetree-group {
+	display: flex;
+	align-items: center;
+	gap: 0.375rem;
+	padding: 0.375rem 0.5rem 0.25rem;
+	color: var(--im-code-muted);
+}
+
+.im-filetree-file {
+	display: grid;
+	grid-template-columns: 1rem minmax(0, 1fr);
+	gap: 0.5rem;
+	align-items: center;
+	padding: 0.3125rem 0.5rem 0.3125rem 1.25rem;
+	border-radius: var(--im-radius-sm);
+	color: var(--im-code-muted);
+	text-decoration: none;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	transition: background-color 120ms, color 120ms;
+}
+
+.im-filetree-file:hover {
+	background-color: var(--im-code-hover);
+	color: var(--im-code-fg);
+}
+
+/* The open file. Same two-part active state as the rest of the system — a
+   fill and a heavier label — drawn in the editor's own palette. */
+.im-filetree-file[aria-current="page"] {
+	background-color: var(--im-code-hover);
+	color: var(--im-code-fg);
+	font-weight: 600;
+}
+
+.im-filetree-file > .im-icon {
+	color: var(--im-repo-lang, var(--im-code-muted));
+	font-size: 0.875rem;
+}
+
+@media (width < 60rem) {
+	.im-editor {
+		--im-editor-gutter: 2.25rem;
+	}
+}

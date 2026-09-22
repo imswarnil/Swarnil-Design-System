@@ -1,0 +1,231 @@
+/* Stream — one chronological column of EVERYTHING.
+
+     <ol class="im-stream">
+       <li class="im-stream-item" data-kind="video">
+         <span class="im-stream-mark">{{> "icons/video"}}</span>
+         <div class="im-stream-body">
+           <p class="im-stream-meta"><span class="im-stream-kind">Published a video</span><time>21 Sep</time></p>
+           <h3 class="im-stream-title"><a href="…">…</a></h3>
+           <p class="im-stream-text">…</p>
+         </div>
+       </li>
+     </ol>
+
+   This replaced a "journal" collection. A journal is a second blog with a
+   lower bar, and the honest version of what it was for — "here is what I have
+   been doing" — is not a set of short posts, it is EVERY collection on one
+   line: a post, a video, a release, a trip, a thing bought, an issue sent.
+   The kind is carried by the mark, so the eye can filter the column without
+   reading a word of it.
+
+   The rule runs down the marker column, not down the middle: a centred
+   alternating timeline is a diagram, and it collapses to a left rule on a
+   phone anyway — so it is a left rule everywhere, and it is one column of
+   markup instead of two. */
+
+.im-stream {
+	--im-stream-mark: 2.25rem;
+	--im-stream-gap: 0.875rem;
+	--im-stream-row: 1.75rem;
+
+	display: flex;
+	flex-direction: column;
+	gap: var(--im-stream-row);
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.im-stream-item {
+	position: relative;
+	display: grid;
+	grid-template-columns: var(--im-stream-mark) minmax(0, 1fr);
+	gap: 0 var(--im-stream-gap);
+	align-items: start;
+}
+
+/* The rule joins one mark to the next. It is drawn by the item ABOVE, so the
+   last row has no tail hanging off the end of the column. */
+.im-stream-item:not(:last-child)::before {
+	content: "";
+	position: absolute;
+	top: var(--im-stream-mark);
+	bottom: calc(var(--im-stream-row) * -1);
+	left: calc(var(--im-stream-mark) / 2);
+	width: 1px;
+	background-color: var(--im-line);
+}
+
+.im-stream-mark {
+	display: grid;
+	place-items: center;
+	width: var(--im-stream-mark);
+	height: var(--im-stream-mark);
+	border-radius: var(--im-radius-full);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	background-color: var(--im-canvas);
+	color: var(--im-kind-ink, var(--im-muted));
+}
+
+.im-stream-mark > .im-icon {
+	font-size: 1rem;
+}
+
+/* Every collection that can appear in the column, and the one colour each is
+   allowed. The colours match the identifier chip (`im-kind`) exactly, so a
+   video is the same red wherever a reader meets one. */
+.im-stream-item[data-kind="post"] { --im-kind-ink: var(--im-accent); }
+.im-stream-item[data-kind="article"] { --im-kind-ink: var(--im-accent); }
+.im-stream-item[data-kind="video"] { --im-kind-ink: var(--im-danger); }
+.im-stream-item[data-kind="short"] { --im-kind-ink: var(--im-danger); }
+.im-stream-item[data-kind="project"] { --im-kind-ink: var(--im-info); }
+.im-stream-item[data-kind="release"] { --im-kind-ink: var(--im-info); }
+.im-stream-item[data-kind="issue"] { --im-kind-ink: var(--im-success); }
+.im-stream-item[data-kind="product"] { --im-kind-ink: var(--im-warning); }
+.im-stream-item[data-kind="trip"] { --im-kind-ink: var(--im-warning); }
+.im-stream-item[data-kind="note"] { --im-kind-ink: var(--im-muted); }
+
+.im-stream-body {
+	display: flex;
+	flex-direction: column;
+	gap: 0.3125rem;
+	min-width: 0;
+	padding-top: 0.3125rem;
+}
+
+.im-stream-meta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.25rem 0.625rem;
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+}
+
+/* What happened, in the kind's own colour — the one word that says which
+   collection this row came from. */
+.im-stream-kind {
+	color: var(--im-kind-ink, var(--im-muted));
+	font-weight: 500;
+}
+
+.im-stream-meta > time {
+	font-family: var(--im-font-mono);
+}
+
+.im-stream-meta > time::before {
+	content: "·";
+	margin-right: 0.625rem;
+	color: var(--im-faint);
+}
+
+.im-stream-title {
+	color: var(--im-ink);
+	font-size: var(--im-text-base);
+	font-weight: 600;
+	line-height: 1.35;
+	letter-spacing: var(--im-tracking-tight);
+}
+
+.im-stream-title > a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.im-stream-title > a::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+}
+
+.im-stream-item:is(:hover, :focus-within) .im-stream-title > a {
+	color: var(--im-accent);
+}
+
+.im-stream-text {
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+	line-height: 1.6;
+	text-wrap: pretty;
+}
+
+/* A row may carry a picture, a clip or a product shot. It is small on
+   purpose: this is a record of what happened, not a second feed. */
+.im-stream-media {
+	position: relative;
+	display: block;
+	width: min(100%, 22rem);
+	margin-top: 0.25rem;
+	aspect-ratio: var(--im-stream-ratio, 16 / 9);
+	overflow: hidden;
+	border-radius: var(--im-radius-md);
+	background-color: var(--im-surface-2);
+}
+
+.im-stream-media > img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+/* A clip in the column wears the system's one play mark — add `im-thumb
+   im-thumb-play` to the media, exactly as a video card does. Nothing about
+   the indicator is re-invented here. */
+
+/* A row of chips under a row — what the entry linked to. */
+.im-stream-links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.375rem;
+	margin-top: 0.25rem;
+}
+
+.im-stream-links > a {
+	position: relative;
+	z-index: 1;
+}
+
+/* ---- a month heading in the column ---- */
+.im-stream-month {
+	position: sticky;
+	top: calc(var(--im-bar-height) + 0.5rem);
+	z-index: 2;
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	padding: 0.375rem 0;
+	background-color: var(--im-canvas);
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.im-stream-month::after {
+	content: "";
+	flex: 1;
+	height: 1px;
+	background-color: var(--im-line);
+}
+
+/* ---- filters ---- */
+.im-stream-filters {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.375rem;
+	margin-bottom: 1.25rem;
+}
+
+/* Narrow: the mark shrinks and the rule with it, so the text keeps its
+   measure rather than the column keeping its decoration. */
+@media (width < 30rem) {
+	.im-stream {
+		--im-stream-mark: 1.75rem;
+		--im-stream-gap: 0.625rem;
+	}
+
+	.im-stream-mark > .im-icon {
+		font-size: 0.875rem;
+	}
+}

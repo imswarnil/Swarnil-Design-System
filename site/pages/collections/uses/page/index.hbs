@@ -31,7 +31,7 @@ source: src/components/ad.css · content.css
 		</header>
 
 		<div class="im-expstats">
-			<span><strong>{{price}}</strong>Paid</span>
+			<span><strong>{{cost}}</strong>Paid</span>
 			<span><strong>2 yrs</strong>Owned</span>
 			<span><strong>Daily</strong>Used</span>
 			<span><strong>Yes</strong>Buy again</span>
@@ -76,7 +76,7 @@ source: src/components/ad.css · content.css
 				<section class="im-widget" aria-labelledby="u-more">
 					<h2 class="im-widget-title" id="u-more">Also on the desk <a href="/collections/uses/">All</a></h2>
 					<ul class="im-widget-list im-widget-list-thumbs">
-						{{#each demo.uses}}{{#match @index ">" 0}}<li><a href="/collections/uses/page/"><img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy">{{name}}<small>{{price}}</small></a></li>{{/match}}{{/each}}
+						{{#each demo.uses}}{{#match @index ">" 0}}<li><a href="/collections/uses/page/"><img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy">{{name}}<small>{{cost}}</small></a></li>{{/match}}{{/each}}
 					</ul>
 				</section>
 			</div>

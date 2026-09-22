@@ -94,6 +94,46 @@
 	scrollbar-width: thin;
 }
 
+/* A rail that fills the window and does NOT scroll inside itself. The whole
+   column is one screen: nothing is below a fold that does not exist, and a
+   reader never has to work out that there is a second scrollbar in the page.
+   The price is that it cannot hold more than fits, which is the point — put
+   three widgets in it, not seven, and give the one that can absorb the slack
+   `im-rail-grow`. */
+.im-sticky-rail-full {
+	display: flex;
+	flex-direction: column;
+	gap: var(--im-rail-gap-y, 0.875rem);
+	height: calc(100dvh - var(--im-rail-top) - var(--im-rail-inset));
+	max-height: none;
+	overflow: hidden;
+}
+
+.im-sticky-rail-full > .im-widgets {
+	flex: 1 1 auto;
+	min-height: 0;
+}
+
+/* The one part allowed to take the leftover height — a log, a list of
+   episodes, a queue — and the only part that scrolls. */
+.im-rail-grow {
+	flex: 1 1 auto;
+	min-height: 0;
+	overflow-y: auto;
+	overscroll-behavior: contain;
+	scrollbar-width: thin;
+}
+
+/* A short window cannot honour a full-height rail without hiding things, so
+   below this it goes back to being an ordinary sticky column. */
+@media (height < 40rem), (width < 64rem) {
+	.im-sticky-rail-full {
+		height: auto;
+		max-height: calc(100dvh - var(--im-rail-top) - var(--im-rail-inset));
+		overflow-y: auto;
+	}
+}
+
 /* The aside on the LEFT instead — for a reading sidebar rather than a
    contents rail. Nothing moves in the markup; only the columns swap. */
 .im-with-aside-start {

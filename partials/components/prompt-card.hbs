@@ -1,0 +1,26 @@
+{{!-- Prompt card — a prompt, in the window it belongs in.
+
+	Context   name · model · text · body (the prompt) · reply (what came back)
+	          url · tokens
+	Params
+	  full    true — the reply is not faded
+	  class   anything else --}}
+<article class="im-promptcard{{#if class}} {{class}}{{/if}}">
+	<h2 class="im-promptcard-title"><a href="{{#if url}}{{url}}{{else}}/collections/prompts/page/{{/if}}">{{name}}</a></h2>
+	<p class="im-promptcard-text">{{text}}</p>
+
+	<div class="im-chat">
+		<p class="im-chat-model">{{> "icons/sparkles"}}{{model}}<span class="im-chat-model-push">{{tokens}}</span></p>
+		<ol class="im-chat-log">
+			<li class="im-chat-turn" data-from="you">
+				<span class="im-chat-mark">You</span>
+				<div class="im-chat-bubble">{{body}}</div>
+			</li>
+			<li class="im-chat-turn" data-from="model"{{#unless full}} data-trail{{/unless}}>
+				<span class="im-chat-mark">AI</span>
+				<div class="im-chat-bubble">{{reply}}</div>
+			</li>
+		</ol>
+		<p class="im-chat-input"><span class="im-chat-caret">Ask a follow-up…</span><span class="im-btn im-btn-sm im-btn-icon" aria-hidden="true">{{> "icons/arrow-up"}}</span></p>
+	</div>
+</article>

@@ -768,3 +768,72 @@
 		scroll-behavior: smooth;
 	}
 }
+
+/* ---- the play mark ------------------------------------------------------
+   One indicator, used on every still in the system that stands for something
+   that plays: a video card, a short in a carousel, a row in the timeline, a
+   lesson in a curriculum, a episode in a list. It is drawn by a pseudo-element
+   from `--im-play-glyph`, so a thumbnail wears one by gaining a class and not
+   by gaining a tag.
+
+     <span class="im-thumb im-thumb-play"><img …></span>
+
+   `im-thumb-lock` is the same thing for a members-only item, and the two are
+   mutually exclusive on purpose — a locked video shows the lock, because the
+   lock is the fact the reader needs first. */
+.im-thumb {
+	position: relative;
+	display: block;
+	overflow: hidden;
+	border-radius: var(--im-radius-md);
+	background-color: var(--im-surface-2);
+}
+
+.im-thumb > img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.im-thumb-play::after,
+.im-thumb-lock::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	margin: auto;
+	width: var(--im-thumb-mark, 2.75rem);
+	height: var(--im-thumb-mark, 2.75rem);
+	border-radius: var(--im-radius-full);
+	background-color: rgb(20 20 20 / 60%);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: calc(var(--im-thumb-mark, 2.75rem) * 0.42);
+	-webkit-backdrop-filter: blur(4px);
+	backdrop-filter: blur(4px);
+	transition: background-color var(--im-duration-fast) var(--im-ease-out), scale var(--im-duration-fast) var(--im-ease-out);
+}
+
+/* The triangle is optically centred, not geometrically: a shape with its mass
+   to the left looks left-of-centre when its bounding box is centred. */
+.im-thumb-play::after {
+	background-image: var(--im-play-glyph);
+	background-position: 56% 50%;
+}
+
+.im-thumb-lock::after {
+	background-image: var(--im-lock-glyph);
+	background-size: calc(var(--im-thumb-mark, 2.75rem) * 0.46);
+}
+
+:is(a, button, .im-vidcard, .im-post-card, .im-stream-item):is(:hover, :focus-within) .im-thumb-play::after {
+	background-color: var(--im-danger);
+	scale: 1.06;
+}
+
+.im-thumb-sm {
+	--im-thumb-mark: 1.75rem;
+}
+
+.im-thumb-lg {
+	--im-thumb-mark: 4rem;
+}

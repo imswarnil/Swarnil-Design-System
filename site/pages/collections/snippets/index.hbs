@@ -33,23 +33,8 @@ source: src/components/commerce.css · code.css
 			</div>
 		</div>
 
-		<div class="im-snippets" id="snips">
-			{{#each demo.snippets}}
-			<article class="im-snippet" style="--im-repo-lang: {{langColor}}">
-				<p class="im-snippet-head">
-					<a class="im-snippet-name" href="#snips">{{name}}</a>
-					<span class="im-snippet-lang">{{lang}}</span>
-				</p>
-				<p>{{text}}</p>
-				<div class="im-snippet-body">
-					<pre><code class="language-{{#match lang "=" "CSS"}}css{{else}}{{#match lang "=" "JavaScript"}}js{{else}}hbs{{/match}}{{/match}}">{{snippet}}</code></pre>
-				</div>
-				<p class="im-snippet-foot">
-					<span class="im-kind">{{icon "code"}}Snippet</span>
-					<button class="im-btn im-btn-sm" type="button" data-im-copy="{{snippet}}" data-im-copied-label="Copied">{{icon "copy"}}<span data-im-copy-label>Copy</span></button>
-				</p>
-			</article>
-			{{/each}}
+		<div class="im-snipcards" id="snips">
+			{{#each demo.snippets}}{{> "components/snippet-card"}}{{/each}}
 		</div>
 	</article>
 
@@ -63,7 +48,7 @@ source: src/components/commerce.css · code.css
 					<a class="im-tag" href="#snips">CSS<small>4</small></a>
 					<a class="im-tag" href="#snips">JavaScript<small>3</small></a>
 					<a class="im-tag" href="#snips">Handlebars<small>2</small></a>
-					<a class="im-tag" href="#snips">Shell<small>1</small></a>
+					<a class="im-tag" href="#snips">Handlebars<small>1</small></a>
 				</div>
 			</section>
 
@@ -83,10 +68,16 @@ source: src/components/commerce.css · code.css
 				</ul>
 			</section>
 
-			<section class="im-widget" aria-labelledby="cw-feed">
-				<h2 class="im-widget-title" id="cw-feed">Take the feed</h2>
-				<p class="im-widget-sponsor">Every snippet as it lands, in your reader.</p>
-				<a class="im-btn im-btn-sm" href="#snips">{{icon "rss"}}RSS</a>
+			<section class="im-widget im-widget-bare" aria-labelledby="cw-files">
+				<h2 class="im-widget-title" id="cw-files">All of them</h2>
+				<nav class="im-filetree" aria-labelledby="cw-files">
+					<p class="im-filetree-group">{{icon "folder"}}css</p>
+					{{#each demo.snippets}}{{#match lang "=" "CSS"}}<a class="im-filetree-file" href="/collections/snippets/page/" style="--im-repo-lang: {{langColor}}">{{icon "file-code"}}{{file}}</a>{{/match}}{{/each}}
+					<p class="im-filetree-group">{{icon "folder"}}js</p>
+					{{#each demo.snippets}}{{#match lang "=" "JavaScript"}}<a class="im-filetree-file" href="/collections/snippets/page/" style="--im-repo-lang: {{langColor}}">{{icon "file-code"}}{{file}}</a>{{/match}}{{/each}}
+					<p class="im-filetree-group">{{icon "folder"}}hbs</p>
+					{{#each demo.snippets}}{{#match lang "=" "Handlebars"}}<a class="im-filetree-file" href="/collections/snippets/page/" style="--im-repo-lang: {{langColor}}">{{icon "file-code"}}{{file}}</a>{{/match}}{{/each}}
+				</nav>
 			</section>
 		</div>
 		</div>

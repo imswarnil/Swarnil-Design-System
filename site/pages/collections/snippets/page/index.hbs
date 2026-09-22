@@ -1,90 +1,109 @@
 ---
 title: Snippet page
 layout: home
-description: One snippet, whole — the code unclipped, why it works, what it does not handle, and the two or three places it came from.
-eyebrow: Collections · Snippet
-source: src/components/commerce.css · code.css
+description: One file, open in the editor, with the rest of the folder beside it. Full width, no widget rail — the only navigation a reader of a snippet wants is the other snippets.
+eyebrow: Collections · Snippets
+source: src/components/editor.css
 ---
 <section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
-	<p class="im-eyebrow">Collections · Snippet · {{page.title}}</p>
+	<p class="im-eyebrow">Collections · Snippets · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
-<div class="im-single im-wrap" data-sidebar="on">
-	<article class="im-stack" style="--im-stack-gap: 1.5rem">
+<div class="im-with-aside im-with-aside-start im-wrap-wide" style="--im-aside-width: 15rem">
+	<aside>
+		<div class="im-sticky-rail">
+			<nav class="im-filetree" aria-label="Snippets">
+				<p class="im-filetree-head">Snippets</p>
+				<p class="im-filetree-group">{{icon "folder"}}css</p>
+				{{#each demo.snippets}}{{#match lang "=" "CSS"}}<a class="im-filetree-file" href="/collections/snippets/page/" style="--im-repo-lang: {{langColor}}"{{#match @index "=" 0}} aria-current="page"{{/match}}>{{icon "file-code"}}{{file}}</a>{{/match}}{{/each}}
+				<p class="im-filetree-group">{{icon "folder"}}js</p>
+				{{#each demo.snippets}}{{#match lang "=" "JavaScript"}}<a class="im-filetree-file" href="/collections/snippets/page/" style="--im-repo-lang: {{langColor}}">{{icon "file-code"}}{{file}}</a>{{/match}}{{/each}}
+				<p class="im-filetree-group">{{icon "folder"}}hbs</p>
+				{{#each demo.snippets}}{{#match lang "=" "Handlebars"}}<a class="im-filetree-file" href="/collections/snippets/page/" style="--im-repo-lang: {{langColor}}">{{icon "file-code"}}{{file}}</a>{{/match}}{{/each}}
+			</nav>
+		</div>
+	</aside>
+
+	<article class="im-stack" style="--im-stack-gap: 1.75rem">
 		{{#with demo.snippets.[0]}}
 		<nav aria-label="Breadcrumb">
 			<ol class="im-breadcrumb im-breadcrumb-chevron">
 				<li><a href="/">{{> "icons/house"}}<span>Home</span></a></li>
 				<li><a href="/collections/snippets/">{{> "icons/code"}}<span>Snippets</span></a></li>
-				<li><span aria-current="page">{{name}}</span></li>
+				<li><span aria-current="page">{{file}}</span></li>
 			</ol>
 		</nav>
 
 		<header class="im-stack" style="--im-stack-gap: .625rem">
-			<p class="im-cluster" style="--im-cluster-gap: .5rem">
-				<span class="im-kind">{{icon "code"}}Snippet</span>
-				<span class="im-snippet-lang" style="--im-repo-lang: {{langColor}}; margin: 0">{{lang}}</span>
-			</p>
-			<h1 class="im-collhead-title" style="font-size: clamp(1.75rem, 1.3rem + 2vw, 2.5rem)">{{name}}</h1>
-			<p class="im-collhead-text">{{text}}</p>
+			<p class="im-snipcard-meta"><span class="im-kind" data-kind="post">{{> "icons/code"}}Snippet</span><span>{{lang}}</span><span>Last checked 14 September 2026</span></p>
+			<h1 class="im-collhead-title">{{name}}</h1>
+			<p class="im-lede" style="margin: 0">{{text}}</p>
 		</header>
 
-		<section class="im-section" style="--im-section-gap: .5rem">
-			<pre><code class="language-css">{{snippet}}</code></pre>
-			<p class="im-cluster"><button class="im-btn im-btn-primary im-btn-sm" type="button" data-im-copy="{{snippet}}" data-im-copied-label="Copied">{{icon "copy"}}<span data-im-copy-label>Copy the snippet</span></button></p>
-		</section>
+		<figure class="im-editor im-mock im-mock-mac im-mock-lights" style="--im-editor-max: none; --im-repo-lang: {{langColor}}">
+			<div class="im-mock-bar">
+				<span class="im-mock-dots" aria-hidden="true"><i></i></span>
+				<div class="im-mock-tabs">
+					<button class="im-mock-tab" type="button" aria-current="page">{{file}}</button>
+					<button class="im-mock-tab" type="button" data-dirty>scratch.css</button>
+				</div>
+			</div>
+			<div class="im-editor-body">
+				<pre class="im-editor-lines" aria-hidden="true">{{lines}}</pre>
+				<pre><code class="language-{{lang_class}}">{{snippet}}</code></pre>
+			</div>
+			<p class="im-editor-status">
+				<span class="im-editor-lang">{{lang}}</span>
+				<span>UTF-8</span>
+				<span>LF</span>
+				<span class="im-editor-push">Ln 1, Col 1</span>
+			</p>
+		</figure>
 		{{/with}}
 
 		<section class="im-content im-content-flush">
-			<h2>Why it works</h2>
-			<p>The middle value is the one doing the work: <code>0.9rem + 0.5vw</code> grows with the viewport, and the two outside it are the floor and the ceiling. Nothing in it is a breakpoint, so there is no width at which the type suddenly jumps.</p>
+			<h2>Why it is written this way</h2>
+			<p>A media query picks a size and then jumps to another one. <code>clamp()</code> gives a minimum, a preferred value and a maximum, and every size between them is a real size — including the window widths nobody wrote a breakpoint for.</p>
+			<p>The middle term is the part worth reading. <code>0.9rem + 0.5vw</code> rather than <code>2.5vw</code> alone: a pure viewport unit means a reader who zooms gets nothing, because <code>vw</code> does not respond to zoom the way <code>rem</code> does. Mixing a <code>rem</code> into the preferred value is what keeps the text honest at 200%.</p>
 
-			<h2>What it does not handle</h2>
+			<h2>When not to</h2>
 			<ul>
-				<li><strong>Zoom.</strong> A user who zooms to 200% gets the ceiling, which is usually right but is not always.</li>
-				<li><strong>Very narrow columns.</strong> <code>vw</code> is the <em>viewport</em>, not the container — in a 20rem sidebar on a 90rem screen it will be too big. Use a container query unit there.</li>
+				<li><strong>Not for a heading that must not shrink.</strong> A minimum of <code>1rem</code> is a promise; check it at 320px before you make it.</li>
+				<li><strong>Not on <code>line-height</code>.</strong> Fluid leading drifts out of the vertical rhythm and there is no way to get it back.</li>
 			</ul>
-
-			<h2>Where it came from</h2>
-			<p>The formula is the well-known fluid-type calculation; the numbers are this system's, and they are in <a href="/foundation/typography/">Typography</a> as real tokens rather than as a snippet you have to paste.</p>
 		</section>
-	</article>
 
-	<aside>
-		<div class="im-sticky-rail">
-			<div class="im-widgets">
-				<section class="im-widget" aria-labelledby="s-facts">
-					<h2 class="im-widget-title" id="s-facts">This snippet</h2>
-					<dl class="im-widget-facts">
-						<dt>Language</dt><dd>CSS</dd>
-						<dt>Lines</dt><dd>2</dd>
-						<dt>Added</dt><dd>Sep 2026</dd>
-						<dt>Licence</dt><dd>Public domain</dd>
-					</dl>
-				</section>
-
-				<section class="im-widget" aria-labelledby="s-more">
-					<h2 class="im-widget-title" id="s-more">More snippets <a href="/collections/snippets/">All</a></h2>
-					<ul class="im-widget-list">
-						{{#each demo.snippets}}{{#match @index ">" 0}}<li><a href="/collections/snippets/page/">{{name}}<small>{{lang}}</small></a></li>{{/match}}{{/each}}
-					</ul>
-				</section>
-			</div>
+		<div class="im-snipcards" style="--im-snipcards-min: 22rem">
+			{{#each demo.snippets}}{{#match @index ">" 3}}{{> "components/snippet-card"}}{{/match}}{{/each}}
 		</div>
-	</aside>
+	</article>
 </div>
 
 <section class="im-section im-wrap">
 	<div class="im-prose">
-		<h2>Three headings, always the same three</h2>
-		<p><strong>Why it works</strong>, <strong>what it does not handle</strong>, and <strong>where it came from</strong>. A snippet page with only the first is a tutorial; one with all three is the thing you actually wanted when you searched for it at eleven at night.</p>
-		<p>The second is the one nobody writes and everybody needs. Every snippet has an edge it falls off, and saying so is what separates a collection you can trust from a collection you have to test.</p>
-		<ul>
-			<li><strong>The code is unclipped here.</strong> The card clipped it; the page is where the whole thing lives.</li>
-			<li><strong>One big Copy button</strong>, under the code, primary. It is what the page is for.</li>
-			<li><strong>Say the licence.</strong> Most snippets should be public domain and saying so removes the only reason to hesitate.</li>
-		</ul>
+		<h2>No sidebar, and no copy button</h2>
+		<p>Two deliberate absences.</p>
+		<p><strong>No widget rail.</strong> An author card, a newsletter box and a "popular posts" list are things a reader of an <em>essay</em> might want next. A reader who arrived at <code>fluid-type.css</code> wants the other files, which is why the left column is a file tree and the page is otherwise full width.</p>
+		<p><strong>No copy button.</strong> The four lines are not the value — the reason they are <em>those</em> four lines is, and it is in the paragraph underneath. A copy button is an invitation to skip it. The code is selectable, which is what copying was for.</p>
+		<div class="im-table-scroll">
+		<table>
+			<thead><tr><th>Class</th><th></th></tr></thead>
+			<tbody>
+				<tr><td><code>im-editor</code></td><td>The window. It reuses <a href="/content/mockups/">the mockup chrome</a> — <code>im-mock im-mock-mac im-mock-lights</code> — rather than drawing a second one.</td></tr>
+				<tr><td><code>im-editor-lines</code></td><td>The gutter, as ONE block of numbers rather than a counter per line: a counter numbers the wrap, and code wraps. It is <code>position: sticky</code> so it survives a sideways scroll.</td></tr>
+				<tr><td><code>im-editor-status</code></td><td>Language, encoding, position. The row that makes it read as an editor and not as a terminal.</td></tr>
+				<tr><td><code>im-filetree</code></td><td>The other files. <code>aria-current="page"</code> is the open one, drawn with the same fill-and-weight active state as every other list in the system.</td></tr>
+				<tr><td><code>im-snipcard</code></td><td>The card: the sentence above, the window below.</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<h2>The highlighter leaves it alone</h2>
+		<p><code>im-code.js</code> normally wraps a <code>&lt;pre&gt;</code> in its own figure with a title bar and a copy button. Inside <code>.im-editor</code> it colours the tokens and stops — otherwise the card would have two title bars and the button this page exists to not have. <code>data-im-bare</code> on any <code>&lt;pre&gt;</code> does the same thing anywhere else.</p>
+
+		<h2>Code does not wrap</h2>
+		<p><code>white-space: pre</code>, and the body scrolls sideways. A wrapped line of CSS is a different line of CSS, and a reader who cannot tell where line 2 ends cannot use the snippet. The gutter stays put while it scrolls.</p>
 	</div>
 </section>

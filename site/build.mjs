@@ -132,12 +132,12 @@ export async function build({ quiet = false } = {}) {
 			{ name: 'Figma', note: 'Where the design system starts', url: '#' },
 		],
 		projects: [
-			{ name: 'im-design-system', owner: 'imswarnil', text: 'A Tailwind 4 design system for Ghost themes: tokens, layout, components and ready-made sections.', lang: 'CSS', langColor: '#563d7c', stars: '1.2k', forks: '84', updated: '3 days ago', topics: ['design-system', 'tailwindcss', 'ghost', 'css'], visibility: 'Public', image: fixtures.posts[0].feature_image, demo_url: '#', code_url: '#', url: '/collections/project/page/' },
-			{ name: 'ghost-swarnil-theme', owner: 'imswarnil', text: 'The theme this site runs on. One install, somebody else\u2019s Ghost, and the rules that keep the two from destroying each other.', lang: 'Handlebars', langColor: '#f7931e', stars: '486', forks: '31', updated: '1 week ago', topics: ['ghost-theme', 'handlebars'], visibility: 'Public', image: fixtures.posts[1].feature_image, demo_url: '#', code_url: '#', url: '/collections/project/page/' },
-			{ name: 'links', owner: 'imswarnil', text: 'A link page on Cloudflare Workers that fetches GitHub, Ghost and YouTube per request.', lang: 'TypeScript', langColor: '#3178c6', stars: '212', forks: '18', updated: '2 weeks ago', topics: ['nextjs', 'cloudflare'], visibility: 'Public', image: fixtures.posts[2].feature_image, demo_url: '#', code_url: '#', url: '/collections/project/page/' },
-			{ name: 'field-notes', owner: 'imswarnil', text: 'Ten years of notebooks, scanned, tagged and searchable. Archived \u2014 read only.', lang: 'Python', langColor: '#3572a5', stars: '97', forks: '6', updated: '8 months ago', topics: ['archive', 'ocr'], visibility: 'Archived', image: fixtures.posts[3].feature_image, demo_url: '#', code_url: '#', url: '/collections/project/page/' },
-			{ name: 'swarnil-icons', owner: 'imswarnil', text: 'The icon set, drawn on a 24px grid and shipped as partials rather than as a font.', lang: 'SVG', langColor: '#ff9e0f', stars: '340', forks: '22', updated: '5 days ago', topics: ['icons', 'svg'], visibility: 'Public', image: fixtures.posts[4].feature_image, demo_url: '#', code_url: '#', url: '/collections/project/page/' },
-			{ name: 'no-ai-content', owner: 'imswarnil', text: 'A badge, a manifesto and a verifier for pages written by a person.', lang: 'JavaScript', langColor: '#f1e05a', stars: '1.9k', forks: '140', updated: 'yesterday', topics: ['manifesto', 'web'], visibility: 'Public', image: fixtures.posts[5].feature_image, demo_url: '#', code_url: '#', url: '/collections/project/page/' },
+			{ name: 'im-design-system', owner: 'imswarnil', text: 'A Tailwind 4 design system for Ghost themes: tokens, layout, components and ready-made sections.', lang: 'CSS', langColor: '#563d7c', stars: '1.2k', forks: '84', updated: '3 days ago', topics: ['design-system', 'tailwindcss', 'ghost', 'css'], visibility: 'Public', image: fixtures.posts[0].feature_image, demo_url: '#', code_url: '#', state: 'live', state_label: 'Live', stack: [{name:'CSS',icon:'palette'},{name:'Tailwind',icon:'layers'},{name:'Handlebars',icon:'code'},{name:'Node',icon:'terminal'}], took: '9 months', since: 'Jan 2026', commits: '1,204', url: '/collections/project/page/' },
+			{ name: 'ghost-swarnil-theme', owner: 'imswarnil', text: 'The theme this site runs on. One install, somebody else\u2019s Ghost, and the rules that keep the two from destroying each other.', lang: 'Handlebars', langColor: '#f7931e', stars: '486', forks: '31', updated: '1 week ago', topics: ['ghost-theme', 'handlebars'], visibility: 'Public', image: fixtures.posts[1].feature_image, demo_url: '#', code_url: '#', state: 'live', state_label: 'Live', stack: [{name:'Handlebars',icon:'code'},{name:'Ghost',icon:'rocket'},{name:'CSS',icon:'palette'}], took: '4 months', since: 'May 2026', commits: '486', url: '/collections/project/page/' },
+			{ name: 'links', owner: 'imswarnil', text: 'A link page on Cloudflare Workers that fetches GitHub, Ghost and YouTube per request.', lang: 'TypeScript', langColor: '#3178c6', stars: '212', forks: '18', updated: '2 weeks ago', topics: ['nextjs', 'cloudflare'], visibility: 'Public', image: fixtures.posts[2].feature_image, demo_url: '#', code_url: '#', state: 'building', state_label: 'Building', stack: [{name:'TypeScript',icon:'file-code'},{name:'Next.js',icon:'layers'},{name:'Cloudflare',icon:'globe'},{name:'Neon',icon:'layers'}], took: '6 weeks', since: 'Aug 2026', commits: '212', url: '/collections/project/page/' },
+			{ name: 'field-notes', owner: 'imswarnil', text: 'Ten years of notebooks, scanned, tagged and searchable. Archived \u2014 read only.', lang: 'Python', langColor: '#3572a5', stars: '97', forks: '6', updated: '8 months ago', topics: ['archive', 'ocr'], visibility: 'Archived', image: fixtures.posts[3].feature_image, demo_url: '#', code_url: '#', state: 'archived', state_label: 'Archived', stack: [{name:'Python',icon:'terminal'},{name:'OCR',icon:'eye'}], took: '1 year', since: '2024', commits: '97', url: '/collections/project/page/' },
+			{ name: 'swarnil-icons', owner: 'imswarnil', text: 'The icon set, drawn on a 24px grid and shipped as partials rather than as a font.', lang: 'SVG', langColor: '#ff9e0f', stars: '340', forks: '22', updated: '5 days ago', topics: ['icons', 'svg'], visibility: 'Public', image: fixtures.posts[4].feature_image, demo_url: '#', code_url: '#', state: 'live', state_label: 'Live', stack: [{name:'SVG',icon:'image'},{name:'Node',icon:'terminal'}], took: '3 months', since: 'Mar 2026', commits: '340', url: '/collections/project/page/' },
+			{ name: 'no-ai-content', owner: 'imswarnil', text: 'A badge, a manifesto and a verifier for pages written by a person.', lang: 'JavaScript', langColor: '#f1e05a', stars: '1.9k', forks: '140', updated: 'yesterday', topics: ['manifesto', 'web'], visibility: 'Public', image: fixtures.posts[5].feature_image, demo_url: '#', code_url: '#', state: 'live', state_label: 'Live', stack: [{name:'JavaScript',icon:'file-code'},{name:'Vercel',icon:'globe'}], took: '2 weeks', since: 'Jun 2026', commits: '190', url: '/collections/project/page/' },
 		],
 		log: [
 			{ when: 'March 2026', title: 'Rebuilt the token layer', text: 'Primitives and semantics split into two files. A component now names what a value is FOR and never what it is, which is what made dark mode a change to one file instead of forty.', state: 'done', tag: 'v0.4', shot: fixtures.posts[2].feature_image },
@@ -169,27 +169,30 @@ export async function build({ quiet = false } = {}) {
 			{ n: '039', day: '28', month: 'Aug', year: '2026', sent: '28 Aug 2026', title: 'Every number from the move', text: 'Rent, tax, the deposit nobody mentions, and the month it took to get a bank account.', read: '71%', words: '2,300' },
 		],
 		shop: [
-			{ name: 'Im Design System', text: 'Tokens, a page shell, forty components and ready-made sections for Ghost themes.', price: '$149', was: '$199', kind: 'Design system', badge: 'New' },
-			{ name: 'Signal — a Ghost theme', text: 'The theme this site runs on. Built on the system, and it comes with it.', price: '$89', kind: 'Ghost theme' },
-			{ name: 'The icon set', text: '340 icons on a 24px grid, shipped as partials rather than as a font.', price: '$29', kind: 'Icons' },
-			{ name: 'Field Notes templates', text: 'Six newsletter layouts that survive Outlook. Because somebody has to.', price: 'Free', free: true, kind: 'Templates' },
+			{ name: 'Im Design System', text: 'Tokens, a page shell, forty components and ready-made sections for Ghost themes.', cost: '$149', was: '$199', kind: 'Design system', badge: 'New' },
+			{ name: 'Signal — a Ghost theme', text: 'The theme this site runs on. Built on the system, and it comes with it.', cost: '$89', kind: 'Ghost theme' },
+			{ name: 'The icon set', text: '340 icons on a 24px grid, shipped as partials rather than as a font.', cost: '$29', kind: 'Icons' },
+			{ name: 'Field Notes templates', text: 'Six newsletter layouts that survive Outlook. Because somebody has to.', cost: 'Free', free: true, kind: 'Templates' },
 		],
 		uses: [
-			{ name: 'Fujifilm X100VI', by: 'Fujifilm · compact camera', text: 'Every picture on this site since March. Small enough to be in a pocket, good enough not to want the other one.', price: '€1,599', was: '€1,799' },
-			{ name: 'Roterfaden Taschenbegleiter', by: 'Roterfaden · notebook cover', text: 'Four years old, four countries, still closes properly.', price: '€139' },
-			{ name: 'Herman Miller Aeron', by: 'Herman Miller · chair', text: 'Bought used, twelve years old, will outlive me.', price: '€620' },
-			{ name: 'iA Writer', by: 'Information Architects · app', text: 'Drafts, before they are posts. The one app I have never replaced.', price: '€29' },
+			{ name: 'Fujifilm X100VI', by: 'Fujifilm · compact camera', text: 'Every picture on this site since March. Small enough to be in a pocket, good enough not to want the other one.', cost: '€1,599', was: '€1,799' },
+			{ name: 'Roterfaden Taschenbegleiter', by: 'Roterfaden · notebook cover', text: 'Four years old, four countries, still closes properly.', cost: '€139' },
+			{ name: 'Herman Miller Aeron', by: 'Herman Miller · chair', text: 'Bought used, twelve years old, will outlive me.', cost: '€620' },
+			{ name: 'iA Writer', by: 'Information Architects · app', text: 'Drafts, before they are posts. The one app I have never replaced.', cost: '€29' },
 		],
 		snippets: [
-			{ name: 'Fluid type without a media query', lang: 'CSS', langColor: '#563d7c', text: 'One clamp, one line, every size between.', snippet: 'font-size: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);\nline-height: 1.5;' },
-			{ name: 'A grid with no breakpoints', lang: 'CSS', langColor: '#563d7c', text: 'As many columns as fit, and never one that is too narrow to read.', snippet: 'grid-template-columns:\n\trepeat(auto-fill, minmax(min(16rem, 100%), 1fr));' },
-			{ name: 'Throttle a scroll listener properly', lang: 'JavaScript', langColor: '#f1e05a', text: 'One frame, one measurement. An observer never fires in an unpainted tab.', snippet: 'let pending = false;\naddEventListener(\'scroll\', () =>\n\tpending || ((pending = true), requestAnimationFrame(measure)),\n{ passive: true });' },
-			{ name: 'Ghost: posts by tag, without the current one', lang: 'Handlebars', langColor: '#f7931e', text: 'The related-posts query that does not include the post you are on.', snippet: '{{#get "posts" filter="tags:[{{primary_tag.slug}}]+id:-{{id}}" limit="3"}}\n\t{{#foreach posts}}…{{/foreach}}\n{{/get}}' },
+			{ name: 'Fluid type without a media query', file: 'fluid-type.css', lang: 'CSS', lang_class: 'css', langColor: '#563d7c', lines: '1\n2', text: 'One clamp, one line, every size between — and it keeps working at a window size nobody wrote a breakpoint for.', snippet: 'font-size: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);\nline-height: 1.5;' },
+			{ name: 'A grid with no breakpoints', file: 'auto-grid.css', lang: 'CSS', lang_class: 'css', langColor: '#563d7c', lines: '1\n2', text: 'As many columns as fit, and never one too narrow to read. The min() is what stops it overflowing a phone.', snippet: 'grid-template-columns:\n\trepeat(auto-fill, minmax(min(16rem, 100%), 1fr));' },
+			{ name: 'Throttle a scroll listener properly', file: 'on-scroll.js', lang: 'JavaScript', lang_class: 'js', langColor: '#f1e05a', lines: '1\n2\n3\n4', text: 'One frame, one measurement. An IntersectionObserver would be tidier and never fires in a tab that is not being painted.', snippet: 'let pending = false;\naddEventListener(\'scroll\', () =>\n\tpending || ((pending = true), requestAnimationFrame(measure)),\n{ passive: true });' },
+			{ name: 'Related posts, without the one you are on', file: 'related.hbs', lang: 'Handlebars', lang_class: 'hbs', langColor: '#f7931e', lines: '1\n2\n3', text: 'The Ghost query everybody writes wrong the first time: the filter has to exclude the current id, or the post recommends itself.', snippet: '{{#get "posts" filter="tags:[{{primary_tag.slug}}]+id:-{{id}}" limit="3"}}\n\t{{#foreach posts}}…{{/foreach}}\n{{/get}}' },
+			{ name: 'Centre a dialog without fighting its animation', file: 'dialog.css', lang: 'CSS', lang_class: 'css', langColor: '#563d7c', lines: '1\n2\n3', text: 'A translate centres it and then the open animation has to undo the translate. Margin does not move, so it does not fight.', snippet: 'dialog {\n\tinset: 0;\n\tmargin: auto;\n}' },
+			{ name: 'Tile a one-pixel rule that Chrome keeps', file: 'ticks.css', lang: 'CSS', lang_class: 'css', langColor: '#563d7c', lines: '1\n2\n3', text: 'A repeating-linear-gradient drops stretches of 1px ticks over a long run. Tiling one tick does not.', snippet: 'background-image: linear-gradient(90deg, currentColor 1px, transparent 0);\nbackground-size: 0.5rem 100%;\nbackground-repeat: repeat-x;' },
 		],
 		prompts: [
-			{ name: 'Rewrite without the adjectives', model: 'Any model', text: 'For a draft that reads like a brochure.', body: 'Rewrite the text below. Remove every adjective that is not doing work, every sentence that restates the one before it, and every phrase that could be said by any company about any product.\n\nKeep the facts, the numbers and the voice. Return only the rewritten text.' },
-			{ name: 'Find what is missing', model: 'Reasoning models', text: 'The review that catches the thing nobody wrote down.', body: 'Read the document below and list only what is MISSING: decisions implied but never stated, terms used but never defined, and steps that assume knowledge the reader has not been given.\n\nDo not summarise. Do not praise. A numbered list, shortest first.' },
-			{ name: 'Explain this code to its future author', model: 'Any model', text: 'Comments that say why, not what.', body: 'Write the comment that belongs above this function. Explain WHY it is written this way and what breaks if it is changed — not what the lines do, which is already there.\n\nOne short paragraph. No preamble.' },
+			{ name: 'Rewrite without the adjectives', model: 'Any model', tokens: '~120 tokens', text: 'For a draft that reads like a brochure. It is the one I run on everything before I publish it.', body: 'Rewrite the text below. Remove every adjective that is not doing work, every sentence that restates the one before it, and every phrase that could be said by any company about any product.\n\nKeep the facts, the numbers and the voice. Return only the rewritten text.', reply: 'The road is forty kilometres and takes two hours. It was cut into the cliff in the 1840s and has not been widened since. Buses fold their mirrors in to pass each other.\n\nWe drove it east to west, which puts you on the sea side. Four days, five towns, \u20ac479.' },
+			{ name: 'Find what is missing', model: 'Reasoning models', tokens: '~90 tokens', text: 'The review that catches the thing nobody wrote down. Better than any "review this" prompt I have tried.', body: 'Read the document below and list only what is MISSING: decisions implied but never stated, terms used but never defined, and steps that assume knowledge the reader has not been given.\n\nDo not summarise. Do not praise. A numbered list, shortest first.', reply: '1. "The rail" is used nine times and never defined.\n2. Step 3 assumes the reader has already run the build once.\n3. No statement of what happens when the API returns nothing.\n4. The decision to drop the second theme is implied by the diagram and never written down.' },
+			{ name: 'Explain this code to its future author', model: 'Any model', tokens: '~70 tokens', text: 'Comments that say why, not what. The second paragraph is what makes it work.', body: 'Write the comment that belongs above this function. Explain WHY it is written this way and what breaks if it is changed \u2014 not what the lines do, which is already there.\n\nOne short paragraph. No preamble.', reply: 'Sized from both constraints at once because the clip has to fit a short laptop window and a narrow phone with the same rule. A height in vh with overflow hidden would hide the overflow rather than prevent it, and the controls would end up off the bottom of the screen.' },
+			{ name: 'Turn a decision into a paragraph', model: 'Any model', tokens: '~80 tokens', text: 'For a changelog entry that a reader six months from now can act on.', body: 'I made this decision: [DECISION]. The reason was: [REASON].\n\nWrite one paragraph that states what changed, why, and what somebody should do differently because of it. No bullet points. Do not restate the decision as its own justification.', reply: 'The style scope is gone. Two skins meant every component was tuned twice and tested once, and the second one existed because it was interesting rather than because anybody asked for it. Anything that needs to look different now does it with a modifier class on the component itself.' },
 		],
 		trips: [
 			{ title: 'The Amalfi Coast, slowly', country: 'Italy', when: 'November 2025', days: '6', km: '410', route: ['Naples', 'Sorrento', 'Positano', 'Amalfi', 'Ravello'], text: 'Forty kilometres of road that takes two hours, and five days of not being in a hurry about it.', state: 'done' },
@@ -230,11 +233,19 @@ export async function build({ quiet = false } = {}) {
 			{ n: '03', title: 'Positano, and the parking', time: '14:05', when: '18 Sep', state: 'current', text: 'What it costs in August, and where to leave the car instead.' },
 			{ n: '04', title: 'Amalfi, and the way back', time: '—', when: 'Next Thursday', state: 'upcoming', text: 'East to west, on the sea side, with nothing left to prove.' },
 		],
-		journal: [
-			{ when: '21 September', title: 'Deleted the style scope', text: 'Two looks was one look too many. Everything is one component styled once now, and the page is quieter for it.', tag: 'Design system' },
-			{ when: '18 September', title: 'The dot is not a state', text: 'A dot beside a nav link means a notification everywhere else on the web. Changed it to a fill and a bolder label — the thing the side nav was already doing.', tag: 'Design system' },
-			{ when: '14 September', title: 'Four hours on a pseudo-element', text: 'A registered custom property read by a ::before must inherit. It does not, by default. Nothing about that is in any tutorial.', tag: 'CSS' },
-			{ when: '9 September', title: 'Back from the coast', text: 'Eight minutes of footage out of four days. Worth it.', tag: 'Travel' },
+		stream: [
+			{ month: 'September 2026', items: [
+				{ kind: 'release', mark: 'rocket', label: 'Shipped a release', when: '21 Sep', title: 'Im Design System v0.6 — one look, nine collections', text: 'The style scope is gone. Two looks was one look too many: everything is one component styled once now, and the page is quieter for it.', url: '/collections/project/page/', links: ['Changelog', 'Repo'] },
+				{ kind: 'video', mark: 'video', label: 'Published a video', when: '18 Sep', title: 'Driving the Amalfi Coast — the whole road in 8 minutes', text: 'Four days of footage, eight minutes of road, one lens.', url: '/collections/video/page/', image: 1 },
+				{ kind: 'post', mark: 'pencil', label: 'Wrote a post', when: '14 Sep', title: 'Four hours on a pseudo-element', text: 'A registered custom property read by a ::before must inherit. It does not, by default. Nothing about that is in any tutorial.', url: '/collections/post/article/' },
+				{ kind: 'product', mark: 'package', label: 'Bought something', when: '11 Sep', title: 'Fujifilm X100VI', text: 'Replaced the body I have carried for three years. Every picture on this site since is from it.', url: '/collections/uses/page/' },
+			] },
+			{ month: 'August 2026', items: [
+				{ kind: 'trip', mark: 'map-pin', label: 'Went somewhere', when: '28 Aug', title: 'Back from the coast', text: 'Six days, four towns, and one road that takes two hours to drive forty kilometres.', url: '/collections/travel/trip/', image: 3 },
+				{ kind: 'issue', mark: 'mail', label: 'Sent an issue', when: '22 Aug', title: 'Field Notes #24 — what the rebuild cost', text: 'Every hour, every decision I would take back, and the two that paid for the rest.', url: '/collections/newsletter/issue/' },
+				{ kind: 'project', mark: 'folder', label: 'Started a project', when: '14 Aug', title: 'links — a link page on Workers', text: 'Fetches GitHub, Ghost and YouTube per request. No build step, no data scripts.', url: '/collections/project/page/' },
+				{ kind: 'note', mark: 'message-square', label: 'Noted', when: '9 Aug', title: 'The dot is not a state', text: 'A dot beside a nav link means a notification everywhere else on the web. Changed it to a fill and a bolder label.' },
+			] },
 		],
 		archive: [
 			{ year: '2026', posts: 34, share: '100%' },
@@ -376,6 +387,28 @@ export async function build({ quiet = false } = {}) {
 	fs.writeFileSync(path.join(DIST, 'robots.txt'), `User-agent: *\nAllow: /\n`);
 	log(`  pages    ${count} · ${sections.length} section(s) · ${icons.length} icons · ${tokens.count} tokens`);
 	if (ghost.warnings.size === 0) log('  helpers  every Ghost helper the partials use is modelled');
+
+	// A fixture field whose name is also a helper is invisible: `{{price}}` in a
+	// product's context calls the HELPER, which prints `$[object Object]`, and
+	// `{{code}}` calls a block helper with no block, which throws. Both have
+	// happened. Name the collisions rather than finding them in the output.
+	// These helpers READ the field they are named for out of the current
+	// context, so a fixture carrying one is not a clash — it is how they work.
+	const readsItsOwnField = new Set(['excerpt', 'reading_time', 'url', 'content']);
+	const helperNames = new Set(Object.keys(hbs.helpers).filter((n) => !readsItsOwnField.has(n)));
+	const clashes = new Map();
+	const walkFixture = (value, trail) => {
+		if (Array.isArray(value)) return value.forEach((v) => walkFixture(v, trail));
+		if (!value || typeof value !== 'object') return;
+		for (const key of Object.keys(value)) {
+			if (helperNames.has(key)) clashes.set(key, `${trail}.${key}`);
+		}
+	};
+	for (const [key, value] of Object.entries(demo)) walkFixture(value, `demo.${key}`);
+	if (clashes.size) {
+		log(`  CLASH    fixture field(s) shadowed by a Ghost helper: ${[...clashes.values()].join(', ')}`);
+		log('           rename the field — the helper wins and prints nonsense');
+	}
 	log(`  done     ${Date.now() - started}ms`);
 }
 

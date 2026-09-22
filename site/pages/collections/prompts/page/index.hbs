@@ -1,19 +1,19 @@
 ---
 title: Prompt page
 layout: home
-description: One prompt, whole — the text to copy, what it is for, what it does badly, and the two changes worth making before you use it.
-eyebrow: Collections · Prompt
-source: src/components/commerce.css
+description: One prompt, the whole conversation it produced, and the paragraph explaining which line does the work. The window is the page.
+eyebrow: Collections · Prompts
+source: src/components/chat.css
 ---
 <section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
-	<p class="im-eyebrow">Collections · Prompt · {{page.title}}</p>
+	<p class="im-eyebrow">Collections · Prompts · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
-<div class="im-single im-wrap" data-sidebar="on">
-	<article class="im-stack" style="--im-stack-gap: 1.5rem">
-		{{#with demo.prompts.[0]}}
+<div class="im-single im-wrap-wide" data-sidebar="on">
+	<article class="im-stack" style="--im-stack-gap: 1.75rem">
+		{{#with demo.prompts.[1]}}
 		<nav aria-label="Breadcrumb">
 			<ol class="im-breadcrumb im-breadcrumb-chevron">
 				<li><a href="/">{{> "icons/house"}}<span>Home</span></a></li>
@@ -23,54 +23,95 @@ source: src/components/commerce.css
 		</nav>
 
 		<header class="im-stack" style="--im-stack-gap: .625rem">
-			<p class="im-cluster" style="--im-cluster-gap: .5rem">
-				<span class="im-kind" data-kind="tag">{{icon "sparkles"}}Prompt</span>
-				<span class="im-snippet-lang" style="--im-repo-lang: var(--im-accent); margin: 0">{{model}}</span>
-			</p>
-			<h1 class="im-collhead-title" style="font-size: clamp(1.75rem, 1.3rem + 2vw, 2.5rem)">{{name}}</h1>
-			<p class="im-collhead-text">{{text}}</p>
+			<p class="im-snipcard-meta"><span class="im-kind" data-kind="tag">{{> "icons/sparkles"}}Prompt</span><span>{{model}}</span><span>{{tokens}}</span></p>
+			<h1 class="im-collhead-title">{{name}}</h1>
+			<p class="im-lede" style="margin: 0">{{text}}</p>
 		</header>
 
-		<section class="im-section" style="--im-section-gap: .5rem">
-			<div class="im-snippet-prompt" style="border-radius: var(--im-radius-lg)">{{body}}</div>
-			<p class="im-cluster"><button class="im-btn im-btn-primary im-btn-sm" type="button" data-im-copy="{{body}}" data-im-copied-label="Copied">{{icon "copy"}}<span data-im-copy-label>Copy the prompt</span></button></p>
-		</section>
+		<div class="im-chat">
+			<p class="im-chat-model">{{> "icons/sparkles"}}{{model}}<span class="im-chat-model-push">{{tokens}}</span></p>
+			<ol class="im-chat-log">
+				<li class="im-chat-turn" data-from="you">
+					<span class="im-chat-mark">You</span>
+					<div class="im-chat-bubble">{{body}}</div>
+				</li>
+				<li class="im-chat-turn" data-from="model">
+					<span class="im-chat-mark">AI</span>
+					<div class="im-chat-bubble">{{reply}}</div>
+				</li>
+				<li class="im-chat-turn" data-from="you">
+					<span class="im-chat-mark">You</span>
+					<div class="im-chat-bubble">Now do the same for the section under it.</div>
+				</li>
+				<li class="im-chat-turn" data-from="model">
+					<span class="im-chat-mark">AI</span>
+					<div class="im-chat-bubble"><span class="im-chat-typing" aria-label="Thinking"><i></i><i></i><i></i></span></div>
+				</li>
+			</ol>
+			<p class="im-chat-input"><span class="im-chat-caret">Ask a follow-up…</span><span class="im-btn im-btn-sm im-btn-icon" aria-hidden="true">{{> "icons/arrow-up"}}</span></p>
+		</div>
 		{{/with}}
 
 		<section class="im-content im-content-flush">
-			<h2>What it is for</h2>
-			<p>A draft that has been over-written — every noun wearing two adjectives, every paragraph restating the one above it. It is the state most first drafts of marketing copy arrive in, including mine.</p>
+			<h2>Which line does the work</h2>
+			<p><strong>"Do not summarise. Do not praise."</strong> Without those five words every model on earth opens with a paragraph about how well-structured the document is, and the list that follows is shorter because the praise used the attention.</p>
+			<p><strong>"Shortest first."</strong> An ordering instruction is the cheapest quality control there is: sorting forces the model to compare the items against each other, and the weak ones become obvious to it while it is sorting.</p>
+			<p><strong>The word MISSING in capitals.</strong> Not because capitals are magic — because the prompt is otherwise a review prompt, and every review prompt in the training data ends in a summary. The capital is what stops it drifting back to the average.</p>
 
-			<h2>What it does badly</h2>
+			<h2>Where it fails</h2>
 			<ul>
-				<li><strong>Technical writing.</strong> It will strip precision along with the padding; "a 128-bit key" is not an adjective problem.</li>
-				<li><strong>Anything with a voice.</strong> It flattens. Run it on a brochure, not on an essay.</li>
-				<li><strong>Long documents.</strong> Past about a thousand words it starts summarising instead of rewriting, whatever the instruction says.</li>
+				<li><strong>On a document under about 300 words</strong> it invents gaps. There is nothing missing from a paragraph, and it will find four things anyway.</li>
+				<li><strong>On a specification with numbered requirements</strong> it lists the numbers you skipped rather than the assumptions you made. Ask for assumptions explicitly if that is what you want.</li>
 			</ul>
 
-			<h2>Two changes worth making</h2>
-			<p>Add <em>"keep every number and every proper noun exactly as written"</em> if the text has facts in it. And if you want the cuts visible rather than applied, change the last line to <em>"return the rewritten text, then a list of what you removed and why"</em> — which is how you find out whether to trust it.</p>
+			<h2>What I changed, and when</h2>
+			<ul>
+				<li><strong>September 2026</strong> — added "shortest first". The lists got noticeably better.</li>
+				<li><strong>June 2026</strong> — dropped "act as a technical reviewer". It changed nothing except the length of the prompt.</li>
+			</ul>
+		</section>
+
+		<section class="im-section" style="--im-section-gap: 1rem">
+			<h2 class="im-caption">Others like it</h2>
+			<div class="im-promptcards" style="--im-promptcards-min: 22rem">
+				{{#each demo.prompts}}{{#match @index "!=" 1}}{{> "components/prompt-card"}}{{/match}}{{/each}}
+			</div>
 		</section>
 	</article>
 
 	<aside>
 		<div class="im-sticky-rail">
 			<div class="im-widgets">
-				<section class="im-widget" aria-labelledby="p-facts">
-					<h2 class="im-widget-title" id="p-facts">This prompt</h2>
+				<section class="im-widget" aria-labelledby="pp-copy">
+					<h2 class="im-widget-title" id="pp-copy">Take it</h2>
+					<p class="im-widget-heading">The prompt, on its own, nothing else.</p>
+					<button class="im-btn im-btn-primary im-btn-sm" type="button" data-im-copy="{{demo.prompts.[1].body}}" data-im-copied-label="Copied" style="width: 100%">{{icon "copy"}}<span data-im-copy-label>Copy the prompt</span></button>
+				</section>
+
+				<section class="im-widget" aria-labelledby="pp-facts">
+					<h2 class="im-widget-title" id="pp-facts">About this one</h2>
 					<dl class="im-widget-facts">
-						<dt>Models</dt><dd>Any</dd>
-						<dt>Length</dt><dd>62 words</dd>
-						<dt>For</dt><dd>Writing</dd>
-						<dt>Added</dt><dd>Sep 2026</dd>
+						<dt>Model</dt><dd>Reasoning</dd>
+						<dt>Length</dt><dd>~90 tokens</dd>
+						<dt>Written</dt><dd>March 2026</dd>
+						<dt>Last revised</dt><dd>September 2026</dd>
+						<dt>Used</dt><dd>Weekly</dd>
 					</dl>
 				</section>
 
-				<section class="im-widget" aria-labelledby="p-more">
-					<h2 class="im-widget-title" id="p-more">More prompts <a href="/collections/prompts/">All</a></h2>
+				<section class="im-widget" aria-labelledby="pp-tools">
+					<h2 class="im-widget-title" id="pp-tools">Runs well on</h2>
 					<ul class="im-widget-list">
-						{{#each demo.prompts}}{{#match @index ">" 0}}<li><a href="/collections/prompts/page/">{{name}}<small>{{model}}</small></a></li>{{/match}}{{/each}}
+						<li><a href="#prompts">A reasoning model<small>What it was written for</small></a></li>
+						<li><a href="#prompts">A fast general model<small>Works, shorter lists</small></a></li>
+						<li><a href="#prompts">A local 8B<small>Needs the capitals</small></a></li>
 					</ul>
+				</section>
+
+				<section class="im-widget im-widget-fill" aria-labelledby="pp-sub">
+					<h2 class="im-widget-title" id="pp-sub">New ones</h2>
+					<p class="im-widget-heading">Rarely, and only when one has earned it.</p>
+					{{> "components/subscribe" id="prompt-email" button="Tell me"}}
 				</section>
 			</div>
 		</div>
@@ -79,13 +120,25 @@ source: src/components/commerce.css
 
 <section class="im-section im-wrap">
 	<div class="im-prose">
-		<h2>The middle heading is the honest one</h2>
-		<p><strong>What it does badly.</strong> Every prompt has a shape of input it ruins, and a collection that never says so is a collection of claims. Writing that section is also the fastest way to find out whether a prompt is worth publishing at all — two of mine did not survive it.</p>
-		<p>Then <strong>two changes worth making</strong>, which turns a thing to paste into a thing to understand. A reader who has adapted a prompt once will adapt the next one themselves, which is the whole point of a collection like this.</p>
-		<ul>
-			<li><strong>The prompt is above the prose</strong>, not under it. Most visitors came to copy and leave, and making them scroll past an essay first is a tax on the majority.</li>
-			<li><strong>One big Copy button</strong>, primary, right under the text.</li>
-			<li><strong>Count the words.</strong> It is the one number that predicts whether a prompt will behave, and it is free to show.</li>
-		</ul>
+		<h2>A prompt printed as a paragraph is not a prompt</h2>
+		<p>It is prose <em>about</em> a prompt, and a reader has to work out where it starts and stops. Printed as the turn it is — in a window, with a reply under it — three things are obvious without reading a word: which part gets pasted, how long it is, and what it produced.</p>
+		<div class="im-table-scroll">
+		<table>
+			<thead><tr><th>Class</th><th></th></tr></thead>
+			<tbody>
+				<tr><td><code>im-chat</code></td><td>The window. Ordinary surfaces, radii and type from this system — no brand name, no logo, no borrowed colour. Nobody owns the idea of a message in a box.</td></tr>
+				<tr><td><code>im-chat-turn[data-from]</code></td><td><code>you</code> or <code>model</code>. The prompt is the one bubble with a border, because it is the one a reader is looking for.</td></tr>
+				<tr><td><code>data-trail</code></td><td>On a reply in a <em>card</em>: it fades rather than being cut, so nobody reads to the end expecting an answer.</td></tr>
+				<tr><td><code>im-chat-model</code></td><td>Which model, at the top. A prompt tuned on one is not the same prompt on another, and pretending otherwise is how a prompt collection stops being useful.</td></tr>
+				<tr><td><code>im-chat-typing</code></td><td>Three dots. Stops under <code>prefers-reduced-motion</code>.</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<h2>The composer is a picture, not a form</h2>
+		<p>A text field nobody can submit is worse than no text field. The bottom row says "this is where the text goes" and nothing else — it has no <code>&lt;input&gt;</code>, takes no focus and is out of the tab order. A page that really chats puts a real form there.</p>
+
+		<h2>The explanation is the page</h2>
+		<p>The prompt is four lines and takes ten seconds to read. <strong>Which line does the work</strong>, <strong>where it fails</strong> and <strong>what changed and when</strong> are the parts nobody else can write, and they are the reason this is a collection rather than a text file.</p>
 	</div>
 </section>

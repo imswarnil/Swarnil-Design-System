@@ -228,15 +228,7 @@ export const navigation = [
 					{ label: 'Product page', url: '/collections/uses/page/' },
 				],
 			},
-			{
-				label: 'Journal',
-				icon: 'pencil',
-				children: [
-					{ label: 'Journal collection', url: '/collections/journal/' },
-					{ label: 'Entry card', url: '/collections/journal/card/' },
-					{ label: 'Entry page', url: '/collections/journal/page/' },
-				],
-			},
+			{ label: 'Timeline', url: '/collections/timeline/', icon: 'git-commit-vertical' },
 			{
 				label: 'Snippet',
 				icon: 'code',

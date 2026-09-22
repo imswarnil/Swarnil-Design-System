@@ -150,6 +150,11 @@
 		const source = code.textContent.replace(/\n$/, '');
 		code.innerHTML = (LANGS[lang] || generic)(source);
 
+		// Something that already IS a window — the snippet editor — gets the
+		// colours and nothing else. Wrapping it would give it a second title
+		// bar and a copy button it deliberately does not have.
+		if (pre.closest('.im-editor') || pre.hasAttribute('data-im-bare')) return;
+
 		const figure = document.createElement('figure');
 		figure.className = pre.classList.contains('im-code-light') ? 'im-code im-code-light' : 'im-code';
 		pre.classList.remove('im-code-light');

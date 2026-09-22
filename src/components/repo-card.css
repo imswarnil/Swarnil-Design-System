@@ -111,11 +111,23 @@
 	color: var(--im-warning);
 }
 
+/* Clamped, not truncated with a character count: a count guesses at a width
+   it cannot know, and the line-clamp measures the box it is actually in.
+   `--im-repo-lines: none` on a single card that wants the whole paragraph. */
 .im-repo-text {
 	min-width: 0;
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: var(--im-repo-lines, 2);
 	color: var(--im-body);
 	line-height: 1.6;
 	text-wrap: pretty;
+}
+
+.im-repo-lg .im-repo-text,
+.im-repo-bare .im-repo-text {
+	--im-repo-lines: 3;
 }
 
 /* ---- topics ---- */
@@ -258,12 +270,22 @@
 	object-fit: cover;
 }
 
-/* ---- a grid of them ---- */
+/* ---- a grid of them ----
+   `align-items: stretch` (the default, restated because it is a decision):
+   every card in a row is as tall as the tallest, so the row of buttons at the
+   bottom of each one lands on the same line. A grid of cards that end where
+   their text happens to end reads as a mistake, and the fix is not to write
+   descriptions of equal length — it is to clamp the text. */
 .im-repos {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-repos-min, 19rem), 100%), 1fr));
 	gap: 1rem;
-	align-items: start;
+	align-items: stretch;
+}
+
+/* The buttons go to the floor, whatever is above them. */
+.im-repos > .im-repo > .im-repo-actions {
+	margin-top: auto;
 }
 
 .im-repos-list {
@@ -499,4 +521,129 @@
 	gap: 0.625rem;
 	color: var(--im-muted);
 	font-size: var(--im-text-sm);
+}
+
+/* ---- what makes it a PROJECT rather than a post ------------------------
+   A post card carries a picture, a title and a date. A project has to answer
+   three other questions before anybody clicks it: is it alive, what is it
+   built with, and how long did it take. Those three lines are the whole
+   difference, and they are why this card is not the post card with a folder
+   icon on it. */
+
+/* Alive, being built, finished, put down. A dot and a word — the dot is
+   coloured because a status is the one place a colour carries meaning, and
+   the word is there because a colour on its own is not a label. */
+.im-repo-status {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
+	padding: 0.0625rem 0.5rem 0.0625rem 0.375rem;
+	border-radius: var(--im-radius-full);
+	background-color: var(--im-status-tint, var(--im-surface-2));
+	color: var(--im-status-ink, var(--im-muted));
+	font-size: var(--im-text-xs);
+	font-weight: 500;
+	white-space: nowrap;
+}
+
+.im-repo-status::before {
+	content: "";
+	width: 0.4375rem;
+	height: 0.4375rem;
+	border-radius: var(--im-radius-full);
+	background-color: currentColor;
+}
+
+.im-repo-status[data-state="live"] {
+	--im-status-tint: var(--im-success-tint);
+	--im-status-ink: var(--im-success);
+}
+
+.im-repo-status[data-state="building"] {
+	--im-status-tint: var(--im-warning-tint);
+	--im-status-ink: var(--im-warning);
+}
+
+.im-repo-status[data-state="archived"] {
+	--im-status-tint: var(--im-surface-2);
+	--im-status-ink: var(--im-faint);
+}
+
+/* A live thing should look live. The pulse is one ring, it runs only where
+   motion is welcome, and it is on the DOT — never on the card. */
+@media (prefers-reduced-motion: no-preference) {
+	.im-repo-status[data-state="live"]::before {
+		animation: im-repo-pulse 2.4s var(--im-ease-out) infinite;
+	}
+}
+
+@keyframes im-repo-pulse {
+	0%, 70%, 100% { box-shadow: 0 0 0 0 transparent; }
+	35% { box-shadow: 0 0 0 0.25rem color-mix(in oklab, var(--im-success) 22%, transparent); }
+}
+
+/* What it is built with, as marks rather than as a sentence. Six glyphs are
+   read in the time one line of prose takes to start. */
+.im-repo-stack {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.375rem;
+}
+
+.im-repo-stack > li {
+	display: grid;
+	place-items: center;
+	width: 1.75rem;
+	height: 1.75rem;
+	border-radius: var(--im-radius-sm);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	background-color: var(--im-surface);
+	color: var(--im-muted);
+}
+
+.im-repo-stack > li > .im-icon {
+	font-size: 0.9375rem;
+}
+
+/* The overflow count, when there are more than the card can show. */
+.im-repo-stack > li.im-repo-stack-more {
+	box-shadow: none;
+	background-color: transparent;
+	color: var(--im-faint);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+}
+
+/* How long it took, and when. Mono, because they are quantities. */
+.im-repo-facts {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.25rem 0.875rem;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+}
+
+.im-repo-facts > span {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.3125rem;
+}
+
+.im-repo-facts .im-icon {
+	color: var(--im-faint);
+	font-size: 0.875rem;
+}
+
+/* A thin rule above the numbers, so the card reads as two halves — what it is
+   on top, how it is doing underneath. */
+.im-repo-meta {
+	margin-top: auto;
+	padding-top: 0.75rem;
+	border-top: 1px solid var(--im-line);
+}
+
+.im-repos > .im-repo > .im-repo-actions {
+	margin-top: 0;
 }

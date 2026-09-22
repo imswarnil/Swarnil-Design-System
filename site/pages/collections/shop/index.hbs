@@ -44,7 +44,7 @@ source: src/components/commerce.css
 				<h3><a class="im-product-name" href="/collections/shop/product/">{{name}}</a></h3>
 				<p class="im-product-text">{{text}}</p>
 				<p class="im-product-foot">
-					<span class="im-price{{#if free}} im-price-free{{/if}}">{{price}}{{#if was}}<span class="im-price-was">{{was}}</span>{{/if}}</span>
+					<span class="im-price{{#if free}} im-price-free{{/if}}">{{cost}}{{#if was}}<span class="im-price-was">{{was}}</span>{{/if}}</span>
 					<a class="im-btn im-btn-sm im-btn-primary" href="/collections/shop/product/">{{#if free}}Download{{else}}Buy{{/if}} {{icon "arrow-right"}}</a>
 				</p>
 			</article>
@@ -84,7 +84,7 @@ source: src/components/commerce.css
 			<section class="im-widget" aria-labelledby="sw-best">
 				<h2 class="im-widget-title" id="sw-best">Best selling</h2>
 				<div class="im-widget-products">
-					{{#foreach demo.shop}}{{#match @number "<" 4}}<a class="im-widget-product" href="/collections/shop/product/"><span class="im-widget-product-mark">{{@number}}</span><span class="im-widget-product-name">{{title}}</span><span class="im-widget-product-note">{{price}}</span>{{icon "arrow-right"}}</a>{{/match}}{{/foreach}}
+					{{#foreach demo.shop}}{{#match @number "<" 4}}<a class="im-widget-product" href="/collections/shop/product/"><span class="im-widget-product-mark">{{@number}}</span><span class="im-widget-product-name">{{name}}</span><span class="im-widget-product-note">{{cost}}</span>{{icon "arrow-right"}}</a>{{/match}}{{/foreach}}
 				</div>
 			</section>
 

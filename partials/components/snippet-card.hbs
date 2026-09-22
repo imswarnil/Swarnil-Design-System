@@ -1,0 +1,39 @@
+{{!-- Snippet card — a file, in the editor it was written in.
+
+	Context   name · file · lang · lang_class · langColor · text · snippet ·
+	          lines (a string of line numbers) · url
+	Params
+	  open    true — no tab bar; the window is only this one file
+	  class   anything else
+
+	No copy button, on purpose: a snippet page is a place to read WHY the four
+	lines are those four lines, and a copy button invites skipping it. The
+	code is selectable, which is enough. --}}
+<article class="im-snipcard{{#if class}} {{class}}{{/if}}"{{#if langColor}} style="--im-repo-lang: {{langColor}}"{{/if}}>
+	<h2 class="im-snipcard-title"><a href="{{#if url}}{{url}}{{else}}/collections/snippets/page/{{/if}}">{{name}}</a></h2>
+	<p class="im-snipcard-text">{{text}}</p>
+
+	<figure class="im-editor im-mock im-mock-mac im-mock-lights">
+		<div class="im-mock-bar">
+			<span class="im-mock-dots" aria-hidden="true"><i></i></span>
+			<div class="im-mock-tabs">
+				<button class="im-mock-tab" type="button" aria-current="page">{{file}}</button>
+			</div>
+		</div>
+		<div class="im-editor-body">
+			<pre class="im-editor-lines" aria-hidden="true">{{lines}}</pre>
+			<pre><code class="language-{{lang_class}}">{{snippet}}</code></pre>
+		</div>
+		<p class="im-editor-status">
+			<span class="im-editor-lang">{{lang}}</span>
+			<span>UTF-8</span>
+			<span>LF</span>
+			<span class="im-editor-push">Tab size: 1</span>
+		</p>
+	</figure>
+
+	<p class="im-snipcard-meta">
+		<span class="im-kind" data-kind="post">{{> "icons/code"}}Snippet</span>
+		<span>{{file}}</span>
+	</p>
+</article>

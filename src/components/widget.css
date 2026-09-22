@@ -128,9 +128,13 @@
 	border-top: 1px solid var(--im-line);
 }
 
+/* One column by default. The ranked variant adds the numeral's column — a
+   two-column template with nothing in the first column squeezes the title
+   into `auto` and hands the whole 1fr to the `<small>`, which is how a list
+   of post titles ends up printing one letter per line. */
 .im-widget-list a {
 	display: grid;
-	grid-template-columns: auto minmax(0, 1fr);
+	grid-template-columns: minmax(0, 1fr);
 	gap: 0.125rem 0.75rem;
 	padding: 0.625rem 0;
 	color: var(--im-ink);
@@ -145,13 +149,17 @@
 }
 
 .im-widget-list a > small {
-	grid-column: 2;
+	grid-column: -2;
 	color: var(--im-muted);
 	font-size: var(--im-text-xs);
 	font-weight: 400;
 }
 
 /* Ranked: a mono numeral leads each row. */
+.im-widget-list-ranked a {
+	grid-template-columns: auto minmax(0, 1fr);
+}
+
 .im-widget-list-ranked a::before {
 	content: counter(im-widget, decimal-leading-zero);
 	grid-row: span 2;
@@ -505,4 +513,100 @@
 	align-items: center;
 	gap: 0.375rem;
 	margin-left: auto;
+}
+
+/* ---- hire me ------------------------------------------------------------
+   The one widget on a project page that is asking for something. It is
+   allowed to be the loudest thing in the rail — and it is the ONLY thing in
+   the rail allowed to be, which is why it inverts rather than merely tinting.
+
+     <section class="im-widget im-widget-hire"> … </section>
+
+   It restates the SEMANTIC tokens rather than setting colours, so the button,
+   the rule and the availability dot inside it all follow without knowing
+   anything about being on a dark ground. Two literal blocks, one per theme:
+   `--a: var(--b); --b: var(--a)` is a reference cycle and CSS throws both
+   away. */
+.im-widget-hire {
+	color-scheme: dark;
+
+	--im-canvas: var(--im-gray-950);
+	--im-surface: var(--im-gray-900);
+	--im-surface-2: var(--im-gray-800);
+	--im-surface-3: var(--im-gray-700);
+	--im-line: color-mix(in oklab, var(--im-gray-400) 26%, transparent);
+	--im-ink: var(--im-white);
+	--im-body: var(--im-gray-400);
+	--im-muted: var(--im-gray-500);
+	--im-faint: var(--im-gray-600);
+
+	background-color: var(--im-canvas);
+	box-shadow: none;
+	color: var(--im-body);
+}
+
+:root[data-theme="dark"] .im-widget-hire {
+	color-scheme: light;
+
+	--im-canvas: var(--im-white);
+	--im-surface: var(--im-gray-100);
+	--im-surface-2: var(--im-gray-200);
+	--im-surface-3: var(--im-gray-300);
+	--im-line: color-mix(in oklab, var(--im-gray-500) 24%, transparent);
+	--im-ink: var(--im-gray-950);
+	--im-body: var(--im-gray-600);
+	--im-muted: var(--im-gray-500);
+	--im-faint: var(--im-gray-400);
+}
+
+.im-widget-hire .im-widget-title {
+	color: var(--im-ink);
+}
+
+/* Available / booked / closed — the fact a reader wants before the button. */
+.im-widget-hire-state {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4375rem;
+	color: var(--im-ink);
+	font-size: var(--im-text-sm);
+	font-weight: 500;
+}
+
+.im-widget-hire-state::before {
+	content: "";
+	width: 0.5rem;
+	height: 0.5rem;
+	border-radius: var(--im-radius-full);
+	background-color: var(--im-success);
+}
+
+.im-widget-hire-state[data-state="booked"]::before {
+	background-color: var(--im-warning);
+}
+
+.im-widget-hire-state[data-state="closed"]::before {
+	background-color: var(--im-faint);
+}
+
+.im-widget-hire-list {
+	display: grid;
+	gap: 0.4375rem;
+	font-size: var(--im-text-sm);
+}
+
+.im-widget-hire-list > li {
+	display: grid;
+	grid-template-columns: 1rem minmax(0, 1fr);
+	gap: 0.5rem;
+	align-items: start;
+}
+
+.im-widget-hire-list .im-icon {
+	margin-top: 0.1875rem;
+	color: var(--im-muted);
+}
+
+.im-widget-hire .im-btn {
+	width: 100%;
 }

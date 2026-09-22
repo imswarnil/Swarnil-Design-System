@@ -71,9 +71,9 @@ source: src/components/repo-card.css · timeline.css
 				</section>
 
 				<section class="im-widget" aria-labelledby="l-notes">
-					<h2 class="im-widget-title" id="l-notes">Working notes <a href="/collections/journal/">All</a></h2>
+					<h2 class="im-widget-title" id="l-notes">Working notes <a href="/collections/timeline/">All</a></h2>
 					<ul class="im-widget-list">
-						{{#each demo.journal}}{{#match @index "<" 3}}<li><a href="/collections/journal/page/">{{title}}<small>{{when}}</small></a></li>{{/match}}{{/each}}
+						{{#each demo.stream.[0].items}}{{#match @index "<" 3}}<li><a href="/collections/timeline/">{{title}}<small>{{when}}</small></a></li>{{/match}}{{/each}}
 					</ul>
 				</section>
 
@@ -98,7 +98,7 @@ source: src/components/repo-card.css · timeline.css
 			<tbody>
 				<tr><td><a href="/collections/project/page/">Project</a></td><td>Deciding whether to use it</td><td>The case study, and the last four entries</td></tr>
 				<tr><td><a href="/collections/project/log/">Log</a></td><td>Already using it</td><td>Every version, in order, with what changed</td></tr>
-				<tr><td><a href="/collections/journal/">Journal</a></td><td>Neither — it is the working notes</td><td>What you <em>thought</em>, including what did not ship</td></tr>
+				<tr><td><a href="/collections/timeline/">Timeline</a></td><td>Neither — it is the working notes</td><td>What you <em>thought</em>, including what did not ship</td></tr>
 			</tbody>
 		</table>
 		</div>

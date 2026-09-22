@@ -29,47 +29,44 @@ source: src/components/commerce.css
 			</div>
 		</div>
 
-		<div class="im-snippets" id="prompts" style="--im-snippets-min: 23rem">
-			{{#each demo.prompts}}
-			<article class="im-snippet">
-				<p class="im-snippet-head">
-					<a class="im-snippet-name" href="#prompts">{{name}}</a>
-					<span class="im-snippet-lang" style="--im-repo-lang: var(--im-accent)">{{model}}</span>
-				</p>
-				<p>{{text}}</p>
-				<div class="im-snippet-body im-snippet-prompt">{{body}}</div>
-				<p class="im-snippet-foot">
-					<span class="im-kind" data-kind="tag">{{icon "sparkles"}}Prompt</span>
-					<button class="im-btn im-btn-sm" type="button" data-im-copy="{{body}}" data-im-copied-label="Copied">{{icon "copy"}}<span data-im-copy-label>Copy</span></button>
-				</p>
-			</article>
-			{{/each}}
+		<div class="im-promptcards" id="prompts">
+			{{#each demo.prompts}}{{> "components/prompt-card"}}{{/each}}
 		</div>
 	</article>
 
 	<aside>
 		<div class="im-sticky-rail">
 		<div class="im-widgets">
+			<section class="im-widget" aria-labelledby="qw-tools">
+				<h2 class="im-widget-title" id="qw-tools">Tools I actually pay for</h2>
+				<div class="im-widget-products">
+					<a class="im-widget-product" href="#prompts"><span class="im-widget-product-mark">01</span><span class="im-widget-product-name">A reasoning model</span><span class="im-widget-product-note">Daily</span>{{icon "arrow-right"}}</a>
+					<a class="im-widget-product" href="#prompts"><span class="im-widget-product-mark">02</span><span class="im-widget-product-name">An editor with a model in it</span><span class="im-widget-product-note">Daily</span>{{icon "arrow-right"}}</a>
+					<a class="im-widget-product" href="#prompts"><span class="im-widget-product-mark">03</span><span class="im-widget-product-name">A local model, for the offline days</span><span class="im-widget-product-note">Weekly</span>{{icon "arrow-right"}}</a>
+				</div>
+			</section>
+
 			<section class="im-widget" aria-labelledby="qw-use">
 				<h2 class="im-widget-title" id="qw-use">How to use these</h2>
 				<ul class="im-widget-now">
-					<li>{{icon "copy"}}<span><b>Copy the whole thing.</b> The boring lines are the ones doing the work.</span></li>
+					<li>{{icon "copy"}}<span><b>Paste the whole thing.</b> The boring lines are the ones doing the work.</span></li>
 					<li>{{icon "pencil"}}<span><b>Change the brackets only.</b> Everything else was tuned by being wrong first.</span></li>
 					<li>{{icon "triangle-alert"}}<span><b>Read the output.</b> A prompt is not a guarantee.</span></li>
 				</ul>
 			</section>
 
 			<section class="im-widget" aria-labelledby="qw-model">
-				<h2 class="im-widget-title" id="qw-model">Tested on</h2>
+				<h2 class="im-widget-title" id="qw-model">What I check them on</h2>
 				<dl class="im-widget-facts">
 					<dt>Written for</dt><dd>Any model</dd>
 					<dt>Checked on</dt><dd>Three</dd>
+					<dt>Re-checked</dt><dd>Every release</dd>
 					<dt>Last revised</dt><dd>September 2026</dd>
 				</dl>
 			</section>
 
 			<section class="im-widget" aria-labelledby="qw-art">
-				<h2 class="im-widget-title" id="qw-art">For images <a href="/collections/uses/">Uses</a></h2>
+				<h2 class="im-widget-title" id="qw-art">For images</h2>
 				<p class="im-widget-sponsor">Thumbnails and covers have their own prompts, and a context block that has to go first. It lives in <code>PROMPT.md</code> at the root of the design system.</p>
 			</section>
 
@@ -78,7 +75,6 @@ source: src/components/commerce.css
 				<p class="im-widget-heading">Rarely. That is the point.</p>
 				{{> "components/subscribe" id="prompts-email" button="Tell me"}}
 			</section>
-		</div>
 		</div>
 	</aside>
 </div>

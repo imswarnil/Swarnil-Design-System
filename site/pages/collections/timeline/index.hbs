@@ -1,0 +1,133 @@
+---
+title: Timeline
+layout: home
+description: One column, everything in it — a post, a release, a video, an issue, a trip, a thing bought. The kind is carried by the mark, so the column can be read without being read.
+eyebrow: Collections
+source: src/components/stream.css
+---
+<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+	<p class="im-eyebrow">Collections · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+</section>
+
+<div class="im-single im-wrap-wide" data-sidebar="on">
+	<article class="im-stack" style="--im-stack-gap: 1.75rem">
+		<header class="im-collhead">
+			<p class="im-eyebrow">Timeline</p>
+			<h1 class="im-collhead-title">Everything, in order</h1>
+			<p class="im-collhead-text">What actually happened, whichever collection it belongs to. This replaced a journal — a journal is a second blog with a lower bar, and the honest version of "here is what I have been doing" is every collection on one line.</p>
+			<p class="im-collhead-meta"><span>2026</span><span>8 entries</span><a href="#stream">RSS</a></p>
+		</header>
+
+		<div class="im-stream-filters" role="group" aria-label="Filter the column">
+			<a class="im-tag" href="#stream" aria-current="page">Everything</a>
+			<a class="im-tag" href="#stream">{{icon "pencil"}}Writing</a>
+			<a class="im-tag" href="#stream">{{icon "video"}}Video</a>
+			<a class="im-tag" href="#stream">{{icon "folder"}}Projects</a>
+			<a class="im-tag" href="#stream">{{icon "map-pin"}}Travel</a>
+			<a class="im-tag" href="#stream">{{icon "package"}}Bought</a>
+		</div>
+
+		<div id="stream">
+			{{#each demo.stream}}
+			<p class="im-stream-month">{{month}}</p>
+			<ol class="im-stream">
+				{{#each items}}
+				<li class="im-stream-item" data-kind="{{kind}}">
+					<span class="im-stream-mark">{{icon mark}}</span>
+					<div class="im-stream-body">
+						<p class="im-stream-meta"><span class="im-stream-kind">{{label}}</span><time>{{when}}</time></p>
+						<h2 class="im-stream-title">{{#if url}}<a href="{{url}}">{{title}}</a>{{else}}{{title}}{{/if}}</h2>
+						<p class="im-stream-text">{{text}}</p>
+						{{#if image}}<span class="im-stream-media im-thumb{{#match kind "=" "video"}} im-thumb-play{{/match}}"><img src="{{lookup ../../demo.shots image}}" alt="" loading="lazy"></span>{{/if}}
+						{{#if links}}<p class="im-stream-links">{{#each links}}<a class="im-topic" href="#stream">{{this}}</a>{{/each}}</p>{{/if}}
+					</div>
+				</li>
+				{{/each}}
+			</ol>
+			{{/each}}
+		</div>
+	</article>
+
+	<aside>
+		<div class="im-sticky-rail">
+			<div class="im-widgets">
+				<section class="im-widget" aria-labelledby="sw-year">
+					<h2 class="im-widget-title" id="sw-year">This year</h2>
+					<div class="im-widget-stats">
+						<div><strong>34</strong><span>Posts</span></div>
+						<div><strong>12</strong><span>Videos</span></div>
+						<div><strong>6</strong><span>Trips</span></div>
+					</div>
+				</section>
+
+				<section class="im-widget" aria-labelledby="sw-now">
+					<h2 class="im-widget-title" id="sw-now">Right now</h2>
+					<ul class="im-widget-now">
+						<li>{{icon "component"}}<span>Building <b>Im Design System v0.7</b> — collections and the theme on top of them.</span></li>
+						<li>{{icon "book-open"}}<span>Reading <b>The Timeless Way of Building</b>, slowly.</span></li>
+						<li>{{icon "map-pin"}}<span>In <b>Amsterdam</b> until February.</span></li>
+					</ul>
+				</section>
+
+				<section class="im-widget" aria-labelledby="sw-arch">
+					<h2 class="im-widget-title" id="sw-arch">By year</h2>
+					<nav class="im-widget-archive">
+						{{#each demo.archive}}<a href="#stream">{{year}}<small>{{count}}</small></a>{{/each}}
+					</nav>
+				</section>
+
+				<section class="im-widget im-widget-fill" aria-labelledby="sw-sub">
+					<h2 class="im-widget-title" id="sw-sub">The letter</h2>
+					<p class="im-widget-heading">This column, once a fortnight, written out properly.</p>
+					{{> "components/subscribe" id="stream-email" button="Join"}}
+				</section>
+			</div>
+		</div>
+	</aside>
+</div>
+
+<section class="im-section im-wrap">
+	<div class="im-prose">
+		<h2>Why this replaced a journal</h2>
+		<p>A journal collection is a second blog with a lower bar. It gets three entries, then a gap, then an apology — and meanwhile the things it was <em>for</em> ("I shipped a release", "I bought a camera", "I went to the coast") are each sitting in their own collection where nobody reads them together.</p>
+		<p>So there is no journal. There is one column that every collection writes into, and the kind is carried by the <strong>mark</strong> rather than by a word, so the eye can filter it without reading it.</p>
+		<div class="im-table-scroll">
+		<table>
+			<thead><tr><th>Class</th><th></th></tr></thead>
+			<tbody>
+				<tr><td><code>im-stream</code></td><td>The column. One list, one rule down the marker column.</td></tr>
+				<tr><td><code>im-stream-item[data-kind]</code></td><td>post · article · video · short · project · release · issue · product · trip · note. The kind colours the mark and the label, and the colours match the <a href="/collections/post/card/">identifier chip</a> exactly.</td></tr>
+				<tr><td><code>im-stream-month</code></td><td>A sticky month rule inside the column.</td></tr>
+				<tr><td><code>im-stream-media</code></td><td>Optional, and small on purpose: this is a record of what happened, not a second feed. Add <code>im-thumb im-thumb-play</code> for a clip.</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<h2>The rule is drawn by the item above</h2>
+		<p>Each entry draws the line from its own mark down to the next one, so the last row has no tail hanging off the bottom of the column. A single line behind the whole list would need to know where to stop, and it never does.</p>
+
+		<h2>Not an alternating timeline</h2>
+		<p>A centred timeline with entries left and right is a diagram, not a feed: it reads slowest at exactly the width most people are on, it needs two columns of markup, and it collapses to a left rule on a phone anyway. So it is a left rule everywhere, and the markup is one column.</p>
+
+		<h2>In a theme</h2>
+		{{{{code "hbs"}}}}
+{{!-- Ghost has one content type, so the kind is a tag. --}}
+{{#get "posts" limit="all" include="tags" as |entries|}}
+<ol class="im-stream">
+	{{#foreach entries}}
+	<li class="im-stream-item" data-kind="{{primary_tag.slug}}">
+		<span class="im-stream-mark">{{> "icons/pencil"}}</span>
+		<div class="im-stream-body">
+			<p class="im-stream-meta"><span class="im-stream-kind">{{primary_tag.name}}</span><time>{{date published_at format="D MMM"}}</time></p>
+			<h2 class="im-stream-title"><a href="{{url}}">{{title}}</a></h2>
+			<p class="im-stream-text">{{excerpt characters="140"}}</p>
+		</div>
+	</li>
+	{{/foreach}}
+</ol>
+{{/get}}
+		{{{{/code}}}}
+	</div>
+</section>
