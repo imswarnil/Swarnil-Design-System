@@ -47,7 +47,7 @@ source: src/components/commerce.css · video-card.css
 			<div class="im-episode" data-state="{{state}}" data-facet="{{season}}">
 				<span class="im-epnum">{{n}}</span>
 				<article class="im-vidcard im-vidcard-row im-vidcard-reveal">
-					<a class="im-vidcard-thumb" href="/collections/series/episode/" tabindex="-1" aria-hidden="true">
+					<a class="im-vidcard-thumb im-thumb im-thumb-play" href="/collections/series/episode/" tabindex="-1" aria-hidden="true">
 						<img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy">
 						<span class="im-vidcard-time">{{time}}</span>
 						{{#match state "=" "done"}}<span class="im-vidcard-progress"><span style="width: 100%"></span></span>{{/match}}
