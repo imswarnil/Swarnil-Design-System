@@ -12,7 +12,7 @@ source: src/components/life.css · timeline.css
 </section>
 
 <div class="im-single im-wrap-wide" data-sidebar="on">
-	<article class="im-stack" style="--im-stack-gap: 1.75rem">
+	<article class="im-stack" id="trip-body" style="--im-stack-gap: 1.75rem">
 		{{#with demo.trips.[0]}}
 		<nav aria-label="Breadcrumb">
 			<ol class="im-breadcrumb im-breadcrumb-chevron">
@@ -30,12 +30,12 @@ source: src/components/life.css · timeline.css
 
 		<p class="im-trip-route" style="font-size: var(--im-text-sm)">{{#each route}}<span>{{this}}</span>{{/each}}</p>
 
-		<div class="im-expstats">
-			<span><strong>{{days}}</strong>Days</span>
-			<span><strong>{{km}} km</strong>Travelled</span>
-			<span><strong>€479</strong>Total</span>
-			<span><strong>€80</strong>A day</span>
-			<span><strong>5</strong>Stops</span>
+		<div class="im-tripstats">
+			<span class="im-tripstat">{{icon "calendar"}}<strong>{{days}}</strong><span>Days</span></span>
+			<span class="im-tripstat">{{icon "route"}}<strong>{{km}} km</strong><span>Travelled</span></span>
+			<span class="im-tripstat">{{icon "wallet"}}<strong>€479</strong><span>Total</span></span>
+			<span class="im-tripstat">{{icon "clock"}}<strong>€80</strong><span>A day</span></span>
+			<span class="im-tripstat">{{icon "map-pin"}}<strong>5</strong><span>Stops</span></span>
 		</div>
 		{{/with}}
 
@@ -101,19 +101,15 @@ source: src/components/life.css · timeline.css
 					</nav>
 				</section>
 
-				<section class="im-widget" aria-labelledby="tr-cost">
-					<h2 class="im-widget-title" id="tr-cost">What it cost</h2>
-					<dl class="im-widget-facts">
-						<dt>Beds</dt><dd>€286</dd>
-						<dt>Transport</dt><dd>€94</dd>
-						<dt>Everything else</dt><dd>€99</dd>
-						<dt>Total</dt><dd>€479</dd>
-					</dl>
-					<span class="im-langbar">
-						<span style="--im-repo-lang: var(--im-accent); width: 60%"></span>
-						<span style="--im-repo-lang: var(--im-info); width: 20%"></span>
-						<span style="--im-repo-lang: var(--im-faint); width: 20%"></span>
-					</span>
+				<section class="im-widget" aria-labelledby="tr-toc">
+					<h2 class="im-widget-title" id="tr-toc">On this page</h2>
+					<div class="im-toc" data-toc="#trip-body"></div>
+				</section>
+				<section class="im-widget" aria-labelledby="tr-gear">
+					<h2 class="im-widget-title" id="tr-gear">Packed for this <a href="/collections/uses/">Uses</a></h2>
+					<div class="im-widget-products">
+						{{#each demo.uses}}{{#match group "=" "Camera"}}<a class="im-widget-product" href="/collections/uses/page/"><img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy"><span class="im-widget-product-name">{{name}}</span><span class="im-widget-product-note">{{cost}}</span>{{icon "arrow-right"}}</a>{{/match}}{{/each}}
+					</div>
 				</section>
 
 				<section class="im-widget" aria-labelledby="tr-exp">

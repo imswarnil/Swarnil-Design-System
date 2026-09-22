@@ -264,15 +264,7 @@ export const navigation = [
 					{ label: 'Experience collection', url: '/collections/experience/' },
 					{ label: 'Experience card', url: '/collections/experience/card/' },
 					{ label: 'Experience page', url: '/collections/experience/page/' },
-				],
-			},
-			{
-				label: 'Bucket list',
-				icon: 'square-check',
-				children: [
-					{ label: 'Bucket collection', url: '/collections/wishlist/' },
-					{ label: 'Bucket card', url: '/collections/wishlist/card/' },
-					{ label: 'Bucket page', url: '/collections/wishlist/page/' },
+					{ label: 'Still to do', url: '/collections/experience/#todo' },
 				],
 			},
 			{

@@ -252,6 +252,22 @@ export async function build({ quiet = false } = {}) {
 			{ title: 'The High Tatras, on foot', country: 'Slovakia', when: 'September 2023', days: '4', km: '62', route: ['Poprad', 'Štrbské Pleso', 'Gerlach', 'Tatranská Lomnica'], text: 'Four days, one night above the cloud layer, and more weather than the forecast promised.', state: 'done' },
 			{ title: 'Tromsø, for the lights', country: 'Norway', when: 'February 2027', days: '5', km: '—', route: ['Oslo', 'Tromsø', 'Sommarøy'], text: 'Booked. Three nights of standing in a field being cold and hopeful.', state: 'upcoming' },
 		],
+		regions: [
+			{ name: 'Europe', trips: '4', countries: '4', shot: 1, mark: 'globe' },
+			{ name: 'Asia', trips: '0', countries: '0', shot: 2, mark: 'compass', state: 'next' },
+			{ name: 'Africa', trips: '1', countries: '1', shot: 3, mark: 'sun' },
+			{ name: 'Americas', trips: '0', countries: '0', shot: 4, mark: 'route', state: 'next' },
+		],
+		countries: [
+			{ name: 'Italy', region: 'Europe', trips: '1', days: '6', state: 'done' },
+			{ name: 'Croatia', region: 'Europe', trips: '1', days: '6', state: 'done' },
+			{ name: 'Slovakia', region: 'Europe', trips: '1', days: '4', state: 'done' },
+			{ name: 'Egypt', region: 'Africa', trips: '1', days: '5', state: 'done' },
+			{ name: 'Norway', region: 'Europe', trips: '0', days: '5', state: 'booked' },
+			{ name: 'Japan', region: 'Asia', trips: '0', days: '\u2014', state: 'next' },
+			{ name: 'Portugal', region: 'Europe', trips: '0', days: '\u2014', state: 'next' },
+			{ name: 'Peru', region: 'Americas', trips: '0', days: '\u2014', state: 'next' },
+		],
 		itinerary: [
 			{ day: '1', kind: 'start', kindlabel: 'Start', shot: 1, legs: ['Naples', 'Sorrento'], title: 'Getting out of Naples', text: 'The Circumvesuviana takes an hour and is the single least pleasant part of the whole trip. Do it early and get it over with.', sleep: 'Sorrento', cost: '\u20ac64', km: '52', hours: '2h 10' },
 			{ day: '2', shot: 2, kind: 'stay', kindlabel: 'Stay', legs: ['Sorrento'], title: 'Doing nothing, on purpose', text: 'A day of walking the cliff path and eating too much. The town is the least interesting thing on this coast and the best place to be based on it.', sleep: 'Sorrento', cost: '\u20ac41', km: '9', hours: '0h 40' },

@@ -27,6 +27,48 @@ source: src/components/life.css
 		</div>
 	</header>
 
+	<section class="im-section" style="--im-section-gap: 1rem">
+		<div class="home-head"><p class="im-caption" data-index="latest">Most recent</p></div>
+		{{#with demo.trips.[0]}}
+		<article class="im-tripfeature">
+			<div class="im-tripfeature-pic">
+				<img src="{{../demo.shots.[0]}}" alt="" loading="eager">
+				<span class="im-kind im-kind-over" data-kind="trip">{{icon "map-pin"}}{{country}}</span>
+				<span class="im-post-card-featured" aria-label="Featured"><span aria-hidden="true">Featured</span></span>
+			</div>
+			<div class="im-tripfeature-body">
+				<p class="im-tripcard-meta" style="color: var(--im-muted)"><span>{{when}}</span><span>{{days}} days</span><span>{{km}} km</span></p>
+				<h2 class="im-tripfeature-title"><a href="/collections/travel/trip/" style="color: inherit; text-decoration: none">{{title}}</a></h2>
+				<p class="im-exp-text">{{text}}</p>
+				<div class="im-tripfeature-days">
+					{{#each ../demo.itinerary}}<p class="im-tripfeature-day">{{#match kind "=" "start"}}{{icon "rocket"}}{{/match}}{{#match kind "=" "stay"}}{{icon "bookmark"}}{{/match}}{{#match kind "=" "road"}}{{icon "route"}}{{/match}}{{#match kind "=" "beach"}}{{icon "sun"}}{{/match}}{{#match kind "=" "climb"}}{{icon "trending-up"}}{{/match}}{{#match kind "=" "end"}}{{icon "house"}}{{/match}}<b>Day {{day}}</b><span>{{title}}</span><small>{{cost}}</small></p>{{/each}}
+				</div>
+			</div>
+			<div class="im-tripfeature-foot">
+				<p class="im-trip-route">{{#each route}}<span>{{this}}</span>{{/each}}</p>
+				<a class="im-btn im-btn-primary im-btn-sm" href="/collections/travel/trip/">{{icon "route"}}The itinerary</a>
+				<a class="im-btn im-btn-sm" href="/collections/video/page/">{{icon "play"}}The film</a>
+			</div>
+		</article>
+		{{/with}}
+	</section>
+
+	<section class="im-section" style="--im-section-gap: 1rem">
+		<div class="home-head"><p class="im-caption" data-index="regions">By region</p></div>
+		<div class="im-regions">
+			{{#each demo.regions}}<a class="im-region" href="#trips"{{#if state}} data-state="{{state}}"{{/if}}><img src="{{lookup ../demo.shots shot}}" alt="" loading="lazy"><span class="im-kind im-kind-over" data-kind="trip">{{icon mark}}{{#if state}}Next{{else}}Been{{/if}}</span><span class="im-region-name">{{name}}</span><span class="im-region-meta">{{trips}} trips · {{countries}} countries</span></a>{{/each}}
+		</div>
+	</section>
+
+	<section class="im-section" style="--im-section-gap: 1rem">
+		<div class="home-head"><p class="im-caption" data-index="countries">Countries</p><p class="im-hint" style="margin: 0">tick = been · blue = booked · dashed = yet to visit</p></div>
+		<div class="im-countries">
+			{{#each demo.countries}}<a class="im-country" href="#trips" data-state="{{state}}"><span class="im-country-mark" aria-hidden="true"></span><b>{{name}}</b><small>{{region}} · {{#match state "=" "next"}}not yet{{else}}{{days}} days{{/match}}</small><span class="im-country-state">{{#match state "=" "done"}}Been{{/match}}{{#match state "=" "booked"}}Booked{{/match}}{{#match state "=" "next"}}To visit{{/match}}</span></a>{{/each}}
+		</div>
+	</section>
+
+	<section class="im-section" style="--im-section-gap: 1rem">
+		<div class="home-head"><p class="im-caption" data-index="trips">Every trip</p></div>
 	<div class="im-collbar">
 		<div class="im-collbar-filters" role="group" aria-label="Which country" data-im-filter="#trips">
 			<button class="im-tag" type="button" value="all" aria-current="page">All</button>
@@ -56,6 +98,7 @@ source: src/components/life.css
 		<p class="im-feed-empty" data-facet-empty hidden>Nothing here yet.</p>
 	</div>
 
+	</section>
 	<section class="im-section" style="--im-section-gap: 1rem">
 		<div class="home-head"><p class="im-caption" data-index="totals">In total</p></div>
 		<div class="im-expstats">
