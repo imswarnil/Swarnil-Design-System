@@ -648,52 +648,10 @@
    The column of actions beside the clip. On a wide screen it stands outside
    the frame, where it does not cover the picture; under 40rem there is no
    room beside it, so it moves inside and sits on the scrim. */
-.im-short-rail {
-	display: flex;
-	flex: none;
-	flex-direction: column;
-	gap: clamp(0.5rem, 1.6vh, 1rem);
-	padding-bottom: 0.5rem;
-}
 
-.im-short-act {
-	display: grid;
-	gap: 0.25rem;
-	justify-items: center;
-	width: 3rem;
-	padding: 0;
-	border: 0;
-	background: none;
-	color: var(--im-body);
-	font-family: inherit;
-	font-size: var(--im-text-xs);
-	font-variant-numeric: tabular-nums;
-	text-decoration: none;
-	cursor: pointer;
-}
 
-.im-short-act > .im-icon {
-	display: grid;
-	place-items: center;
-	width: 2.75rem;
-	height: 2.75rem;
-	border-radius: 50%;
-	background-color: var(--im-canvas);
-	box-shadow: inset 0 0 0 1px var(--im-line);
-	font-size: 1.25rem;
-	transition: background-color 140ms, color 140ms;
-}
 
-.im-short-act:is(:hover, :focus-visible) > .im-icon {
-	background-color: var(--im-hover-bg);
-	color: var(--im-ink);
-}
 
-.im-short-act[aria-pressed="true"] > .im-icon {
-	background-color: var(--im-accent);
-	box-shadow: none;
-	color: var(--im-on-accent);
-}
 
 /* Up and down, the whole of a short feed's navigation. */
 .im-short-step {
@@ -709,17 +667,7 @@
 		position: relative;
 	}
 
-	.im-short-rail {
-		position: absolute;
-		right: 0.5rem;
-		bottom: 5.5rem;
-		z-index: 2;
-		padding-bottom: 0;
-	}
 
-	.im-short-act {
-		color: #fff;
-	}
 
 	.im-short-act > .im-icon {
 		background-color: rgb(20 20 20 / 45%);
