@@ -284,3 +284,275 @@
 	filter: grayscale(1);
 	opacity: 0.45;
 }
+
+/* ---- the course page ---------------------------------------------------
+   A course sells on four things, in this order: what it is, who made it, how
+   much of it there is, and what somebody who took it says. Everything below
+   serves that order. */
+
+/* The head: the trailer on the left, the offer on the right. The player is
+   the biggest thing on the page because pressing it is the decision the page
+   is asking for. */
+.im-coursehero {
+	display: grid;
+	grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+	gap: clamp(1.25rem, 0.8rem + 2vw, 2.5rem);
+	align-items: start;
+}
+
+@media (width < 60rem) {
+	.im-coursehero {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+/* Numbers that count up. The animation is decoration on top of a number
+   that is already correct in the markup — the element's text IS the final
+   value, and a script only replaces it while it runs. Nothing is ever blank,
+   nothing is wrong with JavaScript off, and a reader with motion turned down
+   simply sees the number. */
+.im-bignums {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(9rem, 100%), 1fr));
+	gap: 1px;
+	overflow: hidden;
+	border-radius: var(--im-radius-lg);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	background-color: var(--im-line);
+}
+
+.im-bignum {
+	display: grid;
+	gap: 0.25rem;
+	padding: 1.125rem 1rem;
+	background-color: var(--im-canvas);
+}
+
+.im-bignum > strong {
+	display: flex;
+	align-items: baseline;
+	gap: 0.25rem;
+	color: var(--im-ink);
+	font-family: var(--im-font-heading);
+	font-size: clamp(1.75rem, 1.4rem + 1.4vw, 2.5rem);
+	font-weight: 600;
+	line-height: 1;
+	letter-spacing: var(--im-tracking-tight);
+	font-variant-numeric: tabular-nums;
+}
+
+.im-bignum > strong > small {
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-sm);
+	font-weight: 400;
+}
+
+.im-bignum > span {
+	display: flex;
+	align-items: center;
+	gap: 0.375rem;
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+}
+
+.im-bignum .im-icon {
+	color: var(--im-accent);
+	font-size: 0.9375rem;
+}
+
+/* ---- a section of the curriculum ----
+   Ghost has no "module", so a section is a heading with a range of lessons
+   under it. It carries its own meta — how long, when it was last updated —
+   because "updated September" on a course page and "updated September" on
+   ONE section of it are very different claims. */
+.im-module {
+	border-radius: var(--im-radius-lg);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	overflow: hidden;
+}
+
+.im-module + .im-module {
+	margin-top: 0.75rem;
+}
+
+.im-module-head {
+	display: grid;
+	grid-template-columns: 2.25rem minmax(0, 1fr);
+	gap: 0.25rem 0.875rem;
+	padding: 1rem 1.125rem;
+	background-color: var(--im-surface);
+}
+
+.im-module-n {
+	grid-row: 1 / span 3;
+	display: grid;
+	place-items: center;
+	width: 2.25rem;
+	height: 2.25rem;
+	border-radius: var(--im-radius-md);
+	background-color: var(--im-canvas);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	color: var(--im-ink);
+	font-family: var(--im-font-pixel, var(--im-font-mono));
+	font-size: var(--im-text-base);
+}
+
+.im-module-title {
+	color: var(--im-ink);
+	font-size: var(--im-text-h5);
+	font-weight: 600;
+	line-height: 1.3;
+	letter-spacing: var(--im-tracking-tight);
+}
+
+.im-module-meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.25rem 0.75rem;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+}
+
+.im-module-text {
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+	line-height: 1.55;
+	text-wrap: pretty;
+}
+
+.im-module > .im-lessons {
+	padding: 0.5rem;
+}
+
+/* A lesson's kind — filmed or written. It changes what a reader is agreeing
+   to spend, so it goes on the row rather than being discovered on arrival. */
+.im-lesson-kind {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.3125rem;
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+}
+
+.im-lesson-kind > .im-icon {
+	font-size: 0.875rem;
+}
+
+/* Free to watch, in a course that is not. The one green thing on the page. */
+.im-lesson-free {
+	color: var(--im-success);
+	font-size: var(--im-text-xs);
+	font-weight: 600;
+}
+
+/* ---- the lesson menu on a phone ----------------------------------------
+   Under `lg` the curriculum rail has nowhere to be, so it becomes a sheet.
+   A <dialog>, because it is modal and the browser is better at that than we
+   are — and the trigger is a real button in the lesson's own header rather
+   than a floating tab, so it is where a thumb already is. */
+.im-lessonmenu {
+	width: min(30rem, calc(100vw - 2rem));
+	max-height: min(80dvh, 42rem);
+	inset: 0;
+	margin: auto;
+	padding: 0;
+	border-radius: var(--im-radius-2xl);
+	background-color: var(--im-canvas);
+	color: var(--im-body);
+	overflow: hidden;
+}
+
+.im-lessonmenu::backdrop {
+	background-color: rgb(10 10 10 / 55%);
+	-webkit-backdrop-filter: blur(3px);
+	backdrop-filter: blur(3px);
+}
+
+.im-lessonmenu > .im-curriculum {
+	max-height: min(80dvh, 42rem);
+	border: 0;
+	border-radius: 0;
+}
+
+.im-lessonmenu-trigger {
+	display: inline-flex;
+}
+
+@media (width >= 64rem) {
+	.im-lessonmenu-trigger {
+		display: none;
+	}
+}
+
+/* ---- previous / next, with the picture ---------------------------------
+   Pagination on a lesson is the most-pressed control on the page, so it is
+   a pair of cards rather than two links: the still says which lesson, which
+   a title alone does not once somebody is six in. */
+.im-lessonnav {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr));
+	gap: 0.75rem;
+}
+
+.im-lessonnav-item {
+	--im-hover-bg: var(--im-surface);
+
+	display: grid;
+	grid-template-columns: 5.5rem minmax(0, 1fr);
+	gap: 0.875rem;
+	align-items: center;
+	padding: 0.75rem;
+	border-radius: var(--im-radius-lg);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	color: var(--im-ink);
+	text-decoration: none;
+	transition: background-color var(--im-duration-fast) var(--im-ease-out);
+}
+
+.im-lessonnav-item:hover {
+	background-color: var(--im-hover-bg);
+}
+
+.im-lessonnav-item > img {
+	width: 5.5rem;
+	aspect-ratio: 16 / 10;
+	border-radius: var(--im-radius-sm);
+	object-fit: cover;
+	background-color: var(--im-surface-2);
+}
+
+.im-lessonnav-item > span {
+	display: grid;
+	gap: 0.1875rem;
+	min-width: 0;
+}
+
+.im-lessonnav-item small {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+}
+
+.im-lessonnav-item b {
+	font-size: var(--im-text-sm);
+	font-weight: 600;
+	line-height: 1.35;
+}
+
+/* Next is the one somebody is reaching for, and it reads right to left. */
+.im-lessonnav-item[data-next] {
+	direction: rtl;
+}
+
+.im-lessonnav-item[data-next] > span {
+	direction: ltr;
+	text-align: right;
+}
+
+.im-lessonnav-item[data-next] small {
+	justify-content: flex-end;
+}

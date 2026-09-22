@@ -178,11 +178,23 @@ export async function build({ quiet = false } = {}) {
 			{ title: 'A whole blog, from empty folder to deployed, in one sitting', time: '41:06', views: '303k', when: '7 months ago', thumb: fixtures.posts[1].feature_image, channel: fixtures.author.name, avatar: fixtures.author.profile_image },
 		],
 		lessons: [
-			{ n: '01', title: 'What a token is for', time: '7:12', state: 'done' },
-			{ n: '02', title: 'Primitives and semantics', time: '11:40', state: 'done' },
-			{ n: '03', title: 'Dark mode for free', time: '14:05', state: 'current' },
-			{ n: '04', title: 'The page shell', time: '13:20' },
-			{ n: '05', title: 'The top bar and the side nav', time: '12:02' },
+			{ n: '01', title: 'What a token is for', time: '7:12', state: 'done', kind: 'video', shot: 0, text: 'The difference between a value and a decision, and why only one of them belongs in a component.' },
+			{ n: '02', title: 'Primitives and semantics', time: '11:40', state: 'done', kind: 'video', shot: 1, text: 'Two layers, and the rule that decides which one a new variable belongs in.' },
+			{ n: '03', title: 'Dark mode for free', time: '14:05', state: 'current', kind: 'video', shot: 2, text: 'If the semantic layer is right this is one file. If it is not, it is forty.' },
+			{ n: '04', title: 'The page shell', time: '9 min read', kind: 'article', shot: 3, text: 'Top bar, side nav, content. Written rather than filmed, because it is mostly markup.' },
+			{ n: '05', title: 'The top bar and the side nav', time: '12:02', kind: 'video', shot: 4, locked: true, text: 'Sticky, floating, and the scroll listener that is not an observer.' },
+			{ n: '06', title: 'Components that read tokens', time: '15:38', kind: 'video', shot: 5, locked: true, text: 'One button, every state, and no hard-coded colour anywhere in it.' },
+			{ n: '07', title: 'Shipping it into Ghost', time: '11 min read', kind: 'article', shot: 0, locked: true, text: 'card_assets: false, the partials, and the gscan run that has to pass.' },
+		],
+		sections: [
+			{ name: 'The token layer', n: '1', when: 'Updated Sep 2026', time: '33 min', text: 'Where every decision in the system is written down, and the two kinds of variable that make dark mode a one-file change.', from: 1, to: 3 },
+			{ name: 'The page and its chrome', n: '2', when: 'Updated Sep 2026', time: '21 min', text: 'The shell, the bar and the navigation — the parts that are the same on every page and must therefore be right.', from: 4, to: 5 },
+			{ name: 'Into a real theme', n: '3', when: 'New', time: '27 min', text: 'Components, Ghost\u2019s own card CSS, and the validation run that decides whether any of this ships.', from: 6, to: 7 },
+		],
+		testimonials: [
+			{ by: 'Mara Lindqvist', role: 'Design lead, Nordvik', rating: '5', text: 'I have watched four of these and this is the only one where the instructor shows the thing failing first. The dark-mode lesson paid for the whole course.' },
+			{ by: 'Tomas Reuter', role: 'Freelance, Berlin', rating: '5', text: 'Shipped a client theme in a fortnight using nothing but the token lesson and the shell lesson. Everything else was a bonus.' },
+			{ by: 'Priya Raman', role: 'Front-end, Chennai', rating: '4', text: 'Excellent, and denser than it looks. Do not try to watch it at 2x — I did, and rewatched two lessons properly.' },
 		],
 		issues: [
 			{ n: '042', day: '18', month: 'Sep', year: '2026', sent: '18 Sep 2026', title: 'The one where I deleted the theme', text: 'Why the site moved off a paid theme, what it cost, and the two-line audit that proves nothing came with it.', read: '62%', words: '1,240' },

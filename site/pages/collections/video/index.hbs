@@ -24,7 +24,14 @@ source: src/components/video-card.css · partials/components/video-card.hbs
 <div class="im-single im-wrap-wide" data-sidebar="on">
 	<article class="im-stack" style="--im-stack-gap: 1.75rem">
 		<section class="im-channel">
-			<div class="im-channel-banner"><img src="{{demo.six.[4].feature_image}}" alt="" loading="eager"></div>
+			{{!-- The banner plays. Muted, looping, playsinline, a poster that is
+				  the first frame, and preload="none" so the clip never competes
+				  with the page for bandwidth. Under reduced motion the poster
+				  simply stays. The docs ship no file: nothing here fetches
+				  video from somewhere else. --}}
+			<div class="im-channel-banner">
+				<video poster="{{demo.six.[4].feature_image}}" muted loop playsinline autoplay preload="none" aria-hidden="true"></video>
+			</div>
 			<div class="im-channel-head">
 				{{> "components/avatar" size="xl" src=demo.author.profile_image name=demo.author.name}}
 				<div class="im-channel-id">
@@ -40,12 +47,11 @@ source: src/components/video-card.css · partials/components/video-card.hbs
 		</section>
 
 		<div class="im-collbar">
-			<div class="im-collbar-filters">
-				<a class="im-tag" href="#vids" aria-current="page">Videos</a>
-				<a class="im-tag" href="#vids">Shorts</a>
-				<a class="im-tag" href="#vids">Live</a>
-				<a class="im-tag" href="#vids">Playlists</a>
-				<a class="im-tag" href="#vids">About</a>
+			<div class="im-collbar-filters" role="group" aria-label="What to show" data-im-filter="#vids">
+				<button class="im-tag" type="button" value="all" aria-current="false">Everything</button>
+				<button class="im-tag" type="button" value="video" aria-current="page">{{icon "video"}}Videos</button>
+				<button class="im-tag" type="button" value="short" aria-current="false">{{icon "square-play"}}Shorts</button>
+				<button class="im-tag" type="button" value="live" aria-current="false">{{icon "zap"}}Live</button>
 			</div>
 			<div class="im-cluster" style="--im-cluster-gap: .375rem">
 				<button class="im-btn im-btn-sm" type="button">{{icon "list-filter"}}Latest</button>
@@ -54,9 +60,23 @@ source: src/components/video-card.css · partials/components/video-card.hbs
 
 		<div class="im-vidgrid" id="vids">
 			{{#each demo.videos}}
-				{{> "components/video-card" hide_by=true}}
+				<div data-facet="{{#if live}}live{{else}}video{{/if}}">{{> "components/video-card" hide_by=true}}</div>
 			{{/each}}
+			{{#each demo.videos}}{{#match @index "<" 5}}
+				<div data-facet="short" hidden>{{> "components/video-card" class="im-vidcard-tall" hide_by=true kind="short"}}</div>
+			{{/match}}{{/each}}
+			<p class="im-feed-empty" data-facet-empty hidden>Nothing of that kind yet.</p>
 		</div>
+
+		<section class="im-section" style="--im-section-gap: 1rem">
+			<div class="home-head"><p class="im-caption" data-index="shorts">Shorts</p><a class="im-card-cta" href="/collections/video/short/">All of them {{> "icons/arrow-right"}}</a></div>
+			{{!-- A carousel rather than a grid: shorts are browsed sideways
+				  everywhere they exist, and five 9:16 cards in a grid is a wall
+				  of portraits that pushes everything else off the page. --}}
+			{{#> "components/carousel" label="Shorts" dots=true style="--im-slides: 2.2; --im-slides-sm: 3.2; --im-slides-md: 5.2"}}
+				{{#each demo.videos}}{{#match @index "<" 6}}{{> "components/video-card" class="im-vidcard-tall" hide_by=true kind="short"}}{{/match}}{{/each}}
+			{{/"components/carousel"}}
+		</section>
 
 		<div class="im-loadmore">
 			<button class="im-btn" type="button">Load more</button>

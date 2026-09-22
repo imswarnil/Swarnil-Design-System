@@ -327,10 +327,18 @@
 	background-color: var(--im-surface-2);
 }
 
-.im-channel-banner > img {
+.im-channel-banner > :is(img, video) {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
+}
+
+/* A banner that moves is the one place on a channel page where it earns its
+   weight — but only on somebody's own terms. */
+@media (prefers-reduced-motion: reduce) {
+	.im-channel-banner > video {
+		display: none;
+	}
 }
 
 .im-channel-head {

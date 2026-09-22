@@ -11,88 +11,135 @@ source: src/components/curriculum.css · video.css
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
-<div class="im-course im-wrap-wide" style="--im-curriculum-width: 21rem">
-	<div class="im-stack" style="--im-stack-gap: 1.25rem; min-width: 0">
-		<button class="im-btn im-curriculum-open" type="button" data-im-dialog-open="#lesson-curriculum">{{icon "list"}}Curriculum</button>
+<div class="im-with-aside im-with-aside-start im-wrap-wide" style="--im-aside-width: 20rem">
+	<aside>
+		<div class="im-sticky-rail im-sticky-rail-full">
+			<nav class="im-curriculum im-rail-grow" aria-label="Lessons">
+				<div class="im-curriculum-head">
+					<p class="im-curriculum-title">{{icon "graduation-cap"}}Design tokens, properly</p>
+					<p class="im-curriculum-progress"><span>2 of 7</span><span class="im-progress" role="progressbar" aria-label="Through the course" aria-valuenow="29" aria-valuemin="0" aria-valuemax="100" style="--im-value: .29"></span></p>
+				</div>
+				{{#each demo.sections}}
+				<p class="im-module-meta" style="padding: .75rem 1rem .25rem">{{n}} · {{name}}</p>
+				<ol class="im-lessons">
+					{{#each ../demo.lessons}}{{#match n ">=" ../from}}{{#match n "<=" ../to}}
+					<li>
+						<a class="im-lesson" href="/collections/course/lesson/" data-state="{{#if locked}}locked{{else}}{{state}}{{/if}}"{{#match state "=" "current"}} aria-current="page"{{/match}}>
+							<span class="im-lesson-mark" aria-hidden="true"></span>
+							<span>{{title}}</span>
+							<small>{{time}}</small>
+						</a>
+					</li>
+					{{/match}}{{/match}}{{/each}}
+				</ol>
+				{{/each}}
+			</nav>
+		</div>
+	</aside>
 
-		<div class="im-video im-video-full" id="lesson" data-im-video="aqz-KE-bpKQ" data-im-video-title="Dark mode for free">
-			<img class="im-video-poster" src="{{demo.six.[2].feature_image}}" alt="" loading="eager">
+	<article class="im-stack" style="--im-stack-gap: 1.5rem">
+		{{#with demo.lessons.[2]}}
+		<div class="im-cluster" style="--im-cluster-gap: .75rem">
+			<nav aria-label="Breadcrumb" style="flex: 1">
+				<ol class="im-breadcrumb im-breadcrumb-chevron">
+					<li><a href="/collections/course/">{{> "icons/graduation-cap"}}<span>Design tokens, properly</span></a></li>
+					<li><a href="/collections/course/">{{> "icons/layers"}}<span>The token layer</span></a></li>
+					<li><span aria-current="page">Lesson {{n}}</span></li>
+				</ol>
+			</nav>
+			<button class="im-btn im-btn-sm im-lessonmenu-trigger" type="button" popovertarget="lessons-sheet" onclick="document.getElementById('lessons-sheet').showModal()">{{icon "list"}}Lessons <span class="im-hint" style="margin:0">3/7</span></button>
+		</div>
+
+		<div class="im-video im-video-full" id="lesson" data-im-video="aqz-KE-bpKQ" data-im-video-title="{{title}}">
+			<img class="im-video-poster" src="{{lookup ../demo.shots shot}}" alt="" loading="eager">
 			<button class="im-video-play" type="button" aria-label="Play">{{> "icons/play"}}</button>
 		</div>
 
-		<header class="im-vidhead">
-			<p class="im-caption" data-index="03">Module 01 · Tokens and the shell · Lesson 3 of 18</p>
-			<h1 class="im-vidhead-title">Dark mode for free</h1>
-			<div class="im-vidhead-bar">
-				<p class="im-vidcard-meta"><span>14:05</span><span>Updated 3 days ago</span></p>
-				<div class="im-vidhead-actions">
-					<button class="im-btn im-btn-sm" type="button">{{icon "download"}}Exercise files</button>
-					<button class="im-btn im-btn-sm" type="button" aria-pressed="false" data-im-toggle>{{icon "check"}}Mark complete</button>
-				</div>
-			</div>
+		<header class="im-stack" style="--im-stack-gap: .5rem">
+			<p class="im-snipcard-meta"><span class="im-lesson-kind">{{icon "square-play"}}Video</span><span>{{time}}</span><span>Lesson {{n}} of 07</span></p>
+			<h1 class="im-collhead-title" style="font-size: var(--im-text-h2)">{{title}}</h1>
+			<p class="im-lede" style="margin: 0">{{text}}</p>
 		</header>
+		{{/with}}
 
-		<nav class="im-postnav" aria-label="Lessons">
-			<a href="/collections/course/lesson/" rel="prev"><small>{{icon "arrow-left"}} Previous</small>Primitives and semantics</a>
-			<a href="/collections/course/lesson/" rel="next"><small>Next {{icon "arrow-right"}}</small>The page shell</a>
+		<section class="im-section" style="--im-section-gap: .75rem">
+			<h2 class="im-caption">Chapters</h2>
+			<ol class="im-chapters" data-im-chapters="#lesson" data-im-duration="14:05" aria-label="Chapters">
+				<li><button type="button" data-t="0:00"><time>0:00</time><span>What we are fixing</span></button></li>
+				<li><button type="button" data-t="2:40"><time>2:40</time><span>The two blocks, written out</span></button></li>
+				<li><button type="button" data-t="7:15"><time>7:15</time><span>Why a reference cycle throws both away</span></button></li>
+				<li><button type="button" data-t="11:30"><time>11:30</time><span>Testing it properly</span></button></li>
+			</ol>
+		</section>
+
+		<section class="im-content im-content-flush">
+			<h2>The two blocks</h2>
+			<p>Dark mode is not a filter and it is not a second stylesheet. It is the <strong>semantic</strong> layer, written twice — once under the light theme and once under the dark one — with the primitives untouched in both.</p>
+			<pre><code class="language-css">:root {
+	--im-canvas: var(--im-white);
+	--im-ink: var(--im-gray-950);
+}
+
+:root[data-theme="dark"] {
+	--im-canvas: var(--im-gray-950);
+	--im-ink: var(--im-white);
+}</code></pre>
+			<p>Two <strong>literal</strong> blocks. Not <code>--a: var(--b); --b: var(--a)</code> — that is a reference cycle, and CSS throws both declarations away without a word in the console. It is the single most common way this goes wrong, and it took me an afternoon the first time.</p>
+
+			<figure class="im-shot">
+				<img src="{{demo.shots.[2]}}" alt="" loading="lazy">
+				<figcaption><b>Both themes, one component.</b> The card names no colour at all — only <code>--im-surface</code> and <code>--im-ink</code>.</figcaption>
+			</figure>
+
+			<h2>What to check before you move on</h2>
+			<ul>
+				<li>A component with a hard-coded colour in it. There should be none; grep for <code>#</code>.</li>
+				<li>An inverted block — a dark footer on a light page — which needs its own two literal blocks for the same reason.</li>
+				<li><code>color-scheme</code> on anything inverted, or the scrollbars and form controls stay the wrong way round.</li>
+			</ul>
+		</section>
+
+		<nav class="im-lessonnav" aria-label="Lessons">
+			<a class="im-lessonnav-item" href="/collections/course/lesson/" rel="prev">
+				<img src="{{demo.shots.[1]}}" alt="" loading="lazy">
+				<span>
+					<small>{{icon "arrow-left"}}Previous · Lesson 02</small>
+					<b>Primitives and semantics</b>
+				</span>
+			</a>
+			<a class="im-lessonnav-item" href="/collections/course/lesson/" rel="next" data-next>
+				<img src="{{demo.shots.[3]}}" alt="" loading="lazy">
+				<span>
+					<small>Next · Lesson 04{{icon "arrow-right"}}</small>
+					<b>The page shell</b>
+				</span>
+			</a>
 		</nav>
 
-		<section class="im-content im-content-flush" style="--im-content-main: 100%">
-			<h2>What this lesson covers</h2>
-			<p>Why a component should never name a colour, only what the colour is <em>for</em> — and why that one rule is the whole of dark mode.</p>
-			<pre><code class="language-css">/* Not this */
-.card { background: #f5f5f5; }
-
-/* This */
-.card { background: var(--im-surface); }</code></pre>
-			<p>Two declarations, one file, and every component in the theme follows without being told.</p>
-			<h3>Exercise</h3>
-			<p>Take the three components you wrote in lesson 2 and remove every literal colour from them. Nothing should break in light mode; dark mode should start working on its own.</p>
-			<div class="kg-card kg-callout-card kg-callout-card-blue"><div class="kg-callout-emoji">📎</div><div class="kg-callout-text">The exercise files are the same theme at the start and the end of this lesson, so you can diff them if you get stuck.</div></div>
-		</section>
-
-		<section class="im-section" style="--im-section-gap: 1rem">
-			<h2 class="im-caption">Questions on this lesson</h2>
-			{{> "components/comments" thread=demo.comments count="12"}}
-		</section>
-	</div>
-
-	<nav class="im-curriculum" id="lesson-curriculum" aria-label="Curriculum">
-		<div class="im-curriculum-head">
-			<p class="im-curriculum-title">Ghost themes, properly</p>
-			<button class="im-btn im-btn-ghost im-btn-icon im-curriculum-close" type="button" data-im-dialog-close aria-label="Close">{{icon "x"}}</button>
-		</div>
-		<div class="im-curriculum-progress">
-			<div class="im-progress" style="--im-value: .17" role="progressbar" aria-valuenow="17" aria-label="Course progress"><span></span></div>
-			<small>3 of 18 · 33 min</small>
-		</div>
-		<details class="im-module" open>
-			<summary><span class="im-module-index">01</span>Tokens and the shell<small>5 · 58m</small></summary>
-			<div class="im-lessons im-lessons-shots">
-				<a class="im-lesson" href="/collections/course/lesson/" data-state="done"><span class="im-lesson-mark"></span><span class="im-lesson-shot"><img src="{{demo.shots.[0]}}" alt="" loading="lazy"></span>What a token is for<small>7:12</small></a>
-				<a class="im-lesson" href="/collections/course/lesson/" data-state="done"><span class="im-lesson-mark"></span><span class="im-lesson-shot"><img src="{{demo.shots.[1]}}" alt="" loading="lazy"></span>Primitives and semantics<small>11:40</small></a>
-				<a class="im-lesson" href="/collections/course/lesson/" aria-current="page"><span class="im-lesson-mark"></span><span class="im-lesson-shot"><img src="{{demo.shots.[2]}}" alt="" loading="lazy"></span>Dark mode for free<small>14:05</small></a>
-				<a class="im-lesson" href="/collections/course/lesson/"><span class="im-lesson-mark"></span><span class="im-lesson-shot"><img src="{{demo.shots.[3]}}" alt="" loading="lazy"></span>The page shell<small>13:20</small></a>
-				<a class="im-lesson" href="/collections/course/lesson/"><span class="im-lesson-mark"></span><span class="im-lesson-shot"><img src="{{demo.shots.[4]}}" alt="" loading="lazy"></span>The top bar and the side nav<small>12:02</small></a>
-			</div>
-		</details>
-		<details class="im-module">
-			<summary><span class="im-module-index">02</span>Templates<small>7 · 1h 42m</small></summary>
-			<div class="im-lessons im-lessons-shots">
-				<a class="im-lesson" href="/collections/course/lesson/"><span class="im-lesson-mark"></span><span class="im-lesson-shot"><img src="{{demo.shots.[5]}}" alt="" loading="lazy"></span>index.hbs and the feed<small>15:30</small></a>
-				<a class="im-lesson" href="/collections/course/lesson/"><span class="im-lesson-mark"></span><span class="im-lesson-shot"><img src="{{demo.shots.[0]}}" alt="" loading="lazy"></span>post.hbs<small>18:12</small></a>
-				<a class="im-lesson" href="/collections/course/lesson/" data-state="locked"><span class="im-lesson-mark"></span><span class="im-lesson-shot"><img src="{{demo.shots.[1]}}" alt="" loading="lazy"></span>The editor's cards<small>22:40</small></a>
-			</div>
-		</details>
-		<details class="im-module">
-			<summary><span class="im-module-index">03</span>Shipping it<small>6 · 1h 30m</small></summary>
-			<div class="im-lessons im-lessons-shots">
-				<a class="im-lesson" href="/collections/course/lesson/" data-state="locked"><span class="im-lesson-mark"></span><span class="im-lesson-shot"><img src="{{demo.shots.[2]}}" alt="" loading="lazy"></span>What you are allowed to sell<small>19:55</small></a>
-				<a class="im-lesson" href="/collections/course/lesson/" data-state="locked"><span class="im-lesson-mark"></span><span class="im-lesson-shot"><img src="{{demo.shots.[3]}}" alt="" loading="lazy"></span>Writing a provenance file<small>12:18</small></a>
-			</div>
-		</details>
-	</nav>
+		{{> "components/comments" thread=demo.comments count="24" lean=true limit="1"}}
+	</article>
 </div>
+
+<dialog class="im-lessonmenu" id="lessons-sheet" aria-label="Lessons">
+	<nav class="im-curriculum">
+		<div class="im-curriculum-head">
+			<p class="im-curriculum-title">{{icon "graduation-cap"}}Design tokens, properly</p>
+			<button class="im-curriculum-close" type="button" aria-label="Close" onclick="this.closest('dialog').close()">{{icon "x"}}</button>
+			<p class="im-curriculum-progress"><span>2 of 7</span><span class="im-progress" role="progressbar" aria-label="Through the course" aria-valuenow="29" aria-valuemin="0" aria-valuemax="100" style="--im-value: .29"></span></p>
+		</div>
+		<ol class="im-lessons">
+			{{#each demo.lessons}}
+			<li>
+				<a class="im-lesson" href="/collections/course/lesson/" data-state="{{#if locked}}locked{{else}}{{state}}{{/if}}"{{#match state "=" "current"}} aria-current="page"{{/match}}>
+					<span class="im-lesson-mark" aria-hidden="true"></span>
+					<span>{{title}}</span>
+					<small>{{time}}</small>
+				</a>
+			</li>
+			{{/each}}
+		</ol>
+	</nav>
+</dialog>
 
 <section class="im-section im-wrap">
 	<div class="im-prose">

@@ -161,3 +161,82 @@
 	else run();
 	window.imFilter = { run };
 })();
+
+/**
+ * im-count — a number that counts up to the value already in the element.
+ *
+ *     <strong data-im-count>1,240</strong>
+ *
+ * The markup carries the FINAL value, always. The script reads it, counts to
+ * it, and puts it back — so with JavaScript off, with the script failing, or
+ * under prefers-reduced-motion the number is simply correct and nothing has
+ * to be rendered blank and filled in later.
+ *
+ * It only runs when the element is actually on screen, and only once: a
+ * counter that restarts every time it scrolls past is a distraction, and one
+ * that runs in a background tab is a rAF loop nobody is watching. Suffixes
+ * and separators in the text are preserved — "1,240" counts in thousands
+ * separators, "4.9" counts in tenths.
+ */
+(() => {
+	if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+	const format = (n, decimals, grouped) =>
+		n.toLocaleString(undefined, {
+			minimumFractionDigits: decimals,
+			maximumFractionDigits: decimals,
+			useGrouping: grouped,
+		});
+
+	function run(el) {
+		const text = el.textContent.trim();
+		const match = /^([^\d-]*)(-?[\d.,]+)(.*)$/s.exec(text);
+		if (!match) return;
+		const [, before, digits, after] = match;
+		const grouped = digits.includes(',');
+		const value = Number(digits.replace(/,/g, ''));
+		if (!Number.isFinite(value)) return;
+		const decimals = (digits.split('.')[1] || '').length;
+
+		const duration = 900;
+		const started = performance.now();
+		let done = false;
+		const settle = () => {
+			done = true;
+			el.textContent = text; // exactly what was in the markup
+		};
+		const step = (now) => {
+			if (done) return;
+			const t = Math.min(1, (now - started) / duration);
+			// Ease out: fast at first, so the final value is legible early.
+			const eased = 1 - (1 - t) ** 3;
+			el.textContent = before + format(value * eased, decimals, grouped) + after;
+			if (t < 1) requestAnimationFrame(step);
+			else settle();
+		};
+		requestAnimationFrame(step);
+		// rAF never fires again in a tab that stops being painted — switch away
+		// mid-count and the number freezes on whatever it had reached, for
+		// good. A wrong number is far worse than no animation, so a timer
+		// settles it regardless. Timers are throttled in a background tab but
+		// they do still run.
+		setTimeout(settle, duration + 200);
+	}
+
+	const seen = new WeakSet();
+	const start = () => {
+		const targets = document.querySelectorAll('[data-im-count]');
+		if (!targets.length) return;
+		const io = new IntersectionObserver((entries) => {
+			for (const e of entries) {
+				if (!e.isIntersecting || seen.has(e.target)) continue;
+				seen.add(e.target);
+				io.unobserve(e.target);
+				run(e.target);
+			}
+		}, { rootMargin: '0px 0px -10% 0px' });
+		targets.forEach((t) => io.observe(t));
+	};
+	if (document.readyState === 'loading') addEventListener('DOMContentLoaded', start);
+	else start();
+})();
