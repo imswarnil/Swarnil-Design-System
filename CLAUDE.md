@@ -184,6 +184,12 @@ Add a token → `--im-*` in primitives/semantic, plus one bridge line if it shou
 - **A bar that floats over the page must be `fixed`, not `sticky`** — `top` on a sticky element does
   not animate. `im-topbar-float` transitions `top`/`left`/`right`, and `[data-im-stick]` is set by a
   throttled scroll listener, not an observer (which never fires in an unpainted tab).
+- **A percentage width inside a container sized BY its contents resolves to zero.** The short
+  player is `width: min(100%, …)` in a stage whose parent centres its items — so the stage was
+  max-content wide, the percentage was a cycle, and only the action rail rendered. Give the
+  intermediate box a definite width.
+- **A snapping feed needs `scroll-snap-stop: always`.** Without it a hard flick skips three items,
+  and a viewer who cannot land on the one they aimed at stops aiming.
 - **A docs page can drop the docs chrome**: `shell: frame` in its frontmatter picks
   `site/layouts/frame.hbs`. That is the only way to show a floating bar over a page that scrolls —
   `/demos/navbar/`, loaded in an iframe by the Navbar page.
