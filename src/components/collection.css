@@ -1023,3 +1023,80 @@
 		--im-queue-thumb: 5rem;
 	}
 }
+
+/* ---- a collection head with a pattern ---------------------------------
+   Every collection needs a head that is recognisably ITS head. A photograph
+   would do it, and most collections have no photograph that means anything —
+   a snippets page, a prompts page, an archive. So: a pattern, in the
+   collection's own colour, down the right-hand third.
+
+     <header class="im-collhead im-collhead-patterned">
+       <span class="im-collhead-art im-bg-isometric" style="--im-art: #3178c6"></span>
+       … the words …
+     </header>
+
+   The pattern is a real element and not a pseudo, because the patterns are
+   Tailwind `@utility` rules — a class, which a pseudo-element cannot wear.
+   It is `aria-hidden` by being empty, it never reaches the words, and each
+   collection picks ONE and keeps it, which is what makes it a mark rather
+   than a texture. */
+.im-collhead-patterned {
+	position: relative;
+	isolation: isolate;
+	padding-right: clamp(0px, 18vw - 6rem, 12rem);
+}
+
+.im-collhead-art {
+	position: absolute;
+	inset: -1.25rem -1.25rem -1.25rem auto;
+	z-index: -1;
+	width: min(38%, 24rem);
+	opacity: var(--im-art-opacity, 0.5);
+	pointer-events: none;
+
+	--im-pattern-color: var(--im-art, var(--im-accent));
+
+	/* Fades out to the left so it never reaches the words, and downward so it
+	   does not stop on a hard edge where the section does. Two masks, composed:
+	   `intersect` is the standard keyword, `source-in` the WebKit spelling. */
+	-webkit-mask-image: linear-gradient(to left, #000 10%, transparent 92%), linear-gradient(to bottom, #000 55%, transparent);
+	mask-image: linear-gradient(to left, #000 10%, transparent 92%), linear-gradient(to bottom, #000 55%, transparent);
+	-webkit-mask-composite: source-in;
+	mask-composite: intersect;
+}
+
+/* Below 40rem the pattern would be behind the text rather than beside it. */
+@media (width < 40rem) {
+	.im-collhead-patterned {
+		padding-right: 0;
+	}
+
+	.im-collhead-art {
+		display: none;
+	}
+}
+
+/* An issue that does have a picture. It takes the date tile's place and
+   keeps the number, so a mixed archive still scans by number — which is the
+   thing a reader is actually looking for. A placeholder standing in for a
+   picture that was never taken is the one arrangement that does not work. */
+.im-issue-tile-shot {
+	overflow: hidden;
+	background-color: var(--im-surface-2);
+}
+
+.im-issue-tile-shot > img {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.im-issue-tile-shot > b {
+	z-index: 1;
+	background-color: rgb(20 20 20 / 72%);
+	-webkit-backdrop-filter: blur(6px);
+	backdrop-filter: blur(6px);
+	color: #fff;
+}

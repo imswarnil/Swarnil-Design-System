@@ -13,7 +13,8 @@ source: src/components/collection.css · field.css
 
 <div class="im-single im-wrap-wide" data-sidebar="on">
 	<article class="im-stack" style="--im-stack-gap: 2rem">
-		<header class="im-collhead">
+		<header class="im-collhead im-collhead-patterned">
+			<span class="im-collhead-art im-bg-lines" style="--im-art: #4ac26b" aria-hidden="true"></span>
 			<p class="im-eyebrow">Newsletter</p>
 			<h1 class="im-collhead-title">Field Notes</h1>
 			<p class="im-collhead-text">One email when something lands — what I built, what it cost and what I got wrong. No schedule, no filler, no list swapping.</p>
@@ -35,7 +36,11 @@ source: src/components/collection.css · field.css
 			<div class="im-issues">
 				{{#each demo.issues}}
 				<article class="im-issue">
-					<span class="im-issue-tile"><b>{{n}}</b><strong>{{day}}</strong><span>{{month}}</span><small>{{year}}</small></span>
+					{{#if shot}}
+						<span class="im-issue-tile im-issue-tile-shot"><img src="{{lookup ../demo.shots shot}}" alt="" loading="lazy"><b>{{n}}</b></span>
+					{{else}}
+						<span class="im-issue-tile"><b>{{n}}</b><strong>{{day}}</strong><span>{{month}}</span><small>{{year}}</small></span>
+					{{/if}}
 					<p class="im-issue-date">{{sent}}</p>
 					<h3 class="im-issue-title"><a href="/collections/newsletter/issue/">{{title}}</a></h3>
 					<p class="im-issue-text">{{text}}</p>
@@ -75,7 +80,7 @@ source: src/components/collection.css · field.css
 			<section class="im-widget" aria-labelledby="nw-arch">
 				<h2 class="im-widget-title" id="nw-arch">Every issue</h2>
 				<nav class="im-widget-archive">
-					{{#each demo.archive}}<a href="#issues">{{year}}<small>{{count}} issues</small></a>{{/each}}
+					{{#each demo.archive}}<a href="#issues">{{year}}<small>{{posts}} issues</small></a>{{/each}}
 				</nav>
 			</section>
 
@@ -98,7 +103,8 @@ source: src/components/collection.css · field.css
 			<tbody>
 				<tr><td><code>im-issues</code></td><td>The column. Rows, not cards in a grid: an issue is a thing in a sequence.</td></tr>
 				<tr><td><code>im-issue</code></td><td>One issue. It fills on hover, like every other card in the system.</td></tr>
-				<tr><td><code>im-issue-tile</code></td><td>The date as a <strong>thumbnail</strong>: day, month, year on a tile, with the issue number riding its corner. A letter has no cover image, and a row of grey placeholders would be worse than none — but it does have a date, and a date is what a reader navigates an archive by.</td></tr>
+				<tr><td><code>im-issue-tile</code></td><td>The date as a <strong>thumbnail</strong>: day, month, year on a tile, with the issue number riding its corner. A letter usually has no cover image, and a row of grey placeholders would be worse than none — but it always has a date, and a date is what a reader navigates an archive by.</td></tr>
+				<tr><td><code>im-issue-tile-shot</code></td><td>When an issue <em>does</em> have a picture, it takes the tile's place and keeps the number. Mixing the two in one archive is fine and looks deliberate; what does not work is a placeholder standing in for a picture that was never taken.</td></tr>
 				<tr><td><code>im-issue-num</code></td><td>The number on its own, for a list that does not want the tile.</td></tr>
 				<tr><td><code>im-issue-date</code> · <code>-title</code> · <code>-text</code> · <code>-meta</code></td><td>When, what it was called, what was in it, and the facts under it.</td></tr>
 			</tbody>

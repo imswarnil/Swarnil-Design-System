@@ -198,9 +198,9 @@ export async function build({ quiet = false } = {}) {
 			{ by: 'Priya Raman', role: 'Front-end, Chennai', rating: '4', text: 'Excellent, and denser than it looks. Do not try to watch it at 2x — I did, and rewatched two lessons properly.' },
 		],
 		issues: [
-			{ n: '042', day: '18', month: 'Sep', year: '2026', sent: '18 Sep 2026', title: 'The one where I deleted the theme', text: 'Why the site moved off a paid theme, what it cost, and the two-line audit that proves nothing came with it.', read: '62%', words: '1,240' },
+			{ n: '042', day: '18', month: 'Sep', year: '2026', sent: '18 Sep 2026', title: 'The one where I deleted the theme', text: 'Why the site moved off a paid theme, what it cost, and the two-line audit that proves nothing came with it.', read: '62%', words: '1,240', shot: 1 },
 			{ n: '041', day: '11', month: 'Sep', year: '2026', sent: '11 Sep 2026', title: 'Forty components and one hover', text: 'Three competing interactions removed in an afternoon, and nothing was lost.', read: '58%', words: '980' },
-			{ n: '040', day: '4', month: 'Sep', year: '2026', sent: '4 Sep 2026', title: 'What a design system is actually for', text: 'Not consistency. Not speed. The ability to change your mind later.', read: '64%', words: '1,510' },
+			{ n: '040', day: '4', month: 'Sep', year: '2026', sent: '4 Sep 2026', title: 'What a design system is actually for', text: 'Not consistency. Not speed. The ability to change your mind later.', read: '64%', words: '1,510', shot: 2 },
 			{ n: '039', day: '28', month: 'Aug', year: '2026', sent: '28 Aug 2026', title: 'Every number from the move', text: 'Rent, tax, the deposit nobody mentions, and the month it took to get a bank account.', read: '71%', words: '2,300' },
 		],
 		shop: [

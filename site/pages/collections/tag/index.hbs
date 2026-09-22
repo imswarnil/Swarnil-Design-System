@@ -13,7 +13,8 @@ source: src/components/collection.css · tag.css
 
 <div class="im-single im-wrap-wide" data-sidebar="on">
 	<article class="im-stack" style="--im-stack-gap: 2.5rem">
-		<header class="im-collhead">
+		<header class="im-collhead im-collhead-patterned">
+			<span class="im-collhead-art im-bg-checker" style="--im-art: #f59e0b" aria-hidden="true"></span>
 			<p class="im-eyebrow">Index</p>
 			<h1 class="im-collhead-title">Topics</h1>
 			<p class="im-collhead-text">Everything here, sorted by what it is about. A tag with three posts in it is a tag that should not exist — these are the ones that earned their name.</p>
@@ -102,7 +103,7 @@ source: src/components/collection.css · tag.css
 			<section class="im-widget" aria-labelledby="gw-arch">
 				<h2 class="im-widget-title" id="gw-arch">By year</h2>
 				<nav class="im-widget-archive">
-					{{#each demo.archive}}<a href="#topics">{{year}}<small>{{count}}</small></a>{{/each}}
+					{{#each demo.archive}}<a href="#topics">{{year}}<small>{{posts}}</small></a>{{/each}}
 				</nav>
 			</section>
 

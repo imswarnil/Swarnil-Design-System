@@ -28,7 +28,8 @@ source: src/components/collection.css · post-card.css · pagination.css
 
 <div class="im-single im-wrap-wide" data-sidebar="on">
 	<article class="im-stack" style="--im-stack-gap: 1.75rem">
-		<header class="im-collhead">
+		<header class="im-collhead im-collhead-patterned">
+			<span class="im-collhead-art im-bg-rules" style="--im-art: #ff5a1f" aria-hidden="true"></span>
 			<p class="im-eyebrow">Collection</p>
 			<h1 class="im-collhead-title">Journal</h1>
 			<p class="im-collhead-text">Notes on building things, the roads in between, and the tools that survived the year. Long enough to be worth the trip; never longer.</p>
@@ -89,7 +90,7 @@ source: src/components/collection.css · post-card.css · pagination.css
 			<section class="im-widget" aria-labelledby="pw-arch">
 				<h2 class="im-widget-title" id="pw-arch">Archive</h2>
 				<nav class="im-widget-archive">
-					{{#each demo.archive}}<a href="#feed">{{year}}<small>{{count}}</small></a>{{/each}}
+					{{#each demo.archive}}<a href="#feed">{{year}}<small>{{posts}}</small></a>{{/each}}
 				</nav>
 			</section>
 
