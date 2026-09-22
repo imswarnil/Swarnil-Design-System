@@ -81,12 +81,10 @@
 
 	position: sticky;
 	top: var(--im-rail-top);
-	max-height: calc(100dvh - var(--im-rail-top) - var(--im-rail-inset));
-	/* No scrollbar of its own. A rail that scrolls inside itself catches the
-	   wheel whenever the pointer is over it, and the page appears to hang.
-	   What does not fit is clipped; a rail that needs more than a screen has
-	   too many widgets, and the one list allowed to be long uses im-rail-grow. */
-	overflow: hidden;
+	/* No max-height and no overflow: a rail must never clip a widget, and it
+	   must never scroll inside itself either. It sticks at the top; a rail
+	   taller than the window is read by scrolling to the end of the article,
+	   which is where its lower widgets are wanted anyway. */
 }
 
 /* A rail that fills the window and does NOT scroll inside itself. The whole
@@ -99,9 +97,7 @@
 	display: flex;
 	flex-direction: column;
 	gap: var(--im-rail-gap-y, 0.875rem);
-	height: calc(100dvh - var(--im-rail-top) - var(--im-rail-inset));
-	max-height: none;
-	overflow: hidden;
+	min-height: calc(100dvh - var(--im-rail-top) - var(--im-rail-inset));
 }
 
 .im-sticky-rail-full > .im-widgets {
@@ -121,13 +117,8 @@
 
 /* A short window cannot honour a full-height rail without hiding things, so
    below this it goes back to being an ordinary sticky column. */
-@media (height < 40rem), (width < 64rem) {
-	.im-sticky-rail-full {
-		height: auto;
-		max-height: none;
-		overflow: visible;
-		position: static;
-	}
+@media (width < 64rem) {
+	.im-sticky-rail-full { min-height: 0; position: static; }
 }
 
 /* The aside on the LEFT instead — for a reading sidebar rather than a

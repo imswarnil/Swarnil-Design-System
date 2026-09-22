@@ -1,106 +1,11 @@
 ---
 title: Course curriculum
 layout: wide
-description: The navigation of a course — modules that open, lessons with their state, and how far along you are. Beside the lesson on a wide screen; on a phone, a button opens it as a panel.
+description: The curriculum on the course page and the navigation on a lesson page — one vocabulary of states, drawn twice.
 eyebrow: Collections · Course
-source: src/components/curriculum.css · src/js/im.js
+source: src/components/coursenav.css · src/js/im-view.js
 ---
-<section class="im-section im-wrap-wide">
-	<div class="im-course">
-		<article class="im-stack" style="--im-stack-gap: 1.25rem; min-width: 0">
-			<button class="im-btn im-btn-outline im-curriculum-open" type="button" data-im-curriculum-open="#course">{{> "icons/menu"}} Course curriculum <span class="im-badge">7 / 12</span></button>
-			<div class="im-video" id="lesson-video" data-im-video="aqz-KE-bpKQ">
-				<img class="im-video-poster" src="https://i.ytimg.com/vi/aqz-KE-bpKQ/maxresdefault.jpg" alt="">
-				<button class="im-video-play" type="button" aria-label="Play lesson">{{> "icons/play"}}</button>
-				<div class="im-video-meta"><span>2.3 · Semantic tokens</span><small>8:40</small></div>
-			</div>
-			<div class="im-prose" style="max-width: none">
-				<p class="im-caption" data-index="2.3">Module 2 · Tokens</p>
-				<h2>Semantic tokens</h2>
-				<p>This page <em>is</em> the component: a lesson on the left, the curriculum on the right. Narrow the window below 64rem — the curriculum leaves the page and the <strong>Course curriculum</strong> button appears; it opens the same markup as a panel from the right, with a scrim, <kbd>Esc</kbd> and a close button.</p>
-				<div class="im-postnav">
-					<a href="#"><small>{{> "icons/arrow-left"}} Previous</small>2.2 · Primitives</a>
-					<a href="#"><small>Next {{> "icons/arrow-right"}}</small>2.4 · Dark mode for free</a>
-				</div>
-			</div>
-		</article>
-
-		<aside class="im-curriculum" id="course" aria-label="Course curriculum">
-			<header class="im-curriculum-head">
-				<p class="im-curriculum-title"><span>Build a design system</span><button class="im-btn im-btn-ghost im-btn-icon im-btn-sm im-curriculum-close" type="button" data-im-curriculum-close aria-label="Close curriculum">{{> "icons/x"}}</button></p>
-				<div class="im-curriculum-progress"><div class="im-progress im-progress-sm" role="progressbar" aria-label="Course progress" aria-valuenow="58" aria-valuemin="0" aria-valuemax="100" style="--im-value: .58"></div><span>7 / 12</span></div>
-			</header>
-			<details class="im-module">
-				<summary><span class="im-module-index">01</span><span class="im-module-title">Foundations</span><small>4 / 4</small></summary>
-				<ol class="im-lessons">
-					<li><a class="im-lesson" href="#" data-state="done"><span class="im-lesson-mark">{{> "icons/check"}}</span><span>Why a system</span><small>4:10</small></a></li>
-					<li><a class="im-lesson" href="#" data-state="done"><span class="im-lesson-mark">{{> "icons/check"}}</span><span>Cascade layers</span><small>9:32</small></a></li>
-					<li><a class="im-lesson" href="#" data-state="done"><span class="im-lesson-mark">{{> "icons/check"}}</span><span>Tailwind, constrained</span><small>7:05</small></a></li>
-					<li><a class="im-lesson" href="#" data-state="done"><span class="im-lesson-mark">{{> "icons/check"}}</span><span>Quiz</span><small>5 q</small></a></li>
-				</ol>
-			</details>
-			<details class="im-module" open>
-				<summary><span class="im-module-index">02</span><span class="im-module-title">Tokens</span><small>3 / 5</small></summary>
-				<ol class="im-lessons">
-					<li><a class="im-lesson" href="#" data-state="done"><span class="im-lesson-mark">{{> "icons/check"}}</span><span>Naming things</span><small>6:20</small></a></li>
-					<li><a class="im-lesson" href="#" data-state="done"><span class="im-lesson-mark">{{> "icons/check"}}</span><span>Primitives</span><small>5:48</small></a></li>
-					<li><a class="im-lesson" href="#" aria-current="page"><span class="im-lesson-mark"></span><span>Semantic tokens</span><small>8:40</small></a></li>
-					<li><a class="im-lesson" href="#"><span class="im-lesson-mark"></span><span>Dark mode for free</span><small>7:15</small></a></li>
-					<li><a class="im-lesson" href="#"><span class="im-lesson-mark"></span><span>Exercise: re-skin it</span><small>20 min</small></a></li>
-				</ol>
-			</details>
-			<details class="im-module">
-				<summary><span class="im-module-index">03</span><span class="im-module-title">Components</span><small>0 / 3</small></summary>
-				<ol class="im-lessons">
-					<li><a class="im-lesson" href="#" data-state="locked"><span class="im-lesson-mark">{{> "icons/lock"}}</span><span>Knobs as variables</span><small>10:02</small></a></li>
-					<li><a class="im-lesson" href="#" data-state="locked"><span class="im-lesson-mark">{{> "icons/lock"}}</span><span>State from attributes</span><small>8:11</small></a></li>
-					<li><a class="im-lesson" href="#" data-state="locked"><span class="im-lesson-mark">{{> "icons/lock"}}</span><span>Final project</span><small>1 hr</small></a></li>
-				</ol>
-			</details>
-		</aside>
-	</div>
-</section>
-
-<section class="im-section im-wrap-wide">
-	<div class="im-prose" style="max-width: 62rem">
-		<h2>Structure</h2>
-		{{{{code "hbs"}}}}
-<div class="im-course">
-	<article>
-		<button class="im-btn im-curriculum-open" data-im-curriculum-open="#course">{{> "icons/menu"}} Course curriculum</button>
-		…the lesson…
-	</article>
-
-	<aside class="im-curriculum" id="course" aria-label="Course curriculum">
-		<header class="im-curriculum-head"> title · close button · progress </header>
-		<details class="im-module" open>
-			<summary><span class="im-module-index">02</span><span class="im-module-title">Tokens</span><small>3 / 5</small></summary>
-			<ol class="im-lessons">
-				<li><a class="im-lesson" href="…" data-state="done"><span class="im-lesson-mark">{{> "icons/check"}}</span><span>Primitives</span><small>5:48</small></a></li>
-				<li><a class="im-lesson" href="…" aria-current="page"><span class="im-lesson-mark"></span><span>Semantic tokens</span><small>8:40</small></a></li>
-			</ol>
-		</details>
-	</aside>
-</div>
-		{{{{/code}}}}
-		<div class="im-table-scroll">
-		<table>
-			<thead><tr><th>Piece</th><th></th></tr></thead>
-			<tbody>
-				<tr><td><code>im-course</code></td><td>The layout: lesson + curriculum. From <code>lg</code> the curriculum is a sticky column; <code>--im-curriculum-width</code> (20rem).</td></tr>
-				<tr><td><code>im-module</code></td><td>A native <code>&lt;details&gt;</code>. Open the one holding the current lesson. Index, title, "done / total".</td></tr>
-				<tr><td><code>im-lesson</code></td><td>A link. <code>data-state="done"</code> · <code>aria-current="page"</code> · <code>data-state="locked"</code> (not clickable).</td></tr>
-				<tr><td><code>im-lesson-mark</code></td><td>Empty ring → to do. Put a check icon in it for done, a lock for locked; current fills with the accent.</td></tr>
-				<tr><td><code>data-im-curriculum-open="#id"</code></td><td>The phone button. <code>data-im-curriculum-close</code>, <kbd>Esc</kbd> or a tap outside closes.</td></tr>
-			</tbody>
-		</table>
-		</div>
-		<h2>In Ghost</h2>
-		<p>A course is a tag; its modules are child tags or an internal-tag convention of your choosing; lessons are posts in order. The curriculum is then two nested <code>\{{#get}}</code> loops around one <code>im-lesson</code>, with <code>aria-current="page"</code> where <code>\{{#match slug ../post.slug}}</code>. "Done" is per reader, so it lives in <code>localStorage</code> (or member data) and is applied by a few lines of theme script that set <code>data-state="done"</code>.</p>
-	</div>
-</section>
-
-
+<p>Two components, one vocabulary: <code>im-syllabus</code> is the curriculum on the course page; <code>im-coursenav</code> is the rail on a lesson page. States are marks — tick, play, lock — never a word alone.</p>
 
 <h2>The syllabus, on the course page</h2>
 <p><code>im-syllabus</code>: units that open and close, a row per lesson — still, number and title, kind and length, and the state on the right as a mark with a word. Done, playing, free, members.</p>
@@ -120,13 +25,12 @@ source: src/components/curriculum.css · src/js/im.js
 {{/example}}
 
 <h2>The rail, on the lesson page</h2>
-<p><code>im-coursenav</code>: the same states as marks, with a still per row or without (<code>im-coursenav-plain</code>, the sheet on a phone). Next up is pinned to the bottom.</p>
+<p><code>im-coursenav</code>: the same states as marks, with a still per row or without (<code>im-coursenav-plain</code>, the sheet on a phone).</p>
 {{#example}}
 <div class="im-grid-auto" style="--im-grid-min: 18rem; align-items: start">
 	<nav class="im-coursenav" aria-label="Lessons">
 		<div class="im-coursenav-head"><p class="im-coursenav-title">{{icon "graduation-cap"}}Design tokens, properly</p><p class="im-coursenav-progress"><span>2 of 7 done</span><span>29%</span><span class="im-progress" role="progressbar" aria-valuenow="29" aria-valuemin="0" aria-valuemax="100" style="--im-value: .29"></span></p></div>
 		<div class="im-coursenav-body">{{#each demo.sections}}{{#match @index "<" 2}}<details class="im-coursenav-unit" open><summary><b>{{n}}</b><span>{{name}}</span><small>{{time}}</small></summary>{{#each ../demo.lessons}}{{#match n ">=" ../from}}{{#match n "<=" ../to}}<a class="im-coursenav-lesson" href="#" data-state="{{#if locked}}locked{{else}}{{state}}{{/if}}"{{#match state "=" "current"}} aria-current="page"{{/match}}><span class="im-coursenav-mark" aria-hidden="true"></span><span class="im-coursenav-shot"><img src="{{lookup @root.demo.shots shot}}" alt="" loading="lazy"></span><span>{{title}}</span><small>{{time}}</small></a>{{/match}}{{/match}}{{/each}}</details>{{/match}}{{/each}}</div>
-		<a class="im-coursenav-next" href="#"><img src="{{demo.shots.[3]}}" alt=""><span><small>Next · Lesson 04</small><b>The page shell</b></span></a>
 	</nav>
 	<nav class="im-coursenav im-coursenav-plain" aria-label="Lessons, plain">
 		<div class="im-coursenav-head"><p class="im-coursenav-title">{{icon "graduation-cap"}}Without stills</p></div>

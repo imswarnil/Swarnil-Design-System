@@ -251,8 +251,8 @@
 
 .im-coursenav-head {
 	display: grid;
-	gap: 0.5rem;
-	padding: 1rem 1.125rem;
+	gap: 0.75rem;
+	padding: 1.25rem 1.25rem 1rem;
 	border-bottom: 1px solid var(--im-line);
 	background-color: var(--im-surface);
 }
@@ -268,6 +268,7 @@
 
 .im-coursenav-title > .im-icon { color: var(--im-accent); }
 .im-coursenav-title > button { margin-left: auto; }
+.im-coursenav-title { font-size: var(--im-text-base); }
 
 .im-coursenav-progress {
 	display: grid;
@@ -287,17 +288,17 @@
 	overflow-y: auto;
 	overscroll-behavior: auto;
 	scrollbar-width: thin;
-	padding: 0.5rem;
+	padding: 0.75rem;
 }
 
-.im-coursenav-unit + .im-coursenav-unit { margin-top: 0.5rem; }
+.im-coursenav-unit + .im-coursenav-unit { margin-top: 1rem; }
 
 .im-coursenav-unit > summary {
 	display: grid;
 	grid-template-columns: 1.5rem minmax(0, 1fr) auto;
 	gap: 0.5rem;
 	align-items: center;
-	padding: 0.5rem 0.625rem;
+	padding: 0.625rem 0.75rem;
 	border-radius: 0;
 	color: var(--im-ink);
 	font-size: var(--im-text-xs);
@@ -315,10 +316,10 @@
 
 .im-coursenav-lesson {
 	display: grid;
-	grid-template-columns: 1.5rem 3rem minmax(0, 1fr) auto;
-	gap: 0.625rem;
+	grid-template-columns: 1.5rem 3.25rem minmax(0, 1fr) auto;
+	gap: 0.75rem;
 	align-items: center;
-	padding: 0.4375rem 0.625rem;
+	padding: 0.625rem 0.75rem;
 	border-radius: 0;
 	color: var(--im-body);
 	font-size: var(--im-text-sm);
@@ -374,25 +375,6 @@
 
 .im-coursenav-lesson[data-state="locked"] { color: var(--im-muted); }
 .im-coursenav-lesson[data-state="locked"] .im-coursenav-shot > img { filter: grayscale(1); opacity: 0.5; }
-
-/* Next up, pinned to the bottom of the rail. */
-.im-coursenav-next {
-	display: grid;
-	grid-template-columns: 4.5rem minmax(0, 1fr);
-	gap: 0.75rem;
-	align-items: center;
-	padding: 0.75rem 1rem;
-	border-top: 1px solid var(--im-line);
-	background-color: var(--im-surface);
-	color: var(--im-ink);
-	text-decoration: none;
-}
-
-.im-coursenav-next:hover { background-color: var(--im-surface-2); }
-.im-coursenav-next > img { aspect-ratio: 16 / 10; border-radius: 0; object-fit: cover; }
-.im-coursenav-next > span { display: grid; gap: 0.125rem; min-width: 0; }
-.im-coursenav-next small { color: var(--im-muted); font-family: var(--im-font-mono); font-size: var(--im-text-xs); }
-.im-coursenav-next b { font-size: var(--im-text-sm); font-weight: 600; line-height: 1.3; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 
 /* Without stills, in a narrow rail or a sheet. */
 .im-coursenav-plain .im-coursenav-lesson { grid-template-columns: 1.5rem minmax(0, 1fr) auto; }

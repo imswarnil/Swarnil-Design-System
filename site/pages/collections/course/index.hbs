@@ -11,39 +11,34 @@ source: src/components/curriculum.css · commerce.css
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
-<div class="im-single im-wrap-wide" data-sidebar="on" style="--im-single-aside: 21rem">
-	<article class="im-stack" style="--im-stack-gap: 2rem">
-		<nav aria-label="Breadcrumb">
-			<ol class="im-breadcrumb im-breadcrumb-chevron">
-				<li><a href="/">{{> "icons/house"}}<span>Home</span></a></li>
-				<li><a href="/collections/course/">{{> "icons/graduation-cap"}}<span>Courses</span></a></li>
-				<li><span aria-current="page">Design tokens, properly</span></li>
-			</ol>
-		</nav>
+<div class="im-wrap-wide im-stack" style="--im-stack-gap: 2rem">
+	<nav aria-label="Breadcrumb">
+		<ol class="im-breadcrumb im-breadcrumb-chevron">
+			<li><a href="/">{{> "icons/house"}}<span>Home</span></a></li>
+			<li><a href="/collections/course/">{{> "icons/graduation-cap"}}<span>Courses</span></a></li>
+			<li><span aria-current="page">Design tokens, properly</span></li>
+		</ol>
+	</nav>
 
-		<header class="im-stack" style="--im-stack-gap: 1.5rem">
-			<div class="im-mediabg" style="--im-mediabg-min: 18rem">
-				<img src="{{demo.shots.[0]}}" alt="">
-				<div class="im-mediabg-scrim"></div>
-				<div class="im-mediabg-copy">
-					<p class="im-cinehero-meta"><span>Course</span><span>7 lessons · 81 min</span><span>2 free</span></p>
-					<h1 class="im-mediabg-title">Design tokens, properly</h1>
-					<p class="im-mediabg-text">The layer that decides everything else. By the end, dark mode is a change to one file — and you know why.</p>
-				</div>
-			</div>
-			<div class="im-coursehero" style="min-height: 0">
-				<div class="im-video im-video-full" id="trailer" data-im-video="aqz-KE-bpKQ" data-im-video-title="Trailer">
-					<img class="im-video-poster" src="{{demo.shots.[1]}}" alt="" loading="eager">
-					<button class="im-video-play" type="button" aria-label="Play the trailer">{{> "icons/play"}}</button>
-				</div>
-				<div class="im-stack" style="--im-stack-gap: .875rem">
-					<p class="im-rating im-rating-lg" style="--im-rating: 4.8"><span class="im-rating-stars" aria-hidden="true"></span><span class="im-rating-value">4.8</span><a class="im-rating-count" href="#said">41 reviews</a></p>
-					<p class="im-tier-price" style="border: 0; padding: 0"><b>€49</b><span>once, yours forever · free on <a href="/pages/membership/">Workshop</a></span></p>
-					<p class="im-cluster" style="--im-cluster-gap: .5rem"><a class="im-btn im-btn-primary" href="/collections/course/lesson/">{{icon "play"}}Start the course</a><a class="im-btn" href="#curriculum">{{icon "list"}}Curriculum</a></p>
-					<ul class="im-tier-list"><li>Every source file and the finished token set</li><li>Lifetime updates, 14-day refund</li><li>Two lessons free, no account needed</li></ul>
-				</div>
-			</div>
-		</header>
+	<header class="im-mediabg" style="--im-mediabg-min: 22rem">
+		<img src="{{demo.shots.[0]}}" alt="">
+		<div class="im-mediabg-scrim"></div>
+		<div class="im-mediabg-copy">
+			<p class="im-cinehero-meta"><span>Course</span><span>7 lessons · 81 min</span><span>2 free</span><span>Updated Sep 2026</span></p>
+			<h1 class="im-mediabg-title">Design tokens, properly</h1>
+			<p class="im-mediabg-text">The layer that decides everything else. By the end, dark mode is a change to one file — and you know why.</p>
+			<p class="im-cluster" style="--im-cluster-gap: .5rem; margin-top: 1.25rem"><a class="im-btn im-btn-primary" href="/collections/course/lesson/">{{icon "play"}}Start the course</a><a class="im-btn im-btn-ink" href="#curriculum">{{icon "list"}}Curriculum</a></p>
+		</div>
+	</header>
+</div>
+
+<div class="im-single im-wrap-wide" data-sidebar="on" style="--im-single-aside: 21rem; margin-top: 2rem">
+	<article class="im-stack" style="--im-stack-gap: 2rem">
+		<div class="im-video im-video-full" id="trailer" data-im-video="aqz-KE-bpKQ" data-im-video-title="Trailer">
+			<img class="im-video-poster" src="{{demo.shots.[1]}}" alt="" loading="eager">
+			<button class="im-video-play" type="button" aria-label="Play the trailer">{{> "icons/play"}}</button>
+		</div>
+		<p class="im-snipcard-meta" style="margin-top: -1rem"><span class="im-kind" data-kind="video">{{icon "square-play"}}Trailer</span><span>2:40</span><span class="im-rating" style="--im-rating: 4.8"><span class="im-rating-stars" aria-hidden="true"></span><span class="im-rating-value">4.8</span><a class="im-rating-count" href="#said">41 reviews</a></span></p>
 
 		<div class="im-bignums">
 			<span class="im-bignum"><strong data-im-count>7</strong><span>{{icon "square-play"}}Lessons</span></span>
@@ -124,55 +119,34 @@ source: src/components/curriculum.css · commerce.css
 	</article>
 
 	<aside>
-		<div class="im-sticky-rail im-sticky-rail-full">
+		<div class="im-sticky-rail">
 			<div class="im-widgets">
 				<section class="im-offer" aria-labelledby="c-buy">
-					<h2 class="im-widget-title" id="c-buy" style="color: inherit">Get the course</h2>
-					<p class="im-offer-price"><b>€49</b><s>€79</s><span>once · yours forever</span></p>
-					<ul class="im-offer-list"><li>{{icon "check"}}7 lessons, 81 minutes</li><li>{{icon "check"}}Every source file</li><li>{{icon "check"}}Lifetime updates</li><li>{{icon "check"}}14-day refund, no reason</li></ul>
+					<h2 class="im-widget-title" id="c-buy">Get the course</h2>
+					<p class="im-offer-price"><b>€49</b><s>€79</s><span>Once. Yours forever, every revision included.</span></p>
 					<a class="im-btn im-btn-primary" href="/pages/auth/">{{icon "play"}}Start the course</a>
-					<p class="im-offer-note">Free on <a href="/pages/membership/" style="color: inherit">Workshop</a>. Two lessons free without an account.</p>
+					<ul class="im-offer-list"><li>{{icon "check"}}7 lessons, 81 minutes</li><li>{{icon "check"}}Every source file, and the finished token set</li><li>{{icon "check"}}Lifetime updates</li><li>{{icon "check"}}14-day refund, no reason needed</li></ul>
+					<p class="im-offer-note">Free on <a href="/pages/membership/">Workshop</a> · two lessons free without an account</p>
 				</section>
-
-				<section class="im-widget" aria-labelledby="c-by">
-					<h2 class="im-widget-title" id="c-by">Who made it</h2>
-					<div class="im-widget-author">
-						{{> "components/avatar" size="lg" src=demo.author.profile_image name=demo.author.name}}
-						<div>
-							<p class="im-widget-author-name">{{demo.author.name}}</p>
-							<p class="im-widget-author-role">Design systems · 8 years</p>
-						</div>
-					</div>
-					<p class="im-widget-sponsor">Wrote the system this course is about, and the theme on top of it. Both are in the <a href="/collections/shop/">shop</a>, and the course is how they were built.</p>
+				{{#with demo.author}}{{> "components/author-widget" title="Who made it"}}{{/with}}
+				<section class="im-widget" aria-labelledby="c-facts">
+					<h2 class="im-widget-title" id="c-facts">At a glance</h2>
 					<dl class="im-widget-facts">
-						<dt>Courses</dt><dd>2</dd>
-						<dt>Students</dt><dd>2,100</dd>
-						<dt>Rated</dt><dd>4.8</dd>
+						<dt>Level</dt><dd>Intermediate</dd>
+						<dt>Format</dt><dd>5 videos, 2 articles</dd>
+						<dt>Needs</dt><dd>CSS, a browser</dd>
+						<dt>Certificate</dt><dd>No</dd>
+						<dt>Language</dt><dd>English</dd>
 					</dl>
-					<a class="im-btn im-btn-sm" href="/pages/about/" style="width: 100%">{{icon "user"}}About me</a>
 				</section>
-
-				<section class="im-widget" aria-labelledby="c-inc">
-					<h2 class="im-widget-title" id="c-inc">What is included</h2>
-					<ul class="im-tier-list">
-						<li>7 lessons, 81 minutes</li>
-						<li>Every source file</li>
-						<li>The finished token set</li>
-						<li>Lifetime updates</li>
-						<li data-no>A certificate</li>
-					</ul>
-				</section>
-
 				<section class="im-widget im-widget-fill" aria-labelledby="c-sub">
 					<h2 class="im-widget-title" id="c-sub">Not sure yet</h2>
 					<p class="im-widget-heading">Two lessons are free. Start there.</p>
 					{{> "components/subscribe" id="course-email" button="Send them"}}
 				</section>
-				<aside class="im-ad im-ad-rectangle" aria-label="Advertisement">
-				<span class="im-ad-label">Sponsored</span>
-				<span class="im-ad-slot"><img src="{{demo.shots.[5]}}" alt="" loading="lazy"></span>
-				<button class="im-btn im-btn-sm im-ad-remove" type="button" popovertarget="ad-gate">{{icon "circle-x"}}Remove ads</button>
-			</aside>
+			</div>
+		</div>
+	</aside>
 		</div>
 		</div>
 	</aside>

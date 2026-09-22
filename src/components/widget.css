@@ -14,6 +14,7 @@
 }
 
 .im-widget {
+	min-width: 0;
 	display: flex;
 	flex-direction: column;
 	gap: 0.875rem;
@@ -95,7 +96,8 @@
 
 .im-widget-stats {
 	display: flex;
-	gap: 1.25rem;
+	flex-wrap: wrap;
+	gap: 0.5rem 1.25rem;
 	width: 100%;
 	padding-top: 0.875rem;
 	border-top: 1px solid var(--im-line);
