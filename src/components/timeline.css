@@ -302,11 +302,11 @@
 	font-size: var(--im-text-sm);
 }
 
-.im-timeline-item[data-kind="job"] { --im-kind-ink: var(--im-info); }
-.im-timeline-item[data-kind="trip"] { --im-kind-ink: var(--im-warning); }
-.im-timeline-item[data-kind="learning"] { --im-kind-ink: var(--im-success); }
-.im-timeline-item[data-kind="release"] { --im-kind-ink: var(--im-accent); }
-.im-timeline-item[data-kind="event"] { --im-kind-ink: var(--im-danger); }
+.im-timeline-item[data-kind="job"] { --im-kind-ink: var(--im-c-project); }
+.im-timeline-item[data-kind="trip"] { --im-kind-ink: var(--im-c-travel); }
+.im-timeline-item[data-kind="learning"] { --im-kind-ink: var(--im-c-course); }
+.im-timeline-item[data-kind="release"] { --im-kind-ink: var(--im-c-post); }
+.im-timeline-item[data-kind="event"] { --im-kind-ink: var(--im-c-video); }
 .im-timeline-item[data-kind="life"] { --im-kind-ink: var(--im-ink); }
 
 .im-timeline-kind {

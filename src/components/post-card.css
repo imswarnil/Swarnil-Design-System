@@ -522,3 +522,71 @@ a.im-post-card {
 .im-post-card-media.im-thumb-lock {
 	--im-thumb-mark: 2.25rem;
 }
+
+/* ---- featured, on the picture ------------------------------------------
+   A dot at the picture's top-right corner, always. On hover the word slides
+   in beside it. The dot is the only thing that shows at rest, so a grid of
+   cards is not a grid of labels. */
+.im-post-card-featured {
+	position: absolute;
+	top: 0.625rem;
+	right: 0.625rem;
+	z-index: 2;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
+	height: 1.25rem;
+	padding: 0 0.3125rem;
+	border-radius: var(--im-radius-full);
+	background-color: rgb(20 20 20 / 60%);
+	-webkit-backdrop-filter: blur(4px);
+	backdrop-filter: blur(4px);
+	color: #fff;
+	font-size: 0.625rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	overflow: hidden;
+	transition: padding var(--im-duration-fast) var(--im-ease-out);
+}
+
+.im-post-card-featured::before {
+	content: "";
+	flex: none;
+	width: 0.5rem;
+	height: 0.5rem;
+	border-radius: var(--im-radius-full);
+	background-color: var(--im-accent);
+	box-shadow: 0 0 0 2px rgb(255 255 255 / 85%);
+}
+
+.im-post-card-featured > span {
+	max-width: 0;
+	opacity: 0;
+	white-space: nowrap;
+	transition: max-width var(--im-duration-base) var(--im-ease-out), opacity var(--im-duration-fast) var(--im-ease-out);
+}
+
+.im-post-card:is(:hover, :focus-within) .im-post-card-featured { padding-right: 0.5rem; }
+.im-post-card:is(:hover, :focus-within) .im-post-card-featured > span { max-width: 6rem; opacity: 1; }
+
+/* ---- members only: the picture blurred, the gate written on it -------- */
+.im-post-card-media.im-thumb-lock::after { display: none; }
+.im-post-card-media.im-thumb-lock > img { filter: blur(6px) saturate(0.7); opacity: 0.85; scale: 1.06; }
+
+.im-post-card-gate {
+	position: absolute;
+	inset: 0;
+	z-index: 2;
+	display: grid;
+	place-content: center;
+	justify-items: center;
+	gap: 0.375rem;
+	color: #fff;
+	text-align: center;
+	background-image: linear-gradient(rgb(10 10 10 / 25%), rgb(10 10 10 / 45%));
+}
+
+.im-post-card-gate > .im-icon { font-size: 1.5rem; }
+.im-post-card-gate > b { font-size: var(--im-text-sm); font-weight: 600; }
+.im-post-card-gate > small { font-size: var(--im-text-xs); opacity: 0.8; }

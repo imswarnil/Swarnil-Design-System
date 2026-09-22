@@ -612,3 +612,48 @@
 .im-widget-hire .im-btn {
 	width: 100%;
 }
+
+/* ---- the author, as a stacked card ----
+   Two cards behind, offset, so the widget reads as a person's card pulled
+   from a pile. The avatar is larger and centred; the numbers carry icons. */
+.im-widget-person {
+	position: relative;
+	text-align: center;
+	margin-top: 0.75rem;
+}
+
+.im-widget-person::before,
+.im-widget-person::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	border-radius: inherit;
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	background-color: var(--im-canvas);
+}
+
+.im-widget-person::before { translate: 0 -0.5rem; scale: 0.94; opacity: 0.6; }
+.im-widget-person::after { translate: 0 -0.25rem; scale: 0.97; opacity: 0.8; }
+
+.im-widget-person > .im-avatar,
+.im-widget-person .im-avatar { --im-avatar-size: 4.5rem; margin-inline: auto; }
+
+.im-widget-person .im-widget-author-name { margin-top: 0.75rem; font-size: var(--im-text-base); }
+.im-widget-person .im-widget-author-role { color: var(--im-muted); }
+.im-widget-person .im-widget-sponsor { margin-top: 0.5rem; }
+
+.im-widget-person-stats {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 0.5rem;
+	margin-top: 0.875rem;
+	padding-top: 0.875rem;
+	border-top: 1px solid var(--im-line);
+}
+
+.im-widget-person-stats > div { display: grid; gap: 0.125rem; }
+.im-widget-person-stats .im-icon { margin-inline: auto; color: var(--im-accent); font-size: 1rem; }
+.im-widget-person-stats strong { font-family: var(--im-font-mono); font-size: var(--im-text-sm); font-variant-numeric: tabular-nums; }
+.im-widget-person-stats span { color: var(--im-muted); font-size: 0.6875rem; }
+.im-widget-person .im-cluster { justify-content: center; }

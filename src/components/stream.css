@@ -74,16 +74,13 @@
 /* Every collection that can appear in the column, and the one colour each is
    allowed. The colours match the identifier chip (`im-kind`) exactly, so a
    video is the same red wherever a reader meets one. */
-.im-stream-item[data-kind="post"] { --im-kind-ink: var(--im-accent); }
-.im-stream-item[data-kind="article"] { --im-kind-ink: var(--im-accent); }
-.im-stream-item[data-kind="video"] { --im-kind-ink: var(--im-danger); }
-.im-stream-item[data-kind="short"] { --im-kind-ink: var(--im-danger); }
-.im-stream-item[data-kind="project"] { --im-kind-ink: var(--im-info); }
-.im-stream-item[data-kind="release"] { --im-kind-ink: var(--im-info); }
-.im-stream-item[data-kind="issue"] { --im-kind-ink: var(--im-success); }
-.im-stream-item[data-kind="product"] { --im-kind-ink: var(--im-warning); }
-.im-stream-item[data-kind="trip"] { --im-kind-ink: var(--im-warning); }
-.im-stream-item[data-kind="note"] { --im-kind-ink: var(--im-muted); }
+.im-stream-item[data-kind="post"], .im-stream-item[data-kind="article"] { --im-kind-ink: var(--im-c-post); }
+.im-stream-item[data-kind="video"], .im-stream-item[data-kind="short"] { --im-kind-ink: var(--im-c-video); }
+.im-stream-item[data-kind="project"], .im-stream-item[data-kind="release"] { --im-kind-ink: var(--im-c-project); }
+.im-stream-item[data-kind="issue"] { --im-kind-ink: var(--im-c-newsletter); }
+.im-stream-item[data-kind="product"] { --im-kind-ink: var(--im-c-shop); }
+.im-stream-item[data-kind="trip"] { --im-kind-ink: var(--im-c-travel); }
+.im-stream-item[data-kind="note"] { --im-kind-ink: var(--im-c-timeline); }
 
 .im-stream-body {
 	display: flex;

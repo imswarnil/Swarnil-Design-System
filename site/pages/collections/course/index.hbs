@@ -92,7 +92,13 @@ source: src/components/curriculum.css · commerce.css
 		</section>
 
 		<section class="im-section" id="said" style="--im-section-gap: 1rem">
-			<h2 class="im-caption" data-index="said">What people who took it say</h2>
+			<h2 class="im-caption" data-index="said">What students say</h2>
+			<div class="im-marquee im-marquee-pause" data-im-marquee style="--im-marquee-gap: 1rem; --im-marquee-speed: 60s">
+				<div class="im-marquee-group">
+					{{#each demo.testimonials}}<article class="im-review im-review-card"><p class="im-review-head"><span class="im-review-by">{{by}}</span><span class="im-rating" style="--im-rating: {{rating}}"><span class="im-rating-stars" aria-hidden="true"></span></span></p><p class="im-review-text">{{text}}</p><p class="im-review-when" style="margin: 0">{{role}}</p></article>{{/each}}
+					{{#each demo.reviews}}<article class="im-review im-review-card"><p class="im-review-head"><span class="im-review-by">{{by}}</span><span class="im-rating" style="--im-rating: {{rating}}"><span class="im-rating-stars" aria-hidden="true"></span></span></p><p class="im-review-text">{{text}}</p><p class="im-review-when" style="margin: 0">{{when}}</p></article>{{/each}}
+				</div>
+			</div>
 			<div class="im-reviews">
 				{{#each demo.testimonials}}
 				<article class="im-review">
@@ -145,9 +151,6 @@ source: src/components/curriculum.css · commerce.css
 					{{> "components/subscribe" id="course-email" button="Send them"}}
 				</section>
 			</div>
-		</div>
-	</aside>
-		</div>
 		</div>
 	</aside>
 </div>

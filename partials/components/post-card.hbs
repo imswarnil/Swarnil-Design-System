@@ -21,7 +21,6 @@
 	condition here: that way `hide` is one attribute a theme can set from a
 	setting, and the partial does not grow a boolean per part. --}}
 <article class="im-post-card{{#if layout}} im-post-card-{{layout}}{{/if}}{{#if size}} im-post-card-{{size}}{{/if}}{{#if top}} im-post-card-row-top{{/if}}{{#if dot}} im-post-card-dot{{#match dot "!=" true}} im-post-card-dot-{{dot}}{{/match}}{{/if}}{{#if class}} {{class}}{{/if}}{{#if featured}} im-featured{{/if}} {{post_class}}"{{#if hide}} data-im-hide="{{hide}}"{{/if}}{{#if style}} style="{{style}}"{{/if}}>
-	{{#if featured}}<span class="im-featured-tag">{{t "Featured"}}</span>{{/if}}
 	<div class="im-post-card-media im-thumb{{#unless access}} im-thumb-lock{{/unless}}"{{#unless feature_image}} data-initial="{{title.[0]}}"{{/unless}}>
 		{{#if feature_image}}
 			<img
@@ -35,6 +34,8 @@
 		{{/if}}
 
 		{{#if kind}}<span class="im-kind im-kind-over" data-kind="{{kind}}">{{> "icons/file-text"}}{{kind}}</span>{{/if}}
+		{{#if featured}}<span class="im-post-card-featured" aria-label="{{t "Featured"}}"><span aria-hidden="true">{{t "Featured"}}</span></span>{{/if}}
+		{{#unless access}}<span class="im-post-card-gate">{{> "icons/lock"}}<b>{{t "Members only"}}</b><small>{{t "Sign in to read"}}</small></span>{{/unless}}
 
 		<div class="im-post-card-flags">
 			{{#if reading_time}}<span class="im-post-card-flag" data-part="time">{{reading_time minute=(t "1 min") minutes=(t "% min")}}</span>{{/if}}

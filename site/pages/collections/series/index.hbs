@@ -46,7 +46,7 @@ source: src/components/commerce.css · video-card.css
 			{{#each demo.episodes}}
 			<div class="im-episode" data-state="{{state}}" data-facet="{{season}}">
 				<span class="im-epnum">{{n}}</span>
-				<article class="im-vidcard im-vidcard-row">
+				<article class="im-vidcard im-vidcard-row im-vidcard-reveal">
 					<a class="im-vidcard-thumb" href="/collections/series/episode/" tabindex="-1" aria-hidden="true">
 						<img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy">
 						<span class="im-vidcard-time">{{time}}</span>
@@ -58,6 +58,11 @@ source: src/components/commerce.css · video-card.css
 						<p class="im-vidcard-meta"><span>{{when}}</span>{{#match state "=" "done"}}<span>Watched</span>{{/match}}{{#match state "=" "upcoming"}}<span>Not out yet</span>{{/match}}</p>
 						<p class="im-vidcard-text">{{text}}</p>
 					</div></div>
+					<div class="im-vidcard-panel">
+						<p>{{text}}</p>
+						<dl class="im-widget-facts"><dt>Episode</dt><dd>{{n}} of 07</dd><dt>Length</dt><dd>{{time}}</dd><dt>Out</dt><dd>{{when}}</dd></dl>
+						<p class="im-cluster" style="--im-cluster-gap: .375rem"><a class="im-btn im-btn-sm im-btn-primary" href="/collections/series/episode/">{{icon "play"}}Watch</a><a class="im-btn im-btn-sm" href="/collections/series/episode/">Details</a></p>
+					</div>
 				</article>
 			</div>
 			{{/each}}
@@ -70,6 +75,7 @@ source: src/components/commerce.css · video-card.css
 				{{#each demo.seriesall}}
 				<article class="im-seriescard" data-state="{{#match state "=" "Running"}}running{{else}}finished{{/match}}">
 					<span class="im-seriescard-media"><img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy"></span>
+					<p><span class="im-kind" data-kind="series">{{icon "square-play"}}Series</span></p>
 					<a class="im-seriescard-name" href="/collections/series/">{{name}}</a>
 					<p class="im-seriescard-meta">
 						<span class="im-seriescard-state">{{state}}</span>

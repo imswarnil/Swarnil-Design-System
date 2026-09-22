@@ -95,16 +95,16 @@ export async function build({ quiet = false } = {}) {
 	// a theme keeps the lookup — by slug, in one place — and falls back to a
 	// generic mark for a tag nobody has decided about yet.
 	const TOPIC_FACE = {
-		craft: { mark: 'component', color: '#ff5a1f', text: 'How things are built, and why they are built that way.' },
-		'moving-to-europe': { mark: 'route', color: '#3178c6', text: 'Paperwork, money and the parts nobody warns you about.' },
-		salesforce: { mark: 'zap', color: '#4ac26b', text: 'Eight years of it. The good parts and the expensive ones.' },
-		career: { mark: 'briefcase', color: '#a855f7', text: 'Work, and what it is actually worth.' },
-		travel: { mark: 'map-pin', color: '#f59e0b', text: 'Roads, itineraries and what each day cost.' },
+		craft: { mark: 'component', color: 'var(--im-c-post)', text: 'How things are built, and why they are built that way.' },
+		'moving-to-europe': { mark: 'route', color: 'var(--im-c-travel)', text: 'Paperwork, money and the parts nobody warns you about.' },
+		salesforce: { mark: 'zap', color: 'var(--im-c-newsletter)', text: 'Eight years of it. The good parts and the expensive ones.' },
+		career: { mark: 'briefcase', color: 'var(--im-c-course)', text: 'Work, and what it is actually worth.' },
+		travel: { mark: 'map-pin', color: 'var(--im-c-tag)', text: 'Roads, itineraries and what each day cost.' },
 	};
 
 	const topics = fixtures.tags.map((t) => ({
 		...t,
-		...(TOPIC_FACE[t.slug] || { mark: 'tag', color: '#8b8b8b', text: `Everything filed under ${t.name}.` }),
+		...(TOPIC_FACE[t.slug] || { mark: 'tag', color: 'var(--im-c-timeline)', text: `Everything filed under ${t.name}.` }),
 	}));
 
 	const demo = {

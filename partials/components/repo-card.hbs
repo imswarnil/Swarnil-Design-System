@@ -20,7 +20,7 @@
 <article class="im-repo{{#if layout}} im-repo-{{layout}}{{/if}}{{#if class}} {{class}}{{/if}}"{{#if lang_color}} style="--im-repo-lang: {{lang_color}}"{{/if}}>
 	{{#if image}}<span class="im-repo-media"><img src="{{image}}" alt="" loading="lazy"></span>{{/if}}
 
-	{{#if kind}}<p><span class="im-kind" data-kind="{{kind}}">{{> "icons/folder"}}{{kind}}</span></p>{{/if}}
+	<p><span class="im-kind" data-kind="project">{{> "icons/folder"}}{{#if kind}}{{kind}}{{else}}{{t "Project"}}{{/if}}</span></p>
 
 	<p class="im-repo-head">
 		<a class="im-repo-name" href="{{#if url}}{{url}}{{else}}#{{/if}}">{{> "icons/folder"}}{{#if owner}}{{owner}}/{{/if}}<b>{{name}}</b></a>

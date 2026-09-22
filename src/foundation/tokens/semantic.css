@@ -21,7 +21,7 @@
 	--im-faint: var(--im-gray-400);
 
 	/* ---- Accent: Ghost injects --ghost-accent-color from Settings → Design -- */
-	--im-accent: var(--ghost-accent-color, #ff5a1f);
+	--im-accent: var(--ghost-accent-color, #f22f46);
 	--im-on-accent: var(--im-white);
 
 	/* ---- Status, and a tint of each over the CURRENT canvas ---------------- */
@@ -49,6 +49,27 @@
 	--im-current-fg: var(--im-ink);
 	--im-current-weight: 600;
 	--im-hover-bg: var(--im-surface);
+
+	/* ---- One colour per collection --------------------------------------
+	   Sat beside the primary: the same saturation and lightness band, hues
+	   spread round the wheel so no two neighbours in a mixed feed match. A
+	   collection's chip, its stream mark, its tag face and its head pattern
+	   all read the same variable, so a collection is one colour everywhere. */
+	--im-c-post: var(--im-accent);
+	--im-c-project: #2f6bf2;
+	--im-c-video: #d61f6a;
+	--im-c-series: #9b2ff2;
+	--im-c-course: #6a3df2;
+	--im-c-shop: #f2842f;
+	--im-c-newsletter: #1fa36b;
+	--im-c-uses: #0f9a9a;
+	--im-c-snippet: #4a4af2;
+	--im-c-prompt: #1f8fd6;
+	--im-c-travel: #1f78f2;
+	--im-c-experience: #0fa0c4;
+	--im-c-bucket: #e0298f;
+	--im-c-tag: #d68a1f;
+	--im-c-timeline: var(--im-muted);
 
 	/* ---- Marks drawn on a picture -------------------------------------------
 	   A play triangle as an image rather than as an element, so any thumbnail

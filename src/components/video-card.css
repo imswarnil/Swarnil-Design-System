@@ -501,7 +501,10 @@
 
 .im-viddesc-body {
 	padding-top: 0.75rem;
-	white-space: pre-wrap;
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+	line-height: 1.6;
+	white-space: pre-line;
 	text-wrap: pretty;
 }
 
@@ -1020,6 +1023,14 @@
 }
 
 @media (width < 64rem) {
+	/* On a phone the clip is a 16:9 post hero, not a portrait: a 9:16 frame
+	   in a narrow column is a whole screen of picture before any words. */
+	.im-shortwatch-player {
+		width: 100%;
+		aspect-ratio: 16 / 9;
+		max-height: none;
+	}
+
 	.im-shortwatch {
 		grid-template-columns: minmax(0, 1fr);
 		height: auto;
@@ -1031,13 +1042,49 @@
 		justify-content: center;
 	}
 
-	.im-shortwatch-player {
-		width: min(100%, 24rem);
-		max-height: none;
-	}
 
 	.im-shortwatch-panel {
 		height: auto;
 		overflow: visible;
 	}
 }
+
+/* ---- reveal: the card with a panel behind it ----------------------------
+   At rest the still and the title. On hover a panel rises from behind the
+   card with the line about it, the facts and a button — the way a streaming
+   grid expands a title without moving its neighbours. Nothing in the layout
+   changes size; the panel is out of flow.
+
+     <article class="im-vidcard im-vidcard-reveal"> … <div class="im-vidcard-panel"> … </div> </article> */
+.im-vidcard-reveal { position: relative; isolation: isolate; }
+
+.im-vidcard-panel {
+	position: absolute;
+	inset: auto 0 0;
+	z-index: -1;
+	display: grid;
+	gap: 0.5rem;
+	padding: 4rem 1rem 1rem;
+	border-radius: var(--im-radius-xl);
+	box-shadow: inset 0 0 0 1px var(--im-line), var(--im-shadow-float);
+	background-color: var(--im-canvas);
+	translate: 0 calc(100% - 3.5rem);
+	opacity: 0;
+	pointer-events: none;
+	transition: translate var(--im-duration-base) var(--im-ease-out), opacity var(--im-duration-fast) var(--im-ease-out);
+}
+
+.im-vidcard-panel > p { color: var(--im-body); font-size: var(--im-text-sm); line-height: 1.5; }
+.im-vidcard-panel .im-widget-facts { font-size: var(--im-text-xs); }
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+	.im-vidcard-reveal:is(:hover, :focus-within) { z-index: 3; }
+	.im-vidcard-reveal:is(:hover, :focus-within) .im-vidcard-panel { translate: 0 calc(100% - 1rem); opacity: 1; pointer-events: auto; }
+}
+
+@media (hover: none) {
+	.im-vidcard-panel { position: static; translate: none; opacity: 1; pointer-events: auto; padding: 0.75rem 0 0; box-shadow: none; }
+}
+
+/* a review card that fits a marquee */
+.im-review-card { width: 22rem; flex: none; }

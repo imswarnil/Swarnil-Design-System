@@ -230,6 +230,7 @@ export const navigation = [
 				],
 			},
 			{ label: 'Timeline', url: '/collections/timeline/', icon: 'git-commit-vertical' },
+			{ label: 'Archive', url: '/collections/archive/', icon: 'library' },
 			{
 				label: 'Snippet',
 				icon: 'code',

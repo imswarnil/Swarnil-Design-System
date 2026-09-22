@@ -17,10 +17,9 @@
    One state vocabulary for both: done · current · locked · free. The state
    is a MARK (tick, play, lock, dot) and a colour, never a word alone. */
 
-/* Square corners throughout. A curriculum is a table of contents, and a
-   table of contents reads as rows and rules, not as a stack of pills. The
-   only circles are the state rings, because a tick, a play and a lock
-   belong in a ring. */
+/* Rounded, like every other card here. A UNIT is a card on the surface
+   colour with a round numeral; a LESSON is a row inside it on the canvas.
+   The two are told apart by ground and by indent, not by decoration. */
 
 /* ---- syllabus ---------------------------------------------------------- */
 .im-syllabus {
@@ -33,7 +32,7 @@
 }
 
 .im-unit {
-	border-radius: 0;
+	border-radius: var(--im-radius-xl);
 	box-shadow: inset 0 0 0 1px var(--im-line);
 	background-color: var(--im-canvas);
 	overflow: hidden;
@@ -61,7 +60,7 @@
 	place-items: center;
 	width: 3rem;
 	height: 3rem;
-	border-radius: 0;
+	border-radius: var(--im-radius-full);
 	background-color: var(--im-canvas);
 	box-shadow: inset 0 0 0 1px var(--im-line);
 	font-family: var(--im-font-pixel, var(--im-font-mono));
@@ -124,7 +123,8 @@
 .im-unit-lessons {
 	display: none;
 	margin: 0;
-	padding: 0.5rem;
+	padding: 0.625rem;
+	border-top: 1px solid var(--im-line);
 	list-style: none;
 }
 
@@ -137,8 +137,8 @@
 	grid-template-columns: 5.5rem minmax(0, 1fr) auto;
 	gap: 0.125rem 1rem;
 	align-items: center;
-	padding: 0.625rem 0.75rem;
-	border-radius: 0;
+	padding: 0.75rem 0.875rem;
+	border-radius: var(--im-radius-lg);
 	color: var(--im-ink);
 	text-decoration: none;
 	transition: background-color var(--im-duration-fast) var(--im-ease-out);
@@ -151,7 +151,7 @@
 	position: relative;
 	aspect-ratio: 16 / 10;
 	overflow: hidden;
-	border-radius: 0;
+	border-radius: var(--im-radius-md);
 	background-color: var(--im-surface-2);
 }
 
@@ -243,7 +243,7 @@
 	display: flex;
 	flex-direction: column;
 	min-height: 0;
-	border-radius: 0;
+	border-radius: var(--im-radius-xl);
 	box-shadow: inset 0 0 0 1px var(--im-line);
 	background-color: var(--im-canvas);
 	overflow: hidden;
@@ -299,7 +299,8 @@
 	gap: 0.5rem;
 	align-items: center;
 	padding: 0.625rem 0.75rem;
-	border-radius: 0;
+	border-radius: var(--im-radius-md);
+	background-color: var(--im-surface);
 	color: var(--im-ink);
 	font-size: var(--im-text-xs);
 	font-weight: 600;
@@ -320,7 +321,7 @@
 	gap: 0.75rem;
 	align-items: center;
 	padding: 0.625rem 0.75rem;
-	border-radius: 0;
+	border-radius: var(--im-radius-md);
 	color: var(--im-body);
 	font-size: var(--im-text-sm);
 	text-decoration: none;
@@ -348,7 +349,7 @@
 .im-coursenav-shot {
 	aspect-ratio: 16 / 10;
 	overflow: hidden;
-	border-radius: 0;
+	border-radius: var(--im-radius-sm);
 	background-color: var(--im-surface-2);
 }
 

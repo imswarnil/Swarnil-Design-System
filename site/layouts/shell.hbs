@@ -40,7 +40,16 @@
 			<a class="im-brand" href="/">{{> "components/logo" text=name size="1.375rem"}}</a>
 			<button class="im-btn im-btn-ghost im-btn-icon" type="button" data-drawer-close aria-label="{{t "Close"}}">{{> "icons/x"}}</button>
 		</div>
-		<nav class="im-navpanel-cols" aria-label="{{t "Documentation"}}">{{> "docs/nav-panel"}}</nav>
+		<nav class="im-navpanel-cols im-navpanel-grid" aria-label="{{t "Documentation"}}">{{> "docs/nav-panel"}}</nav>
+		<div class="im-navpanel-about">
+			<p><b>{{name}}</b> — a Tailwind 4 design system for Ghost themes, behind imswarnil.com. One look; a variant is a modifier, never a second skin.</p>
+			<p class="im-cluster" style="--im-cluster-gap: .375rem">
+				<a class="im-btn im-btn-sm im-btn-icon" href="https://github.com/imswarnil" aria-label="GitHub">{{> "icons/brand-github"}}</a>
+				<a class="im-btn im-btn-sm im-btn-icon" href="#" aria-label="LinkedIn">{{> "icons/brand-linkedin"}}</a>
+				<a class="im-btn im-btn-sm im-btn-icon" href="#" aria-label="YouTube">{{> "icons/brand-youtube"}}</a>
+				<a class="im-btn im-btn-sm im-btn-icon" href="#" aria-label="X">{{> "icons/brand-x"}}</a>
+			</p>
+		</div>
 		<div class="im-navpanel-foot">
 			{{> "components/theme-switch" size="sm"}}
 			<a class="im-star im-star-sm" href="https://github.com/imswarnil/Swarnil-Design-System" target="_blank" rel="noopener noreferrer">{{> "icons/brand-github"}}<span>Star</span><b data-im-star-count></b></a>

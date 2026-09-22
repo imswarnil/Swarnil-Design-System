@@ -241,3 +241,8 @@
 		transition-duration: 1ms;
 	}
 }
+
+/* On a phone the wordmark gives up its size, not its letters. */
+@media (width < 40rem) {
+	.im-brand .im-logo { --im-logo-size: 1.0625rem; }
+}
