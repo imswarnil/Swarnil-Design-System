@@ -7,7 +7,7 @@ export const NAME = 'Im Design System';
 export const SHORT = 'Im';
 
 export const site = {
-	title: SHORT,
+	title: NAME,
 	description: 'A Tailwind design system for Ghost themes: tokens, layout, components and ready-made sections.',
 	locale: 'en',
 	accent_color: '#ff5a1f',

@@ -21,7 +21,7 @@
 			"slug": "how-this-site-is-put-together",
 			"excerpt": "One Ghost install, somebody else's theme, and the rules that keep the two from destroying each other. Also the post I load to check the theme still works.",
 			"feature_image": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1600&h=900&q=80",
-			"featured": true,
+			"featured": false,
 			"published_at": "2026-09-16 07:58:51",
 			"reading_time": 5,
 			"tags": [
@@ -36,7 +36,7 @@
 			"slug": "the-real-cost-of-moving-to-amsterdam",
 			"excerpt": "Every number, no rounding.",
 			"feature_image": "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=1600&q=80",
-			"featured": true,
+			"featured": false,
 			"published_at": "2026-09-15 23:09:01",
 			"reading_time": 2,
 			"tags": [
@@ -171,7 +171,7 @@
 			"slug": "amalfi-coast-drive-video",
 			"excerpt": "Sorrento to Amalfi from the passenger seat, with the bits the brochures leave out.",
 			"feature_image": "https://images.unsplash.com/photo-1534445867742-43195f401b6c?auto=format&fit=crop&w=1600&q=80",
-			"featured": true,
+			"featured": false,
 			"published_at": "2026-09-17 20:51:12",
 			"reading_time": 2,
 			"tags": [

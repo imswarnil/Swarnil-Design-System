@@ -168,6 +168,7 @@
 }
 
 .im-exphero-title {
+	color: inherit;
 	max-width: 20ch;
 	font-family: var(--im-font-heading);
 	font-size: clamp(2rem, 1.3rem + 2.8vw, 3.25rem);
@@ -626,6 +627,7 @@
 }
 
 .im-cinehero-title {
+	color: inherit;
 	max-width: 18ch;
 	font-family: var(--im-font-heading);
 	font-size: clamp(2.25rem, 1.4rem + 3.4vw, 4rem);

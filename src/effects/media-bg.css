@@ -88,6 +88,7 @@
 }
 
 .im-mediabg-title {
+	color: inherit; /* base colours headings ink; this one sits on a picture */
 	max-width: 16ch;
 	font-family: var(--im-font-heading);
 	font-size: clamp(2.25rem, 1.4rem + 3.6vw, 4.5rem);
@@ -98,6 +99,7 @@
 }
 
 .im-mediabg-text {
+	color: inherit;
 	max-width: 44ch;
 	margin-top: 0.75rem;
 	opacity: 0.85;
