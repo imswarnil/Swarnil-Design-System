@@ -531,10 +531,17 @@
 	height: 100dvh;
 }
 
+/* `width: 100%` is load-bearing, not tidiness. The stage's parent centres its
+   items, which makes the stage max-content wide — and the player inside is
+   sized `min(100%, …)`, a percentage against a container that is being sized
+   BY its contents. That is a cycle, and CSS resolves it as zero: the clip
+   disappears and only the rail is left. A definite width breaks the cycle. */
 .im-short-stage {
 	display: flex;
 	align-items: flex-end;
+	justify-content: center;
 	gap: clamp(0.5rem, 1.5vw, 1rem);
+	width: 100%;
 	max-width: 100%;
 	max-height: 100%;
 }
@@ -711,5 +718,53 @@
 
 	.im-short-step {
 		display: none;
+	}
+}
+
+/* ---- short feed ---------------------------------------------------------
+   The other 9:16 layout: a column of shorts, one viewport each, that snaps.
+   The SCROLL is the navigation — there is no next button because the gesture
+   is the next button.
+
+     <div class="im-shortfeed">
+       <section class="im-short im-short-full"> … </section>
+       <section class="im-short im-short-full"> … </section>
+     </div>
+
+   `scroll-snap-stop: always` is the part that makes it feel right: without it
+   a hard flick skips three clips, which is the one thing a feed must never
+   do — a viewer who cannot land on the clip they aimed at stops aiming. */
+.im-shortfeed {
+	height: 100dvh;
+	overflow-y: auto;
+	scroll-snap-type: y mandatory;
+	overscroll-behavior-y: contain;
+	scrollbar-width: none;
+}
+
+.im-shortfeed::-webkit-scrollbar {
+	display: none;
+}
+
+.im-shortfeed > .im-short {
+	height: 100%;
+	scroll-snap-align: start;
+	scroll-snap-stop: always;
+}
+
+/* Under a top bar rather than filling the window. */
+.im-shortfeed-inset {
+	height: calc(100dvh - var(--im-bar-height));
+}
+
+.im-shortfeed-inset > .im-short {
+	--im-short-room: calc(100dvh - var(--im-bar-height) - var(--im-short-gutter) * 2);
+}
+
+/* Somebody who has turned motion down should not be thrown between clips by
+   a smooth scroll they did not ask for; the snap still works. */
+@media (prefers-reduced-motion: no-preference) {
+	.im-shortfeed {
+		scroll-behavior: smooth;
 	}
 }

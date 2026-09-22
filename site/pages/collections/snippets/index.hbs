@@ -11,45 +11,86 @@ source: src/components/commerce.css · code.css
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
-<div class="im-wrap-wide im-stack" style="--im-stack-gap: 2rem">
-	<header class="im-collhead">
-		<p class="im-eyebrow">Snippets</p>
-		<h1 class="im-collhead-title">Code I keep looking up</h1>
-		<p class="im-collhead-text">Small, tested, and in here because I have searched for each of them more than twice. Copy freely — none of it is clever enough to need a licence.</p>
-		<p class="im-collhead-meta"><span>{{demo.snippets.length}} snippets</span><span>CSS · JS · Handlebars</span><a href="#snips">RSS</a></p>
-	</header>
+<div class="im-single im-wrap-wide" data-sidebar="on">
+	<article class="im-stack" style="--im-stack-gap: 2rem">
+		<header class="im-collhead">
+			<p class="im-eyebrow">Snippets</p>
+			<h1 class="im-collhead-title">Code I keep looking up</h1>
+			<p class="im-collhead-text">Small, tested, and in here because I have searched for each of them more than twice. Copy freely — none of it is clever enough to need a licence.</p>
+			<p class="im-collhead-meta"><span>{{demo.snippets.length}} snippets</span><span>CSS · JS · Handlebars</span><a href="#snips">RSS</a></p>
+		</header>
 
-	<div class="im-collbar">
-		<div class="im-collbar-filters">
-			<a class="im-tag" href="#snips" aria-current="page">All</a>
-			<a class="im-tag" href="#snips">CSS</a>
-			<a class="im-tag" href="#snips">JavaScript</a>
-			<a class="im-tag" href="#snips">Handlebars</a>
-			<a class="im-tag" href="#snips">Ghost</a>
-		</div>
-		<div class="im-cluster" style="--im-cluster-gap: .375rem">
-			<div class="im-input-group" style="width: 12rem">{{icon "search"}}<input class="im-input im-input-sm" type="search" placeholder="Search snippets" aria-label="Search snippets"></div>
-		</div>
-	</div>
-
-	<div class="im-snippets" id="snips">
-		{{#each demo.snippets}}
-		<article class="im-snippet" style="--im-repo-lang: {{langColor}}">
-			<p class="im-snippet-head">
-				<a class="im-snippet-name" href="#snips">{{name}}</a>
-				<span class="im-snippet-lang">{{lang}}</span>
-			</p>
-			<p>{{text}}</p>
-			<div class="im-snippet-body">
-				<pre><code class="language-{{#match lang "=" "CSS"}}css{{else}}{{#match lang "=" "JavaScript"}}js{{else}}hbs{{/match}}{{/match}}">{{snippet}}</code></pre>
+		<div class="im-collbar">
+			<div class="im-collbar-filters">
+				<a class="im-tag" href="#snips" aria-current="page">All</a>
+				<a class="im-tag" href="#snips">CSS</a>
+				<a class="im-tag" href="#snips">JavaScript</a>
+				<a class="im-tag" href="#snips">Handlebars</a>
+				<a class="im-tag" href="#snips">Ghost</a>
 			</div>
-			<p class="im-snippet-foot">
-				<span class="im-kind">{{icon "code"}}Snippet</span>
-				<button class="im-btn im-btn-sm" type="button" data-im-copy="{{snippet}}" data-im-copied-label="Copied">{{icon "copy"}}<span data-im-copy-label>Copy</span></button>
-			</p>
-		</article>
-		{{/each}}
-	</div>
+			<div class="im-cluster" style="--im-cluster-gap: .375rem">
+				<div class="im-input-group" style="width: 12rem">{{icon "search"}}<input class="im-input im-input-sm" type="search" placeholder="Search snippets" aria-label="Search snippets"></div>
+			</div>
+		</div>
+
+		<div class="im-snippets" id="snips">
+			{{#each demo.snippets}}
+			<article class="im-snippet" style="--im-repo-lang: {{langColor}}">
+				<p class="im-snippet-head">
+					<a class="im-snippet-name" href="#snips">{{name}}</a>
+					<span class="im-snippet-lang">{{lang}}</span>
+				</p>
+				<p>{{text}}</p>
+				<div class="im-snippet-body">
+					<pre><code class="language-{{#match lang "=" "CSS"}}css{{else}}{{#match lang "=" "JavaScript"}}js{{else}}hbs{{/match}}{{/match}}">{{snippet}}</code></pre>
+				</div>
+				<p class="im-snippet-foot">
+					<span class="im-kind">{{icon "code"}}Snippet</span>
+					<button class="im-btn im-btn-sm" type="button" data-im-copy="{{snippet}}" data-im-copied-label="Copied">{{icon "copy"}}<span data-im-copy-label>Copy</span></button>
+				</p>
+			</article>
+			{{/each}}
+		</div>
+	</article>
+
+	<aside>
+		<div class="im-sticky-rail">
+		<div class="im-widgets">
+			<section class="im-widget" aria-labelledby="cw-lang">
+				<h2 class="im-widget-title" id="cw-lang">By language</h2>
+				<div class="im-cluster" style="--im-cluster-gap: .375rem">
+					<a class="im-tag" href="#snips" aria-current="page">All<small>{{demo.snippets.length}}</small></a>
+					<a class="im-tag" href="#snips">CSS<small>4</small></a>
+					<a class="im-tag" href="#snips">JavaScript<small>3</small></a>
+					<a class="im-tag" href="#snips">Handlebars<small>2</small></a>
+					<a class="im-tag" href="#snips">Shell<small>1</small></a>
+				</div>
+			</section>
+
+			<section class="im-widget" aria-labelledby="cw-rules">
+				<h2 class="im-widget-title" id="cw-rules">The rules here</h2>
+				<ul class="im-widget-now">
+					<li>{{icon "check"}}<span><b>Everything runs.</b> Nothing is pasted from memory.</span></li>
+					<li>{{icon "scale"}}<span><b>No licence.</b> None of it is clever enough to need one.</span></li>
+					<li>{{icon "clock"}}<span><b>Dated.</b> A snippet without a date is a trap.</span></li>
+				</ul>
+			</section>
+
+			<section class="im-widget" aria-labelledby="cw-rel">
+				<h2 class="im-widget-title" id="cw-rel">Written about <a href="/collections/post/">Posts</a></h2>
+				<ul class="im-widget-list">
+					{{#foreach demo.six}}{{#match @number "<" 4}}<li><a href="/collections/post/article/">{{title}}<small>{{reading_time}}</small></a></li>{{/match}}{{/foreach}}
+				</ul>
+			</section>
+
+			<section class="im-widget" aria-labelledby="cw-feed">
+				<h2 class="im-widget-title" id="cw-feed">Take the feed</h2>
+				<p class="im-widget-sponsor">Every snippet as it lands, in your reader.</p>
+				<a class="im-btn im-btn-sm" href="#snips">{{icon "rss"}}RSS</a>
+			</section>
+		</div>
+		</div>
+	</aside>
 </div>
 
 <section class="im-section im-wrap">

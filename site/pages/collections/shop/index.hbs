@@ -11,53 +11,90 @@ source: src/components/commerce.css
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
-<div class="im-wrap-wide im-stack" style="--im-stack-gap: 2rem">
-	<header class="im-collhead">
-		<p class="im-eyebrow">Shop</p>
-		<h1 class="im-collhead-title">Things I made, for sale</h1>
-		<p class="im-collhead-text">Digital, delivered immediately, yours to keep. One licence covers every site you own — and everything here is what this site itself runs on.</p>
-		<p class="im-collhead-meta"><span>{{demo.shop.length}} products</span><span>Instant download</span><a href="#shop">Licences</a></p>
-	</header>
+<div class="im-single im-wrap-wide" data-sidebar="on">
+	<article class="im-stack" style="--im-stack-gap: 2rem">
+		<header class="im-collhead">
+			<p class="im-eyebrow">Shop</p>
+			<h1 class="im-collhead-title">Things I made, for sale</h1>
+			<p class="im-collhead-text">Digital, delivered immediately, yours to keep. One licence covers every site you own — and everything here is what this site itself runs on.</p>
+			<p class="im-collhead-meta"><span>{{demo.shop.length}} products</span><span>Instant download</span><a href="#shop">Licences</a></p>
+		</header>
 
-	<div class="im-collbar">
-		<div class="im-collbar-filters">
-			<a class="im-tag" href="#shop" aria-current="page">All</a>
-			<a class="im-tag" href="#shop">Design systems</a>
-			<a class="im-tag" href="#shop">Ghost themes</a>
-			<a class="im-tag" href="#shop">Icons</a>
-			<a class="im-tag" href="#shop">Free</a>
+		<div class="im-collbar">
+			<div class="im-collbar-filters">
+				<a class="im-tag" href="#shop" aria-current="page">All</a>
+				<a class="im-tag" href="#shop">Design systems</a>
+				<a class="im-tag" href="#shop">Ghost themes</a>
+				<a class="im-tag" href="#shop">Icons</a>
+				<a class="im-tag" href="#shop">Free</a>
+			</div>
+			<div class="im-cluster" style="--im-cluster-gap: .375rem">
+				<button class="im-btn im-btn-sm" type="button">{{icon "list-filter"}}Newest</button>
+			</div>
 		</div>
-		<div class="im-cluster" style="--im-cluster-gap: .375rem">
-			<button class="im-btn im-btn-sm" type="button">{{icon "list-filter"}}Newest</button>
-		</div>
-	</div>
 
-	<div class="im-repos" id="shop" style="--im-repos-min: 20rem">
-		{{#each demo.shop}}
-		<article class="im-product">
-			<span class="im-product-media">
-				<img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy">
-				{{#if badge}}<span class="im-kind im-kind-over" data-kind="issue">{{icon "sparkles"}}{{badge}}</span>{{/if}}
-			</span>
-			<p><span class="im-kind">{{icon "package"}}{{kind}}</span></p>
-			<h3><a class="im-product-name" href="/collections/shop/product/">{{name}}</a></h3>
-			<p class="im-product-text">{{text}}</p>
-			<p class="im-product-foot">
-				<span class="im-price{{#if free}} im-price-free{{/if}}">{{price}}{{#if was}}<span class="im-price-was">{{was}}</span>{{/if}}</span>
-				<a class="im-btn im-btn-sm im-btn-primary" href="/collections/shop/product/">{{#if free}}Download{{else}}Buy{{/if}} {{icon "arrow-right"}}</a>
-			</p>
-		</article>
-		{{/each}}
-	</div>
-
-	<section class="im-section">
-		<div class="home-head"><p class="im-caption" data-index="q">Before you buy</p></div>
-		<div class="im-grid-auto" style="--im-grid-min: 17rem">
-			<div class="im-card im-card-outline"><span class="im-card-title">One licence, every site you own</span><span>Not per-site, not per-seat, not a subscription. Buy it once.</span></div>
-			<div class="im-card im-card-outline"><span class="im-card-title">Updates for a year</span><span>And the version you have keeps working after that, forever.</span></div>
-			<div class="im-card im-card-outline"><span class="im-card-title">Refunds, no argument</span><span>Fourteen days. You do not have to explain, and I will not ask.</span></div>
+		<div class="im-repos" id="shop" style="--im-repos-min: 20rem">
+			{{#each demo.shop}}
+			<article class="im-product">
+				<span class="im-product-media">
+					<img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy">
+					{{#if badge}}<span class="im-kind im-kind-over" data-kind="issue">{{icon "sparkles"}}{{badge}}</span>{{/if}}
+				</span>
+				<p><span class="im-kind">{{icon "package"}}{{kind}}</span></p>
+				<h3><a class="im-product-name" href="/collections/shop/product/">{{name}}</a></h3>
+				<p class="im-product-text">{{text}}</p>
+				<p class="im-product-foot">
+					<span class="im-price{{#if free}} im-price-free{{/if}}">{{price}}{{#if was}}<span class="im-price-was">{{was}}</span>{{/if}}</span>
+					<a class="im-btn im-btn-sm im-btn-primary" href="/collections/shop/product/">{{#if free}}Download{{else}}Buy{{/if}} {{icon "arrow-right"}}</a>
+				</p>
+			</article>
+			{{/each}}
 		</div>
-	</section>
+
+		<section class="im-section">
+			<div class="home-head"><p class="im-caption" data-index="q">Before you buy</p></div>
+			<div class="im-grid-auto" style="--im-grid-min: 17rem">
+				<div class="im-card im-card-outline"><span class="im-card-title">One licence, every site you own</span><span>Not per-site, not per-seat, not a subscription. Buy it once.</span></div>
+				<div class="im-card im-card-outline"><span class="im-card-title">Updates for a year</span><span>And the version you have keeps working after that, forever.</span></div>
+				<div class="im-card im-card-outline"><span class="im-card-title">Refunds, no argument</span><span>Fourteen days. You do not have to explain, and I will not ask.</span></div>
+			</div>
+		</section>
+	</article>
+
+	<aside>
+		<div class="im-sticky-rail">
+		<div class="im-widgets">
+			<section class="im-widget im-widget-accent" aria-labelledby="sw-bundle">
+				<h2 class="im-widget-title" id="sw-bundle">Everything, once</h2>
+				<p class="im-widget-heading">All {{demo.shop.length}} products — $149 instead of $237.</p>
+				<p class="im-widget-sponsor">One licence, every site you own, every update forever.</p>
+				<button class="im-btn im-btn-primary" type="button" style="width: 100%">Buy the bundle</button>
+			</section>
+
+			<section class="im-widget" aria-labelledby="sw-facts">
+				<h2 class="im-widget-title" id="sw-facts">The terms</h2>
+				<dl class="im-widget-facts">
+					<dt>Licence</dt><dd>Unlimited sites</dd>
+					<dt>Updates</dt><dd>Forever, free</dd>
+					<dt>Delivery</dt><dd>Immediate</dd>
+					<dt>Refunds</dt><dd>14 days, no reason</dd>
+				</dl>
+			</section>
+
+			<section class="im-widget" aria-labelledby="sw-best">
+				<h2 class="im-widget-title" id="sw-best">Best selling</h2>
+				<div class="im-widget-products">
+					{{#foreach demo.shop}}{{#match @number "<" 4}}<a class="im-widget-product" href="/collections/shop/product/"><span class="im-widget-product-mark">{{@number}}</span><span class="im-widget-product-name">{{title}}</span><span class="im-widget-product-note">{{price}}</span>{{icon "arrow-right"}}</a>{{/match}}{{/foreach}}
+				</div>
+			</section>
+
+			<section class="im-widget" aria-labelledby="sw-said">
+				<h2 class="im-widget-title" id="sw-said">From a buyer</h2>
+				<blockquote class="im-widget-quote">Installed it on a Sunday and shipped the site on the Monday.<span class="im-widget-quote-by">— a customer, last month</span></blockquote>
+			</section>
+		</div>
+		</div>
+	</aside>
 </div>
 
 <section class="im-section im-wrap">

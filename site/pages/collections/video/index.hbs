@@ -21,106 +21,145 @@ source: src/components/video-card.css · partials/components/video-card.hbs
 	</div>
 </section>
 
-<div class="im-wrap-wide im-stack" style="--im-stack-gap: 1.75rem">
-	<section class="im-channel">
-		<div class="im-channel-banner"><img src="{{demo.six.[4].feature_image}}" alt="" loading="eager"></div>
-		<div class="im-channel-head">
-			{{> "components/avatar" size="xl" src=demo.author.profile_image name=demo.author.name}}
-			<div class="im-channel-id">
-				<h1 class="im-channel-name">{{demo.author.name}}<i class="im-vidcard-tick" aria-hidden="true"></i></h1>
-				<p class="im-channel-meta"><span>@imswarnil</span><span>128k subscribers</span><span>{{demo.videos.length}} videos</span></p>
-				<p class="im-channel-text">Roads, tools and the things that survived the year. New film most Thursdays.</p>
+<div class="im-single im-wrap-wide" data-sidebar="on">
+	<article class="im-stack" style="--im-stack-gap: 1.75rem">
+		<section class="im-channel">
+			<div class="im-channel-banner"><img src="{{demo.six.[4].feature_image}}" alt="" loading="eager"></div>
+			<div class="im-channel-head">
+				{{> "components/avatar" size="xl" src=demo.author.profile_image name=demo.author.name}}
+				<div class="im-channel-id">
+					<h1 class="im-channel-name">{{demo.author.name}}<i class="im-vidcard-tick" aria-hidden="true"></i></h1>
+					<p class="im-channel-meta"><span>@imswarnil</span><span>128k subscribers</span><span>{{demo.videos.length}} videos</span></p>
+					<p class="im-channel-text">Roads, tools and the things that survived the year. New film most Thursdays.</p>
+				</div>
+				<div class="im-channel-actions">
+					<button class="im-btn im-btn-primary" type="button">Subscribe</button>
+					<button class="im-btn im-btn-icon" type="button" aria-label="More">{{icon "ellipsis"}}</button>
+				</div>
 			</div>
-			<div class="im-channel-actions">
-				<button class="im-btn im-btn-primary" type="button">Subscribe</button>
-				<button class="im-btn im-btn-icon" type="button" aria-label="More">{{icon "ellipsis"}}</button>
+		</section>
+
+		<div class="im-collbar">
+			<div class="im-collbar-filters">
+				<a class="im-tag" href="#vids" aria-current="page">Videos</a>
+				<a class="im-tag" href="#vids">Shorts</a>
+				<a class="im-tag" href="#vids">Live</a>
+				<a class="im-tag" href="#vids">Playlists</a>
+				<a class="im-tag" href="#vids">About</a>
+			</div>
+			<div class="im-cluster" style="--im-cluster-gap: .375rem">
+				<button class="im-btn im-btn-sm" type="button">{{icon "list-filter"}}Latest</button>
 			</div>
 		</div>
-	</section>
 
-	<div class="im-collbar">
-		<div class="im-collbar-filters">
-			<a class="im-tag" href="#vids" aria-current="page">Videos</a>
-			<a class="im-tag" href="#vids">Shorts</a>
-			<a class="im-tag" href="#vids">Live</a>
-			<a class="im-tag" href="#vids">Playlists</a>
-			<a class="im-tag" href="#vids">About</a>
+		<div class="im-vidgrid" id="vids">
+			{{#each demo.videos}}
+				{{> "components/video-card" hide_by=true}}
+			{{/each}}
 		</div>
-		<div class="im-cluster" style="--im-cluster-gap: .375rem">
-			<button class="im-btn im-btn-sm" type="button">{{icon "list-filter"}}Latest</button>
+
+		<div class="im-loadmore">
+			<button class="im-btn" type="button">Load more</button>
+			<p>8 of 214</p>
 		</div>
-	</div>
 
-	<div class="im-vidgrid" id="vids">
-		{{#each demo.videos}}
-			{{> "components/video-card" hide_by=true}}
-		{{/each}}
-	</div>
+		{{!-- The other three tabs. A channel is four lists of the same thing, so
+		      they are four uses of the same card — not four components. --}}
+		<section class="im-section">
+			<div class="home-head"><p class="im-caption" data-index="shorts">Shorts</p><a class="im-card-cta" href="/collections/video/short/">The short layout {{> "icons/arrow-right"}}</a></div>
+			<div class="im-vidgrid" style="--im-vidgrid-min: 11rem">
+				{{#each demo.videos}}{{#match @index "<" 6}}{{> "components/video-card" class="im-vidcard-tall" hide_by=true kind="short"}}{{/match}}{{/each}}
+			</div>
+		</section>
 
-	<div class="im-loadmore">
-		<button class="im-btn" type="button">Load more</button>
-		<p>8 of 214</p>
-	</div>
+		<section class="im-section">
+			<div class="home-head"><p class="im-caption" data-index="live">Live</p><a class="im-card-cta" href="#live">All streams {{> "icons/arrow-right"}}</a></div>
+			<div class="im-vidgrid">
+				{{#with demo.videos.[5]}}{{> "components/video-card" hide_by=true}}{{/with}}
+				{{#with demo.videos.[3]}}{{> "components/video-card" hide_by=true time="1:42:08"}}{{/with}}
+				{{#with demo.videos.[7]}}{{> "components/video-card" hide_by=true time="58:20"}}{{/with}}
+			</div>
+		</section>
 
-	{{!-- The other three tabs. A channel is four lists of the same thing, so
-	      they are four uses of the same card — not four components. --}}
-	<section class="im-section">
-		<div class="home-head"><p class="im-caption" data-index="shorts">Shorts</p><a class="im-card-cta" href="/collections/video/short/">The short layout {{> "icons/arrow-right"}}</a></div>
-		<div class="im-vidgrid" style="--im-vidgrid-min: 11rem">
-			{{#each demo.videos}}{{#match @index "<" 6}}{{> "components/video-card" class="im-vidcard-tall" hide_by=true kind="short"}}{{/match}}{{/each}}
+		<section class="im-section">
+			<div class="home-head"><p class="im-caption" data-index="lists">Playlists</p><a class="im-card-cta" href="#playlists">All playlists {{> "icons/arrow-right"}}</a></div>
+			<div class="im-vidgrid">
+				{{#with demo.videos.[1]}}
+				<article class="im-vidcard im-playlist">
+					<a class="im-vidcard-thumb" href="#playlists" tabindex="-1" aria-hidden="true">
+						<img src="{{thumb}}" alt="" loading="lazy">
+						<span class="im-playlist-count">{{> "icons/list"}}12</span>
+					</a>
+					<div class="im-vidcard-body"><div>
+						<h3 class="im-vidcard-title"><a href="#playlists">Everything about moving to Europe</a></h3>
+						<p class="im-vidcard-meta"><span>12 videos</span><span>Updated last week</span></p>
+					</div></div>
+				</article>
+				{{/with}}
+				{{#with demo.videos.[4]}}
+				<article class="im-vidcard im-playlist">
+					<a class="im-vidcard-thumb" href="#playlists" tabindex="-1" aria-hidden="true">
+						<img src="{{thumb}}" alt="" loading="lazy">
+						<span class="im-playlist-count">{{> "icons/list"}}7</span>
+					</a>
+					<div class="im-vidcard-body"><div>
+						<h3 class="im-vidcard-title"><a href="#playlists">Building this design system</a></h3>
+						<p class="im-vidcard-meta"><span>7 videos</span><span>Updated 3 days ago</span></p>
+					</div></div>
+				</article>
+				{{/with}}
+				{{#with demo.videos.[2]}}
+				<article class="im-vidcard im-playlist">
+					<a class="im-vidcard-thumb" href="#playlists" tabindex="-1" aria-hidden="true">
+						<img src="{{thumb}}" alt="" loading="lazy">
+						<span class="im-playlist-count">{{> "icons/list"}}24</span>
+					</a>
+					<div class="im-vidcard-body"><div>
+						<h3 class="im-vidcard-title"><a href="#playlists">The road series</a></h3>
+						<p class="im-vidcard-meta"><span>24 videos</span><span>Complete</span></p>
+					</div></div>
+				</article>
+				{{/with}}
+			</div>
+		</section>
+	</article>
+
+	<aside>
+		<div class="im-sticky-rail">
+		<div class="im-widgets">
+			<section class="im-widget im-widget-fill" aria-labelledby="vw-sub">
+				<h2 class="im-widget-title" id="vw-sub">The channel</h2>
+				<div class="im-widget-stats">
+					<div><strong>128k</strong><span>Subscribers</span></div>
+					<div><strong>96</strong><span>Videos</span></div>
+					<div><strong>8.4M</strong><span>Views</span></div>
+				</div>
+				<button class="im-btn im-btn-primary" type="button" style="margin-top: .875rem; width: 100%">{{icon "video"}}Subscribe</button>
+			</section>
+
+			<section class="im-widget" aria-labelledby="vw-live">
+				<h2 class="im-widget-title" id="vw-live">On now</h2>
+				{{#with demo.videos.[5]}}{{> "components/video-card" layout="compact" hide_by=true kind="video"}}{{/with}}
+			</section>
+
+			<section class="im-widget" aria-labelledby="vw-pop">
+				<h2 class="im-widget-title" id="vw-pop">Most watched</h2>
+				<ol class="im-widget-list im-widget-list-ranked">
+					{{#foreach demo.videos}}{{#match @number "<" 5}}<li><a href="/collections/video/page/">{{title}}<small>{{views}} views</small></a></li>{{/match}}{{/foreach}}
+				</ol>
+			</section>
+
+			<section class="im-widget" aria-labelledby="vw-lists">
+				<h2 class="im-widget-title" id="vw-lists">Playlists <a href="/collections/video/playlist/">All</a></h2>
+				<ul class="im-widget-list">
+					<li><a href="/collections/video/playlist/">Everything about moving to Europe<small>12 videos · 2h 14m</small></a></li>
+					<li><a href="/collections/video/playlist/">Building this design system<small>7 videos · 3h 02m</small></a></li>
+					<li><a href="/collections/video/playlist/">The road series<small>24 videos · 5h 40m</small></a></li>
+				</ul>
+			</section>
 		</div>
-	</section>
-
-	<section class="im-section">
-		<div class="home-head"><p class="im-caption" data-index="live">Live</p><a class="im-card-cta" href="#live">All streams {{> "icons/arrow-right"}}</a></div>
-		<div class="im-vidgrid">
-			{{#with demo.videos.[5]}}{{> "components/video-card" hide_by=true}}{{/with}}
-			{{#with demo.videos.[3]}}{{> "components/video-card" hide_by=true time="1:42:08"}}{{/with}}
-			{{#with demo.videos.[7]}}{{> "components/video-card" hide_by=true time="58:20"}}{{/with}}
 		</div>
-	</section>
-
-	<section class="im-section">
-		<div class="home-head"><p class="im-caption" data-index="lists">Playlists</p><a class="im-card-cta" href="#playlists">All playlists {{> "icons/arrow-right"}}</a></div>
-		<div class="im-vidgrid">
-			{{#with demo.videos.[1]}}
-			<article class="im-vidcard im-playlist">
-				<a class="im-vidcard-thumb" href="#playlists" tabindex="-1" aria-hidden="true">
-					<img src="{{thumb}}" alt="" loading="lazy">
-					<span class="im-playlist-count">{{> "icons/list"}}12</span>
-				</a>
-				<div class="im-vidcard-body"><div>
-					<h3 class="im-vidcard-title"><a href="#playlists">Everything about moving to Europe</a></h3>
-					<p class="im-vidcard-meta"><span>12 videos</span><span>Updated last week</span></p>
-				</div></div>
-			</article>
-			{{/with}}
-			{{#with demo.videos.[4]}}
-			<article class="im-vidcard im-playlist">
-				<a class="im-vidcard-thumb" href="#playlists" tabindex="-1" aria-hidden="true">
-					<img src="{{thumb}}" alt="" loading="lazy">
-					<span class="im-playlist-count">{{> "icons/list"}}7</span>
-				</a>
-				<div class="im-vidcard-body"><div>
-					<h3 class="im-vidcard-title"><a href="#playlists">Building this design system</a></h3>
-					<p class="im-vidcard-meta"><span>7 videos</span><span>Updated 3 days ago</span></p>
-				</div></div>
-			</article>
-			{{/with}}
-			{{#with demo.videos.[2]}}
-			<article class="im-vidcard im-playlist">
-				<a class="im-vidcard-thumb" href="#playlists" tabindex="-1" aria-hidden="true">
-					<img src="{{thumb}}" alt="" loading="lazy">
-					<span class="im-playlist-count">{{> "icons/list"}}24</span>
-				</a>
-				<div class="im-vidcard-body"><div>
-					<h3 class="im-vidcard-title"><a href="#playlists">The road series</a></h3>
-					<p class="im-vidcard-meta"><span>24 videos</span><span>Complete</span></p>
-				</div></div>
-			</article>
-			{{/with}}
-		</div>
-	</section>
+	</aside>
 </div>
 
 <section class="im-section im-wrap">

@@ -1,0 +1,77 @@
+---
+title: Bucket card
+description: A row with a state on the front of it — someday, booked, or done. The same vocabulary a course lesson uses, because it is the same idea.
+eyebrow: Collections · Bucket list
+source: src/components/life.css
+---
+<p>A bucket-list item is a <strong>row</strong>, not a card in a grid. There is no picture, because the thing has not happened yet and a stock photograph of somewhere you have never been is the least honest object a page can contain.</p>
+
+<h2>The three states</h2>
+{{#example}}
+<ul class="im-buckets">
+	<li class="im-bucket">
+		<span class="im-bucket-mark">{{icon "check"}}</span>
+		<p class="im-bucket-title"><a href="#the-three-states">Learn to freedive to 20m</a></p>
+		<p class="im-bucket-note">On one breath, which is the whole problem</p>
+		<p class="im-bucket-when">Someday</p>
+	</li>
+	<li class="im-bucket" data-state="booked">
+		<span class="im-bucket-mark">{{icon "check"}}</span>
+		<p class="im-bucket-title"><a href="#the-three-states">See the northern lights</a></p>
+		<p class="im-bucket-note">Tromsø, February, and three nights of patience</p>
+		<p class="im-bucket-when">Booked · Feb 2027</p>
+	</li>
+	<li class="im-bucket" data-state="done">
+		<span class="im-bucket-mark">{{icon "check"}}</span>
+		<p class="im-bucket-title"><a href="/collections/experience/page/">Dive the Blue Hole</a></p>
+		<p class="im-bucket-note">Dahab, Egypt — the one everybody warns you about</p>
+		<p class="im-bucket-when">Done · Mar 2026</p>
+	</li>
+</ul>
+{{/example}}
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th><code>data-state</code></th><th>The mark</th><th>The title</th><th>The date</th></tr></thead>
+	<tbody>
+		<tr><td><em>none</em></td><td>An empty ring</td><td>Ink</td><td>"Someday"</td></tr>
+		<tr><td><code>booked</code></td><td>An accent ring</td><td>Ink</td><td>A real date</td></tr>
+		<tr><td><code>done</code></td><td>A filled tick, in the success colour</td><td>Struck through, <strong>still legible</strong></td><td>In the success colour</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>Done does not mean gone</h2>
+<p>The strike-through is <code>text-decoration-color: var(--im-faint)</code> and the text stays at <code>--im-muted</code>, not at 40% opacity. A done line has to be readable, because being able to read it is the entire reason it is still on the page — and its title links to the <a href="/collections/experience/">experience</a> it became.</p>
+
+<h2>Grouped</h2>
+<p>By something real — water, cold, distance — with a count in the group's head. Not "high priority": that is a project-management word and it means nothing on a list like this.</p>
+{{#example}}
+<section class="im-bucket-group">
+	<p class="im-bucket-head"><span>Water</span><span>1 of 3 done</span></p>
+	<ul class="im-buckets">
+		{{#each demo.wishlist}}{{#match group "=" "Water"}}
+		<li class="im-bucket"{{#if state}} data-state="{{state}}"{{/if}}>
+			<span class="im-bucket-mark">{{icon "check"}}</span>
+			<p class="im-bucket-title"><a href="/collections/wishlist/page/">{{title}}</a></p>
+			<p class="im-bucket-note">{{note}}</p>
+			<p class="im-bucket-when">{{when}}</p>
+		</li>
+		{{/match}}{{/each}}
+	</ul>
+</section>
+{{/example}}
+
+<h2>Parts</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Class</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>im-buckets</code></td><td>The list.</td></tr>
+		<tr><td><code>im-bucket</code></td><td>One row. <code>data-state</code> is the whole of its behaviour.</td></tr>
+		<tr><td><code>im-bucket-mark</code></td><td>The ring or the tick — the same vocabulary as a <a href="/navigation/curriculum/">course lesson</a>, because it is the same idea.</td></tr>
+		<tr><td><code>im-bucket-note</code> · <code>-when</code></td><td>The line under it, and the date at the end.</td></tr>
+		<tr><td><code>im-bucket-group</code> · <code>-head</code></td><td>A group and its count.</td></tr>
+	</tbody>
+</table>
+</div>
+<p>Under 34rem the date moves under the note, because a right-aligned column beside a wrapped title on a phone is two columns of nothing.</p>

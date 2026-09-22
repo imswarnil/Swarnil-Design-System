@@ -11,67 +11,105 @@ source: src/components/ad.css · commerce.css
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
-<div class="im-wrap im-stack" style="--im-stack-gap: 2rem">
-	<header class="im-collhead">
-		<p class="im-eyebrow">Uses</p>
-		<h1 class="im-collhead-title">What I actually use</h1>
-		<p class="im-collhead-text">Everything here I own, paid for, and have used long enough to have an opinion about. If it is on this page it survived at least a year.</p>
-		<p class="im-collhead-meta"><span>{{demo.uses.length}} things</span><span>Updated September 2026</span></p>
-	</header>
+<div class="im-single im-wrap-wide" data-sidebar="on">
+	<article class="im-stack" style="--im-stack-gap: 2rem">
+		<header class="im-collhead">
+			<p class="im-eyebrow">Uses</p>
+			<h1 class="im-collhead-title">What I actually use</h1>
+			<p class="im-collhead-text">Everything here I own, paid for, and have used long enough to have an opinion about. If it is on this page it survived at least a year.</p>
+			<p class="im-collhead-meta"><span>{{demo.uses.length}} things</span><span>Updated September 2026</span></p>
+		</header>
 
-	<div class="im-callout im-callout-info">
-		<p>Some of the links below pay me a small amount if you buy through them, at no cost to you. Nothing is on this page <em>because</em> of that — three of the four have no affiliate programme at all.</p>
-	</div>
-
-	<div class="im-collbar">
-		<div class="im-collbar-filters">
-			<a class="im-tag" href="#uses" aria-current="page">Everything</a>
-			<a class="im-tag" href="#uses">Desk</a>
-			<a class="im-tag" href="#uses">Camera</a>
-			<a class="im-tag" href="#uses">Software</a>
-			<a class="im-tag" href="#uses">Carried</a>
+		<div class="im-callout im-callout-info">
+			<p>Some of the links below pay me a small amount if you buy through them, at no cost to you. Nothing is on this page <em>because</em> of that — three of the four have no affiliate programme at all.</p>
 		</div>
-	</div>
 
-	<div class="im-affiliates" id="uses">
-		{{#each demo.uses}}
-		<article class="im-affiliate">
-			<span class="im-affiliate-media"><img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy"></span>
-			<a class="im-affiliate-name" href="#uses" rel="sponsored noopener">{{name}}</a>
-			<p class="im-affiliate-by">{{by}}</p>
-			<p class="im-affiliate-text">{{text}}</p>
-			<p class="im-affiliate-meta">
-				<span class="im-affiliate-price">{{price}}</span>
-				{{#if was}}<span class="im-affiliate-was">{{was}}</span>{{/if}}
-				<span class="im-badge im-badge-success">Still using it</span>
-			</p>
-			<div class="im-affiliate-actions">
-				<a class="im-btn im-btn-primary im-btn-sm" href="#uses" rel="sponsored noopener">Where I got it {{icon "arrow-up-right"}}</a>
-				<a class="im-btn im-btn-sm" href="/collections/post/article/">Why this one</a>
+		<div class="im-collbar">
+			<div class="im-collbar-filters">
+				<a class="im-tag" href="#uses" aria-current="page">Everything</a>
+				<a class="im-tag" href="#uses">Desk</a>
+				<a class="im-tag" href="#uses">Camera</a>
+				<a class="im-tag" href="#uses">Software</a>
+				<a class="im-tag" href="#uses">Carried</a>
 			</div>
-			<p class="im-affiliate-note">Affiliate link — I earn a little if you buy, at no cost to you</p>
-		</article>
-		{{/each}}
-	</div>
+		</div>
 
-	<section class="im-section">
-		<div class="home-head"><p class="im-caption" data-index="also">Also on the desk</p></div>
-		<div class="im-widgets" style="max-width: 24rem">
-			<section class="im-widget">
-				<h2 class="im-widget-title">Small things</h2>
-				<div class="im-widget-products">
-					{{#each demo.products}}
-					<a class="im-widget-product" href="#uses">
-						<span class="im-widget-product-mark">{{name.[0]}}</span>
-						<span class="im-widget-product-name">{{name}}</span>
-						<span class="im-widget-product-note">{{note}}</span>
-						{{icon "arrow-up-right"}}
-					</a>
-					{{/each}}
+		<div class="im-affiliates" id="uses">
+			{{#each demo.uses}}
+			<article class="im-affiliate">
+				<span class="im-affiliate-media"><img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy"></span>
+				<a class="im-affiliate-name" href="#uses" rel="sponsored noopener">{{name}}</a>
+				<p class="im-affiliate-by">{{by}}</p>
+				<p class="im-affiliate-text">{{text}}</p>
+				<p class="im-affiliate-meta">
+					<span class="im-affiliate-price">{{price}}</span>
+					{{#if was}}<span class="im-affiliate-was">{{was}}</span>{{/if}}
+					<span class="im-badge im-badge-success">Still using it</span>
+				</p>
+				<div class="im-affiliate-actions">
+					<a class="im-btn im-btn-primary im-btn-sm" href="#uses" rel="sponsored noopener">Where I got it {{icon "arrow-up-right"}}</a>
+					<a class="im-btn im-btn-sm" href="/collections/post/article/">Why this one</a>
 				</div>
+				<p class="im-affiliate-note">Affiliate link — I earn a little if you buy, at no cost to you</p>
+			</article>
+			{{/each}}
+		</div>
+
+		<section class="im-section">
+			<div class="home-head"><p class="im-caption" data-index="also">Also on the desk</p></div>
+			<div class="im-widgets" style="max-width: 24rem">
+				<section class="im-widget">
+					<h2 class="im-widget-title">Small things</h2>
+					<div class="im-widget-products">
+						{{#each demo.products}}
+						<a class="im-widget-product" href="#uses">
+							<span class="im-widget-product-mark">{{name.[0]}}</span>
+							<span class="im-widget-product-name">{{name}}</span>
+							<span class="im-widget-product-note">{{note}}</span>
+							{{icon "arrow-up-right"}}
+						</a>
+						{{/each}}
+					</div>
+				</section>
+			</div>
+		</section>
+	</article>
+
+	<aside>
+		<div class="im-sticky-rail">
+		<div class="im-widgets">
+			<section class="im-widget" aria-labelledby="uw-jump">
+				<h2 class="im-widget-title" id="uw-jump">Jump to</h2>
+				<ul class="im-widget-list">
+					<li><a href="#uses">Desk<small>9 things</small></a></li>
+					<li><a href="#uses">Camera<small>6 things</small></a></li>
+					<li><a href="#uses">Software<small>11 things</small></a></li>
+					<li><a href="#uses">Carried every day<small>5 things</small></a></li>
+				</ul>
+			</section>
+
+			<section class="im-widget" aria-labelledby="uw-new">
+				<h2 class="im-widget-title" id="uw-new">Changed recently</h2>
+				<ul class="im-widget-now">
+					<li>{{icon "plus"}}<span><b>Added</b> the 40mm — it has not come off the camera since.</span></li>
+					<li>{{icon "minus"}}<span><b>Dropped</b> the standing desk. Two years, four uses.</span></li>
+					<li>{{icon "refresh-cw"}}<span><b>Replaced</b> the keyboard after the third spill.</span></li>
+				</ul>
+			</section>
+
+			<section class="im-widget" aria-labelledby="uw-disc">
+				<h2 class="im-widget-title" id="uw-disc">Disclosure</h2>
+				<p class="im-widget-sponsor"><span class="im-widget-sponsor-label">Affiliate</span><br>Some links pay a commission. Nothing is on this page because of it — everything here was bought before it was listed, and the ones that did not last were removed.</p>
+			</section>
+
+			<section class="im-widget im-widget-fill" aria-labelledby="uw-sub">
+				<h2 class="im-widget-title" id="uw-sub">When this changes</h2>
+				<p class="im-widget-heading">Twice a year, at most.</p>
+				{{> "components/subscribe" id="uses-email" button="Tell me"}}
 			</section>
 		</div>
-	</section>
+		</div>
+	</aside>
 </div>
 
 <section class="im-section im-wrap">

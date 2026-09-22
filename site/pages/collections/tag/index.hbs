@@ -11,66 +11,100 @@ source: src/components/collection.css · tag.css
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
-<div class="im-wrap im-stack" style="--im-stack-gap: 2.5rem">
-	<header class="im-collhead">
-		<p class="im-eyebrow">Index</p>
-		<h1 class="im-collhead-title">Topics</h1>
-		<p class="im-collhead-text">Everything here, sorted by what it is about. A tag with three posts in it is a tag that should not exist — these are the ones that earned their name.</p>
-		<p class="im-collhead-meta"><span>{{fixtures.tags.length}} topics</span><span>{{fixtures.posts.length}} posts</span></p>
-	</header>
+<div class="im-single im-wrap-wide" data-sidebar="on">
+	<article class="im-stack" style="--im-stack-gap: 2.5rem">
+		<header class="im-collhead">
+			<p class="im-eyebrow">Index</p>
+			<h1 class="im-collhead-title">Topics</h1>
+			<p class="im-collhead-text">Everything here, sorted by what it is about. A tag with three posts in it is a tag that should not exist — these are the ones that earned their name.</p>
+			<p class="im-collhead-meta"><span>{{fixtures.tags.length}} topics</span><span>{{fixtures.posts.length}} posts</span></p>
+		</header>
 
-	<section class="im-section">
-		<div class="im-tagcards">
-			{{#each fixtures.tags}}
-			<article class="im-tagcard" style="--im-tag-dot: {{#match @index "=" 0}}#ff5a1f{{else}}{{#match @index "=" 1}}#3178c6{{else}}{{#match @index "=" 2}}#4ac26b{{else}}{{#match @index "=" 3}}#a855f7{{else}}#f59e0b{{/match}}{{/match}}{{/match}}{{/match}}">
-				<a class="im-tagcard-name" href="/collections/tag/page/">{{name}}<span class="im-tagcard-count">{{count.posts}}</span></a>
-				<p>Everything filed under {{name}}.</p>
-				<p><span class="im-kind" data-kind="tag">{{icon "tag"}}Topic</span></p>
-			</article>
-			{{/each}}
-		</div>
-	</section>
-
-	<section class="im-section">
-		<div class="home-head"><p class="im-caption" data-index="archive">The archive</p><a class="im-card-cta" href="/collections/post/">Everything {{> "icons/arrow-right"}}</a></div>
-		<div class="im-archive">
-			<div class="im-archive-year">
-				<p class="im-archive-head"><strong>2026</strong><span>{{demo.six.length}} pieces</span></p>
-				{{#each demo.six}}
-				<a class="im-archive-row" href="/collections/post/article/">
-					<span class="im-archive-date">{{date published_at format="D MMM"}}</span>
-					<span class="im-archive-title">{{title}}</span>
-					<span class="im-kind" data-kind="post">{{icon "file-text"}}Post</span>
-				</a>
-				{{/each}}
-				<a class="im-archive-row" href="/collections/project/page/">
-					<span class="im-archive-date">14 Sep</span>
-					<span class="im-archive-title">im-design-system — v0.7</span>
-					<span class="im-kind" data-kind="project">{{icon "folder"}}Project</span>
-				</a>
-				<a class="im-archive-row" href="/collections/video/page/">
-					<span class="im-archive-date">9 Sep</span>
-					<span class="im-archive-title">Driving the Amalfi Coast — the whole road in 8 minutes</span>
-					<span class="im-kind" data-kind="video">{{icon "video"}}Video</span>
-				</a>
-				<a class="im-archive-row" href="/collections/newsletter/issue/">
-					<span class="im-archive-date">4 Sep</span>
-					<span class="im-archive-title">Field Notes 040 — What a design system is actually for</span>
-					<span class="im-kind" data-kind="issue">{{icon "mail"}}Issue</span>
-				</a>
-			</div>
-			<div class="im-archive-year">
-				<p class="im-archive-head"><strong>2025</strong><span>28 pieces</span></p>
-				{{#each demo.three}}
-				<a class="im-archive-row" href="/collections/post/article/">
-					<span class="im-archive-date">{{date published_at format="D MMM"}}</span>
-					<span class="im-archive-title">{{title}}</span>
-					<span class="im-kind" data-kind="post">{{icon "file-text"}}Post</span>
-				</a>
+		<section class="im-section">
+			<div class="im-tagcards">
+				{{#each fixtures.tags}}
+				<article class="im-tagcard" style="--im-tag-dot: {{#match @index "=" 0}}#ff5a1f{{else}}{{#match @index "=" 1}}#3178c6{{else}}{{#match @index "=" 2}}#4ac26b{{else}}{{#match @index "=" 3}}#a855f7{{else}}#f59e0b{{/match}}{{/match}}{{/match}}{{/match}}">
+					<a class="im-tagcard-name" href="/collections/tag/page/">{{name}}<span class="im-tagcard-count">{{count.posts}}</span></a>
+					<p>Everything filed under {{name}}.</p>
+					<p><span class="im-kind" data-kind="tag">{{icon "tag"}}Topic</span></p>
+				</article>
 				{{/each}}
 			</div>
+		</section>
+
+		<section class="im-section">
+			<div class="home-head"><p class="im-caption" data-index="archive">The archive</p><a class="im-card-cta" href="/collections/post/">Everything {{> "icons/arrow-right"}}</a></div>
+			<div class="im-archive">
+				<div class="im-archive-year">
+					<p class="im-archive-head"><strong>2026</strong><span>{{demo.six.length}} pieces</span></p>
+					{{#each demo.six}}
+					<a class="im-archive-row" href="/collections/post/article/">
+						<span class="im-archive-date">{{date published_at format="D MMM"}}</span>
+						<span class="im-archive-title">{{title}}</span>
+						<span class="im-kind" data-kind="post">{{icon "file-text"}}Post</span>
+					</a>
+					{{/each}}
+					<a class="im-archive-row" href="/collections/project/page/">
+						<span class="im-archive-date">14 Sep</span>
+						<span class="im-archive-title">im-design-system — v0.7</span>
+						<span class="im-kind" data-kind="project">{{icon "folder"}}Project</span>
+					</a>
+					<a class="im-archive-row" href="/collections/video/page/">
+						<span class="im-archive-date">9 Sep</span>
+						<span class="im-archive-title">Driving the Amalfi Coast — the whole road in 8 minutes</span>
+						<span class="im-kind" data-kind="video">{{icon "video"}}Video</span>
+					</a>
+					<a class="im-archive-row" href="/collections/newsletter/issue/">
+						<span class="im-archive-date">4 Sep</span>
+						<span class="im-archive-title">Field Notes 040 — What a design system is actually for</span>
+						<span class="im-kind" data-kind="issue">{{icon "mail"}}Issue</span>
+					</a>
+				</div>
+				<div class="im-archive-year">
+					<p class="im-archive-head"><strong>2025</strong><span>28 pieces</span></p>
+					{{#each demo.three}}
+					<a class="im-archive-row" href="/collections/post/article/">
+						<span class="im-archive-date">{{date published_at format="D MMM"}}</span>
+						<span class="im-archive-title">{{title}}</span>
+						<span class="im-kind" data-kind="post">{{icon "file-text"}}Post</span>
+					</a>
+					{{/each}}
+				</div>
+			</div>
+		</section>
+	</article>
+
+	<aside>
+		<div class="im-sticky-rail">
+		<div class="im-widgets">
+			<section class="im-widget" aria-labelledby="gw-top">
+				<h2 class="im-widget-title" id="gw-top">Most used</h2>
+				<ol class="im-widget-list im-widget-list-ranked">
+					{{#foreach fixtures.tags}}{{#match @number "<" 5}}<li><a href="/collections/tag/page/">{{name}}<small>{{count.posts}} posts</small></a></li>{{/match}}{{/foreach}}
+				</ol>
+			</section>
+
+			<section class="im-widget" aria-labelledby="gw-new">
+				<h2 class="im-widget-title" id="gw-new">Newest</h2>
+				<div class="im-cluster" style="--im-cluster-gap: .375rem">
+					{{#each fixtures.tags}}<a class="im-tag" href="/collections/tag/page/">{{name}}</a>{{/each}}
+				</div>
+			</section>
+
+			<section class="im-widget" aria-labelledby="gw-arch">
+				<h2 class="im-widget-title" id="gw-arch">By year</h2>
+				<nav class="im-widget-archive">
+					{{#each demo.archive}}<a href="#topics">{{year}}<small>{{count}}</small></a>{{/each}}
+				</nav>
+			</section>
+
+			<section class="im-widget" aria-labelledby="gw-rule">
+				<h2 class="im-widget-title" id="gw-rule">One rule</h2>
+				<p class="im-widget-sponsor">A tag with three posts in it is a tag that should not exist. Merge it, or write the other four.</p>
+			</section>
 		</div>
-	</section>
+		</div>
+	</aside>
 </div>
 
 <section class="im-section im-wrap">

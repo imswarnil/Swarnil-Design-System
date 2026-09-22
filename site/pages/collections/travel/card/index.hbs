@@ -1,0 +1,70 @@
+---
+title: Trip card
+description: The experience card with a duration in the corner and a route underneath — the stops in order, with drawn rules between them.
+eyebrow: Collections · Travel
+source: src/components/life.css
+---
+<p>A trip is an <a href="/collections/experience/card/">experience</a> that lasted a week. Same card, two changes.</p>
+
+<h2>The card</h2>
+{{#example}}
+<div class="im-exps" style="--im-exps-min: 19rem">
+	{{#each demo.trips}}{{#match @index "<" 2}}
+	<article class="im-exp im-trip">
+		<span class="im-exp-media">
+			<img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy">
+			<span class="im-exp-figure">{{days}}<small>days</small></span>
+			<span class="im-kind im-kind-over" data-kind="tag">{{icon "map-pin"}}{{country}}</span>
+		</span>
+		<div class="im-exp-body">
+			<p class="im-exp-where"><span>{{when}}</span><span>{{km}} km</span></p>
+			<h3 class="im-exp-title"><a href="/collections/travel/trip/">{{title}}</a></h3>
+			<p class="im-exp-text">{{text}}</p>
+			<p class="im-trip-route">{{#each route}}<span>{{this}}</span>{{/each}}</p>
+		</div>
+	</article>
+	{{/match}}{{/each}}
+</div>
+{{/example}}
+
+<h2>The route</h2>
+<p>The stops, in order, with a <strong>drawn</strong> rule between them rather than a typed arrow — so a screen reader reads "Naples, Sorrento, Positano" and not "Naples rightwards arrow Sorrento rightwards arrow Positano".</p>
+{{#example center=true}}
+<p class="im-trip-route"><span>Naples</span><span>Sorrento</span><span>Positano</span><span>Amalfi</span><span>Ravello</span></p>
+{{/example}}
+<p>Five stops is the most a card should carry. Beyond that, print the first, the last and a count — the full route is on the <a href="/collections/travel/trip/">trip page</a>, where it has room.</p>
+
+<h2>Planned trips stay on the list</h2>
+<p>With "Planned" where the distance would be. Hiding a trip until it has happened loses the one reader who wanted to say "I am there that week too".</p>
+{{#example}}
+<div class="im-exps" style="--im-exps-min: 19rem">
+	{{#with demo.trips.[3]}}
+	<article class="im-exp im-trip">
+		<span class="im-exp-media">
+			<img src="{{../demo.shots.[3]}}" alt="" loading="lazy">
+			<span class="im-exp-figure">{{days}}<small>days</small></span>
+			<span class="im-kind im-kind-over" data-kind="tag">{{icon "map-pin"}}{{country}}</span>
+		</span>
+		<div class="im-exp-body">
+			<p class="im-exp-where"><span>{{when}}</span><span>Planned</span></p>
+			<h3 class="im-exp-title"><a href="/collections/travel/trip/">{{title}}</a></h3>
+			<p class="im-exp-text">{{text}}</p>
+			<p class="im-trip-route">{{#each route}}<span>{{this}}</span>{{/each}}</p>
+		</div>
+	</article>
+	{{/with}}
+</div>
+{{/example}}
+
+<h2>Parts</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Class</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>im-exp im-trip</code></td><td>The card, at 3:2 — a landscape is wider than a moment.</td></tr>
+		<tr><td><code>im-exp-figure</code></td><td>Days, in the picture's corner, where an experience puts its depth.</td></tr>
+		<tr><td><code>im-kind</code></td><td>The country, top left.</td></tr>
+		<tr><td><code>im-trip-route</code></td><td>The stops, with drawn rules.</td></tr>
+	</tbody>
+</table>
+</div>

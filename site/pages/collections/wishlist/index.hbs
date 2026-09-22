@@ -1,87 +1,136 @@
 ---
-title: Wishlist
+title: Bucket collection
 layout: home
-description: Things you want, with how much you want them — and the ones you have since got, left on the list, because a wishlist that deletes its history is a shopping cart.
-eyebrow: Collections
-source: src/components/commerce.css · ad.css
+description: Things to do — grouped, checked off, and left on the page once they are done, because a list that deletes what you achieved is a to-do list and not a record of anything.
+eyebrow: Collections · Bucket list
+source: src/components/life.css
 ---
 <section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
-	<p class="im-eyebrow">Collections · {{page.title}}</p>
+	<p class="im-eyebrow">Collections · Bucket list · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
-<div class="im-wrap im-stack" style="--im-stack-gap: 2rem">
-	<header class="im-collhead">
-		<p class="im-eyebrow">Wishlist</p>
-		<h1 class="im-collhead-title">Things I want</h1>
-		<p class="im-collhead-text">Kept in public mostly to slow myself down. The bar underneath each one is how badly, and it is the only honest thing on the page.</p>
-		<p class="im-collhead-meta"><span>{{demo.wishlist.length}} things</span><span>1 got</span><span>Updated September 2026</span></p>
-	</header>
+<div class="im-single im-wrap" data-sidebar="on">
+	<article class="im-stack" style="--im-stack-gap: 2rem">
+		<header class="im-collhead">
+			<p class="im-eyebrow">Bucket list</p>
+			<h1 class="im-collhead-title">Things I want to do</h1>
+			<p class="im-collhead-text">Kept in public because a list nobody can see is a list you can quietly drop. One is done, two are booked, and the rest are honest about being someday.</p>
+			<p class="im-collhead-meta"><span>{{demo.wishlist.length}} things</span><span>1 done</span><span>2 booked</span></p>
+		</header>
 
-	<div class="im-collbar">
-		<div class="im-collbar-filters">
-			<a class="im-tag" href="#wish" aria-current="page">Wanted</a>
-			<a class="im-tag" href="#wish">Got</a>
-			<a class="im-tag" href="#wish">Someday</a>
-		</div>
-	</div>
-
-	<div class="im-affiliates" id="wish">
-		{{#each demo.wishlist}}
-		<article class="im-affiliate">
-			<span class="im-affiliate-media"><img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy"></span>
-			<a class="im-affiliate-name" href="#wish" rel="noopener">{{name}}</a>
-			<p class="im-affiliate-by">{{by}}</p>
-			<p class="im-affiliate-text">{{text}}</p>
-			<p class="im-affiliate-meta">
-				<span class="im-affiliate-price">{{price}}</span>
-				<span class="im-wish-priority{{#if got}} im-wish-got{{/if}}" style="--im-wish: {{wish}}%">{{#if got}}Got it{{else}}Want{{/if}}</span>
-			</p>
-			<div class="im-affiliate-actions">
-				{{#if got}}
-					<span class="im-badge im-badge-success">{{icon "check"}}Since August</span>
-					<a class="im-btn im-btn-sm" href="/collections/uses/">Now on Uses</a>
-				{{else}}
-					<a class="im-btn im-btn-sm" href="#wish" rel="noopener">Where it is {{icon "arrow-up-right"}}</a>
-				{{/if}}
+		<div class="im-collbar">
+			<div class="im-collbar-filters">
+				<a class="im-tag" href="#bucket" aria-current="page">Everything</a>
+				<a class="im-tag" href="#bucket">Water</a>
+				<a class="im-tag" href="#bucket">Cold</a>
+				<a class="im-tag" href="#bucket">Distance</a>
+				<a class="im-tag" href="#bucket">Done</a>
 			</div>
-			<p class="im-affiliate-note">Nothing on this page is an affiliate link</p>
-		</article>
-		{{/each}}
-	</div>
+		</div>
+
+		<div class="im-stack" id="bucket" style="--im-stack-gap: 2rem">
+			<section class="im-bucket-group">
+				<p class="im-bucket-head"><span>Water</span><span>1 of 3 done</span></p>
+				<ul class="im-buckets">
+					{{#each demo.wishlist}}{{#match group "=" "Water"}}
+					<li class="im-bucket"{{#if state}} data-state="{{state}}"{{/if}}>
+						<span class="im-bucket-mark">{{icon "check"}}</span>
+						<p class="im-bucket-title"><a href="/collections/wishlist/page/">{{title}}</a></p>
+						<p class="im-bucket-note">{{note}}</p>
+						<p class="im-bucket-when">{{when}}</p>
+					</li>
+					{{/match}}{{/each}}
+				</ul>
+			</section>
+
+			<section class="im-bucket-group">
+				<p class="im-bucket-head"><span>Cold</span><span>0 of 3 done</span></p>
+				<ul class="im-buckets">
+					{{#each demo.wishlist}}{{#match group "=" "Cold"}}
+					<li class="im-bucket"{{#if state}} data-state="{{state}}"{{/if}}>
+						<span class="im-bucket-mark">{{icon "check"}}</span>
+						<p class="im-bucket-title"><a href="/collections/wishlist/page/">{{title}}</a></p>
+						<p class="im-bucket-note">{{note}}</p>
+						<p class="im-bucket-when">{{when}}</p>
+					</li>
+					{{/match}}{{/each}}
+				</ul>
+			</section>
+
+			<section class="im-bucket-group">
+				<p class="im-bucket-head"><span>Distance</span><span>0 of 3 done</span></p>
+				<ul class="im-buckets">
+					{{#each demo.wishlist}}{{#match group "=" "Distance"}}
+					<li class="im-bucket"{{#if state}} data-state="{{state}}"{{/if}}>
+						<span class="im-bucket-mark">{{icon "check"}}</span>
+						<p class="im-bucket-title"><a href="/collections/wishlist/page/">{{title}}</a></p>
+						<p class="im-bucket-note">{{note}}</p>
+						<p class="im-bucket-when">{{when}}</p>
+					</li>
+					{{/match}}{{/each}}
+				</ul>
+			</section>
+		</div>
+	</article>
+
+	<aside>
+		<div class="im-sticky-rail">
+			<div class="im-widgets">
+				<section class="im-widget" aria-labelledby="b-prog">
+					<h2 class="im-widget-title" id="b-prog">How it is going</h2>
+					<div class="im-progress" style="--im-value: .11" role="progressbar" aria-valuenow="11" aria-label="Bucket list progress"><span></span></div>
+					<p class="text-xs text-muted">1 of 9 done · 2 booked</p>
+					<div class="im-widget-stats">
+						<div><strong>1</strong><span>Done</span></div>
+						<div><strong>2</strong><span>Booked</span></div>
+						<div><strong>6</strong><span>Someday</span></div>
+					</div>
+				</section>
+
+				<section class="im-widget" aria-labelledby="b-done">
+					<h2 class="im-widget-title" id="b-done">Already done <a href="/collections/experience/">All</a></h2>
+					<ul class="im-widget-list">
+						{{#each demo.experience}}{{#match @index "<" 3}}<li><a href="/collections/experience/page/">{{title}}<small>{{where}} · {{when}}</small></a></li>{{/match}}{{/each}}
+					</ul>
+				</section>
+
+				<section class="im-widget im-widget-fill" aria-labelledby="b-sub">
+					<h2 class="im-widget-title" id="b-sub">When one happens</h2>
+					<p class="im-widget-heading">I write it up.</p>
+					{{> "components/subscribe" id="bucket-email" button="Join"}}
+				</section>
+			</div>
+		</div>
+	</aside>
 </div>
 
 <section class="im-section im-wrap">
 	<div class="im-prose">
-		<h2>The affiliate card, with the buying taken out</h2>
-		<p>A wishlist is the <a href="/collections/uses/">uses</a> page before the decision: the same card, the same shot, the same price — but the buy button is gone, because you are not buying it, and in its place is the only fact a wishlist actually carries.</p>
-		<p><strong>How badly.</strong> <code>im-wish-priority</code> is a small bar, <code>--im-wish</code> percent full, in one line with the word "Want". It says more than a star rating and takes a quarter of the room.</p>
-		{{#example center=true}}
-		<span class="im-wish-priority" style="--im-wish: 90%">Want</span>
-		<span class="im-wish-priority" style="--im-wish: 65%">Want</span>
-		<span class="im-wish-priority" style="--im-wish: 25%">Someday</span>
-		<span class="im-wish-priority im-wish-got">Got it</span>
-		{{/example}}
-
-		<h2>Leave the ones you got</h2>
-		<p>A wishlist that deletes an item the moment it is bought is a shopping cart. Leaving it — marked, in the success colour, with a link through to <a href="/collections/uses/">Uses</a> — turns the page into a record of what you wanted and whether you were right, which is the only part of it worth reading a year later.</p>
+		<h2>A checklist, not a shopping list</h2>
+		<p>The state is the whole point, so it is the first thing on every row: an empty ring for someday, an accent ring for booked, a filled tick for done. It is the same vocabulary a <a href="/navigation/curriculum/">course lesson</a> uses, because it is the same idea — a thing you have or have not got to yet.</p>
 		<div class="im-table-scroll">
 		<table>
-			<thead><tr><th>Class</th><th></th></tr></thead>
+			<thead><tr><th><code>data-state</code></th><th></th></tr></thead>
 			<tbody>
-				<tr><td><code>im-wish-priority</code></td><td>The bar and the word. <code>--im-wish</code> is how full, <code>--im-wish-color</code> what colour.</td></tr>
-				<tr><td><code>im-wish-got</code></td><td>Full, in the success colour, and the label changes. The card stays.</td></tr>
-				<tr><td><code>im-affiliate</code></td><td>Everything else — it is the same card as <a href="/components/ads/#affiliate-product-card">Uses</a>, minus the buy button.</td></tr>
+				<tr><td><em>none</em></td><td>Someday. An empty ring, and the date column says so.</td></tr>
+				<tr><td><code>booked</code></td><td>It is happening: an accent ring, and a real date.</td></tr>
+				<tr><td><code>done</code></td><td>A filled tick, the title struck through but <strong>still legible</strong>, and the date in the success colour.</td></tr>
 			</tbody>
 		</table>
 		</div>
 
+		<h2>Leave the done ones on the page</h2>
+		<p>A list that deletes an item the moment it happens is a to-do list. Leaving it — struck through, dated, and linked to the <a href="/collections/experience/">experience</a> it became — is what turns the page into a record of a life rather than a set of intentions.</p>
+		<p>That link is the only navigation the collection needs. A done row goes to what happened; the experience page links back to the line it came from.</p>
+
 		<h2>Rules</h2>
 		<ul>
-			<li><strong>No affiliate links on a wishlist.</strong> Asking people to look at what you want and earning from it is the one place this stops being charming. The note on every card says so out loud.</li>
-			<li><strong>Prices go out of date.</strong> Say when the page was last checked, or leave them off.</li>
-			<li><strong>One thing that is not for sale.</strong> Every good wishlist has one, and it is the reason anybody reads to the bottom.</li>
+			<li><strong>Group them by something real.</strong> Water, cold, distance — not "high priority", which is a project-management word and means nothing on a list like this.</li>
+			<li><strong>"Someday" is an honest answer.</strong> A made-up date on every line makes the two real dates worth nothing.</li>
+			<li><strong>Nine is a list. Forty is a fantasy.</strong></li>
+			<li><strong>No prices.</strong> This is not a <a href="/collections/uses/">wish-to-buy</a> page; it is a wish-to-do one.</li>
 		</ul>
 	</div>
 </section>

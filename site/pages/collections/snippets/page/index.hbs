@@ -1,0 +1,90 @@
+---
+title: Snippet page
+layout: home
+description: One snippet, whole — the code unclipped, why it works, what it does not handle, and the two or three places it came from.
+eyebrow: Collections · Snippet
+source: src/components/commerce.css · code.css
+---
+<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+	<p class="im-eyebrow">Collections · Snippet · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+</section>
+
+<div class="im-single im-wrap" data-sidebar="on">
+	<article class="im-stack" style="--im-stack-gap: 1.5rem">
+		{{#with demo.snippets.[0]}}
+		<nav aria-label="Breadcrumb">
+			<ol class="im-breadcrumb im-breadcrumb-chevron">
+				<li><a href="/">{{> "icons/house"}}<span>Home</span></a></li>
+				<li><a href="/collections/snippets/">{{> "icons/code"}}<span>Snippets</span></a></li>
+				<li><span aria-current="page">{{name}}</span></li>
+			</ol>
+		</nav>
+
+		<header class="im-stack" style="--im-stack-gap: .625rem">
+			<p class="im-cluster" style="--im-cluster-gap: .5rem">
+				<span class="im-kind">{{icon "code"}}Snippet</span>
+				<span class="im-snippet-lang" style="--im-repo-lang: {{langColor}}; margin: 0">{{lang}}</span>
+			</p>
+			<h1 class="im-collhead-title" style="font-size: clamp(1.75rem, 1.3rem + 2vw, 2.5rem)">{{name}}</h1>
+			<p class="im-collhead-text">{{text}}</p>
+		</header>
+
+		<section class="im-section" style="--im-section-gap: .5rem">
+			<pre><code class="language-css">{{snippet}}</code></pre>
+			<p class="im-cluster"><button class="im-btn im-btn-primary im-btn-sm" type="button" data-im-copy="{{snippet}}" data-im-copied-label="Copied">{{icon "copy"}}<span data-im-copy-label>Copy the snippet</span></button></p>
+		</section>
+		{{/with}}
+
+		<section class="im-content im-content-flush">
+			<h2>Why it works</h2>
+			<p>The middle value is the one doing the work: <code>0.9rem + 0.5vw</code> grows with the viewport, and the two outside it are the floor and the ceiling. Nothing in it is a breakpoint, so there is no width at which the type suddenly jumps.</p>
+
+			<h2>What it does not handle</h2>
+			<ul>
+				<li><strong>Zoom.</strong> A user who zooms to 200% gets the ceiling, which is usually right but is not always.</li>
+				<li><strong>Very narrow columns.</strong> <code>vw</code> is the <em>viewport</em>, not the container — in a 20rem sidebar on a 90rem screen it will be too big. Use a container query unit there.</li>
+			</ul>
+
+			<h2>Where it came from</h2>
+			<p>The formula is the well-known fluid-type calculation; the numbers are this system's, and they are in <a href="/foundation/typography/">Typography</a> as real tokens rather than as a snippet you have to paste.</p>
+		</section>
+	</article>
+
+	<aside>
+		<div class="im-sticky-rail">
+			<div class="im-widgets">
+				<section class="im-widget" aria-labelledby="s-facts">
+					<h2 class="im-widget-title" id="s-facts">This snippet</h2>
+					<dl class="im-widget-facts">
+						<dt>Language</dt><dd>CSS</dd>
+						<dt>Lines</dt><dd>2</dd>
+						<dt>Added</dt><dd>Sep 2026</dd>
+						<dt>Licence</dt><dd>Public domain</dd>
+					</dl>
+				</section>
+
+				<section class="im-widget" aria-labelledby="s-more">
+					<h2 class="im-widget-title" id="s-more">More snippets <a href="/collections/snippets/">All</a></h2>
+					<ul class="im-widget-list">
+						{{#each demo.snippets}}{{#match @index ">" 0}}<li><a href="/collections/snippets/page/">{{name}}<small>{{lang}}</small></a></li>{{/match}}{{/each}}
+					</ul>
+				</section>
+			</div>
+		</div>
+	</aside>
+</div>
+
+<section class="im-section im-wrap">
+	<div class="im-prose">
+		<h2>Three headings, always the same three</h2>
+		<p><strong>Why it works</strong>, <strong>what it does not handle</strong>, and <strong>where it came from</strong>. A snippet page with only the first is a tutorial; one with all three is the thing you actually wanted when you searched for it at eleven at night.</p>
+		<p>The second is the one nobody writes and everybody needs. Every snippet has an edge it falls off, and saying so is what separates a collection you can trust from a collection you have to test.</p>
+		<ul>
+			<li><strong>The code is unclipped here.</strong> The card clipped it; the page is where the whole thing lives.</li>
+			<li><strong>One big Copy button</strong>, under the code, primary. It is what the page is for.</li>
+			<li><strong>Say the licence.</strong> Most snippets should be public domain and saying so removes the only reason to hesitate.</li>
+		</ul>
+	</div>
+</section>

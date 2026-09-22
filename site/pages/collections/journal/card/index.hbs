@@ -1,0 +1,53 @@
+---
+title: Entry card
+description: A journal entry has no card. It has a row on a timeline, with the whole entry printed on it — and that absence is the design decision, not an omission.
+eyebrow: Collections · Journal
+source: src/components/timeline.css
+---
+<p>Every other collection here is a list, a card and a page. The journal is the one that <strong>refuses the card</strong>, and it is worth saying why out loud rather than quietly shipping a page with nothing on it.</p>
+
+<h2>What an entry looks like</h2>
+{{#example}}
+<ol class="im-timeline im-log">
+	{{#each demo.journal}}{{#match @index "<" 2}}
+	<li class="im-timeline-item">
+		<span class="im-timeline-marker"></span>
+		<time class="im-timeline-time">{{when}}</time>
+		<h3 class="im-timeline-title">{{title}}</h3>
+		<p class="im-timeline-text">{{text}}</p>
+		<p class="im-log-meta"><a class="im-tag" href="/collections/tag/page/">{{tag}}</a></p>
+	</li>
+	{{/match}}{{/each}}
+</ol>
+{{/example}}
+
+<h2>Why not a card</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>A card says</th><th>A journal entry is</th></tr></thead>
+	<tbody>
+		<tr><td>"This is a thing worth choosing between"</td><td>Read in sequence, not chosen between</td></tr>
+		<tr><td>Has an excerpt, and a read-more</td><td>Four sentences. The excerpt <em>is</em> the entry</td></tr>
+		<tr><td>Has a picture, or a hole where one should be</td><td>Usually has neither, and does not miss one</td></tr>
+		<tr><td>Sits in a grid</td><td>Sits on a line, which shows the gaps between entries</td></tr>
+	</tbody>
+</table>
+</div>
+<p>A grid of eight cards each holding four sentences and a "read more" is eight clicks to read a page of text. The <a href="/components/timeline/">timeline</a> prints all of it, in order, and the reader scrolls — which is the interaction they were going to use anyway.</p>
+
+<h2>The parts it does have</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Class</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>im-timeline im-log</code></td><td>The list. <code>im-log</code> is the tuning: a bigger heading and room for a picture.</td></tr>
+		<tr><td><code>im-timeline-time</code></td><td>The date, first — a journal is navigated by <em>when</em>.</td></tr>
+		<tr><td><code>im-timeline-title</code> · <code>-text</code></td><td>What it was, and the whole of it.</td></tr>
+		<tr><td><code>im-log-shot</code></td><td>A picture, where there is one. Optional, and usually absent.</td></tr>
+		<tr><td><code>im-log-meta</code></td><td>The tag, and the kind chip in a mixed archive.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>When an entry does need a page</h2>
+<p>When somebody has to link to it. See <a href="/collections/journal/page/">Entry page</a> — it is the same timeline row, given a URL and a heading, and nothing else.</p>

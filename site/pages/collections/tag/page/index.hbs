@@ -14,26 +14,28 @@ source: src/components/collection.css · tag.css
 <div class="im-wrap-wide im-stack" style="--im-stack-gap: 2rem">
 	{{#with fixtures.tags.[0]}}
 	<header class="im-taghero" style="--im-tag-dot: #ff5a1f">
-		<nav aria-label="Breadcrumb">
-			<ol class="im-breadcrumb im-breadcrumb-chevron">
-				<li><a href="/">{{> "icons/house"}}<span>Home</span></a></li>
-				<li><a href="/collections/tag/">{{> "icons/tag"}}<span>Topics</span></a></li>
-				<li><span aria-current="page">{{name}}</span></li>
-			</ol>
-		</nav>
-		<h1 class="im-taghero-name">{{name}}</h1>
-		<p class="im-collhead-text">Roads, the places at the end of them, and what they actually cost. Mostly Italy, mostly in November, mostly by accident.</p>
-		<p class="im-collhead-meta">
-			<span>{{count.posts}} posts</span>
-			<span>First in March 2024</span>
-			<a href="#posts">RSS</a>
-		</p>
-		<p class="im-cluster" style="--im-cluster-gap: .375rem">
-			<span class="im-kind" data-kind="tag">{{icon "tag"}}Topic</span>
-			<a class="im-tag" href="/collections/tag/page/">Moving to Europe</a>
-			<a class="im-tag" href="/collections/tag/page/">Craft</a>
-			<a class="im-tag" href="/collections/tag/page/">Career</a>
-		</p>
+		<div class="im-taghero-copy">
+			<nav aria-label="Breadcrumb">
+				<ol class="im-breadcrumb im-breadcrumb-chevron">
+					<li><a href="/">{{> "icons/house"}}<span>Home</span></a></li>
+					<li><a href="/collections/tag/">{{> "icons/tag"}}<span>Topics</span></a></li>
+					<li><span aria-current="page">{{name}}</span></li>
+				</ol>
+			</nav>
+			<h1 class="im-taghero-name">{{name}}</h1>
+			<p class="im-collhead-text">Roads, the places at the end of them, and what they actually cost. Mostly Italy, mostly in November, mostly by accident.</p>
+			<p class="im-collhead-meta">
+				<span>{{count.posts}} posts</span>
+				<span>First in March 2024</span>
+				<a href="#posts">RSS</a>
+			</p>
+			<p class="im-cluster" style="--im-cluster-gap: .375rem">
+				<span class="im-kind" data-kind="tag">{{icon "tag"}}Topic</span>
+				<a class="im-tag" href="/collections/tag/page/">Moving to Europe</a>
+				<a class="im-tag" href="/collections/tag/page/">Craft</a>
+			</p>
+		</div>
+		<div class="im-taghero-art" data-initial="{{name.[0]}}" aria-hidden="true"><span class="im-bg-isometric"></span></div>
 	</header>
 	{{/with}}
 
@@ -69,12 +71,15 @@ source: src/components/collection.css · tag.css
 <section class="im-section im-wrap">
 	<div class="im-prose">
 		<h2>A hero, and then the collection</h2>
-		<p>A tag page is the <a href="/collections/post/">post collection</a> with a head that says what the topic <em>is</em>. Ghost hands it a different list and a <code>{{"{{#tag}}"}}</code> block with the name, the description and the count; nothing else about the page changes, which is the whole point — a reader who has used the blog index already knows how this works.</p>
+		<p>A topic has no cover photograph, and inventing one is how a blog ends up with six stock images of laptops. So the head is a <strong>pattern</strong>: one of the system's own line patterns in the tag's own colour, masked to a soft edge, with the topic's initial behind it. It is drawn from tokens, it costs nothing, it is honest, and it makes two tag pages look different from each other for the one reason that actually differs — the topic.</p>
+<p>Otherwise a tag page is the <a href="/collections/post/">post collection</a> with a head that says what the topic <em>is</em>. Ghost hands it a different list and a <code>{{"{{#tag}}"}}</code> block with the name, the description and the count; nothing else about the page changes, which is the whole point — a reader who has used the blog index already knows how this works.</p>
 		<div class="im-table-scroll">
 		<table>
 			<thead><tr><th>Class</th><th></th></tr></thead>
 			<tbody>
-				<tr><td><code>im-taghero</code></td><td>The head: breadcrumb, name, description, counts, and the topics next to it.</td></tr>
+				<tr><td><code>im-taghero</code></td><td>Two columns in one ruled panel: the words on the left, a pattern on the right.</td></tr>
+				<tr><td><code>im-taghero-copy</code></td><td>Breadcrumb, name, description, counts, sibling topics.</td></tr>
+				<tr><td><code>im-taghero-art</code></td><td>The panel. One of the system's own <a href="/foundation/patterns/">line patterns</a> in the tag's colour, masked away at the edges, with the topic's initial huge and quiet behind it. Under 56rem it moves above the words.</td></tr>
 				<tr><td><code>im-taghero-name</code></td><td>The <code>&lt;h1&gt;</code>, with the tag's own dot before it — <code>--im-tag-dot</code>, from the data, the same colour the <a href="/collections/tag/">index card</a> uses.</td></tr>
 				<tr><td><code>im-feed im-feed-lead</code></td><td>The list. The newest piece takes the top row and lies down.</td></tr>
 				<tr><td><code>im-archive</code></td><td>Everything older, as rows — with <code>im-kind</code> on each one, because a topic's history usually has more than posts in it.</td></tr>

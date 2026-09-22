@@ -26,46 +26,81 @@ source: src/components/collection.css · post-card.css · pagination.css
 	</div>
 </section>
 
-<div class="im-wrap-wide im-stack" style="--im-stack-gap: 1.75rem">
-	<header class="im-collhead">
-		<p class="im-eyebrow">Collection</p>
-		<h1 class="im-collhead-title">Journal</h1>
-		<p class="im-collhead-text">Notes on building things, the roads in between, and the tools that survived the year. Long enough to be worth the trip; never longer.</p>
-		<p class="im-collhead-meta">
-			<span>{{fixtures.posts.length}} posts</span>
-			<a href="/components/icons/">RSS</a>
-			<a href="/forms/inputs/">Subscribe</a>
-		</p>
-	</header>
+<div class="im-single im-wrap-wide" data-sidebar="on">
+	<article class="im-stack" style="--im-stack-gap: 1.75rem">
+		<header class="im-collhead">
+			<p class="im-eyebrow">Collection</p>
+			<h1 class="im-collhead-title">Journal</h1>
+			<p class="im-collhead-text">Notes on building things, the roads in between, and the tools that survived the year. Long enough to be worth the trip; never longer.</p>
+			<p class="im-collhead-meta">
+				<span>{{fixtures.posts.length}} posts</span>
+				<a href="/components/icons/">RSS</a>
+				<a href="/forms/inputs/">Subscribe</a>
+			</p>
+		</header>
 
-	<div class="im-collbar">
-		<div class="im-collbar-filters">
-			<a class="im-tag" href="#feed" aria-current="page">All</a>
-			{{#each fixtures.tags}}<a class="im-tag" href="#feed">{{name}} <small>{{count.posts}}</small></a>{{/each}}
+		<div class="im-collbar">
+			<div class="im-collbar-filters">
+				<a class="im-tag" href="#feed" aria-current="page">All</a>
+				{{#each fixtures.tags}}<a class="im-tag" href="#feed">{{name}} <small>{{count.posts}}</small></a>{{/each}}
+			</div>
+			<div class="im-cluster" style="--im-cluster-gap: .375rem">
+				<button class="im-btn im-btn-sm" type="button">{{icon "list-filter"}}Newest</button>
+			</div>
 		</div>
-		<div class="im-cluster" style="--im-cluster-gap: .375rem">
-			<button class="im-btn im-btn-sm" type="button">{{icon "list-filter"}}Newest</button>
+
+		<div class="im-feed im-feed-lead" id="feed">
+			{{#foreach demo.ten}}{{> "components/post-card" excerpt=true}}{{/foreach}}
 		</div>
-	</div>
 
-	<div class="im-feed im-feed-lead" id="feed">
-		{{#foreach demo.ten}}{{> "components/post-card" excerpt=true}}{{/foreach}}
-	</div>
+		<div class="im-loadmore">
+			<button class="im-btn" type="button">Load more</button>
+			<p>10 of {{fixtures.posts.length}}</p>
+		</div>
 
-	<div class="im-loadmore">
-		<button class="im-btn" type="button">Load more</button>
-		<p>10 of {{fixtures.posts.length}}</p>
-	</div>
+		<nav class="im-pagination im-pagination-ruled" aria-label="Pages" style="justify-content: center">
+			<span class="im-page" aria-disabled="true">{{icon "chevron-left"}}</span>
+			<a class="im-page" href="#feed" aria-current="page">1</a>
+			<a class="im-page" href="#feed">2</a>
+			<a class="im-page" href="#feed">3</a>
+			<span class="im-page im-page-gap">…</span>
+			<a class="im-page" href="#feed">9</a>
+			<a class="im-page" href="#feed">{{icon "chevron-right"}}</a>
+		</nav>
+	</article>
 
-	<nav class="im-pagination im-pagination-ruled" aria-label="Pages" style="justify-content: center">
-		<span class="im-page" aria-disabled="true">{{icon "chevron-left"}}</span>
-		<a class="im-page" href="#feed" aria-current="page">1</a>
-		<a class="im-page" href="#feed">2</a>
-		<a class="im-page" href="#feed">3</a>
-		<span class="im-page im-page-gap">…</span>
-		<a class="im-page" href="#feed">9</a>
-		<a class="im-page" href="#feed">{{icon "chevron-right"}}</a>
-	</nav>
+	<aside>
+		<div class="im-sticky-rail">
+		<div class="im-widgets">
+			<section class="im-widget" aria-labelledby="pw-top">
+				<h2 class="im-widget-title" id="pw-top">Most read</h2>
+				<ol class="im-widget-list im-widget-list-ranked">
+					{{#foreach demo.six}}{{#match @number "<" 5}}<li><a href="/collections/post/article/">{{title}}<small>{{reading_time}}</small></a></li>{{/match}}{{/foreach}}
+				</ol>
+			</section>
+
+			<section class="im-widget" aria-labelledby="pw-tags">
+				<h2 class="im-widget-title" id="pw-tags">Topics <a href="/collections/tag/">All</a></h2>
+				<div class="im-cluster" style="--im-cluster-gap: .375rem">
+					{{#each fixtures.tags}}<a class="im-tag" href="/collections/tag/page/">{{name}}<small>{{count.posts}}</small></a>{{/each}}
+				</div>
+			</section>
+
+			<section class="im-widget" aria-labelledby="pw-arch">
+				<h2 class="im-widget-title" id="pw-arch">Archive</h2>
+				<nav class="im-widget-archive">
+					{{#each demo.archive}}<a href="#feed">{{year}}<small>{{count}}</small></a>{{/each}}
+				</nav>
+			</section>
+
+			<section class="im-widget im-widget-fill" aria-labelledby="pw-sub">
+				<h2 class="im-widget-title" id="pw-sub">Get these by email</h2>
+				<p class="im-widget-heading">One a fortnight. No list swapping.</p>
+				{{> "components/subscribe" id="feed-email"}}
+			</section>
+		</div>
+		</div>
+	</aside>
 </div>
 
 <section class="im-section im-wrap">

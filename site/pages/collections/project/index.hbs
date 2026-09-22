@@ -21,50 +21,104 @@ source: src/components/repo-card.css · partials/components/repo-card.hbs
 	</div>
 </section>
 
-<div class="im-wrap-wide im-stack" style="--im-stack-gap: 1.75rem">
-	<header class="im-collhead">
-		<p class="im-eyebrow">Work</p>
-		<h1 class="im-collhead-title">Projects</h1>
-		<p class="im-collhead-text">Things I have built and kept building. Everything here is open, and everything here is used by somebody — including me.</p>
-		<p class="im-collhead-meta">
-			<span>{{demo.projects.length}} repositories</span>
-			<a href="#projects">4.2k stars</a>
-			<a href="#projects">GitHub</a>
-		</p>
-	</header>
+<div class="im-single im-wrap-wide" data-sidebar="on">
+	<article class="im-stack" style="--im-stack-gap: 1.75rem">
+		<header class="im-collhead">
+			<p class="im-eyebrow">Work</p>
+			<h1 class="im-collhead-title">Projects</h1>
+			<p class="im-collhead-text">Things I have built and kept building. Everything here is open, and everything here is used by somebody — including me.</p>
+			<p class="im-collhead-meta">
+				<span>{{demo.projects.length}} repositories</span>
+				<a href="#projects">4.2k stars</a>
+				<a href="#projects">GitHub</a>
+			</p>
+		</header>
 
-	<div class="im-collbar">
-		<div class="im-collbar-filters">
-			<a class="im-tag" href="#projects" aria-current="page">All</a>
-			<a class="im-tag" href="#projects">CSS</a>
-			<a class="im-tag" href="#projects">TypeScript</a>
-			<a class="im-tag" href="#projects">Handlebars</a>
-			<a class="im-tag" href="#projects">Python</a>
-			<a class="im-tag" href="#projects">Archived</a>
+		<div class="im-collbar">
+			<div class="im-collbar-filters">
+				<a class="im-tag" href="#projects" aria-current="page">All</a>
+				<a class="im-tag" href="#projects">CSS</a>
+				<a class="im-tag" href="#projects">TypeScript</a>
+				<a class="im-tag" href="#projects">Handlebars</a>
+				<a class="im-tag" href="#projects">Python</a>
+				<a class="im-tag" href="#projects">Archived</a>
+			</div>
+			<div class="im-cluster" style="--im-cluster-gap: .375rem">
+				<button class="im-btn im-btn-sm" type="button">{{icon "list-filter"}}Most stars</button>
+			</div>
 		</div>
-		<div class="im-cluster" style="--im-cluster-gap: .375rem">
-			<button class="im-btn im-btn-sm" type="button">{{icon "list-filter"}}Most stars</button>
+
+		<div class="im-repos" id="repos">
+			{{#each demo.projects}}{{> "components/repo-card" cta=true}}{{/each}}
 		</div>
-	</div>
 
-	<div class="im-repos" id="repos">
-		{{#each demo.projects}}{{> "components/repo-card" cta=true}}{{/each}}
-	</div>
-
-	<div class="im-loadmore">
-		<button class="im-btn" type="button">Load more</button>
-		<p>6 of 24</p>
-	</div>
-
-	{{!-- A collection of projects is not only a grid of them: the writing about
-	      the work belongs on the same page as the work. These are ordinary
-	      POSTS, tagged, in the ordinary post card. --}}
-	<section class="im-section">
-		<div class="home-head"><p class="im-caption" data-index="log">From the project log</p><a class="im-card-cta" href="/collections/post/">All posts {{> "icons/arrow-right"}}</a></div>
-		<div class="im-feed">
-			{{#foreach demo.three}}{{> "components/post-card" excerpt=true}}{{/foreach}}
+		<div class="im-loadmore">
+			<button class="im-btn" type="button">Load more</button>
+			<p>6 of 24</p>
 		</div>
-	</section>
+
+		{{!-- A collection of projects is not only a grid of them: the writing about
+		      the work belongs on the same page as the work. These are ordinary
+		      POSTS, tagged, in the ordinary post card. --}}
+		<section class="im-section">
+			<div class="home-head"><p class="im-caption" data-index="log">From the project log</p><a class="im-card-cta" href="/collections/post/">All posts {{> "icons/arrow-right"}}</a></div>
+			<div class="im-feed">
+				{{#foreach demo.three}}{{> "components/post-card" excerpt=true}}{{/foreach}}
+			</div>
+		</section>
+	</article>
+
+	<aside>
+		<div class="im-sticky-rail">
+		<div class="im-widgets">
+			<section class="im-widget" aria-labelledby="jw-sum">
+				<h2 class="im-widget-title" id="jw-sum">In total</h2>
+				<div class="im-widget-stats">
+					<div><strong>{{demo.projects.length}}</strong><span>Repos</span></div>
+					<div><strong>4.1k</strong><span>Stars</span></div>
+					<div><strong>312</strong><span>Forks</span></div>
+				</div>
+			</section>
+
+			<section class="im-widget" aria-labelledby="jw-lang">
+				<h2 class="im-widget-title" id="jw-lang">What they are written in</h2>
+				<span class="im-langbar">
+					<span style="--im-repo-lang: var(--im-info); width: 44%"></span>
+					<span style="--im-repo-lang: var(--im-accent); width: 31%"></span>
+					<span style="--im-repo-lang: var(--im-success); width: 15%"></span>
+					<span style="--im-repo-lang: var(--im-faint); width: 10%"></span>
+				</span>
+				<ul class="im-widget-list">
+					<li><a href="#repos">TypeScript<small>44%</small></a></li>
+					<li><a href="#repos">CSS<small>31%</small></a></li>
+					<li><a href="#repos">Handlebars<small>15%</small></a></li>
+				</ul>
+			</section>
+
+			<section class="im-widget" aria-labelledby="jw-log">
+				<h2 class="im-widget-title" id="jw-log">Latest from the log <a href="/collections/project/log/">All</a></h2>
+				<ol class="im-timeline im-timeline-compact im-widget-series">
+					{{#foreach demo.log}}{{#match @number "<" 4}}
+					<li class="im-timeline-item" data-state="done">
+						<span class="im-timeline-marker">{{@number}}</span>
+						<h3 class="im-timeline-title"><a href="/collections/project/log/">{{title}}</a></h3>
+					</li>
+					{{/match}}{{/foreach}}
+				</ol>
+			</section>
+
+			<section class="im-widget im-widget-accent" aria-labelledby="jw-spon">
+				<h2 class="im-widget-title" id="jw-spon">Sponsor</h2>
+				<p class="im-widget-sponsor">Every one of these is free and maintained in the evenings. If one saved you a day, it is worth a coffee.</p>
+				<div class="im-widget-support-amounts">
+					<button class="im-btn im-btn-sm" type="button">$5</button>
+					<button class="im-btn im-btn-sm" type="button">$25</button>
+					<button class="im-btn im-btn-sm im-btn-primary" type="button">Any amount</button>
+				</div>
+			</section>
+		</div>
+		</div>
+	</aside>
 </div>
 
 <section class="im-section im-wrap">

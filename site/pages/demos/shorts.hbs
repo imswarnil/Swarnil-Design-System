@@ -1,0 +1,31 @@
+---
+title: Short feed demo
+layout: home
+shell: frame
+---
+{{!-- Loaded in an iframe by /collections/video/short/. A column of shorts,
+	one viewport each, that snaps. Scroll it. --}}
+<div class="im-shortfeed">
+	{{#foreach demo.videos}}{{#match @number "<" 5}}
+	<section class="im-short im-short-full" aria-label="Short {{@number}} of 4">
+		<div class="im-short-stage">
+			<div class="im-short-player">
+				<img src="{{thumb}}" alt="" loading="{{#if @first}}eager{{else}}lazy{{/if}}">
+				<div class="im-short-over">
+					<p class="im-short-by">{{> "components/avatar" size="sm" src=avatar name=channel}}<a href="#">{{channel}}</a><button class="im-btn im-btn-sm im-btn-ink" type="button">Subscribe</button></p>
+					<p class="im-short-title">{{title}}</p>
+					<p class="im-short-tags"><span>#shorts</span><span>#{{@number}}of4</span></p>
+				</div>
+				<span class="im-short-bar"><span style="width: {{@number}}0%"></span></span>
+			</div>
+
+			<div class="im-short-rail">
+				<button class="im-short-act" type="button" data-im-toggle>{{> "icons/heart"}}<span>{{views}}</span></button>
+				<button class="im-short-act" type="button">{{> "icons/message-circle"}}<span>318</span></button>
+				<button class="im-short-act" type="button">{{> "icons/share"}}<span>Share</span></button>
+				<button class="im-short-act" type="button">{{> "icons/ellipsis"}}<span>More</span></button>
+			</div>
+		</div>
+	</section>
+	{{/match}}{{/foreach}}
+</div>

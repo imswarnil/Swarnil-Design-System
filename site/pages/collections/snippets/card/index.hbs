@@ -1,0 +1,54 @@
+---
+title: Snippet card
+description: A title that names the problem, one line about when to use it, seven lines of the thing itself, and one button — Copy. Because copying it is the only interaction anybody ever wants.
+eyebrow: Collections · Snippet
+source: src/components/commerce.css · code.css
+---
+<p>Nobody reads a snippet page. They scan for the one that matches, copy it, and leave — so the card is built around exactly that.</p>
+
+<h2>The card</h2>
+{{#example}}
+<div class="im-snippets">
+	{{#each demo.snippets}}{{#match @index "<" 2}}
+	<article class="im-snippet" style="--im-repo-lang: {{langColor}}">
+		<p class="im-snippet-head"><a class="im-snippet-name" href="/collections/snippets/page/">{{name}}</a><span class="im-snippet-lang">{{lang}}</span></p>
+		<p>{{text}}</p>
+		<div class="im-snippet-body"><pre><code class="language-css">{{snippet}}</code></pre></div>
+		<p class="im-snippet-foot"><span class="im-kind">{{icon "code"}}Snippet</span><button class="im-btn im-btn-sm" type="button" data-im-copy="{{snippet}}" data-im-copied-label="Copied">{{icon "copy"}}<span data-im-copy-label>Copy</span></button></p>
+	</article>
+	{{/match}}{{/each}}
+</div>
+{{/example}}
+
+<h2>Title it by the problem</h2>
+<p>"Fluid type without a media query", not "clamp()". The reader is searching for the <em>problem</em> they have, not for the function they have not thought of yet — and a collection titled by function is a reference manual nobody needs, because one of those already exists.</p>
+
+<h2>Clipped, not scrolled</h2>
+<p>The body stops at <code>--im-snippet-lines</code> (7) with a fade into the code block's own background. A card is a preview; a scrollbar inside a card in a grid is three scroll contexts on one screen and a reader who has lost track of which one they are in.</p>
+{{#example}}
+<div class="im-snippets" style="--im-snippets-min: 26rem">
+	{{#with demo.snippets.[3]}}
+	<article class="im-snippet" style="--im-repo-lang: {{langColor}}; --im-snippet-lines: 4">
+		<p class="im-snippet-head"><a class="im-snippet-name" href="/collections/snippets/page/">{{name}}</a><span class="im-snippet-lang">{{lang}}</span></p>
+		<p>{{text}}</p>
+		<div class="im-snippet-body"><pre><code class="language-hbs">{{snippet}}</code></pre></div>
+		<p class="im-snippet-foot"><span class="im-kind">{{icon "code"}}Snippet</span><button class="im-btn im-btn-sm" type="button" data-im-copy="{{snippet}}" data-im-copied-label="Copied">{{icon "copy"}}<span data-im-copy-label>Copy</span></button></p>
+	</article>
+	{{/with}}
+</div>
+{{/example}}
+
+<h2>Parts</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Class</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>im-snippet</code></td><td>The card. Fills on hover.</td></tr>
+		<tr><td><code>im-snippet-name</code></td><td>The title — the problem, not the function.</td></tr>
+		<tr><td><code>im-snippet-lang</code></td><td>The language, with a dot in <code>--im-repo-lang</code>. The <strong>same dot</strong> the <a href="/collections/project/card/">project card</a> uses, so one colour means one language everywhere on the site.</td></tr>
+		<tr><td><code>im-snippet-body</code></td><td>Clipped at <code>--im-snippet-lines</code> with a fade.</td></tr>
+		<tr><td><code>im-snippet-foot</code></td><td>Kind chip left, Copy pushed right.</td></tr>
+	</tbody>
+</table>
+</div>
+<p>The copy button is the system's own <a href="/components/code/">copy behaviour</a> — <code>data-im-copy</code> takes the <strong>raw source</strong>, not the highlighted HTML, and swaps its label to "Copied" for a moment. No script of the page's own.</p>

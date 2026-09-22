@@ -22,7 +22,7 @@ source: src/components/collection.css · content.css
 					<li><span aria-current="page">Issue {{n}}</span></li>
 				</ol>
 			</nav>
-			<p class="im-caption">Issue {{n}} · {{date}}</p>
+			<p class="im-caption">Issue {{n}} · {{sent}}</p>
 			<h1 class="im-posthero-title" style="font-size: clamp(1.875rem, 1.3rem + 2.2vw, 2.75rem)">{{title}}</h1>
 			<p class="im-posthero-excerpt">{{text}}</p>
 		</header>
@@ -68,7 +68,7 @@ source: src/components/collection.css · content.css
 				<section class="im-widget" aria-labelledby="i-recent">
 					<h2 class="im-widget-title" id="i-recent">Recent issues <a href="/collections/newsletter/">All</a></h2>
 					<ul class="im-widget-list im-widget-list-ranked">
-						{{#each demo.issues}}<li><a href="/collections/newsletter/issue/">{{title}}<small>{{date}}</small></a></li>{{/each}}
+						{{#each demo.issues}}<li><a href="/collections/newsletter/issue/">{{title}}<small>{{sent}}</small></a></li>{{/each}}
 					</ul>
 				</section>
 

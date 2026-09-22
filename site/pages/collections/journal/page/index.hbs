@@ -1,0 +1,92 @@
+---
+title: Entry page
+layout: home
+description: One entry, given a URL — for the days when somebody needs to link to a single note. The same row as the list, with a heading and a way back.
+eyebrow: Collections · Journal
+source: src/components/timeline.css · content.css
+---
+<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+	<p class="im-eyebrow">Collections · Journal · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+</section>
+
+<div class="im-single im-wrap" data-sidebar="on">
+	<article class="im-stack" style="--im-stack-gap: 1.25rem">
+		{{#with demo.journal.[2]}}
+		<nav aria-label="Breadcrumb">
+			<ol class="im-breadcrumb im-breadcrumb-chevron">
+				<li><a href="/">{{> "icons/house"}}<span>Home</span></a></li>
+				<li><a href="/collections/journal/">{{> "icons/pencil"}}<span>Journal</span></a></li>
+				<li><span aria-current="page">{{when}}</span></li>
+			</ol>
+		</nav>
+
+		<header class="im-stack" style="--im-stack-gap: .5rem">
+			<p class="im-caption">{{when}} 2026</p>
+			<h1 class="im-collhead-title" style="font-size: clamp(1.625rem, 1.2rem + 1.8vw, 2.25rem)">{{title}}</h1>
+			<p class="im-cluster" style="--im-cluster-gap: .375rem"><a class="im-tag" href="/collections/tag/page/">{{tag}}</a><span class="im-kind" data-kind="post">{{icon "pencil"}}Note</span></p>
+		</header>
+
+		<section class="im-content im-content-flush">
+			<p>{{text}}</p>
+			<pre><code class="language-css">@property --im-post-card-flood {
+	syntax: "&lt;percentage&gt;";
+	initial-value: 0%;
+	inherits: true;   /* ← this */
+}</code></pre>
+			<p>A pseudo-element inherits from the element it belongs to. Registered as non-inheriting, the <code>::before</code> silently falls back to the initial value and the card never fills — the text inverts onto a surface that has not changed colour, which looks like a colour bug and is not one.</p>
+			<p>It is now in <a href="/collections/project/log/">the project log</a> and in the repository's own notes, where I will find it again.</p>
+		</section>
+
+		<nav class="im-postnav" aria-label="Entries">
+			<a href="/collections/journal/page/" rel="prev"><small>{{icon "arrow-left"}} Earlier</small>Back from the coast</a>
+			<a href="/collections/journal/page/" rel="next"><small>Later {{icon "arrow-right"}}</small>The dot is not a state</a>
+		</nav>
+		{{/with}}
+	</article>
+
+	<aside>
+		<div class="im-sticky-rail">
+			<div class="im-widgets">
+				<section class="im-widget" aria-labelledby="j-around">
+					<h2 class="im-widget-title" id="j-around">Around it <a href="/collections/journal/">All</a></h2>
+					<ol class="im-timeline im-timeline-compact im-widget-series">
+						{{#each demo.journal}}
+						<li class="im-timeline-item" data-state="{{#match @index "=" 2}}current{{else}}done{{/match}}">
+							<span class="im-timeline-marker"></span>
+							<h3 class="im-timeline-title">{{#match @index "=" 2}}<span>{{title}}</span>{{else}}<a href="/collections/journal/page/">{{title}}</a>{{/match}}</h3>
+							<time class="im-timeline-time">{{when}}</time>
+						</li>
+						{{/each}}
+					</ol>
+				</section>
+
+				<section class="im-widget" aria-labelledby="j-proj">
+					<h2 class="im-widget-title" id="j-proj">It went into</h2>
+					<div class="im-widget-products">
+						<a class="im-widget-product" href="/collections/project/page/"><span class="im-widget-product-mark">{{icon "folder"}}</span><span class="im-widget-product-name">im-design-system</span><span class="im-widget-product-note">v0.7 · the post card's hover</span>{{icon "arrow-up-right"}}</a>
+					</div>
+				</section>
+			</div>
+		</div>
+	</aside>
+</div>
+
+<section class="im-section im-wrap">
+	<div class="im-prose">
+		<h2>The page a journal only sometimes needs</h2>
+		<p>Most entries never need one — the <a href="/collections/journal/">list</a> prints them whole and that is where they are read. But an entry that somebody wants to <strong>link to</strong> needs a URL, and an entry that turns out to be four paragraphs and a code block needs somewhere to be four paragraphs and a code block.</p>
+		<p>So it is the smallest page in the system: a breadcrumb, the date, the title, the content, and prev/next. No hero, no author card, no related grid, no newsletter. Adding those would make a four-sentence note look like a thin blog post, which is the one thing the journal format exists to avoid.</p>
+		<div class="im-table-scroll">
+		<table>
+			<thead><tr><th>In the rail</th><th>Why</th></tr></thead>
+			<tbody>
+				<tr><td>The entries around it</td><td>A journal is read in sequence; the neighbours are the navigation.</td></tr>
+				<tr><td>What it went into</td><td>A working note that changed a <a href="/collections/project/">project</a> should say which, and that link is the only thing on the page you could not work out from the page.</td></tr>
+			</tbody>
+		</table>
+		</div>
+		<p><strong>Where the work log lives.</strong> A note about a project is a journal entry; the project's own version history is <a href="/collections/project/log/">its log</a>. The journal is what you thought; the log is what shipped.</p>
+	</div>
+</section>

@@ -1,0 +1,91 @@
+---
+title: Prompt page
+layout: home
+description: One prompt, whole — the text to copy, what it is for, what it does badly, and the two changes worth making before you use it.
+eyebrow: Collections · Prompt
+source: src/components/commerce.css
+---
+<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+	<p class="im-eyebrow">Collections · Prompt · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+</section>
+
+<div class="im-single im-wrap" data-sidebar="on">
+	<article class="im-stack" style="--im-stack-gap: 1.5rem">
+		{{#with demo.prompts.[0]}}
+		<nav aria-label="Breadcrumb">
+			<ol class="im-breadcrumb im-breadcrumb-chevron">
+				<li><a href="/">{{> "icons/house"}}<span>Home</span></a></li>
+				<li><a href="/collections/prompts/">{{> "icons/sparkles"}}<span>Prompts</span></a></li>
+				<li><span aria-current="page">{{name}}</span></li>
+			</ol>
+		</nav>
+
+		<header class="im-stack" style="--im-stack-gap: .625rem">
+			<p class="im-cluster" style="--im-cluster-gap: .5rem">
+				<span class="im-kind" data-kind="tag">{{icon "sparkles"}}Prompt</span>
+				<span class="im-snippet-lang" style="--im-repo-lang: var(--im-accent); margin: 0">{{model}}</span>
+			</p>
+			<h1 class="im-collhead-title" style="font-size: clamp(1.75rem, 1.3rem + 2vw, 2.5rem)">{{name}}</h1>
+			<p class="im-collhead-text">{{text}}</p>
+		</header>
+
+		<section class="im-section" style="--im-section-gap: .5rem">
+			<div class="im-snippet-prompt" style="border-radius: var(--im-radius-lg)">{{body}}</div>
+			<p class="im-cluster"><button class="im-btn im-btn-primary im-btn-sm" type="button" data-im-copy="{{body}}" data-im-copied-label="Copied">{{icon "copy"}}<span data-im-copy-label>Copy the prompt</span></button></p>
+		</section>
+		{{/with}}
+
+		<section class="im-content im-content-flush">
+			<h2>What it is for</h2>
+			<p>A draft that has been over-written — every noun wearing two adjectives, every paragraph restating the one above it. It is the state most first drafts of marketing copy arrive in, including mine.</p>
+
+			<h2>What it does badly</h2>
+			<ul>
+				<li><strong>Technical writing.</strong> It will strip precision along with the padding; "a 128-bit key" is not an adjective problem.</li>
+				<li><strong>Anything with a voice.</strong> It flattens. Run it on a brochure, not on an essay.</li>
+				<li><strong>Long documents.</strong> Past about a thousand words it starts summarising instead of rewriting, whatever the instruction says.</li>
+			</ul>
+
+			<h2>Two changes worth making</h2>
+			<p>Add <em>"keep every number and every proper noun exactly as written"</em> if the text has facts in it. And if you want the cuts visible rather than applied, change the last line to <em>"return the rewritten text, then a list of what you removed and why"</em> — which is how you find out whether to trust it.</p>
+		</section>
+	</article>
+
+	<aside>
+		<div class="im-sticky-rail">
+			<div class="im-widgets">
+				<section class="im-widget" aria-labelledby="p-facts">
+					<h2 class="im-widget-title" id="p-facts">This prompt</h2>
+					<dl class="im-widget-facts">
+						<dt>Models</dt><dd>Any</dd>
+						<dt>Length</dt><dd>62 words</dd>
+						<dt>For</dt><dd>Writing</dd>
+						<dt>Added</dt><dd>Sep 2026</dd>
+					</dl>
+				</section>
+
+				<section class="im-widget" aria-labelledby="p-more">
+					<h2 class="im-widget-title" id="p-more">More prompts <a href="/collections/prompts/">All</a></h2>
+					<ul class="im-widget-list">
+						{{#each demo.prompts}}{{#match @index ">" 0}}<li><a href="/collections/prompts/page/">{{name}}<small>{{model}}</small></a></li>{{/match}}{{/each}}
+					</ul>
+				</section>
+			</div>
+		</div>
+	</aside>
+</div>
+
+<section class="im-section im-wrap">
+	<div class="im-prose">
+		<h2>The middle heading is the honest one</h2>
+		<p><strong>What it does badly.</strong> Every prompt has a shape of input it ruins, and a collection that never says so is a collection of claims. Writing that section is also the fastest way to find out whether a prompt is worth publishing at all — two of mine did not survive it.</p>
+		<p>Then <strong>two changes worth making</strong>, which turns a thing to paste into a thing to understand. A reader who has adapted a prompt once will adapt the next one themselves, which is the whole point of a collection like this.</p>
+		<ul>
+			<li><strong>The prompt is above the prose</strong>, not under it. Most visitors came to copy and leave, and making them scroll past an essay first is a tax on the majority.</li>
+			<li><strong>One big Copy button</strong>, primary, right under the text.</li>
+			<li><strong>Count the words.</strong> It is the one number that predicts whether a prompt will behave, and it is free to show.</li>
+		</ul>
+	</div>
+</section>

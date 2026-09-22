@@ -1,107 +1,118 @@
 ---
-title: Experience
+title: Experience collection
 layout: home
-description: Where you have worked, what you did there, and what came of it — on a timeline, because a career has an order and a list of jobs does not show it.
-eyebrow: Collections
-source: src/components/commerce.css · timeline.css
+description: Things that happened — where, when, and what it was like. A photograph each, the number of the thing in its corner, and no attempt to make any of it sound like a CV.
+eyebrow: Collections · Experience
+source: src/components/life.css
 ---
 <section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
-	<p class="im-eyebrow">Collections · {{page.title}}</p>
+	<p class="im-eyebrow">Collections · Experience · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
-<div class="im-single im-wrap" data-sidebar="on">
-	<article class="im-stack" style="--im-stack-gap: 2.25rem">
+<div class="im-single im-wrap-wide" data-sidebar="on">
+	<article class="im-stack" style="--im-stack-gap: 2rem">
 		<header class="im-collhead">
 			<p class="im-eyebrow">Experience</p>
-			<h1 class="im-collhead-title">Seven years, three places</h1>
-			<p class="im-collhead-text">Front-end, then Salesforce, then design systems on my own. Each one taught me the thing the next one needed, which is a sentence you can only write afterwards.</p>
-			<p class="im-collhead-meta"><span>2019 — now</span><span>Budapest · remote</span><a href="#roles">Download CV</a></p>
+			<h1 class="im-collhead-title">Things I have done</h1>
+			<p class="im-collhead-text">Not work. The other kind — water, cold, distance, and a few hours of being usefully frightened. Everything here has a date because everything here happened.</p>
+			<p class="im-collhead-meta"><span>{{demo.experience.length}} of them</span><span>Since 2023</span><a href="/collections/wishlist/">The list they came from</a></p>
 		</header>
 
-		<ol class="im-timeline im-timeline-role im-log" id="roles" style="--im-timeline-gap: 2.5rem">
-			{{#each demo.experience}}
-			<li class="im-timeline-item" data-state="{{state}}">
-				<span class="im-timeline-marker"><span class="im-role-mark">{{mark}}</span></span>
-				<time class="im-timeline-time">{{when}}</time>
-				<h2 class="im-timeline-title">{{role}}</h2>
-				<p class="im-role-at"><b>{{at}}</b></p>
-				<ul class="im-role-list">
-					{{#each bullets}}<li><span>{{this}}</span></li>{{/each}}
-				</ul>
-			</li>
-			{{/each}}
-		</ol>
+		<div class="im-collbar">
+			<div class="im-collbar-filters">
+				<a class="im-tag" href="#exps" aria-current="page">Everything</a>
+				<a class="im-tag" href="#exps">Water</a>
+				<a class="im-tag" href="#exps">Cold</a>
+				<a class="im-tag" href="#exps">Distance</a>
+				<a class="im-tag" href="#exps">Height</a>
+			</div>
+			<div class="im-cluster" style="--im-cluster-gap: .375rem">
+				<button class="im-btn im-btn-sm" type="button">{{icon "list-filter"}}Most recent</button>
+			</div>
+		</div>
 
-		<section class="im-section" style="--im-section-gap: 1rem">
-			<h2 class="im-caption" data-index="edu">Before that</h2>
-			<ol class="im-timeline im-timeline-compact">
-				<li class="im-timeline-item" data-state="done"><span class="im-timeline-marker"></span><h3 class="im-timeline-title">BSc Computer Science</h3><time class="im-timeline-time">2015 — 2019</time></li>
-				<li class="im-timeline-item" data-state="done"><span class="im-timeline-marker"></span><h3 class="im-timeline-title">Salesforce Platform Developer I</h3><time class="im-timeline-time">2021</time></li>
-			</ol>
-		</section>
+		<div class="im-exps" id="exps">
+			{{#each demo.experience}}
+			<article class="im-exp">
+				<span class="im-exp-media">
+					<img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy">
+					<span class="im-exp-figure">{{figure}}<small>{{unit}}</small></span>
+					<span class="im-kind im-kind-over" data-kind="tag">{{icon "compass"}}{{kind}}</span>
+				</span>
+				<div class="im-exp-body">
+					<p class="im-exp-where"><span>{{where}}</span><span>{{when}}</span></p>
+					<h2 class="im-exp-title"><a href="/collections/experience/page/">{{title}}</a></h2>
+					<p class="im-exp-text">{{text}}</p>
+				</div>
+			</article>
+			{{/each}}
+		</div>
 	</article>
 
 	<aside>
 		<div class="im-sticky-rail">
-			<div class="im-widgets">
-				<section class="im-widget" aria-labelledby="x-now">
-					<h2 class="im-widget-title" id="x-now">Available</h2>
-					<p class="im-widget-heading">Open to design-system work.</p>
-					<p>One project at a time, remote, from Budapest.</p>
-					<a class="im-btn im-btn-primary im-btn-sm im-btn-block" href="#roles">{{icon "mail"}}Get in touch</a>
-				</section>
+		<div class="im-widgets">
+			<section class="im-widget" aria-labelledby="ew-sum">
+				<h2 class="im-widget-title" id="ew-sum">So far</h2>
+				<div class="im-widget-stats">
+					<div><strong>{{demo.experience.length}}</strong><span>Done</span></div>
+					<div><strong>6</strong><span>Countries</span></div>
+					<div><strong>2023</strong><span>Since</span></div>
+				</div>
+			</section>
 
-				<section class="im-widget" aria-labelledby="x-skills">
-					<h2 class="im-widget-title" id="x-skills">What I do</h2>
-					<div class="im-cluster" style="--im-cluster-gap: .375rem">
-						<span class="im-tag">Design systems</span>
-						<span class="im-tag">CSS</span>
-						<span class="im-tag">Tailwind</span>
-						<span class="im-tag">Ghost</span>
-						<span class="im-tag">Handlebars</span>
-						<span class="im-tag">Salesforce</span>
-					</div>
-				</section>
+			<section class="im-widget" aria-labelledby="ew-next">
+				<h2 class="im-widget-title" id="ew-next">Next on the list <a href="/collections/wishlist/">All</a></h2>
+				<ul class="im-widget-list">
+					{{#foreach demo.wishlist}}{{#match @number "<" 4}}<li><a href="/collections/wishlist/">{{title}}<small>{{#if where}}{{where}}{{else}}Someday{{/if}}</small></a></li>{{/match}}{{/foreach}}
+				</ul>
+			</section>
 
-				<section class="im-widget" aria-labelledby="x-links">
-					<h2 class="im-widget-title" id="x-links">Elsewhere</h2>
-					<div class="im-widget-products">
-						<a class="im-widget-product" href="/collections/project/"><span class="im-widget-product-mark">{{icon "folder"}}</span><span class="im-widget-product-name">Projects</span><span class="im-widget-product-note">6 repositories</span>{{icon "arrow-up-right"}}</a>
-						<a class="im-widget-product" href="#roles"><span class="im-widget-product-mark">{{icon "brand-linkedin"}}</span><span class="im-widget-product-name">LinkedIn</span><span class="im-widget-product-note">The formal version</span>{{icon "arrow-up-right"}}</a>
-						<a class="im-widget-product" href="#roles"><span class="im-widget-product-mark">{{icon "download"}}</span><span class="im-widget-product-name">CV</span><span class="im-widget-product-note">PDF, one page</span>{{icon "arrow-up-right"}}</a>
-					</div>
-				</section>
-			</div>
+			<section class="im-widget" aria-labelledby="ew-trips">
+				<h2 class="im-widget-title" id="ew-trips">The trips they came from <a href="/collections/travel/">Travel</a></h2>
+				<ul class="im-widget-list">
+					{{#foreach demo.trips}}{{#match @number "<" 3}}<li><a href="/collections/travel/trip/">{{title}}<small>{{country}} · {{when}}</small></a></li>{{/match}}{{/foreach}}
+				</ul>
+			</section>
+
+			<section class="im-widget" aria-labelledby="ew-gear">
+				<h2 class="im-widget-title" id="ew-gear">What it took <a href="/collections/uses/">Uses</a></h2>
+				<div class="im-widget-products">
+					{{#foreach demo.uses}}{{#match @number "<" 3}}<a class="im-widget-product" href="/collections/uses/page/"><span class="im-widget-product-mark">{{@number}}</span><span class="im-widget-product-name">{{title}}</span>{{icon "arrow-right"}}</a>{{/match}}{{/foreach}}
+				</div>
+			</section>
+		</div>
 		</div>
 	</aside>
 </div>
 
 <section class="im-section im-wrap">
 	<div class="im-prose">
-		<h2>A career has an order</h2>
-		<p>Which is why it is a <a href="/components/timeline/">timeline</a> and not a list of cards. The line is the point: it shows that one thing led to the next, and where the gaps are, and how long each of them lasted — none of which a stack of boxes shows.</p>
+		<h2>The number goes on the picture</h2>
+		<p>Thirty metres. Four thousand metres. Forty-two point two kilometres. Two degrees. Whatever the thing is <em>measured</em> in is the first question anybody asks about it, so it sits in the corner of the photograph in the mono face — <code>im-exp-figure</code> — where a video card would put its length.</p>
 		<div class="im-table-scroll">
 		<table>
 			<thead><tr><th>Class</th><th></th></tr></thead>
 			<tbody>
-				<tr><td><code>im-timeline-role</code></td><td>Tunes the timeline's marker into a square that holds a logo or two letters — so a CV reads as a row of <em>places</em> rather than a row of dots.</td></tr>
-				<tr><td><code>im-role-mark</code></td><td>What goes in it: an <code>&lt;img&gt;</code> if there is a logo, initials if there is not.</td></tr>
-				<tr><td><code>im-role-at</code></td><td>The employer, under the role. The role is the heading because the role is what a reader is scanning for.</td></tr>
-				<tr><td><code>im-role-list</code></td><td>What you did. Small drawn bullets, capped at a readable measure.</td></tr>
-				<tr><td><code>data-state</code></td><td><code>current</code> puts the accent ring on the job you are in; <code>done</code> fills the line above it.</td></tr>
+				<tr><td><code>im-exp</code></td><td>The card. It fills on hover with a panel behind it, like every other card in the system.</td></tr>
+				<tr><td><code>im-exp-figure</code></td><td>The measurement, bottom left of the picture. A number and a unit, nothing else.</td></tr>
+				<tr><td><code>im-exp-where</code></td><td>Place, then date, with the drawn dot between them.</td></tr>
+				<tr><td><code>im-exps</code></td><td>The grid, at <code>--im-exps-min</code> (18rem) with a taller row gap than column gap.</td></tr>
 			</tbody>
 		</table>
 		</div>
 
+		<h2>It is the other half of the bucket list</h2>
+		<p>An experience is a <a href="/collections/wishlist/">bucket-list</a> item that came true, so the two collections are deliberately one shape in two tenses. A done row in the list links here; this page links back to the list it came from. Neither of them is a blog post about how it felt — that is the <a href="/collections/post/">post collection</a>, and it should be linked to, not inlined.</p>
+
 		<h2>Rules</h2>
 		<ul>
-			<li><strong>Outcomes, not duties.</strong> "Took a nine-minute process to ninety seconds" beats "responsible for process improvement", and it is the only line anybody will remember.</li>
-			<li><strong>Three bullets each, at most.</strong> A page with thirty bullets on it has none.</li>
-			<li><strong>Do not hide the gaps.</strong> The timeline shows them anyway; a date that quietly overlaps is worse than a year off with a sentence about it.</li>
-			<li><strong>Put "available" at the top of the rail.</strong> It is the one thing a visitor to this page might act on.</li>
-			<li><strong>Education goes last and small.</strong> After the first job it is context, not evidence.</li>
+			<li><strong>One photograph, taken there.</strong> A stock image of scuba diving on a page about your dive is the fastest way to make the whole page look invented.</li>
+			<li><strong>Numbers, not adjectives.</strong> "30m" says more than "deep", and it is checkable.</li>
+			<li><strong>Do not rank them.</strong> A five-star rating on a life experience is a strange thing to publish and a stranger thing to read.</li>
+			<li><strong>Keep the frightening ones.</strong> The two-degree swim is the reason anybody reads to the bottom.</li>
 		</ul>
 	</div>
 </section>

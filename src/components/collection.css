@@ -315,6 +315,71 @@
 	background-color: var(--im-hover-bg);
 }
 
+/* The date as a thumbnail: a tile with the day, the month and the year, in
+   the place a picture would be. A letter has no cover image, and a row of
+   grey placeholders would be worse than none — but it does have a date, and
+   a date is what a reader navigates an archive by. */
+.im-issue-tile {
+	/* The number rides this tile's corner, so the tile is what it is
+	   positioned against — without this it escapes to the card and lands on
+	   the row above. */
+	position: relative;
+	grid-row: span 4;
+	align-self: start;
+	display: grid;
+	place-items: center;
+	align-content: center;
+	gap: 0.125rem;
+	width: 4.5rem;
+	aspect-ratio: 1;
+	border-radius: var(--im-radius-md);
+	background-color: var(--im-surface);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	line-height: 1;
+	text-align: center;
+}
+
+.im-issue-tile > strong {
+	color: var(--im-ink);
+	font-family: var(--im-font-pixel, var(--im-font-mono));
+	font-size: var(--im-text-h3);
+	font-variant-numeric: tabular-nums;
+}
+
+.im-issue-tile > span {
+	font-size: 0.625rem;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+
+.im-issue-tile > small {
+	font-size: 0.625rem;
+	opacity: 0.7;
+}
+
+/* The issue number rides the corner of the tile, so both facts are in one
+   place instead of competing for the row. */
+.im-issue-tile > b {
+	position: absolute;
+	top: -0.375rem;
+	left: -0.375rem;
+	padding: 0.0625rem 0.375rem;
+	border-radius: var(--im-radius-full);
+	background-color: var(--im-ink);
+	color: var(--im-canvas);
+	font-size: 0.625rem;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+}
+
+.im-issue:has(.im-issue-tile) {
+	position: relative;
+	grid-template-columns: auto minmax(0, 1fr);
+	align-items: start;
+}
+
 .im-issue-num {
 	grid-row: span 4;
 	align-self: start;
@@ -380,7 +445,72 @@
 		grid-template-columns: minmax(0, 1fr);
 	}
 
-	.im-issue-num {
+	/* The date as a thumbnail: a tile with the day, the month and the year, in
+   the place a picture would be. A letter has no cover image, and a row of
+   grey placeholders would be worse than none — but it does have a date, and
+   a date is what a reader navigates an archive by. */
+.im-issue-tile {
+	/* The number rides this tile's corner, so the tile is what it is
+	   positioned against — without this it escapes to the card and lands on
+	   the row above. */
+	position: relative;
+	grid-row: span 4;
+	align-self: start;
+	display: grid;
+	place-items: center;
+	align-content: center;
+	gap: 0.125rem;
+	width: 4.5rem;
+	aspect-ratio: 1;
+	border-radius: var(--im-radius-md);
+	background-color: var(--im-surface);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	line-height: 1;
+	text-align: center;
+}
+
+.im-issue-tile > strong {
+	color: var(--im-ink);
+	font-family: var(--im-font-pixel, var(--im-font-mono));
+	font-size: var(--im-text-h3);
+	font-variant-numeric: tabular-nums;
+}
+
+.im-issue-tile > span {
+	font-size: 0.625rem;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+
+.im-issue-tile > small {
+	font-size: 0.625rem;
+	opacity: 0.7;
+}
+
+/* The issue number rides the corner of the tile, so both facts are in one
+   place instead of competing for the row. */
+.im-issue-tile > b {
+	position: absolute;
+	top: -0.375rem;
+	left: -0.375rem;
+	padding: 0.0625rem 0.375rem;
+	border-radius: var(--im-radius-full);
+	background-color: var(--im-ink);
+	color: var(--im-canvas);
+	font-size: 0.625rem;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+}
+
+.im-issue:has(.im-issue-tile) {
+	position: relative;
+	grid-template-columns: auto minmax(0, 1fr);
+	align-items: start;
+}
+
+.im-issue-num {
 		grid-row: auto;
 		font-size: var(--im-text-h4);
 	}
@@ -450,12 +580,73 @@
 	gap: 0.75rem;
 }
 
-/* ---- the tag page's head ---- */
+/* ---- the tag page's head ----
+   Two columns: the words on the left, and on the right a panel of the site's
+   own line-pattern in the TAG'S colour. A topic has no cover photograph and
+   inventing one is how a blog ends up with six stock images of laptops — a
+   pattern is honest, it is drawn from tokens, it costs nothing, and it makes
+   two tag pages look different from each other for the one reason that
+   actually differs: the topic. */
 .im-taghero {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 20rem);
+	gap: clamp(1.5rem, 3vw, 3rem);
+	align-items: center;
+	padding: clamp(1.25rem, 3vw, 2rem);
+	border-radius: var(--im-radius-2xl);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	overflow: hidden;
+}
+
+.im-taghero-copy {
 	display: flex;
 	flex-direction: column;
 	gap: 0.875rem;
-	max-width: 52rem;
+	min-width: 0;
+	max-width: 46rem;
+}
+
+/* The panel. The pattern takes the tag's colour through --im-pattern-color,
+   and is masked away at the edges so it reads as texture, not as wallpaper. */
+.im-taghero-art {
+	position: relative;
+	align-self: stretch;
+	min-height: 9rem;
+	overflow: hidden;
+	border-radius: var(--im-radius-xl);
+	background-color: color-mix(in oklab, var(--im-tag-dot, var(--im-accent)) 7%, var(--im-canvas));
+	--im-pattern-color: color-mix(in oklab, var(--im-tag-dot, var(--im-accent)) 45%, transparent);
+}
+
+.im-taghero-art > * {
+	position: absolute;
+	inset: 0;
+	-webkit-mask-image: radial-gradient(ellipse 90% 90% at 70% 40%, #000 30%, transparent 80%);
+	mask-image: radial-gradient(ellipse 90% 90% at 70% 40%, #000 30%, transparent 80%);
+}
+
+/* The topic's first letter, huge and quiet, behind the pattern. */
+.im-taghero-art::after {
+	content: attr(data-initial);
+	position: absolute;
+	right: 0.5rem;
+	bottom: -0.35em;
+	color: color-mix(in oklab, var(--im-tag-dot, var(--im-accent)) 22%, transparent);
+	font-family: var(--im-font-pixel, var(--im-font-heading));
+	font-size: 9rem;
+	line-height: 1;
+	pointer-events: none;
+}
+
+@media (width < 56rem) {
+	.im-taghero {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.im-taghero-art {
+		min-height: 6rem;
+		order: -1;
+	}
 }
 
 .im-taghero-name {
@@ -556,5 +747,178 @@
 
 	.im-archive-date {
 		grid-column: 1 / -1;
+	}
+}
+
+/* ---- queue --------------------------------------------------------------
+   A playlist being watched: the list travels WITH the player instead of
+   sitting under it, so the next thing is always one press away and the
+   position in the set is always visible.
+
+     <div class="im-queue">
+       <div class="im-queue-head"> … name, channel, 3 / 12 … </div>
+       <ol class="im-queue-list">
+         <li class="im-queue-item" aria-current="true"> … </li>
+       </ol>
+     </div>
+
+   The panel has its OWN scrollbar and a definite height, because a queue of
+   forty that pushes the page down is not a queue — it is a second page. */
+.im-queue {
+	--im-queue-max: 32rem;
+	--im-queue-thumb: 6.5rem;
+
+	display: grid;
+	grid-template-rows: auto minmax(0, 1fr);
+	max-height: var(--im-queue-max);
+	overflow: hidden;
+	border-radius: var(--im-radius-xl);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	background-color: var(--im-surface);
+}
+
+.im-queue-head {
+	display: grid;
+	gap: 0.25rem;
+	padding: 0.875rem 1rem;
+	border-bottom: 1px solid var(--im-line);
+	background-color: var(--im-surface-2);
+}
+
+.im-queue-name {
+	font-size: var(--im-text-base);
+	font-weight: 600;
+	line-height: 1.3;
+}
+
+.im-queue-meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.25rem 0.5rem;
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+}
+
+.im-queue-meta > * + *::before {
+	content: "·";
+	margin-right: 0.5rem;
+}
+
+/* The scrolling part. `overscroll-behavior` stops a flick at the end of the
+   queue carrying on and scrolling the page behind it. */
+.im-queue-list {
+	margin: 0;
+	padding: 0.375rem;
+	overflow-y: auto;
+	overscroll-behavior: contain;
+	list-style: none;
+}
+
+.im-queue-item {
+	position: relative;
+	display: grid;
+	grid-template-columns: 1.5rem var(--im-queue-thumb) minmax(0, 1fr);
+	gap: 0.625rem;
+	align-items: center;
+	padding: 0.375rem;
+	border-radius: var(--im-radius-md);
+	transition: background-color var(--im-duration-fast) var(--im-ease-out);
+}
+
+.im-queue-item:hover {
+	background-color: var(--im-hover-bg, var(--im-surface-2));
+}
+
+/* The current one: the same light ground and heavier text every other active
+   state in the system uses — never a coloured bar down the side. */
+.im-queue-item[aria-current="true"] {
+	background-color: var(--im-current-bg);
+	font-weight: var(--im-current-weight);
+}
+
+.im-queue-index {
+	justify-self: center;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	font-variant-numeric: tabular-nums;
+}
+
+/* On the one being watched the number is replaced by a mark, because the
+   position is already said in the head ("3 of 12") and a viewer scanning the
+   column wants to find the ▸, not read a number twice. */
+.im-queue-item[aria-current="true"] .im-queue-index {
+	color: var(--im-ink);
+}
+
+.im-queue-thumb {
+	position: relative;
+	aspect-ratio: 16 / 9;
+	overflow: hidden;
+	border-radius: var(--im-radius-sm);
+	background-color: var(--im-surface-3);
+}
+
+.im-queue-thumb > img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.im-queue-time {
+	position: absolute;
+	right: 0.1875rem;
+	bottom: 0.1875rem;
+	padding: 0 0.25rem;
+	border-radius: var(--im-radius-xs);
+	background-color: rgb(20 20 20 / 80%);
+	color: #fff;
+	font-family: var(--im-font-mono);
+	font-size: 0.625rem;
+	line-height: 1.5;
+}
+
+.im-queue-title {
+	font-size: var(--im-text-sm);
+	font-weight: inherit;
+	line-height: 1.35;
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+}
+
+.im-queue-title > a {
+	color: inherit;
+	text-decoration: none;
+}
+
+/* The whole row is the target; the link keeps the accessible name. */
+.im-queue-title > a::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+}
+
+.im-queue-by {
+	grid-column: 3;
+	overflow: hidden;
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+	font-weight: 400;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+/* A played one is dimmed, not hidden — a viewer coming back to a course needs
+   to see what they have already done. */
+.im-queue-item[data-state="done"] .im-queue-thumb > img {
+	opacity: 0.55;
+}
+
+@media (width < 30rem) {
+	.im-queue {
+		--im-queue-thumb: 5rem;
 	}
 }

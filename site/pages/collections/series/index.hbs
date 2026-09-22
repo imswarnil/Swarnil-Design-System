@@ -11,55 +11,96 @@ source: src/components/commerce.css · video-card.css
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
-<div class="im-wrap-wide im-stack" style="--im-stack-gap: 2rem">
-	<section class="im-channel">
-		<div class="im-channel-banner" style="--im-channel-ratio: 4 / 1"><img src="{{demo.six.[0].feature_image}}" alt="" loading="eager"></div>
-		<div class="im-channel-head">
-			<div class="im-channel-id">
-				<p><span class="im-kind" data-kind="video">{{icon "square-play"}}Series</span></p>
-				<h1 class="im-channel-name">The Amalfi Road</h1>
-				<p class="im-channel-meta"><span>Season 1</span><span>4 episodes</span><span>Updated Thursdays</span></p>
-				<p class="im-channel-text">Forty kilometres, two hours, and nobody in a hurry. Four films about one road, made over four days in November.</p>
+<div class="im-single im-wrap-wide" data-sidebar="on">
+	<article class="im-stack" style="--im-stack-gap: 2rem">
+		<section class="im-channel">
+			<div class="im-channel-banner" style="--im-channel-ratio: 4 / 1"><img src="{{demo.six.[0].feature_image}}" alt="" loading="eager"></div>
+			<div class="im-channel-head">
+				<div class="im-channel-id">
+					<p><span class="im-kind" data-kind="video">{{icon "square-play"}}Series</span></p>
+					<h1 class="im-channel-name">The Amalfi Road</h1>
+					<p class="im-channel-meta"><span>Season 1</span><span>4 episodes</span><span>Updated Thursdays</span></p>
+					<p class="im-channel-text">Forty kilometres, two hours, and nobody in a hurry. Four films about one road, made over four days in November.</p>
+				</div>
+				<div class="im-channel-actions">
+					<a class="im-btn im-btn-primary" href="/collections/series/episode/">{{icon "play"}}Start watching</a>
+					<button class="im-btn" type="button">{{icon "bell"}}Notify me</button>
+				</div>
 			</div>
-			<div class="im-channel-actions">
-				<a class="im-btn im-btn-primary" href="/collections/series/episode/">{{icon "play"}}Start watching</a>
-				<button class="im-btn" type="button">{{icon "bell"}}Notify me</button>
+		</section>
+
+		<div class="im-collbar">
+			<div class="im-collbar-filters">
+				<a class="im-tag" href="#eps" aria-current="page">Season 1</a>
+				<a class="im-tag" href="#eps">Season 2</a>
+				<a class="im-tag" href="#eps">Extras</a>
+			</div>
+			<div class="im-cluster" style="--im-cluster-gap: .375rem">
+				<span class="im-caption">2 of 4 watched</span>
+				<div class="im-progress" style="width: 7rem; --im-value: .5" role="progressbar" aria-valuenow="50" aria-label="Watched"><span></span></div>
 			</div>
 		</div>
-	</section>
 
-	<div class="im-collbar">
-		<div class="im-collbar-filters">
-			<a class="im-tag" href="#eps" aria-current="page">Season 1</a>
-			<a class="im-tag" href="#eps">Season 2</a>
-			<a class="im-tag" href="#eps">Extras</a>
+		<div class="im-stack" id="eps" style="--im-stack-gap: 1.25rem">
+			{{#each demo.episodes}}
+			<div class="im-episode" data-state="{{state}}">
+				<span class="im-epnum">{{n}}</span>
+				<article class="im-vidcard im-vidcard-row">
+					<a class="im-vidcard-thumb" href="/collections/series/episode/" tabindex="-1" aria-hidden="true">
+						<img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy">
+						<span class="im-vidcard-time">{{time}}</span>
+						{{#match state "=" "done"}}<span class="im-vidcard-progress"><span style="width: 100%"></span></span>{{/match}}
+						{{#match state "=" "current"}}<span class="im-vidcard-progress"><span style="width: 34%"></span></span>{{/match}}
+					</a>
+					<div class="im-vidcard-body"><div>
+						<h3 class="im-vidcard-title"><a href="/collections/series/episode/">{{title}}</a></h3>
+						<p class="im-vidcard-meta"><span>{{when}}</span>{{#match state "=" "done"}}<span>Watched</span>{{/match}}{{#match state "=" "upcoming"}}<span>Not out yet</span>{{/match}}</p>
+						<p class="im-vidcard-text">{{text}}</p>
+					</div></div>
+				</article>
+			</div>
+			{{/each}}
 		</div>
-		<div class="im-cluster" style="--im-cluster-gap: .375rem">
-			<span class="im-caption">2 of 4 watched</span>
-			<div class="im-progress" style="width: 7rem; --im-value: .5" role="progressbar" aria-valuenow="50" aria-label="Watched"><span></span></div>
-		</div>
-	</div>
+	</article>
 
-	<div class="im-stack" id="eps" style="--im-stack-gap: 1.25rem">
-		{{#each demo.episodes}}
-		<div class="im-episode" data-state="{{state}}">
-			<span class="im-epnum">{{n}}</span>
-			<article class="im-vidcard im-vidcard-row">
-				<a class="im-vidcard-thumb" href="/collections/series/episode/" tabindex="-1" aria-hidden="true">
-					<img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy">
-					<span class="im-vidcard-time">{{time}}</span>
-					{{#match state "=" "done"}}<span class="im-vidcard-progress"><span style="width: 100%"></span></span>{{/match}}
-					{{#match state "=" "current"}}<span class="im-vidcard-progress"><span style="width: 34%"></span></span>{{/match}}
-				</a>
-				<div class="im-vidcard-body"><div>
-					<h3 class="im-vidcard-title"><a href="/collections/series/episode/">{{title}}</a></h3>
-					<p class="im-vidcard-meta"><span>{{when}}</span>{{#match state "=" "done"}}<span>Watched</span>{{/match}}{{#match state "=" "upcoming"}}<span>Not out yet</span>{{/match}}</p>
-					<p class="im-vidcard-text">{{text}}</p>
-				</div></div>
-			</article>
+	<aside>
+		<div class="im-sticky-rail">
+		<div class="im-widgets">
+			<section class="im-widget" aria-labelledby="rw-start">
+				<h2 class="im-widget-title" id="rw-start">Start here</h2>
+				<p class="im-widget-heading">Part one is the only one that assumes nothing.</p>
+				<a class="im-btn im-btn-primary im-btn-sm" href="/collections/series/episode/">{{icon "play"}}Begin the series</a>
+			</section>
+
+			<section class="im-widget" aria-labelledby="rw-parts">
+				<h2 class="im-widget-title" id="rw-parts">The parts</h2>
+				<ol class="im-timeline im-timeline-compact im-widget-series">
+					{{#foreach demo.series}}
+					<li class="im-timeline-item" data-state="{{#match @number "<" 3}}done{{else}}{{#match @number "=" 3}}current{{else}}{{/match}}{{/match}}">
+						<span class="im-timeline-marker">{{@number}}</span>
+						<h3 class="im-timeline-title">{{#match @number "=" 3}}<span>{{title}}</span>{{else}}<a href="/collections/series/episode/">{{title}}</a>{{/match}}</h3>
+					</li>
+					{{/foreach}}
+				</ol>
+			</section>
+
+			<section class="im-widget" aria-labelledby="rw-other">
+				<h2 class="im-widget-title" id="rw-other">Other series</h2>
+				<ul class="im-widget-list">
+					<li><a href="/collections/series/">Building this design system<small>7 parts · finished</small></a></li>
+					<li><a href="/collections/series/">The road<small>24 parts · running</small></a></li>
+					<li><a href="/collections/series/">A year of consulting<small>5 parts · finished</small></a></li>
+				</ul>
+			</section>
+
+			<section class="im-widget im-widget-fill" aria-labelledby="rw-sub">
+				<h2 class="im-widget-title" id="rw-sub">Get the next part</h2>
+				<p class="im-widget-heading">Emailed the morning it goes up.</p>
+				{{> "components/subscribe" id="series-email" button="Follow"}}
+			</section>
 		</div>
-		{{/each}}
-	</div>
+		</div>
+	</aside>
 </div>
 
 <section class="im-section im-wrap">

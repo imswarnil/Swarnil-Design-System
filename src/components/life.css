@@ -1,0 +1,450 @@
+/* Experience and the bucket list — the two collections that are about a life
+   rather than about work.
+
+     im-exp      something that happened: where, when, and what it was like
+     im-bucket   something that has not happened yet, and might
+
+   They are deliberately a pair. An experience is a bucket-list item that came
+   true, so the card is the same shape with the tense changed: a done row in
+   the bucket list links straight to the experience it became. */
+
+/* ---- experience ----------------------------------------------------------
+   A photograph, where it was, when, and one line about it. The depth, the
+   altitude, the distance — whatever the number of the thing is — goes in the
+   corner of the picture, because that is the fact people ask about first. */
+.im-exp {
+	--im-hover-bg: var(--im-surface);
+	--im-exp-bleed: 1rem;
+
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+	min-width: 0;
+	isolation: isolate;
+}
+
+.im-exp::before {
+	content: "";
+	position: absolute;
+	inset: calc(var(--im-exp-bleed) * -1);
+	z-index: -1;
+	border-radius: calc(var(--im-radius-xl) + var(--im-exp-bleed) * 0.75);
+	background-color: var(--im-hover-bg);
+	opacity: 0;
+	transition: opacity var(--im-duration-fast) var(--im-ease-out);
+	pointer-events: none;
+}
+
+.im-exp:is(:hover, :focus-within)::before {
+	opacity: 1;
+}
+
+.im-exp-media {
+	position: relative;
+	aspect-ratio: var(--im-exp-ratio, 4 / 3);
+	overflow: hidden;
+	border-radius: var(--im-radius-xl);
+	background-color: var(--im-surface-2);
+}
+
+.im-exp-media > img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+/* The number of the thing: 30m, 4,000m, 42.2km. Bottom left, on a dark chip,
+   in the mono face — it is a measurement and it should look like one. */
+.im-exp-figure {
+	position: absolute;
+	left: 0.5rem;
+	bottom: 0.5rem;
+	z-index: 1;
+	display: inline-flex;
+	align-items: baseline;
+	gap: 0.25rem;
+	padding: 0.25rem 0.5rem;
+	border-radius: var(--im-radius-sm);
+	background-color: rgb(20 20 20 / 68%);
+	-webkit-backdrop-filter: blur(8px);
+	backdrop-filter: blur(8px);
+	color: #fff;
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-sm);
+	font-weight: 600;
+	font-variant-numeric: tabular-nums;
+}
+
+.im-exp-figure > small {
+	font-size: 0.625rem;
+	font-weight: 400;
+	opacity: 0.8;
+}
+
+.im-exp-body {
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+	min-width: 0;
+}
+
+.im-exp-where {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0 0.5rem;
+	color: var(--im-muted);
+	font-size: var(--im-text-sm);
+}
+
+.im-exp-where > * + *::before {
+	content: "·";
+	margin-right: 0.5rem;
+	color: var(--im-faint);
+}
+
+.im-exp-title {
+	color: var(--im-ink);
+	font-size: var(--im-text-h4);
+	font-weight: 600;
+	line-height: var(--im-leading-h4);
+	letter-spacing: var(--im-tracking-tight);
+}
+
+.im-exp-title > a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.im-exp-title > a::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+}
+
+.im-exp-text {
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+	text-wrap: pretty;
+}
+
+.im-exps {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-exps-min, 18rem), 100%), 1fr));
+	gap: clamp(1.75rem, 3vw, 2.5rem) 1.25rem;
+	align-items: start;
+}
+
+/* The page's head: the photograph full width, the facts on it. */
+.im-exphero {
+	position: relative;
+	display: grid;
+	align-content: end;
+	min-height: min(26rem, 60dvh);
+	padding: clamp(1.5rem, 1rem + 2vw, 3rem);
+	overflow: hidden;
+	isolation: isolate;
+	border-radius: var(--im-radius-2xl);
+	color: #fff;
+}
+
+.im-exphero > img {
+	position: absolute;
+	inset: 0;
+	z-index: -2;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.im-exphero::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	background-image: linear-gradient(to top, rgb(0 0 0 / 82%), rgb(0 0 0 / 30%) 55%, rgb(0 0 0 / 5%));
+}
+
+.im-exphero-title {
+	max-width: 20ch;
+	font-family: var(--im-font-heading);
+	font-size: clamp(2rem, 1.3rem + 2.8vw, 3.25rem);
+	font-weight: 600;
+	line-height: 1.06;
+	letter-spacing: var(--im-tracking-tight);
+	text-wrap: balance;
+}
+
+/* The numbers under an experience: depth, time, visibility, temperature —
+   whatever the thing is measured in. */
+.im-expstats {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(7rem, 100%), 1fr));
+	gap: 1px;
+	overflow: hidden;
+	border-radius: var(--im-radius-lg);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	background-color: var(--im-line);
+}
+
+.im-expstats > * {
+	display: flex;
+	flex-direction: column;
+	gap: 0.125rem;
+	padding: 0.875rem 1rem;
+	background-color: var(--im-canvas);
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+}
+
+.im-expstats strong {
+	color: var(--im-ink);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-h5);
+	font-weight: 600;
+	font-variant-numeric: tabular-nums;
+	line-height: 1.1;
+}
+
+/* ---- bucket list ---------------------------------------------------------
+   Things to do. A checklist, not a shopping list: the state is the point, and
+   a done one stays on the page with a link to what it became.
+
+     <li class="im-bucket" data-state="done"> … </li>                        */
+.im-buckets {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.im-bucket {
+	--im-hover-bg: var(--im-surface);
+
+	position: relative;
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr) auto;
+	gap: 0.25rem 1rem;
+	align-items: center;
+	padding: 0.875rem 1.125rem;
+	border-radius: var(--im-radius-lg);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+	transition: background-color var(--im-duration-fast) var(--im-ease-out);
+}
+
+.im-bucket:is(:hover, :focus-within) {
+	background-color: var(--im-hover-bg);
+}
+
+/* The mark: an empty ring, or a filled tick. The same vocabulary as a
+   course's lesson, because it is the same idea — a thing you have or have
+   not got to yet. */
+.im-bucket-mark {
+	grid-row: span 2;
+	display: grid;
+	place-items: center;
+	width: 1.5rem;
+	height: 1.5rem;
+	border-radius: 50%;
+	box-shadow: inset 0 0 0 1.5px var(--im-line);
+	color: transparent;
+	font-size: 0.875rem;
+}
+
+.im-bucket[data-state="done"] > .im-bucket-mark {
+	background-color: var(--im-success);
+	box-shadow: none;
+	color: #fff;
+}
+
+.im-bucket[data-state="booked"] > .im-bucket-mark {
+	box-shadow: inset 0 0 0 1.5px var(--im-accent);
+	color: var(--im-accent);
+}
+
+.im-bucket-title {
+	color: var(--im-ink);
+	font-size: var(--im-text-base);
+	font-weight: 600;
+	line-height: 1.35;
+	letter-spacing: var(--im-tracking-tight);
+}
+
+.im-bucket-title > a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.im-bucket-title > a::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+}
+
+/* Done: struck through, but still legible. The point of leaving it is that
+   somebody can read it. */
+.im-bucket[data-state="done"] .im-bucket-title {
+	color: var(--im-muted);
+	text-decoration: line-through;
+	text-decoration-color: var(--im-faint);
+	text-decoration-thickness: 1.5px;
+}
+
+.im-bucket-note {
+	grid-column: 2;
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+}
+
+.im-bucket-when {
+	grid-row: span 2;
+	align-self: center;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	text-align: right;
+	white-space: nowrap;
+}
+
+.im-bucket[data-state="done"] .im-bucket-when {
+	color: var(--im-success);
+}
+
+/* A group of them — "before I am forty", "this year", "someday". */
+.im-bucket-group {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+}
+
+.im-bucket-head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 0.75rem;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+@media (width < 34rem) {
+	.im-bucket {
+		grid-template-columns: auto minmax(0, 1fr);
+	}
+
+	.im-bucket-when {
+		grid-row: auto;
+		grid-column: 2;
+		text-align: left;
+	}
+}
+
+/* ---- travel ------------------------------------------------------------
+   A trip: where, how long, and the route. It is the experience card with a
+   duration instead of a measurement and a country instead of a place — and
+   the trip's page is an ITINERARY, which is a timeline with a day on each
+   mark rather than a date.
+
+     <article class="im-trip"> … </article>
+     <ol class="im-timeline im-itinerary"> … one <li> per day … </ol>       */
+.im-trip {
+	--im-exp-ratio: 3 / 2;
+}
+
+.im-trip-route {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.25rem 0.5rem;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+}
+
+/* An arrow between the stops, drawn rather than typed — a screen reader
+   should not read "rightwards arrow" nine times. */
+.im-trip-route > * + *::before {
+	content: "";
+	display: inline-block;
+	width: 0.875rem;
+	height: 1px;
+	margin-right: 0.5rem;
+	background-color: var(--im-faint);
+	vertical-align: middle;
+}
+
+/* ---- itinerary ----
+   A timeline whose marks are DAYS. Day one is not a date — a reader planning
+   the same trip needs "day 3", and a reader remembering it needs "Tuesday",
+   and neither of them needs 14 November 2025. */
+.im-timeline.im-itinerary {
+	--im-timeline-gap: 1.75rem;
+}
+
+.im-itinerary .im-timeline-marker {
+	--im-timeline-marker: 2.75rem;
+
+	flex-direction: column;
+	gap: 0;
+	/* Square, not round: a day is a box on a calendar, and a column of
+	   circles running down a page already means "step" elsewhere. */
+	border-radius: var(--im-radius-md);
+	background-color: var(--im-surface);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: 0.625rem;
+	letter-spacing: 0.06em;
+	line-height: 1.2;
+	text-transform: uppercase;
+}
+
+.im-itinerary .im-timeline-marker > b {
+	color: var(--im-ink);
+	font-family: var(--im-font-pixel, var(--im-font-mono));
+	font-size: var(--im-text-base);
+	letter-spacing: normal;
+}
+
+.im-itinerary .im-timeline-item[data-state="current"] .im-timeline-marker {
+	background-color: var(--im-accent);
+	box-shadow: none;
+	color: color-mix(in oklab, var(--im-on-accent) 78%, transparent);
+}
+
+.im-itinerary .im-timeline-item[data-state="current"] .im-timeline-marker > b {
+	color: var(--im-on-accent);
+}
+
+.im-itinerary .im-timeline-title {
+	font-size: var(--im-text-h5);
+	line-height: var(--im-leading-h5);
+}
+
+/* Where you slept, what it cost, how far you went — the three facts a day of
+   a trip has that a paragraph should not have to carry. */
+.im-itinerary-facts {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.375rem 1rem;
+	padding-top: 0.5rem;
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+}
+
+.im-itinerary-facts > span {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
+}
+
+.im-itinerary-facts .im-icon {
+	font-size: 0.875rem;
+}

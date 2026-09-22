@@ -71,6 +71,34 @@ source: src/components/video-card.css
 {{{{/code}}}}
 <p>Give it no footer and no sidebar: a page that is one viewport has no room for either, and a footer that can only be reached by scrolling defeats the whole layout. If the site needs those, the short belongs in a <a href="/collections/video/">collection</a> and this page belongs behind a link from it.</p>
 
+<h2>The other 9:16 layout: the feed</h2>
+<p>One short is a page. Several are a <strong>feed</strong> — the same page repeated down a snapping column, where the scroll <em>is</em> the navigation. Scroll inside the frame.</p>
+{{#example flush=true code=false}}
+<iframe class="demo-frame" src="/demos/shorts/" title="A feed of vertical videos" style="height: 40rem" loading="lazy"></iframe>
+{{/example}}
+{{{{code "css"}}}}
+.im-shortfeed {
+	height: 100dvh;
+	overflow-y: auto;
+	scroll-snap-type: y mandatory;
+	overscroll-behavior-y: contain;
+}
+
+.im-shortfeed > .im-short {
+	height: 100%;
+	scroll-snap-align: start;
+	scroll-snap-stop: always;
+}
+{{{{/code}}}}
+<ul>
+	<li><strong><code>scroll-snap-stop: always</code> is the whole feel of it.</strong> Without it a hard flick skips three clips, which is the one thing a feed must never do — a viewer who cannot land on the clip they aimed at stops aiming.</li>
+	<li><strong><code>overscroll-behavior-y: contain</code></strong> stops the last clip handing the scroll back to the page behind it.</li>
+	<li><strong>No next button.</strong> The gesture is the button; <code>im-short-step</code> belongs on the single page, where there is nothing to scroll.</li>
+	<li><strong>Only the first poster is eager.</strong> Four autoplaying videos is four videos downloading at once — in a real feed, play the snapped one and pause the rest with one <code>IntersectionObserver</code> on the column.</li>
+	<li><strong>Each clip is a landmark</strong> (<code>&lt;section aria-label="Short 2 of 4"&gt;</code>), so a screen-reader user knows where they are in a list that has no visible list.</li>
+	<li><code>im-shortfeed-inset</code> when there is a top bar above the column instead of it filling the window.</li>
+</ul>
+
 <h2>In a grid</h2>
 <p>A vertical card is the same <a href="/collections/video/card/">video card</a> with one variable changed — <code>im-vidcard-tall</code> sets <code>--im-vidcard-ratio: 9 / 16</code>. Not a second component.</p>
 {{#example}}

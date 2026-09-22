@@ -1,0 +1,48 @@
+---
+title: Uses card
+description: A thing you own and recommend — the shot, the vendor, why you like it, what it cost, and the disclosure as its own row. It is the affiliate card, and nothing about it is new.
+eyebrow: Collections · Uses
+source: src/components/ad.css
+---
+<p>The uses collection did not need a card of its own: <code>im-affiliate</code> from <a href="/components/ads/#affiliate-product-card">Ads &amp; sponsors</a> already holds everything one needs. This page is the card in the context it is actually used in.</p>
+
+<h2>The card</h2>
+{{#example}}
+<div class="im-affiliates">
+	{{#each demo.uses}}{{#match @index "<" 2}}
+	<article class="im-affiliate">
+		<span class="im-affiliate-media"><img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy"></span>
+		<a class="im-affiliate-name" href="/collections/uses/page/" rel="sponsored noopener">{{name}}</a>
+		<p class="im-affiliate-by">{{by}}</p>
+		<p class="im-affiliate-text">{{text}}</p>
+		<p class="im-affiliate-meta"><span class="im-affiliate-price">{{price}}</span>{{#if was}}<span class="im-affiliate-was">{{was}}</span>{{/if}}<span class="im-badge im-badge-success">Still using it</span></p>
+		<div class="im-affiliate-actions"><a class="im-btn im-btn-primary im-btn-sm" href="#the-card" rel="sponsored noopener">Where I got it {{icon "arrow-up-right"}}</a><a class="im-btn im-btn-sm" href="/collections/uses/page/">Why this one</a></div>
+		<p class="im-affiliate-note">Affiliate link — I earn a little if you buy, at no cost to you</p>
+	</article>
+	{{/match}}{{/each}}
+</div>
+{{/example}}
+
+<h2>Two tiers, not one</h2>
+<p>Four things you would fight for get a card each. The other twenty go in the <a href="/components/widgets/#things-i-use">products widget</a> as rows — a name, what it is for, and an arrow. A page of twenty-four equal cards says everything matters equally, which is never true and is not what a reader came to find out.</p>
+{{#example style="max-width: 24rem"}}
+<section class="im-widget">
+	<h2 class="im-widget-title">Small things</h2>
+	<div class="im-widget-products">
+		{{#each demo.products}}
+		<a class="im-widget-product" href="#two-tiers-not-one"><span class="im-widget-product-mark">{{name.[0]}}</span><span class="im-widget-product-name">{{name}}</span><span class="im-widget-product-note">{{note}}</span>{{icon "arrow-up-right"}}</a>
+		{{/each}}
+	</div>
+</section>
+{{/example}}
+
+<h2>The disclosure is part of the card</h2>
+<p><code>im-affiliate-note</code> is a row of its own at the bottom, above a rule, in the same mono as every other label in the system — so a reader who has learnt what that type means on an <a href="/components/ads/">ad</a> knows what it means here without being told twice.</p>
+<p>It is <strong>not</strong> the page's disclosure. That goes at the top, in a <a href="/components/callout/">callout</a>, before the list: the note on a card is a reminder, and the callout is the actual statement.</p>
+
+<h2>Rules</h2>
+<ul>
+	<li><strong>Own it, or take it off.</strong> A uses page listing things you have not used is an ad page with a different name.</li>
+	<li><strong>Say when it was last checked.</strong> A three-year-old recommendation for a discontinued product is worse than no page.</li>
+	<li><strong><code>rel="sponsored noopener"</code> on every paid link</strong> — the machine-readable half of what the card already says in words.</li>
+</ul>

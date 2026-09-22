@@ -1,0 +1,78 @@
+---
+title: Experience card
+description: A photograph, where it was, when, and the number of the thing in its corner. The card a life collection is made of.
+eyebrow: Collections · Experience
+source: src/components/life.css
+---
+<p>Every collection on this site is a list, a card and a page. This is the card — and like the <a href="/collections/project/card/">project</a> and <a href="/collections/video/card/">video</a> cards, almost all of it is the system's: the fill hover, the radii, the drawn dots between facts. What it adds is one thing an ordinary card has no room for.</p>
+
+<h2>The card</h2>
+{{#example}}
+<div class="im-exps">
+	{{#each demo.experience}}{{#match @index "<" 3}}
+	<article class="im-exp">
+		<span class="im-exp-media">
+			<img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy">
+			<span class="im-exp-figure">{{figure}}<small>{{unit}}</small></span>
+		</span>
+		<div class="im-exp-body">
+			<p class="im-exp-where"><span>{{where}}</span><span>{{when}}</span></p>
+			<h3 class="im-exp-title"><a href="/collections/experience/page/">{{title}}</a></h3>
+			<p class="im-exp-text">{{text}}</p>
+		</div>
+	</article>
+	{{/match}}{{/each}}
+</div>
+{{/example}}
+
+<h2>The figure</h2>
+<p>Thirty metres. Four thousand metres. Two degrees. Whatever the thing is <strong>measured in</strong> is the first question anybody asks about it, so it goes in the corner of the picture — the same corner a <a href="/collections/video/card/">video card</a> puts its length in, for the same reason.</p>
+{{#example center=true}}
+<span class="im-exp-figure" style="position: static; background-color: var(--im-ink)">30<small>m</small></span>
+<span class="im-exp-figure" style="position: static; background-color: var(--im-ink)">4,000<small>m</small></span>
+<span class="im-exp-figure" style="position: static; background-color: var(--im-ink)">42.2<small>km</small></span>
+<span class="im-exp-figure" style="position: static; background-color: var(--im-ink)">2<small>°C</small></span>
+{{/example}}
+<p>A number and a unit. Not "very deep", not five stars, not a difficulty rating — those are opinions, and the number is the thing that is true.</p>
+
+<h2>With a kind chip</h2>
+<p>In a mixed feed the card takes <code>im-kind</code> like everything else, top-left over the picture. The figure is bottom-left, so the two never collide.</p>
+{{#example}}
+<div class="im-exps" style="--im-exps-min: 15rem">
+	{{#each demo.experience}}{{#match @index ">" 2}}
+	<article class="im-exp">
+		<span class="im-exp-media">
+			<img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy">
+			<span class="im-exp-figure">{{figure}}<small>{{unit}}</small></span>
+			<span class="im-kind im-kind-over" data-kind="tag">{{icon "compass"}}{{kind}}</span>
+		</span>
+		<div class="im-exp-body">
+			<p class="im-exp-where"><span>{{where}}</span><span>{{when}}</span></p>
+			<h3 class="im-exp-title"><a href="/collections/experience/page/">{{title}}</a></h3>
+		</div>
+	</article>
+	{{/match}}{{/each}}
+</div>
+{{/example}}
+
+<h2>Parts</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Class</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>im-exp</code></td><td>The card. <code>--im-exp-bleed</code> is how far the hover panel reaches past it.</td></tr>
+		<tr><td><code>im-exp-media</code></td><td>The photograph. <code>--im-exp-ratio</code>, 4:3 — taller than a video still, because a place is not a screen.</td></tr>
+		<tr><td><code>im-exp-figure</code></td><td>The measurement, bottom left. A number, then a <code>&lt;small&gt;</code> unit.</td></tr>
+		<tr><td><code>im-exp-where</code></td><td>Place, then date, with drawn dots between.</td></tr>
+		<tr><td><code>im-exp-title</code> · <code>-text</code></td><td>What it was, and one line about it. The title carries the whole card's hit area.</td></tr>
+		<tr><td><code>im-exps</code></td><td>The grid. <code>--im-exps-min</code>, 18rem.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>Choosing</h2>
+<ul>
+	<li><strong>One photograph, taken there.</strong> A stock image makes the whole page look invented.</li>
+	<li><strong>Alt text describes the place</strong>, not "a photo of scuba diving".</li>
+	<li><strong>Keep the line short.</strong> The card is the hook; the <a href="/collections/experience/page/">page</a> is the story.</li>
+</ul>

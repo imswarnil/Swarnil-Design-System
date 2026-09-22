@@ -1,0 +1,50 @@
+---
+title: Prompt card
+description: The snippet card with words in it — one class different, because a prompt is read before it is copied and a horizontal scrollbar makes that impossible.
+eyebrow: Collections · Prompt
+source: src/components/commerce.css
+---
+<p>A prompt collection is a <a href="/collections/snippets/card/">snippet collection</a> where the thing being copied is prose. Same card, same copy button, one class different.</p>
+
+<h2>The card</h2>
+{{#example}}
+<div class="im-snippets" style="--im-snippets-min: 23rem">
+	{{#each demo.prompts}}{{#match @index "<" 2}}
+	<article class="im-snippet">
+		<p class="im-snippet-head"><a class="im-snippet-name" href="/collections/prompts/page/">{{name}}</a><span class="im-snippet-lang" style="--im-repo-lang: var(--im-accent)">{{model}}</span></p>
+		<p>{{text}}</p>
+		<div class="im-snippet-body im-snippet-prompt">{{body}}</div>
+		<p class="im-snippet-foot"><span class="im-kind" data-kind="tag">{{icon "sparkles"}}Prompt</span><button class="im-btn im-btn-sm" type="button" data-im-copy="{{body}}" data-im-copied-label="Copied">{{icon "copy"}}<span data-im-copy-label>Copy</span></button></p>
+	</article>
+	{{/match}}{{/each}}
+</div>
+{{/example}}
+
+<h2>The one class</h2>
+<p><code>im-snippet-prompt</code> swaps the terminal for a quiet mono block on a surface that <strong>wraps</strong> and is <strong>not clipped</strong>.</p>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th></th><th>Snippet</th><th>Prompt</th></tr></thead>
+	<tbody>
+		<tr><td>The body</td><td>A highlighted <code>&lt;pre&gt;</code>, clipped at 7 lines</td><td>Wrapping mono on a surface, whole</td></tr>
+		<tr><td>Why</td><td>Code is scanned for shape; the page has the rest</td><td>A prompt is <em>judged</em> before it is copied, and you cannot judge one with its last two lines hidden</td></tr>
+		<tr><td>The tag</td><td>The language, with its colour dot</td><td>Which models it works on</td></tr>
+		<tr><td>The button</td><td colspan="2">Copy. The same one.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>Name the models honestly</h2>
+<p>"Any model" or "reasoning models" — not a list of version numbers that will be wrong in three months and that nobody can verify anyway.</p>
+{{#example center=true}}
+<span class="im-snippet-lang" style="--im-repo-lang: var(--im-accent); margin: 0">Any model</span>
+<span class="im-snippet-lang" style="--im-repo-lang: var(--im-accent); margin: 0">Reasoning models</span>
+<span class="im-snippet-lang" style="--im-repo-lang: var(--im-accent); margin: 0">Long context</span>
+{{/example}}
+
+<h2>Choosing</h2>
+<ul>
+	<li><strong>Say what it is for in one line.</strong> "For a draft that reads like a brochure" tells a reader whether to keep reading; "a powerful rewriting prompt" does not.</li>
+	<li><strong>Three good ones beat thirty.</strong> A page of a hundred is a page nobody reads past the fifth.</li>
+	<li><strong>No screenshots of output.</strong> They age badly, they cannot be verified, and they are the oldest trick in the genre.</li>
+</ul>

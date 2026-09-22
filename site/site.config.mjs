@@ -184,6 +184,7 @@ export const navigation = [
 					{ label: 'Project collection', url: '/collections/project/' },
 					{ label: 'Project card', url: '/collections/project/card/' },
 					{ label: 'Project page', url: '/collections/project/page/' },
+					{ label: 'Project log', url: '/collections/project/log/' },
 				],
 			},
 			{
@@ -218,12 +219,69 @@ export const navigation = [
 					{ label: 'Issue page', url: '/collections/newsletter/issue/' },
 				],
 			},
-			{ label: 'Products I use', url: '/collections/uses/', icon: 'package' },
-			{ label: 'Journal', url: '/collections/journal/', icon: 'pencil' },
-			{ label: 'Snippets', url: '/collections/snippets/', icon: 'code' },
-			{ label: 'Prompts', url: '/collections/prompts/', icon: 'sparkles' },
-			{ label: 'Experience', url: '/collections/experience/', icon: 'briefcase' },
-			{ label: 'Wishlist', url: '/collections/wishlist/', icon: 'heart' },
+			{
+				label: 'Uses',
+				icon: 'package',
+				children: [
+					{ label: 'Uses collection', url: '/collections/uses/' },
+					{ label: 'Uses card', url: '/collections/uses/card/' },
+					{ label: 'Product page', url: '/collections/uses/page/' },
+				],
+			},
+			{
+				label: 'Journal',
+				icon: 'pencil',
+				children: [
+					{ label: 'Journal collection', url: '/collections/journal/' },
+					{ label: 'Entry card', url: '/collections/journal/card/' },
+					{ label: 'Entry page', url: '/collections/journal/page/' },
+				],
+			},
+			{
+				label: 'Snippet',
+				icon: 'code',
+				children: [
+					{ label: 'Snippet collection', url: '/collections/snippets/' },
+					{ label: 'Snippet card', url: '/collections/snippets/card/' },
+					{ label: 'Snippet page', url: '/collections/snippets/page/' },
+				],
+			},
+			{
+				label: 'Prompt',
+				icon: 'sparkles',
+				children: [
+					{ label: 'Prompt collection', url: '/collections/prompts/' },
+					{ label: 'Prompt card', url: '/collections/prompts/card/' },
+					{ label: 'Prompt page', url: '/collections/prompts/page/' },
+				],
+			},
+			{
+				label: 'Travel',
+				icon: 'map-pin',
+				children: [
+					{ label: 'Travel collection', url: '/collections/travel/' },
+					{ label: 'Trip card', url: '/collections/travel/card/' },
+					{ label: 'Trip page', url: '/collections/travel/trip/' },
+				],
+			},
+			{
+				label: 'Experience',
+				icon: 'compass',
+				children: [
+					{ label: 'Experience collection', url: '/collections/experience/' },
+					{ label: 'Experience card', url: '/collections/experience/card/' },
+					{ label: 'Experience page', url: '/collections/experience/page/' },
+				],
+			},
+			{
+				label: 'Bucket list',
+				icon: 'square-check',
+				children: [
+					{ label: 'Bucket collection', url: '/collections/wishlist/' },
+					{ label: 'Bucket card', url: '/collections/wishlist/card/' },
+					{ label: 'Bucket page', url: '/collections/wishlist/page/' },
+				],
+			},
 			{
 				label: 'Tag',
 				icon: 'tag',
@@ -239,6 +297,7 @@ export const navigation = [
 					{ label: 'Video collection', url: '/collections/video/' },
 					{ label: 'Video card', url: '/collections/video/card/' },
 					{ label: 'Video page', url: '/collections/video/page/' },
+					{ label: 'Playlist page', url: '/collections/video/playlist/' },
 					{ label: 'Short (9:16)', url: '/collections/video/short/' },
 				],
 			},

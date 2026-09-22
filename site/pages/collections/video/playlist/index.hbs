@@ -1,0 +1,126 @@
+---
+title: Playlist page
+layout: home
+description: A set being watched — the player, and the rest of the set beside it in a queue that scrolls on its own. The position in the set is the page's whole job.
+eyebrow: Collections · Video
+source: src/components/collection.css · video.css
+---
+<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+	<p class="im-eyebrow">Collections · Video · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+</section>
+
+<div class="im-with-aside im-with-aside-wide im-wrap-wide">
+	<article class="im-stack" style="--im-stack-gap: 1.25rem">
+		<nav aria-label="Breadcrumb">
+			<ol class="im-breadcrumb im-breadcrumb-chevron">
+				<li><a href="/">{{> "icons/house"}}<span>Home</span></a></li>
+				<li><a href="/collections/video/">{{> "icons/video"}}<span>Videos</span></a></li>
+				<li><span aria-current="page">Everything about moving to Europe</span></li>
+			</ol>
+		</nav>
+
+		{{#with demo.videos.[2]}}
+		<div class="im-video im-video-full" id="play" data-im-video="aqz-KE-bpKQ" data-im-video-title="{{title}}">
+			<img class="im-video-poster" src="{{thumb}}" alt="" loading="eager">
+			<button class="im-video-play" type="button" aria-label="Play">{{> "icons/play"}}</button>
+		</div>
+
+		<header class="im-vidhead">
+			<p class="im-queue-meta"><span>{{icon "list"}}Everything about moving to Europe</span><span>3 of 12</span></p>
+			<h1 class="im-vidhead-title">{{title}}</h1>
+			<div class="im-vidhead-bar">
+				<div class="im-vidhead-by">
+					{{> "components/avatar" src=avatar name=channel}}
+					<div>
+						<strong>{{channel}}<i class="im-vidcard-tick" aria-hidden="true"></i></strong>
+						<small>{{views}} views · {{when}}</small>
+					</div>
+				</div>
+				<div class="im-vidhead-actions">
+					<div class="im-btn-group" role="group" aria-label="Move through the playlist">
+						<button class="im-btn im-btn-sm" type="button">{{icon "chevron-left"}}Previous</button>
+						<button class="im-btn im-btn-sm" type="button">Next{{icon "chevron-right"}}</button>
+					</div>
+					<button class="im-btn im-btn-sm" type="button" aria-pressed="false">{{icon "refresh-cw"}}Loop</button>
+					<button class="im-btn im-btn-sm" type="button" data-im-share="#play">{{icon "share"}}Share</button>
+				</div>
+			</div>
+		</header>
+		{{/with}}
+
+		<div class="im-progress-field"><span>Through the playlist</span><output>3 of 12</output><div class="im-progress" role="progressbar" aria-label="Through the playlist" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="--im-value: .25"></div></div>
+
+		{{> "components/comments" thread=demo.comments count="96"}}
+	</article>
+
+	<aside>
+		<div class="im-sticky-rail">
+			<div class="im-queue">
+				<div class="im-queue-head">
+					<p class="im-queue-name">Everything about moving to Europe</p>
+					<p class="im-queue-meta"><span>{{demo.author.name}}</span><span>3 / 12</span><span>2h 14m</span></p>
+				</div>
+				<ol class="im-queue-list">
+					{{#foreach demo.videos}}
+					<li class="im-queue-item"{{#match @number "=" 3}} aria-current="true"{{/match}}{{#match @number "<" 3}} data-state="done"{{/match}}>
+						<span class="im-queue-index" aria-hidden="true">{{#match @number "=" 3}}&#9656;{{else}}{{@number}}{{/match}}</span>
+						<span class="im-queue-thumb"><img src="{{thumb}}" alt="" loading="lazy"><span class="im-queue-time">{{time}}</span></span>
+						<h3 class="im-queue-title"><a href="#play">{{title}}</a></h3>
+						<p class="im-queue-by">{{channel}} · {{views}} views</p>
+					</li>
+					{{/foreach}}
+				</ol>
+			</div>
+		</div>
+	</aside>
+</div>
+
+<section class="im-section im-wrap">
+	<div class="im-prose">
+		<h2>A playlist page is a watch page that knows where it is</h2>
+		<p>Everything above the queue is the ordinary <a href="/collections/video/page/">video page</a>. Three things are added, and all three answer the same question — <em>where am I in this?</em></p>
+		<div class="im-table-scroll">
+		<table>
+			<thead><tr><th>Class</th><th></th></tr></thead>
+			<tbody>
+				<tr><td><code>im-queue</code></td><td>The set, beside the player. Two rows — a fixed head and a list that scrolls — with a <strong>definite</strong> <code>max-height</code>, so a queue of forty does not become a second page under the first.</td></tr>
+				<tr><td><code>im-queue-item</code></td><td>Number, still, title, channel. <code>aria-current="true"</code> is the one being watched; <code>data-state="done"</code> dims one already seen.</td></tr>
+				<tr><td><code>im-progress</code></td><td>How far through the set — not how far through the clip. The player has its own bar for that.</td></tr>
+				<tr><td><code>im-btn-group</code></td><td>Previous and next, joined. In a playlist those two are one control, so they are drawn as one.</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<h2>The queue scrolls, the page does not</h2>
+		<p>The panel owns its scrollbar and carries <code>overscroll-behavior: contain</code>, so reaching the end of the queue does not carry on and scroll the page out from under the player. Under <code>64rem</code> the aside falls below the article and the queue keeps its height — a list that is always twelve rows tall is a list a viewer learns the shape of.</p>
+
+		<h2>Details that matter</h2>
+		<ul>
+			<li><strong>The current row uses the same active state as everything else</strong> — a light ground and heavier text, exactly as the <a href="/navigation/sidebar/">sidebar</a> and the <a href="/navigation/navbar/">navbar</a> do. Not a coloured bar down one side, and not a dot: the dot means <em>new</em>, everywhere.</li>
+			<li><strong>Played items are dimmed, never removed.</strong> Somebody coming back to a course needs to see what they have already done; a queue that deletes itself as you watch it loses the only progress record the page had.</li>
+			<li><strong>Previous and next are buttons, not the queue.</strong> A viewer who is watching should not have to aim at a row in a scrolling list to get to the next thing.</li>
+			<li><strong>Scroll the current row into view on load.</strong> One line — <code>queue.querySelector('[aria-current]')?.scrollIntoView({block: 'center'})</code> — and it is the difference between a queue that shows where you are and one that always shows item one.</li>
+			<li><strong>The position is written twice on purpose</strong> — "3 of 12" over the title and "3 / 12" in the queue head. The second one is the only one visible once the page has scrolled.</li>
+			<li><strong>A playlist of lessons is a <a href="/collections/course/lesson/">course</a>, not this.</strong> The difference is that a course tracks completion per viewer and this does not; if there are checkmarks, use the curriculum.</li>
+		</ul>
+
+		<h2>In a theme</h2>
+		{{{{code "hbs"}}}}
+{{!-- A Ghost collection routed at /playlist/{slug}/ — the set is a tag,
+     the order is the tag's own. --}}
+{{#get "posts" filter="tag:{{slug}}" limit="all" as |set|}}
+<ol class="im-queue-list">
+	{{#foreach set}}
+	<li class="im-queue-item"{{#if featured}} aria-current="true"{{/if}}>
+		<span class="im-queue-index" aria-hidden="true">{{@number}}</span>
+		<span class="im-queue-thumb"><img src="{{img_url feature_image size="xs"}}" alt=""></span>
+		<h3 class="im-queue-title"><a href="{{url}}">{{title}}</a></h3>
+	</li>
+	{{/foreach}}
+</ol>
+{{/get}}
+		{{{{/code}}}}
+	</div>
+</section>

@@ -1,0 +1,158 @@
+---
+title: Trip page
+layout: home
+description: One trip, day by day — the route, what each day cost, where you slept, and how far you went. The itinerary is the page; the photographs are the decoration.
+eyebrow: Collections · Travel
+source: src/components/life.css · timeline.css
+---
+<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+	<p class="im-eyebrow">Collections · Travel · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+</section>
+
+<div class="im-single im-wrap-wide" data-sidebar="on">
+	<article class="im-stack" style="--im-stack-gap: 1.75rem">
+		{{#with demo.trips.[0]}}
+		<nav aria-label="Breadcrumb">
+			<ol class="im-breadcrumb im-breadcrumb-chevron">
+				<li><a href="/">{{> "icons/house"}}<span>Home</span></a></li>
+				<li><a href="/collections/travel/">{{> "icons/map-pin"}}<span>Travel</span></a></li>
+				<li><span aria-current="page">{{title}}</span></li>
+			</ol>
+		</nav>
+
+		<header class="im-exphero">
+			<img src="{{../demo.shots.[0]}}" alt="" loading="eager">
+			<p class="im-exp-where" style="color: color-mix(in oklab, #fff 80%, transparent)"><span>{{country}}</span><span>{{when}}</span><span>{{days}} days</span></p>
+			<h1 class="im-exphero-title">{{title}}</h1>
+		</header>
+
+		<p class="im-trip-route" style="font-size: var(--im-text-sm)">{{#each route}}<span>{{this}}</span>{{/each}}</p>
+
+		<div class="im-expstats">
+			<span><strong>{{days}}</strong>Days</span>
+			<span><strong>{{km}} km</strong>Travelled</span>
+			<span><strong>€479</strong>Total</span>
+			<span><strong>€80</strong>A day</span>
+			<span><strong>5</strong>Stops</span>
+		</div>
+		{{/with}}
+
+		<section class="im-content im-content-flush im-content-lede">
+			<p>Six days, four towns and one road that takes two hours to drive forty kilometres. Everything below is what we actually did and what it actually cost, in the order it happened.</p>
+		</section>
+
+		<section class="im-section" style="--im-section-gap: 1.25rem">
+			<h2 class="im-caption" data-index="plan">The itinerary</h2>
+			<ol class="im-timeline im-itinerary">
+				{{#each demo.itinerary}}
+				<li class="im-timeline-item" id="day-{{day}}">
+					<span class="im-timeline-marker">Day<b>{{day}}</b></span>
+					<time class="im-timeline-time">{{where}}</time>
+					<h3 class="im-timeline-title">{{title}}</h3>
+					<p class="im-timeline-text">{{text}}</p>
+					<p class="im-itinerary-facts">
+						<span>{{icon "bookmark"}}Slept: {{sleep}}</span>
+						<span>{{icon "wallet"}}{{cost}}</span>
+						<span>{{icon "navigation"}}{{km}} km</span>
+					</p>
+				</li>
+				{{/each}}
+			</ol>
+		</section>
+
+		<section class="im-content im-content-flush">
+			<h2>What I would do differently</h2>
+			<ul>
+				<li><strong>Two nights in Positano, not one.</strong> Arriving and leaving on the same road in twenty-four hours is the one thing everybody regrets.</li>
+				<li><strong>Drive it east to west.</strong> You are on the sea side, and it is a completely different road.</li>
+				<li><strong>Skip the car after Amalfi.</strong> The SITA bus is ten euro for the day and somebody else does the parking.</li>
+			</ul>
+		</section>
+
+		{{> "components/comments" thread=demo.comments count="41"}}
+	</article>
+
+	<aside>
+		<div class="im-sticky-rail">
+			<div class="im-widgets">
+				<section class="im-widget" aria-labelledby="tr-plan">
+					<h2 class="im-widget-title" id="tr-plan">The days</h2>
+					<ol class="im-timeline im-timeline-compact im-widget-series">
+						{{#each demo.itinerary}}
+						<li class="im-timeline-item" data-state="done">
+							<span class="im-timeline-marker">{{day}}</span>
+							<h3 class="im-timeline-title"><a href="#day-{{day}}">{{title}}</a></h3>
+						</li>
+						{{/each}}
+					</ol>
+				</section>
+
+				<section class="im-widget" aria-labelledby="tr-cost">
+					<h2 class="im-widget-title" id="tr-cost">What it cost</h2>
+					<dl class="im-widget-facts">
+						<dt>Beds</dt><dd>€286</dd>
+						<dt>Transport</dt><dd>€94</dd>
+						<dt>Everything else</dt><dd>€99</dd>
+						<dt>Total</dt><dd>€479</dd>
+					</dl>
+					<span class="im-langbar">
+						<span style="--im-repo-lang: var(--im-accent); width: 60%"></span>
+						<span style="--im-repo-lang: var(--im-info); width: 20%"></span>
+						<span style="--im-repo-lang: var(--im-faint); width: 20%"></span>
+					</span>
+				</section>
+
+				<section class="im-widget" aria-labelledby="tr-exp">
+					<h2 class="im-widget-title" id="tr-exp">What happened on it</h2>
+					<ul class="im-widget-list">
+						{{#each demo.experience}}{{#match @index "<" 2}}<li><a href="/collections/experience/page/">{{title}}<small>{{when}}</small></a></li>{{/match}}{{/each}}
+					</ul>
+				</section>
+
+				<section class="im-widget" aria-labelledby="tr-watch">
+					<h2 class="im-widget-title" id="tr-watch">The film <a href="/collections/series/">Series</a></h2>
+					{{#with demo.videos.[0]}}{{> "components/video-card" layout="compact" hide_by=true}}{{/with}}
+				</section>
+
+				<section class="im-widget im-widget-fill" aria-labelledby="tr-sub">
+					<h2 class="im-widget-title" id="tr-sub">Next trip</h2>
+					<p class="im-widget-heading">Tromsø, February.</p>
+					{{> "components/subscribe" id="trip-email" button="Join"}}
+				</section>
+			</div>
+		</div>
+	</aside>
+</div>
+
+<section class="im-section im-wrap">
+	<div class="im-prose">
+		<h2>The itinerary is the page</h2>
+		<p>Most travel pages are a gallery and a paragraph, and they are useless to the one reader who matters — somebody deciding whether to do the same trip. What that reader wants is the <strong>plan</strong>: the days in order, where you slept, what it cost, how far you went.</p>
+		<p>So the middle of the page is a timeline whose marks are <strong>days, not dates</strong>. "Day 3" is what a person planning the trip needs; 14 November 2025 is what nobody needs.</p>
+		<div class="im-table-scroll">
+		<table>
+			<thead><tr><th>Class</th><th></th></tr></thead>
+			<tbody>
+				<tr><td><code>data-state</code></td><td>On a trip that has not happened yet: <code>done</code> behind you, <code>current</code> on today, nothing ahead. On a trip that is over, leave it off — every day is done and marking them says nothing.</td></tr>
+				<tr><td><code>im-itinerary</code></td><td>The <a href="/components/timeline/">timeline</a>, tuned: a square mark with "Day" over a numeral.</td></tr>
+				<tr><td><code>im-itinerary-facts</code></td><td>Slept, cost, distance — the three facts a day has that a paragraph should not have to carry.</td></tr>
+				<tr><td><code>im-trip-route</code></td><td>The stops in order, under the head.</td></tr>
+				<tr><td><code>im-expstats</code></td><td>Days, distance, total, per-day, stops — the same ruled row a <a href="/collections/experience/page/">experience</a> and a <a href="/collections/project/page/">project</a> use.</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<h2>What I would do differently</h2>
+		<p>That heading is not optional. It is the only part of a travel page that could not have been written before the trip, and it is the reason somebody sends the link to a friend.</p>
+
+		<h2>The rail carries the trip's own things</h2>
+		<p>The days as a jump-list, the money broken down, the <a href="/collections/experience/">experiences</a> that came out of it, and the <a href="/collections/series/">film</a> if there is one. Not an author card and not a related grid — those belong on a post. A collection's rail should be made of the things <em>that collection</em> has.</p>
+		<ul>
+			<li><strong>Costs in the currency you paid in.</strong> Converting is a decision the reader can make and you cannot.</li>
+			<li><strong>One photograph in the head, not twelve in a gallery.</strong> The pictures belong in the <a href="/collections/series/">film</a> or on the <a href="/collections/experience/">experience</a> pages.</li>
+			<li><strong>Comments are worth more here than anywhere.</strong> Half of them will be "the bus is €12 now", and that is the page staying alive.</li>
+		</ul>
+	</div>
+</section>

@@ -1,0 +1,119 @@
+---
+title: Experience page
+layout: home
+description: One thing that happened — the photograph full width, the numbers under it, what it was actually like, and the line on the bucket list it came from.
+eyebrow: Collections · Experience
+source: src/components/life.css · content.css
+---
+<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+	<p class="im-eyebrow">Collections · Experience · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+</section>
+
+<div class="im-single im-wrap-wide" data-sidebar="on">
+	<article class="im-stack" style="--im-stack-gap: 1.75rem">
+		{{#with demo.experience.[0]}}
+		<nav aria-label="Breadcrumb">
+			<ol class="im-breadcrumb im-breadcrumb-chevron">
+				<li><a href="/">{{> "icons/house"}}<span>Home</span></a></li>
+				<li><a href="/collections/experience/">{{> "icons/compass"}}<span>Experience</span></a></li>
+				<li><span aria-current="page">{{title}}</span></li>
+			</ol>
+		</nav>
+
+		<header class="im-exphero">
+			<img src="{{../demo.shots.[0]}}" alt="" loading="eager">
+			<p class="im-exp-where" style="color: color-mix(in oklab, #fff 80%, transparent)"><span>{{where}}</span><span>{{when}}</span></p>
+			<h1 class="im-exphero-title">{{title}}</h1>
+		</header>
+
+		<div class="im-expstats">
+			<span><strong>{{figure}}{{unit}}</strong>Max depth</span>
+			<span><strong>38</strong>Minutes</span>
+			<span><strong>24°C</strong>Water</span>
+			<span><strong>40m</strong>Visibility</span>
+			<span><strong>2</strong>Dives</span>
+		</div>
+
+		<section class="im-content im-content-flush im-content-lede" data-im-zoom>
+			<p>{{text}}</p>
+
+			<h2>What it is</h2>
+			<p>A sinkhole in the Red Sea, seventy metres at the bottom, with an arch at fifty-five that has killed a lot of people who tried to swim through it on one breath. We did not go near the arch.</p>
+
+			<h2>What nobody tells you</h2>
+			<ul>
+				<li>The water is so clear that thirty metres does not <em>feel</em> like thirty metres, which is exactly the problem.</li>
+				<li>The walk in, over the rock, in full kit, in the sun, is harder than the dive.</li>
+				<li>You will spend the whole descent checking your gauge and none of it looking at the reef.</li>
+			</ul>
+
+			<figure class="kg-card kg-image-card kg-width-wide kg-card-hascaption"><img src="{{../demo.shots.[4]}}" class="kg-image" alt="" loading="lazy" width="1600" height="900"><figcaption>Nine in the morning, before the boats.</figcaption></figure>
+
+			<h2>Would I do it again</h2>
+			<p>Yes, and deeper, and with somebody who has done it forty times rather than four.</p>
+		</section>
+
+		<nav class="im-postnav" aria-label="More">
+			<a href="/collections/experience/page/" rel="prev"><small>{{> "icons/arrow-left"}} Before this</small>A night on Gerlach</a>
+			<a href="/collections/experience/page/" rel="next"><small>After {{> "icons/arrow-right"}}</small>First jump</a>
+		</nav>
+		{{/with}}
+	</article>
+
+	<aside>
+		<div class="im-sticky-rail">
+			<div class="im-widgets">
+				<section class="im-widget" aria-labelledby="e-from">
+					<h2 class="im-widget-title" id="e-from">From the list</h2>
+					<ul class="im-buckets">
+						<li class="im-bucket" data-state="done" style="box-shadow: none; padding: 0">
+							<span class="im-bucket-mark">{{icon "check"}}</span>
+							<p class="im-bucket-title"><a href="/collections/wishlist/">Dive the Blue Hole</a></p>
+							<p class="im-bucket-note">Added March 2024</p>
+						</li>
+					</ul>
+					<p>Two years on the <a href="/collections/wishlist/">bucket list</a> before it happened.</p>
+				</section>
+
+				<section class="im-widget" aria-labelledby="e-facts">
+					<h2 class="im-widget-title" id="e-facts">The facts</h2>
+					<dl class="im-widget-facts">
+						<dt>Where</dt><dd>Dahab, Egypt</dd>
+						<dt>When</dt><dd>March 2026</dd>
+						<dt>Depth</dt><dd>30 m</dd>
+						<dt>With</dt><dd>Blue Hole Divers</dd>
+					</dl>
+				</section>
+
+				<section class="im-widget" aria-labelledby="e-more">
+					<h2 class="im-widget-title" id="e-more">More like this <a href="/collections/experience/">All</a></h2>
+					<ul class="im-widget-list im-widget-list-thumbs">
+						{{#each demo.experience}}{{#match @index ">" 2}}<li><a href="/collections/experience/page/"><img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy">{{title}}<small>{{where}}</small></a></li>{{/match}}{{/each}}
+					</ul>
+				</section>
+			</div>
+		</div>
+	</aside>
+</div>
+
+<section class="im-section im-wrap">
+	<div class="im-prose">
+		<h2>The photograph is the hero</h2>
+		<p><code>im-exphero</code> is the picture full width with the facts written on it, on the same gradient scrim the <a href="/collections/post/article/">post hero</a>'s cover arrangement uses — dark where the words are, nearly clear at the top, so the photograph survives.</p>
+		<p>Under it, <code>im-expstats</code>: depth, time, temperature, visibility. Whatever the thing is measured in, in a ruled row — the same component a <a href="/collections/project/page/">project page</a> puts its stars and forks in.</p>
+		<div class="im-table-scroll">
+		<table>
+			<thead><tr><th>Block</th><th>Built from</th></tr></thead>
+			<tbody>
+				<tr><td>The head</td><td><code>im-exphero</code>, and a <a href="/navigation/breadcrumb/">breadcrumb</a> above it.</td></tr>
+				<tr><td>The numbers</td><td><code>im-expstats</code>.</td></tr>
+				<tr><td>The story</td><td><code>im-content</code> — the same canvas as a post, so a wide picture and a callout behave the way they do everywhere.</td></tr>
+				<tr><td>The rail</td><td>The bucket-list row it came from, the facts, and three more.</td></tr>
+			</tbody>
+		</table>
+		</div>
+		<p><strong>The rail's first widget is the line on the list.</strong> It is the only thing on this page that could not be worked out from the page itself, and it is the one that makes the two collections one thing.</p>
+	</div>
+</section>

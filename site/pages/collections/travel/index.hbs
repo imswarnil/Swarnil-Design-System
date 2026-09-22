@@ -1,0 +1,134 @@
+---
+title: Travel collection
+layout: home
+description: Trips — where, how long, how far, and the route across the card. Every one links to an itinerary, because the useful half of a travel page is the plan, not the photographs.
+eyebrow: Collections · Travel
+source: src/components/life.css
+---
+<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+	<p class="im-eyebrow">Collections · Travel · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+</section>
+
+<div class="im-single im-wrap-wide" data-sidebar="on">
+	<article class="im-stack" style="--im-stack-gap: 2rem">
+		<header class="im-collhead">
+			<p class="im-eyebrow">Travel</p>
+			<h1 class="im-collhead-title">Where I have been</h1>
+			<p class="im-collhead-text">Trips, with the itinerary and what each day cost. Written down mostly so I can answer "how would you do it again" without inventing the answer.</p>
+			<p class="im-collhead-meta"><span>{{demo.trips.length}} trips</span><span>4 countries</span><span>Since 2023</span></p>
+		</header>
+
+		<div class="im-collbar">
+			<div class="im-collbar-filters">
+				<a class="im-tag" href="#trips" aria-current="page">All</a>
+				<a class="im-tag" href="#trips">Italy</a>
+				<a class="im-tag" href="#trips">Croatia</a>
+				<a class="im-tag" href="#trips">Slovakia</a>
+				<a class="im-tag" href="#trips">Planned</a>
+			</div>
+			<div class="im-cluster" style="--im-cluster-gap: .375rem">
+				<button class="im-btn im-btn-sm" type="button">{{icon "list-filter"}}Most recent</button>
+			</div>
+		</div>
+
+		<div class="im-exps" id="trips" style="--im-exps-min: 19rem">
+			{{#each demo.trips}}
+			<article class="im-exp im-trip">
+				<span class="im-exp-media">
+					<img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy">
+					<span class="im-exp-figure">{{days}}<small>days</small></span>
+					<span class="im-kind im-kind-over" data-kind="tag">{{icon "map-pin"}}{{country}}</span>
+				</span>
+				<div class="im-exp-body">
+					<p class="im-exp-where"><span>{{when}}</span>{{#match state "=" "upcoming"}}<span>Planned</span>{{else}}<span>{{km}} km</span>{{/match}}</p>
+					<h2 class="im-exp-title"><a href="/collections/travel/trip/">{{title}}</a></h2>
+					<p class="im-exp-text">{{text}}</p>
+					<p class="im-trip-route">{{#each route}}<span>{{this}}</span>{{/each}}</p>
+				</div>
+			</article>
+			{{/each}}
+		</div>
+	</article>
+
+	<aside>
+		<div class="im-sticky-rail">
+			<div class="im-widgets">
+				<section class="im-widget" aria-labelledby="t-stats">
+					<h2 class="im-widget-title" id="t-stats">So far</h2>
+					<div class="im-widget-stats">
+						<div><strong>4</strong><span>Countries</span></div>
+						<div><strong>652</strong><span>km</span></div>
+						<div><strong>21</strong><span>Days</span></div>
+					</div>
+				</section>
+
+				<section class="im-widget" aria-labelledby="t-next">
+					<h2 class="im-widget-title" id="t-next">Next</h2>
+					<p class="im-widget-heading">Tromsø, February 2027</p>
+					<p>Five days, three of them standing in a field being cold and hopeful.</p>
+					<a class="im-btn im-btn-sm" href="/collections/wishlist/">On the bucket list {{icon "arrow-right"}}</a>
+				</section>
+
+				<section class="im-widget" aria-labelledby="t-map">
+					<h2 class="im-widget-title" id="t-map">Countries</h2>
+					<nav class="im-widget-archive" aria-label="By country">
+						<a href="#trips" style="--im-share: 100%">Italy<small>1</small></a>
+						<a href="#trips" style="--im-share: 100%">Croatia<small>1</small></a>
+						<a href="#trips" style="--im-share: 100%">Slovakia<small>1</small></a>
+						<a href="#trips" style="--im-share: 100%">Norway<small>0</small></a>
+					</nav>
+				</section>
+
+				<section class="im-widget" aria-labelledby="t-exp">
+					<h2 class="im-widget-title" id="t-exp">What happened on them <a href="/collections/experience/">All</a></h2>
+					<ul class="im-widget-list im-widget-list-thumbs">
+						{{#each demo.experience}}{{#match @index "<" 3}}<li><a href="/collections/experience/page/"><img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy">{{title}}<small>{{where}}</small></a></li>{{/match}}{{/each}}
+					</ul>
+				</section>
+
+				<section class="im-widget im-widget-fill" aria-labelledby="t-sub">
+					<h2 class="im-widget-title" id="t-sub">When I go somewhere</h2>
+					<p class="im-widget-heading">The itinerary, afterwards.</p>
+					{{> "components/subscribe" id="travel-email" button="Join"}}
+				</section>
+			</div>
+		</div>
+	</aside>
+</div>
+
+<section class="im-section im-wrap">
+	<div class="im-prose">
+		<h2>It is the experience card, with a route</h2>
+		<p>A trip is an <a href="/collections/experience/card/">experience</a> that lasted a week, so the card is the same one with two things changed: the figure in the corner is a <strong>duration</strong> rather than a measurement, and there is a <strong>route</strong> under the text — the stops, in order, with drawn rules between them.</p>
+		<div class="im-table-scroll">
+		<table>
+			<thead><tr><th>Class</th><th></th></tr></thead>
+			<tbody>
+				<tr><td><code>im-trip</code></td><td>The experience card at 3:2 — a landscape is wider than a moment.</td></tr>
+				<tr><td><code>im-trip-route</code></td><td>The stops. The arrows between them are <strong>drawn</strong>, so a screen reader does not read "rightwards arrow" nine times.</td></tr>
+				<tr><td><code>im-exp-figure</code></td><td>Days, in the picture's corner.</td></tr>
+				<tr><td><code>im-kind</code></td><td>The country, top left.</td></tr>
+			</tbody>
+		</table>
+		</div>
+		<p>A planned trip is on the same list with "Planned" where the distance would be. Hiding it until it happens loses the one reader who wanted to say "I am there that week too".</p>
+
+		<h2>The rail is the collection's nature</h2>
+		<p>Every collection's sidebar should carry the widgets <em>that collection</em> needs, not a copy of the post page's. A travel rail holds the totals, what is next, a breakdown by country, and what happened on the trips — four things that only make sense here.</p>
+		<div class="im-table-scroll">
+		<table>
+			<thead><tr><th>Collection</th><th>Its rail</th></tr></thead>
+			<tbody>
+				<tr><td><a href="/collections/travel/">Travel</a></td><td>Totals · next trip · by country · the experiences that came out of them</td></tr>
+				<tr><td><a href="/collections/project/">Project</a></td><td>Links · built-with · more projects · releases</td></tr>
+				<tr><td><a href="/collections/course/">Course</a></td><td>The buy box, which becomes a progress bar once you are enrolled</td></tr>
+				<tr><td><a href="/collections/wishlist/">Bucket list</a></td><td>How it is going · already done</td></tr>
+				<tr><td><a href="/collections/journal/">Journal</a></td><td>Now · by month</td></tr>
+			</tbody>
+		</table>
+		</div>
+		<p>They are all <code>im-widget</code>s in an <code>im-widgets</code> column inside an <code>im-sticky-rail</code> — the same three classes every time. What changes is what is <em>in</em> them, and that is the only part that should.</p>
+	</div>
+</section>
