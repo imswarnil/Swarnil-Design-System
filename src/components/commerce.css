@@ -352,7 +352,7 @@
 .im-episode {
 	position: relative;
 	display: grid;
-	grid-template-columns: 4.5rem minmax(0, 1fr);
+	grid-template-columns: minmax(0, 1fr);
 	align-items: stretch;
 	isolation: isolate;
 }
@@ -363,8 +363,7 @@
 	z-index: -1;
 	display: grid;
 	align-content: center;
-	width: 6rem;
-	overflow: hidden;
+	width: auto;
 	color: var(--im-surface-3);
 	font-family: var(--im-font-pixel, var(--im-font-mono));
 	font-size: clamp(5rem, 4rem + 4vw, 8rem);
@@ -375,17 +374,19 @@
 }
 
 .im-episode > .im-vidcard {
-	grid-column: 2;
+	grid-column: 1;
 	min-width: 0;
 	position: relative;
+	margin-left: 3.25rem; /* the numeral shows in this strip, and under the still */
+	background-color: var(--im-canvas);
 }
 
 .im-episode[data-state="done"] .im-epnum { color: color-mix(in oklab, var(--im-success) 22%, transparent); }
 .im-episode[data-state="current"] .im-epnum { color: color-mix(in oklab, var(--im-accent) 22%, transparent); }
 
 @media (width < 34rem) {
-	.im-episode { grid-template-columns: 2rem minmax(0, 1fr); }
-	.im-epnum { width: 4rem; font-size: 3.5rem; }
+	.im-episode > .im-vidcard { margin-left: 1.5rem; }
+	.im-epnum { font-size: 3.5rem; }
 }
 
 

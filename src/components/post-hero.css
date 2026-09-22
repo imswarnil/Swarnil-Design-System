@@ -173,6 +173,17 @@
 	text-align: start;
 }
 
+/* Left-aligned, the copy is a start-justified grid item and is sized by its
+   content — a breadcrumb that does not wrap makes it wider than the phone.
+   Cap it at the column and let the crumbs wrap. */
+.im-posthero-stack .im-posthero-copy {
+	width: 100%;
+	max-width: min(var(--im-posthero-measure, 44rem), 100%);
+	min-width: 0;
+}
+
+.im-posthero-crumbs .im-breadcrumb { flex-wrap: wrap; }
+
 .im-posthero-center {
 	justify-items: center;
 	text-align: center;
