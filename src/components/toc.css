@@ -22,32 +22,35 @@
 .im-toc-list {
 	display: flex;
 	flex-direction: column;
-	border-left: 1px solid var(--im-line);
+	gap: 0.125rem;
+	margin-inline: -0.5rem;
 }
 
+/* The same row the docs nav uses: a fill on hover, a fill and a heavier
+   label on the current one. No underline, no left rule. */
 .im-toc-link {
 	display: block;
-	margin-left: -1px;
-	padding: 0.25rem 0 0.25rem 0.75rem;
-	border-left: 1px solid transparent;
+	padding: 0.4375rem 0.625rem;
+	border-radius: var(--im-radius-md);
 	color: var(--im-muted);
 	font-weight: 500;
 	line-height: 1.35;
 	text-decoration: none;
-	transition: color 120ms, border-color 120ms;
+	transition: background-color 120ms, color 120ms;
 }
 
 .im-toc-link[data-depth="3"] {
-	padding-left: 1.625rem;
+	padding-left: 1.5rem;
 	font-weight: 400;
 }
 
 .im-toc-link:hover {
+	background-color: var(--im-hover-bg, var(--im-surface));
 	color: var(--im-ink);
 }
 
 .im-toc-link[aria-current="true"] {
-	border-left-color: var(--im-ink);
+	background-color: var(--im-current-bg);
 	color: var(--im-current-fg);
 	font-weight: var(--im-current-weight);
 }

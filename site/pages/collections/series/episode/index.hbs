@@ -48,9 +48,7 @@ source: src/components/commerce.css · video-card.css
 
 		<details class="im-viddesc" open>
 			<summary><span>96k views</span><span>{{when}}</span><span class="im-topic">#amalfi</span></summary>
-			<div class="im-viddesc-body">{{text}}
-
-Shot over four days in November with one lens. Everything it cost is in episode four.</div>
+			<div class="im-viddesc-body"><p>{{text}}</p><p>Shot over four days in November with one lens. Everything it cost is in episode four.</p></div>
 		</details>
 		{{/with}}
 
@@ -79,7 +77,7 @@ Shot over four days in November with one lens. Everything it cost is in episode 
 					<ol class="im-queue-list" style="padding: 0">
 						{{#each demo.episodes}}
 						<li class="im-queue-item" data-state="{{#match state "=" "done"}}done{{/match}}"{{#match state "=" "current"}} aria-current="true"{{/match}}>
-							<span class="im-queue-index" aria-hidden="true">{{#match state "=" "current"}}&#9656;{{else}}{{n}}{{/match}}</span>
+							<span class="im-queue-index" aria-hidden="true">{{n}}</span>
 							<span class="im-queue-thumb im-thumb{{#match state "=" "upcoming"}} im-thumb-lock{{else}} im-thumb-play{{/match}}" style="--im-thumb-mark: 1.5rem"><img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy"><span class="im-queue-time">{{time}}</span></span>
 							<h3 class="im-queue-title">{{#match state "=" "current"}}<span>{{title}}</span>{{else}}<a href="/collections/series/episode/">{{title}}</a>{{/match}}</h3>
 							<p class="im-queue-by">{{when}}{{#match state "=" "done"}} · Watched{{/match}}{{#match state "=" "upcoming"}} · Not out yet{{/match}}</p>

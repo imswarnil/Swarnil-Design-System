@@ -245,3 +245,13 @@
 	font-style: italic;
 	line-height: 1.5;
 }
+
+/* The card IS a small chat window: the model at the top, an empty log with
+   the line about it, and the title typed into the composer — the prompt is
+   on the single page. */
+.im-promptcard .im-chat-log { min-height: 5.5rem; }
+.im-promptcard .im-chat-empty { color: var(--im-muted); font-size: var(--im-text-sm); line-height: 1.5; }
+.im-promptcard .im-chat-input > .im-chat-caret { color: var(--im-ink); font-weight: 500; }
+.im-promptcard .im-chat-input > .im-chat-caret::after { content: ""; display: inline-block; width: 2px; height: 1em; margin-left: 2px; vertical-align: -0.15em; background-color: var(--im-accent); animation: im-caret 1s steps(2) infinite; }
+@keyframes im-caret { to { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .im-promptcard .im-chat-input > .im-chat-caret::after { animation: none; } }

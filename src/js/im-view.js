@@ -255,3 +255,19 @@
 		head.setAttribute('aria-expanded', String(!open));
 	});
 })();
+
+/** im-deck: a small stack of cards with two arrows. Cycles data-pos. */
+(() => {
+	for (const deck of document.querySelectorAll('[data-im-deck]')) {
+		const cards = [...deck.querySelectorAll('.im-deck-card')];
+		const n = deck.querySelector('[data-deck-n]');
+		let i = 0;
+		const draw = () => {
+			cards.forEach((c, k) => { const pos = (k - i + cards.length) % cards.length; c.dataset.pos = pos > 2 ? 'hidden' : String(pos); });
+			if (n) n.textContent = String(i + 1);
+		};
+		deck.querySelector('[data-deck-next]')?.addEventListener('click', () => { i = (i + 1) % cards.length; draw(); });
+		deck.querySelector('[data-deck-prev]')?.addEventListener('click', () => { i = (i - 1 + cards.length) % cards.length; draw(); });
+		draw();
+	}
+})();

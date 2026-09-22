@@ -13,21 +13,15 @@ source: src/components/commerce.css · video-card.css
 
 <div class="im-single im-wrap-wide" data-sidebar="on">
 	<article class="im-stack" style="--im-stack-gap: 2rem">
-		<section class="im-channel">
-			<div class="im-channel-banner" style="--im-channel-ratio: 4 / 1"><img src="{{demo.six.[0].feature_image}}" alt="" loading="eager"></div>
-			<div class="im-channel-head">
-				<div class="im-channel-id">
-					<p><span class="im-kind" data-kind="video">{{icon "square-play"}}Series</span></p>
-					<h1 class="im-channel-name">The Amalfi Road</h1>
-					<p class="im-channel-meta"><span>Season 1</span><span>4 episodes</span><span>Updated Thursdays</span></p>
-					<p class="im-channel-text">Forty kilometres, two hours, and nobody in a hurry. Four films about one road, made over four days in November.</p>
-				</div>
-				<div class="im-channel-actions">
-					<a class="im-btn im-btn-primary" href="/collections/series/episode/">{{icon "play"}}Start watching</a>
-					<button class="im-btn" type="button">{{icon "bell"}}Notify me</button>
-				</div>
+		<header class="im-serieshero">
+			<video poster="{{demo.six.[0].feature_image}}" muted loop playsinline autoplay preload="none" aria-hidden="true"></video>
+			<div class="im-serieshero-copy">
+				<p class="im-serieshero-meta"><span>Series</span><span>Season 1</span><span>4 episodes</span><span>Thursdays</span></p>
+				<h1 class="im-serieshero-title">The Amalfi Road</h1>
+				<p class="im-serieshero-text">Forty kilometres, two hours, and nobody in a hurry. Four films about one road, made over four days in November.</p>
+				<p class="im-cluster" style="--im-cluster-gap: .5rem"><a class="im-btn im-btn-primary" href="/collections/series/episode/">{{icon "play"}}Start watching</a><button class="im-btn im-btn-ink" type="button">{{icon "bell"}}Notify me</button></p>
 			</div>
-		</section>
+		</header>
 
 		<div class="im-collbar">
 			<div class="im-collbar-filters" role="group" aria-label="Which season" data-im-filter="#eps">
@@ -46,7 +40,7 @@ source: src/components/commerce.css · video-card.css
 			{{#each demo.episodes}}
 			<div class="im-episode" data-state="{{state}}" data-facet="{{season}}">
 				<span class="im-epnum">{{n}}</span>
-				<article class="im-vidcard im-vidcard-row im-vidcard-reveal">
+				<article class="im-vidcard im-vidcard-row">
 					<a class="im-vidcard-thumb im-thumb im-thumb-play" href="/collections/series/episode/" tabindex="-1" aria-hidden="true">
 						<img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy">
 						<span class="im-vidcard-time">{{time}}</span>
@@ -58,11 +52,6 @@ source: src/components/commerce.css · video-card.css
 						<p class="im-vidcard-meta"><span>{{when}}</span>{{#match state "=" "done"}}<span>Watched</span>{{/match}}{{#match state "=" "upcoming"}}<span>Not out yet</span>{{/match}}</p>
 						<p class="im-vidcard-text">{{text}}</p>
 					</div></div>
-					<div class="im-vidcard-panel">
-						<p>{{text}}</p>
-						<dl class="im-widget-facts"><dt>Episode</dt><dd>{{n}} of 07</dd><dt>Length</dt><dd>{{time}}</dd><dt>Out</dt><dd>{{when}}</dd></dl>
-						<p class="im-cluster" style="--im-cluster-gap: .375rem"><a class="im-btn im-btn-sm im-btn-primary" href="/collections/series/episode/">{{icon "play"}}Watch</a><a class="im-btn im-btn-sm" href="/collections/series/episode/">Details</a></p>
-					</div>
 				</article>
 			</div>
 			{{/each}}
@@ -112,11 +101,25 @@ source: src/components/commerce.css · video-card.css
 
 			<section class="im-widget" aria-labelledby="rw-other">
 				<h2 class="im-widget-title" id="rw-other">Other series</h2>
-				<ul class="im-widget-list">
-					<li><a href="/collections/series/">Building this design system<small>7 parts · finished</small></a></li>
-					<li><a href="/collections/series/">The road<small>24 parts · running</small></a></li>
-					<li><a href="/collections/series/">A year of consulting<small>5 parts · finished</small></a></li>
-				</ul>
+				<div class="im-deck" data-im-deck>
+					<div class="im-deck-stage">
+						{{#each demo.seriesall}}{{#match @index ">" 0}}<a class="im-deck-card" href="/collections/series/" data-pos="{{#match @index "=" 1}}0{{else}}{{#match @index "=" 2}}1{{else}}2{{/match}}{{/match}}"><img src="{{lookup @root.demo.shots @index}}" alt="" loading="lazy"><b>{{name}}</b><small>{{parts}} parts · {{state}}</small></a>{{/match}}{{/each}}
+					</div>
+					<div class="im-deck-nav">
+						<button class="im-btn im-btn-sm im-btn-icon" type="button" data-deck-prev aria-label="Previous">{{icon "chevron-left"}}</button>
+						<button class="im-btn im-btn-sm im-btn-icon" type="button" data-deck-next aria-label="Next">{{icon "chevron-right"}}</button>
+						<small><span data-deck-n>1</span> / 3</small>
+					</div>
+				</div>
+			</section>
+
+			<section class="im-widget" aria-labelledby="rw-tools">
+				<h2 class="im-widget-title" id="rw-tools">Made with <a href="/collections/uses/">Uses</a></h2>
+				<div class="im-widget-products">
+					<a class="im-widget-product" href="/collections/uses/page/"><span class="im-widget-product-mark">Pr</span><span class="im-widget-product-name">Premiere Pro</span><span class="im-widget-product-note">Edit</span>{{icon "arrow-right"}}</a>
+					<a class="im-widget-product" href="/collections/uses/page/"><span class="im-widget-product-mark">Ae</span><span class="im-widget-product-name">After Effects</span><span class="im-widget-product-note">Titles</span>{{icon "arrow-right"}}</a>
+					{{#each demo.uses}}{{#match group "=" "Camera"}}{{#match @index "<" 5}}<a class="im-widget-product" href="/collections/uses/page/"><img src="{{lookup @root.demo.shots @index}}" alt="" loading="lazy"><span class="im-widget-product-name">{{name}}</span><span class="im-widget-product-note">Shoot</span>{{icon "arrow-right"}}</a>{{/match}}{{/match}}{{/each}}
+				</div>
 			</section>
 
 			<section class="im-widget im-widget-fill" aria-labelledby="rw-sub">

@@ -612,32 +612,16 @@
 	width: 100%;
 }
 
-/* ---- the author, as a stacked card ----
-   Two cards behind, offset, so the widget reads as a person's card pulled
-   from a pile. The avatar is larger and centred; the numbers carry icons. */
+/* ---- the author card ----
+   On the light ground every hover and active state uses; centred; the
+   numbers carry icons. Nothing stacked, nothing raised. */
 .im-widget-person {
-	position: relative;
 	text-align: center;
-	margin-top: 0.75rem;
+	background-color: var(--im-surface);
+	box-shadow: none;
 }
 
-.im-widget-person::before,
-.im-widget-person::after {
-	content: "";
-	position: absolute;
-	inset: 0;
-	z-index: -1;
-	border-radius: inherit;
-	box-shadow: inset 0 0 0 1px var(--im-line);
-	background-color: var(--im-canvas);
-}
-
-.im-widget-person::before { translate: 0 -0.5rem; scale: 0.94; opacity: 0.6; }
-.im-widget-person::after { translate: 0 -0.25rem; scale: 0.97; opacity: 0.8; }
-
-.im-widget-person > .im-avatar,
 .im-widget-person .im-avatar { --im-avatar-size: 4.5rem; margin-inline: auto; }
-
 .im-widget-person .im-widget-author-name { margin-top: 0.75rem; font-size: var(--im-text-base); }
 .im-widget-person .im-widget-author-role { color: var(--im-muted); }
 .im-widget-person .im-widget-sponsor { margin-top: 0.5rem; }

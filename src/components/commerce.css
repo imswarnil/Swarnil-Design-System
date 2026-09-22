@@ -346,41 +346,48 @@
 
 /* ---- episode number ------------------------------------------------------
    A series is watched in order, so the number is navigation. Set like one. */
-.im-epnum {
+/* The number stands BEHIND the card at the card's full height — a numeral
+   the size of the row, faint, cut by the card's own edge. It is read before
+   the title and it is not a label anybody has to look at. */
+.im-episode {
+	position: relative;
 	display: grid;
-	place-items: center;
-	flex: none;
-	min-width: 2.25rem;
-	align-self: flex-start;
-	color: var(--im-faint);
-	font-family: var(--im-font-pixel, var(--im-font-mono));
-	font-size: var(--im-text-h3);
-	font-variant-numeric: tabular-nums;
-	line-height: 1;
+	grid-template-columns: 4.5rem minmax(0, 1fr);
+	align-items: stretch;
+	isolation: isolate;
 }
 
-.im-episode {
-	display: flex;
-	gap: 1rem;
-	align-items: flex-start;
+.im-epnum {
+	position: absolute;
+	inset: 0 auto 0 0;
+	z-index: -1;
+	display: grid;
+	align-content: center;
+	width: 6rem;
+	overflow: hidden;
+	color: var(--im-surface-3);
+	font-family: var(--im-font-pixel, var(--im-font-mono));
+	font-size: clamp(5rem, 4rem + 4vw, 8rem);
+	font-variant-numeric: tabular-nums;
+	line-height: 0.85;
+	letter-spacing: -0.04em;
+	pointer-events: none;
 }
 
 .im-episode > .im-vidcard {
-	flex: 1 1 auto;
+	grid-column: 2;
 	min-width: 0;
+	position: relative;
 }
 
-/* Watched: the number goes quiet and a tick joins it. */
-.im-episode[data-state="done"] .im-epnum {
-	color: var(--im-success);
-}
+.im-episode[data-state="done"] .im-epnum { color: color-mix(in oklab, var(--im-success) 22%, transparent); }
+.im-episode[data-state="current"] .im-epnum { color: color-mix(in oklab, var(--im-accent) 22%, transparent); }
 
 @media (width < 34rem) {
-	.im-epnum {
-		font-size: var(--im-text-h5);
-		min-width: 1.5rem;
-	}
+	.im-episode { grid-template-columns: 2rem minmax(0, 1fr); }
+	.im-epnum { width: 4rem; font-size: 3.5rem; }
 }
+
 
 /* ---- rating ------------------------------------------------------------
    Stars, drawn as ONE element with a clipped overlay rather than five

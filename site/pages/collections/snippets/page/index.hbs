@@ -42,24 +42,15 @@ source: src/components/editor.css
 			<p class="im-lede" style="margin: 0">{{text}}</p>
 		</header>
 
-		<figure class="im-editor im-mock im-mock-mac im-mock-lights" style="--im-editor-max: none; --im-repo-lang: {{langColor}}">
-			<div class="im-mock-bar">
-				<span class="im-mock-dots" aria-hidden="true"><i></i></span>
-				<div class="im-mock-tabs">
-					<button class="im-mock-tab" type="button" aria-current="page">{{file}}</button>
-					<button class="im-mock-tab" type="button" data-dirty>scratch.css</button>
-				</div>
-			</div>
+		<figure class="im-editor im-editor-plain" style="--im-editor-max: none; --im-repo-lang: {{langColor}}">
+			<p class="im-editor-head">{{> "icons/file-code"}}{{file}}<small>{{lang}}</small></p>
 			<div class="im-editor-body">
 				<pre class="im-editor-lines" aria-hidden="true">{{lines}}</pre>
 				<pre><code class="language-{{lang_class}}">{{snippet}}</code></pre>
 			</div>
 			<p class="im-editor-status">
-				<span class="im-editor-lang">{{lang}}</span>
-				<span>UTF-8</span>
-				<span>LF</span>
-				<span class="im-editor-push">Ln 1, Col 1</span>
-				<button class="im-editor-copy" type="button" data-im-copy="{{snippet}}" data-im-copied-label="Copied">{{icon "copy"}}<span data-im-copy-label>Copy</span></button>
+				<span class="im-editor-lang">{{lang}}</span><span>UTF-8</span>
+				<button class="im-editor-copy im-editor-push" type="button" data-im-copy="{{snippet}}" data-im-copied-label="Copied">{{icon "copy"}}<span data-im-copy-label>Copy</span></button>
 			</p>
 		</figure>
 		{{/with}}

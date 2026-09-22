@@ -355,3 +355,8 @@
 .im-editor-plain .im-tok-tag { color: #be123c; }
 .im-editor-plain .im-tok-attr { color: #0369a1; }
 .im-editor-plain .im-tok-punct { color: var(--im-muted); }
+
+.im-editor-plain .im-editor-status { background-color: var(--im-surface); border-top-color: var(--im-line); color: var(--im-muted); }
+.im-editor-plain .im-editor-status > .im-editor-lang { color: var(--im-ink); }
+.im-editor-plain .im-editor-copy { color: var(--im-ink); }
+.im-editor-plain .im-editor-copy:hover { background-color: var(--im-surface-2); }

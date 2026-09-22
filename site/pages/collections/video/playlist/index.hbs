@@ -65,7 +65,7 @@ source: src/components/collection.css · video.css
 				<ol class="im-queue-list">
 					{{#foreach demo.videos}}
 					<li class="im-queue-item"{{#match @number "=" 3}} aria-current="true"{{/match}}{{#match @number "<" 3}} data-state="done"{{/match}}>
-						<span class="im-queue-index" aria-hidden="true">{{#match @number "=" 3}}&#9656;{{else}}{{@number}}{{/match}}</span>
+						<span class="im-queue-index" aria-hidden="true">{{@number}}</span>
 						<span class="im-queue-thumb"><img src="{{thumb}}" alt="" loading="lazy"><span class="im-queue-time">{{time}}</span></span>
 						<h3 class="im-queue-title"><a href="#play">{{title}}</a></h3>
 						<p class="im-queue-by">{{channel}} · {{views}} views</p>

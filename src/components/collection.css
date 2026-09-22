@@ -953,15 +953,7 @@
 /* On the one being watched the number is replaced by a mark, because the
    position is already said in the head ("3 of 12") and a viewer scanning the
    column wants to find the ▸, not read a number twice. */
-.im-queue-item[aria-current="true"] .im-queue-index {
-	width: 1.375rem;
-	height: 1.375rem;
-	border-radius: var(--im-radius-full);
-	background-color: var(--im-accent);
-	color: #fff;
-	display: grid;
-	place-items: center;
-}
+.im-queue-item[aria-current="true"] .im-queue-index { color: var(--im-ink); font-weight: 700; }
 
 .im-queue-thumb {
 	grid-row: 1 / span 2;

@@ -503,10 +503,10 @@
 	padding-top: 0.75rem;
 	color: var(--im-body);
 	font-size: var(--im-text-sm);
-	line-height: 1.6;
-	white-space: pre-line;
+	line-height: 1.55;
 	text-wrap: pretty;
 }
+.im-viddesc-body > p + p { margin-top: 0.625rem; }
 
 /* ---- vertical video: the short ------------------------------------------
    A 9:16 clip on a page that is exactly ONE viewport and never scrolls.

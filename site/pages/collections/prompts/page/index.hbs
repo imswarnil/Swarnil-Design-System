@@ -83,11 +83,6 @@ source: src/components/chat.css
 		<div class="im-sticky-rail">
 			<div class="im-widgets">
 				{{#with demo.author}}{{> "components/author-widget"}}{{/with}}
-				<section class="im-widget" aria-labelledby="pp-copy">
-					<h2 class="im-widget-title" id="pp-copy">Take it</h2>
-					<p class="im-widget-heading">The prompt, on its own, nothing else.</p>
-					<button class="im-btn im-btn-primary im-btn-sm" type="button" data-im-copy="{{demo.prompts.[1].body}}" data-im-copied-label="Copied" style="width: 100%">{{icon "copy"}}<span data-im-copy-label>Copy the prompt</span></button>
-				</section>
 
 				<section class="im-widget" aria-labelledby="pp-facts">
 					<h2 class="im-widget-title" id="pp-facts">About this one</h2>

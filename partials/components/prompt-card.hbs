@@ -1,10 +1,11 @@
-{{!-- Prompt card — an abstraction: the name, what it is for, the first line
-	of the prompt as a teaser. The prompt itself and the conversation are on
-	the single page. --}}
+{{!-- Prompt card — a small chat window. The log carries the line about the
+	prompt; the title sits in the composer as if being typed. The prompt
+	itself is on the single page. --}}
 <article class="im-promptcard{{#if class}} {{class}}{{/if}}">
-	<p><span class="im-kind" data-kind="prompt">{{> "icons/sparkles"}}Prompt</span></p>
+	<div class="im-chat">
+		<p class="im-chat-model">{{> "icons/sparkles"}}{{model}}<span class="im-chat-model-push">{{tokens}}</span></p>
+		<div class="im-chat-log"><p class="im-chat-empty">{{text}}</p></div>
+		<p class="im-chat-input"><span class="im-chat-caret">{{name}}</span><a class="im-btn im-btn-sm im-btn-icon im-btn-primary" href="{{#if url}}{{url}}{{else}}/collections/prompts/page/{{/if}}" aria-label="Open {{name}}">{{> "icons/arrow-up"}}</a></p>
+	</div>
 	<h2 class="im-promptcard-title"><a href="{{#if url}}{{url}}{{else}}/collections/prompts/page/{{/if}}">{{name}}</a></h2>
-	<p class="im-promptcard-text">{{text}}</p>
-	<p class="im-promptcard-teaser">“{{excerpt_line}}…”</p>
-	<p class="im-snipcard-meta"><span>{{model}}</span><span>{{tokens}}</span></p>
 </article>
