@@ -28,11 +28,7 @@ source: src/components/ad.css · commerce.css
 			<p class="im-rating im-rating-lg" style="--im-rating: 4.5"><span class="im-rating-stars" aria-hidden="true"></span><span class="im-rating-value">4.5 out of 5</span><span>after 7 months</span></p>
 		</header>
 
-		<figure class="im-carousel" data-im-carousel style="--im-slides: 1; --im-slides-md: 2">
-			<div class="im-carousel-track">
-				{{#each ../demo.shots}}{{#match @index "<" 4}}<div class="im-carousel-slide"><img src="{{this}}" alt="" loading="lazy" style="aspect-ratio: 4/3; width: 100%; object-fit: cover; border-radius: var(--im-radius-lg)"></div>{{/match}}{{/each}}
-			</div>
-		</figure>
+		<figure class="im-projectcover" style="--im-projectcover-ratio: 16 / 10; max-width: none"><img src="{{../demo.shots.[0]}}" alt="" loading="eager"></figure>
 
 		<div class="im-expstats">
 			<span><strong>{{cost}}</strong>Paid</span>
@@ -74,6 +70,13 @@ source: src/components/ad.css · commerce.css
 					<p class="im-affiliate-meta"><span class="im-affiliate-price">{{cost}}</span><span class="im-badge im-badge-success">Still using it</span></p>
 				</article>
 				{{/match}}{{/match}}{{/each}}
+			</div>
+		</section>
+
+		<section class="im-section" style="--im-section-gap: 1rem">
+			<h2 class="im-caption" data-index="pictures">In use</h2>
+			<div class="im-bento">
+				{{#each demo.shots}}<a class="im-bento-cell im-zoomable" href="{{this}}" data-caption="In use"><img src="{{this}}" alt="" loading="lazy"></a>{{/each}}
 			</div>
 		</section>
 

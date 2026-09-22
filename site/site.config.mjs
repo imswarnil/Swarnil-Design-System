@@ -174,7 +174,6 @@ export const navigation = [
 					{ label: 'Post collection', url: '/collections/post/' },
 					{ label: 'Post card', url: '/collections/post/card/' },
 					{ label: 'Post single', url: '/collections/post/single/' },
-					{ label: 'Post page', url: '/collections/post/article/' },
 				],
 			},
 			{

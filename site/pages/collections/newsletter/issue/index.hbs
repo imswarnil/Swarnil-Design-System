@@ -11,87 +11,64 @@ source: src/components/collection.css · content.css
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
-<div class="im-single im-wrap" data-sidebar="on">
-	<article class="im-stack" style="--im-stack-gap: 1.5rem">
-		{{#with demo.issues.[0]}}
-		<header class="im-stack" style="--im-stack-gap: .75rem">
-			<nav aria-label="Breadcrumb">
-				<ol class="im-breadcrumb im-breadcrumb-chevron">
-					<li><a href="/">{{> "icons/house"}}<span>Home</span></a></li>
-					<li><a href="/collections/newsletter/">{{> "icons/mail"}}<span>Field Notes</span></a></li>
-					<li><span aria-current="page">Issue {{n}}</span></li>
-				</ol>
-			</nav>
-			<p class="im-caption">Issue {{n}} · {{sent}}</p>
-			<h1 class="im-posthero-title" style="font-size: clamp(1.875rem, 1.3rem + 2.2vw, 2.75rem)">{{title}}</h1>
-			<p class="im-posthero-excerpt">{{text}}</p>
-		</header>
-		{{/with}}
+<div class="im-wrap-wide" style="margin-bottom: 2rem">
+	{{#with demo.issues.[0]}}
+	<header class="im-letterhead" style="align-items: start">
+		<div class="im-stack" style="--im-stack-gap: .875rem">
+			<nav aria-label="Breadcrumb"><ol class="im-breadcrumb im-breadcrumb-chevron"><li><a href="/">{{> "icons/house"}}<span>Home</span></a></li><li><a href="/collections/newsletter/">{{> "icons/mail"}}<span>Field Notes</span></a></li><li><span aria-current="page">#{{n}}</span></li></ol></nav>
+			<h1 class="im-collhead-title">{{title}}</h1>
+			<p class="im-lede" style="margin: 0">{{text}}</p>
+			<p class="im-collhead-meta"><span>{{sent}}</span><span>{{words}} words</span><span>{{read}} opened</span></p>
+			<div style="max-width: 26rem">{{> "components/subscribe" id="letter-email" button="Get the next one"}}</div>
+			<p class="im-letterhead-note">{{> "icons/mail"}}This page went out as an email to 4,210 people on {{sent}}.</p>
+		</div>
+		<div class="im-letterhead-shot"><img src="{{lookup ../demo.shots shot}}" alt="" loading="eager"></div>
+	</header>
+	{{/with}}
+</div>
 
-		<nav class="im-seriesbar" aria-label="Issues">
-			<p class="im-seriesbar-label"><strong>Issue 42 of 42</strong><a href="/collections/newsletter/">Field Notes</a></p>
-			<div class="im-seriesbar-nav">
-				<a class="im-btn im-btn-sm" href="/collections/newsletter/issue/">{{icon "arrow-left"}}Issue 041</a>
-				<a class="im-btn im-btn-sm" href="/collections/newsletter/" aria-disabled="true">Latest</a>
-			</div>
-		</nav>
-
-		<section class="im-content im-content-flush im-content-lede" data-im-zoom>
-			<p>The site ran on a theme somebody else wrote, under a licence that forbids redistribution and modification for resale. Everything built on it was therefore unsellable — including the thing I was building.</p>
+<div class="im-single im-wrap-wide" data-sidebar="on">
+	<article class="im-stack" style="--im-stack-gap: 1.75rem">
+		<section class="im-content im-content-flush" data-toc-skip style="text-align: center">
+			<details class="im-toc-inline" style="display: block; max-width: 28rem; margin-inline: auto; text-align: left">
+				<summary>In this letter <span>Contents</span></summary>
+				<div class="im-toc" data-toc="#letter"></div>
+			</details>
+		</section>
+		<section class="im-content im-content-flush im-content-lede" id="letter">
+			<p>Hello from Amsterdam. This is the one where I deleted the theme this site ran on, and what that cost — in hours, in euros and in one licence clause I should have read first.</p>
+			<h2>What I built</h2>
+			<p>A design system I own every line of, and a theme on top of it. Nine months. The two-line audit that proves nothing came with me from the old theme returns empty, which is the whole point.</p>
 			<h2>What it cost</h2>
-			<p>Six weeks, and a rule I now apply to everything: if I cannot answer <em>where did this file come from</em>, it does not ship.</p>
-			<div class="kg-card kg-callout-card kg-callout-card-yellow"><div class="kg-callout-emoji">📮</div><div class="kg-callout-text">This is an ordinary post with an internal tag. It has a URL, it is in the RSS feed, and a search engine can read it — which a newsletter archive locked inside a mail provider is not.</div></div>
-			<h2>What is next</h2>
-			<p>Collections: the page-shapes a site is actually made of, each one a collection, a card and a page.</p>
+			<p>About four hundred hours, most of them evenings. Two rewrites. One argument with myself about a second skin, which I lost, and then won by deleting it.</p>
+			<h2>What I got wrong</h2>
+			<p>I built for pages that never existed. Everything I regret is a component no real page needed. Pick twenty, write them properly, add the twenty-first when a page asks for it.</p>
+			<h2>Three links</h2>
+			<ul><li><a href="/collections/project/page/">The project, as a case study.</a></li><li><a href="/collections/snippets/page/">The one snippet from this that I use daily.</a></li><li><a href="/collections/travel/trip/">The trip that made the film.</a></li></ul>
+			<p>Reply to this email if you want; I read all of them.</p>
 		</section>
-
-		<section class="im-postcta">
-			<h2 class="im-postcta-title">Get the next one</h2>
-			<p class="im-postcta-text">One letter when something lands. Nothing else, ever.</p>
-			{{> "components/subscribe" id="issue-email" button="Subscribe"}}
-		</section>
+		{{> "components/comments" thread=demo.comments count="18" lean=true limit="1"}}
 	</article>
-
 	<aside>
 		<div class="im-sticky-rail">
 			<div class="im-widgets">
 				{{#with demo.author}}{{> "components/author-widget"}}{{/with}}
-				<section class="im-widget" aria-labelledby="i-about">
-					<h2 class="im-widget-title" id="i-about">This issue</h2>
-					<dl class="im-widget-facts">
-						<dt>Number</dt><dd>042</dd>
-						<dt>Sent</dt><dd>18 Sep 2026</dd>
-						<dt>Words</dt><dd>1,240</dd>
-						<dt>Opened</dt><dd>62%</dd>
-					</dl>
-				</section>
-
-				<section class="im-widget" aria-labelledby="i-recent">
-					<h2 class="im-widget-title" id="i-recent">Recent issues <a href="/collections/newsletter/">All</a></h2>
-					<ul class="im-widget-list im-widget-list-ranked">
-						{{#each demo.issues}}<li><a href="/collections/newsletter/issue/">{{title}}<small>{{sent}}</small></a></li>{{/each}}
+				<section class="im-widget" aria-labelledby="l-prev">
+					<h2 class="im-widget-title" id="l-prev">Earlier letters <a href="/collections/newsletter/">All</a></h2>
+					<ul class="im-widget-list im-widget-list-thumbs">
+						{{#each demo.issues}}{{#match @index ">" 0}}<li><a href="/collections/newsletter/issue/">{{#if shot}}<img src="{{lookup ../demo.shots shot}}" alt="" loading="lazy">{{else}}<img src="{{lookup ../demo.shots 2}}" alt="" loading="lazy">{{/if}}{{title}}<small>#{{n}} · {{sent}}</small></a></li>{{/match}}{{/each}}
 					</ul>
 				</section>
-
-				<section class="im-widget im-widget-fill" aria-labelledby="i-join">
-					<h2 class="im-widget-title" id="i-join">Join</h2>
-					<p class="im-widget-heading">4,100 readers.</p>
-					{{> "components/subscribe" id="issue-email-2" button="Join"}}
+				<section class="im-widget im-widget-fill" aria-labelledby="l-sub">
+					<h2 class="im-widget-title" id="l-sub">Get the next one</h2>
+					<p class="im-widget-heading">Free. One letter when something lands.</p>
+					{{> "components/subscribe" id="letter-email-2" button="Join"}}
 				</section>
 			</div>
 		</div>
 	</aside>
 </div>
 
-<section class="im-section im-wrap">
-	<div class="im-prose">
-		<h2>It is the post layout</h2>
-		<p>An issue is a post: the <a href="/collections/post/single/">single layout</a> with its sidebar on, the same <code>im-content</code> canvas, the same rail. What it adds is the <strong>number and date above the title</strong> — an issue is navigated by number — and a <a href="/collections/post/single/#the-series-bar">series bar</a> pointing at the one before it, because a letter is a series by definition.</p>
-		<p>It ends with the signup, for whoever arrived from a forwarded link and has not subscribed. That is most of the people who will ever read it.</p>
-		<ul>
-			<li><strong>Do not paywall the archive.</strong> It is the argument for subscribing.</li>
-			<li><strong>Keep the number in the title tag</strong> as well as on the page — "Field Notes 042: …" is how somebody finds it again.</li>
-			<li><strong>One call to action.</strong> The rail's Join and the footer's signup are the same ask twice; on a real theme, pick one.</li>
-		</ul>
-	</div>
-</section>
+<section class="im-section im-wrap"><div class="im-prose">
+<p>A letter's head is the same two columns as the collection's: the title, what it is, the numbers and a subscribe box on the left; the letter's picture on the right; and a line saying it went out as an email, because it did. The contents sit centred and collapsed above the body; the rail carries the author, earlier letters and the box again.</p>
+</div></section>

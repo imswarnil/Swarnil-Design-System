@@ -385,3 +385,42 @@
 		animation-duration: 1ms;
 	}
 }
+
+/* ---- bento --------------------------------------------------------------
+   A mosaic, not a slider: every picture is on the page at once, the first
+   one large, the rest filling in. Six cells is the sweet spot; the pattern
+   repeats after that.
+
+     <div class="im-bento"> <a class="im-bento-cell im-zoomable" href="…"><img …></a> … </div> */
+.im-bento {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	grid-auto-rows: 9rem;
+	grid-auto-flow: dense;
+	gap: 0.625rem;
+}
+
+.im-bento-cell {
+	display: block;
+	overflow: hidden;
+	border-radius: var(--im-radius-lg);
+	background-color: var(--im-surface-2);
+}
+
+.im-bento-cell > img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: scale var(--im-duration-slow) var(--im-ease-glide);
+}
+
+.im-bento-cell:hover > img { scale: 1.04; }
+
+.im-bento-cell:nth-child(6n + 1) { grid-column: span 2; grid-row: span 2; }
+.im-bento-cell:nth-child(6n + 4) { grid-row: span 2; }
+.im-bento-cell:nth-child(6n + 6) { grid-column: span 2; }
+
+@media (width < 40rem) {
+	.im-bento { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 7rem; }
+	.im-bento-cell:nth-child(6n + 6) { grid-column: span 1; }
+}

@@ -76,7 +76,7 @@ source: src/components/collection.css · post-card.css · pagination.css
 			<section class="im-widget" aria-labelledby="pw-top">
 				<h2 class="im-widget-title" id="pw-top">Most read</h2>
 				<ol class="im-widget-list im-widget-list-ranked">
-					{{#foreach demo.six}}{{#match @number "<" 5}}<li><a href="/collections/post/article/">{{title}}<small>{{reading_time}}</small></a></li>{{/match}}{{/foreach}}
+					{{#foreach demo.six}}{{#match @number "<" 5}}<li><a href="/collections/post/single/">{{title}}<small>{{reading_time}}</small></a></li>{{/match}}{{/foreach}}
 				</ol>
 			</section>
 

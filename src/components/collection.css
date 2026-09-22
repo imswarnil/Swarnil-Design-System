@@ -1115,3 +1115,115 @@
 	backdrop-filter: blur(6px);
 	color: #fff;
 }
+
+/* ---- the letter card ---------------------------------------------------
+   A letter has a picture now, so it is a card with a 16:10 still on top, the
+   number and the date where a post card puts its kicker, and how many read
+   it under. The date tile survives for a letter with no picture. */
+.im-letter {
+	--im-hover-bg: var(--im-surface);
+
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 0.625rem;
+	padding: 0.75rem 0.75rem 1rem;
+	border-radius: var(--im-radius-xl);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	transition: background-color var(--im-duration-fast) var(--im-ease-out);
+}
+
+.im-letter:is(:hover, :focus-within) { background-color: var(--im-hover-bg); }
+
+.im-letter-media {
+	position: relative;
+	aspect-ratio: 16 / 10;
+	overflow: hidden;
+	border-radius: var(--im-radius-lg);
+	background-color: var(--im-surface-2);
+}
+
+.im-letter-media > img { width: 100%; height: 100%; object-fit: cover; }
+
+.im-letter-media > .im-letter-n {
+	position: absolute;
+	top: 0.625rem;
+	left: 0.625rem;
+	padding: 0.125rem 0.5rem;
+	border-radius: var(--im-radius-full);
+	background-color: rgb(20 20 20 / 70%);
+	-webkit-backdrop-filter: blur(4px);
+	backdrop-filter: blur(4px);
+	color: #fff;
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+}
+
+.im-letter-body { display: grid; gap: 0.375rem; padding: 0 0.375rem; }
+.im-letter-date { color: var(--im-muted); font-family: var(--im-font-mono); font-size: var(--im-text-xs); }
+.im-letter-title { color: var(--im-ink); font-size: var(--im-text-h5); font-weight: 600; line-height: var(--im-leading-h5); letter-spacing: var(--im-tracking-tight); }
+.im-letter-title > a { color: inherit; text-decoration: none; }
+.im-letter-title > a::after { content: ""; position: absolute; inset: 0; }
+.im-letter:is(:hover, :focus-within) .im-letter-title > a { color: var(--im-accent); }
+.im-letter-meta { display: flex; flex-wrap: wrap; gap: 0.25rem 0.75rem; color: var(--im-muted); font-size: var(--im-text-xs); }
+.im-letters { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(18rem, 100%), 1fr)); gap: var(--im-grid-gap); }
+
+/* ---- the letter's head: two columns, the words and a mark --------------
+   The words on the left — what it is, who it is from, how often — and on
+   the right a drawn mark (an envelope of rules, in the collection's colour)
+   rather than a photograph: a newsletter is not a place. The subscribe box
+   sits in the words, because that is what the head is for. */
+.im-letterhead {
+	display: grid;
+	grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+	gap: clamp(1.5rem, 1rem + 2.5vw, 3.5rem);
+	align-items: center;
+	padding: clamp(1.5rem, 1rem + 2vw, 3rem);
+	border-radius: var(--im-radius-2xl);
+	background-color: var(--im-surface);
+}
+
+.im-letterhead-mark { width: 100%; max-width: 22rem; margin-inline: auto; color: var(--im-c-newsletter); }
+.im-letterhead-mark svg { width: 100%; height: auto; display: block; }
+
+@media (width < 56rem) {
+	.im-letterhead { grid-template-columns: minmax(0, 1fr); }
+	.im-letterhead-mark { max-width: 14rem; }
+}
+
+/* On a single letter, the same head with the picture in the right column. */
+.im-letterhead-shot { aspect-ratio: 16 / 10; overflow: hidden; border-radius: var(--im-radius-xl); }
+.im-letterhead-shot > img { width: 100%; height: 100%; object-fit: cover; }
+.im-letterhead-note { display: inline-flex; align-items: center; gap: 0.375rem; color: var(--im-muted); font-size: var(--im-text-xs); }
+
+/* ---- archive rows with a picture, and a grid of them ------------------- */
+.im-archive-row > .im-archive-shot {
+	width: 4rem;
+	aspect-ratio: 16 / 10;
+	border-radius: var(--im-radius-sm);
+	overflow: hidden;
+	background-color: var(--im-surface-2);
+}
+.im-archive-row > .im-archive-shot > img { width: 100%; height: 100%; object-fit: cover; }
+.im-archive-row { grid-template-columns: 4rem auto minmax(0, 1fr) auto; }
+
+[data-view="grid"].im-archive .im-archive-year > .im-archive-row {
+	display: flex;
+	flex-direction: column;
+	gap: 0.375rem;
+	padding: 0.5rem;
+	border-radius: var(--im-radius-lg);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+}
+[data-view="grid"].im-archive .im-archive-year { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(13rem, 100%), 1fr)); gap: var(--im-grid-gap); }
+[data-view="grid"].im-archive .im-archive-year > .im-archive-head { grid-column: 1 / -1; }
+[data-view="grid"].im-archive .im-archive-row > .im-archive-shot { width: 100%; }
+[data-view="grid"].im-archive .im-archive-row > .im-kind { justify-self: start; }
+
+[data-view="plain"].im-archive .im-archive-row > :is(.im-archive-shot, .im-kind) { display: none; }
+[data-view="plain"].im-archive .im-archive-row { grid-template-columns: auto minmax(0, 1fr); padding-block: 0.25rem; }
+
+@media (width < 34rem) {
+	.im-archive-row { grid-template-columns: 3.25rem minmax(0, 1fr) auto; }
+	.im-archive-row > .im-archive-date { grid-column: 2 / -1; }
+}

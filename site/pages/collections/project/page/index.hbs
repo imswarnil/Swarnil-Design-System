@@ -190,7 +190,7 @@ source: src/components/repo-card.css · content.css · carousel.css · comments.
 				<tr><td>The head</td><td><code>im-projecthero</code> + <a href="/navigation/breadcrumb/">breadcrumb</a>, <code>im-topic</code> chips, <code>im-projecthero-actions</code>. <strong>Three buttons at most</strong>: a row of nine is a row nobody presses.</td></tr>
 				<tr><td>Screenshots</td><td>The <a href="/components/carousel/">carousel</a> wrapped in <code>data-im-lightbox</code>, slides as <code>im-zoomable</code>. Every shot opens on the plain sheet at full size — a case study is the one place a reader genuinely wants to look closely.</td></tr>
 				<tr><td>The facts</td><td><code>im-projectstats</code> — role, year, stack, stars, licence. Cells sharing a hairline; any of them may be a link.</td></tr>
-				<tr><td>The case</td><td><code>im-content</code>, the same canvas a <a href="/collections/post/article/">post</a> uses, with <code>im-shot</code> for a wide screenshot and <code>im-case-quote</code> for the one line somebody said.</td></tr>
+				<tr><td>The case</td><td><code>im-content</code>, the same canvas a <a href="/collections/post/single/">post</a> uses, with <code>im-shot</code> for a wide screenshot and <code>im-case-quote</code> for the one line somebody said.</td></tr>
 				<tr><td>The log</td><td><code>im-timeline im-timeline-numbered im-log</code> — the <a href="/components/timeline/">timeline</a>, tuned. A log is a list of dated things in order, which is exactly what a timeline is; a second component that drew the same line would be a second component to keep in step.</td></tr>
 				<tr><td>Comments</td><td><code>im-comments</code>, the same thread as a post's.</td></tr>
 			</tbody>
@@ -215,7 +215,7 @@ source: src/components/repo-card.css · content.css · carousel.css · comments.
 		<p>The writing <em>about</em> a project is a different thing again, and it belongs in the <a href="/collections/post/">post collection</a> as ordinary posts — the <a href="/collections/project/">project collection</a> prints the latest few of them under the grid. A log entry is "this changed"; a post is "here is why".</p>
 
 		<h3>The rail keeps one distance</h3>
-		<p>The widgets are an <code>im-widgets</code> column in an <code>im-sticky-rail</code>, which is the same pair the <a href="/collections/post/article/#both-rails-keep-the-same-distance">post page</a> uses. <strong>One</strong> variable does it: <code>--im-rail-inset</code> is the distance under the top bar <em>and</em> the gap the rail keeps above the bottom of the window, and <code>im-widgets</code> has one gap between every block. Nothing on a project page is spaced by hand.</p>
+		<p>The widgets are an <code>im-widgets</code> column in an <code>im-sticky-rail</code>, which is the same pair the <a href="/collections/post/single/">post page</a> uses. <strong>One</strong> variable does it: <code>--im-rail-inset</code> is the distance under the top bar <em>and</em> the gap the rail keeps above the bottom of the window, and <code>im-widgets</code> has one gap between every block. Nothing on a project page is spaced by hand.</p>
 
 		<h2>Details that matter</h2>
 		<ul>

@@ -143,10 +143,10 @@ export async function build({ quiet = false } = {}) {
 			{ name: 'Ines Duarte', when: '2 weeks ago', likes: 1, text: 'The SITA bus is the answer and nobody wants to hear it.' },
 		],
 		series: [
-			{ title: 'The road itself', url: '/collections/post/article/', state: 'done', part: '01' },
-			{ title: 'Where to stop', url: '/collections/post/article/', state: 'done', part: '02' },
+			{ title: 'The road itself', url: '/collections/post/single/', state: 'done', part: '01' },
+			{ title: 'Where to stop', url: '/collections/post/single/', state: 'done', part: '02' },
 			{ title: 'What it costs', state: 'current', part: '03' },
-			{ title: 'The way back', url: '/collections/post/article/', state: 'upcoming', part: '04' },
+			{ title: 'The way back', url: '/collections/post/single/', state: 'upcoming', part: '04' },
 		],
 		products: [
 			{ name: 'Fujifilm X100VI', note: 'Every picture on this site', url: '#' },
@@ -201,9 +201,9 @@ export async function build({ quiet = false } = {}) {
 		],
 		issues: [
 			{ n: '042', day: '18', month: 'Sep', year: '2026', sent: '18 Sep 2026', title: 'The one where I deleted the theme', text: 'Why the site moved off a paid theme, what it cost, and the two-line audit that proves nothing came with it.', read: '62%', words: '1,240', shot: 1 },
-			{ n: '041', day: '11', month: 'Sep', year: '2026', sent: '11 Sep 2026', title: 'Forty components and one hover', text: 'Three competing interactions removed in an afternoon, and nothing was lost.', read: '58%', words: '980' },
+			{ n: '041', day: '11', month: 'Sep', year: '2026', sent: '11 Sep 2026', title: 'Forty components and one hover', text: 'Three competing interactions removed in an afternoon, and nothing was lost.', read: '58%', words: '980', shot: 3 },
 			{ n: '040', day: '4', kind: 'beach', kindlabel: 'Beach', month: 'Sep', year: '2026', sent: '4 Sep 2026', title: 'What a design system is actually for', text: 'Not consistency. Not speed. The ability to change your mind later.', read: '64%', words: '1,510', shot: 2 },
-			{ n: '039', day: '28', month: 'Aug', year: '2026', sent: '28 Aug 2026', title: 'Every number from the move', text: 'Rent, tax, the deposit nobody mentions, and the month it took to get a bank account.', read: '71%', words: '2,300' },
+			{ n: '039', day: '28', month: 'Aug', year: '2026', sent: '28 Aug 2026', title: 'Every number from the move', text: 'Rent, tax, the deposit nobody mentions, and the month it took to get a bank account.', read: '71%', words: '2,300', shot: 4 },
 		],
 		shop: [
 			{ name: 'Im Design System', rating: '4.9', reviews: '41', text: 'Tokens, a page shell, forty components and ready-made sections for Ghost themes.', cost: '$149', was: '$199', kind: 'Design system', badge: 'New' },
@@ -312,7 +312,7 @@ export async function build({ quiet = false } = {}) {
 			{ month: 'September 2026', items: [
 				{ kind: 'release', mark: 'rocket', label: 'Shipped a release', when: '21 Sep', title: 'Im Design System v0.6 — one look, nine collections', text: 'The style scope is gone. Two looks was one look too many: everything is one component styled once now, and the page is quieter for it.', url: '/collections/project/page/', links: ['Changelog', 'Repo'] },
 				{ kind: 'video', mark: 'video', label: 'Published a video', when: '18 Sep', title: 'Driving the Amalfi Coast — the whole road in 8 minutes', text: 'Four days of footage, eight minutes of road, one lens.', url: '/collections/video/page/', image: 1 },
-				{ kind: 'post', mark: 'pencil', label: 'Wrote a post', when: '14 Sep', title: 'Four hours on a pseudo-element', text: 'A registered custom property read by a ::before must inherit. It does not, by default. Nothing about that is in any tutorial.', url: '/collections/post/article/' },
+				{ kind: 'post', mark: 'pencil', label: 'Wrote a post', when: '14 Sep', title: 'Four hours on a pseudo-element', text: 'A registered custom property read by a ::before must inherit. It does not, by default. Nothing about that is in any tutorial.', url: '/collections/post/single/' },
 				{ kind: 'product', mark: 'package', label: 'Bought something', when: '11 Sep', title: 'Fujifilm X100VI', text: 'Replaced the body I have carried for three years. Every picture on this site since is from it.', url: '/collections/uses/page/' },
 			] },
 			{ month: 'August 2026', items: [

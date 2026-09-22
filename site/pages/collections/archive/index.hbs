@@ -33,6 +33,7 @@ source: src/components/collection.css
 			</div>
 			<div class="im-btn-group im-viewswitch" role="group" aria-label="How to draw the list" data-im-view="#archive">
 				<button class="im-btn im-btn-sm" type="button" value="list" aria-pressed="true">{{icon "rows-3"}}List</button>
+				<button class="im-btn im-btn-sm" type="button" value="grid" aria-pressed="false">{{icon "grid-2x2"}}Grid</button>
 				<button class="im-btn im-btn-sm" type="button" value="plain" aria-pressed="false">{{icon "list"}}Plain</button>
 			</div>
 		</div>
@@ -40,16 +41,16 @@ source: src/components/collection.css
 		<div class="im-archive" id="archive" data-view="list">
 			<div class="im-archive-year">
 				<p class="im-archive-head"><strong>2026</strong><span>this year</span></p>
-				{{#each demo.mixed}}<a class="im-archive-row" href="/collections/post/article/" data-facet="post"><time class="im-archive-date">{{date published_at format="D MMM"}}</time><span class="im-archive-title">{{title}}</span><span class="im-kind" data-kind="post">{{icon "file-text"}}Post</span></a>{{/each}}
-				{{#each demo.videos}}{{#match @index "<" 3}}<a class="im-archive-row" href="/collections/video/page/" data-facet="video"><time class="im-archive-date">{{when}}</time><span class="im-archive-title">{{title}}</span><span class="im-kind" data-kind="video">{{icon "video"}}Film</span></a>{{/match}}{{/each}}
-				{{#each demo.projects}}{{#match @index "<" 2}}<a class="im-archive-row" href="/collections/project/page/" data-facet="project"><time class="im-archive-date">{{since}}</time><span class="im-archive-title">{{name}}</span><span class="im-kind" data-kind="project">{{icon "folder"}}Project</span></a>{{/match}}{{/each}}
-				{{#each demo.issues}}<a class="im-archive-row" href="/collections/newsletter/issue/" data-facet="issue"><time class="im-archive-date">{{day}} {{month}}</time><span class="im-archive-title">{{title}}</span><span class="im-kind" data-kind="issue">{{icon "mail"}}Letter</span></a>{{/each}}
-				{{#each demo.snippets}}{{#match @index "<" 3}}<a class="im-archive-row" href="/collections/snippets/page/" data-facet="snippet"><time class="im-archive-date">Sep</time><span class="im-archive-title">{{name}}</span><span class="im-kind" data-kind="snippet">{{icon "code"}}Snippet</span></a>{{/match}}{{/each}}
+				{{#each demo.mixed}}<a class="im-archive-row" href="/collections/post/single/" data-facet="post"><span class="im-archive-shot"><img src="{{lookup @root.demo.shots @index}}" alt="" loading="lazy"></span><time class="im-archive-date">{{date published_at format="D MMM"}}</time><span class="im-archive-title">{{title}}</span><span class="im-kind" data-kind="post">{{icon "file-text"}}Post</span></a>{{/each}}
+				{{#each demo.videos}}{{#match @index "<" 3}}<a class="im-archive-row" href="/collections/video/page/" data-facet="video"><span class="im-archive-shot"><img src="{{lookup @root.demo.shots @index}}" alt="" loading="lazy"></span><time class="im-archive-date">{{when}}</time><span class="im-archive-title">{{title}}</span><span class="im-kind" data-kind="video">{{icon "video"}}Film</span></a>{{/match}}{{/each}}
+				{{#each demo.projects}}{{#match @index "<" 2}}<a class="im-archive-row" href="/collections/project/page/" data-facet="project"><span class="im-archive-shot"><img src="{{lookup @root.demo.shots @index}}" alt="" loading="lazy"></span><time class="im-archive-date">{{since}}</time><span class="im-archive-title">{{name}}</span><span class="im-kind" data-kind="project">{{icon "folder"}}Project</span></a>{{/match}}{{/each}}
+				{{#each demo.issues}}<a class="im-archive-row" href="/collections/newsletter/issue/" data-facet="issue"><span class="im-archive-shot"><img src="{{lookup @root.demo.shots @index}}" alt="" loading="lazy"></span><time class="im-archive-date">{{day}} {{month}}</time><span class="im-archive-title">{{title}}</span><span class="im-kind" data-kind="issue">{{icon "mail"}}Letter</span></a>{{/each}}
+				{{#each demo.snippets}}{{#match @index "<" 3}}<a class="im-archive-row" href="/collections/snippets/page/" data-facet="snippet"><span class="im-archive-shot"><img src="{{lookup @root.demo.shots @index}}" alt="" loading="lazy"></span><time class="im-archive-date">Sep</time><span class="im-archive-title">{{name}}</span><span class="im-kind" data-kind="snippet">{{icon "code"}}Snippet</span></a>{{/match}}{{/each}}
 			</div>
 			<div class="im-archive-year">
 				<p class="im-archive-head"><strong>2025</strong><span>4 things</span></p>
-				{{#each demo.trips}}{{#match @index "<" 2}}<a class="im-archive-row" href="/collections/travel/trip/" data-facet="trip"><time class="im-archive-date">{{when}}</time><span class="im-archive-title">{{title}}</span><span class="im-kind" data-kind="trip">{{icon "map-pin"}}Trip</span></a>{{/match}}{{/each}}
-				{{#each demo.videos}}{{#match @index ">" 5}}<a class="im-archive-row" href="/collections/video/page/" data-facet="video"><time class="im-archive-date">{{when}}</time><span class="im-archive-title">{{title}}</span><span class="im-kind" data-kind="video">{{icon "video"}}Film</span></a>{{/match}}{{/each}}
+				{{#each demo.trips}}{{#match @index "<" 2}}<a class="im-archive-row" href="/collections/travel/trip/" data-facet="trip"><span class="im-archive-shot"><img src="{{lookup @root.demo.shots @index}}" alt="" loading="lazy"></span><time class="im-archive-date">{{when}}</time><span class="im-archive-title">{{title}}</span><span class="im-kind" data-kind="trip">{{icon "map-pin"}}Trip</span></a>{{/match}}{{/each}}
+				{{#each demo.videos}}{{#match @index ">" 5}}<a class="im-archive-row" href="/collections/video/page/" data-facet="video"><span class="im-archive-shot"><img src="{{lookup @root.demo.shots @index}}" alt="" loading="lazy"></span><time class="im-archive-date">{{when}}</time><span class="im-archive-title">{{title}}</span><span class="im-kind" data-kind="video">{{icon "video"}}Film</span></a>{{/match}}{{/each}}
 			</div>
 			<p class="im-feed-empty" data-facet-empty hidden>Nothing of that kind.</p>
 		</div>
