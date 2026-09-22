@@ -101,6 +101,7 @@ export async function build({ quiet = false } = {}) {
 		career: { mark: 'briefcase', color: '#a855f7', text: 'Work, and what it is actually worth.' },
 		travel: { mark: 'map-pin', color: '#f59e0b', text: 'Roads, itineraries and what each day cost.' },
 	};
+
 	const topics = fixtures.tags.map((t) => ({
 		...t,
 		...(TOPIC_FACE[t.slug] || { mark: 'tag', color: '#8b8b8b', text: `Everything filed under ${t.name}.` }),
@@ -258,12 +259,23 @@ export async function build({ quiet = false } = {}) {
 			{ day: '6', legs: ['Ravello', 'Naples'], title: 'The way back', text: 'West to east this time, on the cliff side, which is a completely different drive.', sleep: '\u2014', cost: '\u20ac88', km: '68', hours: '2h 30' },
 		],
 		experience: [
-			{ title: 'Diving the Blue Hole', where: 'Dahab, Egypt', when: 'March 2026', figure: '30', unit: 'm', text: 'Eight minutes at thirty metres in water so clear the bottom looks close enough to touch, and is not. The most frightened I have been while perfectly safe.', kind: 'Diving' },
-			{ title: 'First jump', where: 'Skydive Hungary', when: 'August 2025', figure: '4,000', unit: 'm', text: 'Forty seconds of freefall and a very long walk back to the hangar deciding whether to do it again. I did.', kind: 'Jumping' },
-			{ title: 'Budapest marathon, first one', where: 'Budapest', when: 'October 2024', figure: '42.2', unit: 'km', text: 'Four hours eleven. The wall is real, it is at thirty-two kilometres, and it is not a metaphor.', kind: 'Running' },
-			{ title: 'Sailing the Adriatic, no engine', where: 'Split → Hvar', when: 'June 2024', figure: '6', unit: 'days', text: 'Learned to read wind on water the hard way, which is the only way. Twice we went backwards.', kind: 'Sailing' },
-			{ title: 'A night on Gerlach', where: 'High Tatras, Slovakia', when: 'September 2023', figure: '2,655', unit: 'm', text: 'Slept above the cloud layer. Woke at five to find the whole of Slovakia underneath it.', kind: 'Climbing' },
-			{ title: 'Ice swimming, Lake Balaton', where: 'Balatonfüred', when: 'January 2023', figure: '2', unit: '°C', text: 'Ninety seconds. The cold is not the hard part; the breathing is.', kind: 'Swimming' },
+			{ title: 'Diving the Blue Hole', where: 'Dahab, Egypt', when: 'March 2026', figure: '30', unit: 'm', text: 'Eight minutes at thirty metres in water so clear the bottom looks close enough to touch, and is not. The most frightened I have been while perfectly safe.', kind: 'Diving', badge: 'First time', group: 'Under water', shot: 0 },
+			{ title: 'Freediving to 18 metres', where: 'Gozo, Malta', when: 'May 2026', figure: '18', unit: 'm', text: 'One breath, ninety seconds, and the part on the way down where your body stops arguing about it.', kind: 'Diving', badge: 'Personal best', group: 'Under water', shot: 1 },
+			{ title: 'First jump', where: 'Skydive Hungary', when: 'August 2025', figure: '4,000', unit: 'm', text: 'Forty seconds of freefall and a very long walk back to the hangar deciding whether to do it again. I did, three weeks later.', kind: 'Jumping', badge: 'First time', group: 'Off things', shot: 2 },
+			{ title: 'Paragliding off the Dolomites', where: 'Alta Badia, Italy', when: 'July 2026', figure: '2,200', unit: 'm', text: 'Twenty-five minutes of doing nothing at all while the whole valley moved underneath.', kind: 'Flying', group: 'Off things', shot: 3 },
+			{ title: 'A marathon under four hours', where: 'Rotterdam', when: 'April 2026', figure: '3:51', unit: '', text: 'Eleven months of getting up at six, and I would not describe any of it as enjoyable until the last kilometre.', kind: 'Running', badge: 'Personal best', group: 'On foot', shot: 4 },
+			{ title: 'The High Tatras, ridge to ridge', where: 'Slovakia', when: 'September 2023', figure: '62', unit: 'km', text: 'Four days, one night above the cloud layer, and more weather than the forecast promised.', kind: 'Walking', group: 'On foot', shot: 5 },
+			{ title: 'Ice swim, first time', where: 'Amsterdam', when: 'January 2026', figure: '2', unit: '\u00b0C', text: 'Ninety seconds, which sounds like nothing and is not. The hour afterwards is the reason anybody does it twice.', kind: 'Swimming', badge: 'First time', group: 'Cold', shot: 0 },
+			{ title: 'A night above the cloud layer', where: 'Vatnaj\u00f6kull, Iceland', when: 'February 2025', figure: '-14', unit: '\u00b0C', text: 'Slept badly, saw the lights at four in the morning, and would trade a week of good nights for it.', kind: 'Camping', group: 'Cold', shot: 1 },
+		],
+		// Grouped rather than filtered in the template: a nested {{#each}} inside
+		// a partial BLOCK cannot reliably reach the outer item with `../`, and
+		// the fix belongs in the data, not in a path expression nobody can read.
+		expgroups: [
+			{ name: 'Under water', mark: 'volume-2', text: 'Where the fear is manageable and the physics is not.', tag: 'Under water' },
+			{ name: 'Off things', mark: 'arrow-up', text: 'Two, and the second one was easier than anybody warned me.', tag: 'Off things' },
+			{ name: 'On foot', mark: 'route', text: 'The slow ones. These take months rather than minutes.', tag: 'On foot' },
+			{ name: 'Cold', mark: 'moon', text: 'The cheapest category. All it costs is being uncomfortable.', tag: 'Cold' },
 		],
 		wishlist: [
 			{ title: 'Dive the Blue Hole', note: 'Dahab, Egypt \u2014 the one everybody warns you about', when: 'March 2026', state: 'done', group: 'Water', shot: 0, text: 'Eight minutes at thirty metres in water so clear the bottom looks close enough to touch, and is not. The most frightened I have been while perfectly safe.' },
@@ -315,6 +327,13 @@ export async function build({ quiet = false } = {}) {
 			{ year: '2023', posts: 11, share: '32%' },
 		],
 	};
+
+	// Each group carries its own list. Grouping in the template means a nested
+	// {{#each}} inside a partial BLOCK, where `../` cannot reliably reach the
+	// outer item — the fix belongs in the data, not in a path nobody can read.
+	for (const g of demo.expgroups) g.items = demo.experience.filter((e) => e.group === g.tag);
+	for (const g of demo.usegroups) g.items = demo.uses.filter((u) => u.group === g.tag);
+
 
 	/* -- docs helpers -- */
 	const examples = [];

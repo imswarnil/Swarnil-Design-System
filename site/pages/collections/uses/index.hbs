@@ -42,9 +42,9 @@ source: src/components/ad.css · commerce.css
 					<p class="im-usegroup-text">{{text}}</p>
 				</header>
 				<div class="im-affiliates">
-					{{#each ../demo.uses}}{{#match group "=" ../tag}}
+					{{#each items}}
 					<article class="im-affiliate">
-						<span class="im-affiliate-media im-thumb"><img src="{{lookup ../../demo.shots @index}}" alt="" loading="lazy"></span>
+						<span class="im-affiliate-media im-thumb"><img src="{{lookup @root.demo.shots @index}}" alt="" loading="lazy"></span>
 						<a class="im-affiliate-name" href="/collections/uses/page/" rel="sponsored noopener">{{name}}</a>
 						<p class="im-affiliate-by">{{by}}</p>
 						<p class="im-affiliate-text">{{text}}</p>
@@ -59,7 +59,7 @@ source: src/components/ad.css · commerce.css
 							<a class="im-card-cta" href="/collections/uses/page/">How I use it {{icon "arrow-right"}}</a>
 						</p>
 					</article>
-					{{/match}}{{/each}}
+					{{/each}}
 				</div>
 			</section>
 			{{/each}}

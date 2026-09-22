@@ -72,6 +72,13 @@ source: src/components/post-hero.css · content.css · widget.css · post-footer
 
 	<figure class="kg-card kg-image-card kg-width-wide kg-card-hascaption"><img src="{{demo.three.[0].feature_image}}" class="kg-image" alt="A village on a cliff above the sea" loading="lazy" width="1600" height="900"><figcaption><span style="white-space: pre-wrap;">A <strong>wide</strong> image: 10rem past the text on each side, while there is room. The frame in its corner opens it.</span></figcaption></figure>
 
+	<aside class="im-ad im-ad-inread im-ad-inread-text" aria-label="Advertisement">
+		<span class="im-ad-label">Sponsored</span>
+		<img src="{{demo.shots.[3]}}" alt="" loading="lazy">
+		<b>Ghost hosting that does not oversell the box</b>
+		<span>Two CPUs, real backups, and a support inbox a person reads. Three months free for readers here.</span>
+	</aside>
+
 	<h2>Three widths, one grid</h2>
 	<p>The wrapper is a grid with named lines — <code>full</code>, <code>wide</code>, <code>main</code>. Every child lands in <code>main</code>; a card the author set to <em>wide</em> or <em>full</em> in the editor carries a class that moves it outward. No negative margins, no <code>100vw</code> (which ignores the scrollbar and causes a sideways scroll).</p>
 	<ul>
@@ -188,6 +195,17 @@ source: src/components/post-hero.css · content.css · widget.css · post-footer
 						<dt>Filed under</dt><dd>Travel</dd>
 					</dl>
 				</section>
+
+				{{!-- The rail's ad, last. A slot above the fold on a page
+					  somebody has not decided to read yet is an interruption;
+					  the same slot after the series, the author and the facts
+					  is something a reader passes on their way down. --}}
+				<aside class="im-ad im-ad-rectangle" aria-label="Advertisement">
+					<span class="im-ad-label">Sponsored</span>
+					<button class="im-ad-close" type="button" aria-label="Close" data-im-ad-close>{{icon "x"}}</button>
+					<span class="im-ad-slot"><img src="{{demo.shots.[4]}}" alt="Ghost hosting that does not oversell the box" loading="lazy"></span>
+					<button class="im-ad-remove" type="button" popovertarget="ad-gate">{{icon "circle-x"}}Remove ads</button>
+				</aside>
 			</div>
 		</div>
 	</aside>
@@ -295,7 +313,8 @@ source: src/components/post-hero.css · content.css · widget.css · post-footer
 				<tr><td>More like this</td><td><code>im-related</code> — a grid of <a href="/collections/post/card/">post cards</a>, at <code>--im-related-min</code> each.</td></tr>
 				<tr><td>Newsletter</td><td><code>im-postcta</code> + the <a href="/forms/inputs/">subscribe form</a>.</td></tr>
 				<tr><td>Previous / next</td><td><code>im-postnav</code>, from <a href="/navigation/pagination/">Pagination</a> — two cards, sharing an edge, from Ghost's own <code>prev_post</code> and <code>next_post</code>.</td></tr>
-				<tr><td>Comments</td><td><code>im-comments</code> — the thread, the box to write in, and a gate for members-only.</td></tr>
+				<tr><td>Comments</td><td><code>im-comments</code> — the thread, the box to write in, and a gate for members-only. Pass <code>lean=true limit="1"</code> on a page whose subject is not the discussion.</td></tr>
+				<tr><td>Advertising</td><td><code>im-ad-inread</code> between paragraphs, <code>im-ad-rectangle</code> at the <em>bottom</em> of the rail. Both label themselves above the slot and both reserve their height; the rail one carries <code>im-ad-remove</code>, which opens the members gate.</td></tr>
 			</tbody>
 		</table>
 		</div>

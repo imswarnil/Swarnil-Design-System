@@ -916,3 +916,82 @@
 	color: var(--im-muted);
 	font-size: var(--im-text-sm);
 }
+
+/* ---- in-read: an ad BETWEEN paragraphs ---------------------------------
+   The only ad placement inside a body of text that is not hostile. Three
+   rules make the difference, and skipping any one of them is what makes
+   in-article advertising the thing readers install blockers for:
+
+   1. It reserves its own height before anything loads (`aspect-ratio` on the
+      slot), so the paragraph under it never jumps out from under a thumb.
+      A reader who has lost their place once starts scrolling defensively.
+   2. It is LABELLED above the slot, in the page's own type, not inside the
+      creative where an advertiser controls it.
+   3. It never appears before the reader has committed — at least two or
+      three paragraphs in, and never twice in one screen.
+
+     <aside class="im-ad im-ad-inread" aria-label="Advertisement"> … </aside>
+
+   In the content grid it sits in `main`, not `wide`: an ad that is wider
+   than the text it interrupts is claiming to be more important than it. */
+.im-ad-inread {
+	--im-ad-ratio: 16 / 9;
+
+	margin-block: 2rem;
+}
+
+/* Rules above and below, because the thing it is interrupting is prose and
+   prose has no other edges. Cheaper and clearer than a box. */
+.im-ad-inread {
+	padding-block: 0.875rem;
+	border-block: 1px solid var(--im-line);
+	border-radius: 0;
+	background: none;
+}
+
+.im-ad-inread > .im-ad-label {
+	justify-content: center;
+}
+
+/* A text-only variant — a recommendation rather than a banner. It performs
+   better than a picture and it is far less rude, which is not a coincidence. */
+.im-ad-inread-text {
+	--im-ad-ratio: auto;
+
+	display: grid;
+	grid-template-columns: 5.5rem minmax(0, 1fr);
+	gap: 0.25rem 1rem;
+	align-items: center;
+}
+
+.im-ad-inread-text > .im-ad-label {
+	grid-column: 1 / -1;
+	justify-content: flex-start;
+}
+
+.im-ad-inread-text > img {
+	grid-row: span 2;
+	width: 5.5rem;
+	aspect-ratio: 1;
+	border-radius: var(--im-radius-md);
+	object-fit: cover;
+}
+
+.im-ad-inread-text > b {
+	color: var(--im-ink);
+	font-size: var(--im-text-base);
+	font-weight: 600;
+	line-height: 1.35;
+}
+
+.im-ad-inread-text > span {
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+	line-height: 1.5;
+}
+
+@media (width < 34rem) {
+	.im-ad-inread-text {
+		grid-template-columns: 4rem minmax(0, 1fr);
+	}
+}

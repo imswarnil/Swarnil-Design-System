@@ -17,7 +17,7 @@ source: src/components/life.css
 			<p class="im-eyebrow">Experience</p>
 			<h1 class="im-collhead-title">Things I have done</h1>
 			<p class="im-collhead-text">Not work. The other kind — water, cold, distance, and a few hours of being usefully frightened. Everything here has a date because everything here happened.</p>
-			<p class="im-collhead-meta"><span>{{demo.experience.length}} of them</span><span>Since 2023</span><a href="/collections/wishlist/">The list they came from</a></p>
+			<p class="im-collhead-meta"><span>{{demo.experience.length}} of them</span><span>{{demo.expgroups.length}} kinds</span><span>Since 2023</span><a href="/collections/wishlist/">The list they came from</a></p>
 		</header>
 
 		<div class="im-collbar">
@@ -33,20 +33,34 @@ source: src/components/life.css
 			</div>
 		</div>
 
-		<div class="im-exps" id="exps">
-			{{#each demo.experience}}
-			<article class="im-exp">
-				<span class="im-exp-media">
-					<img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy">
-					<span class="im-exp-figure">{{figure}}<small>{{unit}}</small></span>
-					<span class="im-kind im-kind-over" data-kind="tag">{{icon "compass"}}{{kind}}</span>
-				</span>
-				<div class="im-exp-body">
-					<p class="im-exp-where"><span>{{where}}</span><span>{{when}}</span></p>
-					<h2 class="im-exp-title"><a href="/collections/experience/page/">{{title}}</a></h2>
-					<p class="im-exp-text">{{text}}</p>
-				</div>
-			</article>
+		<div class="im-stack" id="exps" style="--im-stack-gap: 2.25rem">
+			{{#each demo.expgroups}}
+			<section class="im-usegroup">
+				<header class="im-usegroup-head">
+					<h2 class="im-usegroup-title">{{icon mark}}{{name}}</h2>
+					<p class="im-usegroup-text">{{text}}</p>
+				</header>
+				{{!-- A carousel, not a grid: a group has two or three things in
+					  it and a grid of three leaves a hole where the fourth would
+					  be. Sideways, they read as a set. --}}
+				{{#> "components/carousel" label=name dots=true style="--im-slides: 1.15; --im-slides-sm: 1.8; --im-slides-md: 2.4"}}
+					{{#each items}}
+					<article class="im-exp">
+						<span class="im-exp-media">
+							<img src="{{lookup @root.demo.shots shot}}" alt="" loading="lazy">
+							<span class="im-exp-figure">{{figure}}<small>{{unit}}</small></span>
+							{{#if badge}}<span class="im-kind im-kind-over" data-kind="issue">{{icon "sparkles"}}{{badge}}</span>{{/if}}
+						</span>
+						<div class="im-exp-body">
+							<p class="im-exp-where"><span>{{where}}</span><span>{{when}}</span></p>
+							<h3 class="im-exp-title"><a href="/collections/experience/page/">{{title}}</a></h3>
+							<p class="im-exp-text">{{text}}</p>
+							<p><span class="im-kind" data-kind="tag">{{icon "compass"}}{{kind}}</span></p>
+						</div>
+					</article>
+					{{/each}}
+				{{/"components/carousel"}}
+			</section>
 			{{/each}}
 		</div>
 	</article>
