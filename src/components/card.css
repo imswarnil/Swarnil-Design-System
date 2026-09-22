@@ -452,3 +452,17 @@
 	white-space: nowrap;
 }
 .im-featured-tag::before { content: ""; width: 0.375rem; height: 0.375rem; border-radius: var(--im-radius-full); background-color: #fff; }
+
+/* ---- one line-under-the-title, every card ----------------------------
+   The sentence on a card — excerpt, text, note — is the same size and
+   leading on every card in the system. Set once here, so a grid of mixed
+   collections reads as one typeface and not as eleven. */
+:is(.im-post-card-excerpt, .im-vidcard-text, .im-repo-text, .im-exp-text, .im-product-text, .im-seriescard-text,
+    .im-snipcard-text, .im-promptcard-text, .im-affiliate-text, .im-stream-text, .im-tripcard-more, .im-done-text,
+    .im-bucket-note, .im-issue-text, .im-tagcard-text, .im-guest-text, .im-review-text, .im-lessonrow-meta,
+    .im-viddesc-body, .im-timeline-text, .im-leg-text, .im-module-text, .im-widget-sponsor) {
+	font-size: var(--im-text-sm);
+	line-height: var(--im-leading-card, 1.55);
+	color: var(--im-body);
+	text-wrap: pretty;
+}

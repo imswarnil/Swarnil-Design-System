@@ -13,7 +13,7 @@
 	                     picture — for a card with no picture
 	  eager    true      for cards above the fold
 	  top      true      row layouts: align the picture to the top
-	  kind     "post" — the identifier chip on the picture, for a mixed feed
+	  kind     the identifier chip on the picture. Default "Post"; pass false for none
 	  class    anything else
 	  style    inline variables, e.g. "--im-post-card-media-width: 8rem"
 
@@ -33,7 +33,7 @@
 			>
 		{{/if}}
 
-		{{#if kind}}<span class="im-kind im-kind-over" data-kind="{{kind}}">{{> "icons/file-text"}}{{kind}}</span>{{/if}}
+		{{#match kind "!=" false}}<span class="im-kind im-kind-over" data-kind="{{#if kind}}{{kind}}{{else}}post{{/if}}">{{> "icons/file-text"}}{{#if kind}}{{kind}}{{else}}{{t "Post"}}{{/if}}</span>{{/match}}
 		{{#if featured}}<span class="im-post-card-featured" aria-label="{{t "Featured"}}"><span aria-hidden="true">{{t "Featured"}}</span></span>{{/if}}
 		{{#unless access}}<span class="im-post-card-gate">{{> "icons/lock"}}<b>{{t "Members only"}}</b><small>{{t "Sign in to read"}}</small></span>{{/unless}}
 

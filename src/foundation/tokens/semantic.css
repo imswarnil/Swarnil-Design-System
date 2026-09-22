@@ -51,24 +51,25 @@
 	--im-hover-bg: var(--im-surface);
 
 	/* ---- One colour per collection --------------------------------------
-	   Sat beside the primary: the same saturation and lightness band, hues
-	   spread round the wheel so no two neighbours in a mixed feed match. A
+	   DERIVED from the primary with relative colour syntax: the primary's
+	   lightness and chroma, the hue rotated. Change --im-accent and every
+	   collection colour moves with it; no two neighbours in a mixed feed share a hue. A
 	   collection's chip, its stream mark, its tag face and its head pattern
 	   all read the same variable, so a collection is one colour everywhere. */
 	--im-c-post: var(--im-accent);
-	--im-c-project: #2f6bf2;
-	--im-c-video: #d61f6a;
-	--im-c-series: #9b2ff2;
-	--im-c-course: #6a3df2;
-	--im-c-shop: #f2842f;
-	--im-c-newsletter: #1fa36b;
-	--im-c-uses: #0f9a9a;
-	--im-c-snippet: #4a4af2;
-	--im-c-prompt: #1f8fd6;
-	--im-c-travel: #1f78f2;
-	--im-c-experience: #0fa0c4;
-	--im-c-bucket: #e0298f;
-	--im-c-tag: #d68a1f;
+	--im-c-video: oklch(from var(--im-accent) l c calc(h - 20));
+	--im-c-bucket: oklch(from var(--im-accent) l c calc(h - 40));
+	--im-c-series: oklch(from var(--im-accent) l c calc(h - 65));
+	--im-c-course: oklch(from var(--im-accent) l c calc(h - 90));
+	--im-c-snippet: oklch(from var(--im-accent) l c calc(h - 115));
+	--im-c-project: oklch(from var(--im-accent) l c calc(h - 140));
+	--im-c-travel: oklch(from var(--im-accent) l c calc(h - 160));
+	--im-c-prompt: oklch(from var(--im-accent) l c calc(h - 180));
+	--im-c-experience: oklch(from var(--im-accent) l c calc(h - 200));
+	--im-c-uses: oklch(from var(--im-accent) l c calc(h - 220));
+	--im-c-newsletter: oklch(from var(--im-accent) l c calc(h - 250));
+	--im-c-tag: oklch(from var(--im-accent) l c calc(h + 45));
+	--im-c-shop: oklch(from var(--im-accent) l c calc(h + 30));
 	--im-c-timeline: var(--im-muted);
 
 	/* ---- Marks drawn on a picture -------------------------------------------
