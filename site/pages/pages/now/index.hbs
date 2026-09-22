@@ -1,0 +1,121 @@
+---
+title: Now page
+layout: home
+description: What I am doing at this point in my life, dated at the top so a reader can tell whether to believe it. Short, honest, and replaced rather than added to.
+eyebrow: Pages
+source: src/components/widget.css · stream.css
+---
+<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+	<p class="im-eyebrow">Pages · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+</section>
+
+<div class="im-single im-wrap" data-sidebar="on" style="--im-single-aside: 19rem">
+	<article class="im-stack" style="--im-stack-gap: 1.75rem">
+		<header class="im-stack" style="--im-stack-gap: .5rem">
+			<p class="im-eyebrow">Now</p>
+			<h1 class="im-collhead-title">What I am doing</h1>
+			<p class="im-snipcard-meta"><span class="im-kind" data-kind="post">{{> "icons/clock"}}Updated</span><time>21 September 2026</time><span>from Amsterdam</span></p>
+		</header>
+
+		<section class="im-content im-content-flush im-content-lede">
+			<p>Two days a week on client work, three on the design system, and one road trip booked for February that I am already thinking about more than either.</p>
+		</section>
+
+		<section class="im-content im-content-flush">
+			<h2>Working on</h2>
+			<p><strong>Im Design System v0.7</strong> — the collections, the theme on top of them, and the documentation that makes it sellable. It is the first thing I have built that I would buy.</p>
+			<p><strong>Two days a week</strong> with a public-sector team that inherited a Salesforce org nobody documented. The interesting part is not the org.</p>
+
+			<h2>Reading</h2>
+			<p><em>The Timeless Way of Building</em>, slowly and for the second time. <em>Working in Public</em>, which is the only honest book about open source I have found.</p>
+
+			<h2>Not doing</h2>
+			<ul>
+				<li><strong>Conference talks.</strong> Two a year was one too many.</li>
+				<li><strong>New clients before November.</strong> Ask anyway — I will tell you when.</li>
+				<li><strong>The newsletter every week.</strong> A fortnight is the honest cadence and pretending otherwise made both of us unhappy.</li>
+			</ul>
+
+			<h2>Next</h2>
+			<p>Tromsø in February, for the lights. A course on building a Ghost theme from nothing, if enough people say they want it. And at some point, a proper holiday that is not also a shoot.</p>
+		</section>
+
+		<section class="im-section" style="--im-section-gap: 1rem">
+			<h2 class="im-caption" data-index="was">What this page said before</h2>
+			<ol class="im-stream">
+				<li class="im-stream-item" data-kind="note">
+					<span class="im-stream-mark">{{icon "clock"}}</span>
+					<div class="im-stream-body">
+						<p class="im-stream-meta"><span class="im-stream-kind">Previous</span><time>2 Aug 2026</time></p>
+						<h3 class="im-stream-title">Four days a week on client work, and the system on weekends</h3>
+						<p class="im-stream-text">Which is how the system took eight months instead of four.</p>
+					</div>
+				</li>
+				<li class="im-stream-item" data-kind="note">
+					<span class="im-stream-mark">{{icon "clock"}}</span>
+					<div class="im-stream-body">
+						<p class="im-stream-meta"><span class="im-stream-kind">Previous</span><time>14 May 2026</time></p>
+						<h3 class="im-stream-title">Rebuilding the site on a theme I do not own</h3>
+						<p class="im-stream-text">The decision that started all of this.</p>
+					</div>
+				</li>
+			</ol>
+		</section>
+	</article>
+
+	<aside>
+		<div class="im-sticky-rail">
+			<div class="im-widgets">
+				<section class="im-widget" aria-labelledby="nw-at">
+					<h2 class="im-widget-title" id="nw-at">At a glance</h2>
+					<dl class="im-widget-facts">
+						<dt>Where</dt><dd>Amsterdam</dd>
+						<dt>Available</dt><dd>From November</dd>
+						<dt>Writing</dt><dd>Every fortnight</dd>
+						<dt>Next trip</dt><dd>Tromsø, February</dd>
+						<dt>Updated</dt><dd>21 Sep 2026</dd>
+					</dl>
+				</section>
+
+				<section class="im-widget" aria-labelledby="nw-last">
+					<h2 class="im-widget-title" id="nw-last">Latest <a href="/collections/timeline/">Timeline</a></h2>
+					<ul class="im-widget-list">
+						{{#each demo.stream.[0].items}}{{#match @index "<" 3}}<li><a href="/collections/timeline/">{{title}}<small>{{label}} · {{when}}</small></a></li>{{/match}}{{/each}}
+					</ul>
+				</section>
+
+				<section class="im-widget im-widget-fill" aria-labelledby="nw-sub">
+					<h2 class="im-widget-title" id="nw-sub">Keep up</h2>
+					<p class="im-widget-heading">This page changes quietly. The letter does not.</p>
+					{{> "components/subscribe" id="now-email" button="Join"}}
+				</section>
+			</div>
+		</div>
+	</aside>
+</div>
+
+<section class="im-section im-wrap">
+	<div class="im-prose">
+		<h2>The date is the page</h2>
+		<p>A now page without a date on it is worse than no now page: a reader cannot tell whether "currently in Amsterdam" was written last week or in 2021, so they assume the worse one and stop trusting the rest of the site with it. The date goes <strong>at the top, beside the title</strong>, not in a footer.</p>
+
+		<h2>Replaced, not appended</h2>
+		<p>This is the one page on a site that is allowed to throw its own history away. The previous versions go in a short list at the bottom — <code>im-stream</code> with <code>data-kind="note"</code> — and everything older than two of them is simply gone. A now page that has become a changelog has become a blog with a worse name.</p>
+
+		<h2>"Not doing" is the half that makes it useful</h2>
+		<p>Anybody can list what they are working on. The list of what somebody has stopped doing, and why, is the part a reader actually learns something from — and on a page that also says "hire me", it is the part that makes the availability claim believable.</p>
+		<div class="im-table-scroll">
+		<table>
+			<thead><tr><th>Block</th><th>Built from</th></tr></thead>
+			<tbody>
+				<tr><td>The date</td><td><code>im-snipcard-meta</code> with a <code>&lt;time&gt;</code>, directly under the title.</td></tr>
+				<tr><td>The sections</td><td>Working on · Reading · Not doing · Next. Four headings, no more.</td></tr>
+				<tr><td>The history</td><td><code>im-stream</code>, two entries, in the <a href="/collections/timeline/">timeline</a>'s own component.</td></tr>
+				<tr><td>The rail</td><td>Facts, the latest from the timeline, the letter.</td></tr>
+			</tbody>
+		</table>
+		</div>
+	</div>
+</section>

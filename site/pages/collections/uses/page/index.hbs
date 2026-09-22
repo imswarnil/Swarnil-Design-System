@@ -1,9 +1,9 @@
 ---
 title: Product page
 layout: home
-description: One thing you own — how long you have had it, what it replaced, what is wrong with it, and whether you would buy it again. The review a specification sheet cannot be.
+description: One thing I own — what it replaced, what it cost, how it is actually used, and the honest paragraph about what is wrong with it.
 eyebrow: Collections · Uses
-source: src/components/ad.css · content.css
+source: src/components/ad.css · commerce.css
 ---
 <section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
 	<p class="im-eyebrow">Collections · Uses · {{page.title}}</p>
@@ -11,8 +11,8 @@ source: src/components/ad.css · content.css
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
-<div class="im-single im-wrap" data-sidebar="on">
-	<article class="im-stack" style="--im-stack-gap: 1.5rem">
+<div class="im-single im-wrap-wide" data-sidebar="on" style="--im-single-aside: 21rem">
+	<article class="im-stack" style="--im-stack-gap: 1.75rem">
 		{{#with demo.uses.[0]}}
 		<nav aria-label="Breadcrumb">
 			<ol class="im-breadcrumb im-breadcrumb-chevron">
@@ -22,62 +22,105 @@ source: src/components/ad.css · content.css
 			</ol>
 		</nav>
 
-		<figure class="im-shot"><img src="{{../demo.shots.[0]}}" alt="" loading="eager"><figcaption><b>Two years in</b> Scratched, and none of the scratches are on the glass.</figcaption></figure>
-
-		<header class="im-stack" style="--im-stack-gap: .5rem">
-			<p><span class="im-kind">{{icon "package"}}Uses</span></p>
-			<h1 class="im-collhead-title" style="font-size: clamp(1.75rem, 1.3rem + 2vw, 2.5rem)">{{name}}</h1>
-			<p class="im-exp-where"><span>{{by}}</span><span>Owned since March 2024</span></p>
+		<header class="im-stack" style="--im-stack-gap: .625rem">
+			<p class="im-snipcard-meta"><span class="im-kind" data-kind="issue">{{> "icons/package"}}Owned</span><span>{{by}}</span><span>Bought {{bought}}</span></p>
+			<h1 class="im-collhead-title">{{name}}</h1>
+			<p class="im-rating im-rating-lg" style="--im-rating: 4.5"><span class="im-rating-stars" aria-hidden="true"></span><span class="im-rating-value">4.5 out of 5</span><span>after 7 months</span></p>
 		</header>
+
+		<figure class="im-carousel" data-im-carousel style="--im-slides: 1; --im-slides-md: 2">
+			<div class="im-carousel-track">
+				{{#each ../demo.shots}}{{#match @index "<" 4}}<div class="im-carousel-slide"><img src="{{this}}" alt="" loading="lazy" style="aspect-ratio: 4/3; width: 100%; object-fit: cover; border-radius: var(--im-radius-lg)"></div>{{/match}}{{/each}}
+			</div>
+		</figure>
 
 		<div class="im-expstats">
 			<span><strong>{{cost}}</strong>Paid</span>
-			<span><strong>2 yrs</strong>Owned</span>
+			<span><strong>7 mo</strong>Owned</span>
+			<span><strong>~2,400</strong>Frames</span>
 			<span><strong>Daily</strong>Used</span>
-			<span><strong>Yes</strong>Buy again</span>
 		</div>
 		{{/with}}
 
-		<section class="im-content im-content-flush im-content-lede" data-im-zoom>
-			<p>Every picture on this site since March was taken on it, which is the only recommendation that means anything.</p>
+		<section class="im-content im-content-flush im-content-lede">
+			<p>It replaced a body I had carried for three years and had stopped taking anywhere, because it was heavy enough that leaving it behind was always the easier decision. That is the whole review: the best camera argument is not about sensors.</p>
+		</section>
 
-			<h2>What it replaced</h2>
-			<p>A full-frame body and two lenses that lived in a cupboard because carrying them was a decision. This one lives in a coat pocket and therefore gets used, and a camera that gets used beats a better camera that does not.</p>
+		<section class="im-content im-content-flush">
+			<h2>How I actually use it</h2>
+			<p>One lens, no bag, in a coat pocket. It lives on <strong>aperture priority at f/4</strong> with auto ISO capped at 6400 and exposure compensation on the front dial, and I have not changed those settings since the first week.</p>
+			<p>Every photograph on this site since March is from it, including the ones that look like they were taken on something bigger. The <a href="/collections/travel/trip/">Amalfi trip</a> was six days, four hundred frames and one battery charge a day.</p>
 
 			<h2>What is wrong with it</h2>
 			<ul>
-				<li><strong>The battery.</strong> Two hundred frames, optimistically. Buy three spares and stop thinking about it.</li>
-				<li><strong>The fixed lens.</strong> This is the point, and it is still sometimes the problem.</li>
-				<li><strong>The price.</strong> It is a lot of money for a camera that does one thing.</li>
+				<li><strong>The battery.</strong> Three hundred frames on paper, about two hundred in the cold. Buy two spares before you buy anything else.</li>
+				<li><strong>The close focus is soft wide open.</strong> Everybody writes this and everybody is right.</li>
+				<li><strong>It is not weather sealed</strong> without the filter and adapter, which is a fifty-euro asterisk on the price.</li>
 			</ul>
 
-			<h2>Would I buy it again</h2>
-			<p>Yes, at this price, knowing about the battery. Not at more.</p>
+			<h2>What I would buy instead</h2>
+			<p>Nothing at this price. At half of it, a used body from two generations ago and the same lens — you lose the viewfinder and you keep the pictures.</p>
 		</section>
-		{{#with demo.uses.[0]}}
-		<p class="im-cluster"><a class="im-btn im-btn-primary" href="#" rel="sponsored noopener">{{icon "external-link"}}Where I got it</a><a class="im-btn" href="/collections/uses/">Everything else I use</a></p>
-		<p class="im-affiliate-note" style="border-top: 1px solid var(--im-line); padding-top: .75rem">Affiliate link — I earn a little if you buy, at no cost to you</p>
-		{{/with}}
+
+		<section class="im-section" style="--im-section-gap: 1rem">
+			<h2 class="im-caption" data-index="with">Used with</h2>
+			<div class="im-affiliates">
+				{{#each demo.uses}}{{#match group "=" "Camera"}}{{#match @index ">" 0}}
+				<article class="im-affiliate">
+					<span class="im-affiliate-media im-thumb"><img src="{{lookup ../../demo.shots @index}}" alt="" loading="lazy"></span>
+					<a class="im-affiliate-name" href="/collections/uses/page/">{{name}}</a>
+					<p class="im-affiliate-by">{{by}}</p>
+					<p class="im-affiliate-text">{{text}}</p>
+					<p class="im-affiliate-meta"><span class="im-affiliate-price">{{cost}}</span><span class="im-badge im-badge-success">Still using it</span></p>
+				</article>
+				{{/match}}{{/match}}{{/each}}
+			</div>
+		</section>
+
+		{{> "components/comments" thread=demo.comments count="18"}}
 	</article>
 
 	<aside>
 		<div class="im-sticky-rail">
 			<div class="im-widgets">
-				<section class="im-widget" aria-labelledby="u-facts">
-					<h2 class="im-widget-title" id="u-facts">The facts</h2>
+				<section class="im-widget im-widget-accent" aria-labelledby="up-buy">
+					<h2 class="im-widget-title" id="up-buy">Where I got it</h2>
+					<p class="im-widget-heading">€1,599, from a shop with a real returns desk.</p>
+					<a class="im-btn im-btn-primary im-btn-sm" href="#" rel="sponsored noopener" style="width: 100%">{{icon "external-link"}}The shop</a>
+					<p class="im-affiliate-mark" title="Affiliate link — I earn a little if you buy, at no cost to you" style="margin-top: .5rem">{{icon "info"}}Affiliate link. It is on this page because I bought it.</p>
+				</section>
+
+				<section class="im-widget" aria-labelledby="up-facts">
+					<h2 class="im-widget-title" id="up-facts">The facts</h2>
 					<dl class="im-widget-facts">
+						<dt>Bought</dt><dd>March 2026</dd>
 						<dt>Paid</dt><dd>€1,599</dd>
-						<dt>Bought</dt><dd>Mar 2024</dd>
-						<dt>Replaced</dt><dd>A whole bag</dd>
-						<dt>Checked</dt><dd>Sep 2026</dd>
+						<dt>Replaced</dt><dd>A heavier body</dd>
+						<dt>Verdict</dt><dd>Keeping</dd>
+						<dt>Group</dt><dd><a href="/collections/uses/">For making video</a></dd>
 					</dl>
 				</section>
 
-				<section class="im-widget" aria-labelledby="u-more">
-					<h2 class="im-widget-title" id="u-more">Also on the desk <a href="/collections/uses/">All</a></h2>
-					<ul class="im-widget-list im-widget-list-thumbs">
-						{{#each demo.uses}}{{#match @index ">" 0}}<li><a href="/collections/uses/page/"><img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy">{{name}}<small>{{cost}}</small></a></li>{{/match}}{{/each}}
+				<section class="im-widget" aria-labelledby="up-recent">
+					<h2 class="im-widget-title" id="up-recent">Recently bought <a href="/collections/uses/">All</a></h2>
+					<div class="im-widget-products">
+						{{#each demo.uses}}{{#match @index ">" 4}}<a class="im-widget-product" href="/collections/uses/page/"><img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy"><span class="im-widget-product-name">{{name}}</span><span class="im-widget-product-note">{{cost}}</span>{{icon "arrow-right"}}</a>{{/match}}{{/each}}
+					</div>
+				</section>
+
+				<section class="im-widget" aria-labelledby="up-seen">
+					<h2 class="im-widget-title" id="up-seen">Seen in</h2>
+					<ul class="im-widget-list">
+						<li><a href="/collections/travel/trip/">The Amalfi Coast, slowly<small>Every frame</small></a></li>
+						<li><a href="/collections/video/page/">Driving the Amalfi Coast<small>The whole video</small></a></li>
+						<li><a href="/collections/experience/page/">Diving the Blue Hole<small>In a housing</small></a></li>
 					</ul>
+				</section>
+
+				<section class="im-widget im-widget-fill" aria-labelledby="up-sub">
+					<h2 class="im-widget-title" id="up-sub">When this page changes</h2>
+					<p class="im-widget-heading">Twice a year, at most.</p>
+					{{> "components/subscribe" id="use-email" button="Tell me"}}
 				</section>
 			</div>
 		</div>
@@ -86,13 +129,26 @@ source: src/components/ad.css · content.css
 
 <section class="im-section im-wrap">
 	<div class="im-prose">
-		<h2>Four headings, and the third is the one that matters</h2>
-		<p><strong>What it replaced</strong>, <strong>what is wrong with it</strong>, <strong>would I buy it again</strong>. A page that only praises is an advertisement, and readers can tell — the three specific complaints are what make the recommendation worth anything.</p>
-		<p>The stats row carries what a specification sheet would: paid, owned, how often, buy-again. Four facts, and the last one is the review.</p>
+		<h2>A uses page is a review collection, not a shopping list</h2>
+		<p>A list of product names with affiliate links is an advertisement with a personal pronoun in it. What makes the page worth reading is the three headings this one has, and none of them can be written by somebody who does not own the thing:</p>
 		<ul>
-			<li><strong>One photograph, of yours.</strong> Scratched, dusty, on your desk — not the press shot. The caption should say how old it is.</li>
-			<li><strong>The disclosure sits at the bottom too</strong>, next to the link it is about.</li>
-			<li><strong>Say when the page was last checked.</strong> It is in the rail, and it is the difference between a recommendation and an artefact.</li>
+			<li><strong>How I actually use it</strong> — the settings, the routine, the thing it goes in.</li>
+			<li><strong>What is wrong with it</strong> — the page has no credibility without this, and the credibility is the only reason anybody clicks the link.</li>
+			<li><strong>What I would buy instead</strong> — including "nothing", which is a real answer.</li>
 		</ul>
+
+		<h2>The disclosure is a mark, not a paragraph</h2>
+		<p><code>im-affiliate-mark</code> sits in the meta row, before the link, with the long form in its <code>title</code>. It used to be a line of its own on every card, which cost the card a row and made a page of eight things as tall as a page of eight posts. Saying it once per card, small, next to the price, is both honest and the right size.</p>
+		<div class="im-table-scroll">
+		<table>
+			<thead><tr><th>Class</th><th></th></tr></thead>
+			<tbody>
+				<tr><td><code>im-usegroup</code></td><td>A group with its own heading — "on the desk", "for making video". Forty unsorted objects is an inventory; four groups of ten is a page.</td></tr>
+				<tr><td><code>im-affiliate</code></td><td>The line item: picture, name, maker, two clamped lines, price, verdict, disclosure.</td></tr>
+				<tr><td><code>im-rating</code></td><td>The score after living with it, with <em>how long</em> beside it. A rating written on the day it arrived is worth nothing.</td></tr>
+				<tr><td><code>im-widget-products</code></td><td>"Recently bought" in the rail — the one widget this collection needs that no other one does.</td></tr>
+			</tbody>
+		</table>
+		</div>
 	</div>
 </section>

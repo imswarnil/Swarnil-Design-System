@@ -91,7 +91,23 @@ export async function build({ quiet = false } = {}) {
 			return { slug: e.name, url: `/sections/${e.name}/`, files, fileCount: files.length };
 		});
 
+	// A topic is a tag with a face: an icon and a colour. Ghost has neither, so
+	// a theme keeps the lookup — by slug, in one place — and falls back to a
+	// generic mark for a tag nobody has decided about yet.
+	const TOPIC_FACE = {
+		craft: { mark: 'component', color: '#ff5a1f', text: 'How things are built, and why they are built that way.' },
+		'moving-to-europe': { mark: 'route', color: '#3178c6', text: 'Paperwork, money and the parts nobody warns you about.' },
+		salesforce: { mark: 'zap', color: '#4ac26b', text: 'Eight years of it. The good parts and the expensive ones.' },
+		career: { mark: 'briefcase', color: '#a855f7', text: 'Work, and what it is actually worth.' },
+		travel: { mark: 'map-pin', color: '#f59e0b', text: 'Roads, itineraries and what each day cost.' },
+	};
+	const topics = fixtures.tags.map((t) => ({
+		...t,
+		...(TOPIC_FACE[t.slug] || { mark: 'tag', color: '#8b8b8b', text: `Everything filed under ${t.name}.` }),
+	}));
+
 	const demo = {
+		topics,
 		post: fixtures.posts[0],
 		three: fixtures.posts.slice(0, 3),
 		four: fixtures.posts.slice(0, 4),
@@ -169,16 +185,26 @@ export async function build({ quiet = false } = {}) {
 			{ n: '039', day: '28', month: 'Aug', year: '2026', sent: '28 Aug 2026', title: 'Every number from the move', text: 'Rent, tax, the deposit nobody mentions, and the month it took to get a bank account.', read: '71%', words: '2,300' },
 		],
 		shop: [
-			{ name: 'Im Design System', text: 'Tokens, a page shell, forty components and ready-made sections for Ghost themes.', cost: '$149', was: '$199', kind: 'Design system', badge: 'New' },
-			{ name: 'Signal — a Ghost theme', text: 'The theme this site runs on. Built on the system, and it comes with it.', cost: '$89', kind: 'Ghost theme' },
-			{ name: 'The icon set', text: '340 icons on a 24px grid, shipped as partials rather than as a font.', cost: '$29', kind: 'Icons' },
-			{ name: 'Field Notes templates', text: 'Six newsletter layouts that survive Outlook. Because somebody has to.', cost: 'Free', free: true, kind: 'Templates' },
+			{ name: 'Im Design System', rating: '4.9', reviews: '41', text: 'Tokens, a page shell, forty components and ready-made sections for Ghost themes.', cost: '$149', was: '$199', kind: 'Design system', badge: 'New' },
+			{ name: 'Signal — a Ghost theme', rating: '4.7', reviews: '28', text: 'The theme this site runs on. Built on the system, and it comes with it.', cost: '$89', kind: 'Ghost theme' },
+			{ name: 'The icon set', rating: '5.0', reviews: '12', text: '340 icons on a 24px grid, shipped as partials rather than as a font.', cost: '$29', kind: 'Icons' },
+			{ name: 'Field Notes templates', rating: '4.4', reviews: '63', text: 'Six newsletter layouts that survive Outlook. Because somebody has to.', cost: 'Free', free: true, kind: 'Templates' },
 		],
 		uses: [
-			{ name: 'Fujifilm X100VI', by: 'Fujifilm · compact camera', text: 'Every picture on this site since March. Small enough to be in a pocket, good enough not to want the other one.', cost: '€1,599', was: '€1,799' },
-			{ name: 'Roterfaden Taschenbegleiter', by: 'Roterfaden · notebook cover', text: 'Four years old, four countries, still closes properly.', cost: '€139' },
-			{ name: 'Herman Miller Aeron', by: 'Herman Miller · chair', text: 'Bought used, twelve years old, will outlive me.', cost: '€620' },
-			{ name: 'iA Writer', by: 'Information Architects · app', text: 'Drafts, before they are posts. The one app I have never replaced.', cost: '€29' },
+			{ name: 'Fujifilm X100VI', by: 'Fujifilm · compact camera', text: 'Every picture on this site since March. Small enough to be in a pocket, good enough not to want the other one.', cost: '\u20ac1,599', was: '\u20ac1,799', group: 'Camera', bought: 'March 2026', verdict: 'Keeping' },
+			{ name: 'Roterfaden Taschenbegleiter', by: 'Roterfaden \u00b7 notebook cover', text: 'Four years old, four countries, still closes properly.', cost: '\u20ac139', group: 'Carried', bought: '2022', verdict: 'Keeping' },
+			{ name: 'Herman Miller Aeron', by: 'Herman Miller \u00b7 chair', text: 'Bought used, twelve years old, will outlive me. The only piece of furniture worth this much.', cost: '\u20ac620', group: 'Desk', bought: '2023', verdict: 'Keeping' },
+			{ name: 'iA Writer', by: 'Information Architects \u00b7 app', text: 'Drafts, before they are posts. The one app I have never replaced.', cost: '\u20ac29', group: 'Software', bought: '2019', verdict: 'Keeping' },
+			{ name: 'Wooden Camera monitor cage', by: 'Wooden Camera \u00b7 rig', text: 'Holds the recorder and the mic without a single arm that needs tightening twice.', cost: '\u20ac210', group: 'Camera', bought: 'June 2026', verdict: 'Keeping' },
+			{ name: 'Keychron Q1', by: 'Keychron \u00b7 keyboard', text: 'Third one. The first two died the way keyboards on a desk with coffee on it die.', cost: '\u20ac185', group: 'Desk', bought: 'August 2026', verdict: 'Keeping' },
+			{ name: 'Rode Wireless ME', by: 'Rode \u00b7 microphone', text: 'Two transmitters, no receiver to lose, and it has never dropped a take.', cost: '\u20ac249', group: 'Camera', bought: 'January 2026', verdict: 'Keeping' },
+			{ name: 'A standing desk', by: 'Unnamed \u00b7 furniture', text: 'Two years, four uses. Removed from this page and from the room.', cost: '\u20ac540', group: 'Desk', bought: '2024', verdict: 'Gone' },
+		],
+		usegroups: [
+			{ name: 'On the desk', mark: 'monitor', text: 'Where most of the hours go. Two of these are on their third replacement.', tag: 'Desk' },
+			{ name: 'For making video', mark: 'video', text: 'Everything that goes in the bag for a shoot, and nothing that does not.', tag: 'Camera' },
+			{ name: 'Carried every day', mark: 'briefcase', text: 'Four things. If it is not in this group it is not worth carrying.', tag: 'Carried' },
+			{ name: 'Software I pay for', mark: 'component', text: 'Bought once where possible. Subscriptions get reviewed every January.', tag: 'Software' },
 		],
 		snippets: [
 			{ name: 'Fluid type without a media query', file: 'fluid-type.css', lang: 'CSS', lang_class: 'css', langColor: '#563d7c', lines: '1\n2', text: 'One clamp, one line, every size between — and it keeps working at a window size nobody wrote a breakpoint for.', snippet: 'font-size: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);\nline-height: 1.5;' },
@@ -193,6 +219,11 @@ export async function build({ quiet = false } = {}) {
 			{ name: 'Find what is missing', model: 'Reasoning models', tokens: '~90 tokens', text: 'The review that catches the thing nobody wrote down. Better than any "review this" prompt I have tried.', body: 'Read the document below and list only what is MISSING: decisions implied but never stated, terms used but never defined, and steps that assume knowledge the reader has not been given.\n\nDo not summarise. Do not praise. A numbered list, shortest first.', reply: '1. "The rail" is used nine times and never defined.\n2. Step 3 assumes the reader has already run the build once.\n3. No statement of what happens when the API returns nothing.\n4. The decision to drop the second theme is implied by the diagram and never written down.' },
 			{ name: 'Explain this code to its future author', model: 'Any model', tokens: '~70 tokens', text: 'Comments that say why, not what. The second paragraph is what makes it work.', body: 'Write the comment that belongs above this function. Explain WHY it is written this way and what breaks if it is changed \u2014 not what the lines do, which is already there.\n\nOne short paragraph. No preamble.', reply: 'Sized from both constraints at once because the clip has to fit a short laptop window and a narrow phone with the same rule. A height in vh with overflow hidden would hide the overflow rather than prevent it, and the controls would end up off the bottom of the screen.' },
 			{ name: 'Turn a decision into a paragraph', model: 'Any model', tokens: '~80 tokens', text: 'For a changelog entry that a reader six months from now can act on.', body: 'I made this decision: [DECISION]. The reason was: [REASON].\n\nWrite one paragraph that states what changed, why, and what somebody should do differently because of it. No bullet points. Do not restate the decision as its own justification.', reply: 'The style scope is gone. Two skins meant every component was tuned twice and tested once, and the second one existed because it was interesting rather than because anybody asked for it. Anything that needs to look different now does it with a modifier class on the component itself.' },
+		],
+		reviews: [
+			{ by: 'A theme developer', when: '3 weeks ago', rating: '5', text: 'The documentation is the product. I have bought four design systems and this is the first one where I did not have to read the CSS to find out what a component does.', verified: true },
+			{ by: 'A Ghost agency', when: 'last month', rating: '5', text: 'Shipped two client themes on it. The card_assets: false note alone saved a day — nobody else warns you that Ghost\u2019s own card CSS is unlayered.', verified: true },
+			{ by: 'A designer', when: '2 months ago', rating: '4', text: 'Excellent, with one gripe: I wanted a second skin and there deliberately is not one. Having read the reasoning I think they are right, but I still wanted it.', verified: true },
 		],
 		trips: [
 			{ title: 'The Amalfi Coast, slowly', country: 'Italy', when: 'November 2025', days: '6', km: '410', route: ['Naples', 'Sorrento', 'Positano', 'Amalfi', 'Ravello'], text: 'Forty kilometres of road that takes two hours, and five days of not being in a hurry about it.', state: 'done' },
@@ -312,6 +343,13 @@ export async function build({ quiet = false } = {}) {
 			__blocks: {},
 			page: { ...meta, url },
 			name: NAME,
+			// The whole tree, for /pages/sitemap/. It is the SAME array the side
+			// nav is built from, so the sitemap cannot drift out of date — adding
+			// a page adds a row there, and there is nothing to remember.
+			sitemap: navigation.map((g) => ({
+				...g,
+				count: leaves(g.items).length,
+			})),
 			// A section starts open if it holds this page; on the home page, the first two do.
 			nav: navigation.map((g, gi) => ({
 				...g,
@@ -371,7 +409,7 @@ export async function build({ quiet = false } = {}) {
 	fs.copyFileSync(path.join(ROOT, 'assets/brand/mark.svg'), path.join(DIST, 'favicon.svg'));
 	fs.copyFileSync(path.join(SRC, 'js/im.js'), path.join(DIST, 'assets/im.js'));
 	fs.copyFileSync(path.join(SRC, 'js/im-code.js'), path.join(DIST, 'assets/im-code.js'));
-	for (const f of ['im-motion.js', 'im-media.js', 'im-charts.js', 'im-content.js', 'im-ads.js']) fs.copyFileSync(path.join(SRC, 'js', f), path.join(DIST, 'assets', f));
+	for (const f of ['im-motion.js', 'im-media.js', 'im-charts.js', 'im-content.js', 'im-ads.js', 'im-view.js']) fs.copyFileSync(path.join(SRC, 'js', f), path.join(DIST, 'assets', f));
 	fs.copyFileSync(path.join(SITE, 'site.js'), path.join(DIST, 'assets/docs.js'));
 	for (const s of sections) {
 		fs.cpSync(path.join(SECTIONS, s.slug), path.join(DIST, 'assets/sections', s.slug), {

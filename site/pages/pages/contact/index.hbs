@@ -1,0 +1,130 @@
+---
+title: Contact page
+layout: home
+description: A form that says what happens after it is sent, next to the three answers that mean nobody has to send it at all.
+eyebrow: Pages
+source: src/components/field.css · widget.css
+---
+<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+	<p class="im-eyebrow">Pages · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+</section>
+
+<div class="im-single im-wrap" data-sidebar="on" style="--im-single-aside: 20rem">
+	<article class="im-stack" style="--im-stack-gap: 1.75rem">
+		<header class="im-stack" style="--im-stack-gap: .5rem">
+			<p class="im-eyebrow">Contact</p>
+			<h1 class="im-collhead-title">Say hello</h1>
+			<p class="im-lede" style="margin: 0">I read everything and reply to most of it, usually within two working days. If it is about work, the second box is the one to use.</p>
+		</header>
+
+		<form class="im-form">
+			<div class="im-form-row">
+				<div class="im-field">
+					<label class="im-label" for="c-name">Your name</label>
+					<input class="im-input" id="c-name" type="text" name="name" autocomplete="name" required>
+				</div>
+				<div class="im-field">
+					<label class="im-label" for="c-email">Email</label>
+					<input class="im-input" id="c-email" type="email" name="email" autocomplete="email" required placeholder="you@example.com">
+					<p class="im-hint">Only ever used to reply.</p>
+				</div>
+			</div>
+
+			<fieldset class="im-fieldset">
+				<legend class="im-label">What is this about?</legend>
+				<div class="im-cluster" style="--im-cluster-gap: .5rem">
+					<label class="im-choice"><input type="radio" name="topic" value="hello" checked><span>Just saying hello</span></label>
+					<label class="im-choice"><input type="radio" name="topic" value="work"><span>Work</span></label>
+					<label class="im-choice"><input type="radio" name="topic" value="bug"><span>Something is broken</span></label>
+					<label class="im-choice"><input type="radio" name="topic" value="speak"><span>Speaking</span></label>
+				</div>
+			</fieldset>
+
+			<div class="im-field">
+				<label class="im-label" for="c-body">Message</label>
+				<textarea class="im-textarea" id="c-body" name="message" rows="6" required placeholder="If it is about work: what the problem is, roughly when, and roughly what you have to spend. Those three lines save us both a call."></textarea>
+				<p class="im-hint">Markdown is fine. Nothing here is stored anywhere except my inbox.</p>
+			</div>
+
+			<label class="im-choice"><input type="checkbox" name="copy"><span>Send me a copy</span></label>
+
+			<p class="im-auth-note">{{icon "info"}}<span>This goes straight to an inbox a person reads. No ticket number, no autoresponder, no CRM.</span></p>
+
+			<p class="im-cluster" style="--im-cluster-gap: .75rem">
+				<button class="im-btn im-btn-primary" type="submit">{{icon "mail"}}Send</button>
+				<span class="im-hint" style="margin: 0">Usually answered in two working days.</span>
+			</p>
+		</form>
+
+		<section class="im-section" style="--im-section-gap: 1rem">
+			<h2 class="im-caption" data-index="first">Before you write</h2>
+			<div class="im-accordion">
+				<details class="im-disclosure"><summary>Are you available?</summary><div class="im-disclosure-body"><p>Two days a week from November. The <a href="/pages/now/">now page</a> is the current answer and is more up to date than this one.</p></div></details>
+				<details class="im-disclosure"><summary>What does it cost?</summary><div class="im-disclosure-body"><p>A day rate, quoted per engagement, and I will tell you if you do not need me. Six weeks at two days a week is the usual shape.</p></div></details>
+				<details class="im-disclosure"><summary>Can you look at my Ghost theme?</summary><div class="im-disclosure-body"><p>Usually yes, and usually the answer is in the <a href="/collections/snippets/">snippets</a> or the <a href="/getting-started/">docs</a> already. Send it anyway if it is not.</p></div></details>
+			</div>
+		</section>
+	</article>
+
+	<aside>
+		<div class="im-sticky-rail">
+			<div class="im-widgets">
+				<section class="im-widget" aria-labelledby="ct-fast">
+					<h2 class="im-widget-title" id="ct-fast">Faster than the form</h2>
+					<ul class="im-widget-list">
+						<li><a href="/collections/snippets/">The code you are looking for<small>Probably already written down</small></a></li>
+						<li><a href="/pages/now/">Am I available<small>The now page, updated fortnightly</small></a></li>
+						<li><a href="/pages/membership/">What a membership includes<small>And what it does not</small></a></li>
+					</ul>
+				</section>
+
+				<section class="im-widget" aria-labelledby="ct-where">
+					<h2 class="im-widget-title" id="ct-where">Elsewhere</h2>
+					<ul class="im-widget-now">
+						<li>{{icon "brand-github"}}<span><b>GitHub</b> — issues get answered faster than email.</span></li>
+						<li>{{icon "brand-linkedin"}}<span><b>LinkedIn</b> — for the formal version of all this.</span></li>
+						<li>{{icon "map-pin"}}<span><b>Amsterdam</b> — coffee is a real option.</span></li>
+					</ul>
+				</section>
+
+				<section class="im-widget" aria-labelledby="ct-not">
+					<h2 class="im-widget-title" id="ct-not">Please do not</h2>
+					<p class="im-widget-sponsor">Send guest-post offers, SEO audits, or link-exchange requests. They are deleted unread, and saying so here is kinder than not replying.</p>
+				</section>
+
+				<section class="im-widget im-widget-fill" aria-labelledby="ct-sub">
+					<h2 class="im-widget-title" id="ct-sub">Or just read along</h2>
+					<p class="im-widget-heading">A post a fortnight. No reply required.</p>
+					{{> "components/subscribe" id="contact-email" button="Join"}}
+				</section>
+			</div>
+		</div>
+	</aside>
+</div>
+
+<section class="im-section im-wrap">
+	<div class="im-prose">
+		<h2>Say what happens after Send</h2>
+		<p>The single biggest improvement to any contact form is one sentence next to the button: who reads it, and how long it takes. Without it a person is posting into a void, and the ones with something worth saying are exactly the ones who decide not to bother.</p>
+
+		<h2>The placeholder does the triage</h2>
+		<p>"What the problem is, roughly when, and roughly what you have to spend." Three things, asked in the box rather than in three extra fields — a form with nine inputs gets abandoned, and a form with three gets a message that is missing the same information anyway.</p>
+
+		<h2>"Please do not" belongs on the page</h2>
+		<p>Stating what will be deleted unread is kinder than silently deleting it, and it is the cheapest spam filter there is.</p>
+		<div class="im-table-scroll">
+		<table>
+			<thead><tr><th>Block</th><th>Built from</th></tr></thead>
+			<tbody>
+				<tr><td>The form</td><td><a href="/forms/fields/">Fields</a> — <code>im-field</code>, <code>im-form-row</code>, <code>im-fieldset</code>, <code>im-choice</code>, <code>im-hint</code>.</td></tr>
+				<tr><td>What happens next</td><td><code>im-auth-note</code>, the same block the <a href="/pages/auth/">sign-in card</a> uses for its surprise.</td></tr>
+				<tr><td>Before you write</td><td><a href="/components/disclosure/">Disclosures</a>. Three answers that mean the form is never sent.</td></tr>
+				<tr><td>The rail</td><td>Faster routes, elsewhere, and what not to send.</td></tr>
+			</tbody>
+		</table>
+		</div>
+		<p>Ghost has no form handler, so the <code>action</code> goes to whatever the site uses — a Worker, a form service, a mailto as a last resort. Nothing here assumes one.</p>
+	</div>
+</section>

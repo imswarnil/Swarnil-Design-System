@@ -33,7 +33,7 @@ source: src/components/commerce.css
 			</div>
 		</div>
 
-		<div class="im-repos" id="shop" style="--im-repos-min: 20rem">
+		<div class="im-products" id="shop" style="--im-products-min: 20rem">
 			{{#each demo.shop}}
 			<article class="im-product">
 				<span class="im-product-media">
@@ -42,6 +42,7 @@ source: src/components/commerce.css
 				</span>
 				<p><span class="im-kind">{{icon "package"}}{{kind}}</span></p>
 				<h3><a class="im-product-name" href="/collections/shop/product/">{{name}}</a></h3>
+				<p class="im-rating" style="--im-rating: {{rating}}"><span class="im-rating-stars" aria-hidden="true"></span><span class="im-rating-value">{{rating}}</span><a class="im-rating-count" href="/collections/shop/product/#reviews">{{reviews}} reviews</a></p>
 				<p class="im-product-text">{{text}}</p>
 				<p class="im-product-foot">
 					<span class="im-price{{#if free}} im-price-free{{/if}}">{{cost}}{{#if was}}<span class="im-price-was">{{was}}</span>{{/if}}</span>

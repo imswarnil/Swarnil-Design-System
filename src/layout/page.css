@@ -296,3 +296,27 @@
 		max-height: none;
 	}
 }
+
+/* The about page's head: a face beside a claim. It stacks under 40rem
+   because a 7rem portrait next to two lines of type is a stamp, not a
+   header — and because the claim is the part that has to be read first. */
+.im-abouthero {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr);
+	gap: clamp(1rem, 0.6rem + 1.6vw, 2rem);
+	align-items: center;
+}
+
+.im-abouthero-face {
+	width: clamp(5rem, 3.5rem + 5vw, 8.5rem);
+	aspect-ratio: 1;
+	border-radius: var(--im-radius-2xl);
+	object-fit: cover;
+	background-color: var(--im-surface-2);
+}
+
+@media (width < 40rem) {
+	.im-abouthero {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}

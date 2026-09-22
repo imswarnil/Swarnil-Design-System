@@ -550,19 +550,62 @@
 	text-decoration: none;
 }
 
-.im-tagcard-name::before {
-	content: "";
+/* An icon, not a dot. A coloured dot beside eighteen topics is a colour
+   chart nobody has the key to; a glyph says what the topic IS before the
+   word is read, and the colour then has something to belong to. */
+.im-tagcard-name > .im-icon {
 	flex: none;
-	width: 0.625rem;
-	height: 0.625rem;
-	border-radius: 50%;
-	background-color: var(--im-tag-dot, var(--im-accent));
+	color: var(--im-tag-dot, var(--im-accent));
+	font-size: 1.125rem;
 }
 
 .im-tagcard-name::after {
 	content: "";
 	position: absolute;
 	inset: 0;
+	z-index: 1;
+}
+
+/* The count, set at the card's full height and allowed to run off its
+   corner. It is decoration that is also information: the biggest numeral on
+   the page belongs to the biggest topic, and you can see that from across the
+   room without reading anything.
+
+   `overflow: hidden` on the card is what cuts it — the numeral is not
+   positioned to avoid the edge, it is positioned THROUGH it. */
+.im-tagcard {
+	overflow: hidden;
+}
+
+.im-tagcard-figure {
+	position: absolute;
+	right: -0.5rem;
+	bottom: -1.125rem;
+	z-index: 0;
+	color: var(--im-tag-dot, var(--im-accent));
+	font-family: var(--im-font-pixel, var(--im-font-mono));
+	font-size: 5.5rem;
+	font-variant-numeric: tabular-nums;
+	line-height: 1;
+	letter-spacing: -0.04em;
+	opacity: 0.16;
+	pointer-events: none;
+	transition: opacity var(--im-duration-fast) var(--im-ease-out), scale var(--im-duration-fast) var(--im-ease-out);
+}
+
+.im-tagcard:is(:hover, :focus-within) .im-tagcard-figure {
+	opacity: 0.26;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.im-tagcard:is(:hover, :focus-within) .im-tagcard-figure {
+		scale: 1.06;
+	}
+}
+
+/* Everything else sits above it. */
+.im-tagcard > :not(.im-tagcard-figure) {
+	position: relative;
 	z-index: 1;
 }
 
@@ -578,6 +621,64 @@
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(min(15rem, 100%), 1fr));
 	gap: 0.75rem;
+}
+
+/* ---- how a collection is drawn ----------------------------------------
+   One data attribute on the container swaps grid for list for plain. It is
+   an attribute rather than three classes so a script that remembers the
+   reader's choice writes ONE value, and so a page can be served with the
+   choice already in it.
+
+     <div class="im-feed" data-view="list">
+
+   There is no fourth option. Three is already the point at which a reader
+   stops choosing and starts wondering which one is right. */
+[data-view="list"].im-tagcards,
+[data-view="plain"].im-tagcards {
+	grid-template-columns: minmax(0, 1fr);
+	gap: 0;
+}
+
+[data-view="list"].im-tagcards > .im-tagcard {
+	flex-direction: row;
+	align-items: center;
+	border-radius: 0;
+	box-shadow: none;
+	border-bottom: 1px solid var(--im-line);
+}
+
+[data-view="list"].im-tagcards > .im-tagcard > .im-tagcard-text {
+	flex: 1;
+	margin-left: 1rem;
+}
+
+/* Plain: the title and nothing else. For somebody who already knows what
+   they are looking for and wants the whole list on one screen. */
+[data-view="plain"].im-tagcards > .im-tagcard {
+	flex-direction: row;
+	align-items: baseline;
+	gap: 0.75rem;
+	padding: 0.4375rem 0.5rem;
+	border-radius: var(--im-radius-sm);
+	box-shadow: none;
+}
+
+[data-view="plain"].im-tagcards > .im-tagcard > .im-tagcard-text,
+[data-view="plain"].im-tagcards > .im-tagcard > .im-tagcard-figure {
+	display: none;
+}
+
+[data-view="plain"].im-tagcards > .im-tagcard .im-tagcard-name {
+	font-size: var(--im-text-base);
+}
+
+/* The switch itself: the button group, with the chosen one pressed. */
+.im-viewswitch {
+	display: inline-flex;
+}
+
+.im-viewswitch > .im-btn {
+	flex: none;
 }
 
 /* ---- the tag page's head ----

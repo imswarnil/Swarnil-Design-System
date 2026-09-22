@@ -1,0 +1,138 @@
+---
+title: Membership
+layout: home
+description: Ghost's tiers, drawn so the difference between them is legible in four seconds — same rows in every column, differences on the same line, one recommendation.
+eyebrow: Pages
+source: src/components/pricing.css
+---
+<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+	<p class="im-eyebrow">Pages · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+</section>
+
+<section class="im-section im-wrap">
+	<header class="im-collhead" style="text-align: center; align-items: center">
+		<p class="im-eyebrow">Membership</p>
+		<h1 class="im-collhead-title">Read everything</h1>
+		<p class="im-collhead-text" style="margin-inline: auto">Most of what I write is free and always will be. The paid tiers are for the long pieces with the numbers in them, and for the people who want the thing to keep existing.</p>
+	</header>
+
+	<div class="im-periods">
+		<div class="im-btn-group" role="group" aria-label="Billing period" data-im-period="#tiers">
+			<button class="im-btn im-btn-sm" type="button" value="month" aria-selected="false">Monthly</button>
+			<button class="im-btn im-btn-sm" type="button" value="year" aria-selected="true">Yearly</button>
+		</div>
+		<span class="im-tier-save">Two months free on yearly</span>
+	</div>
+
+	<div class="im-tiers" id="tiers" data-period="year">
+		<article class="im-tier">
+			<h2 class="im-tier-name">Free</h2>
+			<p class="im-tier-text">Everything public, and the letter.</p>
+			<p class="im-tier-price" data-period="month"><b>€0</b><span>forever</span></p>
+			<p class="im-tier-price" data-period="year"><b>€0</b><span>forever</span></p>
+			<ul class="im-tier-list">
+				<li>Every public post</li>
+				<li>The fortnightly letter</li>
+				<li>The full archive</li>
+				<li data-no>Members-only posts</li>
+				<li data-no>The project logs</li>
+				<li data-no>Source files</li>
+			</ul>
+			<a class="im-btn" href="/pages/auth/">Create a free account</a>
+			<p class="im-tier-note">No card, no expiry.</p>
+		</article>
+
+		<article class="im-tier im-tier-lead">
+			<span class="im-tier-flag">Most people pick this</span>
+			<h2 class="im-tier-name">Supporter</h2>
+			<p class="im-tier-text">The long pieces, the numbers, and the working notes.</p>
+			<p class="im-tier-price" data-period="month"><b>€6</b><span>a month</span></p>
+			<p class="im-tier-price" data-period="year"><b>€60</b><span>a year · two months free</span></p>
+			<ul class="im-tier-list">
+				<li>Everything in Free</li>
+				<li>Members-only posts</li>
+				<li>The full project logs</li>
+				<li>Comments and the thread</li>
+				<li data-no>Source files</li>
+				<li data-no>A call, twice a year</li>
+			</ul>
+			<a class="im-btn im-btn-primary" href="/pages/auth/">Become a supporter</a>
+			<p class="im-tier-note">Cancel in two clicks, keep the year you paid for.</p>
+		</article>
+
+		<article class="im-tier">
+			<h2 class="im-tier-name">Workshop</h2>
+			<p class="im-tier-text">For people building the same things, with the files to prove it.</p>
+			<p class="im-tier-price" data-period="month"><b>€18</b><span>a month</span></p>
+			<p class="im-tier-price" data-period="year"><b>€180</b><span>a year · two months free</span></p>
+			<ul class="im-tier-list">
+				<li>Everything in Supporter</li>
+				<li>Source files for every build</li>
+				<li>The design system, licensed</li>
+				<li>Early access to the themes</li>
+				<li>A call, twice a year</li>
+				<li>Your name in the colophon</li>
+			</ul>
+			<a class="im-btn" href="/pages/auth/">Join the workshop</a>
+			<p class="im-tier-note">Invoiced properly, VAT included.</p>
+		</article>
+	</div>
+</section>
+
+<section class="im-section im-wrap">
+	<h2 class="im-caption" data-index="compare">Exactly what differs</h2>
+	<div class="im-table-scroll">
+	<table class="im-compare">
+		<thead>
+			<tr><th>What</th><th>Free</th><th>Supporter</th><th>Workshop</th></tr>
+		</thead>
+		<tbody>
+			<tr><th>Public posts</th><td data-yes>✓</td><td data-yes>✓</td><td data-yes>✓</td></tr>
+			<tr><th>The letter</th><td data-yes>✓</td><td data-yes>✓</td><td data-yes>✓</td></tr>
+			<tr><th>Members-only posts</th><td>—</td><td data-yes>✓</td><td data-yes>✓</td></tr>
+			<tr><th>Project logs</th><td>—</td><td data-yes>✓</td><td data-yes>✓</td></tr>
+			<tr><th>Comments</th><td>Read</td><td data-yes>Write</td><td data-yes>Write</td></tr>
+			<tr><th>Source files</th><td>—</td><td>—</td><td data-yes>✓</td></tr>
+			<tr><th>Design system licence</th><td>—</td><td>—</td><td data-yes>✓</td></tr>
+			<tr><th>A call</th><td>—</td><td>—</td><td data-yes>Twice a year</td></tr>
+		</tbody>
+	</table>
+	</div>
+</section>
+
+<section class="im-section im-wrap">
+	<h2 class="im-caption" data-index="q">Before you pay</h2>
+	<div class="im-accordion">
+		<details class="im-disclosure"><summary>What happens if I cancel?</summary><div class="im-disclosure-body"><p>You keep everything you paid for until the period ends, and then the account drops to free. Nothing is deleted and you can come back to the same email address.</p></div></details>
+		<details class="im-disclosure"><summary>Is there a refund?</summary><div class="im-disclosure-body"><p>Fourteen days, no reason needed and none asked for. After that, cancelling stops the next payment rather than reversing the last one.</p></div></details>
+		<details class="im-disclosure"><summary>Why is there no password?</summary><div class="im-disclosure-body"><p>Ghost signs members in with a link by email. It works on every device, there is nothing to forget and nothing to leak.</p></div></details>
+		<details class="im-disclosure"><summary>Can I expense it?</summary><div class="im-disclosure-body"><p>Yes — Workshop is invoiced with VAT and a company name if you give one. Supporter can be too; ask.</p></div></details>
+	</div>
+</section>
+
+<section class="im-section im-wrap">
+	<div class="im-prose">
+		<h2>Three cards answer "which one", a table answers "what exactly"</h2>
+		<p>A site with tiers needs both. The cards are read first and fast, so every column has <strong>the same number of rows</strong> and the differences fall on the <strong>same lines</strong> — which is only possible if a tier lists what it does <em>not</em> include rather than omitting the row. A missing row is read as an oversight; a struck one is read as an answer.</p>
+
+		<h2>The recommended tier fills, it does not grow</h2>
+		<p><code>im-tier-lead</code> is a surface and a heavier frame. Scaling it up by 5% — the usual trick — breaks the alignment of every row inside it, which is the one thing the set exists to provide.</p>
+
+		<h2>Both prices are in the markup</h2>
+		<p>The monthly and yearly figures are both there and CSS shows one, keyed off <code>data-period</code> on the container. Nothing is computed, nothing is fetched, and the page is correct before any script runs — so there is no moment where the button says "yearly" and the number is still monthly.</p>
+		<div class="im-table-scroll">
+		<table>
+			<thead><tr><th>Class</th><th></th></tr></thead>
+			<tbody>
+				<tr><td><code>im-tiers[data-period]</code></td><td>The set. <code>month</code> or <code>year</code>.</td></tr>
+				<tr><td><code>im-tier-lead</code> · <code>im-tier-flag</code></td><td>The recommendation, marked once.</td></tr>
+				<tr><td><code>im-tier-list > li[data-no]</code></td><td>Not included — listed, struck, and kept on its line.</td></tr>
+				<tr><td><code>im-compare</code></td><td>The table underneath, for the second read.</td></tr>
+			</tbody>
+		</table>
+		</div>
+		<p>In a theme the columns come from <code>{{"{{#get \"tiers\"}}"}}</code> and the prices from <code>{{"{{price}}"}}</code>; Ghost gives up to three paid tiers plus free, which is exactly what this grid is sized for.</p>
+	</div>
+</section>

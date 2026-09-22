@@ -17,7 +17,7 @@ source: src/components/ad.css · commerce.css
 			<p class="im-eyebrow">Uses</p>
 			<h1 class="im-collhead-title">What I actually use</h1>
 			<p class="im-collhead-text">Everything here I own, paid for, and have used long enough to have an opinion about. If it is on this page it survived at least a year.</p>
-			<p class="im-collhead-meta"><span>{{demo.uses.length}} things</span><span>Updated September 2026</span></p>
+			<p class="im-collhead-meta"><span>{{demo.uses.length}} things</span><span>{{demo.usegroups.length}} groups</span><span>Updated September 2026</span></p>
 		</header>
 
 		<div class="im-callout im-callout-info">
@@ -34,24 +34,34 @@ source: src/components/ad.css · commerce.css
 			</div>
 		</div>
 
-		<div class="im-affiliates" id="uses">
-			{{#each demo.uses}}
-			<article class="im-affiliate">
-				<span class="im-affiliate-media"><img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy"></span>
-				<a class="im-affiliate-name" href="#uses" rel="sponsored noopener">{{name}}</a>
-				<p class="im-affiliate-by">{{by}}</p>
-				<p class="im-affiliate-text">{{text}}</p>
-				<p class="im-affiliate-meta">
-					<span class="im-affiliate-price">{{cost}}</span>
-					{{#if was}}<span class="im-affiliate-was">{{was}}</span>{{/if}}
-					<span class="im-badge im-badge-success">Still using it</span>
-				</p>
-				<div class="im-affiliate-actions">
-					<a class="im-btn im-btn-primary im-btn-sm" href="#uses" rel="sponsored noopener">Where I got it {{icon "arrow-up-right"}}</a>
-					<a class="im-btn im-btn-sm" href="/collections/post/article/">Why this one</a>
+		<div class="im-stack" id="uses" style="--im-stack-gap: 2.25rem">
+			{{#each demo.usegroups}}
+			<section class="im-usegroup">
+				<header class="im-usegroup-head">
+					<h2 class="im-usegroup-title">{{icon mark}}{{name}}</h2>
+					<p class="im-usegroup-text">{{text}}</p>
+				</header>
+				<div class="im-affiliates">
+					{{#each ../demo.uses}}{{#match group "=" ../tag}}
+					<article class="im-affiliate">
+						<span class="im-affiliate-media im-thumb"><img src="{{lookup ../../demo.shots @index}}" alt="" loading="lazy"></span>
+						<a class="im-affiliate-name" href="/collections/uses/page/" rel="sponsored noopener">{{name}}</a>
+						<p class="im-affiliate-by">{{by}}</p>
+						<p class="im-affiliate-text">{{text}}</p>
+						<p class="im-affiliate-meta">
+							<span class="im-affiliate-price">{{cost}}</span>
+							{{#if was}}<span class="im-affiliate-was">{{was}}</span>{{/if}}
+							{{#match verdict "=" "Gone"}}<span class="im-badge">Gone</span>{{else}}<span class="im-badge im-badge-success">Still using it</span>{{/match}}
+							<span class="im-affiliate-mark" title="Affiliate link — I earn a little if you buy, at no cost to you">{{icon "info"}}Affiliate</span>
+						</p>
+						<p class="im-affiliate-actions">
+							<a class="im-btn im-btn-primary im-btn-sm" href="#uses" rel="sponsored noopener">Where I got it {{icon "arrow-up-right"}}</a>
+							<a class="im-card-cta" href="/collections/uses/page/">How I use it {{icon "arrow-right"}}</a>
+						</p>
+					</article>
+					{{/match}}{{/each}}
 				</div>
-				<p class="im-affiliate-note">Affiliate link — I earn a little if you buy, at no cost to you</p>
-			</article>
+			</section>
 			{{/each}}
 		</div>
 

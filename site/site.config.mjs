@@ -296,6 +296,18 @@ export const navigation = [
 		],
 	},
 	{
+		title: 'Pages',
+		icon: 'file-text',
+		items: [
+			{ label: 'About', url: '/pages/about/' },
+			{ label: 'Now', url: '/pages/now/' },
+			{ label: 'Contact', url: '/pages/contact/' },
+			{ label: 'Membership', url: '/pages/membership/' },
+			{ label: 'Sign in / Sign up', url: '/pages/auth/' },
+			{ label: 'Sitemap', url: '/pages/sitemap/' },
+		],
+	},
+	{
 		title: 'Guides',
 		icon: 'book-open',
 		items: [

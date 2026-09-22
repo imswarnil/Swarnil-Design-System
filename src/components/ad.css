@@ -551,13 +551,17 @@
 /* ---- affiliate product card ----
    A thing you recommend and are paid for. Everything a reader needs to decide
    is on the card, including that last part. */
+/* Five stacked rows made this card as tall as a post card, which is wrong:
+   it is a LINE ITEM, and a page of them should read as a list of things
+   somebody owns. The text is clamped, the disclosure moved into the meta row
+   as a mark, and the second action is a quiet link rather than a button. */
 .im-affiliate {
 	position: relative;
 	display: grid;
-	grid-template-columns: 6.5rem minmax(0, 1fr);
-	gap: 0.25rem 1.125rem;
+	grid-template-columns: 5.5rem minmax(0, 1fr);
+	gap: 0.1875rem 1rem;
 	align-items: start;
-	padding: 1.125rem;
+	padding: 0.875rem 1rem;
 	border: 1px solid var(--im-line);
 	border-radius: var(--im-radius-lg);
 	color: var(--im-body);
@@ -565,7 +569,7 @@
 }
 
 .im-affiliate-media {
-	grid-row: 1 / span 5;
+	grid-row: 1 / -1;
 	display: grid;
 	place-items: center;
 	aspect-ratio: 1;
@@ -599,6 +603,10 @@
 }
 
 .im-affiliate-text {
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
 	padding-top: 0.25rem;
 	text-wrap: pretty;
 }
@@ -655,6 +663,10 @@
 	.im-affiliate-media {
 		grid-row: auto;
 		aspect-ratio: 16 / 9;
+	}
+
+	.im-affiliate-actions {
+		grid-column: 1;
 	}
 }
 
@@ -835,4 +847,72 @@
 		animation: none;
 		width: 100%;
 	}
+}
+
+/* The disclosure, as a mark in the meta row rather than a line of its own.
+   It still says the same thing and it still comes before the link — it just
+   does not cost the card a row. `title` carries the long form. */
+.im-affiliate-mark {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.3125rem;
+	color: var(--im-faint);
+	font-size: var(--im-text-xs);
+	cursor: help;
+}
+
+.im-affiliate-mark > .im-icon {
+	font-size: 0.875rem;
+}
+
+/* The actions stay in the text column: the media spans every row, so a row
+   that does not say which column it is in lands under the picture. */
+.im-affiliate-actions {
+	grid-column: 2;
+	align-items: center;
+	margin-top: 0.375rem;
+}
+
+/* A group of things, with its own heading — "the desk", "the camera bag".
+   A page of forty unsorted objects is an inventory; four groups of ten is a
+   page somebody reads. */
+.im-usegroup {
+	display: flex;
+	flex-direction: column;
+	gap: 0.875rem;
+}
+
+.im-usegroup-head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 0.5rem 0.75rem;
+	padding-bottom: 0.625rem;
+	border-bottom: 1px solid var(--im-line);
+}
+
+.im-usegroup-title {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	color: var(--im-ink);
+	font-size: var(--im-text-h5);
+	font-weight: 600;
+	letter-spacing: var(--im-tracking-tight);
+}
+
+.im-usegroup-title > .im-icon {
+	color: var(--im-accent);
+}
+
+.im-usegroup-count {
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+}
+
+.im-usegroup-text {
+	flex: 1 1 18rem;
+	color: var(--im-muted);
+	font-size: var(--im-text-sm);
 }

@@ -17,16 +17,24 @@ source: src/components/collection.css · tag.css
 			<p class="im-eyebrow">Index</p>
 			<h1 class="im-collhead-title">Topics</h1>
 			<p class="im-collhead-text">Everything here, sorted by what it is about. A tag with three posts in it is a tag that should not exist — these are the ones that earned their name.</p>
-			<p class="im-collhead-meta"><span>{{fixtures.tags.length}} topics</span><span>{{fixtures.posts.length}} posts</span></p>
+			<p class="im-collhead-meta"><span>{{demo.topics.length}} topics</span><span>{{fixtures.posts.length}} posts</span></p>
 		</header>
 
-		<section class="im-section">
-			<div class="im-tagcards">
-				{{#each fixtures.tags}}
-				<article class="im-tagcard" style="--im-tag-dot: {{#match @index "=" 0}}#ff5a1f{{else}}{{#match @index "=" 1}}#3178c6{{else}}{{#match @index "=" 2}}#4ac26b{{else}}{{#match @index "=" 3}}#a855f7{{else}}#f59e0b{{/match}}{{/match}}{{/match}}{{/match}}">
-					<a class="im-tagcard-name" href="/collections/tag/page/">{{name}}<span class="im-tagcard-count">{{count.posts}}</span></a>
-					<p>Everything filed under {{name}}.</p>
-					<p><span class="im-kind" data-kind="tag">{{icon "tag"}}Topic</span></p>
+		<section class="im-section" style="--im-section-gap: 1rem">
+			<div class="im-collbar">
+				<p class="im-caption" data-index="topics" style="margin: 0">Every topic</p>
+				<div class="im-btn-group im-viewswitch" role="group" aria-label="How to draw the list" data-im-view="#topics">
+					<button class="im-btn im-btn-sm" type="button" value="grid" aria-pressed="true">{{icon "grid-2x2"}}Grid</button>
+					<button class="im-btn im-btn-sm" type="button" value="list" aria-pressed="false">{{icon "rows-3"}}List</button>
+					<button class="im-btn im-btn-sm" type="button" value="plain" aria-pressed="false">{{icon "list"}}Plain</button>
+				</div>
+			</div>
+			<div class="im-tagcards" id="topics" data-view="grid">
+				{{#each demo.topics}}
+				<article class="im-tagcard" style="--im-tag-dot: {{color}}">
+					<span class="im-tagcard-figure" aria-hidden="true">{{count.posts}}</span>
+					<a class="im-tagcard-name" href="/collections/tag/page/">{{icon mark}}{{name}}<span class="im-tagcard-count">{{count.posts}}</span></a>
+					<p class="im-tagcard-text">{{text}}</p>
 				</article>
 				{{/each}}
 			</div>
@@ -137,7 +145,9 @@ source: src/components/collection.css · tag.css
 				<tr><td><code>im-archive</code></td><td>The whole list, grouped by year.</td></tr>
 				<tr><td><code>im-archive-year</code> · <code>-head</code></td><td>One year and its heading — the year in Geist Pixel, with the count beside it.</td></tr>
 				<tr><td><code>im-archive-row</code></td><td>Date, title, kind. Rows, not cards: an archive is for finding a thing you half remember, and forty pictures do not help with that.</td></tr>
-				<tr><td><code>im-tagcards</code> · <code>im-tagcard</code></td><td>The topic index. The dot is the tag's own colour, from <code>--im-tag-dot</code>.</td></tr>
+				<tr><td><code>im-tagcards</code> · <code>im-tagcard</code></td><td>The topic index. Each topic has an <strong>icon</strong> and a colour (<code>--im-tag-dot</code>) — not a dot: eighteen coloured dots is a colour chart nobody has the key to, and a glyph says what a topic <em>is</em> before its name is read.</td></tr>
+				<tr><td><code>im-tagcard-figure</code></td><td>The count, set at the card's full height and running off its corner. The card clips it. It is decoration that is also information — the biggest numeral belongs to the biggest topic, readable from across the room.</td></tr>
+				<tr><td><code>data-view</code></td><td><code>grid</code> · <code>list</code> · <code>plain</code>. One attribute on the container, set by the button group above it and remembered per collection.</td></tr>
 			</tbody>
 		</table>
 		</div>

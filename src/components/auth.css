@@ -1,0 +1,183 @@
+/* Auth — one card, two jobs.
+
+     <div class="im-auth" data-mode="in">
+       <div class="im-auth-switch" role="tablist"> … Sign in | Sign up … </div>
+       <form class="im-auth-form"> … </form>
+     </div>
+
+   Sign in and sign up are the SAME page with a switch, not two pages. Three
+   reasons, and all three are about the reader rather than about the code:
+
+   1. Most people arriving do not know which one they are. "I think I already
+      have an account" is the single most common state, and a switch answers
+      it without a round trip.
+   2. Ghost's members flow is one field — an email address — for both. Two
+      pages to collect one field is two pages too many.
+   3. A person who lands on the wrong one and has to find the link to the
+      other one, at the bottom, in small type, often simply leaves.
+
+   The mode lives in `data-mode` on the card, so the server can render either
+   one and the switch only changes an attribute. */
+
+.im-auth {
+	--im-auth-width: 25rem;
+
+	display: flex;
+	flex-direction: column;
+	gap: 1.25rem;
+	width: min(var(--im-auth-width), 100%);
+	margin-inline: auto;
+	padding: clamp(1.5rem, 1.1rem + 1.4vw, 2.25rem);
+	border-radius: var(--im-radius-2xl);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	background-color: var(--im-canvas);
+}
+
+.im-auth-head {
+	display: grid;
+	justify-items: center;
+	gap: 0.375rem;
+	text-align: center;
+}
+
+.im-auth-title {
+	color: var(--im-ink);
+	font-size: var(--im-text-h4);
+	font-weight: 600;
+	line-height: var(--im-leading-h4);
+	letter-spacing: var(--im-tracking-tight);
+}
+
+.im-auth-text {
+	color: var(--im-muted);
+	font-size: var(--im-text-sm);
+	text-wrap: pretty;
+}
+
+/* The switch. A segmented control rather than a link, because both states
+   are here — nothing navigates and nothing reloads. */
+.im-auth-switch {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 0.25rem;
+	padding: 0.25rem;
+	border-radius: var(--im-radius-full);
+	background-color: var(--im-surface);
+}
+
+.im-auth-switch > button {
+	padding: 0.4375rem 0.75rem;
+	border-radius: var(--im-radius-full);
+	color: var(--im-muted);
+	font-size: var(--im-text-sm);
+	font-weight: 500;
+	cursor: pointer;
+	transition: background-color var(--im-duration-fast) var(--im-ease-out), color var(--im-duration-fast) var(--im-ease-out);
+}
+
+.im-auth-switch > button:hover {
+	color: var(--im-ink);
+}
+
+/* The same two-part active state the whole system uses: a fill and a heavier
+   label. Not an underline, not a colour. */
+.im-auth-switch > button[aria-selected="true"] {
+	background-color: var(--im-canvas);
+	box-shadow: var(--im-shadow-float);
+	color: var(--im-current-fg);
+	font-weight: var(--im-current-weight);
+}
+
+/* What each mode shows. Everything is in the markup; the attribute decides. */
+.im-auth [data-when] {
+	display: none;
+}
+
+.im-auth[data-mode="in"] [data-when~="in"],
+.im-auth[data-mode="up"] [data-when~="up"] {
+	display: revert;
+}
+
+.im-auth[data-mode="in"] .im-auth-form [data-when~="in"],
+.im-auth[data-mode="up"] .im-auth-form [data-when~="up"] {
+	display: grid;
+}
+
+.im-auth-form {
+	display: grid;
+	gap: 0.875rem;
+}
+
+.im-auth-form .im-btn {
+	width: 100%;
+}
+
+/* "or" between the email form and the social buttons — a rule with a word
+   in the middle of it, drawn without a wrapper element. */
+.im-auth-or {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	color: var(--im-faint);
+	font-size: var(--im-text-xs);
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+}
+
+.im-auth-or::before,
+.im-auth-or::after {
+	content: "";
+	flex: 1;
+	height: 1px;
+	background-color: var(--im-line);
+}
+
+.im-auth-social {
+	display: grid;
+	gap: 0.5rem;
+}
+
+.im-auth-social > .im-btn {
+	width: 100%;
+	justify-content: center;
+}
+
+.im-auth-foot {
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+	text-align: center;
+	text-wrap: pretty;
+}
+
+.im-auth-foot a {
+	color: var(--im-ink);
+}
+
+/* Ghost sends a link rather than taking a password. Say so where the button
+   is, not in a paragraph underneath it — it is the one thing that surprises
+   people, and a surprised person abandons a form. */
+.im-auth-note {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.5rem;
+	padding: 0.625rem 0.75rem;
+	border-radius: var(--im-radius-md);
+	background-color: var(--im-info-tint);
+	color: var(--im-body);
+	font-size: var(--im-text-xs);
+	line-height: 1.5;
+}
+
+.im-auth-note > .im-icon {
+	flex: none;
+	margin-top: 0.0625rem;
+	color: var(--im-info);
+}
+
+/* The page it sits on: centred in the window, with nothing else on it. */
+.im-authpage {
+	display: grid;
+	place-items: center;
+	min-height: calc(100dvh - var(--im-bar-height));
+	padding: clamp(1.5rem, 4vh, 3rem) var(--im-gutter);
+}

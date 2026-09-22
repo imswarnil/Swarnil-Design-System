@@ -1,0 +1,96 @@
+---
+title: Sign in / Sign up
+layout: home
+description: One card, two jobs. Most people arriving do not know which one they are, and a switch answers that without a round trip.
+eyebrow: Pages
+source: src/components/auth.css
+---
+<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+	<p class="im-eyebrow">Pages · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+</section>
+
+<section class="im-section im-wrap">
+	<div class="im-auth" id="auth" data-mode="in">
+		<div class="im-auth-head">
+			{{> "components/logo" size="1.5rem"}}
+			<h1 class="im-auth-title"><span data-when="in">Welcome back</span><span data-when="up">Start reading</span></h1>
+			<p class="im-auth-text"><span data-when="in">Sign in to pick up where you left off.</span><span data-when="up">Free. One email a fortnight, and every members-only post.</span></p>
+		</div>
+
+		<div class="im-auth-switch" role="tablist" aria-label="Sign in or sign up" data-im-mode="#auth">
+			<button type="button" role="tab" value="in" aria-selected="true" aria-controls="auth-form">Sign in</button>
+			<button type="button" role="tab" value="up" aria-selected="false" aria-controls="auth-form">Sign up</button>
+		</div>
+
+		<form class="im-auth-form" id="auth-form" data-members-form="signin">
+			<div class="im-field" data-when="up">
+				<label class="im-label" for="auth-name">Name</label>
+				<input class="im-input" id="auth-name" type="text" name="name" autocomplete="name" placeholder="How you would like to be greeted">
+			</div>
+
+			<div class="im-field">
+				<label class="im-label" for="auth-email">Email</label>
+				<input class="im-input" id="auth-email" type="email" name="email" autocomplete="email" required placeholder="you@example.com" data-members-email>
+			</div>
+
+			<p class="im-auth-note">{{icon "mail"}}<span>No password. We send a link that signs you in — it works on every device and there is nothing to forget.</span></p>
+
+			<button class="im-btn im-btn-primary" type="submit"><span data-when="in">Email me a link</span><span data-when="up">Create my account</span></button>
+		</form>
+
+		<p class="im-auth-or">or</p>
+
+		<div class="im-auth-social">
+			<button class="im-btn" type="button">{{icon "brand-github"}}Continue with GitHub</button>
+			<button class="im-btn" type="button">{{icon "at-sign"}}Continue with a passkey</button>
+		</div>
+
+		<p class="im-auth-foot">
+			<span data-when="in">No account yet? Use the switch above — it is the same form.</span>
+			<span data-when="up">By signing up you agree to the <a href="/pages/about/">terms</a>. We do not sell anything to anybody, ever.</span>
+		</p>
+	</div>
+</section>
+
+<section class="im-section im-wrap">
+	<div class="im-prose">
+		<h2>One page, not two</h2>
+		<p>Sign in and sign up are the same page with a switch. Three reasons, all of them about the reader:</p>
+		<ol>
+			<li><strong>Most people do not know which one they are.</strong> "I think I already have an account" is the commonest state a person arrives in, and a switch answers it without a round trip.</li>
+			<li><strong>Ghost's members flow is one field.</strong> An email address, for both. Two pages to collect one field is two pages too many.</li>
+			<li><strong>The wrong page loses people.</strong> Somebody who lands on sign-in, needs sign-up, and has to find a link at the bottom in small type often simply leaves.</li>
+		</ol>
+
+		<h2>Both states are in the markup</h2>
+		<p><code>data-mode</code> on the card decides which is shown; everything else is <code>data-when="in"</code> or <code>data-when="up"</code> and CSS does the rest. So the server can render either one, the page is correct before any script runs, and the switch only ever writes one attribute — there is no way to end up half-switched with the sign-up heading over the sign-in button.</p>
+
+		<h2>Say "no password" next to the button</h2>
+		<p>It is the one thing that surprises people about Ghost's flow, and a surprised person abandons a form. The note goes where the button is, not in a paragraph underneath it that nobody reads until afterwards.</p>
+		<div class="im-table-scroll">
+		<table>
+			<thead><tr><th>Class</th><th></th></tr></thead>
+			<tbody>
+				<tr><td><code>im-auth</code></td><td>The card. <code>data-mode="in" | "up"</code>.</td></tr>
+				<tr><td><code>im-auth-switch</code></td><td>The segmented control. Same fill-and-weight active state as the rest of the system.</td></tr>
+				<tr><td><code>data-when</code></td><td>Which mode an element belongs to. Space-separated for both.</td></tr>
+				<tr><td><code>im-auth-note</code></td><td>The thing that would otherwise surprise somebody.</td></tr>
+				<tr><td><code>im-authpage</code></td><td>The page wrapper when the card is the only thing on it — centred in the window, no chrome.</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<h2>In a theme</h2>
+		{{{{code "hbs"}}}}
+{{!-- signin.hbs and signup.hbs are the same file with a different mode. --}}
+<div class="im-auth" data-mode="{{#is "signup"}}up{{else}}in{{/is}}">
+	<form class="im-auth-form" data-members-form="signin">
+		<input type="email" name="email" required data-members-email>
+		<button class="im-btn im-btn-primary" type="submit">{{t "Continue"}}</button>
+	</form>
+</div>
+		{{{{/code}}}}
+	</div>
+</section>

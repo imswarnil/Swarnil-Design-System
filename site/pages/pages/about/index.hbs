@@ -1,0 +1,129 @@
+---
+title: About page
+layout: home
+description: The page that answers "who is this" in the first sentence and proves it in the next ten. A picture, a claim, the evidence, and one way to get in touch.
+eyebrow: Pages
+source: src/layout/page.css · components/widget.css
+---
+<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+	<p class="im-eyebrow">Pages · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+</section>
+
+<div class="im-single im-wrap-wide" data-sidebar="on" style="--im-single-aside: 20rem">
+	<article class="im-stack" style="--im-stack-gap: 2rem">
+		<header class="im-abouthero">
+			<img class="im-abouthero-face" src="{{demo.author.profile_image}}" alt="" loading="eager">
+			<div class="im-stack" style="--im-stack-gap: .75rem">
+				<p class="im-eyebrow">About</p>
+				<h1 class="im-collhead-title">I build things for the web and write down what they cost.</h1>
+				<p class="im-lede" style="margin: 0">Eight years of Salesforce consulting, four of them freelance, and a design system I am selling because I got tired of paying for ones I could not modify. Currently in Amsterdam.</p>
+				<p class="im-cluster" style="--im-cluster-gap: .5rem">
+					<a class="im-btn im-btn-primary im-btn-sm" href="/pages/contact/">{{icon "mail"}}Get in touch</a>
+					<a class="im-btn im-btn-sm" href="/pages/now/">{{icon "zap"}}What I am doing now</a>
+					<a class="im-btn im-btn-sm" href="#">{{icon "download"}}CV</a>
+				</p>
+			</div>
+		</header>
+
+		<div class="im-expstats">
+			<span><strong>8</strong>Years</span>
+			<span><strong>{{demo.projects.length}}</strong>Projects</span>
+			<span><strong>34</strong>Posts this year</span>
+			<span><strong>4,210</strong>Readers</span>
+			<span><strong>6</strong>Countries</span>
+		</div>
+
+		<section class="im-content im-content-flush im-content-lede">
+			<p>I started writing this site because I kept answering the same questions in Slack and wanted somewhere to point. It turned into the thing I am best known for, which was not the plan and has been better than the plan.</p>
+		</section>
+
+		<section class="im-content im-content-flush">
+			<h2>What I actually do</h2>
+			<p>Three things, in the order I spend time on them. <strong>Salesforce consulting</strong> — eight years, mostly public sector, mostly the projects that are already late when I arrive. <strong>Design systems and Ghost themes</strong> — this one, and the theme this site runs on, both of which are for sale. <strong>Writing</strong> — a post a fortnight and a letter to go with it.</p>
+
+			<h2>How I work</h2>
+			<ul>
+				<li><strong>Two days a week, six weeks at a time.</strong> Anything longer and I become staff, which is not what either of us is paying for.</li>
+				<li><strong>Written down, always.</strong> Every engagement ends with a document somebody who was not there can act on.</li>
+				<li><strong>I will tell you not to do it.</strong> Roughly a third of the conversations I have end with "you do not need me for this", and those are the ones that turn into the next referral.</li>
+			</ul>
+
+			<h2>Before this</h2>
+			<p>A degree I do not use, four years inside a consultancy learning what not to do, and one startup that did not survive contact with its own market. The <a href="/collections/timeline/">timeline</a> has the rest of it in order.</p>
+
+			<h2>The site itself</h2>
+			<p>Ghost, on a theme I wrote, on a design system I wrote. No third-party scripts, no tracking, no cookie banner because there is nothing to consent to. The <a href="/provenance/">colophon</a> lists every dependency and its licence.</p>
+		</section>
+
+		<section class="im-section" style="--im-section-gap: 1rem">
+			<h2 class="im-caption" data-index="work">Selected work</h2>
+			<div class="im-repos" style="--im-repos-min: 18rem">
+				{{#each demo.projects}}{{#match @index "<" 3}}{{> "components/repo-card" cta=true}}{{/match}}{{/each}}
+			</div>
+		</section>
+	</article>
+
+	<aside>
+		<div class="im-sticky-rail">
+			<div class="im-widgets">
+				<section class="im-widget" aria-labelledby="ab-now">
+					<h2 class="im-widget-title" id="ab-now">Right now <a href="/pages/now/">More</a></h2>
+					<ul class="im-widget-now">
+						<li>{{icon "component"}}<span>Building <b>Im Design System v0.7</b>.</span></li>
+						<li>{{icon "map-pin"}}<span>In <b>Amsterdam</b> until February.</span></li>
+						<li>{{icon "book-open"}}<span>Reading <b>The Timeless Way of Building</b>.</span></li>
+					</ul>
+				</section>
+
+				<section class="im-widget im-widget-hire" aria-labelledby="ab-hire">
+					<h2 class="im-widget-title" id="ab-hire">Hire me</h2>
+					<p class="im-widget-hire-state" data-state="available">Two days a week, from November</p>
+					<ul class="im-widget-hire-list">
+						<li>{{icon "component"}}<span>Design systems and the Ghost themes on top of them.</span></li>
+						<li>{{icon "gauge"}}<span>Making a slow site fast, with the numbers to show it.</span></li>
+					</ul>
+					<a class="im-btn im-btn-primary im-btn-sm" href="/pages/contact/">{{icon "mail"}}Start a conversation</a>
+				</section>
+
+				<section class="im-widget" aria-labelledby="ab-where">
+					<h2 class="im-widget-title" id="ab-where">Elsewhere</h2>
+					<ul class="im-widget-list">
+						<li><a href="#">GitHub<small>Everything open</small></a></li>
+						<li><a href="#">LinkedIn<small>The formal version</small></a></li>
+						<li><a href="#">YouTube<small>128k subscribers</small></a></li>
+					</ul>
+				</section>
+
+				<section class="im-widget im-widget-fill" aria-labelledby="ab-sub">
+					<h2 class="im-widget-title" id="ab-sub">The letter</h2>
+					<p class="im-widget-heading">A post a fortnight, and what it cost.</p>
+					{{> "components/subscribe" id="about-email" button="Join"}}
+				</section>
+			</div>
+		</div>
+	</aside>
+</div>
+
+<section class="im-section im-wrap">
+	<div class="im-prose">
+		<h2>An about page has one job in its first sentence</h2>
+		<p>Answer "who is this and why should I keep reading". Everything else — the history, the degree, the philosophy — is the second read, and most people never take it.</p>
+		<p>So the order is fixed: <strong>a face</strong>, <strong>one sentence that makes a claim</strong>, <strong>numbers that back it</strong>, <strong>a way to get in touch</strong>, and only then the prose. The numbers row is the part most about pages are missing, and it is the cheapest credibility on the page.</p>
+		<div class="im-table-scroll">
+		<table>
+			<thead><tr><th>Block</th><th>Built from</th></tr></thead>
+			<tbody>
+				<tr><td>The head</td><td><code>im-abouthero</code> — a face beside the claim, stacking under 40rem.</td></tr>
+				<tr><td>The numbers</td><td><code>im-expstats</code>, the same ruled row a <a href="/collections/project/page/">project</a> and a <a href="/collections/travel/trip/">trip</a> use.</td></tr>
+				<tr><td>The rail</td><td>Now, <a href="/collections/project/">hire me</a>, elsewhere, the letter. Not an author card — this page <em>is</em> the author card.</td></tr>
+				<tr><td>The work</td><td><a href="/collections/project/card/">Project cards</a>, three of them, with their CTAs.</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<h2>Write "I will tell you not to do it" somewhere</h2>
+		<p>Not that sentence specifically — the thing it stands for. An about page made entirely of claims about how good somebody is reads as an advertisement. One paragraph that costs the author something is what makes the rest of it believable.</p>
+	</div>
+</section>

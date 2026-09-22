@@ -1,0 +1,151 @@
+/* Sitemap — the whole site as a tree.
+
+     <ul class="im-sitemap">
+       <li><a href="/">Home</a>
+         <ul>
+           <li><a href="/blog/">Writing</a></li>
+         </ul>
+       </li>
+     </ul>
+
+   Drawn with rules rather than with dashes or box-drawing characters, so a
+   screen reader is given a nested list and nothing else, and so the lines are
+   real lines at any zoom. Every rule is one pseudo-element per item: the
+   vertical goes from the top of the item to its centre, the horizontal from
+   the vertical to the label. The LAST child's vertical stops at its centre,
+   which is what closes the branch. */
+
+.im-sitemap {
+	--im-tree-indent: 1.25rem;
+	--im-tree-row: 1.75rem;
+
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	font-size: var(--im-text-sm);
+}
+
+.im-sitemap ul {
+	margin: 0;
+	padding-left: var(--im-tree-indent);
+	list-style: none;
+}
+
+.im-sitemap li {
+	position: relative;
+	padding-left: 1rem;
+}
+
+/* The vertical rule: full height, except on the last item where it stops
+   halfway — that is what makes the branch look finished. */
+.im-sitemap li::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	width: 1px;
+	background-color: var(--im-line);
+}
+
+.im-sitemap li:last-child::before {
+	bottom: auto;
+	height: calc(var(--im-tree-row) / 2);
+}
+
+/* The elbow into the label. */
+.im-sitemap li::after {
+	content: "";
+	position: absolute;
+	top: calc(var(--im-tree-row) / 2);
+	left: 0;
+	width: 0.625rem;
+	height: 1px;
+	background-color: var(--im-line);
+}
+
+/* The outermost level has nothing to hang from. */
+.im-sitemap > li {
+	padding-left: 0;
+}
+
+.im-sitemap > li::before,
+.im-sitemap > li::after {
+	content: none;
+}
+
+.im-sitemap-node {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4375rem;
+	min-height: var(--im-tree-row);
+	padding: 0 0.375rem;
+	margin-left: -0.375rem;
+	border-radius: var(--im-radius-sm);
+	color: var(--im-ink);
+	text-decoration: none;
+	transition: background-color 120ms, color 120ms;
+}
+
+.im-sitemap-node:hover {
+	background-color: var(--im-hover-bg);
+	color: var(--im-accent);
+}
+
+.im-sitemap-node > .im-icon {
+	color: var(--im-muted);
+	font-size: 0.9375rem;
+}
+
+.im-sitemap-node:hover > .im-icon {
+	color: inherit;
+}
+
+/* A branch heading — a folder rather than a page. */
+.im-sitemap-branch {
+	color: var(--im-ink);
+	font-weight: 600;
+}
+
+.im-sitemap-branch > .im-icon {
+	color: var(--im-accent);
+}
+
+/* How many pages are under it. */
+.im-sitemap-count {
+	color: var(--im-faint);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+}
+
+/* A page that is behind the members wall. */
+.im-sitemap-node[data-locked]::after {
+	content: "";
+	width: 0.75rem;
+	height: 0.75rem;
+	background-color: var(--im-warning);
+	-webkit-mask-image: var(--im-lock-glyph);
+	mask-image: var(--im-lock-glyph);
+	-webkit-mask-size: contain;
+	mask-size: contain;
+	-webkit-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+}
+
+/* Two or three columns of the tree on a wide window. `break-inside` keeps a
+   branch whole — a tree split across a column boundary is unreadable. */
+.im-sitemap-cols {
+	columns: var(--im-sitemap-cols, 2);
+	column-gap: 2.5rem;
+}
+
+.im-sitemap-cols > .im-sitemap > li {
+	break-inside: avoid;
+	margin-bottom: 1.5rem;
+}
+
+@media (width < 48rem) {
+	.im-sitemap-cols {
+		columns: 1;
+	}
+}

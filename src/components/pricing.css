@@ -1,0 +1,212 @@
+/* Tiers — Ghost memberships, drawn.
+
+     <div class="im-tiers" data-period="year">
+       <article class="im-tier"> … </article>
+       <article class="im-tier im-tier-lead"> … </article>
+     </div>
+
+   Ghost gives a site up to three paid tiers plus free, and the theme's whole
+   job is to make the difference between them legible in about four seconds.
+   So: the same number of rows in every column, the differences on the SAME
+   line across columns, and the recommended one marked once.
+
+   The monthly / yearly switch sets `data-period` on the container. Both
+   prices are in the markup and CSS shows one — no script has to run for the
+   page to be correct, and switching cannot leave a stale number on screen. */
+
+.im-tiers {
+	--im-tier-min: 17rem;
+
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(var(--im-tier-min), 100%), 1fr));
+	gap: 1rem;
+	align-items: stretch;
+}
+
+.im-tier {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 0.875rem;
+	padding: 1.5rem;
+	border-radius: var(--im-radius-xl);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+}
+
+/* The recommended one. It is a FILL and a heavier frame, not a scale
+   transform: a card that is 5% bigger than its neighbours breaks the
+   alignment of every row inside it, which is the one thing the set exists
+   to provide. */
+.im-tier-lead {
+	background-color: var(--im-surface);
+	box-shadow: inset 0 0 0 2px var(--im-ink);
+}
+
+.im-tier-flag {
+	position: absolute;
+	top: 0;
+	right: 1.25rem;
+	translate: 0 -50%;
+	padding: 0.1875rem 0.625rem;
+	border-radius: var(--im-radius-full);
+	background-color: var(--im-ink);
+	color: var(--im-canvas);
+	font-size: var(--im-text-xs);
+	font-weight: 600;
+}
+
+.im-tier-name {
+	color: var(--im-ink);
+	font-size: var(--im-text-h5);
+	font-weight: 600;
+	letter-spacing: var(--im-tracking-tight);
+}
+
+.im-tier-text {
+	color: var(--im-muted);
+	text-wrap: pretty;
+}
+
+.im-tier-price {
+	display: flex;
+	align-items: baseline;
+	gap: 0.375rem;
+	padding-bottom: 0.875rem;
+	border-bottom: 1px solid var(--im-line);
+	color: var(--im-ink);
+}
+
+.im-tier-price > b {
+	font-family: var(--im-font-heading);
+	font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.5rem);
+	font-weight: 600;
+	line-height: 1;
+	letter-spacing: var(--im-tracking-tight);
+}
+
+.im-tier-price > span {
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+}
+
+/* Both prices are in the markup; the container's period decides which one is
+   shown. Nothing to fetch, nothing to recompute, and no way to display a
+   number that does not match the button. */
+.im-tier-price[data-period] {
+	display: none;
+}
+
+.im-tiers[data-period="month"] .im-tier-price[data-period="month"],
+.im-tiers[data-period="year"] .im-tier-price[data-period="year"] {
+	display: flex;
+}
+
+.im-tier-save {
+	padding: 0.0625rem 0.4375rem;
+	border-radius: var(--im-radius-full);
+	background-color: var(--im-success-tint);
+	color: var(--im-success);
+	font-size: var(--im-text-xs);
+	font-weight: 600;
+}
+
+.im-tier-list {
+	display: grid;
+	gap: 0.5rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.im-tier-list > li {
+	display: grid;
+	grid-template-columns: 1.0625rem minmax(0, 1fr);
+	gap: 0.5rem;
+	align-items: start;
+	line-height: 1.5;
+}
+
+.im-tier-list > li::before {
+	content: "";
+	width: 1.0625rem;
+	height: 1.0625rem;
+	margin-top: 0.0625rem;
+	background-color: var(--im-success);
+	-webkit-mask-image: var(--im-tick-glyph);
+	mask-image: var(--im-tick-glyph);
+	-webkit-mask-size: contain;
+	mask-size: contain;
+	-webkit-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+}
+
+/* Something the tier does NOT include. It is listed, not omitted: a reader
+   comparing columns needs the rows to line up, and a missing row is read as
+   an oversight rather than as an answer. */
+.im-tier-list > li[data-no] {
+	color: var(--im-faint);
+}
+
+.im-tier-list > li[data-no]::before {
+	background-color: var(--im-faint);
+	-webkit-mask-image: var(--im-cross-glyph);
+	mask-image: var(--im-cross-glyph);
+}
+
+.im-tier > .im-btn {
+	margin-top: auto;
+	width: 100%;
+}
+
+.im-tier-note {
+	color: var(--im-faint);
+	font-size: var(--im-text-xs);
+	text-align: center;
+}
+
+/* ---- the period switch ---- */
+.im-periods {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: 0.75rem;
+	margin-bottom: 1.5rem;
+}
+
+/* ---- the comparison table, under the columns ----
+   Three cards answer "which one", a table answers "what exactly". A site
+   with three tiers needs both, and the table is the one people read second. */
+.im-compare {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: var(--im-text-sm);
+}
+
+.im-compare :is(th, td) {
+	padding: 0.625rem 0.75rem;
+	border-bottom: 1px solid var(--im-line);
+	text-align: left;
+}
+
+.im-compare thead th {
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+	font-weight: 500;
+}
+
+.im-compare tbody th {
+	color: var(--im-ink);
+	font-weight: 500;
+}
+
+.im-compare td {
+	color: var(--im-muted);
+	text-align: center;
+}
+
+.im-compare td[data-yes] {
+	color: var(--im-success);
+}

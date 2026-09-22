@@ -65,6 +65,39 @@ source: src/components/commerce.css · carousel.css
 				<details><summary>Refunds?</summary><div>Fourteen days, no argument, no form. Email me.</div></details>
 			</div>
 		</section>
+
+		<section class="im-section" id="reviews" style="--im-section-gap: 1rem">
+			<h2 class="im-caption" data-index="reviews">What buyers said</h2>
+
+			<div class="im-ratingsum">
+				<p class="im-ratingsum-score">4.9</p>
+				<p class="im-rating im-rating-lg" style="--im-rating: 4.9"><span class="im-rating-stars" aria-hidden="true"></span><span class="im-rating-value">4.9 out of 5</span><span>41 reviews</span></p>
+				<div class="im-ratingbars">
+					<p class="im-ratingbar"><span>5</span><span style="--im-bar: 88%"></span><span>36</span></p>
+					<p class="im-ratingbar"><span>4</span><span style="--im-bar: 10%"></span><span>4</span></p>
+					<p class="im-ratingbar"><span>3</span><span style="--im-bar: 2%"></span><span>1</span></p>
+					<p class="im-ratingbar"><span>2</span><span style="--im-bar: 0%"></span><span>0</span></p>
+					<p class="im-ratingbar"><span>1</span><span style="--im-bar: 0%"></span><span>0</span></p>
+				</div>
+			</div>
+
+			<div class="im-reviews">
+				{{#each demo.reviews}}
+				<article class="im-review">
+					<p class="im-review-head">
+						<span class="im-review-by">{{by}}</span>
+						<span class="im-rating" style="--im-rating: {{rating}}"><span class="im-rating-stars" aria-hidden="true"></span><span class="sr-only">{{rating}} out of 5</span></span>
+						{{#if verified}}<span class="im-review-verified">{{icon "circle-check"}}Bought it</span>{{/if}}
+						<time class="im-review-when">{{when}}</time>
+					</p>
+					<p class="im-review-text">{{text}}</p>
+				</article>
+				{{/each}}
+			</div>
+
+			<p><a class="im-btn im-btn-sm" href="#reviews">{{icon "message-square"}}Read all 41</a></p>
+		</section>
+
 	</article>
 
 	<aside>
@@ -102,6 +135,9 @@ source: src/components/commerce.css · carousel.css
 		<table>
 			<thead><tr><th>Class</th><th></th></tr></thead>
 			<tbody>
+				<tr><td><code>im-rating</code></td><td>Stars as <strong>one</strong> element with a clipped overlay, not five glyphs — five spans is five things to keep in sync and a half star is impossible with them. <code>--im-rating</code> is the score; the accessible text is the number.</td></tr>
+				<tr><td><code>im-ratingsum</code> · <code>im-ratingbar</code></td><td>The distribution. A 4.9 average with the 1-star row visible is more persuasive than a 4.9 on its own, because it shows nothing is hidden.</td></tr>
+				<tr><td><code>im-review</code></td><td>One review. <code>im-review-verified</code> is "bought it" — the only claim worth making about a reviewer.</td></tr>
 				<tr><td><code>im-buybox</code></td><td>The panel. <code>position: sticky</code> under the top bar, in the <a href="/collections/post/single/">single layout</a>'s aside.</td></tr>
 				<tr><td><code>im-buybox-price</code></td><td>The price at display size, with the old one struck through beside it.</td></tr>
 				<tr><td><code>im-licences</code> · <code>im-licence</code></td><td>One of several, each a row with its own price. <code>aria-checked</code> is the chosen one — the same fill-and-ring the rest of the system uses for "current".</td></tr>

@@ -149,6 +149,19 @@ Add a token → `--im-*` in primitives/semantic, plus one bridge line if it shou
   `{{url}}`, `{{excerpt}}`, `{{tags}}` — an ambiguous mustache resolves to the helper and is called
   with no block, which is `options.fn is not a function` at build time. The snippet fixtures use
   `snippet`, the comments use `when`.
+- **The fixture/helper clash is now caught at BUILD time.** `site/build.mjs` walks `demo` and
+  names any field a registered helper shadows (`price`, `date`, `code`, `icon`, `match`…). The
+  four helpers that legitimately read the field they are named for — `excerpt`, `reading_time`,
+  `url`, `content` — are allowed. It printed `$[object Object]` across two collections before
+  the guard existed.
+- **A track drawn with a background image can only be dimmed with `opacity`, and `opacity`
+  composites its children.** The star rating's filled overlay came out pale inside a 28%-opaque
+  track. Draw the track as a `mask-image` with a `background-color` instead: then the track is a
+  colour, the fill is a colour, and neither knows about the other.
+- **A two-column grid with nothing in the first column squeezes the second.** `.im-widget-list a`
+  was `auto minmax(0,1fr)` for the ranked numeral; without a `::before` the title got the `auto`
+  column and the `<small>` got the whole 1fr, printing post titles one letter per line. Give the
+  base one column and let the variant add the numeral's.
 - **`{{lookup demo.six @index}}` hands back a POST, not a picture** — an object used as a `src`
   prints `[object Object]`. `demo.shots` is the array of plain image URLs for exactly this.
 - **Verifying in the browser:** the user often browses in the same tab. Open your OWN tab
