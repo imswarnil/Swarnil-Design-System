@@ -8,7 +8,10 @@
 	  label      accessible name. Required if there is no title.
 	  title      a visible heading (an h2).
 	  class      variants: "im-carousel-slider" · "im-carousel-tiles" · "im-carousel-ranked"
-	  dots       true — page dots          progress   false — hide the bar
+	  dots       true — page dots INSTEAD of the bar. One indicator or the
+	             other, never both: two things saying the same thing in two
+	             languages is how a reader ends up watching neither.
+	  progress   false — hide the bar (it is on by default)
 	  autoplay   ms per step, e.g. 6000   (pauses on hover, focus, hidden tab, reduced motion)
 	  style      inline variables, e.g. "--im-slides-lg: 3.2" --}}
 <section class="im-carousel{{#if class}} {{class}}{{/if}}" data-im-carousel{{#if autoplay}} data-im-carousel-autoplay="{{autoplay}}"{{/if}} aria-roledescription="carousel" aria-label="{{#if label}}{{label}}{{else}}{{title}}{{/if}}"{{#if style}} style="{{style}}"{{/if}}>
@@ -23,6 +26,5 @@
 	<div class="im-carousel-track" tabindex="0">
 		{{> @partial-block}}
 	</div>
-	{{#if dots}}<div class="im-carousel-dots" data-im-carousel-dots></div>{{/if}}
-	{{#match progress "!=" false}}<div class="im-carousel-progress" aria-hidden="true"><span></span></div>{{/match}}
+	{{#if dots}}<div class="im-carousel-dots" data-im-carousel-dots></div>{{else}}{{#match progress "!=" false}}<div class="im-carousel-progress" aria-hidden="true"><span></span></div>{{/match}}{{/if}}
 </section>

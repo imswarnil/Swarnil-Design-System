@@ -11,11 +11,13 @@
 	  kind    "video" / "short" — the identifier chip, for a mixed feed
 	  class   anything else --}}
 <article class="im-vidcard{{#if layout}} im-vidcard-{{layout}}{{/if}}{{#if class}} {{class}}{{/if}}">
-	<a class="im-vidcard-thumb" href="{{#if url}}{{url}}{{else}}#{{/if}}" tabindex="-1" aria-hidden="true">
+	<a class="im-vidcard-thumb im-thumb{{#if locked}} im-thumb-lock{{else}} im-thumb-play{{/if}}" href="{{#if url}}{{url}}{{else}}#{{/if}}" tabindex="-1" aria-hidden="true">
 		{{#if thumb}}<img src="{{thumb}}" alt="" loading="lazy">{{/if}}
 		{{#if kind}}<span class="im-kind im-kind-over" data-kind="{{kind}}">{{> "icons/video"}}{{kind}}</span>{{/if}}
 		<span class="im-vidcard-time{{#if live}} im-vidcard-time-live{{/if}}">{{#if time}}{{time}}{{else}}0:00{{/if}}</span>
-		{{#if watched}}<span class="im-vidcard-progress"><span style="width: {{watched}}%"></span></span>{{/if}}
+		{{!-- No resume bar here. A site that does not track watch state draws
+			one from a number it invented, which is a lie on every thumbnail.
+			A series page, which does know, adds it itself. --}}
 	</a>
 
 	<div class="im-vidcard-body">

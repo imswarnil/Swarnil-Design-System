@@ -71,7 +71,22 @@ source: src/components/video-card.css
 {{{{/code}}}}
 <p>Give it no footer and no sidebar: a page that is one viewport has no room for either, and a footer that can only be reached by scrolling defeats the whole layout. If the site needs those, the short belongs in a <a href="/collections/video/">collection</a> and this page belongs behind a link from it.</p>
 
-<h2>The other 9:16 layout: the feed</h2>
+<h2>The other two 9:16 layouts</h2>
+<p>One clip is a page; several are a <strong>feed</strong>; and on a desk, where there is room beside the clip, it is a <strong>watch page</strong> — the same viewport, split.</p>
+
+<h3>The watch page: clip left, everything else right</h3>
+<p>A 9:16 clip on a 16:9 screen leaves two thirds of the window empty. <code>im-shortwatch</code> puts the title, the channel, the description and the comments in that space instead of below the fold, and the panel owns the only scrollbar on the page.</p>
+{{#example flush=true code=false}}
+<iframe class="demo-frame" src="/demos/shortwatch/" title="A vertical video with its details beside it" style="height: 40rem" loading="lazy"></iframe>
+{{/example}}
+<ul>
+	<li><strong>Same two-constraint sizing as everything else here</strong> — <code>width: min(100%, room * 9/16)</code> with <code>aspect-ratio</code>, so the clip is as tall as the room allows until the room is narrower than that.</li>
+	<li><strong>Previous and next are a column beside the clip</strong>, not buttons floating over it. On a desk the pointer is already there; over the picture they cover the thing being watched.</li>
+	<li><strong>Under 64rem it stops pretending.</strong> There is no room for two columns, so it becomes an ordinary page — clip, then panel, window scrolls. A layout that insists on fitting when it cannot is how controls end up off-screen.</li>
+	<li><strong>The comments are <a href="/collections/series/episode/">lean</a></strong>: the box and one reply. The viewer is here for the clip.</li>
+</ul>
+
+<h3>The feed: one column that snaps</h3>
 <p>One short is a page. Several are a <strong>feed</strong> — the same page repeated down a snapping column, where the scroll <em>is</em> the navigation. Scroll inside the frame.</p>
 {{#example flush=true code=false}}
 <iframe class="demo-frame" src="/demos/shorts/" title="A feed of vertical videos" style="height: 40rem" loading="lazy"></iframe>

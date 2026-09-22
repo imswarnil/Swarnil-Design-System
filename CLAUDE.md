@@ -200,7 +200,9 @@ Add a token → `--im-*` in primitives/semantic, plus one bridge line if it shou
 - **A percentage width inside a container sized BY its contents resolves to zero.** The short
   player is `width: min(100%, …)` in a stage whose parent centres its items — so the stage was
   max-content wide, the percentage was a cycle, and only the action rail rendered. Give the
-  intermediate box a definite width.
+  intermediate box a definite width, or state the width as a definite length with a
+  `max-width: 100%` beside it: `max-width` is ignored during the intrinsic-sizing pass, which is
+  exactly what is wanted (`im-shortwatch-player`). It has now bitten three times.
 - **A snapping feed needs `scroll-snap-stop: always`.** Without it a hard flick skips three items,
   and a viewer who cannot land on the one they aimed at stops aiming.
 - **A docs page can drop the docs chrome**: `shell: frame` in its frontmatter picks

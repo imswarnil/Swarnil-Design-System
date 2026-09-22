@@ -19,7 +19,9 @@ source: src/components/video-card.css · partials/components/video-card.hbs
 		<tr><td><code>im-vidcard-thumb</code></td><td>The still, 16:9. It is <code>aria-hidden</code> and not focusable — the title's link is the one tab stop, so a keyboard user does not meet every video twice.</td></tr>
 		<tr><td><code>im-vidcard-time</code></td><td>The length, bottom right, on a dark chip. Every viewer looks for it there; moving it is not a design decision, it is a tax.</td></tr>
 		<tr><td>… <code>im-vidcard-time-live</code></td><td>LIVE instead, with a pulse-free white dot. A live video has no length.</td></tr>
-		<tr><td><code>im-vidcard-progress</code></td><td>How far the viewer got last time. Only draw it if you actually know.</td></tr>
+		<tr><td><code>im-thumb-play</code></td><td>The one play mark, in the middle of the still. Every thumbnail in the system that stands for something that plays wears it, so it means the same thing everywhere; it reddens on hover.</td></tr>
+		<tr><td><code>im-thumb-lock</code></td><td>Members only. It replaces the play mark rather than joining it — the lock is the fact the reader needs first.</td></tr>
+		<tr><td><code>im-vidcard-progress</code></td><td>How far the viewer got last time. <strong>Not on the default card</strong>: a site that does not track watch state would be drawing a bar from a number it invented. The <a href="/collections/series/">series page</a>, which does know, adds it itself.</td></tr>
 		<tr><td><code>im-vidcard-title</code></td><td>Clamped to two lines, so a row of cards keeps its shape whatever the titles do.</td></tr>
 		<tr><td><code>im-vidcard-tick</code></td><td>A verified mark — a mask of the row's own colour, so it is right in both themes.</td></tr>
 	</tbody>

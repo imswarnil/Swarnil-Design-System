@@ -148,7 +148,7 @@ export async function build({ quiet = false } = {}) {
 			{ name: 'Figma', note: 'Where the design system starts', url: '#' },
 		],
 		projects: [
-			{ name: 'im-design-system', owner: 'imswarnil', text: 'A Tailwind 4 design system for Ghost themes: tokens, layout, components and ready-made sections.', lang: 'CSS', langColor: '#563d7c', stars: '1.2k', forks: '84', updated: '3 days ago', topics: ['design-system', 'tailwindcss', 'ghost', 'css'], visibility: 'Public', image: fixtures.posts[0].feature_image, demo_url: '#', code_url: '#', state: 'live', state_label: 'Live', stack: [{name:'CSS',icon:'palette'},{name:'Tailwind',icon:'layers'},{name:'Handlebars',icon:'code'},{name:'Node',icon:'terminal'}], took: '9 months', since: 'Jan 2026', commits: '1,204', url: '/collections/project/page/' },
+			{ name: 'im-design-system', owner: 'imswarnil', text: 'A Tailwind 4 design system for Ghost themes: tokens, layout, components and ready-made sections.', lang: 'CSS', langColor: '#563d7c', stars: '1.2k', forks: '84', updated: '3 days ago', topics: ['design-system', 'tailwindcss', 'ghost', 'css'], visibility: 'Public', image: fixtures.posts[0].feature_image, demo_url: '#', code_url: '#', state: 'live', state_label: 'Live', stack: [{name:'CSS',icon:'palette',why:'Tailwind 4, one layer order'},{name:'Tailwind',icon:'layers',why:'Utilities, never @apply'},{name:'Handlebars',icon:'code',why:'Ghost speaks it natively'},{name:'Node',icon:'terminal',why:'The docs build, 500ms'}], took: '9 months', since: 'Jan 2026', commits: '1,204', url: '/collections/project/page/' },
 			{ name: 'ghost-swarnil-theme', owner: 'imswarnil', text: 'The theme this site runs on. One install, somebody else\u2019s Ghost, and the rules that keep the two from destroying each other.', lang: 'Handlebars', langColor: '#f7931e', stars: '486', forks: '31', updated: '1 week ago', topics: ['ghost-theme', 'handlebars'], visibility: 'Public', image: fixtures.posts[1].feature_image, demo_url: '#', code_url: '#', state: 'live', state_label: 'Live', stack: [{name:'Handlebars',icon:'code'},{name:'Ghost',icon:'rocket'},{name:'CSS',icon:'palette'}], took: '4 months', since: 'May 2026', commits: '486', url: '/collections/project/page/' },
 			{ name: 'links', owner: 'imswarnil', text: 'A link page on Cloudflare Workers that fetches GitHub, Ghost and YouTube per request.', lang: 'TypeScript', langColor: '#3178c6', stars: '212', forks: '18', updated: '2 weeks ago', topics: ['nextjs', 'cloudflare'], visibility: 'Public', image: fixtures.posts[2].feature_image, demo_url: '#', code_url: '#', state: 'building', state_label: 'Building', stack: [{name:'TypeScript',icon:'file-code'},{name:'Next.js',icon:'layers'},{name:'Cloudflare',icon:'globe'},{name:'Neon',icon:'layers'}], took: '6 weeks', since: 'Aug 2026', commits: '212', url: '/collections/project/page/' },
 			{ name: 'field-notes', owner: 'imswarnil', text: 'Ten years of notebooks, scanned, tagged and searchable. Archived \u2014 read only.', lang: 'Python', langColor: '#3572a5', stars: '97', forks: '6', updated: '8 months ago', topics: ['archive', 'ocr'], visibility: 'Archived', image: fixtures.posts[3].feature_image, demo_url: '#', code_url: '#', state: 'archived', state_label: 'Archived', stack: [{name:'Python',icon:'terminal'},{name:'OCR',icon:'eye'}], took: '1 year', since: '2024', commits: '97', url: '/collections/project/page/' },
@@ -162,9 +162,9 @@ export async function build({ quiet = false } = {}) {
 			{ when: 'Next', title: 'Ship it', text: 'A licence, a landing page, and a price.', state: 'upcoming' },
 		],
 		videos: [
-			{ title: 'Driving the Amalfi Coast — the whole road in 8 minutes', time: '8:12', views: '412k', when: '3 days ago', watched: 40, thumb: fixtures.posts[0].feature_image, channel: fixtures.author.name, avatar: fixtures.author.profile_image },
+			{ title: 'Driving the Amalfi Coast — the whole road in 8 minutes', time: '8:12', views: '412k', when: '3 days ago', thumb: fixtures.posts[0].feature_image, channel: fixtures.author.name, avatar: fixtures.author.profile_image },
 			{ title: 'I rebuilt my site on a design system I wrote myself', time: '18:47', views: '128k', when: '2 weeks ago', thumb: fixtures.posts[1].feature_image, channel: fixtures.author.name, avatar: fixtures.author.profile_image },
-			{ title: 'Why your Ghost theme fights you (and how to stop it)', time: '12:04', views: '96k', when: '1 month ago', watched: 100, thumb: fixtures.posts[2].feature_image, channel: fixtures.author.name, avatar: fixtures.author.profile_image },
+			{ title: 'Why your Ghost theme fights you (and how to stop it)', time: '12:04', views: '96k', when: '1 month ago', thumb: fixtures.posts[2].feature_image, channel: fixtures.author.name, avatar: fixtures.author.profile_image },
 			{ title: 'Four years of consulting, in one honest list', time: '23:31', views: '210k', when: '2 months ago', thumb: fixtures.posts[3].feature_image, channel: fixtures.author.name, avatar: fixtures.author.profile_image },
 			{ title: 'The real cost of moving to Europe — every number', time: '15:58', views: '1.1M', when: '4 months ago', thumb: fixtures.posts[4].feature_image, channel: fixtures.author.name, avatar: fixtures.author.profile_image },
 			{ title: 'Building the comment wall live', time: 'LIVE', live: true, views: '2.4k watching', when: 'started 40 minutes ago', thumb: fixtures.posts[5].feature_image, channel: fixtures.author.name, avatar: fixtures.author.profile_image },
@@ -259,10 +259,19 @@ export async function build({ quiet = false } = {}) {
 			{ title: 'Sail somewhere I cannot see land', note: 'Six days along a coast does not count', when: 'Someday', group: 'Distance' },
 		],
 		episodes: [
-			{ n: '01', title: 'Leaving Sorrento', time: '8:12', when: '4 Sep', state: 'done', text: 'Why this road exists, who cut it, and what it was for.' },
-			{ n: '02', title: 'The first tunnel', time: '11:40', when: '11 Sep', state: 'done', text: 'Forty kilometres, two hours, and the bit where the bus folds its mirrors in.' },
-			{ n: '03', title: 'Positano, and the parking', time: '14:05', when: '18 Sep', state: 'current', text: 'What it costs in August, and where to leave the car instead.' },
-			{ n: '04', title: 'Amalfi, and the way back', time: '—', when: 'Next Thursday', state: 'upcoming', text: 'East to west, on the sea side, with nothing left to prove.' },
+			{ season: 's1', n: '01', title: 'Leaving Sorrento', time: '8:12', when: '4 Sep', state: 'done', text: 'Why this road exists, who cut it, and what it was for.' },
+			{ season: 's1', n: '02', title: 'The first tunnel', time: '11:40', when: '11 Sep', state: 'done', text: 'Forty kilometres, two hours, and the bit where the bus folds its mirrors in.' },
+			{ season: 's1', n: '03', title: 'Positano, and the parking', time: '14:05', when: '18 Sep', state: 'current', text: 'What it costs in August, and where to leave the car instead.' },
+			{ season: 's1', n: '04', title: 'Amalfi, and the way back', time: '\u2014', when: 'Next Thursday', state: 'upcoming', text: 'East to west, on the sea side, with nothing left to prove.' },
+			{ season: 's2', n: '01', title: 'The high road', time: '9:58', when: '2 Oct', state: 'upcoming', text: 'Ravello, three hundred metres up, and the drive nobody films.' },
+			{ season: 's2', n: '02', title: 'Out of season', time: '\u2014', when: '9 Oct', state: 'upcoming', text: 'The same road in February, with the whole thing to ourselves.' },
+			{ season: 'extra', n: '\u2014', title: 'Everything it cost', time: '4:30', when: '25 Sep', state: 'done', text: 'Four days, two people, one car. Every number, with the receipts.' },
+		],
+		seriesall: [
+			{ name: 'The Amalfi Road', parts: '4', state: 'Running', text: 'Forty kilometres, two hours, and nobody in a hurry.', when: 'Since September 2026' },
+			{ name: 'Building this design system', parts: '7', state: 'Finished', text: 'From an empty folder to a thing somebody would buy. Including the two rewrites.', when: '2026' },
+			{ name: 'A year of consulting', parts: '5', state: 'Finished', text: 'What eight years of it actually taught me, and what it cost to learn.', when: '2025' },
+			{ name: 'Moving to Europe', parts: '12', state: 'Finished', text: 'Paperwork, money, and the parts nobody warns you about.', when: '2024' },
 		],
 		stream: [
 			{ month: 'September 2026', items: [

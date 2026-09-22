@@ -15,6 +15,10 @@ source: src/components/repo-card.css · content.css · carousel.css · comments.
 	<article class="im-stack" style="--im-stack-gap: clamp(2rem, 4vw, 3rem)">
 
 		{{#with demo.projects.[0]}}
+		<figure class="im-projectcover">
+			<img src="{{image}}" alt="" loading="eager">
+		</figure>
+
 		<header class="im-projecthero">
 			<nav aria-label="Breadcrumb">
 				<ol class="im-breadcrumb im-breadcrumb-chevron">
@@ -23,8 +27,9 @@ source: src/components/repo-card.css · content.css · carousel.css · comments.
 					<li><span aria-current="page">{{name}}</span></li>
 				</ol>
 			</nav>
-			<h1 class="im-projecthero-title">{{name}}<span class="im-repo-visibility">{{visibility}}</span></h1>
+			<h1 class="im-projecthero-title">{{name}}<span class="im-repo-status" data-state="{{state}}">{{state_label}}</span><span class="im-repo-visibility">{{visibility}}</span></h1>
 			<p class="im-projecthero-text">{{text}}</p>
+			<p class="im-repo-facts"><span>{{icon "clock"}}{{took}}</span><span>{{icon "calendar"}}{{since}}</span><span>{{icon "git-commit-vertical"}}{{commits}} commits</span></p>
 			<p class="im-repo-topics">{{#foreach topics}}<a class="im-topic" href="#">{{this}}</a>{{/foreach}}</p>
 			<div class="im-projecthero-actions">
 				<a class="im-btn im-btn-primary" href="#">{{> "icons/external-link"}}Live demo</a>
@@ -86,10 +91,34 @@ source: src/components/repo-card.css · content.css · carousel.css · comments.
 			<p>Three sites run on it, the theme it was written for is in the shop, and the thing I actually wanted — being able to answer "where did this come from?" about every file — is a two-line audit that comes back empty.</p>
 		</section>
 
+		<section class="im-section" style="--im-section-gap: 1rem">
+			<h2 class="im-caption" data-index="tools">Built with</h2>
+			<div class="im-toolgrid">
+				{{#with demo.projects.[0]}}{{#each stack}}
+				<span class="im-tool">{{icon this.icon}}<b>{{this.name}}</b><small>{{this.why}}</small></span>
+				{{/each}}{{/with}}
+				<span class="im-tool">{{icon "terminal"}}<b>esbuild</b><small>One bundle, no config</small></span>
+				<span class="im-tool">{{icon "rocket"}}<b>GitHub Pages</b><small>Deploy on push</small></span>
+			</div>
+		</section>
+
+		<section class="im-content im-content-flush">
+			<h2>What I learned</h2>
+			<ul>
+				<li><strong>A second skin is a second product.</strong> The style scope doubled the work and halved the testing, and it existed because it was interesting rather than because anybody asked. Deleting it was the single best day of the project.</li>
+				<li><strong>Documentation that renders the real component cannot rot.</strong> Every example on the docs site uses the shipping partial, so a broken component breaks its own page. Screenshots in a README would have been wrong within a month.</li>
+				<li><strong>Write the "why" comment while the decision is fresh.</strong> Half the value of this codebase is a hundred comments that say what breaks if a line changes. None of them could have been written six months later.</li>
+				<li><strong>Constraints from a licence are still constraints.</strong> "Own every line" sounded like a legal detail and turned out to be the whole architecture.</li>
+			</ul>
+
+			<h2>Would I do it again</h2>
+			<p>Yes, and in about half the time — nine months was four months of building and five of deciding what not to build. If you are starting one: pick the twenty components you actually use, write those properly, and add the twenty-first only when a real page needs it. Everything I regret is something I built for a page that never existed.</p>
+		</section>
+
 		{{!-- The log: the timeline component, tuned. A project's history is a
 		      list of dated things in order, which is what a timeline is. --}}
 		<section class="im-section" style="--im-section-gap: 1.25rem">
-			<h2 class="im-caption" data-index="log">Project log</h2>
+			<h2 class="im-caption" data-index="log" id="project-log">Project log</h2>
 			<ol class="im-timeline im-timeline-numbered im-log">
 				{{#each demo.log}}
 				<li class="im-timeline-item" data-state="{{state}}">
@@ -104,60 +133,47 @@ source: src/components/repo-card.css · content.css · carousel.css · comments.
 			</ol>
 		</section>
 
-		{{> "components/comments" thread=demo.comments}}
+		{{> "components/comments" thread=demo.comments count="41"}}
 	</article>
 
 	<aside>
-		<div class="im-sticky-rail">
+		<div class="im-sticky-rail im-sticky-rail-full">
 			<div class="im-widgets">
-				<section class="im-widget" aria-labelledby="w-links">
-					<h2 class="im-widget-title" id="w-links">Links</h2>
-					<div class="im-widget-products">
-						<a class="im-widget-product" href="#"><span class="im-widget-product-mark">{{icon "external-link"}}</span><span class="im-widget-product-name">Live demo</span><span class="im-widget-product-note">design.imswarnil.com</span>{{icon "arrow-up-right"}}</a>
-						<a class="im-widget-product" href="#"><span class="im-widget-product-mark">{{icon "brand-github"}}</span><span class="im-widget-product-name">Source</span><span class="im-widget-product-note">1.2k stars · MIT</span>{{icon "arrow-up-right"}}</a>
-						<a class="im-widget-product" href="#"><span class="im-widget-product-mark">{{icon "book-open"}}</span><span class="im-widget-product-name">Documentation</span><span class="im-widget-product-note">77 pages</span>{{icon "arrow-up-right"}}</a>
-					</div>
-				</section>
+			<section class="im-widget" aria-labelledby="pw-at">
+				<h2 class="im-widget-title" id="pw-at">At a glance</h2>
+				<div class="im-widget-stats">
+					<div><strong>1.2k</strong><span>Stars</span></div>
+					<div><strong>84</strong><span>Forks</span></div>
+					<div><strong>9 mo</strong><span>Built in</span></div>
+				</div>
+			</section>
 
-				<section class="im-widget" aria-labelledby="w-about">
-					<h2 class="im-widget-title" id="w-about">About</h2>
-					<dl class="im-widget-facts">
-						<dt>Role</dt><dd>Everything</dd>
-						<dt>Year</dt><dd>2026</dd>
-						<dt>Latest</dt><dd>v0.7</dd>
-						<dt>Status</dt><dd><span class="im-badge im-badge-success">Active</span></dd>
-					</dl>
-				</section>
+			<section class="im-widget" aria-labelledby="pw-back">
+				<h2 class="im-widget-title" id="pw-back">This project</h2>
+				<p class="im-widget-heading">im-design-system</p>
+				<p class="im-cluster" style="--im-cluster-gap: .375rem">
+					<a class="im-btn im-btn-primary im-btn-sm" href="#">{{icon "external-link"}}Demo</a>
+					<a class="im-btn im-btn-sm" href="#">{{icon "brand-github"}}Code</a>
+				</p>
+			</section>
 
-				<section class="im-widget" aria-labelledby="w-langs">
-					<h2 class="im-widget-title" id="w-langs">Built with</h2>
-					<span class="im-langbar">
-						<span style="--im-repo-lang: #563d7c; width: 64%"></span>
-						<span style="--im-repo-lang: #f1e05a; width: 21%"></span>
-						<span style="--im-repo-lang: #f7931e; width: 11%"></span>
-						<span style="--im-repo-lang: var(--im-faint); width: 4%"></span>
-					</span>
-					<p class="im-langkeys">
-						<span class="im-repo-lang" style="--im-repo-lang: #563d7c">CSS 64%</span>
-						<span class="im-repo-lang" style="--im-repo-lang: #f1e05a">JavaScript 21%</span>
-						<span class="im-repo-lang" style="--im-repo-lang: #f7931e">Handlebars 11%</span>
-						<span class="im-repo-lang">Other 4%</span>
-					</p>
-				</section>
+			<section class="im-widget im-rail-grow" aria-labelledby="pw-log">
+				<h2 class="im-widget-title" id="pw-log">The log <a href="/collections/project/log/">All</a></h2>
+				<ol class="im-timeline im-timeline-compact im-widget-series">
+					{{#foreach demo.log}}
+					<li class="im-timeline-item" data-state="{{#if state}}{{state}}{{else}}done{{/if}}">
+						<span class="im-timeline-marker">{{@number}}</span>
+						<h3 class="im-timeline-title"><a href="#project-log">{{title}}</a></h3>
+					</li>
+					{{/foreach}}
+				</ol>
+			</section>
 
-				<section class="im-widget" aria-labelledby="w-more">
-					<h2 class="im-widget-title" id="w-more">More projects <a href="/collections/project/">All</a></h2>
-					<ul class="im-widget-list">
-						{{#each demo.projects}}{{#match @index ">" 2}}<li><a href="/collections/project/page/">{{name}}<small>{{lang}} · ★ {{stars}}</small></a></li>{{/match}}{{/each}}
-					</ul>
-				</section>
-
-				<section class="im-widget im-widget-fill" aria-labelledby="w-rel">
-					<h2 class="im-widget-title" id="w-rel">Releases</h2>
-					<p class="im-widget-heading">One email when a version ships.</p>
-					{{> "components/subscribe" id="project-email" button="Join"}}
-				</section>
-			</div>
+			<section class="im-widget im-widget-hire" aria-labelledby="pw-hire">
+				<h2 class="im-widget-title" id="pw-hire">Want one of these</h2>
+				<p class="im-widget-hire-state" data-state="available">Two days a week, from November</p>
+				<a class="im-btn im-btn-primary im-btn-sm" href="/pages/contact/">{{icon "mail"}}Start a conversation</a>
+			</section>
 		</div>
 	</aside>
 </div>

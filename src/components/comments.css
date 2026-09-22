@@ -230,3 +230,21 @@
 	font-size: var(--im-text-sm);
 	text-align: center;
 }
+
+/* Lean: the box to write in and one comment, with a link to the rest. On a
+   page whose subject is not the discussion — an episode, a lesson, a product
+   — a full thread is forty replies standing between the reader and the next
+   thing they came for. The count still says how many there are, so nothing
+   is being hidden. */
+.im-comments-more {
+	padding-top: 0.25rem;
+}
+
+.im-comments-more .im-card-cta > span {
+	padding: 0 0.375rem;
+	border-radius: var(--im-radius-full);
+	background-color: var(--im-surface-2);
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+}

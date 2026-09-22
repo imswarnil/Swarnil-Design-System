@@ -647,3 +647,58 @@
 .im-repos > .im-repo > .im-repo-actions {
 	margin-top: 0;
 }
+
+/* The cover. A project page without a picture of the project is a CV entry —
+   and the card already had one, so the page not having one was simply an
+   omission. Capped, like a post's feature image, because a screenshot
+   allowed to fill a 90rem window is a wall. */
+.im-projectcover {
+	max-width: var(--im-projectcover-frame, 64rem);
+	aspect-ratio: var(--im-projectcover-ratio, 16 / 9);
+	overflow: hidden;
+	border-radius: var(--im-radius-2xl);
+	background-color: var(--im-surface-2);
+}
+
+.im-projectcover > img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+/* ---- tools used --------------------------------------------------------
+   The stack, with a reason each. A list of logos says what was used; a line
+   each says why, which is the only part a reader cannot get from the repo. */
+.im-toolgrid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(13rem, 100%), 1fr));
+	gap: 0.625rem;
+}
+
+.im-tool {
+	display: grid;
+	grid-template-columns: 1.75rem minmax(0, 1fr);
+	gap: 0 0.75rem;
+	align-items: center;
+	padding: 0.75rem 0.875rem;
+	border-radius: var(--im-radius-md);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+}
+
+.im-tool > .im-icon {
+	grid-row: span 2;
+	color: var(--im-accent);
+	font-size: 1.25rem;
+}
+
+.im-tool > b {
+	color: var(--im-ink);
+	font-size: var(--im-text-sm);
+	font-weight: 600;
+}
+
+.im-tool > small {
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+	line-height: 1.4;
+}

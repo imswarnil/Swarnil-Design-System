@@ -1,0 +1,44 @@
+---
+title: Short watch demo
+layout: home
+shell: frame
+---
+{{!-- Loaded in an iframe by /collections/video/short/. Clip on the left at
+	its real proportion, everything else on the right, one viewport. --}}
+{{#with demo.videos.[0]}}
+<div class="im-shortwatch">
+	<div class="im-shortwatch-stage">
+		<div class="im-shortwatch-step">
+			<button class="im-btn im-btn-icon" type="button" aria-label="Previous">{{> "icons/chevron-up"}}</button>
+			<button class="im-btn im-btn-icon" type="button" aria-label="Next">{{> "icons/chevron-down"}}</button>
+		</div>
+		<div class="im-shortwatch-player">
+			<img src="{{thumb}}" alt="">
+			<span class="im-short-bar"><span style="width: 38%"></span></span>
+		</div>
+		<div class="im-short-rail">
+			<button class="im-short-act" type="button" aria-pressed="true" data-im-toggle>{{> "icons/heart"}}<span>12k</span></button>
+			<button class="im-short-act" type="button">{{> "icons/message-circle"}}<span>318</span></button>
+			<button class="im-short-act" type="button">{{> "icons/share"}}<span>Share</span></button>
+			<button class="im-short-act" type="button">{{> "icons/ellipsis"}}<span>More</span></button>
+		</div>
+	</div>
+
+	<div class="im-shortwatch-panel">
+		<p class="im-snipcard-meta"><span class="im-kind" data-kind="short">{{> "icons/video"}}Short</span><span>{{views}} views</span><span>{{when}}</span></p>
+		<h1 class="im-shortwatch-title">{{title}}</h1>
+
+		<div class="im-vidhead-by">
+			{{> "components/avatar" src=avatar name=channel}}
+			<div><strong>{{channel}}</strong><small>128k subscribers</small></div>
+			<button class="im-btn im-btn-primary im-btn-sm" type="button" style="margin-left: auto">Subscribe</button>
+		</div>
+
+		<p style="color: var(--im-body); font-size: var(--im-text-sm); line-height: 1.6">Forty kilometres that take two hours. The whole road, cut down to the bits where the bus folds its mirrors in. Full version on the channel.</p>
+
+		<p class="im-cluster" style="--im-cluster-gap: .375rem"><span class="im-topic">#amalfi</span><span class="im-topic">#travel</span><span class="im-topic">#shorts</span></p>
+
+		{{> "components/comments" thread=../demo.comments count="318" lean=true limit="1"}}
+	</div>
+</div>
+{{/with}}

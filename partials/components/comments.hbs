@@ -8,6 +8,11 @@
 	  count    how many, if the number is not simply the list's length
 	  gated    true — members only: a gate instead of the box to write in
 	  form     false — no box at all (comments closed)
+	  limit    how many to print — pass 1 with `lean`
+	  lean     true — the box to write in and ONE comment. For a page whose
+	           subject is not the discussion (an episode, a lesson, a product):
+	           a full thread there is forty replies between the reader and the
+	           next thing they came for. The count still links to the rest.
 
 	Ghost's OWN comments are one helper, {{comments}}, and they arrive in an
 	iframe Ghost styles itself — nothing here reaches inside it. This is for a
@@ -41,7 +46,7 @@
 
 	{{#if thread}}
 		<ol class="im-comment-list">
-			{{#foreach thread}}
+			{{#foreach thread limit=limit}}
 			<li class="im-comment{{#if mine}} im-comment-mine{{/if}}">
 				{{> "components/avatar" src=avatar name=name}}
 				<div class="im-comment-body">
@@ -73,5 +78,9 @@
 		</ol>
 	{{else}}
 		<p class="im-comments-empty">{{t "No comments yet. Yours would be the first."}}</p>
+	{{/if}}
+
+	{{#if lean}}
+		<p class="im-comments-more"><a class="im-card-cta" href="#comment-box">{{t "Read the rest"}} <span>{{#if count}}{{count}}{{else}}{{thread.length}}{{/if}}</span> {{> "icons/arrow-right"}}</a></p>
 	{{/if}}
 </section>

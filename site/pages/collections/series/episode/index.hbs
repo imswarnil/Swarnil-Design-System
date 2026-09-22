@@ -26,8 +26,8 @@ source: src/components/commerce.css · video-card.css
 				<span class="im-seriesbar-dots" aria-hidden="true"><span data-state="done"></span><span data-state="done"></span><span aria-current="true"></span><span></span></span>
 			</p>
 			<div class="im-seriesbar-nav">
-				<a class="im-btn im-btn-sm" href="/collections/series/episode/">{{icon "arrow-left"}}Previous</a>
-				<a class="im-btn im-btn-sm im-btn-primary" href="/collections/series/episode/">Next{{icon "arrow-right"}}</a>
+				<a class="im-btn" href="/collections/series/episode/">{{icon "arrow-left"}}Previous</a>
+				<a class="im-btn im-btn-primary" href="/collections/series/episode/">Next episode{{icon "arrow-right"}}</a>
 			</div>
 		</nav>
 
@@ -64,31 +64,24 @@ Shot over four days in November with one lens. Everything it cost is in episode 
 			</ol>
 		</section>
 
-		{{> "components/comments" thread=demo.comments count="318"}}
+		{{> "components/comments" thread=demo.comments count="318" lean=true limit="1"}}
 	</article>
 
 	<aside>
-		<div class="im-sticky-rail">
+		<div class="im-sticky-rail im-sticky-rail-full">
 			<div class="im-widgets">
-				<section class="im-widget" aria-labelledby="e-season">
-					<h2 class="im-widget-title" id="e-season">Season 1 <a href="/collections/series/">All</a></h2>
-					<div class="im-stack" style="--im-stack-gap: .625rem">
+				<section class="im-widget im-rail-grow" aria-labelledby="e-season">
+					<h2 class="im-widget-title" id="e-season">The season <a href="/collections/series/">All</a></h2>
+					<ol class="im-queue-list" style="padding: 0">
 						{{#each demo.episodes}}
-						<div class="im-episode" data-state="{{state}}" style="gap: .625rem">
-							<span class="im-epnum" style="font-size: var(--im-text-h5); min-width: 1.75rem">{{n}}</span>
-							<article class="im-vidcard im-vidcard-compact" style="--im-vidcard-thumb-width: 6.5rem">
-								<a class="im-vidcard-thumb" href="/collections/series/episode/" tabindex="-1" aria-hidden="true">
-									<img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy">
-									<span class="im-vidcard-time">{{time}}</span>
-								</a>
-								<div class="im-vidcard-body"><div>
-									<h3 class="im-vidcard-title"><a href="/collections/series/episode/">{{title}}</a></h3>
-									<p class="im-vidcard-meta"><span>{{when}}</span></p>
-								</div></div>
-							</article>
-						</div>
+						<li class="im-queue-item" data-state="{{#match state "=" "done"}}done{{/match}}"{{#match state "=" "current"}} aria-current="true"{{/match}}>
+							<span class="im-queue-index" aria-hidden="true">{{#match state "=" "current"}}&#9656;{{else}}{{n}}{{/match}}</span>
+							<span class="im-queue-thumb im-thumb{{#match state "=" "upcoming"}} im-thumb-lock{{else}} im-thumb-play{{/match}}" style="--im-thumb-mark: 1.5rem"><img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy"><span class="im-queue-time">{{time}}</span></span>
+							<h3 class="im-queue-title">{{#match state "=" "current"}}<span>{{title}}</span>{{else}}<a href="/collections/series/episode/">{{title}}</a>{{/match}}</h3>
+							<p class="im-queue-by">{{when}}{{#match state "=" "done"}} · Watched{{/match}}{{#match state "=" "upcoming"}} · Not out yet{{/match}}</p>
+						</li>
 						{{/each}}
-					</div>
+					</ol>
 				</section>
 
 				<section class="im-widget im-widget-fill" aria-labelledby="e-notify">
@@ -110,6 +103,10 @@ Shot over four days in November with one lens. Everything it cost is in episode 
 			<li><strong>The season in the rail</strong>, as numbered compact cards, so the whole run is one glance away without leaving the page.</li>
 		</ul>
 		<p>Everything else about a series lives on the <a href="/collections/series/">collection</a>. An episode page that repeats the season's description and its trailer is a page that makes the viewer scroll past what they already chose.</p>
+		<h2>The rail is a queue, and it fills the window</h2>
+		<p><code>im-sticky-rail-full</code> makes the column exactly one screen tall and stops it scrolling inside itself; the episode list carries <code>im-rail-grow</code>, so it is the one part that takes the leftover height and the only part with a scrollbar. The episode being watched is <code>aria-current="true"</code> — the same light ground and heavier label every other list in the system uses — and it is the one row that is not a link to itself.</p>
+		<h2>One comment, not the thread</h2>
+		<p><code>lean=true limit="1"</code> on the <a href="/collections/post/article/#after-the-last-paragraph">comments partial</a>: the box to write in, one comment, and a link to the rest with the real count on it. On a page whose subject is the <em>video</em>, a full thread is forty replies standing between the viewer and the next episode — and the next episode is what they came for.</p>
 		<p><strong>Autoplay the next one, or do not — but say which.</strong> If a theme chains episodes, the Next button should say "Next episode" and there should be a way to turn it off; a viewer who has lost twenty minutes to a chain they did not ask for does not come back.</p>
 	</div>
 </section>

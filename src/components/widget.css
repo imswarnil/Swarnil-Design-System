@@ -229,7 +229,7 @@
 	   :has() rule for markers with something in them, which is more specific
 	   than anything a class here can say. Numbered markers are what this wants
 	   anyway — a series is parts, and a part has a number. */
-	--im-timeline-gap: 0.75rem;
+	--im-timeline-gap: 1.125rem;
 
 	font-size: var(--im-text-sm);
 }

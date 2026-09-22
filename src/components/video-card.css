@@ -214,12 +214,21 @@
 }
 
 /* ---- row: the search-result shape ---- */
+/* In a row the text is centred against the still, not hung from its top
+   edge. A two-line title beside a 16:9 thumbnail leaves a block of white
+   under it that reads as a mistake — and the eye lines a title up with the
+   middle of a picture, not with its corner. */
 .im-vidcard-row {
 	--im-vidcard-thumb-width: clamp(9rem, 38%, 22rem);
 
 	flex-direction: row;
-	align-items: flex-start;
+	align-items: center;
 	gap: 1rem;
+}
+
+.im-vidcard-row > .im-vidcard-body {
+	display: flex;
+	align-items: center;
 }
 
 .im-vidcard-row > .im-vidcard-thumb {
@@ -836,4 +845,265 @@
 
 .im-thumb-lg {
 	--im-thumb-mark: 4rem;
+}
+
+/* ---- series card -------------------------------------------------------
+   A series is not a video and not a post: it is a SET with a state. What a
+   reader wants to know before anything else is how many parts there are and
+   whether it is finished — a half-written series is a different proposition
+   from a complete one, and hiding that is how a reader ends up stranded on
+   part three of three-so-far.
+
+     <article class="im-seriescard" data-state="running"> … </article> */
+.im-seriescard {
+	position: relative;
+	display: grid;
+	grid-template-columns: 7.5rem minmax(0, 1fr);
+	gap: 0.25rem 1.125rem;
+	align-items: start;
+	padding: 1rem;
+	border-radius: var(--im-radius-lg);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+	transition: background-color var(--im-duration-fast) var(--im-ease-out);
+}
+
+.im-seriescard:is(:hover, :focus-within) {
+	background-color: var(--im-hover-bg);
+}
+
+/* The stack of parts, suggested by two edges behind the still — the same
+   device the playlist card uses, because it means the same thing. */
+.im-seriescard-media {
+	position: relative;
+	grid-row: 1 / -1;
+	aspect-ratio: 3 / 2;
+	border-radius: var(--im-radius-md);
+	background-color: var(--im-surface-2);
+}
+
+.im-seriescard-media > img {
+	width: 100%;
+	height: 100%;
+	border-radius: inherit;
+	object-fit: cover;
+}
+
+.im-seriescard-media::before,
+.im-seriescard-media::after {
+	content: "";
+	position: absolute;
+	z-index: -1;
+	height: 0.375rem;
+	border-radius: var(--im-radius-md) var(--im-radius-md) 0 0;
+	background-color: var(--im-surface-3);
+}
+
+.im-seriescard-media::before {
+	inset-inline: 0.375rem;
+	bottom: calc(100% + 0.125rem);
+	opacity: 0.65;
+}
+
+.im-seriescard-media::after {
+	inset-inline: 0.75rem;
+	bottom: calc(100% + 0.375rem);
+	opacity: 0.35;
+}
+
+.im-seriescard-name {
+	color: var(--im-ink);
+	font-size: var(--im-text-h5);
+	font-weight: 600;
+	line-height: var(--im-leading-h5);
+	letter-spacing: var(--im-tracking-tight);
+	text-decoration: none;
+}
+
+.im-seriescard-name::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+}
+
+.im-seriescard:is(:hover, :focus-within) .im-seriescard-name {
+	color: var(--im-accent);
+}
+
+.im-seriescard-meta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.25rem 0.625rem;
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+}
+
+/* Running or finished. It is a fact about the set, so it sits with the other
+   facts rather than being a badge in a corner shouting. */
+.im-seriescard-state {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.3125rem;
+	font-weight: 500;
+}
+
+.im-seriescard-state::before {
+	content: "";
+	width: 0.4375rem;
+	height: 0.4375rem;
+	border-radius: var(--im-radius-full);
+	background-color: currentColor;
+}
+
+.im-seriescard[data-state="running"] .im-seriescard-state {
+	color: var(--im-success);
+}
+
+.im-seriescard[data-state="finished"] .im-seriescard-state {
+	color: var(--im-muted);
+}
+
+.im-seriescard-text {
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	line-height: 1.55;
+}
+
+.im-seriescards {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-seriescards-min, 24rem), 100%), 1fr));
+	gap: 1rem;
+	align-items: stretch;
+}
+
+@media (width < 30rem) {
+	.im-seriescard {
+		grid-template-columns: 5rem minmax(0, 1fr);
+		gap: 0.1875rem 0.875rem;
+	}
+}
+
+/* ---- the short WATCH page ----------------------------------------------
+   The other thing a 9:16 page can be. `im-short` is the feed shape — one
+   clip filling the window, nothing else. This is the desk shape: the clip on
+   the left at its real proportion, and everything a viewer would scroll for
+   on the right, inside the same viewport. Nothing scrolls except the panel,
+   and the panel scrolls itself.
+
+     <div class="im-shortwatch">
+       <div class="im-shortwatch-stage"> …the 9:16 player… </div>
+       <div class="im-shortwatch-panel"> …title, channel, description, comments… </div>
+     </div>
+
+   Under 64rem there is no room for two columns, so it becomes an ordinary
+   page: the clip, then the panel under it, and the window scrolls. A layout
+   that insists on fitting when it cannot is how controls end up off-screen. */
+.im-shortwatch {
+	--im-shortwatch-gutter: clamp(0.75rem, 2vh, 1.75rem);
+	--im-shortwatch-room: calc(100dvh - var(--im-bar-height) - var(--im-shortwatch-gutter) * 2);
+	--im-shortwatch-panel: 24rem;
+
+	display: grid;
+	grid-template-columns: auto minmax(0, var(--im-shortwatch-panel));
+	gap: clamp(1rem, 2vw, 2rem);
+	justify-content: center;
+	height: calc(100dvh - var(--im-bar-height));
+	padding: var(--im-shortwatch-gutter);
+	overflow: hidden;
+}
+
+.im-shortwatch-stage {
+	display: flex;
+	align-items: flex-end;
+	gap: clamp(0.5rem, 1vw, 0.875rem);
+	height: 100%;
+}
+
+/* Same two-constraint sizing as the feed, but stated as a DEFINITE width
+   with a max — not `min(100%, …)`. The stage is a flex row in an `auto`
+   grid column, so it is sized by its contents; a percentage against it is a
+   cycle and CSS resolves the cycle as zero. `max-width` is ignored during
+   that sizing pass, which is exactly what is wanted here. */
+.im-shortwatch-player {
+	position: relative;
+	width: calc(var(--im-shortwatch-room) * 9 / 16);
+	max-width: 100%;
+	aspect-ratio: 9 / 16;
+	max-height: 100%;
+	overflow: hidden;
+	border-radius: var(--im-radius-xl);
+	background-color: #000;
+	isolation: isolate;
+}
+
+.im-shortwatch-player > :is(img, video, iframe) {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	border: 0;
+	object-fit: cover;
+}
+
+/* The panel owns the only scrollbar on the page. */
+.im-shortwatch-panel {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	height: 100%;
+	overflow-y: auto;
+	overscroll-behavior: contain;
+	scrollbar-width: thin;
+	padding-right: 0.25rem;
+}
+
+.im-shortwatch-title {
+	color: var(--im-ink);
+	font-size: var(--im-text-h5);
+	font-weight: 600;
+	line-height: var(--im-leading-h5);
+	letter-spacing: var(--im-tracking-tight);
+	text-wrap: pretty;
+}
+
+/* Previous and next, as full-height edges rather than as floating buttons:
+   the whole left and right of the stage is the target, which is what a
+   keyboard-and-mouse viewer actually wants on a page like this. */
+.im-shortwatch-step {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	justify-content: center;
+	height: 100%;
+}
+
+.im-shortwatch-step > .im-btn {
+	flex: none;
+}
+
+@media (width < 64rem) {
+	.im-shortwatch {
+		grid-template-columns: minmax(0, 1fr);
+		height: auto;
+		overflow: visible;
+	}
+
+	.im-shortwatch-stage {
+		height: auto;
+		justify-content: center;
+	}
+
+	.im-shortwatch-player {
+		width: min(100%, 24rem);
+		max-height: none;
+	}
+
+	.im-shortwatch-panel {
+		height: auto;
+		overflow: visible;
+	}
 }

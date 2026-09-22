@@ -95,3 +95,69 @@
 	if (document.readyState === 'loading') addEventListener('DOMContentLoaded', run);
 	else run();
 })();
+
+/**
+ * im-filter — the tabs and chips on a collection bar, made to work.
+ *
+ *     <div class="im-collbar-filters" role="group" data-im-filter="#eps">
+ *       <button type="button" value="all" aria-current="page">All</button>
+ *       <button type="button" value="s1">Season 1</button>
+ *     </div>
+ *     <div id="eps">
+ *       <article data-facet="s1"> … </article>
+ *       <article data-facet="s2 extras"> … </article>
+ *     </div>
+ *
+ * An item's `data-facet` is a space-separated list, so a thing can be in two
+ * places at once. `value="all"` shows everything.
+ *
+ * It toggles the `hidden` ATTRIBUTE rather than a class, because hidden is
+ * what the accessibility tree reads — a filter that only changes `display`
+ * leaves the hidden items in the tab order on some browsers, and a keyboard
+ * user then tabs through four episodes that are not on the screen.
+ *
+ * CSS cannot do this on its own: a selector cannot compare one element's
+ * attribute against another's. Without the script every item stays visible,
+ * which is the right failure — a filter that hides things it cannot unhide
+ * is worse than no filter.
+ */
+(() => {
+	function setup(group) {
+		const target = document.querySelector(group.dataset.imFilter);
+		if (!target) return;
+
+		const items = () => target.querySelectorAll('[data-facet]');
+		const empty = target.querySelector('[data-facet-empty]');
+
+		function apply(value) {
+			let shown = 0;
+			for (const item of items()) {
+				const match = value === 'all' || item.dataset.facet.split(/\s+/).includes(value);
+				item.toggleAttribute('hidden', !match);
+				if (match) shown += 1;
+			}
+			if (empty) empty.toggleAttribute('hidden', shown > 0);
+			for (const b of group.querySelectorAll('[value]')) {
+				const on = b.value === value;
+				b.setAttribute('aria-current', on ? 'page' : 'false');
+				if (b.hasAttribute('aria-pressed')) b.setAttribute('aria-pressed', String(on));
+			}
+			target.dataset.filter = value;
+		}
+
+		group.addEventListener('click', (e) => {
+			const button = e.target.closest('[value]');
+			if (!button || !group.contains(button)) return;
+			e.preventDefault();
+			apply(button.value);
+		});
+
+		const chosen = group.querySelector('[aria-current="page"][value]');
+		if (chosen && chosen.value !== 'all') apply(chosen.value);
+	}
+
+	const run = (root = document) => root.querySelectorAll('[data-im-filter]').forEach(setup);
+	if (document.readyState === 'loading') addEventListener('DOMContentLoaded', () => run());
+	else run();
+	window.imFilter = { run };
+})();
