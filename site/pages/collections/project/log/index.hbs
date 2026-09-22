@@ -5,15 +5,15 @@ description: What shipped, in order — a stepper of dated entries with the vers
 eyebrow: Collections · Project
 source: src/components/repo-card.css · timeline.css
 ---
-<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+<section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Collections · Project · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
 <div class="im-single im-wrap" data-sidebar="on">
-	<article class="im-stack" style="--im-stack-gap: 2rem">
-		<header class="im-stack" style="--im-stack-gap: .75rem">
+	<article class="im-stack im-stack-lg">
+		<header class="im-stack im-stack-xs">
 			<nav aria-label="Breadcrumb">
 				<ol class="im-breadcrumb im-breadcrumb-chevron">
 					<li><a href="/">{{> "icons/house"}}<span>Home</span></a></li>

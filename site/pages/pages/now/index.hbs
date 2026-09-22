@@ -5,15 +5,15 @@ description: What I am doing at this point in my life, dated at the top so a rea
 eyebrow: Pages
 source: src/components/widget.css · stream.css
 ---
-<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+<section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Pages · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
-<div class="im-single im-wrap" data-sidebar="on" style="--im-single-aside: 19rem">
-	<article class="im-stack" style="--im-stack-gap: 1.75rem">
-		<header class="im-stack" style="--im-stack-gap: .5rem">
+<div class="im-single im-wrap im-single-aside-sm" data-sidebar="on">
+	<article class="im-stack im-stack-md">
+		<header class="im-stack im-stack-xs">
 			<p class="im-eyebrow">Now</p>
 			<h1 class="im-collhead-title">What I am doing</h1>
 			<p class="im-snipcard-meta"><span class="im-kind" data-kind="post">{{> "icons/clock"}}Updated</span><time>21 September 2026</time><span>from Amsterdam</span></p>
@@ -42,7 +42,7 @@ source: src/components/widget.css · stream.css
 			<p>Tromsø in February, for the lights. A course on building a Ghost theme from nothing, if enough people say they want it. And at some point, a proper holiday that is not also a shoot.</p>
 		</section>
 
-		<section class="im-section" style="--im-section-gap: 1rem">
+		<section class="im-section im-section-tight">
 			<h2 class="im-caption" data-index="was">What this page said before</h2>
 			<ol class="im-stream">
 				<li class="im-stream-item" data-kind="note">

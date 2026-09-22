@@ -5,14 +5,14 @@ description: One thing that happened — the photograph full width, the numbers 
 eyebrow: Collections · Experience
 source: src/components/life.css · content.css
 ---
-<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+<section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Collections · Experience · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
 <div class="im-single im-wrap-wide" data-sidebar="on">
-	<article class="im-stack" style="--im-stack-gap: 1.75rem">
+	<article class="im-stack im-stack-md">
 		{{#with demo.experience.[0]}}
 		<nav aria-label="Breadcrumb">
 			<ol class="im-breadcrumb im-breadcrumb-chevron">
@@ -24,7 +24,7 @@ source: src/components/life.css · content.css
 
 		<header class="im-exphero">
 			<img src="{{../demo.shots.[0]}}" alt="" loading="eager">
-			<p class="im-exp-where" style="color: color-mix(in oklab, #fff 80%, transparent)"><span>{{where}}</span><span>{{when}}</span></p>
+			<p class="im-exp-where im-on-dark" ><span>{{where}}</span><span>{{when}}</span></p>
 			<h1 class="im-exphero-title">{{title}}</h1>
 		</header>
 
@@ -69,7 +69,7 @@ source: src/components/life.css · content.css
 				<section class="im-widget" aria-labelledby="e-from">
 					<h2 class="im-widget-title" id="e-from">From the list</h2>
 					<ul class="im-buckets">
-						<li class="im-bucket" data-state="done" style="box-shadow: none; padding: 0">
+						<li class="im-bucket im-p-0 im-flat" data-state="done" >
 							<span class="im-bucket-mark">{{icon "check"}}</span>
 							<p class="im-bucket-title"><a href="/collections/experience/#todo">Dive the Blue Hole</a></p>
 							<p class="im-bucket-note">Added March 2024</p>

@@ -5,16 +5,16 @@ description: One column, everything in it — a post, a release, a video, an iss
 eyebrow: Collections
 source: src/components/stream.css
 ---
-<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+<section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Collections · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
 <div class="im-single im-wrap-wide" data-sidebar="on">
-	<article class="im-stack" style="--im-stack-gap: 1.75rem">
+	<article class="im-stack im-stack-md">
 		<header class="im-collhead im-collhead-patterned">
-			<span class="im-collhead-art im-bg-cross" style="--im-art: var(--im-c-timeline)" aria-hidden="true"></span>
+			<span class="im-collhead-art im-bg-cross im-art-timeline" aria-hidden="true"></span>
 			<p class="im-eyebrow">Timeline</p>
 			<h1 class="im-collhead-title">Everything, in order</h1>
 			<p class="im-collhead-text">What actually happened, whichever collection it belongs to. This replaced a journal — a journal is a second blog with a lower bar, and the honest version of "here is what I have been doing" is every collection on one line.</p>
@@ -30,7 +30,7 @@ source: src/components/stream.css
 			<a class="im-tag" href="#stream">{{icon "package"}}Bought</a>
 		</div>
 
-		<section class="im-section" style="--im-section-gap: 1rem">
+		<section class="im-section im-section-tight">
 			<h2 class="im-caption" data-index="milestones">Milestones</h2>
 			<ol class="im-timeline im-timeline-big">
 				{{#each demo.milestones}}

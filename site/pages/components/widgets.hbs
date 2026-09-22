@@ -7,7 +7,7 @@ source: src/components/widget.css
 <p>A widget is a <strong>frame</strong> and something inside it. The frame is always the same — a ruled block, a mono caption, an optional link on the right — and everything below is what goes in. Each one here stands alone: copy the markup, drop it in a column, done.</p>
 
 {{#example title="A column of them" surface=true}}
-<aside class="im-widgets" style="max-width: 19rem" aria-label="Sidebar">
+<aside class="im-widgets im-max-sm" aria-label="Sidebar">
 	<section class="im-widget" style="background-color: var(--im-canvas)">
 		<h2 class="im-widget-title">Most read <a href="#a-column-of-them">All →</a></h2>
 		<ol class="im-widget-list im-widget-list-ranked">
@@ -147,7 +147,7 @@ source: src/components/widget.css
 {{#example style="max-width: 22rem"}}
 <section class="im-widget">
 	<h2 class="im-widget-title">Topics</h2>
-	<div class="im-cluster" style="--im-cluster-gap: .375rem">{{#foreach fixtures.tags}}<a class="im-tag" href="#topics">{{name}} <small class="text-muted">{{count.posts}}</small></a>{{/foreach}}</div>
+	<div class="im-cluster im-cluster-tight">{{#foreach fixtures.tags}}<a class="im-tag" href="#topics">{{name}} <small class="text-muted">{{count.posts}}</small></a>{{/foreach}}</div>
 </section>
 {{/example}}
 
@@ -236,7 +236,7 @@ source: src/components/widget.css
 <div class="im-widgets">
 	<section class="im-widget">
 		<h2 class="im-widget-title">Elsewhere</h2>
-		<div class="im-cluster" style="--im-cluster-gap: .375rem">
+		<div class="im-cluster im-cluster-tight">
 			<a class="im-btn im-btn-brand im-btn-brand-soft im-btn-sm" data-brand="x" href="#follow-search">{{> "icons/brand-x"}}<span>X</span></a>
 			<a class="im-btn im-btn-brand im-btn-brand-soft im-btn-sm" data-brand="github" href="#follow-search">{{> "icons/brand-github"}}<span>GitHub</span></a>
 			<a class="im-btn im-btn-brand im-btn-brand-soft im-btn-sm" data-brand="youtube" href="#follow-search">{{> "icons/brand-youtube"}}<span>YouTube</span></a>

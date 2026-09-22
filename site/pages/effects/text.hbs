@@ -99,7 +99,7 @@ source: src/effects/text.css · src/js/im-motion.js
 <h2>Orbit</h2>
 <p>A ring of type that turns, with the logo's recording dot at its centre — a seal at the end of an about page, "open for work" round an avatar, "scroll" under a hero. The letters are set on the path by the browser's own text engine, so they sit on the curve exactly and stay crisp at any size; nothing here rotates one letter at a time and hopes.</p>
 {{#example center=true style="padding-block: 2.5rem"}}
-<div class="im-cluster" style="--im-cluster-gap: 3rem; align-items: center">
+<div class="im-cluster" style="align-items: center">
 	{{> "components/orbit" id="orbit-a" text="Im Design System · Tailwind 4 · Ghost 6 · "}}
 	{{> "components/orbit" id="orbit-b" shape="square" text="Read the journal · Read the journal · " speed="26s" back=true style="--im-orbit-dot-color: var(--im-ink)"}}
 	{{#> "components/orbit" id="orbit-c" text="Open for work · Open for work · " size="7.5rem" speed="14s"}}{{> "components/avatar" size="lg" src=demo.author.profile_image name=demo.author.name}}{{/"components/orbit"}}

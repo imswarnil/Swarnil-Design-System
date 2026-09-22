@@ -28,8 +28,8 @@ source: src/components/repo-card.css · partials/components/repo-card.hbs
 
 <h2>Three sizes</h2>
 {{#example}}
-<div class="im-stack" style="--im-stack-gap: 2rem">
-	<div class="im-repos" style="--im-repos-min: 22rem">{{#with demo.projects.[5]}}{{> "components/repo-card" layout="lg"}}{{/with}}</div>
+<div class="im-stack im-stack-lg">
+	<div class="im-repos im-repos-md">{{#with demo.projects.[5]}}{{> "components/repo-card" layout="lg"}}{{/with}}</div>
 	<div class="im-repos">{{#with demo.projects.[1]}}{{> "components/repo-card"}}{{/with}}</div>
 	<div class="im-repos im-repos-list">{{#each demo.projects}}{{#match @index "<" 3}}{{> "components/repo-card" layout="bare"}}{{/match}}{{/each}}</div>
 </div>

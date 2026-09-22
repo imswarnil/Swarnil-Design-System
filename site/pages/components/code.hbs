@@ -74,7 +74,7 @@ collections:
 <h2>The theme</h2>
 <p>A code block is <strong>dark in both colour schemes</strong>: code reads best light-on-dark, and a dark slab gives a page of prose a clear change of voice. On a dark page it steps up one shade so it stays a distinct surface. Keywords are warm (kin to the accent) and strings cool, so the two most frequent roles never blur together; punctuation and comments recede.</p>
 {{#example code=false surface=true}}
-<div class="swatches" style="--im-grid-min: 9rem">{{#each tokens.code}}<div class="swatch"><div class="swatch-chip" style="--swatch: var({{name}})"></div><span class="swatch-name">{{key}}</span><span class="swatch-meta"><span>{{light}}</span>{{#if dark}}<span>dark page · {{dark}}</span>{{/if}}</span></div>{{/each}}</div>
+<div class="swatches im-grid-sm">{{#each tokens.code}}<div class="swatch"><div class="swatch-chip" style="--swatch: var({{name}})"></div><span class="swatch-name">{{key}}</span><span class="swatch-meta"><span>{{light}}</span>{{#if dark}}<span>dark page · {{dark}}</span>{{/if}}</span></div>{{/each}}</div>
 {{/example}}
 <p>The block carries its own chrome colours — <code>--im-code-line</code>, <code>--im-code-muted</code>, <code>--im-code-hover</code> — because the page's line and muted tokens are tuned for the page's background, not this one. It also sets <code>color-scheme: dark</code>, so its scrollbars are dark even on a light page. To re-theme, change the variables in <code>src/foundation/tokens/code.css</code>, or override them on one block.</p>
 

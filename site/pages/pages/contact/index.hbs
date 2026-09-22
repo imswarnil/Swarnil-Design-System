@@ -5,19 +5,19 @@ description: A form that says what happens after it is sent, next to the three a
 eyebrow: Pages
 source: src/components/field.css · widget.css
 ---
-<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+<section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Pages · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
-<div class="im-single im-wrap-wide" data-sidebar="on" style="--im-single-aside: 20rem">
-	<article class="im-stack" style="--im-stack-gap: 1.75rem">
-		<header class="im-collhead im-collhead-patterned" style="padding-bottom: 0">
-			<span class="im-collhead-art im-bg-waves" style="--im-art: var(--im-c-prompt)" aria-hidden="true"></span>
+<div class="im-single im-wrap-wide im-single-aside-md" data-sidebar="on">
+	<article class="im-stack im-stack-md">
+		<header class="im-collhead im-collhead-patterned im-pb-0">
+			<span class="im-collhead-art im-bg-waves im-art-prompt" aria-hidden="true"></span>
 			<p class="im-eyebrow">Contact</p>
 			<h1 class="im-collhead-title">Say hello</h1>
-			<p class="im-lede" style="margin: 0">I read everything and reply to most of it, usually within two working days. If it is about work, the second box is the one to use.</p>
+			<p class="im-lede im-m0">I read everything and reply to most of it, usually within two working days. If it is about work, the second box is the one to use.</p>
 		</header>
 
 		<div class="im-ways">
@@ -51,7 +51,7 @@ source: src/components/field.css · widget.css
 
 			<fieldset class="im-fieldset">
 				<legend class="im-label">What is this about?</legend>
-				<div class="im-cluster" style="--im-cluster-gap: .5rem">
+				<div class="im-cluster im-cluster-tight">
 					<label class="im-choice"><input type="radio" name="topic" value="hello" checked><span>Just saying hello</span></label>
 					<label class="im-choice"><input type="radio" name="topic" value="work"><span>Work</span></label>
 					<label class="im-choice"><input type="radio" name="topic" value="bug"><span>Something is broken</span></label>
@@ -69,13 +69,13 @@ source: src/components/field.css · widget.css
 
 			<p class="im-auth-note">{{icon "info"}}<span>This goes straight to an inbox a person reads. No ticket number, no autoresponder, no CRM.</span></p>
 
-			<p class="im-cluster" style="--im-cluster-gap: .75rem">
+			<p class="im-cluster">
 				<button class="im-btn im-btn-primary" type="submit">{{icon "mail"}}Send</button>
-				<span class="im-hint" style="margin: 0">Usually answered in two working days.</span>
+				<span class="im-hint im-m0">Usually answered in two working days.</span>
 			</p>
 		</form>
 
-		<section class="im-section" style="--im-section-gap: 1rem">
+		<section class="im-section im-section-tight">
 			<h2 class="im-caption" data-index="first">Before you write</h2>
 			<div class="im-accordion">
 				<details class="im-disclosure"><summary>Are you available?</summary><div class="im-disclosure-body"><p>Two days a week from November. The <a href="/pages/now/">now page</a> is the current answer and is more up to date than this one.</p></div></details>

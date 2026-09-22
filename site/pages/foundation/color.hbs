@@ -45,5 +45,5 @@ source: src/foundation/tokens/semantic.css
 <h2>The grey ramp</h2>
 <p>Primitives — not for use in components. Pure neutral (zero chroma), so it never tints a photograph beside it. The values are Tailwind CSS's <code>neutral</code> scale, MIT licensed.</p>
 {{#example code=false}}
-<div class="swatches" style="--im-grid-min: 7rem">{{#each tokens.grays}}<div class="swatch"><div class="swatch-chip" style="--swatch: var({{name}})"></div><span class="swatch-name">{{key}}</span></div>{{/each}}</div>
+<div class="swatches im-grid-sm">{{#each tokens.grays}}<div class="swatch"><div class="swatch-chip" style="--swatch: var({{name}})"></div><span class="swatch-name">{{key}}</span></div>{{/each}}</div>
 {{/example}}

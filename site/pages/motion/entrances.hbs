@@ -46,14 +46,14 @@ source: src/motion/entrance.css · src/js/im-motion.js
 <h2>Image</h2>
 {{#example code=false}}
 <div class="tiles tiles-4" data-replay>
-	<div class="tile" data-replay-tile><p class="im-caption" data-index="10">wipe-right</p><figure class="im-fx-img" style="aspect-ratio: 4 / 3; overflow: hidden"><img data-im-in="wipe-right" src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></figure><span class="text-sm">Uncovered by a straight edge, left to right.</span></div>
-	<div class="tile" data-replay-tile><p class="im-caption" data-index="11">wipe-up</p><figure class="im-fx-img" style="aspect-ratio: 4 / 3; overflow: hidden"><img data-im-in="wipe-up" src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></figure><span class="text-sm">Uncovered from the bottom.</span></div>
-	<div class="tile" data-replay-tile><p class="im-caption" data-index="12">iris</p><figure class="im-fx-img" style="aspect-ratio: 4 / 3; overflow: hidden"><img data-im-in="iris" src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></figure><span class="text-sm">Opens from the centre, like a lens.</span></div>
-	<div class="tile" data-replay-tile><p class="im-caption" data-index="13">blinds</p><figure class="im-fx-img" style="aspect-ratio: 4 / 3; overflow: hidden"><img data-im-in="blinds" src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></figure><span class="text-sm">Eight slats open together.</span></div>
-	<div class="tile" data-replay-tile><p class="im-caption" data-index="14">zoom-out</p><figure class="im-fx-img" style="aspect-ratio: 4 / 3; overflow: hidden"><img data-im-in="zoom-out" src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></figure><span class="text-sm">Settles back from slightly too close.</span></div>
-	<div class="tile" data-replay-tile><p class="im-caption" data-index="15">develop</p><figure class="im-fx-img" style="aspect-ratio: 4 / 3; overflow: hidden"><img data-im-in="develop" src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></figure><span class="text-sm">Like a print in the tray: pale and soft, then colour and edge.</span></div>
-	<div class="tile" data-replay-tile><p class="im-caption" data-index="16">curtain</p><figure class="im-fx-img" data-im-in="curtain" style="aspect-ratio: 4 / 3"><img src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></figure><span class="text-sm">A panel of the accent crosses and leaves the picture behind it. On the wrapper.</span></div>
-	<div class="tile" data-replay-tile><p class="im-caption" data-index="17">tilt</p><figure class="im-fx-img" style="aspect-ratio: 4 / 3; overflow: hidden"><img data-im-in="tilt" src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></figure><span class="text-sm">Swings in on a vertical hinge.</span></div>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="10">wipe-right</p><figure class="im-fx-img im-ratio-4-3"><img data-im-in="wipe-right" src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></figure><span class="text-sm">Uncovered by a straight edge, left to right.</span></div>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="11">wipe-up</p><figure class="im-fx-img im-ratio-4-3"><img data-im-in="wipe-up" src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></figure><span class="text-sm">Uncovered from the bottom.</span></div>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="12">iris</p><figure class="im-fx-img im-ratio-4-3"><img data-im-in="iris" src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></figure><span class="text-sm">Opens from the centre, like a lens.</span></div>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="13">blinds</p><figure class="im-fx-img im-ratio-4-3"><img data-im-in="blinds" src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></figure><span class="text-sm">Eight slats open together.</span></div>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="14">zoom-out</p><figure class="im-fx-img im-ratio-4-3"><img data-im-in="zoom-out" src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></figure><span class="text-sm">Settles back from slightly too close.</span></div>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="15">develop</p><figure class="im-fx-img im-ratio-4-3"><img data-im-in="develop" src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></figure><span class="text-sm">Like a print in the tray: pale and soft, then colour and edge.</span></div>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="16">curtain</p><figure class="im-fx-img im-ratio-4-3" data-im-in="curtain"><img src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></figure><span class="text-sm">A panel of the accent crosses and leaves the picture behind it. On the wrapper.</span></div>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="17">tilt</p><figure class="im-fx-img im-ratio-4-3"><img data-im-in="tilt" src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></figure><span class="text-sm">Swings in on a vertical hinge.</span></div>
 </div>
 {{/example}}
 <p>The clipping styles (<code>wipe</code>, <code>iris</code>, <code>blinds</code>, <code>unfold</code>) hide nothing from a search engine or a screen reader — the picture is in the page from the first byte; only its paint is delayed.</p>
@@ -75,7 +75,7 @@ source: src/motion/entrance.css · src/js/im-motion.js
 <h2>One after another</h2>
 <p><code>im-stagger</code> on a parent numbers its children; every entrance reads that number as a delay (<code>--im-stagger</code>, 60ms a step).</p>
 {{#example}}
-<div class="im-grid-auto im-stagger" data-replay style="--im-grid-min: 10rem">
+<div class="im-grid-auto im-stagger im-grid-sm" data-replay>
 	<div class="im-card" data-im-in="rise"><span class="im-card-title">One</span></div>
 	<div class="im-card" data-im-in="rise"><span class="im-card-title">Two</span></div>
 	<div class="im-card" data-im-in="rise"><span class="im-card-title">Three</span></div>

@@ -5,16 +5,16 @@ description: The things you sell. A shot, what it is, what it costs and one butt
 eyebrow: Collections · Shop
 source: src/components/commerce.css
 ---
-<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+<section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Collections · Shop · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
 <div class="im-single im-wrap-wide" data-sidebar="on">
-	<article class="im-stack" style="--im-stack-gap: 2rem">
+	<article class="im-stack im-stack-lg">
 		<header class="im-collhead im-collhead-patterned">
-			<span class="im-collhead-art im-bg-diamond" style="--im-art: var(--im-c-shop)" aria-hidden="true"></span>
+			<span class="im-collhead-art im-bg-diamond im-art-shop" aria-hidden="true"></span>
 			<p class="im-eyebrow">Shop</p>
 			<h1 class="im-collhead-title">Things I made, for sale</h1>
 			<p class="im-collhead-text">Digital, delivered immediately, yours to keep. One licence covers every site you own — and everything here is what this site itself runs on.</p>
@@ -29,7 +29,7 @@ source: src/components/commerce.css
 				<a class="im-tag" href="#shop">Icons</a>
 				<a class="im-tag" href="#shop">Free</a>
 			</div>
-			<div class="im-cluster" style="--im-cluster-gap: .375rem">
+			<div class="im-cluster im-cluster-tight">
 				<button class="im-btn im-btn-sm" type="button">{{icon "list-filter"}}Newest</button>
 			</div>
 		</div>
@@ -55,7 +55,7 @@ source: src/components/commerce.css
 
 		<section class="im-section">
 			<div class="home-head"><p class="im-caption" data-index="q">Before you buy</p></div>
-			<div class="im-grid-auto" style="--im-grid-min: 17rem">
+			<div class="im-grid-auto im-grid-md">
 				<div class="im-card im-card-outline"><span class="im-card-title">One licence, every site you own</span><span>Not per-site, not per-seat, not a subscription. Buy it once.</span></div>
 				<div class="im-card im-card-outline"><span class="im-card-title">Updates for a year</span><span>And the version you have keeps working after that, forever.</span></div>
 				<div class="im-card im-card-outline"><span class="im-card-title">Refunds, no argument</span><span>Fourteen days. You do not have to explain, and I will not ask.</span></div>
@@ -70,7 +70,7 @@ source: src/components/commerce.css
 				<h2 class="im-widget-title" id="sw-bundle">Everything, once</h2>
 				<p class="im-widget-heading">All {{demo.shop.length}} products — $149 instead of $237.</p>
 				<p class="im-widget-sponsor">One licence, every site you own, every update forever.</p>
-				<button class="im-btn im-btn-primary" type="button" style="width: 100%">Buy the bundle</button>
+				<button class="im-btn im-btn-primary im-w-full" type="button">Buy the bundle</button>
 			</section>
 
 			<section class="im-widget" aria-labelledby="sw-facts">
@@ -127,7 +127,7 @@ source: src/components/commerce.css
 		<h2>In a theme</h2>
 		{{{{code "hbs"}}}}
 {{#get "posts" filter="tag:#product" limit="all"}}
-	<div class="im-repos" style="--im-repos-min: 20rem">
+	<div class="im-repos im-repos-md">
 		{{#foreach posts}}
 		<article class="im-product">
 			<span class="im-product-media"><img src="{{img_url feature_image size="m"}}" alt=""></span>

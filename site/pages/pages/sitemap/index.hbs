@@ -5,7 +5,7 @@ description: Every page on the site as one tree, generated from the same array t
 eyebrow: Pages
 source: src/components/sitemap.css
 ---
-<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+<section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Pages · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
@@ -13,8 +13,8 @@ source: src/components/sitemap.css
 
 <section class="im-section im-wrap-wide">
 	<div class="im-collbar">
-		<p class="im-caption" data-index="tree" style="margin: 0">Everything</p>
-		<p class="im-cluster" style="--im-cluster-gap: .375rem"><button class="im-btn im-btn-sm" type="button" onclick="document.querySelectorAll('.im-sitemap details').forEach(d=>d.open=true)">Expand all</button><button class="im-btn im-btn-sm" type="button" onclick="document.querySelectorAll('.im-sitemap details').forEach(d=>d.open=false)">Collapse all</button></p>
+		<p class="im-caption im-m0" data-index="tree">Everything</p>
+		<p class="im-cluster im-cluster-tight"><button class="im-btn im-btn-sm" type="button" onclick="document.querySelectorAll('.im-sitemap details').forEach(d=>d.open=true)">Expand all</button><button class="im-btn im-btn-sm" type="button" onclick="document.querySelectorAll('.im-sitemap details').forEach(d=>d.open=false)">Collapse all</button></p>
 		<p class="im-snipcard-meta"><span>{{sitemap.length}} sections</span><a class="im-card-cta" href="/sitemap.xml">sitemap.xml {{icon "external-link"}}</a></p>
 	</div>
 

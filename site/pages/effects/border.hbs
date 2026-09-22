@@ -7,7 +7,7 @@ source: src/effects/border.css
 <h2>Corners</h2>
 <p>Four brackets instead of a box — the mark a designer puts round something to say <em>this</em>. Under the pointer the arms run along the edges until they meet and the brackets become a frame; it is one movement on one long glide, so the frame <strong>arrives</strong> rather than snapping shut.</p>
 {{#example}}
-<div class="im-grid-fit" style="--im-grid-min: 15rem; --im-grid-gap: 1.5rem">
+<div class="im-grid-fit im-grid-md">
 	<a class="im-fx-corners block p-6 no-underline" href="#corners"><p class="im-caption" data-index="01">im-fx-corners</p><p class="mt-2 text-sm text-body">Hover: the brackets close into a frame.</p></a>
 	<a class="im-fx-corners block p-6 no-underline" href="#corners" style="--im-fx-ink: var(--im-accent); --im-fx-length: 1.5rem; --im-fx-speed: 900ms"><p class="im-caption" data-index="02">Longer arms, slower</p><p class="mt-2 text-sm text-body"><code>--im-fx-length</code>, <code>--im-fx-speed</code>.</p></a>
 	<figure class="im-fx-corners p-2" style="--im-fx-ink: var(--im-accent); --im-fx-length: 1.25rem; --im-fx-width: 2px"><img class="block w-full" style="aspect-ratio: 16 / 10; object-fit: cover" src="{{demo.post.feature_image}}" alt="" loading="lazy"></figure>
@@ -18,7 +18,7 @@ source: src/effects/border.css
 <h2>Trace</h2>
 <p>A hairline box with one bright segment travelling round it — a scanner, a "live" state, the one plan in a pricing row you want looked at first. <strong>One per view</strong>; it never stops moving.</p>
 {{#example}}
-<div class="im-grid-fit" style="--im-grid-min: 15rem; --im-grid-gap: 1.5rem">
+<div class="im-grid-fit im-grid-md">
 	<div class="im-fx-trace rounded-xl p-6"><p class="im-caption" data-index="●">im-fx-trace</p><p class="mt-2 text-sm">The accent travels the rule.</p></div>
 	<div class="im-fx-trace rounded-xl p-6" style="--im-fx-ink: var(--im-ink); --im-fx-speed: 3s"><p class="im-caption">In ink, faster</p><p class="mt-2 text-sm"><code>--im-fx-ink</code>, <code>--im-fx-speed</code>.</p></div>
 </div>
@@ -27,7 +27,7 @@ source: src/effects/border.css
 
 <h2>On components</h2>
 {{#example}}
-<div class="im-grid-fit" style="--im-grid-min: 15rem; --im-grid-gap: 1.5rem">
+<div class="im-grid-fit im-grid-md">
 	<div class="im-card im-card-plain im-fx-trace p-5" style="border-radius: var(--im-radius-xl)"><span class="im-badge im-badge-accent" style="align-self: start">Pro</span><span class="im-card-title">The plan to look at</span><span>Trace, on the one card that should be seen first.</span></div>
 	<a class="im-card im-card-plain im-fx-corners p-5" href="#on-components"><span class="im-card-title">Brackets, no surface</span><span>The frame closes as the pointer arrives.</span><span class="im-card-cta">Read {{> "icons/arrow-right"}}</span></a>
 </div>

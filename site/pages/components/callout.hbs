@@ -6,7 +6,7 @@ source: src/components/callout.css
 ---
 <h2>Kinds</h2>
 {{#example}}
-<div class="im-stack" style="--im-stack-gap: 1.5rem">
+<div class="im-stack im-stack-md">
 	<div class="im-callout"><p class="im-callout-label">{{> "icons/info"}} Note</p><p>Useful, not urgent. The neutral callout.</p></div>
 	<div class="im-callout im-callout-info"><p class="im-callout-label">{{> "icons/lightbulb"}} Good to know</p><p>Utilities point at live variables, so they follow dark mode by themselves.</p></div>
 	<div class="im-callout im-callout-success"><p class="im-callout-label">{{> "icons/circle-check"}} Done</p><p>The theme passed validation.</p></div>
@@ -29,7 +29,7 @@ source: src/components/callout.css
 <h2>Tinted</h2>
 <p><code>im-callout-tint</code> fills the box; the label becomes a solid chip so it still reads on the fill.</p>
 {{#example}}
-<div class="im-grid-fit" style="--im-grid-min: 16rem; --im-grid-gap: 1.5rem">
+<div class="im-grid-fit im-grid-md">
 	<div class="im-callout im-callout-tint im-callout-info"><p class="im-callout-label">{{> "icons/lightbulb"}} Tip</p><p>Press <kbd>/</kbd> anywhere to search.</p></div>
 	<div class="im-callout im-callout-tint im-callout-warning"><p class="im-callout-label">{{> "icons/triangle-alert"}} Deprecated</p><p>Use <code>im-caption</code> instead.</p></div>
 	<div class="im-callout im-callout-tint im-callout-success"><p class="im-callout-label">{{> "icons/circle-check"}} Saved</p><p>Your changes are live.</p></div>
@@ -39,7 +39,7 @@ source: src/components/callout.css
 <h2>With an icon tile</h2>
 <p><code>im-callout-icon</code>: a tinted tile to the left of the text instead of a label on the edge — for a callout that stands alone, outside prose.</p>
 {{#example}}
-<div class="im-stack" style="--im-stack-gap: .75rem">
+<div class="im-stack im-stack-xs">
 	<div class="im-callout im-callout-icon im-callout-info"><span class="im-callout-mark">{{> "icons/shield"}}</span><p class="im-callout-title">Two-factor is off</p><p>Turn it on to protect your publication.</p><div class="im-callout-actions"><a class="im-btn im-btn-sm" href="#with-an-icon-tile">Turn on</a></div></div>
 	<div class="im-callout im-callout-icon im-callout-danger"><span class="im-callout-mark">{{> "icons/wallet"}}</span><p class="im-callout-title">Payment failed</p><p>Your card ending 4242 was declined.</p></div>
 </div>
@@ -47,7 +47,7 @@ source: src/components/callout.css
 
 <h2>Sizes</h2>
 {{#example}}
-<div class="im-stack" style="--im-stack-gap: 1.25rem">
+<div class="im-stack im-stack-sm">
 	<div class="im-callout im-callout-sm im-callout-warning">{{> "icons/triangle-alert"}}<span><strong>Small.</strong> One line — a banner above a form, a note in a table.</span></div>
 	<div class="im-callout im-callout-info"><p class="im-callout-label">{{> "icons/info"}} Medium</p><p>The default. A paragraph or two inside an article.</p></div>
 	<div class="im-callout im-callout-lg im-callout-accent"><p class="im-callout-label">{{> "icons/rocket"}} Large</p><p class="im-callout-title">A callout that is nearly a section</p><p>For the one announcement on a page: roomier padding, a larger title, space for a button.</p><div class="im-callout-actions"><a class="im-btn im-btn-primary" href="#sizes">Get started {{> "icons/arrow-right"}}</a></div></div>

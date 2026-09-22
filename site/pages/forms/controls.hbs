@@ -6,7 +6,7 @@ source: src/components/field.css · src/js/im.js · im-media.js
 ---
 <h2>Select</h2>
 {{#example style="max-width: 26rem"}}
-<div class="im-stack" style="--im-stack-gap: .875rem">
+<div class="im-stack im-stack-sm">
 	<div class="im-field"><label class="im-label" for="se-1">Topic</label><select class="im-select" id="se-1"><option>Design systems</option><option>Ghost themes</option><option>Travel</option></select></div>
 	<div class="im-field"><label class="im-label" for="se-2">Grouped</label><select class="im-select" id="se-2"><optgroup label="Europe"><option>Budapest</option><option>Amsterdam</option></optgroup><optgroup label="Asia"><option>Kyoto</option></optgroup></select></div>
 	<div class="im-field"><label class="im-label" for="se-3">Invalid</label><select class="im-select" id="se-3" aria-invalid="true" aria-describedby="se-3-e"><option value="">Choose one…</option><option>Monthly</option></select><p class="im-error" id="se-3-e">{{> "icons/circle-alert"}} Pick a plan to continue.</p></div>
@@ -31,7 +31,7 @@ source: src/components/field.css · src/js/im.js · im-media.js
 
 <h2>Range</h2>
 {{#example style="max-width: 26rem"}}
-<div class="im-stack" style="--im-stack-gap: 1.25rem">
+<div class="im-stack im-stack-sm">
 	<div class="im-field"><label class="im-label" for="ra-1">Volume <output class="im-label-note" id="ra-1-o">40</output></label><input class="im-range" id="ra-1" type="range" min="0" max="100" value="40" oninput="document.getElementById('ra-1-o').textContent=this.value"></div>
 	<div class="im-field"><label class="im-label" for="ra-2">Posts per page <output class="im-label-note" id="ra-2-o">12</output></label><input class="im-range" id="ra-2" type="range" min="6" max="48" step="6" value="12" oninput="document.getElementById('ra-2-o').textContent=this.value"></div>
 </div>
@@ -51,7 +51,7 @@ source: src/components/field.css · src/js/im.js · im-media.js
 
 <h2>Search &amp; number</h2>
 {{#example style="max-width: 26rem"}}
-<div class="im-stack" style="--im-stack-gap: .875rem">
+<div class="im-stack im-stack-sm">
 	<div class="im-input-group">{{> "icons/search"}}<input class="im-input" type="search" placeholder="Search…" aria-label="Search"><kbd>/</kbd></div>
 	<div class="im-input-group"><button class="im-btn im-btn-ghost im-btn-icon im-btn-sm" type="button" aria-label="Decrease" style="margin: 0 0 0 -.5rem" onclick="this.nextElementSibling.stepDown()">{{> "icons/minus"}}</button><input class="im-input text-center" type="number" value="2" min="1" max="9" aria-label="Seats"><button class="im-btn im-btn-ghost im-btn-icon im-btn-sm" type="button" aria-label="Increase" onclick="this.previousElementSibling.stepUp()">{{> "icons/plus"}}</button></div>
 </div>

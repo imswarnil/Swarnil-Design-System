@@ -5,14 +5,14 @@ description: The one post layout. Two columns — the post on the left, the rail
 eyebrow: Collections · Post
 source: src/layout/page.css · components/post-hero.css · content.css · widget.css
 ---
-<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+<section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Collections · Post · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
 <div class="im-single im-wrap-wide" id="single" data-sidebar="on">
-	<article class="im-stack" style="--im-stack-gap: 1.75rem">
+	<article class="im-stack im-stack-md">
 		{{#with demo.post}}{{> "components/post-hero" id="post-hero" style="stack" crumbs=true zoom=true section="Writing" section_url="/collections/post/"}}{{/with}}
 
 		<section class="im-content im-content-flush" data-toc-skip>

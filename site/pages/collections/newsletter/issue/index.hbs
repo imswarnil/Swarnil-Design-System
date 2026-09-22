@@ -5,7 +5,7 @@ description: One issue, as it was sent — the number and the date above the tit
 eyebrow: Collections · Newsletter
 source: src/components/collection.css · content.css
 ---
-<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+<section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Collections · Newsletter · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
@@ -13,13 +13,13 @@ source: src/components/collection.css · content.css
 
 <div class="im-wrap-wide" style="margin-bottom: 2rem">
 	{{#with demo.issues.[0]}}
-	<header class="im-letterhead" style="align-items: start">
-		<div class="im-stack" style="--im-stack-gap: .875rem">
+	<header class="im-letterhead im-grid-start">
+		<div class="im-stack im-stack-sm">
 			<nav aria-label="Breadcrumb"><ol class="im-breadcrumb im-breadcrumb-chevron"><li><a href="/">{{> "icons/house"}}<span>Home</span></a></li><li><a href="/collections/newsletter/">{{> "icons/mail"}}<span>Field Notes</span></a></li><li><span aria-current="page">#{{n}}</span></li></ol></nav>
 			<h1 class="im-collhead-title">{{title}}</h1>
-			<p class="im-lede" style="margin: 0">{{text}}</p>
+			<p class="im-lede im-m0">{{text}}</p>
 			<p class="im-collhead-meta"><span>{{sent}}</span><span>{{words}} words</span><span>{{read}} opened</span></p>
-			<div style="max-width: 26rem">{{> "components/subscribe" id="letter-email" button="Get the next one"}}</div>
+			<div class="im-max-sm">{{> "components/subscribe" id="letter-email" button="Get the next one"}}</div>
 			<p class="im-letterhead-note">{{> "icons/mail"}}This page went out as an email to 4,210 people on {{sent}}.</p>
 		</div>
 		<div class="im-letterhead-shot"><img src="{{lookup ../demo.shots shot}}" alt="" loading="eager"></div>
@@ -28,9 +28,9 @@ source: src/components/collection.css · content.css
 </div>
 
 <div class="im-single im-wrap-wide" data-sidebar="on">
-	<article class="im-stack" style="--im-stack-gap: 1.75rem">
-		<section class="im-content im-content-flush" data-toc-skip style="text-align: center">
-			<details class="im-toc-inline" style="display: block; max-width: 28rem; margin-inline: auto; text-align: left">
+	<article class="im-stack im-stack-md">
+		<section class="im-content im-content-flush im-center" data-toc-skip>
+			<details class="im-toc-inline im-block im-max-md im-mx-auto">
 				<summary>In this letter <span>Contents</span></summary>
 				<div class="im-toc" data-toc="#letter"></div>
 			</details>

@@ -19,7 +19,7 @@ source: src/utilities/patterns.css
 
 <h2>Lines</h2>
 {{#example}}
-<div class="im-grid-auto" style="--im-grid-min: 10rem; --im-grid-gap: .75rem">
+<div class="im-grid-auto im-grid-sm">
 	<div class="pattern-tile im-bg-grid">im-bg-grid</div>
 	<div class="pattern-tile im-bg-blueprint">im-bg-blueprint</div>
 	<div class="pattern-tile im-bg-rules">im-bg-rules</div>
@@ -32,7 +32,7 @@ source: src/utilities/patterns.css
 
 <h2>Marks</h2>
 {{#example}}
-<div class="im-grid-auto" style="--im-grid-min: 10rem; --im-grid-gap: .75rem">
+<div class="im-grid-auto im-grid-sm">
 	<div class="pattern-tile im-bg-dots">im-bg-dots</div>
 	<div class="pattern-tile im-bg-cross">im-bg-cross</div>
 	<div class="pattern-tile im-bg-checker">im-bg-checker</div>
@@ -46,9 +46,9 @@ source: src/utilities/patterns.css
 
 <h2>Light &amp; texture</h2>
 {{#example}}
-<div class="im-grid-auto" style="--im-grid-min: 12rem; --im-grid-gap: .75rem">
+<div class="im-grid-auto im-grid-sm">
 	<div class="pattern-tile im-bg-glow">im-bg-glow</div>
-	<div class="pattern-tile im-bg-glow" style="--im-pattern-at: 100% 100%; --im-pattern-color: var(--im-info)">glow · placed, recoloured</div>
+	<div class="pattern-tile im-bg-glow" style="--im-pattern-at: 100% 100%">glow · placed, recoloured</div>
 	<div class="pattern-tile im-bg-mesh">im-bg-mesh</div>
 	<div class="pattern-tile im-bg-noise bg-surface">im-bg-noise on bg-surface</div>
 </div>
@@ -57,20 +57,20 @@ source: src/utilities/patterns.css
 
 <h2>Tuning</h2>
 {{#example}}
-<div class="im-grid-auto" style="--im-grid-min: 10rem; --im-grid-gap: .75rem">
+<div class="im-grid-auto im-grid-sm">
 	<div class="pattern-tile im-bg-grid" style="--im-pattern-size: 1rem">size 1rem</div>
-	<div class="pattern-tile im-bg-grid" style="--im-pattern-color: var(--im-accent)">accent ink</div>
+	<div class="pattern-tile im-bg-grid">accent ink</div>
 	<div class="pattern-tile im-bg-lines" style="--im-pattern-weight: 3px; --im-pattern-size: 1rem">weight 3px</div>
-	<div class="pattern-tile im-bg-dots" style="--im-pattern-size: .625rem; --im-pattern-color: var(--im-ink)">dense, ink</div>
+	<div class="pattern-tile im-bg-dots" style="--im-pattern-size: .625rem">dense, ink</div>
 	<div class="pattern-tile im-bg-rings" style="--im-pattern-at: 0% 100%; --im-pattern-size: 1rem">rings from a corner</div>
-	<div class="pattern-tile im-bg-stripes" style="--im-pattern-color: var(--im-warning-tint)">warning stripes</div>
+	<div class="pattern-tile im-bg-stripes">warning stripes</div>
 </div>
 {{/example}}
 
 <h2>Fading one out</h2>
 <p>A pattern at full strength behind text is noise. Fade it with a mask — and put the pattern on its <strong>own layer</strong>, because a mask fades everything inside the element it is on.</p>
 {{#example}}
-<div class="im-grid-auto" style="--im-grid-min: 10rem; --im-grid-gap: .75rem">
+<div class="im-grid-auto im-grid-sm">
 	<div class="pattern-tile im-bg-grid im-fade-b">im-fade-b</div>
 	<div class="pattern-tile im-bg-grid im-fade-t">im-fade-t</div>
 	<div class="pattern-tile im-bg-grid im-fade-x">im-fade-x</div>
@@ -92,7 +92,7 @@ source: src/utilities/patterns.css
 <h2>Drifting</h2>
 <p><code>im-bg-drift</code> pans a repeating pattern by exactly one pitch, forever, so the loop has no seam. <code>--im-pattern-speed</code> (40s). It stops under reduced motion.</p>
 {{#example}}
-<div class="im-grid-auto" style="--im-grid-min: 12rem; --im-grid-gap: .75rem">
+<div class="im-grid-auto im-grid-sm">
 	<div class="pattern-tile im-bg-grid im-bg-drift" style="--im-pattern-speed: 12s">grid, drifting</div>
 	<div class="pattern-tile im-bg-dots im-bg-drift" style="--im-pattern-size: 1.25rem; --im-pattern-speed: 8s">dots, drifting</div>
 </div>
@@ -110,7 +110,7 @@ source: src/utilities/patterns.css
 <h2>More line work, and variations</h2>
 <p><code>im-bg-hatch</code> · <code>im-bg-lattice</code> · <code>im-bg-radar</code> · <code>im-bg-waves</code> · <code>im-bg-bricks</code> · <code>im-bg-plus</code>. Then a variation on any of them: <code>im-bg-fade-r</code>, <code>im-bg-fade-b</code>, <code>im-bg-corner</code> mask it to one edge or corner; <code>im-bg-dense</code> / <code>im-bg-loose</code> change the pitch; <code>im-bg-accent</code> inks it in the accent. A pattern that fills a panel is wallpaper; one that fades is a mark.</p>
 {{#example}}
-<div class="im-grid-auto" style="--im-grid-min: 9rem; --im-grid-gap: .75rem">
+<div class="im-grid-auto im-grid-sm">
 	<div class="im-bg-hatch" style="aspect-ratio: 1; border-radius: var(--im-radius-lg)"></div>
 	<div class="im-bg-lattice" style="aspect-ratio: 1; border-radius: var(--im-radius-lg)"></div>
 	<div class="im-bg-radar" style="aspect-ratio: 1; border-radius: var(--im-radius-lg)"></div>

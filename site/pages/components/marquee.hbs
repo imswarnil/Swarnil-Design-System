@@ -20,7 +20,7 @@ source: src/components/marquee.css · src/js/im.js
 <h2>Two rows, opposite ways</h2>
 <p><code>im-marquee-reverse</code> runs it the other way; <code>im-marquee-fade</code> softens the edges; different speeds keep two rows from marching in step.</p>
 {{#example flush=true}}
-<div class="im-stack py-6" style="--im-stack-gap: .75rem">
+<div class="im-stack py-6 im-stack-xs">
 	<div class="im-marquee im-marquee-fade im-marquee-pause" data-im-marquee style="--im-marquee-gap: .625rem; --im-marquee-speed: 46s">
 		<div class="im-marquee-group">{{#foreach fixtures.tags}}<a class="im-tag im-tag-dot" href="#two-rows-opposite-ways">{{name}}</a>{{/foreach}}<a class="im-tag" href="#two-rows-opposite-ways">Design systems</a><a class="im-tag" href="#two-rows-opposite-ways">Ghost</a><a class="im-tag" href="#two-rows-opposite-ways">Tailwind</a><a class="im-tag" href="#two-rows-opposite-ways">Photography</a></div>
 	</div>
@@ -45,7 +45,7 @@ source: src/components/marquee.css · src/js/im.js
 <p>Items can be anything — quotes, posts, stats. Give them a width, since a marquee item has no row to fill.</p>
 {{#example flush=true}}
 <div class="im-marquee im-marquee-fade im-marquee-pause py-6" data-im-marquee style="--im-marquee-gap: 1rem; --im-marquee-speed: 60s">
-	<div class="im-marquee-group" style="align-items: stretch">
+	<div class="im-marquee-group">
 		<figure class="im-card im-card-outline w-72"><blockquote class="text-ink">"The tokens carried our rebrand in an afternoon."</blockquote><figcaption class="im-card-meta"><span>{{> "icons/user"}} A designer</span></figcaption></figure>
 		<figure class="im-card im-card-outline w-72"><blockquote class="text-ink">"I deleted a section by deleting a folder. That was the whole job."</blockquote><figcaption class="im-card-meta"><span>{{> "icons/user"}} A developer</span></figcaption></figure>
 		<figure class="im-card im-card-outline w-72"><blockquote class="text-ink">"Dark mode just worked. I had budgeted a week."</blockquote><figcaption class="im-card-meta"><span>{{> "icons/user"}} A founder</span></figcaption></figure>
@@ -58,7 +58,7 @@ source: src/components/marquee.css · src/js/im.js
 <p><code>im-marquee-vertical</code> needs a height: <code>--im-marquee-height</code> (20rem).</p>
 {{#example style="max-width: 22rem"}}
 <div class="im-marquee im-marquee-vertical im-marquee-fade im-marquee-pause" data-im-marquee style="--im-marquee-gap: .75rem; --im-marquee-height: 16rem; --im-marquee-speed: 24s">
-	<div class="im-marquee-group" style="align-items: stretch">
+	<div class="im-marquee-group">
 		{{#foreach demo.four}}<a class="im-card im-card-outline im-card-link im-card-sm" href="#vertical"><span class="im-card-eyebrow">{{primary_tag.name}}</span><span class="im-card-title">{{title}}</span></a>{{/foreach}}
 	</div>
 </div>
@@ -79,14 +79,14 @@ source: src/components/marquee.css · src/js/im.js
 {{#example flush=true}}
 <div class="im-marquee-3d">
 	<div class="im-marquee im-marquee-pause" data-im-marquee style="--im-marquee-gap: 1rem; --im-marquee-speed: 70s">
-		<div class="im-marquee-group" style="align-items: stretch">
+		<div class="im-marquee-group">
 			<figure class="im-marquee-card"><p class="im-marquee-card-text">"The tokens carried our rebrand in an afternoon. I had budgeted a fortnight and a fight."</p><figcaption class="im-marquee-card-by">{{> "components/avatar" size="sm" name="Mara Lindqvist"}}<span><strong>Mara Lindqvist</strong><small>Design lead, Nordvik</small></span></figcaption></figure>
 			<figure class="im-marquee-card"><p class="im-marquee-card-text">"I deleted a section by deleting a folder. That was the whole job."</p><figcaption class="im-marquee-card-by">{{> "components/avatar" size="sm" name="Tobias Reinhardt"}}<span><strong>Tobias Reinhardt</strong><small>Freelance developer</small></span></figcaption></figure>
 			<figure class="im-marquee-card"><p class="im-marquee-card-text">"Dark mode just worked. Every component, first try, no second stylesheet."</p><figcaption class="im-marquee-card-by">{{> "components/avatar" size="sm" name="Ines Duarte"}}<span><strong>Ines Duarte</strong><small>Founder, Cadence</small></span></figcaption></figure>
 		</div>
 	</div>
 	<div class="im-marquee im-marquee-reverse im-marquee-pause" data-im-marquee style="--im-marquee-gap: 1rem; --im-marquee-speed: 82s">
-		<div class="im-marquee-group" style="align-items: stretch">
+		<div class="im-marquee-group">
 			<figure class="im-marquee-card"><p class="im-marquee-card-text">"It reads like a poster and behaves like an app. I did not know you could have both."</p><figcaption class="im-marquee-card-by">{{> "components/avatar" size="sm" name="Joon Park"}}<span><strong>Joon Park</strong><small>Editor, The Long Way</small></span></figcaption></figure>
 			<figure class="im-marquee-card"><p class="im-marquee-card-text">"Two variables and the whole site was ours. Nothing to fork, nothing to fight."</p><figcaption class="im-marquee-card-by">{{> "components/avatar" size="sm" name="Amelie Roux"}}<span><strong>Amelie Roux</strong><small>Art director</small></span></figcaption></figure>
 			<figure class="im-marquee-card"><p class="im-marquee-card-text">"The documentation is the product. I have never said that about a theme before."</p><figcaption class="im-marquee-card-by">{{> "components/avatar" size="sm" name="Sam Okonkwo"}}<span><strong>Sam Okonkwo</strong><small>Ghost developer</small></span></figcaption></figure>
@@ -99,9 +99,9 @@ source: src/components/marquee.css · src/js/im.js
 <h2>Comments</h2>
 <p>The shape of a comment under a video: avatar, name and when, what they said, a like count. It is the one marquee that belongs going <strong>up a column</strong> rather than across a page — a wall of what people said, beside the thing they said it about.</p>
 {{#example}}
-<div class="im-grid-auto" style="--im-grid-min: 18rem; align-items: start">
+<div class="im-grid-auto im-grid-lg im-grid-start">
 	<div class="im-marquee im-marquee-vertical im-marquee-fade im-marquee-pause" data-im-marquee style="--im-marquee-gap: .75rem; --im-marquee-height: 22rem; --im-marquee-speed: 34s; --im-marquee-card: 100%">
-		<div class="im-marquee-group" style="align-items: stretch">
+		<div class="im-marquee-group">
 			<article class="im-marquee-comment">{{> "components/avatar" size="sm" name="Mara L"}}<p class="im-marquee-comment-who">@maralindqvist <time>2 days ago</time></p><p class="im-marquee-comment-text">The bit about the road being cut in the 1840s and never widened explains everything about that drive.</p><p class="im-marquee-comment-likes">{{> "icons/thumbs-up"}}412</p></article>
 			<article class="im-marquee-comment">{{> "components/avatar" size="sm" name="Tobias R"}}<p class="im-marquee-comment-who">@treinhardt <time>5 days ago</time></p><p class="im-marquee-comment-text">Drove it east to west on your advice. Sea side the whole way. Thank you.</p><p class="im-marquee-comment-likes">{{> "icons/thumbs-up"}}188</p></article>
 			<article class="im-marquee-comment">{{> "components/avatar" size="sm" name="Ines D"}}<p class="im-marquee-comment-who">@inesduarte <time>1 week ago</time></p><p class="im-marquee-comment-text">The SITA bus is the answer and nobody wants to hear it 😅</p><p class="im-marquee-comment-likes">{{> "icons/thumbs-up"}}96</p></article>
@@ -119,7 +119,7 @@ source: src/components/marquee.css · src/js/im.js
 <p>A row of screens going past — "made with this", a gallery of work, a changelog of releases. The frame is the <a href="/content/mockups/">mockup</a> component; the marquee only fixes the width and gives the row room so the shadows are not clipped by its own overflow.</p>
 {{#example flush=true}}
 <div class="im-marquee im-marquee-fade im-marquee-pause" data-im-marquee style="--im-marquee-gap: 1.25rem; --im-marquee-speed: 64s">
-	<div class="im-marquee-group" style="align-items: stretch">
+	<div class="im-marquee-group">
 		{{#foreach demo.four}}
 		<figure class="im-mock im-mock-browser im-marquee-window">
 			<div class="im-mock-bar"><span class="im-mock-dots"><i></i></span><span class="im-mock-url">{{> "icons/lock"}}example.com/{{slug}}</span></div>

@@ -5,13 +5,13 @@ description: One topic — a hero that says what it is and how much there is, th
 eyebrow: Collections · Tag
 source: src/components/collection.css · tag.css
 ---
-<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+<section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Collections · Tag · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
-<div class="im-wrap-wide im-stack" style="--im-stack-gap: 2rem">
+<div class="im-wrap-wide im-stack im-stack-lg">
 	{{#with fixtures.tags.[0]}}
 	<header class="im-taghero" style="--im-tag-dot: #ff5a1f">
 		<div class="im-taghero-copy">
@@ -29,7 +29,7 @@ source: src/components/collection.css · tag.css
 				<span>First in March 2024</span>
 				<a href="#posts">RSS</a>
 			</p>
-			<p class="im-cluster" style="--im-cluster-gap: .375rem">
+			<p class="im-cluster im-cluster-tight">
 				<span class="im-kind" data-kind="tag">{{icon "tag"}}Topic</span>
 				<a class="im-tag" href="/collections/tag/page/">Moving to Europe</a>
 				<a class="im-tag" href="/collections/tag/page/">Craft</a>

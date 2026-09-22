@@ -7,7 +7,7 @@ source: src/components/loading.css · src/js/im-media.js
 <h2>Skeleton</h2>
 <p>Size each piece with utilities. A skeleton should have the <em>shape</em> of what it stands for — that is the whole point.</p>
 {{#example}}
-<div class="im-grid-auto" style="--im-grid-min: 15rem">
+<div class="im-grid-auto im-grid-md">
 	<div aria-hidden="true"><span class="im-skeleton im-skeleton-media"></span><span class="im-skeleton im-skeleton-text w-1/4 mt-3"></span><span class="im-skeleton im-skeleton-title w-5/6"></span><span class="im-skeleton im-skeleton-text"></span><span class="im-skeleton im-skeleton-text w-2/3"></span></div>
 	<div aria-hidden="true"><span class="im-skeleton im-skeleton-media"></span><span class="im-skeleton im-skeleton-text w-1/4 mt-3"></span><span class="im-skeleton im-skeleton-title w-3/4"></span><span class="im-skeleton im-skeleton-text"></span><span class="im-skeleton im-skeleton-text w-1/2"></span></div>
 	<div aria-hidden="true"><span class="im-skeleton im-skeleton-media"></span><span class="im-skeleton im-skeleton-text w-1/4 mt-3"></span><span class="im-skeleton im-skeleton-title w-2/3"></span><span class="im-skeleton im-skeleton-text"></span><span class="im-skeleton im-skeleton-text w-4/5"></span></div>
@@ -16,10 +16,10 @@ source: src/components/loading.css · src/js/im-media.js
 
 <h3>Pieces</h3>
 {{#example}}
-<div class="im-grid-fit" style="--im-grid-min: 15rem; --im-grid-gap: 2rem">
+<div class="im-grid-fit im-grid-md">
 	<div class="flex gap-3" aria-hidden="true"><span class="im-skeleton im-skeleton-circle size-10 shrink-0"></span><div class="grow"><span class="im-skeleton im-skeleton-text w-1/2"></span><span class="im-skeleton im-skeleton-text w-1/3"></span></div></div>
 	<div aria-hidden="true"><span class="im-skeleton im-skeleton-title w-2/3"></span><span class="im-skeleton im-skeleton-text"></span><span class="im-skeleton im-skeleton-text"></span><span class="im-skeleton im-skeleton-text w-3/5"></span><span class="im-skeleton im-skeleton-btn mt-3"></span></div>
-	<div class="im-stack" style="--im-stack-gap: .75rem" aria-hidden="true"><div class="flex items-center gap-3"><span class="im-skeleton size-12 shrink-0"></span><span class="im-skeleton im-skeleton-text grow"></span></div><div class="flex items-center gap-3"><span class="im-skeleton size-12 shrink-0"></span><span class="im-skeleton im-skeleton-text grow"></span></div><div class="flex items-center gap-3"><span class="im-skeleton size-12 shrink-0"></span><span class="im-skeleton im-skeleton-text grow"></span></div></div>
+	<div class="im-stack im-stack-xs" aria-hidden="true"><div class="flex items-center gap-3"><span class="im-skeleton size-12 shrink-0"></span><span class="im-skeleton im-skeleton-text grow"></span></div><div class="flex items-center gap-3"><span class="im-skeleton size-12 shrink-0"></span><span class="im-skeleton im-skeleton-text grow"></span></div><div class="flex items-center gap-3"><span class="im-skeleton size-12 shrink-0"></span><span class="im-skeleton im-skeleton-text grow"></span></div></div>
 </div>
 {{/example}}
 <div class="im-table-scroll">
@@ -37,7 +37,7 @@ source: src/components/loading.css · src/js/im-media.js
 <h3>Swapping it for the real thing</h3>
 <p>Wrap the region in <code>im-loading</code> with <code>aria-busy="true"</code>. When your script replaces the skeletons and sets <code>aria-busy="false"</code>, the content fades up. Press the button.</p>
 {{#example}}
-<div class="im-stack" style="--im-stack-gap: 1rem; max-width: 24rem">
+<div class="im-stack im-stack-sm im-max-sm">
 	<div class="im-loading" id="load-demo" aria-busy="true" aria-live="polite"><div class="flex gap-3"><span class="im-skeleton im-skeleton-circle size-12 shrink-0"></span><div class="grow"><span class="im-skeleton im-skeleton-text w-1/2"></span><span class="im-skeleton im-skeleton-text"></span></div></div></div>
 	<button class="im-btn im-btn-sm im-btn-outline self-start" type="button" onclick="const r=document.getElementById('load-demo'); const was=r.dataset.skel||(r.dataset.skel=r.innerHTML); const busy=r.getAttribute('aria-busy')==='true'; r.innerHTML=busy?'<div class=&quot;flex items-center gap-3&quot;><span class=&quot;im-avatar im-avatar-lg&quot; data-initial=&quot;S&quot;></span><div><strong class=&quot;block&quot;>Swarnil Singhai</strong><span class=&quot;text-sm text-muted&quot;>Engineer · Budapest</span></div></div>':was; r.setAttribute('aria-busy',String(!busy)); this.textContent=busy?'Reset':'Finish loading'">Finish loading</button>
 </div>
@@ -46,7 +46,7 @@ source: src/components/loading.css · src/js/im-media.js
 <h2>Lazy pictures</h2>
 <p><code>im-lazy</code> holds the picture's shape and shows a ground colour; the image — loaded by the browser's own <code>loading="lazy"</code> — sharpens in from a blur when it arrives. Scroll to these, or reload the page.</p>
 {{#example}}
-<div class="im-grid-auto" style="--im-grid-min: 14rem">
+<div class="im-grid-auto im-grid-md">
 	<span class="im-lazy" style="--im-lazy-ground: #4f8a8b"><img src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></span>
 	<span class="im-lazy" style="--im-lazy-ground: #b08d6e"><img src="{{demo.three.[1].feature_image}}" alt="" loading="lazy"></span>
 	<span class="im-lazy" style="--im-lazy-ground: #1d2733"><img src="{{demo.three.[2].feature_image}}" alt="" loading="lazy"></span>

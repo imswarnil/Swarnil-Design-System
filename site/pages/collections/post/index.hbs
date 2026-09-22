@@ -6,7 +6,7 @@ eyebrow: Collections · Post
 source: src/components/collection.css · post-card.css · pagination.css
 ---
 {{!-- layout: home — the page's <h1> belongs to the collection being shown. --}}
-<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+<section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Collections · Post · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
@@ -15,21 +15,21 @@ source: src/components/collection.css · post-card.css · pagination.css
 		<p class="im-caption">Feed</p>
 		<div class="im-btn-group" role="group" aria-label="Feed layout"
 			data-demo-target="#feed" data-demo-label="#feed-class">
-			<button class="im-btn im-btn-sm" type="button" aria-pressed="true"
-				data-demo-class="im-feed im-feed-lead">Lead</button>
-			<button class="im-btn im-btn-sm" type="button"
-				data-demo-class="im-feed">Grid</button>
-			<button class="im-btn im-btn-sm" type="button"
-				data-demo-class="im-feed im-feed-list">List</button>
+			<button class="im-btn im-btn-sm im-feed im-feed-lead" type="button" aria-pressed="true"
+				data-demo->Lead</button>
+			<button class="im-btn im-btn-sm im-feed" type="button"
+				data-demo->Grid</button>
+			<button class="im-btn im-btn-sm im-feed im-feed-list" type="button"
+				data-demo->List</button>
 		</div>
-		<code class="doc-source" id="feed-class" style="margin-left: auto"></code>
+		<code class="doc-source im-ml-auto" id="feed-class"></code>
 	</div>
 </section>
 
 <div class="im-single im-wrap-wide" data-sidebar="on">
-	<article class="im-stack" style="--im-stack-gap: 1.75rem">
+	<article class="im-stack im-stack-md">
 		<header class="im-collhead im-collhead-patterned">
-			<span class="im-collhead-art im-bg-rules" style="--im-art: var(--im-c-post)" aria-hidden="true"></span>
+			<span class="im-collhead-art im-bg-rules im-art-post" aria-hidden="true"></span>
 			<p class="im-eyebrow">Collection</p>
 			<h1 class="im-collhead-title">Journal</h1>
 			<p class="im-collhead-text">Notes on building things, the roads in between, and the tools that survived the year. Long enough to be worth the trip; never longer.</p>
@@ -45,7 +45,7 @@ source: src/components/collection.css · post-card.css · pagination.css
 				<a class="im-tag" href="#feed" aria-current="page">All</a>
 				{{#each fixtures.tags}}<a class="im-tag" href="#feed">{{name}} <small>{{count.posts}}</small></a>{{/each}}
 			</div>
-			<div class="im-cluster" style="--im-cluster-gap: .375rem">
+			<div class="im-cluster im-cluster-tight">
 				<button class="im-btn im-btn-sm" type="button">{{icon "list-filter"}}Newest</button>
 			</div>
 		</div>
@@ -82,7 +82,7 @@ source: src/components/collection.css · post-card.css · pagination.css
 
 			<section class="im-widget" aria-labelledby="pw-tags">
 				<h2 class="im-widget-title" id="pw-tags">Topics <a href="/collections/tag/">All</a></h2>
-				<div class="im-cluster" style="--im-cluster-gap: .375rem">
+				<div class="im-cluster im-cluster-tight">
 					{{#each fixtures.tags}}<a class="im-tag" href="/collections/tag/page/">{{name}}<small>{{count.posts}}</small></a>{{/each}}
 				</div>
 			</section>
@@ -154,7 +154,7 @@ source: src/components/collection.css · post-card.css · pagination.css
 				<a class="im-tag" href="#the-bar" aria-current="page">All</a>
 				{{#each fixtures.tags}}<a class="im-tag" href="#the-bar">{{name}} <small>{{count.posts}}</small></a>{{/each}}
 			</div>
-			<div class="im-cluster" style="--im-cluster-gap: .375rem">
+			<div class="im-cluster im-cluster-tight">
 				<button class="im-btn im-btn-sm" type="button">{{icon "list-filter"}}Newest</button>
 			</div>
 		</div>

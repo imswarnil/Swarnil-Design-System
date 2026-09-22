@@ -31,7 +31,7 @@ source: src/components/ad.css · src/js/im-ads.js
 <h2>Every size</h2>
 <p>The formats are <strong>ratios</strong>, not pixel sizes. A 728×90 leaderboard on a 390px phone is a 728px page with a sideways scrollbar; here it is a shape that shrinks, capped so it never eats the screen. Below 40rem a leaderboard becomes the mobile banner it should always have been — nothing in the markup changes.</p>
 {{#example}}
-<div class="im-grid-auto" style="--im-grid-min: 15rem; align-items: start">
+<div class="im-grid-auto im-grid-md im-grid-start">
 	<aside class="im-ad im-ad-rectangle" aria-label="Advertisement"><p class="im-ad-label">Ad</p><button class="im-ad-close" type="button" data-im-ad-close aria-label="Close">{{> "icons/x"}}</button><span class="im-ad-slot im-ad-empty">300 × 250</span></aside>
 	<aside class="im-ad im-ad-square" aria-label="Advertisement"><p class="im-ad-label">Ad</p><span class="im-ad-slot im-ad-empty">250 × 250</span></aside>
 	<aside class="im-ad im-ad-banner" aria-label="Advertisement"><p class="im-ad-label">Ad</p><span class="im-ad-slot im-ad-empty">320 × 50</span></aside>
@@ -59,7 +59,7 @@ source: src/components/ad.css · src/js/im-ads.js
 
 <h2>With a creative</h2>
 {{#example}}
-<div class="im-grid-auto" style="--im-grid-min: 17rem; align-items: start">
+<div class="im-grid-auto im-grid-md im-grid-start">
 	<aside class="im-ad im-ad-rectangle" aria-label="Advertisement">
 		<p class="im-ad-label im-ad-label-chip">Ad</p>
 		<button class="im-ad-close im-ad-close-over" type="button" data-im-ad-close aria-label="Close">{{> "icons/x"}}</button>
@@ -83,7 +83,7 @@ source: src/components/ad.css · src/js/im-ads.js
 <h2>In feed</h2>
 <p>A row that sits between posts. It borrows the <a href="/collections/post/card/">post card</a>'s shape on purpose — that is what "native" means — and is told apart by the label and by the rules above and below it, which no post has.</p>
 {{#example}}
-<div class="im-stack" style="--im-stack-gap: 1.25rem">
+<div class="im-stack im-stack-sm">
 	{{#with demo.three.[0]}}{{> "components/post-card" layout="row" excerpt=true}}{{/with}}
 	<aside class="im-ad im-ad-infeed" aria-label="Advertisement">
 		<p class="im-ad-label">Sponsored</p>
@@ -152,7 +152,7 @@ source: src/components/ad.css · src/js/im-ads.js
 <h2>Sponsor card</h2>
 <p>Not an ad slot — somebody who pays for the whole thing, named, with a line about what they do. It looks like the site because it is part of the site.</p>
 {{#example}}
-<div class="im-grid-auto" style="--im-grid-min: 17rem">
+<div class="im-grid-auto im-grid-md">
 	<section class="im-sponsor">
 		<p class="im-ad-label">This month's sponsor</p>
 		<div class="im-sponsor-head">
@@ -254,7 +254,7 @@ source: src/components/ad.css · src/js/im-ads.js
 	<p class="im-ad-label im-ad-label-chip">Ad</p>
 	<button class="im-ad-close im-ad-close-over" type="button" data-im-ad-close aria-label="Close">{{> "icons/x"}}</button>
 	<a class="im-ad-slot" href="#sticky-floating-interstitial" style="--im-ad-ratio: 4 / 3"><img src="{{demo.six.[1].feature_image}}" alt="An advertisement" loading="lazy"></a>
-	<button class="im-ad-remove" type="button" data-im-ad-remove="#ad-gate" style="margin-top: .625rem">{{> "icons/sparkles"}}Remove ads</button>
+	<button class="im-ad-remove im-mt-sm" type="button" data-im-ad-remove="#ad-gate">{{> "icons/sparkles"}}Remove ads</button>
 </dialog>
 
 <aside class="im-ad im-ad-sticky" id="ad-sticky-demo" aria-label="Advertisement" hidden>

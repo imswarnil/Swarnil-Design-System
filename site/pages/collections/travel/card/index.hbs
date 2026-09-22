@@ -8,7 +8,7 @@ source: src/components/life.css
 
 <h2>The card</h2>
 {{#example}}
-<div class="im-exps" style="--im-exps-min: 19rem">
+<div class="im-exps im-exps-md" >
 	{{#each demo.trips}}{{#match @index "<" 2}}
 	<article class="im-exp im-trip">
 		<span class="im-exp-media">
@@ -37,7 +37,7 @@ source: src/components/life.css
 <h2>Planned trips stay on the list</h2>
 <p>With "Planned" where the distance would be. Hiding a trip until it has happened loses the one reader who wanted to say "I am there that week too".</p>
 {{#example}}
-<div class="im-exps" style="--im-exps-min: 19rem">
+<div class="im-exps im-exps-md" >
 	{{#with demo.trips.[3]}}
 	<article class="im-exp im-trip">
 		<span class="im-exp-media">

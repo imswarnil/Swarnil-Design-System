@@ -6,7 +6,7 @@ source: src/components/field.css
 ---
 <h2>A whole form</h2>
 {{#example}}
-<form class="im-form" style="max-width: 38rem" onsubmit="event.preventDefault(); const b=this.querySelector('[type=submit]'); b.setAttribute('aria-busy','true'); setTimeout(()=>{b.removeAttribute('aria-busy'); this.querySelector('[data-done]').hidden=false; this.reset()},1400)">
+<form class="im-form im-max-lg" onsubmit="event.preventDefault(); const b=this.querySelector('[type=submit]'); b.setAttribute('aria-busy','true'); setTimeout(()=>{b.removeAttribute('aria-busy'); this.querySelector('[data-done]').hidden=false; this.reset()},1400)">
 	<div class="im-form-row">
 		<div class="im-field"><label class="im-label im-label-required" for="fm-first">First name</label><input class="im-input" id="fm-first" required autocomplete="given-name"></div>
 		<div class="im-field"><label class="im-label" for="fm-last">Last name</label><input class="im-input" id="fm-last" autocomplete="family-name"></div>
@@ -17,7 +17,7 @@ source: src/components/field.css
 		<div class="im-field"><label class="im-label" for="fm-budget">Budget <span class="im-label-note">optional</span></label><div class="im-input-group"><span class="im-input-addon">€</span><input class="im-input" id="fm-budget" type="number" inputmode="numeric" placeholder="5,000"></div></div>
 	</div>
 	<div class="im-field"><label class="im-label im-label-required" for="fm-msg">Message</label><textarea class="im-textarea" id="fm-msg" required placeholder="What are you building?"></textarea></div>
-	<fieldset class="im-fieldset"><legend>How should I reply?</legend><div class="im-cluster" style="--im-cluster-gap: 1.25rem"><label class="im-radio"><input type="radio" name="fm-reply" checked><span>Email</span></label><label class="im-radio"><input type="radio" name="fm-reply"><span>A call</span></label></div></fieldset>
+	<fieldset class="im-fieldset"><legend>How should I reply?</legend><div class="im-cluster"><label class="im-radio"><input type="radio" name="fm-reply" checked><span>Email</span></label><label class="im-radio"><input type="radio" name="fm-reply"><span>A call</span></label></div></fieldset>
 	<label class="im-check"><input type="checkbox"><span>Also send me the newsletter<small>One email when something lands.</small></span></label>
 	<div class="im-callout im-callout-sm im-callout-success" data-done hidden role="status">{{> "icons/circle-check"}}<span><strong>Sent.</strong> I will reply within two days.</span></div>
 	<div class="im-form-actions"><button class="im-btn im-btn-ghost" type="reset">Clear</button><button class="im-btn im-btn-primary" type="submit">Send message {{> "icons/arrow-right"}}</button></div>

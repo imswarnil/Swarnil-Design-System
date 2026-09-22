@@ -5,16 +5,16 @@ description: Things that happened — where, when, and what it was like. A photo
 eyebrow: Collections · Experience
 source: src/components/life.css
 ---
-<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+<section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Collections · Experience · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
 <div class="im-single im-wrap-wide" data-sidebar="on">
-	<article class="im-stack" style="--im-stack-gap: 2rem">
+	<article class="im-stack im-stack-lg">
 		<header class="im-collhead im-collhead-patterned">
-			<span class="im-collhead-art im-bg-rings" style="--im-art: var(--im-c-experience)" aria-hidden="true"></span>
+			<span class="im-collhead-art im-bg-rings im-art-experience" aria-hidden="true"></span>
 			<p class="im-eyebrow">Experience</p>
 			<h1 class="im-collhead-title">Things I have done, and things still to do</h1>
 			<p class="im-collhead-text">Not work. The other kind — water, cold, distance, and a few hours of being usefully frightened. Everything here has a date because everything here happened.</p>
@@ -29,12 +29,12 @@ source: src/components/life.css
 				<a class="im-tag" href="#exps">Distance</a>
 				<a class="im-tag" href="#exps">Height</a>
 			</div>
-			<div class="im-cluster" style="--im-cluster-gap: .375rem">
+			<div class="im-cluster im-cluster-tight">
 				<button class="im-btn im-btn-sm" type="button">{{icon "list-filter"}}Most recent</button>
 			</div>
 		</div>
 
-		<div class="im-stack" id="exps" style="--im-stack-gap: 2.25rem">
+		<div class="im-stack im-stack-lg" id="exps">
 			{{#each demo.expgroups}}
 			<section class="im-usegroup">
 				<header class="im-usegroup-head">
@@ -65,11 +65,11 @@ source: src/components/life.css
 			{{/each}}
 		</div>
 
-		<section class="im-section" id="todo" style="--im-section-gap: 1rem">
-			<div class="home-head"><p class="im-caption" data-index="todo">Still to do</p><p class="im-hint" style="margin: 0">7 · 2 booked · a done one moves up into the sections above</p></div>
+		<section class="im-section im-section-tight" id="todo">
+			<div class="home-head"><p class="im-caption" data-index="todo">Still to do</p><p class="im-hint im-m0">7 · 2 booked · a done one moves up into the sections above</p></div>
 			<ul class="im-buckets">
-				{{#each demo.wishlist}}{{#unless state}}<li class="im-bucket"><span class="im-bucket-mark" aria-hidden="true"></span><p class="im-bucket-title"><span class="im-kind" data-kind="bucket" style="margin-right: .375rem">{{icon "square-dashed"}}To do</span>{{title}}</p><p class="im-bucket-note">{{note}}</p><p class="im-bucket-when">{{when}}</p></li>{{/unless}}{{/each}}
-				{{#each demo.wishlist}}{{#match state "=" "booked"}}<li class="im-bucket" data-state="booked"><span class="im-bucket-mark" aria-hidden="true"></span><p class="im-bucket-title"><span class="im-kind" data-kind="bucket" style="margin-right: .375rem">{{icon "calendar"}}Booked</span>{{title}}</p><p class="im-bucket-note">{{note}}</p><p class="im-bucket-when">{{when}}</p></li>{{/match}}{{/each}}
+				{{#each demo.wishlist}}{{#unless state}}<li class="im-bucket"><span class="im-bucket-mark" aria-hidden="true"></span><p class="im-bucket-title"><span class="im-kind im-mr-xs" data-kind="bucket" >{{icon "square-dashed"}}To do</span>{{title}}</p><p class="im-bucket-note">{{note}}</p><p class="im-bucket-when">{{when}}</p></li>{{/unless}}{{/each}}
+				{{#each demo.wishlist}}{{#match state "=" "booked"}}<li class="im-bucket" data-state="booked"><span class="im-bucket-mark" aria-hidden="true"></span><p class="im-bucket-title"><span class="im-kind im-mr-xs" data-kind="bucket" >{{icon "calendar"}}Booked</span>{{title}}</p><p class="im-bucket-note">{{note}}</p><p class="im-bucket-when">{{when}}</p></li>{{/match}}{{/each}}
 			</ul>
 		</section>
 	</article>

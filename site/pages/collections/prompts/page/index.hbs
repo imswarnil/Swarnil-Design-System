@@ -5,14 +5,14 @@ description: One prompt, the whole conversation it produced, and the paragraph e
 eyebrow: Collections · Prompts
 source: src/components/chat.css
 ---
-<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+<section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Collections · Prompts · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
 <div class="im-single im-wrap-wide" data-sidebar="on">
-	<article class="im-stack" style="--im-stack-gap: 1.75rem">
+	<article class="im-stack im-stack-md">
 		{{#with demo.prompts.[1]}}
 		<nav aria-label="Breadcrumb">
 			<ol class="im-breadcrumb im-breadcrumb-chevron">
@@ -22,10 +22,10 @@ source: src/components/chat.css
 			</ol>
 		</nav>
 
-		<header class="im-stack" style="--im-stack-gap: .625rem">
+		<header class="im-stack im-stack-xs">
 			<p class="im-snipcard-meta"><span class="im-kind" data-kind="tag">{{> "icons/sparkles"}}Prompt</span><span>{{model}}</span><span>{{tokens}}</span></p>
 			<h1 class="im-collhead-title">{{name}}</h1>
-			<p class="im-lede" style="margin: 0">{{text}}</p>
+			<p class="im-lede im-m0">{{text}}</p>
 		</header>
 
 		<div class="im-chat">
@@ -71,7 +71,7 @@ source: src/components/chat.css
 			</ul>
 		</section>
 
-		<section class="im-section" style="--im-section-gap: 1rem">
+		<section class="im-section im-section-tight">
 			<h2 class="im-caption">Others like it</h2>
 			<div class="im-promptcards" style="--im-promptcards-min: 22rem">
 				{{#each demo.prompts}}{{#match @index "!=" 1}}{{> "components/prompt-card"}}{{/match}}{{/each}}

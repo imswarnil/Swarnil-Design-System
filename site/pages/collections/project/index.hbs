@@ -5,7 +5,7 @@ description: The page a portfolio opens on — who you are, what you have built,
 eyebrow: Collections · Project
 source: src/components/repo-card.css · partials/components/repo-card.hbs
 ---
-<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+<section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Collections · Project · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
@@ -14,17 +14,17 @@ source: src/components/repo-card.css · partials/components/repo-card.hbs
 		<p class="im-caption">Grid</p>
 		<div class="im-btn-group" role="group" aria-label="Project grid"
 			data-demo-target="#repos" data-demo-label="#repos-class">
-			<button class="im-btn im-btn-sm" type="button" aria-pressed="true" data-demo-class="im-repos">Cards</button>
-			<button class="im-btn im-btn-sm" type="button" data-demo-class="im-repos im-repos-list">List</button>
+			<button class="im-btn im-btn-sm im-repos" type="button" aria-pressed="true" data-demo->Cards</button>
+			<button class="im-btn im-btn-sm im-repos im-repos-list" type="button" data-demo->List</button>
 		</div>
-		<code class="doc-source" id="repos-class" style="margin-left: auto"></code>
+		<code class="doc-source im-ml-auto" id="repos-class"></code>
 	</div>
 </section>
 
 <div class="im-single im-wrap-wide" data-sidebar="on">
-	<article class="im-stack" style="--im-stack-gap: 1.75rem">
+	<article class="im-stack im-stack-md">
 		<header class="im-collhead im-collhead-patterned">
-			<span class="im-collhead-art im-bg-blueprint" style="--im-art: var(--im-c-project)" aria-hidden="true"></span>
+			<span class="im-collhead-art im-bg-blueprint im-art-project" aria-hidden="true"></span>
 			<p class="im-eyebrow">Work</p>
 			<h1 class="im-collhead-title">Projects</h1>
 			<p class="im-collhead-text">Things I have built and kept building. Everything here is open, and everything here is used by somebody — including me.</p>
@@ -44,7 +44,7 @@ source: src/components/repo-card.css · partials/components/repo-card.hbs
 				<a class="im-tag" href="#projects">Python</a>
 				<a class="im-tag" href="#projects">Archived</a>
 			</div>
-			<div class="im-cluster" style="--im-cluster-gap: .375rem">
+			<div class="im-cluster im-cluster-tight">
 				<button class="im-btn im-btn-sm" type="button">{{icon "list-filter"}}Most stars</button>
 			</div>
 		</div>
@@ -156,7 +156,7 @@ source: src/components/repo-card.css · partials/components/repo-card.hbs
 		<h2>Pinned</h2>
 		<p><code>layout="lg"</code>, in a two-column grid: the three or four you want looked at first, above everything else.</p>
 		{{#example}}
-		<div class="im-repos" style="--im-repos-min: 22rem">
+		<div class="im-repos im-repos-md">
 			{{#each demo.projects}}{{#match @index "<" 2}}{{> "components/repo-card" layout="lg"}}{{/match}}{{/each}}
 		</div>
 		{{/example}}

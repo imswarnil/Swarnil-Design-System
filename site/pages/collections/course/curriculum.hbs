@@ -27,7 +27,7 @@ source: src/components/coursenav.css · src/js/im-view.js
 <h2>The rail, on the lesson page</h2>
 <p><code>im-coursenav</code>: the same states as marks, with a still per row or without (<code>im-coursenav-plain</code>, the sheet on a phone).</p>
 {{#example}}
-<div class="im-grid-auto" style="--im-grid-min: 18rem; align-items: start">
+<div class="im-grid-auto im-grid-lg im-grid-start">
 	<nav class="im-coursenav" aria-label="Lessons">
 		<div class="im-coursenav-head"><p class="im-coursenav-title">{{icon "graduation-cap"}}Design tokens, properly</p><p class="im-coursenav-progress"><span>2 of 7 done</span><span>29%</span><span class="im-progress" role="progressbar" aria-valuenow="29" aria-valuemin="0" aria-valuemax="100" style="--im-value: .29"></span></p></div>
 		<div class="im-coursenav-body">{{#each demo.sections}}{{#match @index "<" 2}}<details class="im-coursenav-unit" open><summary><b>{{n}}</b><span>{{name}}</span><small>{{time}}</small></summary>{{#each ../demo.lessons}}{{#match n ">=" ../from}}{{#match n "<=" ../to}}<a class="im-coursenav-lesson" href="#" data-state="{{#if locked}}locked{{else}}{{state}}{{/if}}"{{#match state "=" "current"}} aria-current="page"{{/match}}><span class="im-coursenav-mark" aria-hidden="true"></span><span class="im-coursenav-shot"><img src="{{lookup @root.demo.shots shot}}" alt="" loading="lazy"></span><span>{{title}}</span><small>{{time}}</small></a>{{/match}}{{/match}}{{/each}}</details>{{/match}}{{/each}}</div>

@@ -15,7 +15,7 @@ source: src/foundation/tokens/primitives.css · base/fonts.css
 <h3>Pixel cuts</h3>
 <p>Geist Pixel ships five cuts. Square is <code>font-pixel</code>; the others are separate families to ask for by name.</p>
 {{#example}}
-<div class="im-grid-fit text-h2 text-ink" style="--im-grid-min: 9rem">
+<div class="im-grid-fit text-h2 text-ink im-grid-sm">
 	<span style="font-family: 'Geist Pixel'">Square</span>
 	<span style="font-family: 'Geist Pixel Grid'">Grid</span>
 	<span style="font-family: 'Geist Pixel Circle'">Circle</span>
@@ -34,7 +34,7 @@ source: src/foundation/tokens/primitives.css · base/fonts.css
 
 <h2>Weights</h2>
 {{#example code=false}}
-<div class="im-cluster" style="--im-cluster-gap: 2.5rem">{{#each tokens.weights}}<div class="stat"><strong style="font-family: var(--im-font-sans); font-weight: {{value}}">Ag</strong><span><code>font-{{key}}</code> · {{value}}</span></div>{{/each}}</div>
+<div class="im-cluster">{{#each tokens.weights}}<div class="stat"><strong style="font-family: var(--im-font-sans); font-weight: {{value}}">Ag</strong><span><code>font-{{key}}</code> · {{value}}</span></div>{{/each}}</div>
 {{/example}}
 
 <h2>Prose</h2>

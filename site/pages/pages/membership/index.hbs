@@ -5,17 +5,17 @@ description: Ghost's tiers, drawn so the difference between them is legible in f
 eyebrow: Pages
 source: src/components/pricing.css
 ---
-<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+<section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Pages · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
 <section class="im-section im-wrap">
-	<header class="im-collhead" style="text-align: center; align-items: center">
+	<header class="im-collhead im-center" style="align-items: center">
 		<p class="im-eyebrow">Membership</p>
 		<h1 class="im-collhead-title">Read everything</h1>
-		<p class="im-collhead-text" style="margin-inline: auto">Most of what I write is free and always will be. The paid tiers are for the long pieces with the numbers in them, and for the people who want the thing to keep existing.</p>
+		<p class="im-collhead-text im-mx-auto">Most of what I write is free and always will be. The paid tiers are for the long pieces with the numbers in them, and for the people who want the thing to keep existing.</p>
 	</header>
 
 	<div class="im-periods">
@@ -83,7 +83,7 @@ source: src/components/pricing.css
 
 <section class="im-section im-wrap">
 	<h2 class="im-caption" data-index="why">Why become a member</h2>
-	<div class="im-grid-auto" style="--im-grid-min: 15rem">
+	<div class="im-grid-auto im-grid-md">
 		<div class="im-card im-card-outline"><span class="im-card-title">{{icon "lock"}} The long pieces</span><span>The posts with the numbers in them — what a move cost, what a rebuild cost — are for members.</span></div>
 		<div class="im-card im-card-outline"><span class="im-card-title">{{icon "git-commit-vertical"}} The project logs</span><span>Every build, day by day, including the parts that did not ship.</span></div>
 		<div class="im-card im-card-outline"><span class="im-card-title">{{icon "message-circle"}} A thread that is read</span><span>Comments are members-only, so they stay a conversation.</span></div>

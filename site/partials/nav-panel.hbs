@@ -1,21 +1,21 @@
-{{!-- The docs menu, for any window too narrow for the side nav. The same data
-	as the sidebar, as COLUMNS of plain links — not tiles: there are ninety of
-	them. The panel grows from 2 columns on a phone to 4 on a laptop, and
-	.im-navcols fills them by width, so this markup does not change.
-	A nested group prints its own sub-heading rather than a second dropdown:
-	in a flat column there is nothing for a disclosure to save. --}}
-<div class="im-navcols im-navcols-flow">
+{{!-- The docs menu for a window too narrow for the side nav: the same
+	sections as the sidebar, as an accordion. One column, every section a
+	<details> that opens to its pages; the section holding the current page
+	starts open. Ninety links in two flowing columns was a 4,000px scroll. --}}
+<div class="im-navpanel-list">
 	{{#each nav}}
-	<div class="im-navcol im-navcol-compact">
-		<p class="im-navcol-title">{{#if title}}{{title}}{{else}}Start{{/if}}</p>
-		{{#each items}}
-		{{#if children}}
-		<p class="im-navcol-subtitle">{{label}}</p>
-		{{#each children}}<a class="im-navitem" href="{{url}}"{{#if current}} aria-current="page"{{/if}}><span>{{label}}</span></a>{{/each}}
-		{{else}}
-		<a class="im-navitem" href="{{url}}"{{#if current}} aria-current="page"{{/if}}><span>{{label}}</span></a>
-		{{/if}}
-		{{/each}}
-	</div>
+	<details class="im-navtree im-navtree-panel"{{#if open}} open{{/if}}>
+		<summary>{{#if icon}}{{icon icon}}{{/if}}<span>{{#if title}}{{title}}{{else}}Start{{/if}}</span><small>{{items.length}}</small></summary>
+		<div class="im-navtree-items">
+			{{#each items}}
+			{{#if children}}
+			<p class="im-navcol-subtitle">{{label}}</p>
+			{{#each children}}<a class="im-navlink" href="{{url}}"{{#if current}} aria-current="page"{{/if}}><span>{{label}}</span></a>{{/each}}
+			{{else}}
+			<a class="im-navlink" href="{{url}}"{{#if current}} aria-current="page"{{/if}}><span>{{label}}</span></a>
+			{{/if}}
+			{{/each}}
+		</div>
+	</details>
 	{{/each}}
 </div>

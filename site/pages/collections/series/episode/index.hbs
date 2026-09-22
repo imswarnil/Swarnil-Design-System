@@ -5,14 +5,14 @@ description: One episode — the player, where it sits in the run, and the rest 
 eyebrow: Collections · Series
 source: src/components/commerce.css · video-card.css
 ---
-<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+<section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Collections · Series · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
-<div class="im-single im-wrap-wide" data-sidebar="on" style="--im-single-aside: 19rem">
-	<article class="im-stack" style="--im-stack-gap: 1.25rem">
+<div class="im-single im-wrap-wide im-single-aside-sm" data-sidebar="on">
+	<article class="im-stack im-stack-sm">
 		{{#with demo.episodes.[2]}}
 		<div class="im-video im-video-full" id="ep" data-im-video="aqz-KE-bpKQ" data-im-video-title="{{title}}">
 			<img class="im-video-poster" src="{{../demo.six.[2].feature_image}}" alt="" loading="eager">
@@ -36,7 +36,7 @@ source: src/components/commerce.css · video-card.css
 				<div class="im-vidhead-by">
 					{{> "components/avatar" src=../demo.author.profile_image name=../demo.author.name}}
 					<div><strong>{{../demo.author.name}}<i class="im-vidcard-tick" aria-hidden="true"></i></strong><small>128k subscribers</small></div>
-					<button class="im-btn im-btn-primary im-btn-sm" type="button" style="margin-left: .5rem">Subscribe</button>
+					<button class="im-btn im-btn-primary im-btn-sm im-ml-xs" type="button" >Subscribe</button>
 				</div>
 				<div class="im-vidhead-actions">
 					<button class="im-btn im-btn-sm" type="button">{{icon "thumbs-up"}}4.1k</button>
@@ -52,7 +52,7 @@ source: src/components/commerce.css · video-card.css
 		</details>
 		{{/with}}
 
-		<section class="im-section" style="--im-section-gap: 1rem">
+		<section class="im-section im-section-tight">
 			<h2 class="im-caption">Chapters</h2>
 			<ol class="im-chapters" data-im-chapters="#ep" data-im-duration="14:05" aria-label="Chapters">
 				<li><button type="button" data-t="0:00"><time>0:00</time><span>Arriving</span></button></li>
@@ -74,7 +74,7 @@ source: src/components/commerce.css · video-card.css
 			<div class="im-widgets">
 				<section class="im-widget im-rail-grow" aria-labelledby="e-season">
 					<h2 class="im-widget-title" id="e-season">The season <a href="/collections/series/">All</a></h2>
-					<ol class="im-queue-list" style="padding: 0">
+					<ol class="im-queue-list im-p-0">
 						{{#each demo.episodes}}
 						<li class="im-queue-item" data-state="{{#match state "=" "done"}}done{{/match}}"{{#match state "=" "current"}} aria-current="true"{{/match}}>
 							<span class="im-queue-index" aria-hidden="true">{{n}}</span>

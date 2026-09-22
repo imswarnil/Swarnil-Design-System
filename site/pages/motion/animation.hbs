@@ -39,7 +39,7 @@ source: src/foundation/tokens/motion.css · src/motion/animate.css · src/js/im-
 <h2>Enter</h2>
 <p>Plays once, when the element is rendered. <code>im-enter</code> plus a direction. Press <strong>Replay</strong>.</p>
 {{#example}}
-<div class="im-grid-auto" data-replay style="--im-grid-min: 8rem; --im-grid-gap: .75rem">
+<div class="im-grid-auto im-grid-sm" data-replay>
 	<div class="demo-cell im-enter im-enter-fade">fade</div>
 	<div class="demo-cell im-enter im-enter-up">up</div>
 	<div class="demo-cell im-enter im-enter-down">down</div>
@@ -54,7 +54,7 @@ source: src/foundation/tokens/motion.css · src/motion/animate.css · src/js/im-
 <h3>Stagger</h3>
 <p><code>im-stagger</code> on the parent: its children enter one after another, <code>--im-stagger</code> apart.</p>
 {{#example}}
-<div class="im-grid-auto im-stagger" data-replay style="--im-grid-min: 7rem; --im-grid-gap: .75rem">
+<div class="im-grid-auto im-stagger im-grid-sm" data-replay>
 	<div class="demo-cell im-enter im-enter-up">1</div><div class="demo-cell im-enter im-enter-up">2</div><div class="demo-cell im-enter im-enter-up">3</div><div class="demo-cell im-enter im-enter-up">4</div><div class="demo-cell im-enter im-enter-up">5</div><div class="demo-cell im-enter im-enter-up">6</div>
 </div>
 {{/example}}
@@ -63,7 +63,7 @@ source: src/foundation/tokens/motion.css · src/motion/animate.css · src/js/im-
 <h2>Reveal on scroll</h2>
 <p><code>data-im-reveal="up"</code> — also <code>down</code>, <code>left</code>, <code>right</code>, <code>scale</code>, <code>blur</code>, <code>fade</code>. It shows the first time it scrolls into view. Needs <code>im-motion.js</code>. Scroll to these:</p>
 {{#example}}
-<div class="im-grid-auto" data-im-reveal-group style="--im-grid-min: 9rem; --im-grid-gap: .75rem">
+<div class="im-grid-auto im-grid-sm" data-im-reveal-group>
 	<div class="demo-cell" data-im-reveal="up">up</div>
 	<div class="demo-cell" data-im-reveal="scale">scale</div>
 	<div class="demo-cell" data-im-reveal="blur">blur</div>
@@ -79,7 +79,7 @@ source: src/foundation/tokens/motion.css · src/motion/animate.css · src/js/im-
 <h3>Counting up</h3>
 <p><code>data-im-count="1200"</code> counts to the number when revealed. Decimals are kept; digits are formatted for the visitor's locale.</p>
 {{#example}}
-<div class="im-grid-fit" style="--im-grid-min: 9rem">
+<div class="im-grid-fit im-grid-sm">
 	<div class="im-stat"><span class="im-stat-figure" data-im-count="12480">12,480</span><span class="im-stat-label">readers</span></div>
 	<div class="im-stat"><span class="im-stat-figure"><span data-im-count="98.6">98.6</span>%</span><span class="im-stat-label">uptime</span></div>
 	<div class="im-stat"><span class="im-stat-figure" data-im-count="246">246</span><span class="im-stat-label">posts</span></div>
@@ -99,7 +99,7 @@ source: src/foundation/tokens/motion.css · src/motion/animate.css · src/js/im-
 </table>
 </div>
 {{#example}}
-<div class="im-grid-fit" style="--im-grid-min: 10rem">
+<div class="im-grid-fit im-grid-sm">
 	<div class="demo-cell im-scroll-in" style="min-height: 6rem">im-scroll-in</div>
 	<div class="demo-cell im-scroll-in" style="min-height: 6rem">im-scroll-in</div>
 	<div class="demo-cell im-scroll-parallax" style="min-height: 6rem; --im-parallax: 1.5rem">im-scroll-parallax</div>

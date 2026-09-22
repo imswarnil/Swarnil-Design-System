@@ -7,7 +7,7 @@ source: src/foundation/tokens/primitives.css
 <h2>Spacing</h2>
 <p>Every spacing utility is a multiple of <code>--im-space</code> (0.25rem): <code>p-4</code> is 1rem, <code>gap-6</code> is 1.5rem. In a plain stylesheet, write <code>calc(var(--im-space) * 4)</code>.</p>
 {{#example code=false}}
-<div class="im-stack" style="--im-stack-gap: 0.5rem">
+<div class="im-stack im-stack-xs">
 	<div class="flex items-center gap-4 text-sm"><code class="w-12">1</code><span class="text-muted w-16">4px</span><span class="h-3 rounded-xs bg-accent" style="width: calc(var(--im-space) * 1)"></span></div>
 	<div class="flex items-center gap-4 text-sm"><code class="w-12">2</code><span class="text-muted w-16">8px</span><span class="h-3 rounded-xs bg-accent" style="width: calc(var(--im-space) * 2)"></span></div>
 	<div class="flex items-center gap-4 text-sm"><code class="w-12">3</code><span class="text-muted w-16">12px</span><span class="h-3 rounded-xs bg-accent" style="width: calc(var(--im-space) * 3)"></span></div>
@@ -31,7 +31,7 @@ source: src/foundation/tokens/primitives.css
 
 <h2>Radius</h2>
 {{#example code=false}}
-<div class="swatches" style="--im-grid-min: 8rem">{{#each tokens.radius}}<div class="swatch"><div class="radius-box" style="--r: var({{name}})"></div><span class="swatch-name">rounded-{{key}}</span><span class="swatch-meta"><span>{{value}}</span></span></div>{{/each}}</div>
+<div class="swatches im-grid-sm">{{#each tokens.radius}}<div class="swatch"><div class="radius-box" style="--r: var({{name}})"></div><span class="swatch-name">rounded-{{key}}</span><span class="swatch-meta"><span>{{value}}</span></span></div>{{/each}}</div>
 {{/example}}
 <div class="im-table-scroll">
 <table>

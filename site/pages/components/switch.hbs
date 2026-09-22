@@ -38,11 +38,11 @@ source: src/components/feedback.css · switcher.css
 
 <h3>Variants</h3>
 {{#example}}
-<div class="im-stack" style="--im-stack-gap: 1rem; align-items: flex-start">
+<div class="im-stack im-stack-sm" style="align-items: flex-start">
 	<fieldset class="im-switcher im-switcher-sm" aria-label="Small"><label><input type="radio" name="sw-a" checked><span>Day</span></label><label><input type="radio" name="sw-a"><span>Week</span></label><label><input type="radio" name="sw-a"><span>Month</span></label><label><input type="radio" name="sw-a"><span>Year</span></label></fieldset>
 	<fieldset class="im-switcher im-switcher-solid" aria-label="Solid"><label><input type="radio" name="sw-b" checked><span>Grid</span></label><label><input type="radio" name="sw-b"><span>List</span></label></fieldset>
 	<fieldset class="im-switcher im-switcher-lg" aria-label="Large"><label><input type="radio" name="sw-c"><span>For readers</span></label><label><input type="radio" name="sw-c" checked><span>For writers</span></label></fieldset>
-	<fieldset class="im-switcher im-switcher-block" aria-label="Full width" style="max-width: 24rem"><label><input type="radio" name="sw-d" checked><span>Sign in</span></label><label><input type="radio" name="sw-d"><span>Create account</span></label></fieldset>
+	<fieldset class="im-switcher im-switcher-block im-max-sm" aria-label="Full width"><label><input type="radio" name="sw-d" checked><span>Sign in</span></label><label><input type="radio" name="sw-d"><span>Create account</span></label></fieldset>
 </div>
 {{/example}}
 <p><code>-sm</code> · <code>-lg</code> · <code>-solid</code> (the thumb takes the ink) · <code>-icons</code> (labels kept for screen readers) · <code>-block</code>. Two to five options; more than that is a <a href="/forms/controls/">select</a>.</p>

@@ -5,14 +5,14 @@ description: One card, two jobs. Most people arriving do not know which one they
 eyebrow: Pages
 source: src/components/auth.css
 ---
-<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+<section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Pages · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
-<section class="im-authpage im-bg-radar im-bg-accent im-bg-loose" style="background-color: var(--im-surface)">
-	<div class="im-auth" id="auth" data-mode="in" style="--im-auth-width: 28rem">
+<section class="im-authpage im-bg-radar im-bg-accent im-bg-loose im-bg-surface" >
+	<div class="im-auth im-auth-wide" id="auth" data-mode="in" >
 		<div class="im-auth-head">
 			{{> "components/logo" size="1.5rem"}}
 			<h1 class="im-auth-title"><span data-when="in">Welcome back</span><span data-when="up">Start reading</span></h1>

@@ -18,7 +18,7 @@ source: src/layout/sidenav.css
 
 <h2>Titled groups</h2>
 {{#example style="max-width: 17rem"}}
-<nav class="im-stack" style="--im-stack-gap: 1.25rem" aria-label="Example">
+<nav class="im-stack im-stack-sm" aria-label="Example">
 	<div class="im-navgroup">
 		<p class="im-navgroup-title">Writing</p>
 		<a class="im-navlink" href="#titled-groups">{{> "icons/book-open"}}<span>Journal</span></a>
@@ -58,10 +58,10 @@ source: src/layout/sidenav.css
 
 <h2>Three states</h2>
 {{#example}}
-<div class="im-grid-fit" style="--im-grid-min: 11rem">
-	<div class="im-stack" style="--im-stack-gap: .5rem"><div class="mini-shell"><span>bar</span><span>nav</span><span>main</span></div><p class="text-sm text-muted"><strong>Open</strong> — from <code>lg</code>, by default</p></div>
-	<div class="im-stack" style="--im-stack-gap: .5rem"><div class="mini-shell" style="--mini-nav: 2rem"><span>bar</span><span></span><span>main</span></div><p class="text-sm text-muted"><strong>Rail</strong> — <code>md</code>…<code>lg</code>, or collapsed by the visitor</p></div>
-	<div class="im-stack" style="--im-stack-gap: .5rem"><div class="mini-shell" style="--mini-nav: 0rem"><span>bar</span><span></span><span>main</span></div><p class="text-sm text-muted"><strong>Drawer</strong> — below <code>md</code></p></div>
+<div class="im-grid-fit im-grid-sm">
+	<div class="im-stack im-stack-xs"><div class="mini-shell"><span>bar</span><span>nav</span><span>main</span></div><p class="text-sm text-muted"><strong>Open</strong> — from <code>lg</code>, by default</p></div>
+	<div class="im-stack im-stack-xs"><div class="mini-shell" style="--mini-nav: 2rem"><span>bar</span><span></span><span>main</span></div><p class="text-sm text-muted"><strong>Rail</strong> — <code>md</code>…<code>lg</code>, or collapsed by the visitor</p></div>
+	<div class="im-stack im-stack-xs"><div class="mini-shell" style="--mini-nav: 0rem"><span>bar</span><span></span><span>main</span></div><p class="text-sm text-muted"><strong>Drawer</strong> — below <code>md</code></p></div>
 </div>
 {{/example}}
 <ul>

@@ -5,15 +5,15 @@ description: Every course — a tall card on a pattern, with a drawn diagram of 
 eyebrow: Collections · Course
 source: src/components/coursenav.css
 ---
-<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+<section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Collections · Course · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
-<div class="im-wrap-wide im-stack" style="--im-stack-gap: 2rem">
+<div class="im-wrap-wide im-stack im-stack-lg">
 	<header class="im-collhead im-collhead-patterned">
-		<span class="im-collhead-art im-bg-blueprint" style="--im-art: var(--im-c-course)" aria-hidden="true"></span>
+		<span class="im-collhead-art im-bg-blueprint im-art-course" aria-hidden="true"></span>
 		<p class="im-eyebrow">Courses</p>
 		<h1 class="im-collhead-title">Things I teach</h1>
 		<p class="im-collhead-text">Filmed and written, one idea each, with every source file. Two lessons of every course are free.</p>
@@ -31,7 +31,7 @@ source: src/components/coursenav.css
 
 	<div class="im-coursecards" id="courses">
 		{{#each demo.courses}}
-		<article class="im-coursecard {{pattern}}" data-facet="{{level}}" style="--im-pattern-color: color-mix(in oklab, var(--im-c-course) 30%, transparent)">
+		<article class="im-coursecard {{pattern}}" data-facet="{{level}}">
 			<div class="im-coursecard-art" aria-hidden="true">{{{diagram}}}</div>
 			<div class="im-coursecard-body">
 				<p class="im-coursecard-meta"><span class="im-kind" data-kind="course">{{icon "graduation-cap"}}{{level}}</span><span>{{lessons}} lessons</span><span>{{time}}</span></p>

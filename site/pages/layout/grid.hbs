@@ -22,7 +22,7 @@ source: src/utilities/index.css
 <h2>im-grid-auto</h2>
 <p>As many columns as fit at a minimum width. Set <code>--im-grid-min</code> and <code>--im-grid-gap</code>. This is the workhorse: post feeds, card lists, swatches.</p>
 {{#example}}
-<div class="im-grid-auto" style="--im-grid-min: 8rem; --im-grid-gap: .75rem">
+<div class="im-grid-auto im-grid-sm">
 	<div class="demo-cell">1</div><div class="demo-cell">2</div><div class="demo-cell">3</div><div class="demo-cell">4</div><div class="demo-cell">5</div>
 </div>
 {{/example}}
@@ -30,7 +30,7 @@ source: src/utilities/index.css
 <h2>im-grid-fit</h2>
 <p>The same, but with few items the columns stretch to fill the row instead of leaving empty tracks.</p>
 {{#example}}
-<div class="im-grid-fit" style="--im-grid-min: 8rem; --im-grid-gap: .75rem">
+<div class="im-grid-fit im-grid-sm">
 	<div class="demo-cell">1</div><div class="demo-cell">2</div><div class="demo-cell">3</div>
 </div>
 {{/example}}
@@ -38,7 +38,7 @@ source: src/utilities/index.css
 <h2>im-grid-page</h2>
 <p>Twelve columns, for a deliberate composition. Place children with Tailwind's <code>col-span-*</code>, responsive as usual.</p>
 {{#example}}
-<div class="im-grid-page" style="--im-grid-gap: .75rem">
+<div class="im-grid-page">
 	<div class="demo-cell col-span-12 md:col-span-8">col-span-12 md:col-span-8</div>
 	<div class="demo-cell col-span-12 md:col-span-4">md:col-span-4</div>
 	<div class="demo-cell col-span-6 md:col-span-3">3</div><div class="demo-cell col-span-6 md:col-span-3">3</div><div class="demo-cell col-span-12 md:col-span-6">6</div>

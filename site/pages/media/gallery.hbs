@@ -72,7 +72,7 @@ source: src/components/gallery.css · src/js/im-media.js
 {{#example}}
 <div data-im-lightbox>
 	{{#> "components/carousel" label="Pictures from the road" style="--im-slides: 1.4; --im-slides-sm: 2.4; --im-slides-md: 3.4"}}
-		{{#foreach demo.six}}<a class="im-zoomable" href="{{feature_image}}" data-caption="{{title}}"><img src="{{feature_image}}" alt="{{title}}" loading="lazy" style="aspect-ratio: 4 / 3; width: 100%; object-fit: cover"></a>{{/foreach}}
+		{{#foreach demo.six}}<a class="im-zoomable" href="{{feature_image}}" data-caption="{{title}}"><img src="{{feature_image}}" alt="{{title}}" loading="lazy" class="im-ratio-4-3 im-w-full" style="object-fit: cover"></a>{{/foreach}}
 	{{/"components/carousel"}}
 </div>
 {{/example}}

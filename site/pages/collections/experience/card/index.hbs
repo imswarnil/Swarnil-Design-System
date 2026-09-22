@@ -28,17 +28,17 @@ source: src/components/life.css
 <h2>The figure</h2>
 <p>Thirty metres. Four thousand metres. Two degrees. Whatever the thing is <strong>measured in</strong> is the first question anybody asks about it, so it goes in the corner of the picture — the same corner a <a href="/collections/video/card/">video card</a> puts its length in, for the same reason.</p>
 {{#example center=true}}
-<span class="im-exp-figure" style="position: static; background-color: var(--im-ink)">30<small>m</small></span>
-<span class="im-exp-figure" style="position: static; background-color: var(--im-ink)">4,000<small>m</small></span>
-<span class="im-exp-figure" style="position: static; background-color: var(--im-ink)">42.2<small>km</small></span>
-<span class="im-exp-figure" style="position: static; background-color: var(--im-ink)">2<small>°C</small></span>
+<span class="im-exp-figure im-tile-static" >30<small>m</small></span>
+<span class="im-exp-figure im-tile-static" >4,000<small>m</small></span>
+<span class="im-exp-figure im-tile-static" >42.2<small>km</small></span>
+<span class="im-exp-figure im-tile-static" >2<small>°C</small></span>
 {{/example}}
 <p>A number and a unit. Not "very deep", not five stars, not a difficulty rating — those are opinions, and the number is the thing that is true.</p>
 
 <h2>With a kind chip</h2>
 <p>In a mixed feed the card takes <code>im-kind</code> like everything else, top-left over the picture. The figure is bottom-left, so the two never collide.</p>
 {{#example}}
-<div class="im-exps" style="--im-exps-min: 15rem">
+<div class="im-exps im-exps-md" >
 	{{#each demo.experience}}{{#match @index ">" 2}}
 	<article class="im-exp">
 		<span class="im-exp-media">

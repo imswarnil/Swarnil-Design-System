@@ -49,7 +49,7 @@ source: src/components/card.css
 <h2>The simplest card</h2>
 <p>With none of the structural parts, a card pads its own content. This is what the rest of these docs use.</p>
 {{#example}}
-<div class="im-grid-auto" style="--im-grid-min: 13rem">
+<div class="im-grid-auto im-grid-sm">
 	<div class="im-card"><span class="im-card-title">Filled</span><span>One surface step up from the page.</span></div>
 	<div class="im-card im-card-outline"><span class="im-card-title">Outline</span><span>A hairline instead of a fill.</span></div>
 	<a class="im-card im-card-link" href="#the-simplest-card"><span class="im-card-title">Link</span><span>Steps up again on hover and focus.</span></a>
@@ -58,7 +58,7 @@ source: src/components/card.css
 
 <h2>Surfaces</h2>
 {{#example}}
-<div class="im-grid-auto" style="--im-grid-min: 14rem">
+<div class="im-grid-auto im-grid-md">
 	<article class="im-card"><div class="im-card-media"><img src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></div><div class="im-card-body"><h3 class="im-card-title"><a href="#surfaces">Filled</a></h3><p class="im-card-text">The default surface.</p></div></article>
 	<article class="im-card im-card-outline"><div class="im-card-media"><img src="{{demo.three.[1].feature_image}}" alt="" loading="lazy"></div><div class="im-card-body"><h3 class="im-card-title"><a href="#surfaces">Outline</a></h3><p class="im-card-text">A hairline border, no fill.</p></div></article>
 	<article class="im-card im-card-plain"><div class="im-card-media"><img src="{{demo.three.[2].feature_image}}" alt="" loading="lazy"></div><div class="im-card-body"><h3 class="im-card-title"><a href="#surfaces">Plain</a></h3><p class="im-card-text">No surface: the media rounds itself and the text sits on the page.</p></div></article>
@@ -67,7 +67,7 @@ source: src/components/card.css
 
 <h2>With an icon</h2>
 {{#example}}
-<div class="im-grid-auto" style="--im-grid-min: 14rem">
+<div class="im-grid-auto im-grid-md">
 	<article class="im-card im-card-outline"><div class="im-card-body"><span class="im-card-icon">{{> "icons/palette"}}</span><h3 class="im-card-title"><a href="#with-an-icon">Tokens</a></h3><p class="im-card-text">Two tiers, light and dark, one file each.</p><span class="im-card-cta">Learn more {{> "icons/arrow-right"}}</span></div></article>
 	<article class="im-card im-card-outline"><div class="im-card-body"><span class="im-card-icon">{{> "icons/component"}}</span><h3 class="im-card-title"><a href="#with-an-icon">Components</a></h3><p class="im-card-text">Knobs as variables, state as attributes.</p><span class="im-card-cta">Learn more {{> "icons/arrow-right"}}</span></div></article>
 	<article class="im-card im-card-outline"><div class="im-card-header"><span class="im-card-icon">{{> "icons/package"}}</span><h3 class="im-card-title"><a href="#with-an-icon">In the header</a></h3></div><div class="im-card-body"><p class="im-card-text">An icon beside the title instead of above it.</p></div></article>
@@ -98,7 +98,7 @@ source: src/components/card.css
 <h2>A row that lines up</h2>
 <p>The body grows, the meta sits at its bottom and the footer below that — so cards with different amounts of text still align across a grid.</p>
 {{#example}}
-<div class="im-grid-auto" style="--im-grid-min: 14rem">
+<div class="im-grid-auto im-grid-md">
 	{{#foreach demo.three}}
 	<article class="im-card im-card-outline">
 		<div class="im-card-media"><img src="{{feature_image}}" alt="" loading="lazy"></div>
@@ -113,7 +113,7 @@ source: src/components/card.css
 <p>The same mark the <a href="/foundation/logo/">logo</a> carries, in the top-right corner: this one is <strong>new, live or unread</strong>. <code>im-dotted</code> puts it inside the corner, where a card has padding for it; <code>im-dotted-corner</code> sits it <em>on</em> the corner with a ring of the page behind it, for something with no padding to spare.</p>
 <p>It is <strong>not</strong> the "you are here" state — that is a light fill and a bolder label, everywhere in the system. A dot beside a nav link means a notification everywhere else on the web, and a reader should not have to learn two meanings for one mark.</p>
 {{#example}}
-<div class="im-grid-auto" style="--im-grid-min: 14rem">
+<div class="im-grid-auto im-grid-md">
 	<a class="im-card im-card-outline im-card-link im-dotted" href="#the-dot"><span class="im-card-eyebrow">Journal</span><span class="im-card-title">Something new</span><span>The dot sits inside the corner.</span></a>
 	<a class="im-card im-card-link im-dotted im-dotted-live" href="#the-dot"><span class="im-card-eyebrow">Live</span><span class="im-card-title">Happening now</span><span><code>im-dotted-live</code> — it pulses, like the logo's.</span></a>
 	<div class="im-card im-card-plain im-dotted" style="--im-dot-color: var(--im-success); --im-dot-inset: .25rem"><span class="im-card-title">Any colour, any inset</span><span><code>--im-dot-color</code>, <code>--im-dot-size</code>, <code>--im-dot-inset</code>.</span></div>
@@ -130,7 +130,7 @@ source: src/components/card.css
 
 <h2>Sizes &amp; variables</h2>
 {{#example}}
-<div class="im-grid-auto" style="--im-grid-min: 13rem">
+<div class="im-grid-auto im-grid-sm">
 	<div class="im-card im-card-sm"><span class="im-card-title">im-card-sm</span><span>Tighter padding and radius.</span></div>
 	<div class="im-card"><span class="im-card-title">Default</span><span>1.25rem and radius-xl.</span></div>
 	<div class="im-card im-card-lg"><span class="im-card-title">im-card-lg</span><span>Roomier, radius-2xl.</span></div>

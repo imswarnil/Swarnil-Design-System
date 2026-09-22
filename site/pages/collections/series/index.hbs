@@ -5,21 +5,21 @@ description: A web series — seasons, episodes in order, and where the viewer g
 eyebrow: Collections · Series
 source: src/components/commerce.css · video-card.css
 ---
-<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+<section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Collections · Series · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
 <div class="im-single im-wrap-wide" data-sidebar="on">
-	<article class="im-stack" style="--im-stack-gap: 2rem">
+	<article class="im-stack im-stack-lg">
 		<header class="im-serieshero">
 			<video poster="{{demo.six.[0].feature_image}}" muted loop playsinline autoplay preload="none" aria-hidden="true"></video>
 			<div class="im-serieshero-copy">
 				<p class="im-serieshero-meta"><span>Series</span><span>Season 1</span><span>4 episodes</span><span>Thursdays</span></p>
 				<h1 class="im-serieshero-title">The Amalfi Road</h1>
 				<p class="im-serieshero-text">Forty kilometres, two hours, and nobody in a hurry. Four films about one road, made over four days in November.</p>
-				<p class="im-cluster" style="--im-cluster-gap: .5rem"><a class="im-btn im-btn-primary" href="/collections/series/episode/">{{icon "play"}}Start watching</a><button class="im-btn im-btn-ink" type="button">{{icon "bell"}}Notify me</button></p>
+				<p class="im-cluster im-cluster-tight"><a class="im-btn im-btn-primary" href="/collections/series/episode/">{{icon "play"}}Start watching</a><button class="im-btn im-btn-ink" type="button">{{icon "bell"}}Notify me</button></p>
 			</div>
 		</header>
 
@@ -30,13 +30,13 @@ source: src/components/commerce.css · video-card.css
 				<button class="im-tag" type="button" value="s2" aria-current="false">Season 2</button>
 				<button class="im-tag" type="button" value="extra" aria-current="false">Extras</button>
 			</div>
-			<div class="im-cluster" style="--im-cluster-gap: .375rem">
+			<div class="im-cluster im-cluster-tight">
 				<span class="im-caption">2 of 4 watched</span>
 				<div class="im-progress" style="width: 7rem; --im-value: .5" role="progressbar" aria-valuenow="50" aria-label="Watched"><span></span></div>
 			</div>
 		</div>
 
-		<div class="im-stack" id="eps" data-filter="s1" style="--im-stack-gap: 1.25rem">
+		<div class="im-stack im-stack-sm" id="eps" data-filter="s1">
 			{{#each demo.episodes}}
 			<div class="im-episode" data-state="{{state}}" data-facet="{{season}}">
 				<span class="im-epnum">{{n}}</span>
@@ -44,7 +44,7 @@ source: src/components/commerce.css · video-card.css
 					<a class="im-vidcard-thumb im-thumb im-thumb-play" href="/collections/series/episode/" tabindex="-1" aria-hidden="true">
 						<img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy">
 						<span class="im-vidcard-time">{{time}}</span>
-						{{#match state "=" "done"}}<span class="im-vidcard-progress"><span style="width: 100%"></span></span>{{/match}}
+						{{#match state "=" "done"}}<span class="im-vidcard-progress"><span class="im-w-full"></span></span>{{/match}}
 						{{#match state "=" "current"}}<span class="im-vidcard-progress"><span style="width: 34%"></span></span>{{/match}}
 					</a>
 					<div class="im-vidcard-body"><div>
@@ -58,7 +58,7 @@ source: src/components/commerce.css · video-card.css
 			<p class="im-feed-empty" data-facet-empty hidden>Nothing in this season yet.</p>
 		</div>
 
-		<section class="im-section" style="--im-section-gap: 1rem">
+		<section class="im-section im-section-tight">
 			<div class="home-head"><p class="im-caption" data-index="other">Other series</p><a class="im-card-cta" href="#other">All of them {{> "icons/arrow-right"}}</a></div>
 			<div class="im-seriescards" id="other">
 				{{#each demo.seriesall}}

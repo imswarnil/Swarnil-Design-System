@@ -5,13 +5,13 @@ description: A course — what it teaches, who it is for, the whole curriculum v
 eyebrow: Collections · Course
 source: src/components/curriculum.css · commerce.css
 ---
-<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+<section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Collections · Course · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
-<div class="im-wrap-wide im-stack" style="--im-stack-gap: 2rem">
+<div class="im-wrap-wide im-stack im-stack-lg">
 	<nav aria-label="Breadcrumb">
 		<ol class="im-breadcrumb im-breadcrumb-chevron">
 			<li><a href="/">{{> "icons/house"}}<span>Home</span></a></li>
@@ -24,9 +24,9 @@ source: src/components/curriculum.css · commerce.css
 		<div class="im-coursehead-copy">
 			<p><span class="im-kind" data-kind="course">{{icon "graduation-cap"}}Course</span></p>
 			<h1 class="im-collhead-title">Design tokens, properly</h1>
-			<p class="im-lede" style="margin: 0">The layer that decides everything else. By the end, dark mode is a change to one file — and you know why.</p>
+			<p class="im-lede im-m0">The layer that decides everything else. By the end, dark mode is a change to one file — and you know why.</p>
 			<p class="im-coursehead-meta"><span>{{icon "square-play"}}7 lessons</span><span>{{icon "clock"}}81 min</span><span>{{icon "layers"}}3 units</span><span>{{icon "users"}}1,240 taken it</span><span class="im-rating" style="--im-rating: 4.8"><span class="im-rating-stars" aria-hidden="true"></span><span class="im-rating-value">4.8</span></span></p>
-			<p class="im-cluster" style="--im-cluster-gap: .5rem"><a class="im-btn im-btn-primary" href="/collections/course/lesson/">{{icon "play"}}Start the course</a><a class="im-btn" href="#curriculum">{{icon "list"}}Curriculum</a><span class="im-hint" style="margin: 0">€49 · free on Workshop</span></p>
+			<p class="im-cluster im-cluster-tight"><a class="im-btn im-btn-primary" href="/collections/course/lesson/">{{icon "play"}}Start the course</a><a class="im-btn" href="#curriculum">{{icon "list"}}Curriculum</a><span class="im-hint im-m0">€49 · free on Workshop</span></p>
 		</div>
 		<div class="im-video im-video-full" id="trailer" data-im-video="aqz-KE-bpKQ" data-im-video-title="Trailer">
 			<img class="im-video-poster" src="{{demo.shots.[1]}}" alt="" loading="eager">
@@ -35,8 +35,8 @@ source: src/components/curriculum.css · commerce.css
 	</header>
 </div>
 
-<div class="im-single im-wrap-wide" data-sidebar="on" style="--im-single-aside: 21rem; margin-top: 2rem">
-	<article class="im-stack" style="--im-stack-gap: 2rem">
+<div class="im-single im-wrap-wide im-single-aside-md im-mt-lg" data-sidebar="on">
+	<article class="im-stack im-stack-lg">
 		<section class="im-content im-content-flush">
 			<h2>Who it is for</h2>
 			<ul>
@@ -53,8 +53,8 @@ source: src/components/curriculum.css · commerce.css
 			</ul>
 		</section>
 
-		<section class="im-section" id="curriculum" style="--im-section-gap: 1rem">
-			<div class="home-head"><p class="im-caption" data-index="curriculum">The curriculum</p><p class="im-hint" style="margin: 0">3 units · 7 lessons · 81 min · 2 free</p></div>
+		<section class="im-section im-section-tight" id="curriculum">
+			<div class="home-head"><p class="im-caption" data-index="curriculum">The curriculum</p><p class="im-hint im-m0">3 units · 7 lessons · 81 min · 2 free</p></div>
 			<ol class="im-syllabus">
 				{{#each demo.sections}}
 				<li class="im-unit"{{#match n "=" "1"}} data-open{{/match}}>
@@ -80,12 +80,12 @@ source: src/components/curriculum.css · commerce.css
 			</ol>
 		</section>
 
-		<section class="im-section" id="said" style="--im-section-gap: 1rem">
+		<section class="im-section im-section-tight" id="said">
 			<h2 class="im-caption" data-index="said">What students say</h2>
 			<div class="im-marquee im-marquee-pause" data-im-marquee style="--im-marquee-gap: 1rem; --im-marquee-speed: 60s">
 				<div class="im-marquee-group">
-					{{#each demo.testimonials}}<article class="im-review im-review-card"><p class="im-review-head"><span class="im-review-by">{{by}}</span><span class="im-rating" style="--im-rating: {{rating}}"><span class="im-rating-stars" aria-hidden="true"></span></span></p><p class="im-review-text">{{text}}</p><p class="im-review-when" style="margin: 0">{{role}}</p></article>{{/each}}
-					{{#each demo.reviews}}<article class="im-review im-review-card"><p class="im-review-head"><span class="im-review-by">{{by}}</span><span class="im-rating" style="--im-rating: {{rating}}"><span class="im-rating-stars" aria-hidden="true"></span></span></p><p class="im-review-text">{{text}}</p><p class="im-review-when" style="margin: 0">{{when}}</p></article>{{/each}}
+					{{#each demo.testimonials}}<article class="im-review im-review-card"><p class="im-review-head"><span class="im-review-by">{{by}}</span><span class="im-rating" style="--im-rating: {{rating}}"><span class="im-rating-stars" aria-hidden="true"></span></span></p><p class="im-review-text">{{text}}</p><p class="im-review-when im-m0">{{role}}</p></article>{{/each}}
+					{{#each demo.reviews}}<article class="im-review im-review-card"><p class="im-review-head"><span class="im-review-by">{{by}}</span><span class="im-rating" style="--im-rating: {{rating}}"><span class="im-rating-stars" aria-hidden="true"></span></span></p><p class="im-review-text">{{text}}</p><p class="im-review-when im-m0">{{when}}</p></article>{{/each}}
 				</div>
 			</div>
 			<div class="im-reviews">
@@ -103,7 +103,7 @@ source: src/components/curriculum.css · commerce.css
 			</div>
 		</section>
 
-		<section class="im-section" style="--im-section-gap: 1rem">
+		<section class="im-section im-section-tight">
 			<h2 class="im-caption" data-index="q">Before you buy</h2>
 			<div class="im-accordion">
 				<details class="im-disclosure"><summary>How long do I have access?</summary><div class="im-disclosure-body"><p>Forever, including every revision. The token lesson has been rewritten twice and both rewrites were free to everybody who had already bought it.</p></div></details>

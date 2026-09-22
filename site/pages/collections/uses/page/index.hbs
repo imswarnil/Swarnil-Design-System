@@ -5,14 +5,14 @@ description: One thing I own — what it replaced, what it cost, how it is actua
 eyebrow: Collections · Uses
 source: src/components/ad.css · commerce.css
 ---
-<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+<section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Collections · Uses · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
-<div class="im-single im-wrap-wide" data-sidebar="on" style="--im-single-aside: 21rem">
-	<article class="im-stack" style="--im-stack-gap: 1.75rem">
+<div class="im-single im-wrap-wide im-single-aside-md" data-sidebar="on">
+	<article class="im-stack im-stack-md">
 		{{#with demo.uses.[0]}}
 		<nav aria-label="Breadcrumb">
 			<ol class="im-breadcrumb im-breadcrumb-chevron">
@@ -22,13 +22,13 @@ source: src/components/ad.css · commerce.css
 			</ol>
 		</nav>
 
-		<header class="im-stack" style="--im-stack-gap: .625rem">
+		<header class="im-stack im-stack-xs">
 			<p class="im-snipcard-meta"><span class="im-kind" data-kind="issue">{{> "icons/package"}}Owned</span><span>{{by}}</span><span>Bought {{bought}}</span></p>
 			<h1 class="im-collhead-title">{{name}}</h1>
 			<p class="im-rating im-rating-lg" style="--im-rating: 4.5"><span class="im-rating-stars" aria-hidden="true"></span><span class="im-rating-value">4.5 out of 5</span><span>after 7 months</span></p>
 		</header>
 
-		<figure class="im-projectcover" style="--im-projectcover-ratio: 16 / 10; max-width: none"><img src="{{../demo.shots.[0]}}" alt="" loading="eager"></figure>
+		<figure class="im-projectcover" style="--im-projectcover-ratio: 16 / 10"><img src="{{../demo.shots.[0]}}" alt="" loading="eager"></figure>
 
 		<div class="im-expstats">
 			<span><strong>{{cost}}</strong>Paid</span>
@@ -58,7 +58,7 @@ source: src/components/ad.css · commerce.css
 			<p>Nothing at this price. At half of it, a used body from two generations ago and the same lens — you lose the viewfinder and you keep the pictures.</p>
 		</section>
 
-		<section class="im-section" style="--im-section-gap: 1rem">
+		<section class="im-section im-section-tight">
 			<h2 class="im-caption" data-index="with">Used with</h2>
 			<div class="im-affiliates">
 				{{#each demo.uses}}{{#match group "=" "Camera"}}{{#match @index ">" 0}}
@@ -73,7 +73,7 @@ source: src/components/ad.css · commerce.css
 			</div>
 		</section>
 
-		<section class="im-section" style="--im-section-gap: 1rem">
+		<section class="im-section im-section-tight">
 			<h2 class="im-caption" data-index="pictures">In use</h2>
 			<div class="im-bento">
 				{{#each demo.shots}}<a class="im-bento-cell im-zoomable" href="{{this}}" data-caption="In use"><img src="{{this}}" alt="" loading="lazy"></a>{{/each}}
@@ -90,8 +90,8 @@ source: src/components/ad.css · commerce.css
 				<section class="im-widget im-widget-accent" aria-labelledby="up-buy">
 					<h2 class="im-widget-title" id="up-buy">Where I got it</h2>
 					<p class="im-widget-heading">€1,599, from a shop with a real returns desk.</p>
-					<a class="im-btn im-btn-primary im-btn-sm" href="#" rel="sponsored noopener" style="width: 100%">{{icon "external-link"}}The shop</a>
-					<p class="im-affiliate-mark" title="Affiliate link — I earn a little if you buy, at no cost to you" style="margin-top: .5rem">{{icon "info"}}Affiliate link. It is on this page because I bought it.</p>
+					<a class="im-btn im-btn-primary im-btn-sm im-w-full" href="#" rel="sponsored noopener">{{icon "external-link"}}The shop</a>
+					<p class="im-affiliate-mark im-mt-sm" title="Affiliate link — I earn a little if you buy, at no cost to you">{{icon "info"}}Affiliate link. It is on this page because I bought it.</p>
 				</section>
 
 				<section class="im-widget" aria-labelledby="up-facts">

@@ -5,13 +5,13 @@ description: Trips — where, how long, how far, and the route across the card. 
 eyebrow: Collections · Travel
 source: src/components/life.css
 ---
-<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+<section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Collections · Travel · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
-<div class="im-wrap-wide im-stack" style="--im-stack-gap: 2rem">
+<div class="im-wrap-wide im-stack im-stack-lg">
 	<header class="im-cinehero">
 		{{!-- The docs ship no clip: nothing in this repository may fetch a video
 		     from somewhere else, and a poster with no src is exactly what a
@@ -27,7 +27,7 @@ source: src/components/life.css
 		</div>
 	</header>
 
-	<section class="im-section" style="--im-section-gap: 1rem">
+	<section class="im-section im-section-tight">
 		<div class="home-head"><p class="im-caption" data-index="latest">Most recent</p></div>
 		{{#with demo.trips.[0]}}
 		<article class="im-tripfeature">
@@ -37,7 +37,7 @@ source: src/components/life.css
 				<span class="im-post-card-featured" aria-label="Featured"><span aria-hidden="true">Featured</span></span>
 			</div>
 			<div class="im-tripfeature-body">
-				<p class="im-tripcard-meta" style="color: var(--im-muted)"><span>{{when}}</span><span>{{days}} days</span><span>{{km}} km</span></p>
+				<p class="im-tripcard-meta im-muted"><span>{{when}}</span><span>{{days}} days</span><span>{{km}} km</span></p>
 				<h2 class="im-tripfeature-title"><a href="/collections/travel/trip/" style="color: inherit; text-decoration: none">{{title}}</a></h2>
 				<p class="im-exp-text">{{text}}</p>
 				<div class="im-tripfeature-days im-tripfeature-days-3">
@@ -52,21 +52,21 @@ source: src/components/life.css
 		{{/with}}
 	</section>
 
-	<section class="im-section" style="--im-section-gap: 1rem">
+	<section class="im-section im-section-tight">
 		<div class="home-head"><p class="im-caption" data-index="regions">By region</p></div>
 		<div class="im-regions">
 			{{#each demo.regions}}<a class="im-region" href="#trips"{{#if state}} data-state="{{state}}"{{/if}}><img src="{{lookup ../demo.shots shot}}" alt="" loading="lazy"><span class="im-kind im-kind-over" data-kind="trip">{{icon mark}}{{#if state}}Next{{else}}Been{{/if}}</span><span class="im-region-name">{{name}}</span><span class="im-region-meta">{{trips}} trips · {{countries}} countries</span></a>{{/each}}
 		</div>
 	</section>
 
-	<section class="im-section" style="--im-section-gap: 1rem">
-		<div class="home-head"><p class="im-caption" data-index="countries">Countries</p><p class="im-hint" style="margin: 0">tick = been · blue = booked · dashed = yet to visit</p></div>
+	<section class="im-section im-section-tight">
+		<div class="home-head"><p class="im-caption" data-index="countries">Countries</p><p class="im-hint im-m0">tick = been · blue = booked · dashed = yet to visit</p></div>
 		<div class="im-countries">
 			{{#each demo.countries}}<a class="im-country" href="#trips" data-state="{{state}}"><span class="im-country-mark" aria-hidden="true"></span><b>{{name}}</b><small>{{region}} · {{#match state "=" "next"}}not yet{{else}}{{days}} days{{/match}}</small><span class="im-country-state">{{#match state "=" "done"}}Been{{/match}}{{#match state "=" "booked"}}Booked{{/match}}{{#match state "=" "next"}}To visit{{/match}}</span></a>{{/each}}
 		</div>
 	</section>
 
-	<section class="im-section" style="--im-section-gap: 1rem">
+	<section class="im-section im-section-tight">
 		<div class="home-head"><p class="im-caption" data-index="trips">Every trip</p></div>
 	<div class="im-collbar">
 		<div class="im-collbar-filters" role="group" aria-label="Which country" data-im-filter="#trips">
@@ -76,7 +76,7 @@ source: src/components/life.css
 			<button class="im-tag" type="button" value="Slovakia" aria-current="false">Slovakia</button>
 			<button class="im-tag" type="button" value="Norway" aria-current="false">Norway</button>
 		</div>
-		<div class="im-cluster" style="--im-cluster-gap: .375rem">
+		<div class="im-cluster im-cluster-tight">
 			<button class="im-btn im-btn-sm" type="button">{{icon "list-filter"}}Most recent</button>
 		</div>
 	</div>
@@ -98,7 +98,7 @@ source: src/components/life.css
 	</div>
 
 	</section>
-	<section class="im-section" style="--im-section-gap: 1rem">
+	<section class="im-section im-section-tight">
 		<div class="home-head"><p class="im-caption" data-index="totals">In total</p></div>
 		<div class="im-expstats">
 			<span><strong>{{demo.trips.length}}</strong>Trips</span>

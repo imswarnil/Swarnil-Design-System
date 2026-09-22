@@ -10,7 +10,7 @@ source: src/components/divider.css
 <div class="im-divider im-divider-ticks" role="separator"></div>
 {{/example}}
 {{#example title="In the accent, and sliding — as if being measured against"}}
-<div class="im-stack" style="--im-stack-gap: 2rem">
+<div class="im-stack im-stack-lg">
 	<div class="im-divider im-divider-ticks" role="separator" style="--im-divider-tick: var(--im-accent)"></div>
 	<div class="im-divider im-divider-ticks im-divider-slide" role="separator"></div>
 </div>
@@ -18,7 +18,7 @@ source: src/components/divider.css
 
 <h2>Styles</h2>
 {{#example}}
-<div class="im-stack" style="--im-stack-gap: 1.75rem">
+<div class="im-stack im-stack-md">
 	<hr class="im-divider">
 	<div class="im-divider im-divider-dashed" role="separator"></div>
 	<div class="im-divider im-divider-dotted" role="separator"></div>
@@ -47,7 +47,7 @@ source: src/components/divider.css
 <h2>With a label</h2>
 <p>Put anything inside and the rule splits around it. <code>-start</code> / <code>-end</code> push the label to a side.</p>
 {{#example}}
-<div class="im-stack" style="--im-stack-gap: 1.75rem">
+<div class="im-stack im-stack-md">
 	<div class="im-divider" role="separator"><span>or</span></div>
 	<div class="im-divider im-divider-start" role="separator"><span>01 — Foundation</span></div>
 	<div class="im-divider im-divider-end" role="separator"><span>Continue reading</span></div>
@@ -59,7 +59,7 @@ source: src/components/divider.css
 
 <h2>Animated</h2>
 {{#example}}
-<div class="im-stack" style="--im-stack-gap: 2rem">
+<div class="im-stack im-stack-lg">
 	<div><p class="im-caption mb-3">-draw · draws in when scrolled to</p><div class="im-divider im-divider-draw im-divider-accent" role="separator" data-im-reveal="none"></div></div>
 	<div><p class="im-caption mb-3">-draw -center · from the middle</p><div class="im-divider im-divider-draw im-divider-center" role="separator" data-im-reveal="none" style="--im-divider-ink: var(--im-ink)"></div></div>
 	<div><p class="im-caption mb-3">-scan · a light travels the rule</p><div class="im-divider im-divider-scan" role="separator"></div></div>

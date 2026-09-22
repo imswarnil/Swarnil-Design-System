@@ -5,19 +5,19 @@ description: The archive of a letter — what it is, a form to join it, and ever
 eyebrow: Collections · Newsletter
 source: src/components/collection.css · field.css
 ---
-<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+<section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Collections · Newsletter · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
-<div class="im-wrap-wide im-stack" style="--im-stack-gap: 2rem">
+<div class="im-wrap-wide im-stack im-stack-lg">
 	<header class="im-letterhead">
-		<div class="im-stack" style="--im-stack-gap: 1rem">
+		<div class="im-stack im-stack-sm">
 			<p><span class="im-kind" data-kind="issue">{{icon "mail"}}Newsletter</span></p>
 			<h1 class="im-collhead-title">Field Notes</h1>
-			<p class="im-lede" style="margin: 0">One letter when something lands — what I built, what it cost and what I got wrong. Every letter is also a page here, so nothing is lost to an inbox.</p>
-			<div style="max-width: 26rem">{{> "components/subscribe" id="letters-email" button="Subscribe"}}</div>
+			<p class="im-lede im-m0">One letter when something lands — what I built, what it cost and what I got wrong. Every letter is also a page here, so nothing is lost to an inbox.</p>
+			<div class="im-max-sm">{{> "components/subscribe" id="letters-email" button="Subscribe"}}</div>
 			<p class="im-collhead-meta"><span>{{demo.issues.length}} letters</span><span>4,210 readers</span><span>62% opened</span><a href="#letters">RSS</a></p>
 		</div>
 		<div class="im-letterhead-mark"><svg viewBox="0 0 320 220" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="16" y="40" width="288" height="164" rx="14"/><path d="M16 60 160 150 304 60"/><path d="M16 190 118 118M304 190 202 118" opacity=".6"/><rect x="48" y="12" width="224" height="28" rx="6" opacity=".35"/><circle cx="272" cy="72" r="6" fill="currentColor" stroke="none"/></svg></div>
@@ -29,7 +29,7 @@ source: src/components/collection.css · field.css
 			<button class="im-tag" type="button" value="2026" aria-current="false">2026</button>
 			<button class="im-tag" type="button" value="2025" aria-current="false">2025</button>
 		</div>
-		<p class="im-hint" style="margin: 0">Newest first</p>
+		<p class="im-hint im-m0">Newest first</p>
 	</div>
 
 	<div class="im-letters" id="letters">
@@ -38,7 +38,7 @@ source: src/components/collection.css · field.css
 			{{#if shot}}
 			<span class="im-letter-media"><img src="{{lookup ../demo.shots shot}}" alt="" loading="lazy"><span class="im-letter-n">#{{n}}</span></span>
 			{{else}}
-			<span class="im-letter-media" style="display: grid; place-items: center"><span class="im-issue-tile" style="position: static"><b>{{n}}</b><strong>{{day}}</strong><span>{{month}}</span><small>{{year}}</small></span></span>
+			<span class="im-letter-media im-center-grid" ><span class="im-issue-tile im-static" ><b>{{n}}</b><strong>{{day}}</strong><span>{{month}}</span><small>{{year}}</small></span></span>
 			{{/if}}
 			<div class="im-letter-body">
 				<p class="im-letter-date">{{sent}}</p>

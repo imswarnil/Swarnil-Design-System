@@ -78,3 +78,83 @@
 @utility im-bar-offset {
 	padding-top: calc(var(--im-bar-height) + var(--im-island-gap, 0.75rem));
 }
+
+/* ---- knobs as classes -----------------------------------------------------
+   Every layout knob a page used to set inline has a class, so a page carries
+   no style attribute. A knob that is DATA (a rating, a language colour, a
+   swatch) stays a custom property, because that is what a property is for. */
+@utility im-stack-xs { --im-stack-gap: 0.5rem; }
+@utility im-stack-sm { --im-stack-gap: 1rem; }
+@utility im-stack-md { --im-stack-gap: 1.5rem; }
+@utility im-stack-lg { --im-stack-gap: 2rem; }
+@utility im-stack-xl { --im-stack-gap: clamp(2.5rem, 2rem + 2vw, 4rem); }
+@utility im-section-tight { --im-section-gap: 1rem; }
+@utility im-section-sm { --im-section-gap: 1.5rem; }
+@utility im-cluster-tight { --im-cluster-gap: 0.375rem; }
+@utility im-grid-sm { --im-grid-min: 12rem; }
+@utility im-grid-md { --im-grid-min: 16rem; }
+@utility im-grid-lg { --im-grid-min: 20rem; }
+@utility im-grid-xl { --im-grid-min: 24rem; }
+@utility im-grid-start { align-items: start; }
+@utility im-max-sm { max-width: 24rem; }
+@utility im-max-md { max-width: 32rem; }
+@utility im-max-lg { max-width: 44rem; }
+@utility im-max-xl { max-width: 56rem; }
+@utility im-m0 { margin: 0; }
+@utility im-mt-sm { margin-top: 0.75rem; }
+@utility im-mt-md { margin-top: 1.25rem; }
+@utility im-mt-lg { margin-top: 2rem; }
+@utility im-ml-auto { margin-left: auto; }
+@utility im-w-full { width: 100%; }
+@utility im-block { display: block; }
+@utility im-center { text-align: center; }
+@utility im-mx-auto { margin-inline: auto; }
+@utility im-single-aside-md { --im-single-aside: 21rem; }
+@utility im-single-aside-lg { --im-single-aside: 22rem; }
+@utility im-single-aside-sm { --im-single-aside: 19rem; }
+@utility im-repos-tight { --im-repos-min: 16rem; }
+@utility im-repos-md { --im-repos-min: 18rem; }
+@utility im-mediabg-sm { --im-mediabg-min: 14rem; }
+@utility im-mediabg-md { --im-mediabg-min: 18rem; }
+@utility im-mediabg-lg { --im-mediabg-min: 22rem; }
+@utility im-feed-sm { --im-feed-min: 13rem; }
+@utility im-feed-md { --im-feed-min: 15rem; }
+@utility im-ratio-4-3 { aspect-ratio: 4 / 3; overflow: hidden; }
+@utility im-ratio-1 { aspect-ratio: 1; }
+@utility im-ratio-16-10 { aspect-ratio: 16 / 10; }
+@utility im-pt-sm { padding-top: 1.5rem; }
+@utility im-pb-0 { padding-bottom: 0; }
+@utility im-p-0 { padding: 0; }
+@utility im-border-0 { border: 0; }
+@utility im-text-sm { font-size: var(--im-text-sm); }
+@utility im-text-base { font-size: var(--im-text-base); }
+@utility im-muted { color: var(--im-muted); }
+@utility im-static { position: static; }
+@utility im-tile-static { position: static; background-color: var(--im-ink); }
+@utility im-center-grid { display: grid; place-items: center; }
+@utility im-flat { box-shadow: none; }
+@utility im-bg-surface { background-color: var(--im-surface); }
+@utility im-cover { object-fit: cover; width: 100%; }
+@utility im-mr-xs { margin-right: 0.375rem; }
+@utility im-ml-xs { margin-left: 0.5rem; }
+@utility im-exps-md { --im-exps-min: 19rem; }
+@utility im-vidgrid-sm { --im-vidgrid-min: 11rem; }
+@utility im-auth-wide { --im-auth-width: 28rem; }
+@utility im-content-wide { --im-content-main: 56rem; }
+@utility im-on-dark { color: color-mix(in oklab, #fff 80%, transparent); }
+@utility im-demo-tall { height: 40rem; }
+@utility im-art-post { --im-art: var(--im-c-post); }
+@utility im-art-project { --im-art: var(--im-c-project); }
+@utility im-art-video { --im-art: var(--im-c-video); }
+@utility im-art-series { --im-art: var(--im-c-series); }
+@utility im-art-course { --im-art: var(--im-c-course); }
+@utility im-art-shop { --im-art: var(--im-c-shop); }
+@utility im-art-newsletter { --im-art: var(--im-c-newsletter); }
+@utility im-art-uses { --im-art: var(--im-c-uses); }
+@utility im-art-snippet { --im-art: var(--im-c-snippet); }
+@utility im-art-prompt { --im-art: var(--im-c-prompt); }
+@utility im-art-travel { --im-art: var(--im-c-travel); }
+@utility im-art-experience { --im-art: var(--im-c-experience); }
+@utility im-art-bucket { --im-art: var(--im-c-bucket); }
+@utility im-art-tag { --im-art: var(--im-c-tag); }
+@utility im-art-timeline { --im-art: var(--im-c-timeline); }

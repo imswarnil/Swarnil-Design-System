@@ -39,8 +39,8 @@ source: src/components/video-card.css · partials/components/video-card.hbs
 
 <h2>Compact</h2>
 <p>The "up next" rail beside a player. No channel mark, a smaller still, everything one size down.</p>
-{{#example style="max-width: 26rem"}}
-<div class="im-stack" style="--im-stack-gap: .75rem">
+{{#example class="im-max-sm"}}
+<div class="im-stack im-stack-xs">
 	{{#each demo.videos}}{{#match @index ">" 3}}{{> "components/video-card" layout="compact"}}{{/match}}{{/each}}
 </div>
 {{/example}}

@@ -6,7 +6,7 @@ source: src/components/stats.css · src/js/im-charts.js
 ---
 <h2>Stat</h2>
 {{#example}}
-<div class="im-grid-fit" style="--im-grid-min: 10rem">
+<div class="im-grid-fit im-grid-sm">
 	<div class="im-stat"><span class="im-stat-figure" data-im-count="12480">12,480</span><span class="im-stat-label">readers</span><span class="im-stat-delta">{{> "icons/trending-up"}} 12% this month</span></div>
 	<div class="im-stat"><span class="im-stat-figure"><span data-im-count="41.2">41.2</span>%</span><span class="im-stat-label">open rate</span><span class="im-stat-delta" data-trend="down">{{> "icons/trending-down"}} 1.4 pts</span></div>
 	<div class="im-stat"><span class="im-stat-figure im-pixel" data-im-count="246">246</span><span class="im-stat-label">posts</span><span class="im-stat-delta" data-trend="flat">no change</span></div>
@@ -55,7 +55,7 @@ source: src/components/stats.css · src/js/im-charts.js
 
 <h2>Donut</h2>
 {{#example}}
-<div class="im-cluster" style="--im-cluster-gap: 2rem">
+<div class="im-cluster">
 	<span class="im-donut" style="--a: .46; --b: .32" role="img" aria-label="Members: 46% free, 32% monthly, 22% yearly"><span class="im-stat"><span class="text-h3">1,204</span><span class="im-stat-label">members</span></span></span>
 	<ul class="im-legend" style="min-width: 12rem">
 		<li style="--c: var(--im-accent)">Free<b>46%</b></li>

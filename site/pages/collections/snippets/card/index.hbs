@@ -26,7 +26,7 @@ source: src/components/commerce.css · code.css
 <h2>Clipped, not scrolled</h2>
 <p>The body stops at <code>--im-snippet-lines</code> (7) with a fade into the code block's own background. A card is a preview; a scrollbar inside a card in a grid is three scroll contexts on one screen and a reader who has lost track of which one they are in.</p>
 {{#example}}
-<div class="im-snippets" style="--im-snippets-min: 26rem">
+<div class="im-snippets">
 	{{#with demo.snippets.[3]}}
 	<article class="im-snippet" style="--im-repo-lang: {{langColor}}; --im-snippet-lines: 4">
 		<p class="im-snippet-head"><a class="im-snippet-name" href="/collections/snippets/page/">{{name}}</a><span class="im-snippet-lang">{{lang}}</span></p>

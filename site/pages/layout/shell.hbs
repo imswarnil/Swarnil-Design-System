@@ -21,10 +21,10 @@ source: src/layout/ · partials/shell/topbar.hbs
 
 <h2>Three widths of side nav</h2>
 {{#example}}
-<div class="im-grid-fit" style="--im-grid-min: 11rem">
-	<div class="im-stack" style="--im-stack-gap: .5rem"><div class="mini-shell"><span>topbar</span><span>nav</span><span>main</span></div><p class="text-sm text-muted">Open — from <code>lg</code>, by default</p></div>
-	<div class="im-stack" style="--im-stack-gap: .5rem"><div class="mini-shell" style="--mini-nav: 2rem"><span>topbar</span><span></span><span>main</span></div><p class="text-sm text-muted">Rail — <code>md</code>…<code>lg</code>, or collapsed</p></div>
-	<div class="im-stack" style="--im-stack-gap: .5rem"><div class="mini-shell" style="--mini-nav: 0rem"><span>topbar</span><span></span><span>main</span></div><p class="text-sm text-muted">Drawer — below <code>md</code></p></div>
+<div class="im-grid-fit im-grid-sm">
+	<div class="im-stack im-stack-xs"><div class="mini-shell"><span>topbar</span><span>nav</span><span>main</span></div><p class="text-sm text-muted">Open — from <code>lg</code>, by default</p></div>
+	<div class="im-stack im-stack-xs"><div class="mini-shell" style="--mini-nav: 2rem"><span>topbar</span><span></span><span>main</span></div><p class="text-sm text-muted">Rail — <code>md</code>…<code>lg</code>, or collapsed</p></div>
+	<div class="im-stack im-stack-xs"><div class="mini-shell" style="--mini-nav: 0rem"><span>topbar</span><span></span><span>main</span></div><p class="text-sm text-muted">Drawer — below <code>md</code></p></div>
 </div>
 {{/example}}
 <p>The rail hides labels with CSS only; they stay in the DOM for screen readers, and each link's <code>title</code> gives the tooltip. The visitor's choice is <code>&lt;html data-nav="rail"&gt;</code>, stored, and applied before first paint by <code>partials/shell/head-script.hbs</code>.</p>

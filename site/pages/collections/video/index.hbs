@@ -5,7 +5,7 @@ description: A channel page — the banner, the mark, the numbers, the tabs, and
 eyebrow: Collections · Video
 source: src/components/video-card.css · partials/components/video-card.hbs
 ---
-<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+<section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Collections · Video · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
@@ -14,15 +14,15 @@ source: src/components/video-card.css · partials/components/video-card.hbs
 		<p class="im-caption">Layout</p>
 		<div class="im-btn-group" role="group" aria-label="Video grid"
 			data-demo-target="#vids" data-demo-label="#vids-class">
-			<button class="im-btn im-btn-sm" type="button" aria-pressed="true" data-demo-class="im-vidgrid">Grid</button>
-			<button class="im-btn im-btn-sm" type="button" data-demo-class="im-vidgrid im-vidgrid-list">List</button>
+			<button class="im-btn im-btn-sm im-vidgrid" type="button" aria-pressed="true" data-demo->Grid</button>
+			<button class="im-btn im-btn-sm im-vidgrid im-vidgrid-list" type="button" data-demo->List</button>
 		</div>
-		<code class="doc-source" id="vids-class" style="margin-left: auto"></code>
+		<code class="doc-source im-ml-auto" id="vids-class"></code>
 	</div>
 </section>
 
 <div class="im-single im-wrap-wide" data-sidebar="off">
-	<article class="im-stack" style="--im-stack-gap: 1.75rem">
+	<article class="im-stack im-stack-md">
 		<section class="im-channel">
 			{{!-- The banner plays. Muted, looping, playsinline, a poster that is
 				  the first frame, and preload="none" so the clip never competes
@@ -53,20 +53,20 @@ source: src/components/video-card.css · partials/components/video-card.hbs
 				<button class="im-tag" type="button" value="short" aria-current="false">{{icon "square-play"}}Shorts</button>
 				<button class="im-tag" type="button" value="live" aria-current="false">{{icon "zap"}}Live</button>
 			</div>
-			<div class="im-cluster" style="--im-cluster-gap: .375rem">
+			<div class="im-cluster im-cluster-tight">
 				<button class="im-btn im-btn-sm" type="button">{{icon "list-filter"}}Latest</button>
 			</div>
 		</div>
 
-		<section class="im-section" style="--im-section-gap: 1rem">
+		<section class="im-section im-section-tight">
 			<div class="home-head"><p class="im-caption" data-index="latest">Latest</p><a class="im-card-cta" href="#vids">All films {{> "icons/arrow-right"}}</a></div>
 			{{#> "components/carousel" label="Latest films" dots=true style="--im-slides: 1.1; --im-slides-sm: 2.1; --im-slides-md: 3.1"}}
 				{{#each demo.videos}}{{#match @index "<" 6}}{{> "components/video-card" hide_by=true kind="video"}}{{/match}}{{/each}}
 			{{/"components/carousel"}}
 		</section>
 
-		<section class="im-section" style="--im-section-gap: 1rem">
-			<div class="home-head"><p class="im-caption" data-index="schedule">Schedule</p><p class="im-hint" style="margin: 0">Films most Thursdays · live on the last Friday</p></div>
+		<section class="im-section im-section-tight">
+			<div class="home-head"><p class="im-caption" data-index="schedule">Schedule</p><p class="im-hint im-m0">Films most Thursdays · live on the last Friday</p></div>
 			<ol class="im-schedule">
 				<li class="im-schedule-item" data-state="live"><time>Fri 26 Sep · 19:00</time><b>Building the comment wall, live</b><span class="im-kind" data-kind="video">{{icon "zap"}}Live</span></li>
 				<li class="im-schedule-item"><time>Thu 2 Oct</time><b>The high road — Season 2, episode 1</b><span class="im-kind" data-kind="series">{{icon "square-play"}}Series</span></li>
@@ -85,7 +85,7 @@ source: src/components/video-card.css · partials/components/video-card.hbs
 			<p class="im-feed-empty" data-facet-empty hidden>Nothing of that kind yet.</p>
 		</div>
 
-		<section class="im-section" style="--im-section-gap: 1rem">
+		<section class="im-section im-section-tight">
 			<div class="home-head"><p class="im-caption" data-index="shorts">Shorts</p><a class="im-card-cta" href="/collections/video/short/">All of them {{> "icons/arrow-right"}}</a></div>
 			{{!-- A carousel rather than a grid: shorts are browsed sideways
 				  everywhere they exist, and five 9:16 cards in a grid is a wall
@@ -104,7 +104,7 @@ source: src/components/video-card.css · partials/components/video-card.hbs
 		      they are four uses of the same card — not four components. --}}
 		<section class="im-section">
 			<div class="home-head"><p class="im-caption" data-index="shorts">Shorts</p><a class="im-card-cta" href="/collections/video/short/">The short layout {{> "icons/arrow-right"}}</a></div>
-			<div class="im-vidgrid" style="--im-vidgrid-min: 11rem">
+			<div class="im-vidgrid im-vidgrid-sm" >
 				{{#each demo.videos}}{{#match @index "<" 6}}{{> "components/video-card" class="im-vidcard-tall" hide_by=true kind="short"}}{{/match}}{{/each}}
 			</div>
 		</section>
@@ -171,7 +171,7 @@ source: src/components/video-card.css · partials/components/video-card.hbs
 					<div><strong>96</strong><span>Videos</span></div>
 					<div><strong>8.4M</strong><span>Views</span></div>
 				</div>
-				<button class="im-btn im-btn-primary" type="button" style="margin-top: .875rem; width: 100%">{{icon "video"}}Subscribe</button>
+				<button class="im-btn im-btn-primary im-mt-sm im-w-full" type="button">{{icon "video"}}Subscribe</button>
 			</section>
 
 			<section class="im-widget" aria-labelledby="vw-live">

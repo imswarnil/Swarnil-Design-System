@@ -8,7 +8,7 @@ source: src/components/commerce.css
 
 <h2>The card</h2>
 {{#example}}
-<div class="im-snippets" style="--im-snippets-min: 23rem">
+<div class="im-snippets">
 	{{#each demo.prompts}}{{#match @index "<" 2}}
 	<article class="im-snippet">
 		<p class="im-snippet-head"><a class="im-snippet-name" href="/collections/prompts/page/">{{name}}</a><span class="im-snippet-lang" style="--im-repo-lang: var(--im-accent)">{{model}}</span></p>
@@ -37,9 +37,9 @@ source: src/components/commerce.css
 <h2>Name the models honestly</h2>
 <p>"Any model" or "reasoning models" — not a list of version numbers that will be wrong in three months and that nobody can verify anyway.</p>
 {{#example center=true}}
-<span class="im-snippet-lang" style="--im-repo-lang: var(--im-accent); margin: 0">Any model</span>
-<span class="im-snippet-lang" style="--im-repo-lang: var(--im-accent); margin: 0">Reasoning models</span>
-<span class="im-snippet-lang" style="--im-repo-lang: var(--im-accent); margin: 0">Long context</span>
+<span class="im-snippet-lang im-m0" style="--im-repo-lang: var(--im-accent)">Any model</span>
+<span class="im-snippet-lang im-m0" style="--im-repo-lang: var(--im-accent)">Reasoning models</span>
+<span class="im-snippet-lang im-m0" style="--im-repo-lang: var(--im-accent)">Long context</span>
 {{/example}}
 
 <h2>Choosing</h2>

@@ -5,14 +5,14 @@ description: One thing for sale — the screenshots, what it is, what is in the 
 eyebrow: Collections · Shop
 source: src/components/commerce.css · carousel.css
 ---
-<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+<section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Collections · Shop · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
-<div class="im-single im-wrap-wide" data-sidebar="on" style="--im-single-aside: 21rem">
-	<article class="im-stack" style="--im-stack-gap: 2rem">
+<div class="im-single im-wrap-wide im-single-aside-md" data-sidebar="on">
+	<article class="im-stack im-stack-lg">
 		<header class="im-projecthero">
 			<nav aria-label="Breadcrumb">
 				<ol class="im-breadcrumb im-breadcrumb-chevron">
@@ -34,7 +34,7 @@ source: src/components/commerce.css · carousel.css
 
 		<div data-im-lightbox>
 			{{#> "components/carousel" label="Screenshots" dots=true style="--im-slides: 1.05; --im-slides-sm: 1.5; --im-slides-md: 1.9"}}
-				{{#foreach demo.six}}<a class="im-zoomable" href="{{feature_image}}" data-caption="{{title}}"><img src="{{feature_image}}" alt="{{title}}" loading="lazy" style="aspect-ratio: 16 / 10; width: 100%; object-fit: cover"></a>{{/foreach}}
+				{{#foreach demo.six}}<a class="im-zoomable" href="{{feature_image}}" data-caption="{{title}}"><img src="{{feature_image}}" alt="{{title}}" loading="lazy" class="im-w-full im-ratio-16-10 im-cover" ></a>{{/foreach}}
 			{{/"components/carousel"}}
 		</div>
 
@@ -66,7 +66,7 @@ source: src/components/commerce.css · carousel.css
 			</div>
 		</section>
 
-		<section class="im-section" id="reviews" style="--im-section-gap: 1rem">
+		<section class="im-section im-section-tight" id="reviews">
 			<h2 class="im-caption" data-index="reviews">What buyers said</h2>
 
 			<div class="im-ratingsum">

@@ -5,16 +5,16 @@ description: Code worth keeping — the thing itself, what it is for, and one bu
 eyebrow: Collections
 source: src/components/commerce.css · code.css
 ---
-<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+<section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Collections · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
 <div class="im-single im-wrap-wide" data-sidebar="on">
-	<article class="im-stack" style="--im-stack-gap: 2rem">
+	<article class="im-stack im-stack-lg">
 		<header class="im-collhead im-collhead-patterned">
-			<span class="im-collhead-art im-bg-grid" style="--im-art: var(--im-c-snippet)" aria-hidden="true"></span>
+			<span class="im-collhead-art im-bg-grid im-art-snippet" aria-hidden="true"></span>
 			<p class="im-eyebrow">Snippets</p>
 			<h1 class="im-collhead-title">Code I keep looking up</h1>
 			<p class="im-collhead-text">Small, tested, and in here because I have searched for each of them more than twice. Copy freely — none of it is clever enough to need a licence.</p>
@@ -29,8 +29,8 @@ source: src/components/commerce.css · code.css
 				<a class="im-tag" href="#snips">Handlebars</a>
 				<a class="im-tag" href="#snips">Ghost</a>
 			</div>
-			<div class="im-cluster" style="--im-cluster-gap: .375rem">
-				<div class="im-input-group" style="width: 12rem">{{icon "search"}}<input class="im-input im-input-sm" type="search" placeholder="Search snippets" aria-label="Search snippets"></div>
+			<div class="im-cluster im-cluster-tight">
+				<div class="im-input-group im-max-sm" >{{icon "search"}}<input class="im-input im-input-sm" type="search" placeholder="Search snippets" aria-label="Search snippets"></div>
 			</div>
 		</div>
 
@@ -44,7 +44,7 @@ source: src/components/commerce.css · code.css
 		<div class="im-widgets">
 			<section class="im-widget" aria-labelledby="cw-lang">
 				<h2 class="im-widget-title" id="cw-lang">By language</h2>
-				<div class="im-cluster" style="--im-cluster-gap: .375rem">
+				<div class="im-cluster im-cluster-tight">
 					<a class="im-tag" href="#snips" aria-current="page">All<small>{{demo.snippets.length}}</small></a>
 					<a class="im-tag" href="#snips">CSS<small>4</small></a>
 					<a class="im-tag" href="#snips">JavaScript<small>3</small></a>

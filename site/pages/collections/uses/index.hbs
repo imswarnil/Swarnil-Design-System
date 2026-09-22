@@ -5,16 +5,16 @@ description: The things you actually own and recommend, grouped by where they li
 eyebrow: Collections
 source: src/components/ad.css · commerce.css
 ---
-<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+<section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Collections · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
 <div class="im-single im-wrap-wide" data-sidebar="on">
-	<article class="im-stack" style="--im-stack-gap: 2rem">
+	<article class="im-stack im-stack-lg">
 		<header class="im-collhead im-collhead-patterned">
-			<span class="im-collhead-art im-bg-dots" style="--im-art: var(--im-c-uses)" aria-hidden="true"></span>
+			<span class="im-collhead-art im-bg-dots im-art-uses" aria-hidden="true"></span>
 			<p class="im-eyebrow">Uses</p>
 			<h1 class="im-collhead-title">What I actually use</h1>
 			<p class="im-collhead-text">Everything here I own, paid for, and have used long enough to have an opinion about. If it is on this page it survived at least a year.</p>
@@ -35,7 +35,7 @@ source: src/components/ad.css · commerce.css
 			</div>
 		</div>
 
-		<div class="im-stack" id="uses" style="--im-stack-gap: 2.25rem">
+		<div class="im-stack im-stack-lg" id="uses">
 			{{#each demo.usegroups}}
 			<section class="im-usegroup">
 				<header class="im-usegroup-head">
@@ -46,7 +46,7 @@ source: src/components/ad.css · commerce.css
 					{{#each items}}
 					<article class="im-affiliate im-affiliate-compact">
 						<span class="im-affiliate-media im-thumb"><img src="{{lookup @root.demo.shots @index}}" alt="" loading="lazy"></span>
-						<a class="im-affiliate-name" href="/collections/uses/page/"><span class="im-kind" data-kind="uses" style="margin-right: .375rem">{{icon "package"}}Uses</span>{{name}}</a>
+						<a class="im-affiliate-name" href="/collections/uses/page/"><span class="im-kind im-mr-xs" data-kind="uses" >{{icon "package"}}Uses</span>{{name}}</a>
 						<p class="im-affiliate-by">{{by}}</p>
 						<p class="im-affiliate-meta"><span class="im-affiliate-price">{{cost}}</span>{{#match verdict "=" "Gone"}}<span class="im-badge">Gone</span>{{else}}<span class="im-badge im-badge-success">Still using</span>{{/match}}<span class="im-affiliate-mark" title="Affiliate link — I earn a little if you buy, at no cost to you">{{icon "info"}}</span></p>
 						<a class="im-affiliate-go" href="#uses" rel="sponsored noopener" aria-label="Where I got it">{{icon "arrow-up-right"}}</a>
@@ -59,7 +59,7 @@ source: src/components/ad.css · commerce.css
 
 		<section class="im-section">
 			<div class="home-head"><p class="im-caption" data-index="also">Also on the desk</p></div>
-			<div class="im-widgets" style="max-width: 24rem">
+			<div class="im-widgets im-max-sm">
 				<section class="im-widget">
 					<h2 class="im-widget-title">Small things</h2>
 					<div class="im-widget-products">

@@ -35,8 +35,8 @@ source: src/components/video.css · src/js/im-media.js
 <h2>As chips</h2>
 <p><code>im-chapters-chips</code>: the same timestamps as a wrapping row — for under a video in a blog post, where a column would be too much.</p>
 {{#example}}
-<div class="im-stack" style="--im-stack-gap: .875rem">
-	<div class="im-video" id="demo-video-2" data-im-video="aqz-KE-bpKQ" style="max-width: 34rem">
+<div class="im-stack im-stack-sm">
+	<div class="im-video im-max-md" id="demo-video-2" data-im-video="aqz-KE-bpKQ">
 		<img class="im-video-poster" src="https://i.ytimg.com/vi/aqz-KE-bpKQ/hqdefault.jpg" alt="">
 		<button class="im-video-play" type="button" aria-label="Play video">{{> "icons/play"}}</button>
 	</div>
@@ -52,7 +52,7 @@ source: src/components/video.css · src/js/im-media.js
 <h2>A self-hosted file</h2>
 <p>Put a <code>&lt;video&gt;</code> inside <code>im-video</code> and leave <code>data-im-video</code> empty. Chapters drive it the same way.</p>
 {{#example}}
-<div class="im-stack" style="--im-stack-gap: .875rem; max-width: 34rem">
+<div class="im-stack im-stack-sm im-max-md">
 	<div class="im-video" id="demo-video-3" data-im-video="">
 		<video src="{{demo.video}}" preload="metadata" loop playsinline></video>
 		<img class="im-video-poster" src="{{demo.post.feature_image}}" alt="">

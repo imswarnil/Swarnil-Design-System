@@ -5,7 +5,7 @@ description: One project as a case study — the head, a carousel of screenshots
 eyebrow: Collections · Project
 source: src/components/repo-card.css · content.css · carousel.css · comments.css
 ---
-<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+<section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Collections · Project · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
@@ -43,10 +43,10 @@ source: src/components/repo-card.css · content.css · carousel.css · comments.
 		{{!-- The screenshots. A carousel wrapped in data-im-lightbox, so every
 		      shot opens on the plain sheet at full size — a case study is the
 		      one place a reader genuinely wants to look closely. --}}
-		<section class="im-section" style="--im-section-gap: .75rem">
+		<section class="im-section im-section-tight">
 			<div data-im-lightbox>
 				{{#> "components/carousel" label="Screenshots" dots=true style="--im-slides: 1.05; --im-slides-sm: 1.6; --im-slides-md: 2.1"}}
-					{{#foreach demo.six}}<a class="im-zoomable" href="{{feature_image}}" data-caption="{{title}}"><img src="{{feature_image}}" alt="{{title}}" loading="lazy" style="aspect-ratio: 16 / 10; width: 100%; object-fit: cover"></a>{{/foreach}}
+					{{#foreach demo.six}}<a class="im-zoomable" href="{{feature_image}}" data-caption="{{title}}"><img src="{{feature_image}}" alt="{{title}}" loading="lazy" class="im-w-full im-ratio-16-10 im-cover" ></a>{{/foreach}}
 				{{/"components/carousel"}}
 			</div>
 		</section>
@@ -91,7 +91,7 @@ source: src/components/repo-card.css · content.css · carousel.css · comments.
 			<p>Three sites run on it, the theme it was written for is in the shop, and the thing I actually wanted — being able to answer "where did this come from?" about every file — is a two-line audit that comes back empty.</p>
 		</section>
 
-		<section class="im-section" style="--im-section-gap: 1rem">
+		<section class="im-section im-section-tight">
 			<h2 class="im-caption" data-index="tools">Built with</h2>
 			<div class="im-toolgrid">
 				{{#with demo.projects.[0]}}{{#each stack}}
@@ -117,7 +117,7 @@ source: src/components/repo-card.css · content.css · carousel.css · comments.
 
 		{{!-- The log: the timeline component, tuned. A project's history is a
 		      list of dated things in order, which is what a timeline is. --}}
-		<section class="im-section" style="--im-section-gap: 1.25rem">
+		<section class="im-section im-section-tight">
 			<h2 class="im-caption" data-index="log" id="project-log">Project log</h2>
 			<ol class="im-timeline im-timeline-numbered im-log">
 				{{#each demo.log}}
@@ -152,7 +152,7 @@ source: src/components/repo-card.css · content.css · carousel.css · comments.
 			<section class="im-widget" aria-labelledby="pw-back">
 				<h2 class="im-widget-title" id="pw-back">This project</h2>
 				<p class="im-widget-heading">im-design-system</p>
-				<p class="im-cluster" style="--im-cluster-gap: .375rem">
+				<p class="im-cluster im-cluster-tight">
 					<a class="im-btn im-btn-primary im-btn-sm" href="#">{{icon "external-link"}}Demo</a>
 					<a class="im-btn im-btn-sm" href="#">{{icon "brand-github"}}Code</a>
 				</p>

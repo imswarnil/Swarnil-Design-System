@@ -5,13 +5,13 @@ description: A real CV — a profile header on a pattern, the summary and the ca
 eyebrow: Pages
 source: src/components/pages.css
 ---
-<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+<section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Pages · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
-<div class="im-wrap-wide im-stack" style="--im-stack-gap: 2rem">
+<div class="im-wrap-wide im-stack im-stack-lg">
 	<header class="im-cv-head">
 		<span class="im-cv-pattern im-bg-blueprint im-bg-accent" aria-hidden="true"></span>
 		{{> "components/avatar" size="xl" src=demo.author.profile_image name=demo.author.name}}
@@ -20,7 +20,7 @@ source: src/components/pages.css
 			<p class="im-cv-role">Salesforce consultant · design systems · Amsterdam</p>
 			<p class="im-cv-contact"><span>{{icon "mail"}}hello@imswarnil.com</span><span>{{icon "globe"}}imswarnil.com</span><span>{{icon "brand-github"}}imswarnil</span><span>{{icon "map-pin"}}Amsterdam, NL</span></p>
 		</div>
-		<p class="im-cluster" style="--im-cluster-gap: .5rem"><a class="im-btn im-btn-primary im-btn-sm" href="#">{{icon "download"}}PDF</a><a class="im-btn im-btn-sm" href="/pages/contact/">Contact</a></p>
+		<p class="im-cluster im-cluster-tight"><a class="im-btn im-btn-primary im-btn-sm" href="#">{{icon "download"}}PDF</a><a class="im-btn im-btn-sm" href="/pages/contact/">Contact</a></p>
 	</header>
 
 	<div class="im-cv">
@@ -42,7 +42,7 @@ source: src/components/pages.css
 
 			<section class="im-cv-section">
 				<h2>Projects</h2>
-				<div class="im-repos" style="--im-repos-min: 16rem">{{#each demo.projects}}{{#match @index "<" 2}}{{> "components/repo-card"}}{{/match}}{{/each}}</div>
+				<div class="im-repos im-repos-tight">{{#each demo.projects}}{{#match @index "<" 2}}{{> "components/repo-card"}}{{/match}}{{/each}}</div>
 			</section>
 
 			<section class="im-cv-section">
@@ -66,7 +66,7 @@ source: src/components/pages.css
 		</article>
 
 		<aside class="im-cv-side">
-			<div><h3>Skills</h3><div class="im-stack" style="--im-stack-gap: .5rem"><p class="im-cv-bar"><span>Salesforce</span><span style="--im-bar: 95%"></span></p><p class="im-cv-bar"><span>Design systems</span><span style="--im-bar: 85%"></span></p><p class="im-cv-bar"><span>CSS / Tailwind</span><span style="--im-bar: 90%"></span></p><p class="im-cv-bar"><span>Ghost themes</span><span style="--im-bar: 80%"></span></p><p class="im-cv-bar"><span>Writing</span><span style="--im-bar: 75%"></span></p></div></div>
+			<div><h3>Skills</h3><div class="im-stack im-stack-xs"><p class="im-cv-bar"><span>Salesforce</span><span style="--im-bar: 95%"></span></p><p class="im-cv-bar"><span>Design systems</span><span style="--im-bar: 85%"></span></p><p class="im-cv-bar"><span>CSS / Tailwind</span><span style="--im-bar: 90%"></span></p><p class="im-cv-bar"><span>Ghost themes</span><span style="--im-bar: 80%"></span></p><p class="im-cv-bar"><span>Writing</span><span style="--im-bar: 75%"></span></p></div></div>
 			<div><h3>Certifications</h3><ul><li>Application Architect (2024)</li><li>Platform Developer II</li><li>Sales & Service Cloud Consultant</li></ul></div>
 			<div><h3>Languages</h3><ul><li>English — fluent</li><li>Hindi — native</li><li>Dutch — A2</li></ul></div>
 			<div><h3>Tools</h3><p class="im-skills">{{#each demo.projects.[0].stack}}<span class="im-tag">{{icon this.icon}}{{this.name}}</span>{{/each}}</p></div>

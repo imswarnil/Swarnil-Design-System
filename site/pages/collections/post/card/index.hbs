@@ -9,23 +9,23 @@ source: partials/components/post-card.hbs · src/components/post-card.css
 <h2>Vertical</h2>
 <p>Picture over the words. The default, and what a grid wants.</p>
 {{#example}}
-<div class="im-grid-auto" style="--im-grid-min: 14rem">{{#foreach demo.three}}{{> "components/post-card"}}{{/foreach}}</div>
+<div class="im-grid-auto im-grid-md">{{#foreach demo.three}}{{> "components/post-card"}}{{/foreach}}</div>
 {{/example}}
 {{#example title="With an excerpt"}}
-<div class="im-grid-auto" style="--im-grid-min: 15rem">{{#foreach demo.three}}{{> "components/post-card" excerpt=true}}{{/foreach}}</div>
+<div class="im-grid-auto im-grid-md">{{#foreach demo.three}}{{> "components/post-card" excerpt=true}}{{/foreach}}</div>
 {{/example}}
 
 <h2>Horizontal</h2>
 <p>Picture beside the words, either way round. <code>im-post-card-row-end</code> moves the picture to the right with one <code>order</code> and no second template — and the words still come first in the markup, so they still read first for anyone who cannot see the picture.</p>
 {{#example}}
-<div class="im-stack" style="--im-stack-gap: 1.5rem">
+<div class="im-stack im-stack-md">
 	{{#with demo.three.[0]}}{{> "components/post-card" layout="row" excerpt=true}}{{/with}}
 	{{#with demo.three.[1]}}{{> "components/post-card" layout="row-end" excerpt=true}}{{/with}}
 </div>
 {{/example}}
 <p><code>--im-post-card-media-width</code> is how much of the row the picture takes — <code>clamp(7rem, 32%, 17rem)</code> — and <code>top=true</code> aligns the picture to the top instead of the middle, which a long excerpt needs. Under 30rem every row stacks, because a picture and a paragraph side by side on a phone is two columns of nothing.</p>
 {{#example}}
-<div class="im-stack" style="--im-stack-gap: 1.5rem">
+<div class="im-stack im-stack-md">
 	{{#with demo.three.[2]}}{{> "components/post-card" layout="row" excerpt=true top=true size="sm" style="--im-post-card-media-width: 8rem"}}{{/with}}
 	{{#with demo.four.[3]}}{{> "components/post-card" layout="row" excerpt=true top=true size="sm"}}{{/with}}
 </div>
@@ -34,12 +34,12 @@ source: partials/components/post-card.hbs · src/components/post-card.css
 <h2>Over the picture</h2>
 <p>The words on a gradient, over the image. For a featured row, a hero strip, a carousel — never for a dense grid, where five of them is five photographs shouting at once.</p>
 {{#example}}
-<div class="im-grid-auto" style="--im-grid-min: 13rem">{{#foreach demo.three}}{{> "components/post-card" layout="cover"}}{{/foreach}}</div>
+<div class="im-grid-auto im-grid-sm">{{#foreach demo.three}}{{> "components/post-card" layout="cover"}}{{/foreach}}</div>
 {{/example}}
 
 <h2>No picture</h2>
 <p>A title, its meta and a rule. For an archive, a search result, a "more in this tag" list — anywhere a column of grey placeholder blocks would be worse than no pictures at all. Pass <code>time=true</code> to put the reading time in the meta line, since there is no picture left to carry the flag.</p>
-{{#example style="max-width: 34rem"}}
+{{#example class="im-max-sm"}}
 <div>{{#foreach demo.four}}{{> "components/post-card" layout="plain" size="sm" time=true}}{{/foreach}}</div>
 {{/example}}
 
@@ -53,7 +53,7 @@ source: partials/components/post-card.hbs · src/components/post-card.css
 {{{{/code}}}}
 <p>Any of <code>media</code> · <code>kicker</code> · <code>title</code> · <code>excerpt</code> · <code>meta</code> · <code>author</code> · <code>date</code> · <code>time</code> · <code>flags</code>, in any combination, in any layout. Every part is printed and then hidden in CSS rather than each one being a condition in the template — which is what keeps this one attribute instead of nine booleans, and what lets a theme expose it as a single setting.</p>
 {{#example}}
-<div class="im-grid-auto" style="--im-grid-min: 14rem">
+<div class="im-grid-auto im-grid-md">
 	{{#with demo.three.[0]}}{{> "components/post-card" excerpt=true hide="kicker"}}{{/with}}
 	{{#with demo.three.[1]}}{{> "components/post-card" excerpt=true hide="author"}}{{/with}}
 	{{#with demo.three.[2]}}{{> "components/post-card" excerpt=true hide="meta flags"}}{{/with}}
@@ -75,8 +75,8 @@ source: partials/components/post-card.hbs · src/components/post-card.css
 </table>
 </div>
 <p><strong>The separators stay right.</strong> The dots between the meta items are drawn on every item but the first, so hiding the first one would otherwise leave the <em>second</em> wearing a leading dot. Three chained rules take the separator off whatever now comes first — hide the author and the date, and the reading time loses its dot through the date's rule.</p>
-{{#example style="max-width: 30rem"}}
-<div class="im-stack" style="--im-stack-gap: .75rem">
+{{#example class="im-max-sm"}}
+<div class="im-stack im-stack-xs">
 	{{#with demo.post}}{{> "components/post-card" layout="plain" size="sm" time=true}}{{/with}}
 	{{#with demo.post}}{{> "components/post-card" layout="plain" size="sm" time=true hide="author"}}{{/with}}
 	{{#with demo.post}}{{> "components/post-card" layout="plain" size="sm" time=true hide="author date"}}{{/with}}
@@ -87,7 +87,7 @@ source: partials/components/post-card.hbs · src/components/post-card.css
 <p>A picture nudging 3% larger is what every theme does, and it is not an interaction — it is a twitch. This one uses the <a href="/foundation/logo/">brand's dot</a>, and it uses it as the <em>mechanism</em> rather than as a decoration bolted on top.</p>
 <p>At rest the card is a quiet filled block with the dot in its top-right corner. Under the pointer the dot does not light up, or wobble, or grow a shadow — <strong>it opens</strong>, and the colour it is made of floods the whole card out of that one corner. The dot is the seed; the fill is what it opens into. Hover one:</p>
 {{#example}}
-<div class="im-grid-auto" style="--im-grid-min: 15rem">
+<div class="im-grid-auto im-grid-md">
 	{{#with demo.three.[0]}}{{> "components/post-card" dot=true excerpt=true}}{{/with}}
 	{{#with demo.three.[1]}}{{> "components/post-card" dot="soft" excerpt=true}}{{/with}}
 	{{#with demo.three.[2]}}{{> "components/post-card" dot="ink" excerpt=true}}{{/with}}
@@ -105,7 +105,7 @@ source: partials/components/post-card.hbs · src/components/post-card.css
 </div>
 <p>It works on every layout, including the horizontal one, where the flood crosses the picture as well:</p>
 {{#example}}
-<div class="im-stack" style="--im-stack-gap: 1rem">
+<div class="im-stack im-stack-sm">
 	{{#with demo.four.[2]}}{{> "components/post-card" layout="row" dot=true excerpt=true top=true}}{{/with}}
 	{{#with demo.four.[3]}}{{> "components/post-card" layout="row-end" dot="soft" excerpt=true top=true}}{{/with}}
 </div>
@@ -141,7 +141,7 @@ source: partials/components/post-card.hbs · src/components/post-card.css
 <p>Ghost gives every post an <code>access</code> boolean for the current visitor. A card that does not print it sends people to a gate they were not warned about — and a card that prints only a padlock says nothing to a reader who does not yet know the site has tiers.</p>
 <p>So: the mark in the middle of the picture <strong>and</strong> the word in the corner. These two flags are the only coloured things on a card.</p>
 {{#example}}
-<div class="im-feed" style="--im-feed-min: 15rem">
+<div class="im-feed im-feed-md">
 	{{#each demo.mixed}}{{#match @index "<" 3}}{{> "components/post-card" excerpt=true}}{{/match}}{{/each}}
 </div>
 {{/example}}
@@ -154,7 +154,7 @@ source: partials/components/post-card.hbs · src/components/post-card.css
 <h2>Edge cases</h2>
 <p>No feature image: the title's initial in Geist Pixel holds the shape, so a grid never has a hole. Members-only: a lock flag. Both still work inside a flooding card, because the picture's well is a wash of the card's own ink rather than a fixed grey.</p>
 {{#example}}
-<div class="im-grid-auto" style="--im-grid-min: 14rem">
+<div class="im-grid-auto im-grid-md">
 	{{#with demo.noImage}}{{> "components/post-card"}}{{/with}}
 	{{#with demo.locked}}{{> "components/post-card"}}{{/with}}
 	{{#with demo.noImage}}{{> "components/post-card" dot=true}}{{/with}}

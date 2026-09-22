@@ -8,7 +8,7 @@ source: site/lib/ghost.mjs · src/utilities/
 
 <h2>Helpers modelled</h2>
 <p>{{helpers.length}} names, read from the registry at build time.</p>
-<div class="im-cluster" style="--im-cluster-gap: .375rem">{{#each helpers}}<code>{{"{{"}}{{this}}{{"}}"}}</code>{{/each}}</div>
+<div class="im-cluster im-cluster-tight">{{#each helpers}}<code>{{"{{"}}{{this}}{{"}}"}}</code>{{/each}}</div>
 
 <h2>A field must not share a helper's name</h2>
 <p>An ambiguous <code>{{"{{price}}"}}</code> resolves to the helper, not the field, and prints nonsense. The build names any fixture field a helper shadows; the four that legitimately read their own field — <code>excerpt</code>, <code>reading_time</code>, <code>url</code>, <code>content</code> — are allowed.</p>

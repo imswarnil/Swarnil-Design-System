@@ -5,14 +5,14 @@ description: One trip, day by day — the route, what each day cost, where you s
 eyebrow: Collections · Travel
 source: src/components/life.css · timeline.css
 ---
-<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+<section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Collections · Travel · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
 <div class="im-single im-wrap-wide" data-sidebar="on">
-	<article class="im-stack" id="trip-body" style="--im-stack-gap: 1.75rem">
+	<article class="im-stack im-stack-md" id="trip-body">
 		{{#with demo.trips.[0]}}
 		<nav aria-label="Breadcrumb">
 			<ol class="im-breadcrumb im-breadcrumb-chevron">
@@ -24,11 +24,11 @@ source: src/components/life.css · timeline.css
 
 		<header class="im-exphero">
 			<img src="{{../demo.shots.[0]}}" alt="" loading="eager">
-			<p class="im-exp-where" style="color: color-mix(in oklab, #fff 80%, transparent)"><span>{{country}}</span><span>{{when}}</span><span>{{days}} days</span></p>
+			<p class="im-exp-where im-on-dark" ><span>{{country}}</span><span>{{when}}</span><span>{{days}} days</span></p>
 			<h1 class="im-exphero-title">{{title}}</h1>
 		</header>
 
-		<p class="im-trip-route" style="font-size: var(--im-text-sm)">{{#each route}}<span>{{this}}</span>{{/each}}</p>
+		<p class="im-trip-route im-text-sm">{{#each route}}<span>{{this}}</span>{{/each}}</p>
 
 		<div class="im-tripstats">
 			<span class="im-tripstat">{{icon "calendar"}}<strong>{{days}}</strong><span>Days</span></span>
@@ -43,14 +43,14 @@ source: src/components/life.css · timeline.css
 			<p>Six days, four towns and one road that takes two hours to drive forty kilometres. Everything below is what we actually did and what it actually cost, in the order it happened.</p>
 		</section>
 
-		<section class="im-section" style="--im-section-gap: 1rem">
+		<section class="im-section im-section-tight">
 			<h2 class="im-caption" data-index="shots">The pictures</h2>
 			{{#> "components/carousel" label="Photographs" dots=true style="--im-slides: 1.15; --im-slides-sm: 1.8; --im-slides-md: 2.4"}}
-				{{#each demo.shots}}<a class="im-zoomable" href="{{this}}"><img src="{{this}}" alt="" loading="lazy" style="aspect-ratio: 4 / 3; width: 100%; object-fit: cover; border-radius: var(--im-radius-lg)"></a>{{/each}}
+				{{#each demo.shots}}<a class="im-zoomable" href="{{this}}"><img src="{{this}}" alt="" loading="lazy" class="im-ratio-4-3 im-w-full" style="object-fit: cover; border-radius: var(--im-radius-lg)"></a>{{/each}}
 			{{/"components/carousel"}}
 		</section>
 
-		<section class="im-section" style="--im-section-gap: 1.25rem">
+		<section class="im-section im-section-tight">
 			<h2 class="im-caption" data-index="plan">The itinerary</h2>
 			<ol class="im-legs">
 				{{#each demo.itinerary}}

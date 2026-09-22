@@ -6,7 +6,7 @@ source: src/components/field.css
 ---
 <h2>Checkbox</h2>
 {{#example}}
-<div class="im-stack" style="--im-stack-gap: .75rem">
+<div class="im-stack im-stack-xs">
 	<label class="im-check"><input type="checkbox" checked><span>Send me the newsletter</span></label>
 	<label class="im-check"><input type="checkbox"><span>Also the weekly digest<small>A summary every Sunday morning.</small></span></label>
 	<label class="im-check im-check-accent"><input type="checkbox" checked><span>im-check-accent — in the accent instead of ink</span></label>
@@ -19,9 +19,9 @@ source: src/components/field.css
 <h3>Indeterminate</h3>
 <p>Some, but not all. It can only be set from script (<code>input.indeterminate = true</code>); it shows as a dash.</p>
 {{#example}}
-<div class="im-stack" style="--im-stack-gap: .625rem" id="ind-demo">
+<div class="im-stack im-stack-xs" id="ind-demo">
 	<label class="im-check"><input type="checkbox" id="ind-all"><span><strong>All topics</strong></span></label>
-	<div class="im-stack pl-7" style="--im-stack-gap: .5rem">
+	<div class="im-stack pl-7 im-stack-xs">
 		<label class="im-check"><input type="checkbox" class="ind-one" checked><span>Travel</span></label>
 		<label class="im-check"><input type="checkbox" class="ind-one"><span>Craft</span></label>
 		<label class="im-check"><input type="checkbox" class="ind-one" checked><span>Career</span></label>
@@ -47,7 +47,7 @@ source: src/components/field.css
 {{#example}}
 <fieldset class="im-fieldset">
 	<legend>Pick a plan</legend>
-	<div class="im-grid-fit" style="--im-grid-min: 12rem; --im-grid-gap: .75rem">
+	<div class="im-grid-fit im-grid-sm">
 		<label class="im-choice"><input type="radio" name="plan"><span class="im-choice-title">Free</span><span>Public posts and the newsletter.</span><span class="text-ink font-semibold mt-1">$0</span></label>
 		<label class="im-choice"><input type="radio" name="plan" checked><span class="im-choice-title">Member <span class="im-badge im-badge-accent">Popular</span></span><span>Everything, plus the archive.</span><span class="text-ink font-semibold mt-1">$9 / month</span></label>
 		<label class="im-choice"><input type="radio" name="plan"><span class="im-choice-title">Patron</span><span>All that, and a thank-you.</span><span class="text-ink font-semibold mt-1">$25 / month</span></label>
@@ -55,7 +55,7 @@ source: src/components/field.css
 </fieldset>
 {{/example}}
 {{#example title="As checkboxes — several can be on"}}
-<div class="im-grid-fit" style="--im-grid-min: 12rem; --im-grid-gap: .75rem">
+<div class="im-grid-fit im-grid-sm">
 	<label class="im-choice"><input type="checkbox" checked><span class="im-choice-title">{{> "icons/mail"}} Email</span><span>New posts in your inbox.</span></label>
 	<label class="im-choice"><input type="checkbox"><span class="im-choice-title">{{> "icons/rss"}} RSS</span><span>For your reader.</span></label>
 	<label class="im-choice"><input type="checkbox" checked><span class="im-choice-title">{{> "icons/bell"}} Push</span><span>A notification on publish.</span></label>

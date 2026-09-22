@@ -5,21 +5,21 @@ description: The page that answers "who is this" in the first sentence and prove
 eyebrow: Pages
 source: src/layout/page.css · components/widget.css
 ---
-<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+<section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Pages · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
 <div class="im-single im-wrap-wide" data-sidebar="off">
-	<article class="im-stack" style="--im-stack-gap: 2rem">
+	<article class="im-stack im-stack-lg">
 		<header class="im-abouthero">
 			<img class="im-abouthero-face" src="{{demo.author.profile_image}}" alt="" loading="eager">
-			<div class="im-stack" style="--im-stack-gap: .75rem">
+			<div class="im-stack im-stack-xs">
 				<p class="im-eyebrow">About</p>
 				<h1 class="im-collhead-title">I build things for the web and write down what they cost.</h1>
-				<p class="im-lede" style="margin: 0">Eight years of Salesforce consulting, four of them freelance, and a design system I am selling because I got tired of paying for ones I could not modify. Currently in Amsterdam.</p>
-				<p class="im-cluster" style="--im-cluster-gap: .5rem">
+				<p class="im-lede im-m0">Eight years of Salesforce consulting, four of them freelance, and a design system I am selling because I got tired of paying for ones I could not modify. Currently in Amsterdam.</p>
+				<p class="im-cluster im-cluster-tight">
 					<a class="im-btn im-btn-primary im-btn-sm" href="/pages/contact/">{{icon "mail"}}Get in touch</a>
 					<a class="im-btn im-btn-sm" href="/pages/now/">{{icon "zap"}}What I am doing now</a>
 					<a class="im-btn im-btn-sm" href="#">{{icon "download"}}CV</a>
@@ -35,9 +35,9 @@ source: src/layout/page.css · components/widget.css
 			<span class="im-tripstat">{{icon "map-pin"}}<strong data-im-count>6</strong><span>Countries</span></span>
 		</div>
 
-		<section class="im-section" style="--im-section-gap: 1rem">
+		<section class="im-section im-section-tight">
 			<h2 class="im-caption" data-index="do">What I do</h2>
-			<div class="im-grid-auto" style="--im-grid-min: 15rem">
+			<div class="im-grid-auto im-grid-md">
 				<div class="im-card im-card-outline"><span class="im-card-title">{{icon "zap"}} Salesforce consulting</span><span>Eight years, mostly public sector, mostly the programmes that are already late when I arrive.</span></div>
 				<div class="im-card im-card-outline"><span class="im-card-title">{{icon "component"}} Design systems & themes</span><span>This one, and the theme on top of it. Both for sale, both what this site runs on.</span></div>
 				<div class="im-card im-card-outline"><span class="im-card-title">{{icon "pencil"}} Writing & film</span><span>A post a fortnight, a letter to go with it, and a film most Thursdays.</span></div>
@@ -62,26 +62,26 @@ source: src/layout/page.css · components/widget.css
 			<div class="im-story-chapter"><h2>A design system I would buy</h2><p>The site ran on a paid theme whose licence forbade resale. Nine months later it runs on <a href="/">this</a>, every line owned, and the thing is in the <a href="/collections/shop/">shop</a>. The <a href="/collections/timeline/">timeline</a> has the rest in order.</p><img src="{{demo.shots.[0]}}" alt="" loading="lazy"></div>
 		</section>
 
-		<section class="im-section" style="--im-section-gap: 1rem">
+		<section class="im-section im-section-tight">
 			<h2 class="im-caption" data-index="now">Right now</h2>
-			<ul class="im-widget-now" style="max-width: 40rem">
+			<ul class="im-widget-now im-max-lg">
 				<li>{{icon "component"}}<span>Building <b>Im Design System v0.7</b> — the collections and the theme on top of them.</span></li>
 				<li>{{icon "map-pin"}}<span>In <b>Amsterdam</b> until February; Tromsø after that.</span></li>
 				<li>{{icon "book-open"}}<span>Reading <b>The Timeless Way of Building</b>, slowly, for the second time.</span></li>
 			</ul>
 		</section>
 
-		<section class="im-section" style="--im-section-gap: 1rem">
+		<section class="im-section im-section-tight">
 			<h2 class="im-caption" data-index="work">Selected work</h2>
-			<div class="im-repos" style="--im-repos-min: 18rem">
+			<div class="im-repos im-repos-md">
 				{{#each demo.projects}}{{#match @index "<" 3}}{{> "components/repo-card" cta=true}}{{/match}}{{/each}}
 			</div>
 		</section>
 
-		<section class="im-widget im-widget-accent" style="max-width: 40rem">
+		<section class="im-widget im-widget-accent im-max-lg">
 			<h2 class="im-widget-title">Work with me</h2>
 			<p class="im-widget-heading">Two days a week, from November.</p>
-			<p class="im-cluster" style="--im-cluster-gap: .5rem"><a class="im-btn im-btn-primary" href="/pages/contact/">{{icon "mail"}}Start a conversation</a><a class="im-btn" href="/pages/resume/">{{icon "file-text"}}The résumé</a></p>
+			<p class="im-cluster im-cluster-tight"><a class="im-btn im-btn-primary" href="/pages/contact/">{{icon "mail"}}Start a conversation</a><a class="im-btn" href="/pages/resume/">{{icon "file-text"}}The résumé</a></p>
 		</section>
 	</article>
 

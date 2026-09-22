@@ -6,7 +6,7 @@ source: src/components/progress.css
 ---
 <h2>Bar</h2>
 {{#example}}
-<div class="im-stack" style="--im-stack-gap: 1.25rem; max-width: 28rem">
+<div class="im-stack im-stack-sm im-max-md">
 	<div class="im-progress" role="progressbar" aria-label="Upload" aria-valuenow="64" aria-valuemin="0" aria-valuemax="100" style="--im-value: .64"></div>
 	<div class="im-progress im-progress-sm" role="progressbar" aria-label="Small" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="--im-value: .4"></div>
 	<div class="im-progress im-progress-lg" role="progressbar" aria-label="Large" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="--im-value: .8"></div>
@@ -17,7 +17,7 @@ source: src/components/progress.css
 
 <h3>With a label</h3>
 {{#example style="max-width: 28rem"}}
-<div class="im-stack" style="--im-stack-gap: 1.125rem">
+<div class="im-stack im-stack-sm">
 	<div class="im-progress-field"><span>Storage</span><output>6.4 of 10 GB</output><div class="im-progress" role="progressbar" aria-label="Storage" aria-valuenow="64" aria-valuemin="0" aria-valuemax="100" style="--im-value: .64"></div></div>
 	<div class="im-progress-field"><span>Members</span><output>92%</output><div class="im-progress" role="progressbar" aria-label="Members" aria-valuenow="92" aria-valuemin="0" aria-valuemax="100" style="--im-value: .92; --im-progress-color: var(--im-danger)"></div></div>
 	<div class="im-progress-field"><span>Course</span><output>7 of 12 lessons</output><div class="im-progress" role="progressbar" aria-label="Course" aria-valuenow="58" aria-valuemin="0" aria-valuemax="100" style="--im-value: .58; --im-progress-color: var(--im-success)"></div></div>
@@ -26,7 +26,7 @@ source: src/components/progress.css
 
 <h3>Working</h3>
 {{#example style="max-width: 28rem"}}
-<div class="im-stack" style="--im-stack-gap: 1.25rem">
+<div class="im-stack im-stack-sm">
 	<div class="im-progress im-progress-striped" role="progressbar" aria-label="Uploading" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="--im-value: .45"></div>
 	<div class="im-progress im-progress-indeterminate" role="progressbar" aria-label="Working"></div>
 </div>
@@ -35,7 +35,7 @@ source: src/components/progress.css
 
 <h2>Steps</h2>
 {{#example style="max-width: 28rem"}}
-<div class="im-stack" style="--im-stack-gap: 1.125rem">
+<div class="im-stack im-stack-sm">
 	<div class="im-progress-steps" role="progressbar" aria-label="Step 3 of 5" aria-valuenow="3" aria-valuemin="0" aria-valuemax="5" style="--im-steps: 5"><i data-on></i><i data-on></i><i data-on></i><i></i><i></i></div>
 	<div class="im-progress-steps" role="progressbar" aria-label="Password strength: good" aria-valuenow="3" aria-valuemin="0" aria-valuemax="4" style="--im-steps: 4; --im-progress-color: var(--im-success)"><i data-on></i><i data-on></i><i data-on></i><i></i></div>
 </div>

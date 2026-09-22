@@ -9,7 +9,7 @@ source: src/components/mockup.css
 <h2>Window</h2>
 <p>The plain desktop window: three dots, a centred title, the screen. The title is centred against the <strong>window</strong>, not against what is left after the dots — which is what an auto margin gives you, and is off by the width of the dots.</p>
 {{#example}}
-<div class="im-grid-auto" style="--im-grid-min: 18rem; align-items: start">
+<div class="im-grid-auto im-grid-lg im-grid-start">
 	<figure class="im-mock im-mock-mac">
 		<div class="im-mock-bar"><span class="im-mock-dots"><i></i></span><span class="im-mock-title">Journal — Drafts</span></div>
 		<div class="im-mock-body"><img src="{{demo.three.[0].feature_image}}" alt="" loading="lazy"></div>
@@ -25,7 +25,7 @@ source: src/components/mockup.css
 <h2>Browser</h2>
 <p>Dots, an address pill, and optionally a row of tabs. The pill is mono and truncates, so a long URL narrows rather than bursting the frame.</p>
 {{#example}}
-<figure class="im-mock im-mock-browser" style="max-width: 44rem">
+<figure class="im-mock im-mock-browser im-max-lg">
 	<div class="im-mock-tabs">
 		<span class="im-mock-tab" aria-current="page">{{> "icons/file-text"}}The Amalfi Coast</span>
 		<span class="im-mock-tab">{{> "icons/image"}}Photos</span>
@@ -39,7 +39,7 @@ source: src/components/mockup.css
 <h2>Terminal</h2>
 <p>Its own dark, always: a terminal that follows the page into light mode is not a terminal. The body is mono, pre-wrapped, and <code>im-mock-cmd</code> puts an accent prompt before a command line.</p>
 {{#example}}
-<figure class="im-mock im-mock-terminal" style="max-width: 36rem">
+<figure class="im-mock im-mock-terminal im-max-lg">
 	<div class="im-mock-bar"><span class="im-mock-dots"><i></i></span><span class="im-mock-title">zsh — im-design-system</span></div>
 	<div class="im-mock-body"><span class="im-mock-cmd">npm run build</span>
 <span class="im-mock-out">  css      assets/im.css 312KB · assets/docs.css 18KB</span>
@@ -52,7 +52,7 @@ source: src/components/mockup.css
 <h2>Phone</h2>
 <p>A thick bezel, a very round corner, an island at the top and a home bar at the bottom. It is a <strong>shape</strong>, not a device: no brand, no buttons, no camera. <code>im-mock-flat</code> drops the island for a screen that starts at the very top; <code>im-mock-tablet</code> is the same idea, wider.</p>
 {{#example}}
-<div class="im-cluster" style="--im-cluster-gap: 2rem; align-items: flex-start">
+<div class="im-cluster" style="align-items: flex-start">
 	<figure class="im-mock im-mock-phone" style="--im-mock-width: 13rem">
 		<div class="im-mock-body"><img src="{{demo.three.[2].feature_image}}" alt="" loading="lazy"></div>
 	</figure>
@@ -71,7 +71,7 @@ source: src/components/mockup.css
 <h2>Real markup inside one</h2>
 <p><code>im-mock-body-pad</code> drops the fixed ratio and gives the content room, so the frame can hold the actual thing rather than a picture of it. This is how the docs show a component at phone width without a screenshot to keep in step.</p>
 {{#example}}
-<figure class="im-mock im-mock-mac" style="max-width: 32rem">
+<figure class="im-mock im-mock-mac im-max-md">
 	<div class="im-mock-bar"><span class="im-mock-dots"><i></i></span><span class="im-mock-title">A live card, not a screenshot</span></div>
 	<div class="im-mock-body im-mock-body-pad">
 		{{#with demo.post}}{{> "components/post-card" excerpt=true}}{{/with}}
@@ -93,7 +93,7 @@ source: src/components/mockup.css
 </div>
 {{/example}}
 {{#example style="padding-block: 3rem"}}
-<figure class="im-mock im-mock-mac im-mock-tilt" style="max-width: 30rem; margin-inline: auto">
+<figure class="im-mock im-mock-mac im-mock-tilt im-max-md im-mx-auto">
 	<div class="im-mock-bar"><span class="im-mock-dots"><i></i></span><span class="im-mock-title">Hover me</span></div>
 	<div class="im-mock-body"><img src="{{demo.six.[2].feature_image}}" alt="" loading="lazy"></div>
 </figure>

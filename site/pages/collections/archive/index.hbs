@@ -5,16 +5,16 @@ description: Everything on the site, every kind, by year — one row each, with 
 eyebrow: Collections
 source: src/components/collection.css
 ---
-<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+<section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Collections · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
 <div class="im-single im-wrap-wide" data-sidebar="on">
-	<article class="im-stack" style="--im-stack-gap: 1.75rem">
+	<article class="im-stack im-stack-md">
 		<header class="im-collhead im-collhead-patterned">
-			<span class="im-collhead-art im-bg-rules" style="--im-art: var(--im-c-timeline)" aria-hidden="true"></span>
+			<span class="im-collhead-art im-bg-rules im-art-timeline" aria-hidden="true"></span>
 			<p class="im-eyebrow">Archive</p>
 			<h1 class="im-collhead-title">Everything, by year</h1>
 			<p class="im-collhead-text">Posts, films, releases, letters, trips, snippets — one row each. For finding the thing you half remember.</p>
@@ -71,7 +71,7 @@ source: src/components/collection.css
 				</section>
 				<section class="im-widget" aria-labelledby="ar-tags">
 					<h2 class="im-widget-title" id="ar-tags">Topics <a href="/collections/tag/">All</a></h2>
-					<div class="im-cluster" style="--im-cluster-gap: .375rem">{{#each demo.topics}}<a class="im-tag" href="/collections/tag/page/">{{icon mark}}{{name}}</a>{{/each}}</div>
+					<div class="im-cluster im-cluster-tight">{{#each demo.topics}}<a class="im-tag" href="/collections/tag/page/">{{icon mark}}{{name}}</a>{{/each}}</div>
 				</section>
 			</div>
 		</div>

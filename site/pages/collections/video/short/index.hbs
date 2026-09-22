@@ -9,7 +9,7 @@ source: src/components/video-card.css
 <h2>The page</h2>
 <p>The clip on the left at its real proportion, previous and next beside it, and on the right the post: title, byline, body, facts, one comment — vertically centred against the clip. One viewport; the panel owns the only scrollbar. Loaded in an iframe because that is the only honest way to show a layout whose claim is "it fits".</p>
 {{#example flush=true code=false}}
-<iframe class="demo-frame" src="/demos/shortwatch/" title="A vertical clip with its post beside it" style="height: 40rem" loading="lazy"></iframe>
+<iframe class="demo-frame im-demo-tall" src="/demos/shortwatch/" title="A vertical clip with its post beside it"  loading="lazy"></iframe>
 {{/example}}
 <ul>
 	<li><strong>Clip left, words right.</strong> A 9:16 clip on a 16:9 screen leaves two thirds of the window empty; the post lives there.</li>
@@ -20,7 +20,7 @@ source: src/components/video-card.css
 <h2>On a phone</h2>
 <p>One viewport, the clip and its title. Sized from both constraints at once so nothing overflows.</p>
 {{#example flush=true code=false}}
-<iframe class="demo-frame" src="/demos/short/" title="A vertical clip on a phone" style="height: 40rem; max-width: 24rem; margin-inline: auto; display: block" loading="lazy"></iframe>
+<iframe class="demo-frame im-max-sm im-mx-auto im-block im-demo-tall" src="/demos/short/" title="A vertical clip on a phone"  loading="lazy"></iframe>
 {{/example}}
 
 <h2>The other two 9:16 layouts</h2>
@@ -29,7 +29,7 @@ source: src/components/video-card.css
 <h3>One column that snaps</h3>
 <p>One short is a page. Several are a <strong>feed</strong> — the same page repeated down a snapping column, where the scroll <em>is</em> the navigation. Scroll inside the frame.</p>
 {{#example flush=true code=false}}
-<iframe class="demo-frame" src="/demos/shorts/" title="A feed of vertical videos" style="height: 40rem" loading="lazy"></iframe>
+<iframe class="demo-frame im-demo-tall" src="/demos/shorts/" title="A feed of vertical videos"  loading="lazy"></iframe>
 {{/example}}
 {{{{code "css"}}}}
 .im-shortfeed {
@@ -57,7 +57,7 @@ source: src/components/video-card.css
 <h2>In a grid</h2>
 <p>A vertical card is the same <a href="/collections/video/card/">video card</a> with one variable changed — <code>im-vidcard-tall</code> sets <code>--im-vidcard-ratio: 9 / 16</code>. Not a second component.</p>
 {{#example}}
-<div class="im-vidgrid" style="--im-vidgrid-min: 11rem">
+<div class="im-vidgrid im-vidgrid-sm" >
 	{{#each demo.videos}}{{#match @index "<" 5}}{{> "components/video-card" class="im-vidcard-tall" hide_by=true}}{{/match}}{{/each}}
 </div>
 {{/example}}
