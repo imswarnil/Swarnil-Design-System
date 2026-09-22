@@ -1,10 +1,10 @@
 ---
 title: Short (9:16)
-description: A vertical video on a page that is exactly one viewport and never scrolls. The whole trick is sizing the clip from both constraints at once, so nothing overflows and there is nothing for a scrollbar to appear about.
+description: A post with a vertical clip. On a phone the clip is the page; on a desk it sits on the left with the post beside it. No reaction buttons — this is a blog, not a feed of strangers.
 eyebrow: Collections · Video
 source: src/components/video-card.css
 ---
-<p>A 16:9 video sits <em>in</em> a page. A 9:16 one <strong>is</strong> the page: the clip, what it is called, who made it, and a column of things to press. Nothing is below the fold because there is no fold — and that is a layout problem, not a styling one.</p>
+<p>A 16:9 video sits <em>in</em> a post. A 9:16 clip <strong>is</strong> the post on a phone — one viewport, the clip, its title and who made it. On a desk the same clip goes left and the post goes right. There are no like, share or "more" buttons anywhere: they belong to a feed of strangers, and this is a blog.</p>
 
 <h2>The page</h2>
 <p>Loaded here in an iframe, because that is the only honest way to show a layout whose whole claim is "it fits". Resize the frame and nothing ever scrolls.</p>
@@ -46,8 +46,6 @@ source: src/components/video-card.css
 		<tr><td><code>im-short-player</code></td><td>The 9:16 frame. Takes an <code>&lt;img&gt;</code>, a <code>&lt;video&gt;</code> or an <code>&lt;iframe&gt;</code>.</td></tr>
 		<tr><td><code>im-short-over</code></td><td>What is written over the clip — channel, title, tags — on a gradient scrim, so the picture survives.</td></tr>
 		<tr><td><code>im-short-bar</code></td><td>The scrubber, on the clip's bottom edge.</td></tr>
-		<tr><td><code>im-short-rail</code></td><td>The actions. <strong>Beside</strong> the clip on a wide screen, where they do not cover the picture; under 40rem there is no room beside it, so they move inside and sit on the scrim.</td></tr>
-		<tr><td><code>im-short-act</code></td><td>One action: a round mark and a number under it. <code>aria-pressed</code> is the liked state.</td></tr>
 		<tr><td><code>im-short-step</code></td><td>Up and down — the whole of a short feed's navigation. Hidden on a phone, where the gesture is the swipe.</td></tr>
 	</tbody>
 </table>
@@ -75,13 +73,13 @@ source: src/components/video-card.css
 <p>One clip is a page; several are a <strong>feed</strong>; and on a desk, where there is room beside the clip, it is a <strong>watch page</strong> — the same viewport, split.</p>
 
 <h3>The watch page: clip left, everything else right</h3>
-<p>A 9:16 clip on a 16:9 screen leaves two thirds of the window empty. <code>im-shortwatch</code> puts the title, the channel, the description and the comments in that space instead of below the fold, and the panel owns the only scrollbar on the page.</p>
+<p>A 9:16 clip on a 16:9 screen leaves two thirds of the window empty. <code>im-shortwatch</code> puts the <em>post</em> there — title, byline, the body, the facts, one comment — and the panel owns the only scrollbar on the page.</p>
 {{#example flush=true code=false}}
 <iframe class="demo-frame" src="/demos/shortwatch/" title="A vertical video with its details beside it" style="height: 40rem" loading="lazy"></iframe>
 {{/example}}
 <ul>
 	<li><strong>Same two-constraint sizing as everything else here</strong> — <code>width: min(100%, room * 9/16)</code> with <code>aspect-ratio</code>, so the clip is as tall as the room allows until the room is narrower than that.</li>
-	<li><strong>Previous and next are a column beside the clip</strong>, not buttons floating over it. On a desk the pointer is already there; over the picture they cover the thing being watched.</li>
+	<li><strong>Previous and next are a column beside the clip</strong>, not buttons floating over it — and they are the only controls. No reactions.</li>
 	<li><strong>Under 64rem it stops pretending.</strong> There is no room for two columns, so it becomes an ordinary page — clip, then panel, window scrolls. A layout that insists on fitting when it cannot is how controls end up off-screen.</li>
 	<li><strong>The comments are <a href="/collections/series/episode/">lean</a></strong>: the box and one reply. The viewer is here for the clip.</li>
 </ul>
@@ -125,7 +123,6 @@ source: src/components/video-card.css
 <h2>Details that matter</h2>
 <ul>
 	<li><strong>Autoplay muted, looping, <code>playsinline</code>.</strong> Anything else is blocked, and <code>playsinline</code> is what stops iOS taking the clip full-screen out from under the layout.</li>
-	<li><strong>The rail is buttons, not icons.</strong> Each one has a label under it; a column of six unlabelled glyphs is a guessing game.</li>
 	<li><strong>Do not hide the title behind a tap.</strong> It is the only thing telling a viewer what they are looking at.</li>
 	<li><strong>One viewport means one viewport.</strong> If the design needs a description, comments and related clips, it is not a short page — it is a <a href="/collections/video/page/">video page</a> with a vertical player.</li>
 </ul>

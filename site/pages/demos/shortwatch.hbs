@@ -19,20 +19,20 @@ shell: frame
 	</div>
 
 	<div class="im-shortwatch-panel">
-		<p class="im-snipcard-meta"><span class="im-kind" data-kind="short">{{> "icons/video"}}Reel</span><span>{{views}} views</span><span>{{when}}</span><span>{{time}}</span></p>
+		<p class="im-snipcard-meta"><span class="im-kind" data-kind="post">{{> "icons/file-text"}}Post</span><span>{{when}}</span><span>{{time}} reel</span></p>
 		<h1 class="im-shortwatch-title">{{title}}</h1>
-
 		<div class="im-vidhead-by">
 			{{> "components/avatar" src=avatar name=channel}}
-			<div><strong>{{channel}}</strong><small>128k subscribers</small></div>
-			<button class="im-btn im-btn-primary im-btn-sm" type="button" style="margin-left: auto">Subscribe</button>
+			<div><strong>{{channel}}</strong><small>17 Sep 2026 · 3 min read</small></div>
 		</div>
-
-		<p style="color: var(--im-body); font-size: var(--im-text-sm); line-height: 1.6">Forty kilometres that take two hours. The whole road, cut down to the bits where the bus folds its mirrors in. Full version on the channel.</p>
-
-		<dl class="im-widget-facts"><dt>Shot</dt><dd>Amalfi, Nov 2025</dd><dt>Camera</dt><dd><a href="/collections/uses/page/">X100VI</a></dd><dt>Full film</dt><dd><a href="/collections/video/page/">8:12 on the channel</a></dd><dt>Trip</dt><dd><a href="/collections/travel/trip/">The itinerary</a></dd></dl>
+		<section class="im-content im-content-flush" style="padding: 0; font-size: var(--im-text-sm)">
+			<p>Sorrento to Amalfi is forty kilometres and takes two hours, because nobody on it wants to arrive. The road was cut into the cliff in the 1840s and has not been widened since; buses fold their mirrors in to pass.</p>
+			<p>The reel is the whole road in eight minutes, cut to the bits where the bus does exactly that. The <a href="/collections/travel/trip/">itinerary</a> has what each day cost.</p>
+			<h2>What to know before you drive it</h2>
+			<ul><li>East to west puts you on the sea side.</li><li>Ten euro an hour is the published parking price; fifteen is the August one.</li><li>The SITA bus is the correct answer after Amalfi.</li></ul>
+		</section>
+		<dl class="im-widget-facts"><dt>Shot</dt><dd>Amalfi, Nov 2025</dd><dt>Camera</dt><dd><a href="/collections/uses/page/">X100VI</a></dd><dt>Full film</dt><dd><a href="/collections/video/page/">8:12 on the channel</a></dd></dl>
 		<p class="im-cluster" style="--im-cluster-gap: .375rem"><span class="im-topic">#amalfi</span><span class="im-topic">#travel</span></p>
-
 		{{> "components/comments" thread=../demo.comments count="318" lean=true limit="1"}}
 	</div>
 </div>
