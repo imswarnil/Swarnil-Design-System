@@ -1,150 +1,163 @@
 # Prompting an image model for this site
 
-Everything here is for generating **thumbnails, covers and og-images that look
-like they belong to Im Design System** — not generic stock art. Copy a block,
-fill the `[brackets]`, paste it into whatever model you are using.
+Prompts for thumbnails, covers and posters that belong to **Im Design System** and the theme
+built on it. Paste the **context block** first, every time, then one **shape block**. Fill the
+`[brackets]`.
 
-The first section is the part that matters. An image model has never seen this
-site, so every prompt has to carry the whole look with it; a prompt that says
-"in my brand style" produces somebody else's brand.
-
----
-
-## The context block — paste this first, every time
-
-> **Visual system.** Swiss-influenced editorial design. Near-monochrome: a
-> warm off-white ground (`#fafafa`), near-black ink (`#0a0a0a`), and exactly
-> one accent — a warm orange-red (`#ff5a1f`) used for **one** element per
-> image and never as a fill behind text. Generous flat white space. Hairline rules
-> (1px, light grey) rather than boxes or shadows. Geometric sans-serif type,
-> tight tracking, left-aligned. No gradients, no glows, no glass, no 3D
-> bevels, no drop shadows, no lens flare, no bokeh. Flat, printed, calm.
-> Composition sits on a grid with a clear margin. If type appears it is short,
-> real words, correctly spelled, in a single weight.
-
-Then add **one** of the shape blocks below.
+The site's look, so the model does not invent one: near-monochrome, warm off-white ground
+(`#fafafa`) or near-black (`#0a0a0a`), one accent — orange-red `#ff5a1f` — used for **one**
+element, never behind text. Hairlines, not boxes. Geometric sans (Geist), tight tracking, left
+aligned. Line patterns — grid, blueprint, hatch, rings, isometric — as marks, faded to one edge,
+never as wallpaper. Photographs are natural light, muted, one subject off-centre. No gradients,
+glows, glass, 3D, bokeh, lens flare, stock people.
 
 ---
 
-## Shapes
+## The context block
 
-### Post cover — 16:10
+> **Visual system.** Editorial, Swiss-influenced, near-monochrome. Ground: warm off-white `#fafafa`
+> (or near-black `#0a0a0a` when asked). Ink: `#0a0a0a`. One accent: orange-red `#ff5a1f`, on exactly
+> one element, never as a fill behind text. Hairline rules (1px, light grey) instead of boxes or
+> shadows. If type appears: geometric sans-serif, tight tracking, left aligned, short real words,
+> one weight. Composition on a grid with a clear margin; the subject sits in a third, never
+> centred. No gradients, glows, glass, bevels, drop shadows, lens flare, bokeh. Flat, printed, calm.
 
-> [CONTEXT BLOCK]
->
-> Subject: [what the post is about, in one concrete noun phrase — "a cliff
-> road above the sea at dusk", not "travel"].
-> Treatment: photographic, natural light, muted colour, slightly
-> desaturated. One clear subject, lots of sky or ground for the headline to
-> sit on. Nothing centred; the subject sits in the left or right third.
-> Aspect ratio 16:10. No text, no logos, no watermarks.
+---
+
+## Shapes, by collection
+
+### Blog post cover — 16:10
+> [CONTEXT] Subject: [one concrete noun phrase — "a cliff road above the sea at dusk", not
+> "travel"]. Photographic, natural light, muted, slightly desaturated. One clear subject in the
+> left or right third; quiet sky or ground on the other side. 16:10. No text, logos, watermarks.
+
+### Blog post, no photograph — 16:10 (a mark instead)
+> [CONTEXT] An abstract mark for [the topic]: one filled shape in the accent, two or three
+> hairlines, and one solid near-black shape, on the off-white ground, all in the left third.
+> Flat vector, no perspective, no shading. Large empty area on the right. 16:10.
+
+### Course cover — 16:9
+> [CONTEXT] A course about [subject]. Left two-thirds: an abstract diagram of the idea — [e.g. two
+> stacked layers with a line between them] — drawn in hairlines with ONE element in the accent.
+> Right third empty, for the title. Off-white ground. Flat, no perspective. 16:9. No text.
+
+### Course lesson still — 16:10
+> [CONTEXT] A still that stands for one lesson: [the single thing this lesson shows — "a
+> colour swatch flipping from light to dark"]. Same diagram language as the course cover, so all
+> seven read as a set: hairlines, one accent element, off-white ground. 16:10. No text.
+
+### Series / episode poster — 16:9 (and 2:3 for a poster)
+> [CONTEXT] A film still from [the scene]. Cinematic framing, natural light, not graded — no
+> teal-and-orange, no crushed blacks. Room in the lower third for a title bar. 16:9. No text.
+> For the poster: the same scene, 2:3, subject in the upper two-thirds.
+
+### Video thumbnail — 16:9
+> [CONTEXT] [The scene], photographic, with one strong shape the eye lands on. Space on one
+> side for a two-word title set in the theme. Nothing centred. 16:9. No text, no arrows, no
+> circled faces.
+
+### Short / reel — 9:16
+> [CONTEXT] [The scene], vertical, subject in the upper two-thirds. The bottom third must be
+> quiet — flat colour, water, sky, shadow — for the caption. 9:16. No text.
+
+### Playlist cover — 16:9
+> [CONTEXT] Four stills from [the series] as a strict 2×2 grid with 8px white gutters, each
+> one muted and matched in exposure. No frame, no title. 16:9.
 
 ### Project shot — 16:9
-
-> [CONTEXT BLOCK]
->
-> Subject: an abstract representation of [what the project does], built only
-> from: hairline grid lines, one filled quarter-circle in the accent, small
-> registration crosses, and one solid near-black square. Flat vector, no
-> perspective, no shading. Large empty areas. Aspect ratio 16:9.
-
-### Video / series still — 16:9
-
-> [CONTEXT BLOCK]
->
-> Subject: [the scene]. Photographic, cinematic but not graded — no teal and
-> orange, no crushed blacks. Room in the lower third for a title bar.
-> Aspect ratio 16:9. No text.
-
-### Short / vertical — 9:16
-
-> [CONTEXT BLOCK]
->
-> Subject: [the scene], framed vertically with the subject in the upper
-> two-thirds. The **bottom third must be quiet** — flat colour, water,
-> sky or shadow — because a caption and a row of controls sit over it.
-> Aspect ratio 9:16. No text.
+> [CONTEXT] An abstract representation of [what the project does], built only from hairline grid
+> lines, one filled quarter-circle in the accent, small registration crosses, one solid
+> near-black square. Flat vector. Large empty areas. 16:9.
 
 ### Product / shop — 16:10
+> [CONTEXT] [The product] as a flat editorial still life on the off-white ground, soft light from
+> the upper left, one soft contact shadow only. No reflections, no sweep, no gradient. 16:10.
 
-> [CONTEXT BLOCK]
->
-> Subject: [the product] presented as a flat editorial still life on the
-> off-white ground, lit softly from the upper left, one soft contact shadow
-> only. No reflections, no studio sweep, no gradient backdrop.
-> Aspect ratio 16:10.
+### Thing I use — 1:1
+> [CONTEXT] [The object] alone, three-quarter view, on the off-white ground, soft top-left light,
+> a single soft contact shadow. Nothing else in frame. 1:1.
+
+### Experience — 4:3
+> [CONTEXT] [The moment — "a diver at the lip of a blue sinkhole"], photographic, natural light,
+> the person small in a large environment. Muted. 4:3. No text.
+
+### Trip — 3:2 (card) and 21:9 (hero)
+> [CONTEXT] [The place], a landscape with a road, a path or a coastline leading into it from one
+> corner. Natural light, early or late in the day. Muted. 3:2. For the hero: the same place,
+> 21:9, subject in the lower third so the title sits over sky.
 
 ### Tag / topic panel — 3:2
+> [CONTEXT] An abstract line pattern only — [isometric grid / concentric rings / vertical rules /
+> diagonal hatch] — thin lines in [the tag's colour] on the off-white ground, fading out to the
+> left. No objects, no symbols, no type. 3:2.
 
-> [CONTEXT BLOCK]
->
-> Subject: an abstract line pattern only — [isometric grid / concentric rings
-> / vertical rules / diagonal hatch] — drawn in thin lines in [the tag's
-> colour] on the off-white ground, fading out towards the edges. No objects,
-> no symbols, no type. Aspect ratio 3:2.
+### Newsletter — none
+A letter uses its date as the thumbnail. Only generate art for a letter that genuinely has a
+picture; a placeholder standing in for one that was never taken is the one thing that does not
+work.
 
-### Open-graph image — 1200×630
+### Membership / offer — 16:9
+> [CONTEXT] A near-black ground `#0a0a0a`. One accent shape — a filled circle, top right. Three
+> hairlines in grey. Nothing else. 16:9. (The price is set in HTML over it.)
 
-> [CONTEXT BLOCK]
->
-> A 1200×630 social card. Left two-thirds: the headline "[headline]" in two
-> lines of geometric sans, near-black, tight tracking, left-aligned, large.
-> Right third: [a small abstract mark / the subject photograph]. A single
-> orange-red dot at the top right of the last word of the headline. One
-> hairline rule under the headline. Nothing else.
+### Open-graph card — 1200×630
+> [CONTEXT] Left two-thirds: the headline "[headline]" in two lines of geometric sans, near-black,
+> tight tracking, left aligned, large. Right third: [a small abstract mark / the subject
+> photograph]. One orange-red dot at the top right of the headline's last word. One hairline under
+> the headline. Nothing else.
+
+### Avatar — 1:1
+> [CONTEXT] A head-and-shoulders portrait, natural window light from one side, plain mid-grey
+> background, direct gaze, no smile required. Muted. 1:1.
+
+### Site banner — 1200×360
+> [CONTEXT] Off-white ground. Right half: a hairline grid fading to the left. Left: empty, for
+> the wordmark. One orange-red dot anywhere in the right half. Nothing else.
 
 ---
 
 ## The dot
 
-The brand mark is a word with a small accent dot at the **top right of its
-last letter**. Image models get this wrong more often than they get it right,
-so:
+The brand mark is a word with a small accent dot at the **top right of its last letter**. Ask for
+it explicitly — *"a small solid orange-red circle, the size of a full stop, at the top right of the
+final letter, not touching it"* — and never ask a model to set the wordmark **and** other type in
+one image. Generate the art without type; the theme sets the words.
 
-- Ask for it explicitly: *"a small solid orange-red circle, about the size of
-  a full stop, positioned at the top right of the final letter, not touching
-  it"*.
-- Never ask a model to render the logo **and** other type in one image —
-  generate the art without type and set the wordmark in HTML over it. The
-  system's logo is live text for exactly this reason.
+## Dark ground
 
-## Checking the result
+Add to the context block: *"Ground: near-black `#0a0a0a`; ink: off-white `#fafafa`; hairlines
+mid-grey."* Everything else stays. Use it for the membership offer, the course rail, the
+footer — the parts of the site that are already inverted.
 
-Reject and regenerate if any of these are true:
+## Reject and regenerate if
 
-1. **There is more than one accent colour**, or the accent is a gradient.
-2. **There is a drop shadow, a glow or a glass panel.** The system has one
-   shadow and it is only for things that float.
-3. **Type is misspelled, or is fake-language filler.** Better to have none.
-4. **The subject is centred with even margins.** Nothing here is centred.
-5. **It could be any SaaS company's blog header.** That is the failure mode
-   the context block exists to prevent — if it looks like a stock illustration
-   of people pointing at a laptop, start again with a more concrete subject.
+1. More than one accent colour, or the accent is a gradient.
+2. A drop shadow, glow or glass panel.
+3. Type that is misspelled or fake-language filler — better none.
+4. The subject is centred with even margins.
+5. It could be any SaaS company's blog header.
 
-## Where the images go
+## Where each goes
 
 | Collection | Ratio | Component |
 | --- | --- | --- |
-| Post | 16:10 | `im-post-card-media` |
-| Project | 16:9 | `im-repo-media` · `im-shot` |
-| Video, series | 16:9 | `im-vidcard-thumb` |
-| Short | 9:16 | `im-vidcard-tall` · `im-short-player` |
-| Course lesson | 16:10 | `im-lesson-shot` |
+| Post | 16:10 | `im-post-card-media`, `im-posthero-media` |
+| Course cover | 16:9 | `im-mediabg` on the course page |
+| Lesson | 16:10 | `im-lesson-shot`, `im-lessonnav-item img` |
+| Series, episode | 16:9 | `im-seriescard-media`, `im-vidcard-thumb` |
+| Video | 16:9 | `im-vidcard-thumb`, `im-video-poster` |
+| Short / reel | 9:16 | `im-vidcard-tall`, `im-shortwatch-player` |
+| Playlist | 16:9 | `im-playlist .im-vidcard-thumb` |
+| Project | 16:9 | `im-repo-media`, `im-projectcover` |
 | Shop | 16:10 | `im-product-media` |
-| Experience | 4:3 | `im-exp-media` |
 | Uses | 1:1 | `im-affiliate-media` |
-| Travel | 3:2 | `im-exp-media` on `im-trip` |
-| Newsletter | — | none: the date is the thumbnail |
-| Tag | 3:2 | `im-taghero-art`, or the built-in pattern |
-| Journal | — | none, usually |
-
-**Two of those rows have no image on purpose.** A newsletter issue uses its
-date as the thumbnail and a journal entry has nothing; generating art to fill
-those is the beginning of a site made of stock photographs. If a collection
-has no natural picture, use a pattern (`im-bg-*`) or use nothing.
+| Experience | 4:3 | `im-exp-media` |
+| Trip | 3:2 · 21:9 | `im-tripcard`, `im-cinehero` |
+| Tag | 3:2 | `im-collhead-art` (or a pattern class) |
+| Timeline milestone | 16:9 | `im-timeline-shot` |
+| Newsletter | — | the date tile |
 
 ## Alt text
 
-Whatever generated the image, the `alt` describes **what is in it**, for a
-reader who cannot see it — never "AI-generated image" and never the prompt.
-A decorative pattern gets `alt=""`.
+`alt` describes **what is in the picture**, for someone who cannot see it — never "AI-generated"
+and never the prompt. Decoration gets `alt=""`.

@@ -180,6 +180,9 @@
  */
 (() => {
 	if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+	// A tab that is not being painted never runs a frame; the number would sit
+	// on its first intermediate value until the timer settles it. Do not start.
+	if (document.hidden) return;
 
 	const format = (n, decimals, grouped) =>
 		n.toLocaleString(undefined, {
@@ -220,7 +223,7 @@
 		// good. A wrong number is far worse than no animation, so a timer
 		// settles it regardless. Timers are throttled in a background tab but
 		// they do still run.
-		setTimeout(settle, duration + 200);
+		setTimeout(settle, duration + 60);
 	}
 
 	const seen = new WeakSet();

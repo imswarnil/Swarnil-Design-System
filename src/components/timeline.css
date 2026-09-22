@@ -329,3 +329,11 @@
 	border-radius: var(--im-radius-lg);
 	object-fit: cover;
 }
+
+/* In the big timeline a done mark keeps its kind's colour rather than
+   filling black — the kind is the information, the state is not. */
+.im-timeline-big .im-timeline-item[data-state="done"] .im-timeline-marker {
+	background-color: var(--im-canvas);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	color: var(--im-kind-ink, var(--im-muted));
+}
