@@ -145,6 +145,12 @@ Add a token → `--im-*` in primitives/semantic, plus one bridge line if it shou
   It needs `isolation: isolate` on the card, or the panel slides behind the nearest ancestor with a
   background and is never seen.
 - **The dot is a marker (new / live / unread), never an active state.**
+- **A fixture field must not share a name with a HELPER.** `{{date}}`, `{{code}}`, `{{content}}`,
+  `{{url}}`, `{{excerpt}}`, `{{tags}}` — an ambiguous mustache resolves to the helper and is called
+  with no block, which is `options.fn is not a function` at build time. The snippet fixtures use
+  `snippet`, the comments use `when`.
+- **`{{lookup demo.six @index}}` hands back a POST, not a picture** — an object used as a `src`
+  prints `[object Object]`. `demo.shots` is the array of plain image URLs for exactly this.
 - **Verifying in the browser:** the user often browses in the same tab. Open your OWN tab
   (`tabs_create_mcp`). A background tab is not painted: rAF, IntersectionObserver and WAAPI
   `finish` all stall there, so test behaviour by calling/dispatching, not by waiting for frames.

@@ -1,0 +1,480 @@
+/* Commerce — the things a site sells, recommends, wants, or has done.
+
+   Five small components that share one idea: each of them is a CARD with a
+   fact attached that an ordinary card has no room for — a price, a licence, a
+   language, a priority, a span of years. Everything else about them is the
+   system's: the same radii, the same hairline, the same fill on hover.
+
+     im-product   a thing you sell          (the shop)
+     im-snippet   code, or a prompt         (snippets, prompts)
+     im-role      a job, on a timeline      (experience)
+     im-wish      a thing you want          (wishlist)
+     im-epnum     an episode's number       (a series)                       */
+
+/* ---- product -------------------------------------------------------------
+   The shop card. A shot, what it is, what it costs, and one button. The price
+   is the second thing a buyer looks at after the picture, so it is set like a
+   number and never buried in a line of prose. */
+.im-product {
+	--im-product-pad: 1.125rem;
+	--im-hover-bg: var(--im-surface);
+
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+	min-width: 0;
+	padding: var(--im-product-pad);
+	border-radius: var(--im-radius-xl);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+	transition: background-color var(--im-duration-fast) var(--im-ease-out);
+}
+
+.im-product:is(:hover, :focus-within) {
+	background-color: var(--im-hover-bg);
+}
+
+.im-product-media {
+	position: relative;
+	aspect-ratio: var(--im-product-ratio, 16 / 10);
+	margin: calc(var(--im-product-pad) * -1) calc(var(--im-product-pad) * -1) 0.25rem;
+	overflow: hidden;
+	border-radius: calc(var(--im-radius-xl) - 1px) calc(var(--im-radius-xl) - 1px) 0 0;
+	background-color: var(--im-surface-2);
+}
+
+.im-product-media > img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.im-product-name {
+	color: var(--im-ink);
+	font-size: var(--im-text-h5);
+	font-weight: 600;
+	line-height: var(--im-leading-h5);
+	letter-spacing: var(--im-tracking-tight);
+	text-decoration: none;
+}
+
+.im-product-name::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+}
+
+.im-product-text {
+	text-wrap: pretty;
+}
+
+.im-product-foot {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.625rem;
+	margin-top: auto;
+	padding-top: 0.5rem;
+}
+
+.im-product :is(.im-btn, .im-topic) {
+	position: relative;
+	z-index: 2;
+}
+
+/* ---- price ----
+   Mono and tabular, because it is a number and a row of them should line up.
+   -was is what it used to be; -free is the one that is not a number at all. */
+.im-price {
+	display: inline-flex;
+	align-items: baseline;
+	gap: 0.4375rem;
+	color: var(--im-ink);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-h5);
+	font-weight: 600;
+	font-variant-numeric: tabular-nums;
+	line-height: 1;
+}
+
+.im-price-was {
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+	font-weight: 400;
+	text-decoration: line-through;
+}
+
+.im-price-note {
+	color: var(--im-muted);
+	font-family: var(--im-font-body);
+	font-size: var(--im-text-xs);
+	font-weight: 400;
+}
+
+.im-price-free {
+	color: var(--im-success);
+}
+
+/* ---- the buy box ----
+   The product page's panel: price, what you get, the button, and the small
+   print that stops a refund request. It sticks, because on a long product
+   page the decision is made a long way from the top. */
+.im-buybox {
+	position: sticky;
+	top: calc(var(--im-bar-height) + 1.25rem);
+	display: flex;
+	flex-direction: column;
+	gap: 0.875rem;
+	padding: 1.25rem;
+	border-radius: var(--im-radius-xl);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	background-color: var(--im-canvas);
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+}
+
+.im-buybox-price {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 0.625rem;
+}
+
+.im-buybox-price > .im-price {
+	font-size: var(--im-text-h2);
+}
+
+.im-buybox-list {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	padding-block: 0.25rem;
+}
+
+.im-buybox-list > li {
+	display: grid;
+	grid-template-columns: 1.0625rem minmax(0, 1fr);
+	gap: 0.625rem;
+	align-items: start;
+}
+
+.im-buybox-list > li::before {
+	content: "";
+	width: 1.0625rem;
+	height: 1.0625rem;
+	background-color: var(--im-success);
+	-webkit-mask: var(--im-check-mark, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E")) center / contain no-repeat;
+	mask: var(--im-check-mark, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E")) center / contain no-repeat;
+}
+
+.im-buybox-note {
+	padding-top: 0.25rem;
+	border-top: 1px solid var(--im-line);
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+	text-wrap: pretty;
+}
+
+/* A licence chooser: one of several, each a row with its own price. */
+.im-licences {
+	display: flex;
+	flex-direction: column;
+	gap: 0.375rem;
+}
+
+.im-licence {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	gap: 0.125rem 0.75rem;
+	padding: 0.75rem 0.875rem;
+	border-radius: var(--im-radius-md);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	color: var(--im-body);
+	cursor: pointer;
+	transition: background-color 120ms, box-shadow 120ms;
+}
+
+.im-licence:hover {
+	background-color: var(--im-hover-bg);
+}
+
+.im-licence[aria-checked="true"] {
+	background-color: var(--im-current-bg);
+	box-shadow: inset 0 0 0 1px var(--im-ink);
+}
+
+.im-licence > strong {
+	color: var(--im-ink);
+	font-size: var(--im-text-sm);
+	font-weight: 600;
+}
+
+.im-licence > small {
+	grid-column: 1;
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+}
+
+.im-licence > .im-price {
+	grid-row: span 2;
+	align-self: center;
+	font-size: var(--im-text-base);
+}
+
+/* ---- snippet -------------------------------------------------------------
+   A piece of code, or a prompt. The same card either way: what it is for, the
+   thing itself in a pre, and one button that copies it — because that is the
+   only interaction anybody ever wants from one of these. */
+.im-snippet {
+	--im-hover-bg: var(--im-surface);
+
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 0.625rem;
+	min-width: 0;
+	padding: 1.125rem;
+	border-radius: var(--im-radius-lg);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+	transition: background-color var(--im-duration-fast) var(--im-ease-out);
+}
+
+.im-snippet:is(:hover, :focus-within) {
+	background-color: var(--im-hover-bg);
+}
+
+.im-snippet-head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem 0.75rem;
+}
+
+.im-snippet-name {
+	color: var(--im-ink);
+	font-size: var(--im-text-h5);
+	font-weight: 600;
+	line-height: var(--im-leading-h5);
+	letter-spacing: var(--im-tracking-tight);
+	text-decoration: none;
+}
+
+.im-snippet-lang {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
+	margin-left: auto;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+}
+
+.im-snippet-lang::before {
+	content: "";
+	width: 0.5rem;
+	height: 0.5rem;
+	border-radius: 50%;
+	background-color: var(--im-repo-lang, var(--im-faint));
+}
+
+/* The body. It is clipped, not scrolled: a card is a preview, and the whole
+   thing lives on the snippet's own page. --im-snippet-lines is how much. */
+.im-snippet-body {
+	position: relative;
+	overflow: hidden;
+	max-height: calc(var(--im-snippet-lines, 7) * 1.7em + 1.75rem);
+	border-radius: var(--im-radius-md);
+}
+
+.im-snippet-body::after {
+	content: "";
+	position: absolute;
+	inset: auto 0 0;
+	height: 3rem;
+	background-image: linear-gradient(to top, var(--im-code-bg, #0b0b0c), transparent);
+	pointer-events: none;
+}
+
+.im-snippet-body > pre {
+	margin: 0;
+	border-radius: var(--im-radius-md);
+}
+
+/* A prompt is words, not code: it reads as a quote rather than as a terminal. */
+.im-snippet-prompt {
+	max-height: none;
+	padding: 0.875rem 1rem;
+	background-color: var(--im-surface-2);
+	color: var(--im-ink);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	line-height: 1.7;
+	white-space: pre-wrap;
+	text-wrap: pretty;
+}
+
+.im-snippet-prompt::after {
+	display: none;
+}
+
+.im-snippet-foot {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem;
+	margin-top: auto;
+	padding-top: 0.125rem;
+}
+
+.im-snippet-foot > .im-btn:last-child {
+	margin-left: auto;
+}
+
+.im-snippets {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-snippets-min, 21rem), 100%), 1fr));
+	gap: 1rem;
+	align-items: start;
+}
+
+/* ---- role ----------------------------------------------------------------
+   A job, on the timeline. The mark is the employer's, so a CV reads as a row
+   of places rather than a row of dots. */
+.im-role-mark {
+	display: grid;
+	place-items: center;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	border-radius: var(--im-radius-sm);
+	background-color: var(--im-surface);
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-sm);
+	font-weight: 600;
+}
+
+.im-role-mark > img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+}
+
+.im-timeline-role .im-timeline-marker {
+	border-radius: var(--im-radius-sm);
+	background-color: transparent;
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	overflow: hidden;
+	padding: 0;
+}
+
+.im-role-at {
+	color: var(--im-muted);
+	font-size: var(--im-text-sm);
+}
+
+.im-role-at > b {
+	color: var(--im-ink);
+	font-weight: 600;
+}
+
+.im-role-list {
+	display: flex;
+	flex-direction: column;
+	gap: 0.375rem;
+	max-width: 62ch;
+	padding-top: 0.5rem;
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+}
+
+.im-role-list > li {
+	display: grid;
+	grid-template-columns: 0.75rem minmax(0, 1fr);
+	gap: 0.625rem;
+}
+
+.im-role-list > li::before {
+	content: "";
+	width: 0.3125rem;
+	height: 0.3125rem;
+	margin-top: 0.6em;
+	border-radius: 50%;
+	background-color: var(--im-faint);
+}
+
+/* ---- wish ----------------------------------------------------------------
+   A thing you want. It is the affiliate card with the buying taken out and a
+   PRIORITY put in — which is the only fact that matters on a wishlist. */
+.im-wish-priority {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+.im-wish-priority::before {
+	content: "";
+	display: flex;
+	width: 2.5rem;
+	height: 0.25rem;
+	border-radius: var(--im-radius-full);
+	background:
+		linear-gradient(var(--im-wish-color, var(--im-accent)), var(--im-wish-color, var(--im-accent))) left / var(--im-wish, 33%) 100% no-repeat,
+		var(--im-line);
+}
+
+.im-wish-got {
+	--im-wish: 100%;
+	--im-wish-color: var(--im-success);
+
+	color: var(--im-success);
+}
+
+/* ---- episode number ------------------------------------------------------
+   A series is watched in order, so the number is navigation. Set like one. */
+.im-epnum {
+	display: grid;
+	place-items: center;
+	flex: none;
+	min-width: 2.25rem;
+	align-self: flex-start;
+	color: var(--im-faint);
+	font-family: var(--im-font-pixel, var(--im-font-mono));
+	font-size: var(--im-text-h3);
+	font-variant-numeric: tabular-nums;
+	line-height: 1;
+}
+
+.im-episode {
+	display: flex;
+	gap: 1rem;
+	align-items: flex-start;
+}
+
+.im-episode > .im-vidcard {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+/* Watched: the number goes quiet and a tick joins it. */
+.im-episode[data-state="done"] .im-epnum {
+	color: var(--im-success);
+}
+
+@media (width < 34rem) {
+	.im-epnum {
+		font-size: var(--im-text-h5);
+		min-width: 1.5rem;
+	}
+}

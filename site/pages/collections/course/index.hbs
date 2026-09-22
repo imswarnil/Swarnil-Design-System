@@ -1,0 +1,123 @@
+---
+title: Course collection
+layout: home
+description: A course — what it teaches, who it is for, the whole curriculum visible before anybody pays, and where you got to if you have already started.
+eyebrow: Collections · Course
+source: src/components/curriculum.css · commerce.css
+---
+<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+	<p class="im-eyebrow">Collections · Course · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+</section>
+
+<div class="im-single im-wrap-wide" data-sidebar="on" style="--im-single-aside: 21rem">
+	<article class="im-stack" style="--im-stack-gap: 2rem">
+		<header class="im-projecthero">
+			<nav aria-label="Breadcrumb">
+				<ol class="im-breadcrumb im-breadcrumb-chevron">
+					<li><a href="/">{{> "icons/house"}}<span>Home</span></a></li>
+					<li><a href="/collections/course/">{{> "icons/graduation-cap"}}<span>Courses</span></a></li>
+					<li><span aria-current="page">Ghost themes, properly</span></li>
+				</ol>
+			</nav>
+			<p><span class="im-kind" data-kind="issue">{{icon "graduation-cap"}}Course</span></p>
+			<h1 class="im-projecthero-title">Ghost themes, properly</h1>
+			<p class="im-projecthero-text">Build a Ghost theme you own from an empty folder — tokens, templates, the editor's cards, and the licence questions nobody answers until it is too late.</p>
+			<p class="im-repo-topics"><a class="im-topic" href="#">Ghost 6</a><a class="im-topic" href="#">Handlebars</a><a class="im-topic" href="#">CSS</a><a class="im-topic" href="#">4 hours</a></p>
+		</header>
+
+		<div class="im-projectstats">
+			<span><strong>18</strong>Lessons</span>
+			<span><strong>4h 10m</strong>Total</span>
+			<span><strong>3</strong>Modules</span>
+			<span><strong>Yours</strong>Forever</span>
+		</div>
+
+		<section class="im-content im-content-flush im-content-lede" style="--im-content-main: 100%">
+			<p>By the end you will have a theme running on your own Ghost install, built on tokens you understand, with nothing in it you cannot legally ship.</p>
+			<h2>Who it is for</h2>
+			<ul>
+				<li>You can write CSS and you have opened a Handlebars file once.</li>
+				<li>You have bought a theme, found it fights you, and want out.</li>
+				<li>You want to <em>sell</em> a theme and are not sure what you are allowed to include.</li>
+			</ul>
+			<h2>What you will build</h2>
+			<p>One theme, in eighteen lessons: the token layer, the shell, the post and collection templates, the editor's cards, and the provenance file that makes it sellable.</p>
+		</section>
+
+		<section class="im-section" style="--im-section-gap: 1rem">
+			<h2 class="im-caption" data-index="all">The whole curriculum</h2>
+			<p class="text-sm text-body" style="max-width: 60ch">Every lesson title is visible before anybody pays. A course that hides its contents is a course that is not sure they are worth the money.</p>
+			<div class="im-curriculum" style="position: static; width: auto; max-height: none; border-radius: var(--im-radius-lg); box-shadow: inset 0 0 0 1px var(--im-line)">
+				<details class="im-module" open>
+					<summary><span class="im-module-index">01</span>Tokens and the shell<small>5 lessons · 58m</small></summary>
+					<div class="im-lessons">
+						<a class="im-lesson" href="/collections/course/lesson/" data-state="done"><span class="im-lesson-mark"></span>What a token is for<small>7:12</small></a>
+						<a class="im-lesson" href="/collections/course/lesson/" data-state="done"><span class="im-lesson-mark"></span>Primitives and semantics<small>11:40</small></a>
+						<a class="im-lesson" href="/collections/course/lesson/" aria-current="page"><span class="im-lesson-mark"></span>Dark mode for free<small>14:05</small></a>
+						<a class="im-lesson" href="/collections/course/lesson/"><span class="im-lesson-mark"></span>The page shell<small>13:20</small></a>
+						<a class="im-lesson" href="/collections/course/lesson/"><span class="im-lesson-mark"></span>The top bar and the side nav<small>12:02</small></a>
+					</div>
+				</details>
+				<details class="im-module">
+					<summary><span class="im-module-index">02</span>Templates<small>7 lessons · 1h 42m</small></summary>
+					<div class="im-lessons">
+						<a class="im-lesson" href="/collections/course/lesson/"><span class="im-lesson-mark"></span>index.hbs and the feed<small>15:30</small></a>
+						<a class="im-lesson" href="/collections/course/lesson/"><span class="im-lesson-mark"></span>post.hbs<small>18:12</small></a>
+						<a class="im-lesson" href="/collections/course/lesson/" data-state="locked"><span class="im-lesson-mark"></span>The editor's cards<small>22:40</small></a>
+					</div>
+				</details>
+				<details class="im-module">
+					<summary><span class="im-module-index">03</span>Shipping it<small>6 lessons · 1h 30m</small></summary>
+					<div class="im-lessons">
+						<a class="im-lesson" href="/collections/course/lesson/" data-state="locked"><span class="im-lesson-mark"></span>What you are allowed to sell<small>19:55</small></a>
+						<a class="im-lesson" href="/collections/course/lesson/" data-state="locked"><span class="im-lesson-mark"></span>Writing a provenance file<small>12:18</small></a>
+					</div>
+				</details>
+			</div>
+		</section>
+	</article>
+
+	<aside>
+		<div class="im-buybox">
+			<div class="im-buybox-price">
+				<span class="im-price">$99<span class="im-price-was">$149</span></span>
+				<span class="im-badge im-badge-accent">Early</span>
+			</div>
+			<div class="im-stack" style="--im-stack-gap: .5rem">
+				<p class="im-caption">Your progress</p>
+				<div class="im-progress" style="--im-value: .17" role="progressbar" aria-valuenow="17" aria-label="Course progress"><span></span></div>
+				<p class="text-xs text-muted">3 of 18 lessons · 33 minutes</p>
+			</div>
+			<ul class="im-buybox-list">
+				<li><span>18 lessons, 4 hours 10 minutes</span></li>
+				<li><span>The finished theme's source</span></li>
+				<li><span>Yours forever, updates included</span></li>
+			</ul>
+			<a class="im-btn im-btn-primary im-btn-lg im-btn-block" href="/collections/course/lesson/">{{icon "play"}}Continue — lesson 3</a>
+			<a class="im-btn im-btn-block" href="/collections/course/lesson/">{{icon "eye"}}Watch the first lesson free</a>
+			<p class="im-buybox-note">Fourteen-day refund, no argument. The first lesson is free and always will be.</p>
+		</div>
+	</aside>
+</div>
+
+<section class="im-section im-wrap">
+	<div class="im-prose">
+		<h2>The curriculum is the sales page</h2>
+		<p>Every lesson title is visible before anybody pays — <strong>including the locked ones</strong>. A course that hides its contents is telling a buyer it is not sure they are worth the money, and the titles are the best argument it has.</p>
+		<p>The <a href="/navigation/curriculum/">curriculum component</a> does all of it: modules that open, lessons inside, and four states on each one — <code>done</code> (a filled tick), <code>aria-current="page"</code> (the accent, "you are here"), <code>locked</code> (a padlock, still readable), and nothing at all for one not started.</p>
+		<div class="im-table-scroll">
+		<table>
+			<thead><tr><th>Block</th><th>Built from</th></tr></thead>
+			<tbody>
+				<tr><td>The head</td><td><code>im-projecthero</code> — the same one a <a href="/collections/project/page/">project</a> uses.</td></tr>
+				<tr><td>The numbers</td><td><code>im-projectstats</code>: lessons, length, modules, and what you keep.</td></tr>
+				<tr><td>The curriculum</td><td><code>im-curriculum</code> with <code>position: static</code> — on the course page it is content, not a rail.</td></tr>
+				<tr><td>The buy box</td><td><code>im-buybox</code> from the <a href="/collections/shop/product/">product page</a>, with a <a href="/components/progress/">progress bar</a> instead of a licence chooser once somebody has started.</td></tr>
+			</tbody>
+		</table>
+		</div>
+		<p><strong>The button says what it does next.</strong> "Continue — lesson 3" for somebody enrolled, "Buy" for somebody not. One button that says "Start course" to both is a button that lies to one of them.</p>
+	</div>
+</section>

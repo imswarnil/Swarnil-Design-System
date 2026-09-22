@@ -187,6 +187,30 @@ export const navigation = [
 				],
 			},
 			{
+				label: 'Series',
+				icon: 'square-play',
+				children: [
+					{ label: 'Series collection', url: '/collections/series/' },
+					{ label: 'Episode page', url: '/collections/series/episode/' },
+				],
+			},
+			{
+				label: 'Course',
+				icon: 'graduation-cap',
+				children: [
+					{ label: 'Course collection', url: '/collections/course/' },
+					{ label: 'Lesson page', url: '/collections/course/lesson/' },
+				],
+			},
+			{
+				label: 'Shop',
+				icon: 'wallet',
+				children: [
+					{ label: 'Shop collection', url: '/collections/shop/' },
+					{ label: 'Product page', url: '/collections/shop/product/' },
+				],
+			},
+			{
 				label: 'Newsletter',
 				icon: 'mail',
 				children: [
@@ -194,6 +218,12 @@ export const navigation = [
 					{ label: 'Issue page', url: '/collections/newsletter/issue/' },
 				],
 			},
+			{ label: 'Products I use', url: '/collections/uses/', icon: 'package' },
+			{ label: 'Journal', url: '/collections/journal/', icon: 'pencil' },
+			{ label: 'Snippets', url: '/collections/snippets/', icon: 'code' },
+			{ label: 'Prompts', url: '/collections/prompts/', icon: 'sparkles' },
+			{ label: 'Experience', url: '/collections/experience/', icon: 'briefcase' },
+			{ label: 'Wishlist', url: '/collections/wishlist/', icon: 'heart' },
 			{
 				label: 'Tag',
 				icon: 'tag',

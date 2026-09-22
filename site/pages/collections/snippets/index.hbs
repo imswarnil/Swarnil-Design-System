@@ -1,0 +1,83 @@
+---
+title: Snippets
+layout: home
+description: Code worth keeping — the thing itself, what it is for, and one button that copies it. Because copying it is the only interaction anybody ever wants from a snippet.
+eyebrow: Collections
+source: src/components/commerce.css · code.css
+---
+<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+	<p class="im-eyebrow">Collections · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+</section>
+
+<div class="im-wrap-wide im-stack" style="--im-stack-gap: 2rem">
+	<header class="im-collhead">
+		<p class="im-eyebrow">Snippets</p>
+		<h1 class="im-collhead-title">Code I keep looking up</h1>
+		<p class="im-collhead-text">Small, tested, and in here because I have searched for each of them more than twice. Copy freely — none of it is clever enough to need a licence.</p>
+		<p class="im-collhead-meta"><span>{{demo.snippets.length}} snippets</span><span>CSS · JS · Handlebars</span><a href="#snips">RSS</a></p>
+	</header>
+
+	<div class="im-collbar">
+		<div class="im-collbar-filters">
+			<a class="im-tag" href="#snips" aria-current="page">All</a>
+			<a class="im-tag" href="#snips">CSS</a>
+			<a class="im-tag" href="#snips">JavaScript</a>
+			<a class="im-tag" href="#snips">Handlebars</a>
+			<a class="im-tag" href="#snips">Ghost</a>
+		</div>
+		<div class="im-cluster" style="--im-cluster-gap: .375rem">
+			<div class="im-input-group" style="width: 12rem">{{icon "search"}}<input class="im-input im-input-sm" type="search" placeholder="Search snippets" aria-label="Search snippets"></div>
+		</div>
+	</div>
+
+	<div class="im-snippets" id="snips">
+		{{#each demo.snippets}}
+		<article class="im-snippet" style="--im-repo-lang: {{langColor}}">
+			<p class="im-snippet-head">
+				<a class="im-snippet-name" href="#snips">{{name}}</a>
+				<span class="im-snippet-lang">{{lang}}</span>
+			</p>
+			<p>{{text}}</p>
+			<div class="im-snippet-body">
+				<pre><code class="language-{{#match lang "=" "CSS"}}css{{else}}{{#match lang "=" "JavaScript"}}js{{else}}hbs{{/match}}{{/match}}">{{snippet}}</code></pre>
+			</div>
+			<p class="im-snippet-foot">
+				<span class="im-kind">{{icon "code"}}Snippet</span>
+				<button class="im-btn im-btn-sm" type="button" data-im-copy="{{snippet}}" data-im-copied-label="Copied">{{icon "copy"}}<span data-im-copy-label>Copy</span></button>
+			</p>
+		</article>
+		{{/each}}
+	</div>
+</div>
+
+<section class="im-section im-wrap">
+	<div class="im-prose">
+		<h2>One button, and it is Copy</h2>
+		<p>Nobody reads a snippet page. They scan for the one that matches, copy it, and leave — so the card is built around that: the title says what it is <em>for</em> (not what it is called), one line says when to use it, the code is clipped to seven lines with a fade, and Copy is the only button.</p>
+		<p>It is the system's own <a href="/components/code/">copy behaviour</a> — <code>data-im-copy</code>, which writes to the clipboard and changes the label to "Copied" for a moment. No script of this page's own.</p>
+		<div class="im-table-scroll">
+		<table>
+			<thead><tr><th>Class</th><th></th></tr></thead>
+			<tbody>
+				<tr><td><code>im-snippet</code></td><td>The card. Fills on hover, like everything else.</td></tr>
+				<tr><td><code>im-snippet-lang</code></td><td>The language, with a dot in <code>--im-repo-lang</code> — the same dot the <a href="/collections/project/card/">project card</a> uses, so one colour means one language everywhere on the site.</td></tr>
+				<tr><td><code>im-snippet-body</code></td><td>Clipped to <code>--im-snippet-lines</code> (7) with a fade at the bottom. A card is a preview; the whole thing is one click away.</td></tr>
+				<tr><td><code>im-snippet-foot</code></td><td>The kind chip on the left, Copy pushed to the right.</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<h2>Why not a gist</h2>
+		<p>Because a gist is somebody else's page, it does not match the site, it does not work offline, it cannot be searched from here, and it disappears when the host decides. A snippet that matters enough to keep matters enough to host.</p>
+
+		<h2>Details that matter</h2>
+		<ul>
+			<li><strong>Title it by the problem</strong> — "fluid type without a media query", not "clamp()". The reader is searching for the problem.</li>
+			<li><strong>Keep them short.</strong> If it does not fit in seven lines it is a <a href="/collections/post/">post</a> with a snippet in it.</li>
+			<li><strong>Test everything on the page.</strong> A snippet collection with one broken entry is a snippet collection nobody trusts.</li>
+			<li><strong>The copy button copies the source</strong>, not the highlighted HTML — <code>data-im-copy</code> takes the raw text.</li>
+		</ul>
+	</div>
+</section>

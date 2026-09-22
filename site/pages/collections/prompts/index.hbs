@@ -1,0 +1,73 @@
+---
+title: Prompts
+layout: home
+description: Prompts that earn their place — what each one is for, which models it works on, and the text itself, copyable. The snippet card, with words instead of code.
+eyebrow: Collections
+source: src/components/commerce.css
+---
+<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+	<p class="im-eyebrow">Collections · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+</section>
+
+<div class="im-wrap-wide im-stack" style="--im-stack-gap: 2rem">
+	<header class="im-collhead">
+		<p class="im-eyebrow">Prompts</p>
+		<h1 class="im-collhead-title">Prompts I actually reuse</h1>
+		<p class="im-collhead-text">Three of them. Everything else I have written was either a one-off or a paragraph pretending to be a technique — these are the ones that survived being used a hundred times.</p>
+		<p class="im-collhead-meta"><span>{{demo.prompts.length}} prompts</span><span>Model-agnostic</span></p>
+	</header>
+
+	<div class="im-collbar">
+		<div class="im-collbar-filters">
+			<a class="im-tag" href="#prompts" aria-current="page">All</a>
+			<a class="im-tag" href="#prompts">Writing</a>
+			<a class="im-tag" href="#prompts">Review</a>
+			<a class="im-tag" href="#prompts">Code</a>
+		</div>
+	</div>
+
+	<div class="im-snippets" id="prompts" style="--im-snippets-min: 23rem">
+		{{#each demo.prompts}}
+		<article class="im-snippet">
+			<p class="im-snippet-head">
+				<a class="im-snippet-name" href="#prompts">{{name}}</a>
+				<span class="im-snippet-lang" style="--im-repo-lang: var(--im-accent)">{{model}}</span>
+			</p>
+			<p>{{text}}</p>
+			<div class="im-snippet-body im-snippet-prompt">{{body}}</div>
+			<p class="im-snippet-foot">
+				<span class="im-kind" data-kind="tag">{{icon "sparkles"}}Prompt</span>
+				<button class="im-btn im-btn-sm" type="button" data-im-copy="{{body}}" data-im-copied-label="Copied">{{icon "copy"}}<span data-im-copy-label>Copy</span></button>
+			</p>
+		</article>
+		{{/each}}
+	</div>
+</div>
+
+<section class="im-section im-wrap">
+	<div class="im-prose">
+		<h2>The snippet card, with words in it</h2>
+		<p>A prompt collection is a snippet collection where the thing being copied is prose. Same card, same copy button, one class different: <code>im-snippet-prompt</code> swaps the terminal for a quiet mono block that wraps, because a prompt is read before it is copied and a horizontal scrollbar makes that impossible.</p>
+		<p>It is not clipped either. A prompt with its last two lines hidden is a prompt nobody can judge — and judging it is the entire reason the page exists.</p>
+		<div class="im-table-scroll">
+		<table>
+			<thead><tr><th></th><th>Snippet</th><th>Prompt</th></tr></thead>
+			<tbody>
+				<tr><td>The body</td><td>A <code>&lt;pre&gt;</code>, highlighted, clipped at 7 lines</td><td><code>im-snippet-prompt</code> — wrapping mono on a surface, not clipped</td></tr>
+				<tr><td>The tag at the end</td><td>The language, with its colour dot</td><td>Which models it works on</td></tr>
+				<tr><td>The button</td><td colspan="2">Copy. The same one.</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<h2>Rules for a prompt collection</h2>
+		<ul>
+			<li><strong>Say what it is for in one line</strong>, above the prompt. "For a draft that reads like a brochure" tells a reader whether to keep reading; "a powerful rewriting prompt" does not.</li>
+			<li><strong>Name the models honestly.</strong> "Any model" or "reasoning models" — not a list of version numbers that will be wrong in three months.</li>
+			<li><strong>Three good ones beat thirty.</strong> A page of a hundred prompts is a page nobody reads past the fifth.</li>
+			<li><strong>No screenshots of output.</strong> They age badly, they cannot be verified, and they are the oldest trick in the genre.</li>
+		</ul>
+	</div>
+</section>

@@ -1,0 +1,121 @@
+---
+title: Lesson page
+layout: home
+description: The player layout — the lesson filling the page, the curriculum beside it, and one button that does the only thing anybody wants next. Nothing else on the screen.
+eyebrow: Collections · Course
+source: src/components/curriculum.css · video.css
+---
+<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+	<p class="im-eyebrow">Collections · Course · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+</section>
+
+<div class="im-course im-wrap-wide" style="--im-curriculum-width: 21rem">
+	<div class="im-stack" style="--im-stack-gap: 1.25rem; min-width: 0">
+		<button class="im-btn im-curriculum-open" type="button" data-im-dialog-open="#lesson-curriculum">{{icon "list"}}Curriculum</button>
+
+		<div class="im-video im-video-full" id="lesson" data-im-video="aqz-KE-bpKQ" data-im-video-title="Dark mode for free">
+			<img class="im-video-poster" src="{{demo.six.[2].feature_image}}" alt="" loading="eager">
+			<button class="im-video-play" type="button" aria-label="Play">{{> "icons/play"}}</button>
+		</div>
+
+		<header class="im-vidhead">
+			<p class="im-caption" data-index="03">Module 01 · Tokens and the shell · Lesson 3 of 18</p>
+			<h1 class="im-vidhead-title">Dark mode for free</h1>
+			<div class="im-vidhead-bar">
+				<p class="im-vidcard-meta"><span>14:05</span><span>Updated 3 days ago</span></p>
+				<div class="im-vidhead-actions">
+					<button class="im-btn im-btn-sm" type="button">{{icon "download"}}Exercise files</button>
+					<button class="im-btn im-btn-sm" type="button" aria-pressed="false" data-im-toggle>{{icon "check"}}Mark complete</button>
+				</div>
+			</div>
+		</header>
+
+		<nav class="im-postnav" aria-label="Lessons">
+			<a href="/collections/course/lesson/" rel="prev"><small>{{icon "arrow-left"}} Previous</small>Primitives and semantics</a>
+			<a href="/collections/course/lesson/" rel="next"><small>Next {{icon "arrow-right"}}</small>The page shell</a>
+		</nav>
+
+		<section class="im-content im-content-flush" style="--im-content-main: 100%">
+			<h2>What this lesson covers</h2>
+			<p>Why a component should never name a colour, only what the colour is <em>for</em> — and why that one rule is the whole of dark mode.</p>
+			<pre><code class="language-css">/* Not this */
+.card { background: #f5f5f5; }
+
+/* This */
+.card { background: var(--im-surface); }</code></pre>
+			<p>Two declarations, one file, and every component in the theme follows without being told.</p>
+			<h3>Exercise</h3>
+			<p>Take the three components you wrote in lesson 2 and remove every literal colour from them. Nothing should break in light mode; dark mode should start working on its own.</p>
+			<div class="kg-card kg-callout-card kg-callout-card-blue"><div class="kg-callout-emoji">📎</div><div class="kg-callout-text">The exercise files are the same theme at the start and the end of this lesson, so you can diff them if you get stuck.</div></div>
+		</section>
+
+		<section class="im-section" style="--im-section-gap: 1rem">
+			<h2 class="im-caption">Questions on this lesson</h2>
+			{{> "components/comments" thread=demo.comments count="12"}}
+		</section>
+	</div>
+
+	<nav class="im-curriculum" id="lesson-curriculum" aria-label="Curriculum">
+		<div class="im-curriculum-head">
+			<p class="im-curriculum-title">Ghost themes, properly</p>
+			<button class="im-btn im-btn-ghost im-btn-icon im-curriculum-close" type="button" data-im-dialog-close aria-label="Close">{{icon "x"}}</button>
+		</div>
+		<div class="im-curriculum-progress">
+			<div class="im-progress" style="--im-value: .17" role="progressbar" aria-valuenow="17" aria-label="Course progress"><span></span></div>
+			<small>3 of 18 · 33 min</small>
+		</div>
+		<details class="im-module" open>
+			<summary><span class="im-module-index">01</span>Tokens and the shell<small>5 · 58m</small></summary>
+			<div class="im-lessons">
+				<a class="im-lesson" href="/collections/course/lesson/" data-state="done"><span class="im-lesson-mark"></span>What a token is for<small>7:12</small></a>
+				<a class="im-lesson" href="/collections/course/lesson/" data-state="done"><span class="im-lesson-mark"></span>Primitives and semantics<small>11:40</small></a>
+				<a class="im-lesson" href="/collections/course/lesson/" aria-current="page"><span class="im-lesson-mark"></span>Dark mode for free<small>14:05</small></a>
+				<a class="im-lesson" href="/collections/course/lesson/"><span class="im-lesson-mark"></span>The page shell<small>13:20</small></a>
+				<a class="im-lesson" href="/collections/course/lesson/"><span class="im-lesson-mark"></span>The top bar and the side nav<small>12:02</small></a>
+			</div>
+		</details>
+		<details class="im-module">
+			<summary><span class="im-module-index">02</span>Templates<small>7 · 1h 42m</small></summary>
+			<div class="im-lessons">
+				<a class="im-lesson" href="/collections/course/lesson/"><span class="im-lesson-mark"></span>index.hbs and the feed<small>15:30</small></a>
+				<a class="im-lesson" href="/collections/course/lesson/"><span class="im-lesson-mark"></span>post.hbs<small>18:12</small></a>
+				<a class="im-lesson" href="/collections/course/lesson/" data-state="locked"><span class="im-lesson-mark"></span>The editor's cards<small>22:40</small></a>
+			</div>
+		</details>
+		<details class="im-module">
+			<summary><span class="im-module-index">03</span>Shipping it<small>6 · 1h 30m</small></summary>
+			<div class="im-lessons">
+				<a class="im-lesson" href="/collections/course/lesson/" data-state="locked"><span class="im-lesson-mark"></span>What you are allowed to sell<small>19:55</small></a>
+				<a class="im-lesson" href="/collections/course/lesson/" data-state="locked"><span class="im-lesson-mark"></span>Writing a provenance file<small>12:18</small></a>
+			</div>
+		</details>
+	</nav>
+</div>
+
+<section class="im-section im-wrap">
+	<div class="im-prose">
+		<h2>The player layout</h2>
+		<p><code>im-course</code> is a two-column layout that changes what it <em>is</em> at <code>lg</code>, rather than only how it looks:</p>
+		<div class="im-table-scroll">
+		<table>
+			<thead><tr><th>Width</th><th>The curriculum</th></tr></thead>
+			<tbody>
+				<tr><td><strong>≥ 64rem</strong></td><td>A sticky column beside the lesson, scrolling on its own. The "Curriculum" button is hidden, because the thing it opens is already open.</td></tr>
+				<tr><td><strong>&lt; 64rem</strong></td><td>A panel fixed to the right edge, opened by that button — the browser's own <code>&lt;dialog&gt;</code>, so focus, Esc and the backdrop come free.</td></tr>
+			</tbody>
+		</table>
+		</div>
+		<p>One markup, two behaviours, and the lesson keeps the whole width on a laptop where the video actually needs it.</p>
+
+		<h2>One next thing</h2>
+		<p>A lesson page has exactly one job after the video ends: get the student to the next lesson. So there is <strong>one</strong> prominent way forward — the <code>im-postnav</code> pair — and everything else on the page is quiet. No related courses, no newsletter, no footer full of links; a student who leaves here does not come back to lesson four.</p>
+		<ul>
+			<li><strong>"Mark complete" is a real button</strong>, not something that happens at 90% watched. Some people read the transcript.</li>
+			<li><strong>The exercise files are next to the lesson</strong>, not on a downloads page.</li>
+			<li><strong>Questions belong on the lesson</strong>, not in a forum somewhere else: the answer to "why does this not work" is almost always specific to one lesson, and the next student has the same question.</li>
+			<li><strong>Locked lessons stay readable.</strong> A padlock and the title — not a blur, not a removal. It is the argument for upgrading.</li>
+		</ul>
+	</div>
+</section>

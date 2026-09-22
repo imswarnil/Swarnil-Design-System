@@ -1,0 +1,115 @@
+---
+title: Episode page
+layout: home
+description: One episode — the player, where it sits in the run, and the rest of the season beside it. The video page with a sequence attached.
+eyebrow: Collections · Series
+source: src/components/commerce.css · video-card.css
+---
+<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+	<p class="im-eyebrow">Collections · Series · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+</section>
+
+<div class="im-single im-wrap-wide" data-sidebar="on" style="--im-single-aside: 22rem">
+	<article class="im-stack" style="--im-stack-gap: 1.25rem">
+		{{#with demo.episodes.[2]}}
+		<div class="im-video im-video-full" id="ep" data-im-video="aqz-KE-bpKQ" data-im-video-title="{{title}}">
+			<img class="im-video-poster" src="{{../demo.six.[2].feature_image}}" alt="" loading="eager">
+			<button class="im-video-play" type="button" aria-label="Play">{{> "icons/play"}}</button>
+		</div>
+
+		<nav class="im-seriesbar" aria-label="Series">
+			<p class="im-seriesbar-label">
+				<strong>Episode {{n}} of 04</strong>
+				<a href="/collections/series/">The Amalfi Road</a>
+				<span class="im-seriesbar-dots" aria-hidden="true"><span data-state="done"></span><span data-state="done"></span><span aria-current="true"></span><span></span></span>
+			</p>
+			<div class="im-seriesbar-nav">
+				<a class="im-btn im-btn-sm" href="/collections/series/episode/">{{icon "arrow-left"}}Previous</a>
+				<a class="im-btn im-btn-sm im-btn-primary" href="/collections/series/episode/">Next{{icon "arrow-right"}}</a>
+			</div>
+		</nav>
+
+		<header class="im-vidhead">
+			<h1 class="im-vidhead-title">{{title}}</h1>
+			<div class="im-vidhead-bar">
+				<div class="im-vidhead-by">
+					{{> "components/avatar" src=../demo.author.profile_image name=../demo.author.name}}
+					<div><strong>{{../demo.author.name}}<i class="im-vidcard-tick" aria-hidden="true"></i></strong><small>128k subscribers</small></div>
+					<button class="im-btn im-btn-primary im-btn-sm" type="button" style="margin-left: .5rem">Subscribe</button>
+				</div>
+				<div class="im-vidhead-actions">
+					<button class="im-btn im-btn-sm" type="button">{{icon "thumbs-up"}}4.1k</button>
+					<button class="im-btn im-btn-sm" type="button">{{icon "share"}}Share</button>
+					<button class="im-btn im-btn-sm" type="button">{{icon "bookmark"}}Save</button>
+				</div>
+			</div>
+		</header>
+
+		<details class="im-viddesc" open>
+			<summary><span>96k views</span><span>{{when}}</span><span class="im-topic">#amalfi</span></summary>
+			<div class="im-viddesc-body">{{text}}
+
+Shot over four days in November with one lens. Everything it cost is in episode four.</div>
+		</details>
+		{{/with}}
+
+		<section class="im-section" style="--im-section-gap: 1rem">
+			<h2 class="im-caption">Chapters</h2>
+			<ol class="im-chapters" data-im-chapters="#ep" data-im-duration="14:05" aria-label="Chapters">
+				<li><button type="button" data-t="0:00"><time>0:00</time><span>Arriving</span></button></li>
+				<li><button type="button" data-t="3:20"><time>3:20</time><span>The car park nobody uses</span></button></li>
+				<li><button type="button" data-t="8:45"><time>8:45</time><span>What it costs in August</span></button></li>
+			</ol>
+		</section>
+
+		{{> "components/comments" thread=demo.comments count="318"}}
+	</article>
+
+	<aside>
+		<div class="im-sticky-rail">
+			<div class="im-widgets">
+				<section class="im-widget" aria-labelledby="e-season">
+					<h2 class="im-widget-title" id="e-season">Season 1 <a href="/collections/series/">All</a></h2>
+					<div class="im-stack" style="--im-stack-gap: .625rem">
+						{{#each demo.episodes}}
+						<div class="im-episode" data-state="{{state}}" style="gap: .625rem">
+							<span class="im-epnum" style="font-size: var(--im-text-h5); min-width: 1.75rem">{{n}}</span>
+							<article class="im-vidcard im-vidcard-compact" style="--im-vidcard-thumb-width: 6.5rem">
+								<a class="im-vidcard-thumb" href="/collections/series/episode/" tabindex="-1" aria-hidden="true">
+									<img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy">
+									<span class="im-vidcard-time">{{time}}</span>
+								</a>
+								<div class="im-vidcard-body"><div>
+									<h3 class="im-vidcard-title"><a href="/collections/series/episode/">{{title}}</a></h3>
+									<p class="im-vidcard-meta"><span>{{when}}</span></p>
+								</div></div>
+							</article>
+						</div>
+						{{/each}}
+					</div>
+				</section>
+
+				<section class="im-widget im-widget-fill" aria-labelledby="e-notify">
+					<h2 class="im-widget-title" id="e-notify">Next episode</h2>
+					<p class="im-widget-heading">Thursday.</p>
+					{{> "components/subscribe" id="ep-email" button="Tell me"}}
+				</section>
+			</div>
+		</div>
+	</aside>
+</div>
+
+<section class="im-section im-wrap">
+	<div class="im-prose">
+		<h2>The video page, with a sequence</h2>
+		<p>The player, the head, the description and the comments are exactly the <a href="/collections/video/page/">video page</a>'s. Two things are added, and both answer "where am I in this":</p>
+		<ul>
+			<li><strong>The <a href="/collections/post/single/#the-series-bar">series bar</a> under the player</strong> — episode N of M, the dots, and Next as the primary button. Somebody on episode three of four is going to episode four.</li>
+			<li><strong>The season in the rail</strong>, as numbered compact cards, so the whole run is one glance away without leaving the page.</li>
+		</ul>
+		<p>Everything else about a series lives on the <a href="/collections/series/">collection</a>. An episode page that repeats the season's description and its trailer is a page that makes the viewer scroll past what they already chose.</p>
+		<p><strong>Autoplay the next one, or do not — but say which.</strong> If a theme chains episodes, the Next button should say "Next episode" and there should be a way to turn it off; a viewer who has lost twenty minutes to a chain they did not ask for does not come back.</p>
+	</div>
+</section>

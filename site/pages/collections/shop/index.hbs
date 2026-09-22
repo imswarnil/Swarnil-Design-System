@@ -1,0 +1,103 @@
+---
+title: Shop collection
+layout: home
+description: The things you sell. A shot, what it is, what it costs and one button — plus the two questions every buyer has before they press it, answered above the fold.
+eyebrow: Collections · Shop
+source: src/components/commerce.css
+---
+<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+	<p class="im-eyebrow">Collections · Shop · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+</section>
+
+<div class="im-wrap-wide im-stack" style="--im-stack-gap: 2rem">
+	<header class="im-collhead">
+		<p class="im-eyebrow">Shop</p>
+		<h1 class="im-collhead-title">Things I made, for sale</h1>
+		<p class="im-collhead-text">Digital, delivered immediately, yours to keep. One licence covers every site you own — and everything here is what this site itself runs on.</p>
+		<p class="im-collhead-meta"><span>{{demo.shop.length}} products</span><span>Instant download</span><a href="#shop">Licences</a></p>
+	</header>
+
+	<div class="im-collbar">
+		<div class="im-collbar-filters">
+			<a class="im-tag" href="#shop" aria-current="page">All</a>
+			<a class="im-tag" href="#shop">Design systems</a>
+			<a class="im-tag" href="#shop">Ghost themes</a>
+			<a class="im-tag" href="#shop">Icons</a>
+			<a class="im-tag" href="#shop">Free</a>
+		</div>
+		<div class="im-cluster" style="--im-cluster-gap: .375rem">
+			<button class="im-btn im-btn-sm" type="button">{{icon "list-filter"}}Newest</button>
+		</div>
+	</div>
+
+	<div class="im-repos" id="shop" style="--im-repos-min: 20rem">
+		{{#each demo.shop}}
+		<article class="im-product">
+			<span class="im-product-media">
+				<img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy">
+				{{#if badge}}<span class="im-kind im-kind-over" data-kind="issue">{{icon "sparkles"}}{{badge}}</span>{{/if}}
+			</span>
+			<p><span class="im-kind">{{icon "package"}}{{kind}}</span></p>
+			<h3><a class="im-product-name" href="/collections/shop/product/">{{name}}</a></h3>
+			<p class="im-product-text">{{text}}</p>
+			<p class="im-product-foot">
+				<span class="im-price{{#if free}} im-price-free{{/if}}">{{price}}{{#if was}}<span class="im-price-was">{{was}}</span>{{/if}}</span>
+				<a class="im-btn im-btn-sm im-btn-primary" href="/collections/shop/product/">{{#if free}}Download{{else}}Buy{{/if}} {{icon "arrow-right"}}</a>
+			</p>
+		</article>
+		{{/each}}
+	</div>
+
+	<section class="im-section">
+		<div class="home-head"><p class="im-caption" data-index="q">Before you buy</p></div>
+		<div class="im-grid-auto" style="--im-grid-min: 17rem">
+			<div class="im-card im-card-outline"><span class="im-card-title">One licence, every site you own</span><span>Not per-site, not per-seat, not a subscription. Buy it once.</span></div>
+			<div class="im-card im-card-outline"><span class="im-card-title">Updates for a year</span><span>And the version you have keeps working after that, forever.</span></div>
+			<div class="im-card im-card-outline"><span class="im-card-title">Refunds, no argument</span><span>Fourteen days. You do not have to explain, and I will not ask.</span></div>
+		</div>
+	</section>
+</div>
+
+<section class="im-section im-wrap">
+	<div class="im-prose">
+		<h2>The card</h2>
+		<p>A shot, what kind of thing it is, what it is called, one line, then the <strong>price and one button</strong> on the same row at the bottom. That row is what a shop card is for; everything above it is the argument for reading the row.</p>
+		<div class="im-table-scroll">
+		<table>
+			<thead><tr><th>Class</th><th></th></tr></thead>
+			<tbody>
+				<tr><td><code>im-product</code></td><td>The card. It fills on hover, like every other card in the system.</td></tr>
+				<tr><td><code>im-product-media</code></td><td>The shot, bled to the card's top edge. <code>--im-product-ratio</code>, 16:10.</td></tr>
+				<tr><td><code>im-product-foot</code></td><td>Price on the left, button on the right, pushed to the bottom — so a row of cards with descriptions of different lengths still lines its prices up.</td></tr>
+				<tr><td><code>im-price</code></td><td>Mono and tabular, because it is a number and a row of them should line up. <code>im-price-was</code> is what it used to be; <code>im-price-free</code> is the one that is not a number at all.</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<h2>The three answers go above the fold</h2>
+		<p>Every buyer of a digital product has the same three questions, and a shop that makes them hunt loses the sale: <strong>is it per-site</strong>, <strong>what happens when it updates</strong>, and <strong>can I get my money back</strong>. Answer them on the collection page, in three cards, before anybody has clicked into anything.</p>
+		<p>It costs one row of the page and it is the difference between a shop and a list of files.</p>
+
+		<h2>In a theme</h2>
+		{{{{code "hbs"}}}}
+{{#get "posts" filter="tag:#product" limit="all"}}
+	<div class="im-repos" style="--im-repos-min: 20rem">
+		{{#foreach posts}}
+		<article class="im-product">
+			<span class="im-product-media"><img src="{{img_url feature_image size="m"}}" alt=""></span>
+			<h3><a class="im-product-name" href="{{url}}">{{title}}</a></h3>
+			<p class="im-product-text">{{excerpt words="20"}}</p>
+			<p class="im-product-foot">
+				<span class="im-price">{{@custom.price}}</span>
+				<a class="im-btn im-btn-sm im-btn-primary" href="{{url}}">{{t "Buy"}}</a>
+			</p>
+		</article>
+		{{/foreach}}
+	</div>
+{{/get}}
+		{{{{/code}}}}
+		<p>Ghost has no product type, so a product is a post with an internal tag and the price in its code injection — or, if the shop is real, the price comes from whatever takes the payment, and the page never invents it.</p>
+	</div>
+</section>

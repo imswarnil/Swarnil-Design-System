@@ -98,6 +98,9 @@ export async function build({ quiet = false } = {}) {
 		six: fixtures.posts.slice(0, 6),
 		ten: fixtures.posts.slice(0, 10),
 		video: '/assets/sections/home-hero-full/media/hero-loop.mp4',
+		// Plain image URLs. {{lookup demo.six @index}} hands back a POST, not a
+		// picture, and an object used as a src prints "[object Object]".
+		shots: fixtures.posts.slice(0, 6).map((p) => p.feature_image),
 		noImage: { ...fixtures.posts[1], feature_image: null, featured: false },
 		locked: { ...fixtures.posts[2], access: false },
 		author: fixtures.author,
@@ -157,6 +160,52 @@ export async function build({ quiet = false } = {}) {
 			{ n: '041', date: '11 Sep 2026', title: 'Forty components and one hover', text: 'Three competing interactions removed in an afternoon, and nothing was lost.', read: '58%', words: '980' },
 			{ n: '040', date: '4 Sep 2026', title: 'What a design system is actually for', text: 'Not consistency. Not speed. The ability to change your mind later.', read: '64%', words: '1,510' },
 			{ n: '039', date: '28 Aug 2026', title: 'Every number from the move', text: 'Rent, tax, the deposit nobody mentions, and the month it took to get a bank account.', read: '71%', words: '2,300' },
+		],
+		shop: [
+			{ name: 'Im Design System', text: 'Tokens, a page shell, forty components and ready-made sections for Ghost themes.', price: '$149', was: '$199', kind: 'Design system', badge: 'New' },
+			{ name: 'Signal — a Ghost theme', text: 'The theme this site runs on. Built on the system, and it comes with it.', price: '$89', kind: 'Ghost theme' },
+			{ name: 'The icon set', text: '340 icons on a 24px grid, shipped as partials rather than as a font.', price: '$29', kind: 'Icons' },
+			{ name: 'Field Notes templates', text: 'Six newsletter layouts that survive Outlook. Because somebody has to.', price: 'Free', free: true, kind: 'Templates' },
+		],
+		uses: [
+			{ name: 'Fujifilm X100VI', by: 'Fujifilm · compact camera', text: 'Every picture on this site since March. Small enough to be in a pocket, good enough not to want the other one.', price: '€1,599', was: '€1,799' },
+			{ name: 'Roterfaden Taschenbegleiter', by: 'Roterfaden · notebook cover', text: 'Four years old, four countries, still closes properly.', price: '€139' },
+			{ name: 'Herman Miller Aeron', by: 'Herman Miller · chair', text: 'Bought used, twelve years old, will outlive me.', price: '€620' },
+			{ name: 'iA Writer', by: 'Information Architects · app', text: 'Drafts, before they are posts. The one app I have never replaced.', price: '€29' },
+		],
+		snippets: [
+			{ name: 'Fluid type without a media query', lang: 'CSS', langColor: '#563d7c', text: 'One clamp, one line, every size between.', snippet: 'font-size: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);\nline-height: 1.5;' },
+			{ name: 'A grid with no breakpoints', lang: 'CSS', langColor: '#563d7c', text: 'As many columns as fit, and never one that is too narrow to read.', snippet: 'grid-template-columns:\n\trepeat(auto-fill, minmax(min(16rem, 100%), 1fr));' },
+			{ name: 'Throttle a scroll listener properly', lang: 'JavaScript', langColor: '#f1e05a', text: 'One frame, one measurement. An observer never fires in an unpainted tab.', snippet: 'let pending = false;\naddEventListener(\'scroll\', () =>\n\tpending || ((pending = true), requestAnimationFrame(measure)),\n{ passive: true });' },
+			{ name: 'Ghost: posts by tag, without the current one', lang: 'Handlebars', langColor: '#f7931e', text: 'The related-posts query that does not include the post you are on.', snippet: '{{#get "posts" filter="tags:[{{primary_tag.slug}}]+id:-{{id}}" limit="3"}}\n\t{{#foreach posts}}…{{/foreach}}\n{{/get}}' },
+		],
+		prompts: [
+			{ name: 'Rewrite without the adjectives', model: 'Any model', text: 'For a draft that reads like a brochure.', body: 'Rewrite the text below. Remove every adjective that is not doing work, every sentence that restates the one before it, and every phrase that could be said by any company about any product.\n\nKeep the facts, the numbers and the voice. Return only the rewritten text.' },
+			{ name: 'Find what is missing', model: 'Reasoning models', text: 'The review that catches the thing nobody wrote down.', body: 'Read the document below and list only what is MISSING: decisions implied but never stated, terms used but never defined, and steps that assume knowledge the reader has not been given.\n\nDo not summarise. Do not praise. A numbered list, shortest first.' },
+			{ name: 'Explain this code to its future author', model: 'Any model', text: 'Comments that say why, not what.', body: 'Write the comment that belongs above this function. Explain WHY it is written this way and what breaks if it is changed — not what the lines do, which is already there.\n\nOne short paragraph. No preamble.' },
+		],
+		experience: [
+			{ role: 'Design systems, independently', at: 'Own practice', when: '2024 — now', mark: 'OP', state: 'current', bullets: ['Built and sold a Tailwind design system for Ghost themes.', 'Three client sites on it; none has needed a fork.', 'Wrote the documentation that is most of why it sells.'] },
+			{ role: 'Senior Salesforce developer', at: 'Passport Seva Kendra', when: '2021 — 2024', mark: 'PS', state: 'done', bullets: ['Rebuilt the case-handling flow used by 400 staff daily.', 'Took a nine-minute process to ninety seconds.'] },
+			{ role: 'Front-end developer', at: 'Nordvik', when: '2019 — 2021', mark: 'NV', state: 'done', bullets: ['Shipped the component library the marketing site still runs on.'] },
+		],
+		wishlist: [
+			{ name: 'Leica Q3', by: 'Leica · camera', text: 'The one I will not buy this year, and possibly not next year.', price: '€5,950', wish: 90 },
+			{ name: 'A proper scanner', by: 'Epson · FastFoto', text: 'Ten years of prints in a box under the desk.', price: '€520', wish: 65 },
+			{ name: 'Standing desk, the heavy one', by: 'Jarvis · bamboo', text: 'Got it in August. Leaving it here because somebody asked.', price: '€780', wish: 100, got: true },
+			{ name: 'Two more years of this', by: 'Nobody sells it', text: 'The only thing on the list that is not for sale.', price: '—', wish: 100 },
+		],
+		episodes: [
+			{ n: '01', title: 'Leaving Sorrento', time: '8:12', when: '4 Sep', state: 'done', text: 'Why this road exists, who cut it, and what it was for.' },
+			{ n: '02', title: 'The first tunnel', time: '11:40', when: '11 Sep', state: 'done', text: 'Forty kilometres, two hours, and the bit where the bus folds its mirrors in.' },
+			{ n: '03', title: 'Positano, and the parking', time: '14:05', when: '18 Sep', state: 'current', text: 'What it costs in August, and where to leave the car instead.' },
+			{ n: '04', title: 'Amalfi, and the way back', time: '—', when: 'Next Thursday', state: 'upcoming', text: 'East to west, on the sea side, with nothing left to prove.' },
+		],
+		journal: [
+			{ when: '21 September', title: 'Deleted the style scope', text: 'Two looks was one look too many. Everything is one component styled once now, and the page is quieter for it.', tag: 'Design system' },
+			{ when: '18 September', title: 'The dot is not a state', text: 'A dot beside a nav link means a notification everywhere else on the web. Changed it to a fill and a bolder label — the thing the side nav was already doing.', tag: 'Design system' },
+			{ when: '14 September', title: 'Four hours on a pseudo-element', text: 'A registered custom property read by a ::before must inherit. It does not, by default. Nothing about that is in any tutorial.', tag: 'CSS' },
+			{ when: '9 September', title: 'Back from the coast', text: 'Eight minutes of footage out of four days. Worth it.', tag: 'Travel' },
 		],
 		archive: [
 			{ year: '2026', posts: 34, share: '100%' },

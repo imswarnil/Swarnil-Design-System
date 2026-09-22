@@ -1,0 +1,95 @@
+---
+title: Series collection
+layout: home
+description: A web series — seasons, episodes in order, and where the viewer got to. It is the video collection with one thing added: episodes are watched in sequence, so the number is navigation.
+eyebrow: Collections · Series
+source: src/components/commerce.css · video-card.css
+---
+<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+	<p class="im-eyebrow">Collections · Series · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+</section>
+
+<div class="im-wrap-wide im-stack" style="--im-stack-gap: 2rem">
+	<section class="im-channel">
+		<div class="im-channel-banner" style="--im-channel-ratio: 4 / 1"><img src="{{demo.six.[0].feature_image}}" alt="" loading="eager"></div>
+		<div class="im-channel-head">
+			<div class="im-channel-id">
+				<p><span class="im-kind" data-kind="video">{{icon "square-play"}}Series</span></p>
+				<h1 class="im-channel-name">The Amalfi Road</h1>
+				<p class="im-channel-meta"><span>Season 1</span><span>4 episodes</span><span>Updated Thursdays</span></p>
+				<p class="im-channel-text">Forty kilometres, two hours, and nobody in a hurry. Four films about one road, made over four days in November.</p>
+			</div>
+			<div class="im-channel-actions">
+				<a class="im-btn im-btn-primary" href="/collections/series/episode/">{{icon "play"}}Start watching</a>
+				<button class="im-btn" type="button">{{icon "bell"}}Notify me</button>
+			</div>
+		</div>
+	</section>
+
+	<div class="im-collbar">
+		<div class="im-collbar-filters">
+			<a class="im-tag" href="#eps" aria-current="page">Season 1</a>
+			<a class="im-tag" href="#eps">Season 2</a>
+			<a class="im-tag" href="#eps">Extras</a>
+		</div>
+		<div class="im-cluster" style="--im-cluster-gap: .375rem">
+			<span class="im-caption">2 of 4 watched</span>
+			<div class="im-progress" style="width: 7rem; --im-value: .5" role="progressbar" aria-valuenow="50" aria-label="Watched"><span></span></div>
+		</div>
+	</div>
+
+	<div class="im-stack" id="eps" style="--im-stack-gap: 1.25rem">
+		{{#each demo.episodes}}
+		<div class="im-episode" data-state="{{state}}">
+			<span class="im-epnum">{{n}}</span>
+			<article class="im-vidcard im-vidcard-row">
+				<a class="im-vidcard-thumb" href="/collections/series/episode/" tabindex="-1" aria-hidden="true">
+					<img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy">
+					<span class="im-vidcard-time">{{time}}</span>
+					{{#match state "=" "done"}}<span class="im-vidcard-progress"><span style="width: 100%"></span></span>{{/match}}
+					{{#match state "=" "current"}}<span class="im-vidcard-progress"><span style="width: 34%"></span></span>{{/match}}
+				</a>
+				<div class="im-vidcard-body"><div>
+					<h3 class="im-vidcard-title"><a href="/collections/series/episode/">{{title}}</a></h3>
+					<p class="im-vidcard-meta"><span>{{when}}</span>{{#match state "=" "done"}}<span>Watched</span>{{/match}}{{#match state "=" "upcoming"}}<span>Not out yet</span>{{/match}}</p>
+					<p class="im-vidcard-text">{{text}}</p>
+				</div></div>
+			</article>
+		</div>
+		{{/each}}
+	</div>
+</div>
+
+<section class="im-section im-wrap">
+	<div class="im-prose">
+		<h2>A series is a video collection that is in order</h2>
+		<p>Everything here is the <a href="/collections/video/">video collection</a>'s: the channel head, the filter bar, the card. What a series adds is that the episodes have a <strong>sequence</strong>, and a viewer needs to know three things about it before they press anything — which one is first, which one they are on, and whether the last one is out yet.</p>
+		<div class="im-table-scroll">
+		<table>
+			<thead><tr><th>Class</th><th></th></tr></thead>
+			<tbody>
+				<tr><td><code>im-episode</code></td><td>The row: a number, then the ordinary <a href="/collections/video/card/">video card</a> in its row layout.</td></tr>
+				<tr><td><code>im-epnum</code></td><td>The number, in Geist Pixel, tabular. <code>data-state="done"</code> on the row turns it the success colour.</td></tr>
+				<tr><td>The progress bar</td><td>The card's own <code>im-vidcard-progress</code> — full for a watched episode, part-way for the one in progress, absent for one not started.</td></tr>
+				<tr><td>The season bar</td><td><code>im-collbar</code> with the seasons as chips and a <a href="/components/progress/">progress bar</a> showing how much of the season is done.</td></tr>
+			</tbody>
+		</table>
+		</div>
+		<p><strong>"Not out yet" is a state, not an absence.</strong> The fourth episode has no length and no still — it has a date. Hiding it would be easier and would lose the one viewer who came back to check.</p>
+
+		<h2>In a theme</h2>
+		{{{{code "hbs"}}}}
+{{#get "posts" filter="tag:#series-amalfi" order="published_at asc" limit="all"}}
+	{{#foreach posts}}
+	<div class="im-episode" data-state="{{@custom.state}}">
+		<span class="im-epnum">{{@number}}</span>
+		{{> "components/video-card" layout="row"}}
+	</div>
+	{{/foreach}}
+{{/get}}
+		{{{{/code}}}}
+		<p><code>order="published_at asc"</code> — a series is the one collection that is <strong>not</strong> newest-first. Getting that wrong is the single most common mistake on a series page, and it makes episode four the first thing a new viewer sees.</p>
+	</div>
+</section>

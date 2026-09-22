@@ -1,0 +1,122 @@
+---
+title: Product page
+layout: home
+description: One thing for sale — the screenshots, what it is, what is in the box, and a buy box that sticks, because on a long product page the decision is made a long way from the top.
+eyebrow: Collections · Shop
+source: src/components/commerce.css · carousel.css
+---
+<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+	<p class="im-eyebrow">Collections · Shop · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+</section>
+
+<div class="im-single im-wrap-wide" data-sidebar="on" style="--im-single-aside: 21rem">
+	<article class="im-stack" style="--im-stack-gap: 2rem">
+		<header class="im-projecthero">
+			<nav aria-label="Breadcrumb">
+				<ol class="im-breadcrumb im-breadcrumb-chevron">
+					<li><a href="/">{{> "icons/house"}}<span>Home</span></a></li>
+					<li><a href="/collections/shop/">{{> "icons/wallet"}}<span>Shop</span></a></li>
+					<li><span aria-current="page">Im Design System</span></li>
+				</ol>
+			</nav>
+			<p><span class="im-kind">{{icon "package"}}Design system</span></p>
+			<h1 class="im-projecthero-title">Im Design System</h1>
+			<p class="im-projecthero-text">Tokens, a page shell, forty components and ready-made sections for Ghost themes — written from a blank file, so everything in it is yours to sell on.</p>
+			<p class="im-repo-topics">
+				<a class="im-topic" href="#">Tailwind 4</a>
+				<a class="im-topic" href="#">Ghost 6</a>
+				<a class="im-topic" href="#">Dark mode</a>
+				<a class="im-topic" href="#">No dependencies</a>
+			</p>
+		</header>
+
+		<div data-im-lightbox>
+			{{#> "components/carousel" label="Screenshots" dots=true style="--im-slides: 1.05; --im-slides-sm: 1.5; --im-slides-md: 1.9"}}
+				{{#foreach demo.six}}<a class="im-zoomable" href="{{feature_image}}" data-caption="{{title}}"><img src="{{feature_image}}" alt="{{title}}" loading="lazy" style="aspect-ratio: 16 / 10; width: 100%; object-fit: cover"></a>{{/foreach}}
+			{{/"components/carousel"}}
+		</div>
+
+		<section class="im-content im-content-flush im-content-lede" data-im-zoom style="--im-content-main: 100%">
+			<p>A design system a Ghost theme can be <em>built on and sold with</em>. Not a starter, not a UI kit with a licence that stops at your own site: every line of it is original, every outside file is listed by name, and the licence lets you ship what you make.</p>
+
+			<h2>What is in it</h2>
+			<ul>
+				<li><strong>107 tokens.</strong> Primitives with no meaning, semantic tokens that say what a value is for, and a bridge that hands them to Tailwind.</li>
+				<li><strong>Forty components.</strong> Every one built from tokens only, with its knobs exposed as variables.</li>
+				<li><strong>Fourteen collections.</strong> The page-shapes a site is actually made of — post, project, video, course, shop — each one a collection, a card and a page.</li>
+				<li><strong>Five optional scripts</strong>, 1–3 KB each. Nothing is required to read a page.</li>
+			</ul>
+
+			<figure class="im-shot kg-card kg-width-wide">
+				<img src="{{demo.six.[3].feature_image}}" alt="" loading="lazy">
+				<figcaption><b>The docs</b> 84 pages, and every example renders the real partial.</figcaption>
+			</figure>
+
+			<h2>What it is not</h2>
+			<p>It is not a theme you install. It is what a theme is <em>made of</em> — and if you want the theme as well, that is <a href="/collections/shop/">Signal</a>, which comes with it.</p>
+
+			<h2>Questions people actually ask</h2>
+			<div class="im-accordion kg-card kg-width-wide">
+				<details><summary>Can I sell what I build with it?</summary><div>Yes. That is the whole reason it exists — the alternative was a paid theme whose licence made everything built on it unsellable.</div></details>
+				<details><summary>Does it need Tailwind?</summary><div>It is written in Tailwind 4 and ships a compiled stylesheet. You can use the file and never run the build.</div></details>
+				<details><summary>What happens when Ghost changes?</summary><div>Updates for a year. After that the version you have keeps working, because it is a stylesheet and some Handlebars partials — nothing phones home.</div></details>
+				<details><summary>Refunds?</summary><div>Fourteen days, no argument, no form. Email me.</div></details>
+			</div>
+		</section>
+	</article>
+
+	<aside>
+		<div class="im-buybox">
+			<div class="im-buybox-price">
+				<span class="im-price">$149<span class="im-price-was">$199</span></span>
+				<span class="im-badge im-badge-accent">Launch price</span>
+			</div>
+
+			<div class="im-licences" role="radiogroup" aria-label="Licence">
+				<label class="im-licence" aria-checked="true"><strong>Personal</strong><small>Every site you own</small><span class="im-price">$149</span></label>
+				<label class="im-licence" aria-checked="false"><strong>Studio</strong><small>Client work, unlimited</small><span class="im-price">$399</span></label>
+			</div>
+
+			<ul class="im-buybox-list">
+				<li><span>The full source — CSS, partials, scripts, docs</span></li>
+				<li><span>One licence, every site you own</span></li>
+				<li><span>Updates for a year</span></li>
+				<li><span>Sell what you build with it</span></li>
+			</ul>
+
+			<a class="im-btn im-btn-primary im-btn-lg im-btn-block" href="#buy">{{icon "wallet"}}Buy it — $149</a>
+			<a class="im-btn im-btn-block" href="/">{{icon "eye"}}Browse the docs first</a>
+
+			<p class="im-buybox-note">Instant download. Fourteen-day refund, no argument. VAT added at checkout where it applies.</p>
+		</div>
+	</aside>
+</div>
+
+<section class="im-section im-wrap">
+	<div class="im-prose">
+		<h2>The buy box sticks</h2>
+		<p>On a long product page the decision is made a long way from the top — somewhere around the third screenshot or the second question. A price that scrolled away ten screens ago is a price the buyer has to go and look for, and going to look for it is where the sale is lost.</p>
+		<div class="im-table-scroll">
+		<table>
+			<thead><tr><th>Class</th><th></th></tr></thead>
+			<tbody>
+				<tr><td><code>im-buybox</code></td><td>The panel. <code>position: sticky</code> under the top bar, in the <a href="/collections/post/single/">single layout</a>'s aside.</td></tr>
+				<tr><td><code>im-buybox-price</code></td><td>The price at display size, with the old one struck through beside it.</td></tr>
+				<tr><td><code>im-licences</code> · <code>im-licence</code></td><td>One of several, each a row with its own price. <code>aria-checked</code> is the chosen one — the same fill-and-ring the rest of the system uses for "current".</td></tr>
+				<tr><td><code>im-buybox-list</code></td><td>What is in the box. Ticks in the success colour, drawn as masks so they are right in both themes.</td></tr>
+				<tr><td><code>im-buybox-note</code></td><td>The small print that stops a refund request. Put the refund terms <em>here</em>, not on a policy page.</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<h2>Details that matter</h2>
+		<ul>
+			<li><strong>Two buttons, not one.</strong> The second is for the person who is not ready — "browse the docs" keeps them on the site instead of closing the tab.</li>
+			<li><strong>Answer the objections on the page.</strong> The four questions in the accordion are the four emails you would otherwise get; a product page that makes somebody ask has already cost more than it saved.</li>
+			<li><strong>Never invent the price in the template.</strong> It comes from whatever takes the payment. A page that says $149 while the checkout says $199 is a refund and a bad review.</li>
+			<li><strong>The screenshots open.</strong> Somebody spending $149 wants to look closely; the carousel is wrapped in <code>data-im-lightbox</code>.</li>
+		</ul>
+	</div>
+</section>

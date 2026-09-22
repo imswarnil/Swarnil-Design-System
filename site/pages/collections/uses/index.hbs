@@ -1,0 +1,102 @@
+---
+title: Products I use
+layout: home
+description: The things you actually own and recommend, grouped by where they live — with the disclosure attached to every one of them, because some of these links pay.
+eyebrow: Collections
+source: src/components/ad.css · commerce.css
+---
+<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+	<p class="im-eyebrow">Collections · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+</section>
+
+<div class="im-wrap im-stack" style="--im-stack-gap: 2rem">
+	<header class="im-collhead">
+		<p class="im-eyebrow">Uses</p>
+		<h1 class="im-collhead-title">What I actually use</h1>
+		<p class="im-collhead-text">Everything here I own, paid for, and have used long enough to have an opinion about. If it is on this page it survived at least a year.</p>
+		<p class="im-collhead-meta"><span>{{demo.uses.length}} things</span><span>Updated September 2026</span></p>
+	</header>
+
+	<div class="im-callout im-callout-info">
+		<p>Some of the links below pay me a small amount if you buy through them, at no cost to you. Nothing is on this page <em>because</em> of that — three of the four have no affiliate programme at all.</p>
+	</div>
+
+	<div class="im-collbar">
+		<div class="im-collbar-filters">
+			<a class="im-tag" href="#uses" aria-current="page">Everything</a>
+			<a class="im-tag" href="#uses">Desk</a>
+			<a class="im-tag" href="#uses">Camera</a>
+			<a class="im-tag" href="#uses">Software</a>
+			<a class="im-tag" href="#uses">Carried</a>
+		</div>
+	</div>
+
+	<div class="im-affiliates" id="uses">
+		{{#each demo.uses}}
+		<article class="im-affiliate">
+			<span class="im-affiliate-media"><img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy"></span>
+			<a class="im-affiliate-name" href="#uses" rel="sponsored noopener">{{name}}</a>
+			<p class="im-affiliate-by">{{by}}</p>
+			<p class="im-affiliate-text">{{text}}</p>
+			<p class="im-affiliate-meta">
+				<span class="im-affiliate-price">{{price}}</span>
+				{{#if was}}<span class="im-affiliate-was">{{was}}</span>{{/if}}
+				<span class="im-badge im-badge-success">Still using it</span>
+			</p>
+			<div class="im-affiliate-actions">
+				<a class="im-btn im-btn-primary im-btn-sm" href="#uses" rel="sponsored noopener">Where I got it {{icon "arrow-up-right"}}</a>
+				<a class="im-btn im-btn-sm" href="/collections/post/article/">Why this one</a>
+			</div>
+			<p class="im-affiliate-note">Affiliate link — I earn a little if you buy, at no cost to you</p>
+		</article>
+		{{/each}}
+	</div>
+
+	<section class="im-section">
+		<div class="home-head"><p class="im-caption" data-index="also">Also on the desk</p></div>
+		<div class="im-widgets" style="max-width: 24rem">
+			<section class="im-widget">
+				<h2 class="im-widget-title">Small things</h2>
+				<div class="im-widget-products">
+					{{#each demo.products}}
+					<a class="im-widget-product" href="#uses">
+						<span class="im-widget-product-mark">{{name.[0]}}</span>
+						<span class="im-widget-product-name">{{name}}</span>
+						<span class="im-widget-product-note">{{note}}</span>
+						{{icon "arrow-up-right"}}
+					</a>
+					{{/each}}
+				</div>
+			</section>
+		</div>
+	</section>
+</div>
+
+<section class="im-section im-wrap">
+	<div class="im-prose">
+		<h2>It is the affiliate card, in a list</h2>
+		<p>Nothing new was built for this page. <code>im-affiliate</code> from <a href="/components/ads/#affiliate-product-card">Ads &amp; sponsors</a> already holds everything a "uses" page needs — the shot, the name, the vendor, why you like it, the price, where to get it, and the disclosure as its own row at the bottom.</p>
+		<p>The <strong>page-level disclosure goes at the top, in a callout, before anything else</strong>. The per-card note is a reminder; the callout at the top is the actual disclosure, and it is the one a regulator and a reader both look for.</p>
+		<div class="im-table-scroll">
+		<table>
+			<thead><tr><th>Block</th><th>Built from</th></tr></thead>
+			<tbody>
+				<tr><td>The head</td><td><code>im-collhead</code>, as every collection uses.</td></tr>
+				<tr><td>The disclosure</td><td><a href="/components/callout/">Callout</a>, <code>im-callout-info</code>. Above the list, not under it.</td></tr>
+				<tr><td>The list</td><td><code>im-affiliates</code> · <code>im-affiliate</code>.</td></tr>
+				<tr><td>The small things</td><td>The <a href="/components/widgets/#things-i-use">products widget</a> — for the twenty items that do not each deserve a card.</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<h2>Rules</h2>
+		<ul>
+			<li><strong>Own it, or take it off.</strong> A uses page listing things you have not used is an ad page with a different name, and readers work that out fast.</li>
+			<li><strong>Say when it was last checked.</strong> A three-year-old recommendation for a discontinued product is worse than no page.</li>
+			<li><strong>Two tiers, not one.</strong> Four things you would fight for as cards; the other twenty as rows in a widget.</li>
+			<li><strong><code>rel="sponsored noopener"</code> on every paid link.</strong> It is the machine-readable half of the disclosure the page already makes in words.</li>
+		</ul>
+	</div>
+</section>

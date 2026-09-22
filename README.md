@@ -62,12 +62,18 @@ theme → tokens → base → layout → components → effects → utilities   
   letter on a tile, for a favicon, an avatar or an island bar. One variable, `--im-logo-size`,
   scales all of it. The only drawn file is `assets/brand/mark.svg`, because a browser tab cannot
   run CSS. See **Foundation → Logo**.
-- **A blog is two pages and one card, and all three are here whole.** **Collections → Post** in the
-  docs is what every Ghost site is made of: the *collection* (`im-collhead`, `im-collbar`, `im-feed`
-  — which is also a tag page and an author page), the *post* (`im-posthero`, the body, a column of
-  `im-widget`s, and `im-postfoot` — author, support, related, newsletter, prev/next, comments), and
-  the *card* they are both built out of. Neither page is a section folder to copy; both are
-  compositions of components that already exist.
+- **A site is made of COLLECTIONS, and fourteen of them are here whole.** Each one is a list, the
+  card it is made of, and the page one item opens to — all built from components that already exist,
+  which is the test: if a new page-shape needs eight new classes, the system did not have enough in
+  it. Post (collection · card · single with a sidebar switch · series · article), Project (repo
+  cards · case-study page with a screenshot carousel and a log stepper), Video (channel · card ·
+  watch page · 9:16 short that fits one viewport), Series (seasons and episodes, in order), Course
+  (curriculum · lesson-player layout), Shop (product cards · a sticky buy box), Newsletter (numbered
+  issues), Tag (topic index · tag page · archive), and the single-page ones — Products I use,
+  Journal, Snippets, Prompts, Experience, Wishlist.
+- **Every card says what kind of thing it is.** `im-kind`, one chip, one place: Post, Project,
+  Video, Short, Issue, Topic. Only the icon takes a colour — six coloured chips on a screen is a
+  colour chart.
 - **The post card is one markup, every shape.** Vertical, horizontal either way round, over the
   picture, or no picture — and what it *shows* is a separate, declarative decision:
   `data-im-hide="author excerpt"`, any of nine parts, in any combination, without a second template.

@@ -1,0 +1,87 @@
+---
+title: Wishlist
+layout: home
+description: Things you want, with how much you want them — and the ones you have since got, left on the list, because a wishlist that deletes its history is a shopping cart.
+eyebrow: Collections
+source: src/components/commerce.css · ad.css
+---
+<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+	<p class="im-eyebrow">Collections · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+</section>
+
+<div class="im-wrap im-stack" style="--im-stack-gap: 2rem">
+	<header class="im-collhead">
+		<p class="im-eyebrow">Wishlist</p>
+		<h1 class="im-collhead-title">Things I want</h1>
+		<p class="im-collhead-text">Kept in public mostly to slow myself down. The bar underneath each one is how badly, and it is the only honest thing on the page.</p>
+		<p class="im-collhead-meta"><span>{{demo.wishlist.length}} things</span><span>1 got</span><span>Updated September 2026</span></p>
+	</header>
+
+	<div class="im-collbar">
+		<div class="im-collbar-filters">
+			<a class="im-tag" href="#wish" aria-current="page">Wanted</a>
+			<a class="im-tag" href="#wish">Got</a>
+			<a class="im-tag" href="#wish">Someday</a>
+		</div>
+	</div>
+
+	<div class="im-affiliates" id="wish">
+		{{#each demo.wishlist}}
+		<article class="im-affiliate">
+			<span class="im-affiliate-media"><img src="{{lookup ../demo.shots @index}}" alt="" loading="lazy"></span>
+			<a class="im-affiliate-name" href="#wish" rel="noopener">{{name}}</a>
+			<p class="im-affiliate-by">{{by}}</p>
+			<p class="im-affiliate-text">{{text}}</p>
+			<p class="im-affiliate-meta">
+				<span class="im-affiliate-price">{{price}}</span>
+				<span class="im-wish-priority{{#if got}} im-wish-got{{/if}}" style="--im-wish: {{wish}}%">{{#if got}}Got it{{else}}Want{{/if}}</span>
+			</p>
+			<div class="im-affiliate-actions">
+				{{#if got}}
+					<span class="im-badge im-badge-success">{{icon "check"}}Since August</span>
+					<a class="im-btn im-btn-sm" href="/collections/uses/">Now on Uses</a>
+				{{else}}
+					<a class="im-btn im-btn-sm" href="#wish" rel="noopener">Where it is {{icon "arrow-up-right"}}</a>
+				{{/if}}
+			</div>
+			<p class="im-affiliate-note">Nothing on this page is an affiliate link</p>
+		</article>
+		{{/each}}
+	</div>
+</div>
+
+<section class="im-section im-wrap">
+	<div class="im-prose">
+		<h2>The affiliate card, with the buying taken out</h2>
+		<p>A wishlist is the <a href="/collections/uses/">uses</a> page before the decision: the same card, the same shot, the same price — but the buy button is gone, because you are not buying it, and in its place is the only fact a wishlist actually carries.</p>
+		<p><strong>How badly.</strong> <code>im-wish-priority</code> is a small bar, <code>--im-wish</code> percent full, in one line with the word "Want". It says more than a star rating and takes a quarter of the room.</p>
+		{{#example center=true}}
+		<span class="im-wish-priority" style="--im-wish: 90%">Want</span>
+		<span class="im-wish-priority" style="--im-wish: 65%">Want</span>
+		<span class="im-wish-priority" style="--im-wish: 25%">Someday</span>
+		<span class="im-wish-priority im-wish-got">Got it</span>
+		{{/example}}
+
+		<h2>Leave the ones you got</h2>
+		<p>A wishlist that deletes an item the moment it is bought is a shopping cart. Leaving it — marked, in the success colour, with a link through to <a href="/collections/uses/">Uses</a> — turns the page into a record of what you wanted and whether you were right, which is the only part of it worth reading a year later.</p>
+		<div class="im-table-scroll">
+		<table>
+			<thead><tr><th>Class</th><th></th></tr></thead>
+			<tbody>
+				<tr><td><code>im-wish-priority</code></td><td>The bar and the word. <code>--im-wish</code> is how full, <code>--im-wish-color</code> what colour.</td></tr>
+				<tr><td><code>im-wish-got</code></td><td>Full, in the success colour, and the label changes. The card stays.</td></tr>
+				<tr><td><code>im-affiliate</code></td><td>Everything else — it is the same card as <a href="/components/ads/#affiliate-product-card">Uses</a>, minus the buy button.</td></tr>
+			</tbody>
+		</table>
+		</div>
+
+		<h2>Rules</h2>
+		<ul>
+			<li><strong>No affiliate links on a wishlist.</strong> Asking people to look at what you want and earning from it is the one place this stops being charming. The note on every card says so out loud.</li>
+			<li><strong>Prices go out of date.</strong> Say when the page was last checked, or leave them off.</li>
+			<li><strong>One thing that is not for sale.</strong> Every good wishlist has one, and it is the reason anybody reads to the bottom.</li>
+		</ul>
+	</div>
+</section>
