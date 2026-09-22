@@ -105,3 +105,19 @@ source: src/utilities/patterns.css
 	<li><strong>Empty space is a fine place for one</strong> — a filler cell in a grid, an image placeholder, a "nothing here yet" state.</li>
 	<li>They are decoration: mark the layer <code>aria-hidden="true"</code>.</li>
 </ul>
+
+
+<h2>More line work, and variations</h2>
+<p><code>im-bg-hatch</code> · <code>im-bg-lattice</code> · <code>im-bg-radar</code> · <code>im-bg-waves</code> · <code>im-bg-bricks</code> · <code>im-bg-plus</code>. Then a variation on any of them: <code>im-bg-fade-r</code>, <code>im-bg-fade-b</code>, <code>im-bg-corner</code> mask it to one edge or corner; <code>im-bg-dense</code> / <code>im-bg-loose</code> change the pitch; <code>im-bg-accent</code> inks it in the accent. A pattern that fills a panel is wallpaper; one that fades is a mark.</p>
+{{#example}}
+<div class="im-grid-auto" style="--im-grid-min: 9rem; --im-grid-gap: .75rem">
+	<div class="im-bg-hatch" style="aspect-ratio: 1; border-radius: var(--im-radius-lg)"></div>
+	<div class="im-bg-lattice" style="aspect-ratio: 1; border-radius: var(--im-radius-lg)"></div>
+	<div class="im-bg-radar" style="aspect-ratio: 1; border-radius: var(--im-radius-lg)"></div>
+	<div class="im-bg-waves" style="aspect-ratio: 1; border-radius: var(--im-radius-lg)"></div>
+	<div class="im-bg-bricks" style="aspect-ratio: 1; border-radius: var(--im-radius-lg)"></div>
+	<div class="im-bg-plus" style="aspect-ratio: 1; border-radius: var(--im-radius-lg)"></div>
+	<div class="im-bg-grid im-bg-fade-r im-bg-accent" style="aspect-ratio: 1; border-radius: var(--im-radius-lg)"></div>
+	<div class="im-bg-dots im-bg-corner im-bg-dense" style="aspect-ratio: 1; border-radius: var(--im-radius-lg)"></div>
+</div>
+{{/example}}

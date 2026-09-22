@@ -1,0 +1,121 @@
+/* Media backgrounds — a picture or a clip behind words.
+
+     <section class="im-mediabg" data-blend="multiply">
+       <img src="…" alt="">              or  <video muted loop playsinline autoplay poster="…">
+       <div class="im-mediabg-scrim"></div>
+       <div class="im-mediabg-copy"> … </div>
+     </section>
+
+   Three ways to make text readable on a picture, from cheapest to loudest:
+   a scrim (the gradient the heroes use), a blend (`data-blend`), and a
+   knockout (`im-mediabg-knockout`: the words become windows onto the picture).
+   Use one. Two is a filter on a filter, and the picture is gone. */
+
+.im-mediabg {
+	--im-mediabg-min: 24rem;
+
+	position: relative;
+	display: grid;
+	align-content: end;
+	min-height: var(--im-mediabg-min);
+	padding: clamp(1.5rem, 1rem + 2.5vw, 3.5rem);
+	overflow: hidden;
+	isolation: isolate;
+	border-radius: var(--im-radius-2xl);
+	color: #fff;
+	background-color: var(--im-gray-900);
+}
+
+.im-mediabg > :is(img, video) {
+	position: absolute;
+	inset: 0;
+	z-index: -2;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+/* Full-bleed: edge to edge of the viewport, corners squared. */
+.im-mediabg-full {
+	border-radius: 0;
+	width: 100vw;
+	margin-inline: calc(50% - 50vw);
+}
+
+.im-mediabg-scrim {
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	background-image: linear-gradient(to top, rgb(0 0 0 / 82%), rgb(0 0 0 / 40%) 50%, rgb(0 0 0 / 6%));
+}
+
+/* A blend, applied to the SCRIM, so the picture takes a colour rather than
+   being hidden behind one. The scrim needs an `isolation: isolate` ancestor
+   (the section is one) or it mixes with the whole page. */
+.im-mediabg[data-blend] .im-mediabg-scrim {
+	background-image: none;
+	background-color: var(--im-mediabg-tint, var(--im-accent));
+}
+
+.im-mediabg[data-blend="multiply"] .im-mediabg-scrim { mix-blend-mode: multiply; }
+.im-mediabg[data-blend="screen"] .im-mediabg-scrim { mix-blend-mode: screen; }
+.im-mediabg[data-blend="overlay"] .im-mediabg-scrim { mix-blend-mode: overlay; }
+.im-mediabg[data-blend="luminosity"] .im-mediabg-scrim { mix-blend-mode: luminosity; background-color: var(--im-gray-800); }
+.im-mediabg[data-blend="difference"] .im-mediabg-scrim { mix-blend-mode: difference; background-color: #fff; }
+
+/* Text blended with the picture underneath it. */
+.im-mediabg-copy[data-blend="difference"] { mix-blend-mode: difference; }
+.im-mediabg-copy[data-blend="overlay"] { mix-blend-mode: overlay; }
+
+/* Knockout: white sheet, black words, `screen` — the words become windows
+   onto the picture. Needs display-size type; body text becomes lace. */
+.im-mediabg-knockout {
+	color: #000;
+}
+
+.im-mediabg-knockout .im-mediabg-scrim {
+	background-image: none;
+	background-color: #fff;
+	mix-blend-mode: screen;
+	z-index: 1;
+}
+
+.im-mediabg-knockout .im-mediabg-copy {
+	position: relative;
+	z-index: 2;
+	mix-blend-mode: screen;
+	color: #000;
+}
+
+.im-mediabg-title {
+	max-width: 16ch;
+	font-family: var(--im-font-heading);
+	font-size: clamp(2.25rem, 1.4rem + 3.6vw, 4.5rem);
+	font-weight: 600;
+	line-height: 1;
+	letter-spacing: var(--im-tracking-tight);
+	text-wrap: balance;
+}
+
+.im-mediabg-text {
+	max-width: 44ch;
+	margin-top: 0.75rem;
+	opacity: 0.85;
+	text-wrap: pretty;
+}
+
+/* A fixed picture the page scrolls over. `background-attachment: fixed` is
+   jittery on phones and ignored on iOS, so it is a real element, fixed, and
+   only from md up; below that it is an ordinary cover. */
+@media (width >= 48rem) {
+	.im-mediabg-parallax > :is(img, video) {
+		position: fixed;
+		inset: 0;
+		height: 100dvh;
+		clip-path: inset(0);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.im-mediabg > video { display: none; }
+}

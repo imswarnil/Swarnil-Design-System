@@ -42,13 +42,6 @@
 	color: var(--im-accent);
 }
 
-.im-caption-rule::after {
-	content: "";
-	width: 2rem;
-	height: 1px;
-	background-color: var(--im-line);
-}
-
 /* Article + aside: a reading column with a slim sticky rail beside it.
 
    The width FOLLOWS THE SIDE NAV: collapse the nav to its rail and the space

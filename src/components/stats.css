@@ -153,10 +153,6 @@
 	opacity: 0.12;
 }
 
-.im-spark-dot {
-	fill: currentcolor;
-}
-
 .im-spark-wide {
 	--im-spark-width: 100%;
 	--im-spark-height: 9rem;

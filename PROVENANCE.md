@@ -80,6 +80,7 @@ form, button, image and icon partials and its tooltip library were replaced with
 | Brand colours on `im-btn-brand` | each service's published brand colour (a fact, not a work) | — | `src/components/button.css` |
 | Template rendering for the docs | Handlebars | MIT | build only — not shipped |
 | Sample photographs in the docs | Unsplash | Unsplash License | hot-linked by the preview — not shipped |
+| `@modelcontextprotocol/sdk`, `zod` | npm | MIT | `mcp/server.mjs` — the MCP server. Not shipped in a theme. |
 
 Fonts and icons are copied in by `scripts/vendor.mjs` from the official npm packages, so each file's
 origin is reproducible. Brand marks remain trademarks of their owners; use them only to link to that

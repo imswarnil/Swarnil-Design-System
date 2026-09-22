@@ -12,23 +12,12 @@
 	margin-inline: auto;
 }
 
-@utility im-wrap-prose {
-	width: 100%;
-	max-width: var(--im-width-prose);
-	margin-inline: auto;
-}
-
 @utility im-wrap-wide {
 	width: 100%;
 	max-width: var(--im-width-wide);
 	margin-inline: auto;
 }
 
-/* Break out of a padded parent to the viewport edges. */
-@utility im-bleed {
-	width: auto;
-	margin-inline: calc(var(--im-gutter) * -1);
-}
 
 /* ---- grids --------------------------------------------------------------- */
 /* As many columns as fit at a minimum width — no breakpoints. --im-grid-min. */

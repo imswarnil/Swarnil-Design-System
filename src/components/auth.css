@@ -174,10 +174,4 @@
 	color: var(--im-info);
 }
 
-/* The page it sits on: centred in the window, with nothing else on it. */
-.im-authpage {
-	display: grid;
-	place-items: center;
-	min-height: calc(100dvh - var(--im-bar-height));
-	padding: clamp(1.5rem, 4vh, 3rem) var(--im-gutter);
-}
+

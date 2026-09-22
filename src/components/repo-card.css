@@ -386,14 +386,6 @@
 	background-color: var(--im-repo-lang, var(--im-faint));
 }
 
-.im-langkeys {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 0.375rem 1rem;
-	color: var(--im-muted);
-	font-size: var(--im-text-xs);
-}
-
 /* ---- project log ----
    A stepper down the page: numbered marks on a line, each one an entry with a
    date, a heading, what changed and — where it helps — a shot of it.

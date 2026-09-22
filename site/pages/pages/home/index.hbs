@@ -1,0 +1,72 @@
+---
+title: Homepage
+layout: home
+description: A personal home — who, in one line; then the latest of everything, each in its own collection's card.
+eyebrow: Pages
+source: src/components/pages.css
+---
+<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+	<p class="im-eyebrow">Pages · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+</section>
+
+<div class="im-wrap-wide im-stack" style="--im-stack-gap: clamp(3rem, 2rem + 3vw, 5rem)">
+	<header class="im-homehero">
+		<div class="im-stack" style="--im-stack-gap: 1.25rem">
+			<p class="im-eyebrow">{{demo.author.name}} · Amsterdam</p>
+			<h1 class="im-homehero-title">I build things for the web and <em>write down</em> what they cost.</h1>
+			<p class="im-lede" style="margin: 0">Salesforce consulting, a design system I sell, and a letter every fortnight.</p>
+			<p class="im-cluster" style="--im-cluster-gap: .5rem">
+				<a class="im-btn im-btn-primary" href="/collections/post/">{{icon "pencil"}}Read the latest</a>
+				<a class="im-btn" href="/pages/about/">About</a>
+				<a class="im-btn" href="/pages/contact/">{{icon "mail"}}Hire me</a>
+			</p>
+			<div class="im-widget-stats" style="border: 0; padding: 0">
+				<div><strong data-im-count>34</strong><span>Posts this year</span></div>
+				<div><strong data-im-count>4,210</strong><span>Readers</span></div>
+				<div><strong data-im-count>128k</strong><span>Subscribers</span></div>
+			</div>
+		</div>
+		<div class="im-homehero-side">
+			{{#with demo.post}}{{> "components/post-card" layout="row" excerpt=true kind="post"}}{{/with}}
+			{{#with demo.projects.[0]}}{{> "components/repo-card"}}{{/with}}
+		</div>
+	</header>
+
+	<section class="im-section" style="--im-section-gap: 1rem">
+		<div class="home-head"><p class="im-caption" data-index="writing">Writing</p><a class="im-card-cta" href="/collections/post/">All posts {{> "icons/arrow-right"}}</a></div>
+		<div class="im-feed" style="--im-feed-min: 15rem">{{#each demo.mixed}}{{#match @index "<" 3}}{{> "components/post-card" excerpt=true}}{{/match}}{{/each}}</div>
+	</section>
+
+	<section class="im-section" style="--im-section-gap: 1rem">
+		<div class="home-head"><p class="im-caption" data-index="video">Latest film</p><a class="im-card-cta" href="/collections/video/">The channel {{> "icons/arrow-right"}}</a></div>
+		<div class="im-vidgrid">{{#each demo.videos}}{{#match @index "<" 4}}{{> "components/video-card" hide_by=true}}{{/match}}{{/each}}</div>
+	</section>
+
+	<aside class="im-ad im-ad-leaderboard" aria-label="Advertisement" style="margin-inline: auto"><span class="im-ad-label">Sponsored</span><span class="im-ad-slot"><img src="{{demo.shots.[4]}}" alt="" loading="lazy"></span></aside>
+
+	<section class="im-section" style="--im-section-gap: 1rem">
+		<div class="home-head"><p class="im-caption" data-index="now">Lately</p><a class="im-card-cta" href="/collections/timeline/">The timeline {{> "icons/arrow-right"}}</a></div>
+		<ol class="im-stream">{{#each demo.stream.[0].items}}<li class="im-stream-item" data-kind="{{kind}}"><span class="im-stream-mark">{{icon mark}}</span><div class="im-stream-body"><p class="im-stream-meta"><span class="im-stream-kind">{{label}}</span><time>{{when}}</time></p><h3 class="im-stream-title"><a href="{{#if url}}{{url}}{{else}}/collections/timeline/{{/if}}">{{title}}</a></h3></div></li>{{/each}}</ol>
+	</section>
+
+	<section class="im-section" style="--im-section-gap: 1rem">
+		<div class="home-head"><p class="im-caption" data-index="work">Work</p><a class="im-card-cta" href="/collections/project/">All projects {{> "icons/arrow-right"}}</a></div>
+		<div class="im-repos">{{#each demo.projects}}{{#match @index "<" 3}}{{> "components/repo-card" cta=true}}{{/match}}{{/each}}</div>
+	</section>
+
+	<section class="im-mediabg" data-blend="multiply" style="--im-mediabg-tint: #1d4ed8; --im-mediabg-min: 20rem">
+		<img src="{{demo.shots.[3]}}" alt="">
+		<div class="im-mediabg-scrim"></div>
+		<div class="im-mediabg-copy">
+			<h2 class="im-mediabg-title">The letter</h2>
+			<p class="im-mediabg-text">One thing I built, one thing I got wrong, three links. Every fortnight.</p>
+			<div style="max-width: 26rem; margin-top: 1rem">{{> "components/subscribe" id="home-email" button="Join"}}</div>
+		</div>
+	</section>
+</div>
+
+<section class="im-section im-wrap"><div class="im-prose">
+<p>Every block is a collection's own card: the featured post uses <code>im-featured</code>, the film row is the video card, the "lately" list is the <a href="/collections/timeline/">stream</a>, the letter sits on a <a href="/media/backgrounds/">media background</a>. Nothing here exists only for the home page.</p>
+</div></section>

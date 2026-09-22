@@ -1,26 +1,34 @@
 {
-  "name": "im-design-system",
-  "version": "0.6.0",
-  "private": true,
-  "description": "A Tailwind CSS design system for Ghost themes: tokens, layout, components and reusable sections.",
-  "type": "module",
-  "engines": {
-    "node": ">=22"
-  },
-  "scripts": {
-    "dev": "node site/dev.mjs",
-    "preview": "node site/dev.mjs",
-    "build": "node site/build.mjs",
-    "serve": "node site/dev.mjs --no-watch",
-    "vendor": "node scripts/vendor.mjs"
-  },
-  "devDependencies": {
-    "@tailwindcss/cli": "^4.3.3",
-    "geist": "^1.7.2",
-    "handlebars": "^4.7.9",
-    "lucide-static": "^1.47.0",
-    "simple-icons": "^16.32.0",
-    "tailwindcss": "^4.3.3"
-  },
-  "license": "UNLICENSED"
+	"name": "im-design-system",
+	"version": "0.6.0",
+	"private": true,
+	"description": "A Tailwind CSS design system for Ghost themes: tokens, layout, components and reusable sections.",
+	"type": "module",
+	"engines": {
+		"node": ">=22"
+	},
+	"scripts": {
+		"dev": "node site/dev.mjs",
+		"preview": "node site/dev.mjs",
+		"build": "node site/build.mjs",
+		"serve": "node site/dev.mjs --no-watch",
+		"vendor": "node scripts/vendor.mjs",
+		"mcp": "node mcp/server.mjs"
+	},
+	"devDependencies": {
+		"@tailwindcss/cli": "^4.3.3",
+		"geist": "^1.7.2",
+		"handlebars": "^4.7.9",
+		"lucide-static": "^1.47.0",
+		"simple-icons": "^16.32.0",
+		"tailwindcss": "^4.3.3"
+	},
+	"license": "UNLICENSED",
+	"dependencies": {
+		"@modelcontextprotocol/sdk": "^1.30.0",
+		"zod": "^4.6.5"
+	},
+	"bin": {
+		"im-design-system-mcp": "mcp/server.mjs"
+	}
 }

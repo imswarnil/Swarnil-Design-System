@@ -39,22 +39,17 @@ source: src/layout/page.css · components/widget.css
 			<p>I started writing this site because I kept answering the same questions in Slack and wanted somewhere to point. It turned into the thing I am best known for, which was not the plan and has been better than the plan.</p>
 		</section>
 
-		<section class="im-content im-content-flush">
-			<h2>What I actually do</h2>
-			<p>Three things, in the order I spend time on them. <strong>Salesforce consulting</strong> — eight years, mostly public sector, mostly the projects that are already late when I arrive. <strong>Design systems and Ghost themes</strong> — this one, and the theme this site runs on, both of which are for sale. <strong>Writing</strong> — a post a fortnight and a letter to go with it.</p>
-
-			<h2>How I work</h2>
-			<ul>
-				<li><strong>Two days a week, six weeks at a time.</strong> Anything longer and I become staff, which is not what either of us is paying for.</li>
-				<li><strong>Written down, always.</strong> Every engagement ends with a document somebody who was not there can act on.</li>
-				<li><strong>I will tell you not to do it.</strong> Roughly a third of the conversations I have end with "you do not need me for this", and those are the ones that turn into the next referral.</li>
-			</ul>
-
-			<h2>Before this</h2>
-			<p>A degree I do not use, four years inside a consultancy learning what not to do, and one startup that did not survive contact with its own market. The <a href="/collections/timeline/">timeline</a> has the rest of it in order.</p>
-
-			<h2>The site itself</h2>
-			<p>Ghost, on a theme I wrote, on a design system I wrote. No third-party scripts, no tracking, no cookie banner because there is nothing to consent to. The <a href="/provenance/">colophon</a> lists every dependency and its licence.</p>
+		<section class="im-story" aria-label="The story so far">
+			<p class="im-story-year">2012</p>
+			<div class="im-story-chapter"><h2>A degree I do not use</h2><p>Computer science, in a college I liked, in a subject I was only ever adequate at. The useful part was the four years of writing things down for people who were not in the room.</p></div>
+			<p class="im-story-year">2016</p>
+			<div class="im-story-chapter"><h2>A startup that did not survive contact with its market</h2><p>CRM for small clinics. The market was real; our timing was not. The write-up of why is the most-read thing on this site, which is either encouraging or not.</p><img src="{{demo.shots.[2]}}" alt="" loading="lazy"></div>
+			<p class="im-story-year">2018</p>
+			<div class="im-story-chapter"><h2>Four years inside a consultancy</h2><p>Learning what not to do, at scale, on somebody else's budget. Three multi-year programmes and one habit I kept: every engagement ends with a document a stranger can act on.</p></div>
+			<p class="im-story-year">2022</p>
+			<div class="im-story-chapter"><h2>On my own, two days a week</h2><p>Six weeks at a time. Anything longer and I become staff, which is not what either of us is paying for. Roughly a third of the first conversations end with "you do not need me", and those become the next referral.</p></div>
+			<p class="im-story-year">2026</p>
+			<div class="im-story-chapter"><h2>A design system I would buy</h2><p>The site ran on a paid theme whose licence forbade resale. Nine months later it runs on <a href="/">this</a>, every line owned, and the thing is in the <a href="/collections/shop/">shop</a>. The <a href="/collections/timeline/">timeline</a> has the rest in order.</p><img src="{{demo.shots.[0]}}" alt="" loading="lazy"></div>
 		</section>
 
 		<section class="im-section" style="--im-section-gap: 1rem">
@@ -106,24 +101,6 @@ source: src/layout/page.css · components/widget.css
 	</aside>
 </div>
 
-<section class="im-section im-wrap">
-	<div class="im-prose">
-		<h2>An about page has one job in its first sentence</h2>
-		<p>Answer "who is this and why should I keep reading". Everything else — the history, the degree, the philosophy — is the second read, and most people never take it.</p>
-		<p>So the order is fixed: <strong>a face</strong>, <strong>one sentence that makes a claim</strong>, <strong>numbers that back it</strong>, <strong>a way to get in touch</strong>, and only then the prose. The numbers row is the part most about pages are missing, and it is the cheapest credibility on the page.</p>
-		<div class="im-table-scroll">
-		<table>
-			<thead><tr><th>Block</th><th>Built from</th></tr></thead>
-			<tbody>
-				<tr><td>The head</td><td><code>im-abouthero</code> — a face beside the claim, stacking under 40rem.</td></tr>
-				<tr><td>The numbers</td><td><code>im-expstats</code>, the same ruled row a <a href="/collections/project/page/">project</a> and a <a href="/collections/travel/trip/">trip</a> use.</td></tr>
-				<tr><td>The rail</td><td>Now, <a href="/collections/project/">hire me</a>, elsewhere, the letter. Not an author card — this page <em>is</em> the author card.</td></tr>
-				<tr><td>The work</td><td><a href="/collections/project/card/">Project cards</a>, three of them, with their CTAs.</td></tr>
-			</tbody>
-		</table>
-		</div>
-
-		<h2>Write "I will tell you not to do it" somewhere</h2>
-		<p>Not that sentence specifically — the thing it stands for. An about page made entirely of claims about how good somebody is reads as an advertisement. One paragraph that costs the author something is what makes the rest of it believable.</p>
-	</div>
-</section>
+<section class="im-section im-wrap"><div class="im-prose">
+<p>A face, one claim, the numbers that back it, a way in — then the story as <code>im-story</code>: a sticky year on the left, a chapter on the right, a picture where one exists. The rail is Now, Hire me, Elsewhere and the letter.</p>
+</div></section>

@@ -149,15 +149,6 @@
 	transform-style: preserve-3d;
 }
 
-/* Flat: the same rows without the lean, for a page that has enough going on. */
-.im-marquee-3d-flat {
-	--im-marquee-tilt: 0deg;
-	--im-marquee-turn: 0deg;
-}
-
-.im-marquee-3d-flat > .im-marquee {
-	transform: none;
-}
 
 @media (width < 48rem) {
 	.im-marquee-3d {

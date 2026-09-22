@@ -98,6 +98,11 @@ source: src/components/life.css
 					{{#foreach demo.uses}}{{#match @number "<" 3}}<a class="im-widget-product" href="/collections/uses/page/"><span class="im-widget-product-mark">{{@number}}</span><span class="im-widget-product-name">{{title}}</span>{{icon "arrow-right"}}</a>{{/match}}{{/foreach}}
 				</div>
 			</section>
+			<aside class="im-ad im-ad-rectangle" aria-label="Advertisement">
+				<span class="im-ad-label">Sponsored</span>
+				<span class="im-ad-slot"><img src="{{demo.shots.[5]}}" alt="" loading="lazy"></span>
+				<button class="im-btn im-btn-sm im-ad-remove" type="button" popovertarget="ad-gate">{{icon "circle-x"}}Remove ads</button>
+			</aside>
 		</div>
 		</div>
 	</aside>

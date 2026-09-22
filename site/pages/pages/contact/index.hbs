@@ -19,7 +19,23 @@ source: src/components/field.css · widget.css
 			<p class="im-lede" style="margin: 0">I read everything and reply to most of it, usually within two working days. If it is about work, the second box is the one to use.</p>
 		</header>
 
-		<form class="im-form">
+		<div class="im-ways">
+			<a class="im-way" href="#form">{{icon "mail"}}<b>Email</b><small>Anything. Two working days.</small></a>
+			<a class="im-way" href="#">{{icon "brand-github"}}<b>GitHub issue</b><small>A bug in the system. Fastest.</small></a>
+			<a class="im-way" href="#">{{icon "brand-linkedin"}}<b>LinkedIn</b><small>Work, formally.</small></a>
+			<a class="im-way" href="#">{{icon "calendar"}}<b>A call</b><small>Thirty minutes, after an email.</small></a>
+		</div>
+
+		<section class="im-content im-content-flush" style="padding-block: 0">
+			<h2>Why people write</h2>
+			<ul>
+				<li><strong>Work</strong> — a Salesforce org nobody documented, or a Ghost theme that fights you. Say what, when and roughly the budget.</li>
+				<li><strong>The design system</strong> — a question the docs did not answer. Include the page.</li>
+				<li><strong>The road</strong> — you drove it on my itinerary and something changed. Those go straight into the trip page.</li>
+			</ul>
+		</section>
+
+		<form class="im-form" id="form">
 			<div class="im-form-row">
 				<div class="im-field">
 					<label class="im-label" for="c-name">Your name</label>
@@ -104,27 +120,6 @@ source: src/components/field.css · widget.css
 	</aside>
 </div>
 
-<section class="im-section im-wrap">
-	<div class="im-prose">
-		<h2>Say what happens after Send</h2>
-		<p>The single biggest improvement to any contact form is one sentence next to the button: who reads it, and how long it takes. Without it a person is posting into a void, and the ones with something worth saying are exactly the ones who decide not to bother.</p>
-
-		<h2>The placeholder does the triage</h2>
-		<p>"What the problem is, roughly when, and roughly what you have to spend." Three things, asked in the box rather than in three extra fields — a form with nine inputs gets abandoned, and a form with three gets a message that is missing the same information anyway.</p>
-
-		<h2>"Please do not" belongs on the page</h2>
-		<p>Stating what will be deleted unread is kinder than silently deleting it, and it is the cheapest spam filter there is.</p>
-		<div class="im-table-scroll">
-		<table>
-			<thead><tr><th>Block</th><th>Built from</th></tr></thead>
-			<tbody>
-				<tr><td>The form</td><td><a href="/forms/fields/">Fields</a> — <code>im-field</code>, <code>im-form-row</code>, <code>im-fieldset</code>, <code>im-choice</code>, <code>im-hint</code>.</td></tr>
-				<tr><td>What happens next</td><td><code>im-auth-note</code>, the same block the <a href="/pages/auth/">sign-in card</a> uses for its surprise.</td></tr>
-				<tr><td>Before you write</td><td><a href="/components/disclosure/">Disclosures</a>. Three answers that mean the form is never sent.</td></tr>
-				<tr><td>The rail</td><td>Faster routes, elsewhere, and what not to send.</td></tr>
-			</tbody>
-		</table>
-		</div>
-		<p>Ghost has no form handler, so the <code>action</code> goes to whatever the site uses — a Worker, a form service, a mailto as a last resort. Nothing here assumes one.</p>
-	</div>
-</section>
+<section class="im-section im-wrap"><div class="im-prose">
+<p>The ways in first (<code>im-ways</code>), then why people write, then the form — which says who reads it and how long it takes next to the button. "Please do not" in the rail is the cheapest spam filter there is.</p>
+</div></section>

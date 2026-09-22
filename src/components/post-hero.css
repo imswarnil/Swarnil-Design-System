@@ -162,18 +162,28 @@
 	display: none;
 }
 
-/* ---- stack: centred, picture underneath ---- */
+/* ---- stack: left-aligned copy, picture underneath ----
+   Left, not centred: the body under it is left-aligned prose, and a centred
+   head over left-aligned text puts a kink in the reading line at the exact
+   moment a reader commits. The COLUMN is centred on the page by the single
+   layout; the words inside it start at its left edge, like the paragraphs.
+   `im-posthero-center` restores the centred head for a page that wants it. */
 .im-posthero-stack {
+	justify-items: start;
+	text-align: start;
+}
+
+.im-posthero-center {
 	justify-items: center;
 	text-align: center;
 }
 
-.im-posthero-stack .im-posthero-copy {
+.im-posthero-center .im-posthero-copy {
 	align-items: center;
 	margin-inline: auto;
 }
 
-.im-posthero-stack :is(.im-posthero-kicker, .im-posthero-meta) {
+.im-posthero-center :is(.im-posthero-kicker, .im-posthero-meta) {
 	justify-content: center;
 }
 

@@ -1,0 +1,49 @@
+---
+title: Helpers & utilities
+description: Every Ghost helper the docs model, the docs-only helpers, and the utility classes — one reference, generated from the registry so it cannot drift.
+eyebrow: Guides
+source: site/lib/ghost.mjs · src/utilities/
+---
+<p>Two kinds of helper live here. <strong>Ghost's</strong> are modelled by <code>site/lib/ghost.mjs</code> so every partial renders in the docs exactly as it will in a theme; <strong>the docs' own</strong> exist only on this site. The utilities are Tailwind <code>@utility</code> rules, so they take variants (<code>md:im-stack</code>).</p>
+
+<h2>Helpers modelled</h2>
+<p>{{helpers.length}} names, read from the registry at build time.</p>
+<div class="im-cluster" style="--im-cluster-gap: .375rem">{{#each helpers}}<code>{{"{{"}}{{this}}{{"}}"}}</code>{{/each}}</div>
+
+<h2>A field must not share a helper's name</h2>
+<p>An ambiguous <code>{{"{{price}}"}}</code> resolves to the helper, not the field, and prints nonsense. The build names any fixture field a helper shadows; the four that legitimately read their own field — <code>excerpt</code>, <code>reading_time</code>, <code>url</code>, <code>content</code> — are allowed.</p>
+
+<h2>Docs-only helpers</h2>
+<div class="im-table-scroll"><table>
+<thead><tr><th>Helper</th><th></th></tr></thead>
+<tbody>
+<tr><td><code>{{"{{icon \"name\"}}"}}</code></td><td>An icon partial by name. In a theme write <code>{{"{{> \"icons/name\"}}"}}</code>.</td></tr>
+<tr><td><code>{{"{{#example}}"}}</code></td><td>A preview plus its source, emitted <em>between</em> prose blocks. <code>spill=true</code>, <code>flush=true</code>, <code>code=false</code>, <code>center=true</code>.</td></tr>
+<tr><td><code>{{"{{{{code \"lang\"}}}}"}}</code></td><td>A raw block that prints Handlebars without running it.</td></tr>
+<tr><td><code>{{"{{#match a op b}}"}}</code></td><td>Ghost's, extended: <code>= != &gt; &lt; &gt;= &lt;= ~ ~^ ~$</code>.</td></tr>
+</tbody></table></div>
+
+<h2>Layout utilities</h2>
+<div class="im-table-scroll"><table>
+<thead><tr><th>Class</th><th>Knob</th><th></th></tr></thead>
+<tbody>
+<tr><td><code>im-wrap</code> · <code>im-wrap-wide</code></td><td>—</td><td>Page and wide measures, centred.</td></tr>
+<tr><td><code>im-stack</code></td><td><code>--im-stack-gap</code></td><td>A vertical flow.</td></tr>
+<tr><td><code>im-cluster</code></td><td><code>--im-cluster-gap</code></td><td>Inline items that wrap.</td></tr>
+<tr><td><code>im-grid-auto</code> · <code>im-grid-fit</code></td><td><code>--im-grid-min</code></td><td>As many columns as fit; fit stretches the last row.</td></tr>
+<tr><td><code>im-eyebrow</code> · <code>im-pixel</code></td><td>—</td><td>The mono caption, and Geist Pixel.</td></tr>
+<tr><td><code>im-bar-offset</code></td><td>—</td><td>Scroll margin under the top bar.</td></tr>
+</tbody></table></div>
+
+<h2>State attributes</h2>
+<div class="im-table-scroll"><table>
+<thead><tr><th>Attribute</th><th>Set by</th><th></th></tr></thead>
+<tbody>
+<tr><td><code>data-im-filter</code> → <code>data-facet</code></td><td><code>im-view.js</code></td><td>Tabs and chips that hide non-matching items.</td></tr>
+<tr><td><code>data-im-view</code> → <code>data-view</code></td><td><code>im-view.js</code></td><td>grid · list · plain, remembered per collection.</td></tr>
+<tr><td><code>data-im-mode</code> · <code>data-im-period</code></td><td><code>im-view.js</code></td><td>Two-state switches that only write an attribute.</td></tr>
+<tr><td><code>data-im-count</code></td><td><code>im-view.js</code></td><td>A number that counts up to the value already in the markup.</td></tr>
+<tr><td><code>data-toc</code> · <code>data-toc-skip</code></td><td><code>im.js</code></td><td>Contents built from h2/h3; skip a region.</td></tr>
+<tr><td><code>data-im-in</code></td><td><code>im-motion.js</code></td><td>An entrance that plays on scroll.</td></tr>
+<tr><td><code>data-im-hide</code></td><td>—</td><td>Parts of a post card to leave out.</td></tr>
+</tbody></table></div>

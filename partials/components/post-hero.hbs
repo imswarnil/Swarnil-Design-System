@@ -1,7 +1,7 @@
 {{!-- The head of an article. Context: a post. One partial, six arrangements.
 	Params
 	  style      stack (default) · wide · split · side · cover · minimal
-	  center     true, with style="cover" — the copy sits in the middle
+	  center     true — centred copy (the default is left-aligned)
 	  crumbs     true — a breadcrumb above the title: home · section · topic
 	  section    what the breadcrumb calls the collection ("Writing")
 	  section_url  where that crumb goes ("/blog/")
@@ -16,7 +16,7 @@
 	is revealed rather than printed under every headline. The trigger, the
 	panel and the closing tag must TOUCH: .im-hovercard is display: inline, so
 	any whitespace between them prints as a space. --}}
-<header class="im-posthero im-posthero-{{#if style}}{{style}}{{else}}stack{{/if}}{{#if center}} im-posthero-cover-center{{/if}}"{{#if id}} id="{{id}}"{{/if}}>
+<header class="im-posthero im-posthero-{{#if style}}{{style}}{{else}}stack{{/if}}{{#if center}} im-posthero-center{{#match style "=" "cover"}} im-posthero-cover-center{{/match}}{{/if}}"{{#if id}} id="{{id}}"{{/if}}>
 	<div class="im-posthero-copy">
 		{{#if crumbs}}
 			<nav class="im-posthero-crumbs" aria-label="{{t "Breadcrumb"}}">

@@ -202,12 +202,6 @@
 	text-wrap: pretty;
 }
 
-.im-support-amounts {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 0.375rem;
-}
-
 .im-support-actions {
 	display: flex;
 	flex-wrap: wrap;
@@ -220,12 +214,6 @@
 .im-support-fill {
 	border-color: transparent;
 	background-color: var(--im-surface);
-}
-
-.im-support-accent {
-	border-color: transparent;
-	background-color: var(--im-accent);
-	color: var(--im-on-accent);
 }
 
 .im-support-accent :is(.im-support-heading, .im-support-heading > .im-icon) {

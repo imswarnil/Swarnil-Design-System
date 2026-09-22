@@ -11,8 +11,8 @@ source: src/components/auth.css
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
-<section class="im-section im-wrap">
-	<div class="im-auth" id="auth" data-mode="in">
+<section class="im-authpage">
+	<div class="im-auth" id="auth" data-mode="in" style="--im-auth-width: 28rem">
 		<div class="im-auth-head">
 			{{> "components/logo" size="1.5rem"}}
 			<h1 class="im-auth-title"><span data-when="in">Welcome back</span><span data-when="up">Start reading</span></h1>
@@ -48,7 +48,7 @@ source: src/components/auth.css
 		</div>
 
 		<p class="im-auth-foot">
-			<span data-when="in">No account yet? Use the switch above — it is the same form.</span>
+			<span data-when="in">No account yet? Use the switch above — it is the same form. <a href="/pages/reset/">Forgot your password?</a></span>
 			<span data-when="up">By signing up you agree to the <a href="/pages/about/">terms</a>. We do not sell anything to anybody, ever.</span>
 		</p>
 	</div>

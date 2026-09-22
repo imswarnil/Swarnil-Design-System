@@ -11,32 +11,7 @@ source: src/components/curriculum.css · video.css
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
-<div class="im-with-aside im-with-aside-start im-wrap-wide" style="--im-aside-width: 20rem">
-	<aside>
-		<div class="im-sticky-rail im-sticky-rail-full">
-			<nav class="im-curriculum im-rail-grow" aria-label="Lessons">
-				<div class="im-curriculum-head">
-					<p class="im-curriculum-title">{{icon "graduation-cap"}}Design tokens, properly</p>
-					<p class="im-curriculum-progress"><span>2 of 7</span><span class="im-progress" role="progressbar" aria-label="Through the course" aria-valuenow="29" aria-valuemin="0" aria-valuemax="100" style="--im-value: .29"></span></p>
-				</div>
-				{{#each demo.sections}}
-				<p class="im-module-meta" style="padding: .75rem 1rem .25rem">{{n}} · {{name}}</p>
-				<ol class="im-lessons">
-					{{#each ../demo.lessons}}{{#match n ">=" ../from}}{{#match n "<=" ../to}}
-					<li>
-						<a class="im-lesson" href="/collections/course/lesson/" data-state="{{#if locked}}locked{{else}}{{state}}{{/if}}"{{#match state "=" "current"}} aria-current="page"{{/match}}>
-							<span class="im-lesson-mark" aria-hidden="true"></span>
-							<span>{{title}}</span>
-							<small>{{time}}</small>
-						</a>
-					</li>
-					{{/match}}{{/match}}{{/each}}
-				</ol>
-				{{/each}}
-			</nav>
-		</div>
-	</aside>
-
+<div class="im-single im-wrap-wide" id="lesson-layout" data-sidebar="on" style="--im-single-aside: 21rem">
 	<article class="im-stack" style="--im-stack-gap: 1.5rem">
 		{{#with demo.lessons.[2]}}
 		<div class="im-cluster" style="--im-cluster-gap: .75rem">
@@ -47,6 +22,7 @@ source: src/components/curriculum.css · video.css
 					<li><span aria-current="page">Lesson {{n}}</span></li>
 				</ol>
 			</nav>
+			<button class="im-btn im-btn-sm" type="button" id="rail-show" hidden onclick="document.getElementById('lesson-layout').dataset.sidebar='on';this.hidden=true">{{icon "panel-right"}}Lessons</button>
 			<button class="im-btn im-btn-sm im-lessonmenu-trigger" type="button" popovertarget="lessons-sheet" onclick="document.getElementById('lessons-sheet').showModal()">{{icon "list"}}Lessons <span class="im-hint" style="margin:0">3/7</span></button>
 		</div>
 
@@ -118,6 +94,26 @@ source: src/components/curriculum.css · video.css
 
 		{{> "components/comments" thread=demo.comments count="24" lean=true limit="1"}}
 	</article>
+
+	<aside>
+		<div class="im-sticky-rail im-sticky-rail-full">
+			<nav class="im-curriculum im-rail-grow" aria-label="Lessons">
+				<div class="im-curriculum-head">
+					<p class="im-curriculum-title">{{icon "graduation-cap"}}Design tokens, properly</p>
+					<button class="im-curriculum-close" type="button" aria-label="Hide the lessons" onclick="document.getElementById('lesson-layout').dataset.sidebar='off';document.getElementById('rail-show').hidden=false">{{icon "panel-right"}}</button>
+					<p class="im-curriculum-progress"><span>2 of 7</span><span class="im-progress" role="progressbar" aria-label="Through the course" aria-valuenow="29" aria-valuemin="0" aria-valuemax="100" style="--im-value: .29"></span></p>
+				</div>
+				{{#each demo.sections}}
+				<p class="im-module-meta" style="padding: .75rem 1rem .25rem">{{n}} · {{name}}</p>
+				<ol class="im-lessons im-lessons-shots">
+					{{#each ../demo.lessons}}{{#match n ">=" ../from}}{{#match n "<=" ../to}}
+					<li><a class="im-lesson" href="/collections/course/lesson/" data-state="{{#if locked}}locked{{else}}{{state}}{{/if}}"{{#match state "=" "current"}} aria-current="page"{{/match}}><span class="im-lesson-mark" aria-hidden="true"></span><span class="im-lesson-shot"><img src="{{lookup @root.demo.shots shot}}" alt="" loading="lazy"></span><span>{{title}}</span><small>{{time}}</small></a></li>
+					{{/match}}{{/match}}{{/each}}
+				</ol>
+				{{/each}}
+			</nav>
+		</div>
+	</aside>
 </div>
 
 <dialog class="im-lessonmenu" id="lessons-sheet" aria-label="Lessons">
@@ -141,28 +137,6 @@ source: src/components/curriculum.css · video.css
 	</nav>
 </dialog>
 
-<section class="im-section im-wrap">
-	<div class="im-prose">
-		<h2>The player layout</h2>
-		<p><code>im-course</code> is a two-column layout that changes what it <em>is</em> at <code>lg</code>, rather than only how it looks:</p>
-		<div class="im-table-scroll">
-		<table>
-			<thead><tr><th>Width</th><th>The curriculum</th></tr></thead>
-			<tbody>
-				<tr><td><strong>≥ 64rem</strong></td><td>A sticky column beside the lesson, scrolling on its own. The "Curriculum" button is hidden, because the thing it opens is already open.</td></tr>
-				<tr><td><strong>&lt; 64rem</strong></td><td>A panel fixed to the right edge, opened by that button — the browser's own <code>&lt;dialog&gt;</code>, so focus, Esc and the backdrop come free.</td></tr>
-			</tbody>
-		</table>
-		</div>
-		<p>One markup, two behaviours, and the lesson keeps the whole width on a laptop where the video actually needs it.</p>
-
-		<h2>One next thing</h2>
-		<p>A lesson page has exactly one job after the video ends: get the student to the next lesson. So there is <strong>one</strong> prominent way forward — the <code>im-postnav</code> pair — and everything else on the page is quiet. No related courses, no newsletter, no footer full of links; a student who leaves here does not come back to lesson four.</p>
-		<ul>
-			<li><strong>"Mark complete" is a real button</strong>, not something that happens at 90% watched. Some people read the transcript.</li>
-			<li><strong>The exercise files are next to the lesson</strong>, not on a downloads page.</li>
-			<li><strong>Questions belong on the lesson</strong>, not in a forum somewhere else: the answer to "why does this not work" is almost always specific to one lesson, and the next student has the same question.</li>
-			<li><strong>Locked lessons stay readable.</strong> A padlock and the title — not a blur, not a removal. It is the argument for upgrading.</li>
-		</ul>
-	</div>
-</section>
+<section class="im-section im-wrap"><div class="im-prose">
+<p>The lessons sit on the <strong>right</strong>, in a rail that fills the window; the panel-right button collapses it (<code>data-sidebar="off"</code> on the single layout) and the same button in the header brings it back. Each row carries its still and its length. Under 64rem the rail becomes the <code>&lt;dialog&gt;</code> sheet opened from the header. Chapters, previous/next with the still, and lean comments below the player.</p>
+</div></section>

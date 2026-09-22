@@ -1,0 +1,32 @@
+---
+title: Forgot password
+layout: home
+description: Ghost has no passwords, so this page's job is to say so — and to send the link anyway.
+eyebrow: Pages
+source: src/components/auth.css
+---
+<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+	<p class="im-eyebrow">Pages · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+</section>
+
+<section class="im-authpage">
+	<div class="im-auth" data-mode="in" style="--im-auth-width: 28rem">
+		<div class="im-auth-head">
+			{{> "components/logo" size="1.5rem"}}
+			<h1 class="im-auth-title">Forgot your password?</h1>
+			<p class="im-auth-text">You never had one. Enter the email you signed up with and we will send a link that signs you in on this device.</p>
+		</div>
+		<form class="im-auth-form" data-members-form="signin">
+			<div class="im-field"><label class="im-label" for="r-email">Email</label><input class="im-input" id="r-email" type="email" required autocomplete="email" placeholder="you@example.com" data-members-email></div>
+			<button class="im-btn im-btn-primary" type="submit">{{icon "mail"}}Email me a link</button>
+			<p class="im-auth-note">{{icon "info"}}<span>The link works once and expires in 24 hours. Check spam before asking for another — three in a row and the address is paused for an hour.</span></p>
+		</form>
+		<p class="im-auth-foot">Not a member yet? <a href="/pages/auth/">Sign up</a> — it is the same one field.</p>
+	</div>
+</section>
+
+<section class="im-section im-wrap"><div class="im-prose">
+<p>Ghost signs members in by link, so "forgot password" and "sign in" are the same request with a different heading. The heading matters: somebody who arrives here is worried, and the first sentence has to remove the worry before it asks for anything. <code>im-authpage</code> centres the card in the window with nothing else on it.</p>
+</div></section>

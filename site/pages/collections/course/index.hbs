@@ -21,24 +21,27 @@ source: src/components/curriculum.css · commerce.css
 			</ol>
 		</nav>
 
-		<header class="im-coursehero">
-			<div class="im-stack" style="--im-stack-gap: .75rem">
+		<header class="im-stack" style="--im-stack-gap: 1.5rem">
+			<div class="im-mediabg" style="--im-mediabg-min: 18rem">
+				<img src="{{demo.shots.[0]}}" alt="">
+				<div class="im-mediabg-scrim"></div>
+				<div class="im-mediabg-copy">
+					<p class="im-cinehero-meta"><span>Course</span><span>7 lessons · 81 min</span><span>2 free</span></p>
+					<h1 class="im-mediabg-title">Design tokens, properly</h1>
+					<p class="im-mediabg-text">The layer that decides everything else. By the end, dark mode is a change to one file — and you know why.</p>
+				</div>
+			</div>
+			<div class="im-coursehero" style="min-height: 0">
 				<div class="im-video im-video-full" id="trailer" data-im-video="aqz-KE-bpKQ" data-im-video-title="Trailer">
-					<img class="im-video-poster" src="{{demo.shots.[0]}}" alt="" loading="eager">
+					<img class="im-video-poster" src="{{demo.shots.[1]}}" alt="" loading="eager">
 					<button class="im-video-play" type="button" aria-label="Play the trailer">{{> "icons/play"}}</button>
 				</div>
-				<p class="im-snipcard-meta"><span class="im-kind" data-kind="issue">{{icon "graduation-cap"}}Course</span><span>Free trailer · 2:40</span></p>
-			</div>
-
-			<div class="im-stack" style="--im-stack-gap: .875rem">
-				<h1 class="im-collhead-title">Design tokens, properly</h1>
-				<p class="im-lede" style="margin: 0">Seven lessons on the layer that decides everything else. By the end you will have a token set that makes dark mode a change to one file, and you will know why.</p>
-				<p class="im-rating im-rating-lg" style="--im-rating: 4.8"><span class="im-rating-stars" aria-hidden="true"></span><span class="im-rating-value">4.8</span><a class="im-rating-count" href="#said">41 reviews</a></p>
-				<p class="im-cluster" style="--im-cluster-gap: .5rem">
-					<a class="im-btn im-btn-primary" href="/collections/course/lesson/">{{icon "play"}}Start the course</a>
-					<a class="im-btn" href="#curriculum">{{icon "list"}}See the curriculum</a>
-				</p>
-				<p class="im-hint">€49 once, yours forever. Free for <a href="/pages/membership/">Workshop</a> members.</p>
+				<div class="im-stack" style="--im-stack-gap: .875rem">
+					<p class="im-rating im-rating-lg" style="--im-rating: 4.8"><span class="im-rating-stars" aria-hidden="true"></span><span class="im-rating-value">4.8</span><a class="im-rating-count" href="#said">41 reviews</a></p>
+					<p class="im-tier-price" style="border: 0; padding: 0"><b>€49</b><span>once, yours forever · free on <a href="/pages/membership/">Workshop</a></span></p>
+					<p class="im-cluster" style="--im-cluster-gap: .5rem"><a class="im-btn im-btn-primary" href="/collections/course/lesson/">{{icon "play"}}Start the course</a><a class="im-btn" href="#curriculum">{{icon "list"}}Curriculum</a></p>
+					<ul class="im-tier-list"><li>Every source file and the finished token set</li><li>Lifetime updates, 14-day refund</li><li>Two lessons free, no account needed</li></ul>
+				</div>
 			</div>
 		</header>
 
@@ -166,27 +169,16 @@ source: src/components/curriculum.css · commerce.css
 					<p class="im-widget-heading">Two lessons are free. Start there.</p>
 					{{> "components/subscribe" id="course-email" button="Send them"}}
 				</section>
-			</div>
+				<aside class="im-ad im-ad-rectangle" aria-label="Advertisement">
+				<span class="im-ad-label">Sponsored</span>
+				<span class="im-ad-slot"><img src="{{demo.shots.[5]}}" alt="" loading="lazy"></span>
+				<button class="im-btn im-btn-sm im-ad-remove" type="button" popovertarget="ad-gate">{{icon "circle-x"}}Remove ads</button>
+			</aside>
+		</div>
 		</div>
 	</aside>
 </div>
 
-<section class="im-section im-wrap">
-	<div class="im-prose">
-		<h2>The curriculum is the sales page</h2>
-		<p>Every lesson title is visible before anybody pays — <strong>including the locked ones</strong>. A course that hides its contents is telling a buyer it is not sure they are worth the money, and the titles are the best argument it has.</p>
-		<p>The <a href="/navigation/curriculum/">curriculum component</a> does all of it: modules that open, lessons inside, and four states on each one — <code>done</code> (a filled tick), <code>aria-current="page"</code> (the accent, "you are here"), <code>locked</code> (a padlock, still readable), and nothing at all for one not started.</p>
-		<div class="im-table-scroll">
-		<table>
-			<thead><tr><th>Block</th><th>Built from</th></tr></thead>
-			<tbody>
-				<tr><td>The head</td><td><code>im-projecthero</code> — the same one a <a href="/collections/project/page/">project</a> uses.</td></tr>
-				<tr><td>The numbers</td><td><code>im-projectstats</code>: lessons, length, modules, and what you keep.</td></tr>
-				<tr><td>The curriculum</td><td><code>im-curriculum</code> with <code>position: static</code> — on the course page it is content, not a rail.</td></tr>
-				<tr><td>The buy box</td><td><code>im-buybox</code> from the <a href="/collections/shop/product/">product page</a>, with a <a href="/components/progress/">progress bar</a> instead of a licence chooser once somebody has started.</td></tr>
-			</tbody>
-		</table>
-		</div>
-		<p><strong>The button says what it does next.</strong> "Continue — lesson 3" for somebody enrolled, "Buy" for somebody not. One button that says "Start course" to both is a button that lies to one of them.</p>
-	</div>
-</section>
+<section class="im-section im-wrap"><div class="im-prose">
+<p>What it is, who made it, how much there is, what somebody who took it says — in that order. The cover is a <a href="/media/backgrounds/">media background</a>, the numbers count up (<code>data-im-count</code>), the curriculum is sections (<code>im-module</code>) with a still per lesson and the kind on every row, and the instructor is a rail widget with their own numbers.</p>
+</div></section>

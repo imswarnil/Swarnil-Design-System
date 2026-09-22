@@ -59,6 +59,7 @@ source: src/components/life.css · timeline.css
 					<p class="im-leg-route">{{#each legs}}<span>{{this}}</span>{{/each}}</p>
 					<h3 class="im-leg-title">{{title}}</h3>
 					<p class="im-leg-text">{{text}}</p>
+					{{#if shot}}<figure class="im-log-shot im-leg-shot"><img src="{{lookup ../demo.shots shot}}" alt="" loading="lazy"><figcaption>{{title}}</figcaption></figure>{{/if}}
 					<p class="im-leg-facts">
 						<span>{{icon "bookmark"}}Slept <b>{{sleep}}</b></span>
 						<span>{{icon "wallet"}}<b>{{cost}}</b></span>

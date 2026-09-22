@@ -1,0 +1,59 @@
+---
+title: Résumé
+layout: home
+description: Two columns — the facts that fit on a card on the left, the story on the right — and a print stylesheet that keeps both.
+eyebrow: Pages
+source: src/components/pages.css
+---
+<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+	<p class="im-eyebrow">Pages · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+</section>
+
+<div class="im-wrap-wide im-resume">
+	<aside class="im-resume-side">
+		{{> "components/avatar" size="xl" src=demo.author.profile_image name=demo.author.name}}
+		<div>
+			<h1 class="im-collhead-title" style="font-size: var(--im-text-h3)">{{demo.author.name}}</h1>
+			<p class="im-hint">Salesforce consultant · design systems · Amsterdam</p>
+		</div>
+		<p class="im-cluster" style="--im-cluster-gap: .5rem"><a class="im-btn im-btn-primary im-btn-sm" href="#">{{icon "download"}}PDF</a><a class="im-btn im-btn-sm" href="/pages/contact/">{{icon "mail"}}Contact</a></p>
+		<dl class="im-widget-facts">
+			<dt>Available</dt><dd>Nov 2026</dd>
+			<dt>Rate</dt><dd>Per engagement</dd>
+			<dt>Languages</dt><dd>English, Hindi, Dutch (A2)</dd>
+			<dt>Elsewhere</dt><dd><a href="#">GitHub</a> · <a href="#">LinkedIn</a></dd>
+		</dl>
+		<div>
+			<p class="im-caption" style="margin-bottom: .5rem">Skills</p>
+			<p class="im-skills">{{#each demo.projects.[0].stack}}<span class="im-tag">{{icon this.icon}}{{this.name}}</span>{{/each}}<span class="im-tag">{{icon "zap"}}Salesforce</span><span class="im-tag">{{icon "rocket"}}Ghost</span><span class="im-tag">{{icon "component"}}Design systems</span></p>
+		</div>
+	</aside>
+
+	<article>
+		<section class="im-resume-section">
+			<h2 class="im-caption" data-index="work">Experience</h2>
+			<div class="im-resume-role"><span class="im-resume-when">2022 — now</span><b>Independent consultant</b><small>Public sector, mostly. Two days a week, six weeks at a time.</small><p>Inherited orgs nobody documented; left every one with a document somebody who was not there can act on.</p></div>
+			<div class="im-resume-role"><span class="im-resume-when">2018 — 2022</span><b>Senior consultant, a Salesforce partner</b><small>Delivery lead on three multi-year programmes.</small><p>Learned what not to do, at scale, on somebody else's budget.</p></div>
+			<div class="im-resume-role"><span class="im-resume-when">2016 — 2018</span><b>Co-founder, a startup that did not survive</b><small>CRM for small clinics.</small><p>The market was real; our timing was not. The <a href="/collections/post/">write-up</a> is the most-read thing on this site.</p></div>
+		</section>
+		<section class="im-resume-section">
+			<h2 class="im-caption" data-index="made">Things made</h2>
+			<div class="im-repos" style="--im-repos-min: 16rem">{{#each demo.projects}}{{#match @index "<" 2}}{{> "components/repo-card"}}{{/match}}{{/each}}</div>
+		</section>
+		<section class="im-resume-section">
+			<h2 class="im-caption" data-index="edu">Education & certification</h2>
+			<div class="im-resume-role"><span class="im-resume-when">2024</span><b>Salesforce Application Architect</b><small>Plus the seven certifications under it.</small></div>
+			<div class="im-resume-role"><span class="im-resume-when">2012 — 2016</span><b>B.Tech, Computer Science</b><small>A degree I do not use, from a college I liked.</small></div>
+		</section>
+		<section class="im-resume-section">
+			<h2 class="im-caption" data-index="said">Said about the work</h2>
+			<div class="im-reviews">{{#each demo.testimonials}}{{#match @index "<" 2}}<article class="im-review"><p class="im-review-head"><span class="im-review-by">{{by}}</span><time class="im-review-when">{{role}}</time></p><p class="im-review-text">{{text}}</p></article>{{/match}}{{/each}}</div>
+		</section>
+	</article>
+</div>
+
+<section class="im-section im-wrap"><div class="im-prose">
+<p><code>im-resume</code>: a sticky left column of facts, roles as <code>im-resume-role</code> rows with the years in the mono face, and the existing repo and review components for the rest. Under 48rem it is one column and the years sit above each role.</p>
+</div></section>

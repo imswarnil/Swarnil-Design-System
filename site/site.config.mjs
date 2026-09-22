@@ -77,7 +77,6 @@ export const navigation = [
 			{ label: 'Table of contents', url: '/navigation/toc/' },
 			{ label: 'Breadcrumb', url: '/navigation/breadcrumb/' },
 			{ label: 'Pagination', url: '/navigation/pagination/' },
-			{ label: 'Course curriculum', url: '/navigation/curriculum/' },
 		],
 	},
 	{
@@ -110,6 +109,7 @@ export const navigation = [
 		items: [
 			{ label: 'Gallery & lightbox', url: '/media/gallery/' },
 			{ label: 'Video & timestamps', url: '/media/video/' },
+			{ label: 'Backgrounds & blends', url: '/media/backgrounds/' },
 			{ label: 'Carousel', url: '/components/carousel/' },
 			{ label: 'Marquee', url: '/components/marquee/' },
 		],
@@ -200,6 +200,7 @@ export const navigation = [
 				icon: 'graduation-cap',
 				children: [
 					{ label: 'Course collection', url: '/collections/course/' },
+					{ label: 'Curriculum', url: '/collections/course/curriculum/' },
 					{ label: 'Lesson page', url: '/collections/course/lesson/' },
 				],
 			},
@@ -299,11 +300,15 @@ export const navigation = [
 		title: 'Pages',
 		icon: 'file-text',
 		items: [
+			{ label: 'Home', url: '/pages/home/' },
 			{ label: 'About', url: '/pages/about/' },
+			{ label: 'Résumé', url: '/pages/resume/' },
+			{ label: 'Guestbook', url: '/pages/guestbook/' },
 			{ label: 'Now', url: '/pages/now/' },
 			{ label: 'Contact', url: '/pages/contact/' },
 			{ label: 'Membership', url: '/pages/membership/' },
 			{ label: 'Sign in / Sign up', url: '/pages/auth/' },
+			{ label: 'Forgot password', url: '/pages/reset/' },
 			{ label: 'Sitemap', url: '/pages/sitemap/' },
 		],
 	},
@@ -314,6 +319,7 @@ export const navigation = [
 			{ label: 'Add a token', url: '/guides/add-a-token/' },
 			{ label: 'Add a component', url: '/guides/add-a-component/' },
 			{ label: 'Add a section', url: '/guides/add-a-section/' },
+			{ label: 'Helpers & utilities', url: '/guides/helpers/' },
 			{ label: 'Provenance & licences', url: '/provenance/' },
 		],
 	},

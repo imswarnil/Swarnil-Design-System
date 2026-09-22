@@ -38,13 +38,6 @@
 	color: var(--im-body);
 }
 
-/* Bare: no frame at all, for a slot inside something that already has one. */
-.im-ad-bare {
-	--im-ad-pad: 0px;
-
-	border: 0;
-	background: none;
-}
 
 /* ---- the label ----
    Mono, small, and never in the accent: it is a disclosure, not a badge to be
@@ -248,13 +241,6 @@
 	font-variant-numeric: tabular-nums;
 }
 
-.im-ad-skip {
-	position: absolute;
-	right: 0.625rem;
-	bottom: 0.625rem;
-	z-index: 2;
-}
-
 /* A hairline that empties as the creative plays. */
 .im-ad-progress {
 	position: absolute;
@@ -439,10 +425,6 @@
 }
 
 /* ---- a rail of them ---- */
-.im-ad-rail {
-	position: sticky;
-	top: calc(var(--im-bar-height) + 1.25rem);
-}
 
 /* ---- sponsor card ----
    Not an ad slot: somebody who pays for the whole thing, named, with a line
@@ -903,12 +885,6 @@
 
 .im-usegroup-title > .im-icon {
 	color: var(--im-accent);
-}
-
-.im-usegroup-count {
-	color: var(--im-muted);
-	font-family: var(--im-font-mono);
-	font-size: var(--im-text-xs);
 }
 
 .im-usegroup-text {

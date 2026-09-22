@@ -1,0 +1,42 @@
+---
+title: Backgrounds & blends
+description: A picture or a clip behind words — with a scrim, a blend, or a knockout. One of the three, never two.
+eyebrow: Media
+source: src/effects/media-bg.css
+---
+<p>Three ways to keep text readable on a picture, cheapest first. Use <strong>one</strong>: two is a filter on a filter, and the picture is gone.</p>
+
+<h2>Scrim</h2>
+{{#example}}
+<section class="im-mediabg" style="--im-mediabg-min: 18rem"><img src="{{demo.shots.[0]}}" alt=""><div class="im-mediabg-scrim"></div><div class="im-mediabg-copy"><h3 class="im-mediabg-title">The road</h3><p class="im-mediabg-text">Forty kilometres, two hours.</p></div></section>
+{{/example}}
+
+<h2>Blend</h2>
+<p><code>data-blend</code> on the section: <code>multiply</code> · <code>screen</code> · <code>overlay</code> · <code>luminosity</code> · <code>difference</code>. The tint is <code>--im-mediabg-tint</code>. The section is <code>isolation: isolate</code>, or the scrim mixes with the whole page.</p>
+{{#example}}
+<div class="im-grid-auto" style="--im-grid-min: 16rem">
+	<section class="im-mediabg" data-blend="multiply" style="--im-mediabg-min: 12rem; --im-mediabg-tint: #1d4ed8"><img src="{{demo.shots.[1]}}" alt=""><div class="im-mediabg-scrim"></div><div class="im-mediabg-copy"><h3 class="im-mediabg-title" style="font-size: 1.75rem">Multiply</h3></div></section>
+	<section class="im-mediabg" data-blend="luminosity" style="--im-mediabg-min: 12rem"><img src="{{demo.shots.[2]}}" alt=""><div class="im-mediabg-scrim"></div><div class="im-mediabg-copy"><h3 class="im-mediabg-title" style="font-size: 1.75rem">Luminosity</h3></div></section>
+	<section class="im-mediabg" data-blend="difference" style="--im-mediabg-min: 12rem"><img src="{{demo.shots.[3]}}" alt=""><div class="im-mediabg-scrim"></div><div class="im-mediabg-copy"><h3 class="im-mediabg-title" style="font-size: 1.75rem">Difference</h3></div></section>
+</div>
+{{/example}}
+
+<h2>Knockout</h2>
+<p>White sheet, black words, <code>screen</code>: the words become windows onto the picture. Display type only — body text becomes lace.</p>
+{{#example}}
+<section class="im-mediabg im-mediabg-knockout" style="--im-mediabg-min: 16rem"><img src="{{demo.shots.[4]}}" alt=""><div class="im-mediabg-scrim"></div><div class="im-mediabg-copy"><h3 class="im-mediabg-title">Amalfi</h3></div></section>
+{{/example}}
+
+<h2>Video</h2>
+<p>A <code>&lt;video&gt;</code> in place of the image: muted, looping, playsinline, <code>poster</code> first, <code>preload="none"</code>. Under reduced motion the clip is not shown and the poster stays. The docs ship no clip.</p>
+{{#example}}
+<section class="im-mediabg" style="--im-mediabg-min: 14rem"><video poster="{{demo.shots.[5]}}" muted loop playsinline autoplay preload="none"></video><div class="im-mediabg-scrim"></div><div class="im-mediabg-copy"><h3 class="im-mediabg-title" style="font-size: 2rem">Poster until it plays</h3></div></section>
+{{/example}}
+
+<h2>Parts</h2>
+<div class="im-table-scroll"><table><thead><tr><th>Class</th><th></th></tr></thead><tbody>
+<tr><td><code>im-mediabg</code></td><td>The section: picture, scrim, copy. <code>-full</code> for edge to edge; <code>-parallax</code> fixes the picture from md up.</td></tr>
+<tr><td><code>im-mediabg-scrim</code></td><td>The gradient — or, with <code>data-blend</code>, the tint.</td></tr>
+<tr><td><code>im-mediabg-knockout</code></td><td>Words as windows.</td></tr>
+<tr><td><code>im-mediabg-title</code> · <code>-text</code></td><td>Display type and a line under it.</td></tr>
+</tbody></table></div>

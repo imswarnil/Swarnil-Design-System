@@ -257,6 +257,23 @@
 /* The cross. A button element, because it is one; nothing of a button about
    it but the hit area. It is white over the picture and picks up a disc only
    while it is hovered or focused. */
+/* The site's name, top left, where a title bar would put it: says whose
+   window this is while the picture fills the rest. `data-im-lightbox-title`
+   on <html> sets it; otherwise the last part of the document title. */
+.im-lightbox-title {
+	position: absolute;
+	top: 0.875rem;
+	left: 1rem;
+	z-index: 2;
+	color: var(--im-muted);
+	font-size: var(--im-text-sm);
+	font-weight: 600;
+	letter-spacing: var(--im-tracking-tight);
+	pointer-events: none;
+}
+
+.im-lightbox-title:empty { display: none; }
+
 .im-lightbox-close {
 	position: absolute;
 	top: 0;

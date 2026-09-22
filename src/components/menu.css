@@ -40,12 +40,6 @@
 	--im-menu-width: 19rem;
 }
 
-/* A long menu scrolls inside itself rather than running off the window. */
-.im-menu-scroll {
-	max-height: min(24rem, calc(100dvh - var(--im-bar-height) - 2rem));
-	overflow-y: auto;
-	scrollbar-width: thin;
-}
 
 /* The panel's entrance, shortened: a dropdown is a small thing near its
    button, so it travels less and settles sooner. */

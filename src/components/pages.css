@@ -1,0 +1,221 @@
+/* Page-level layouts that belong to one page each: the personal home, the
+   résumé, the guestbook, the about story. Small on purpose — each is a grid
+   and a few rules over components that already exist. */
+
+/* ---- home hero: the person, left; the proof, right ---- */
+.im-homehero {
+	display: grid;
+	grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+	gap: clamp(1.5rem, 1rem + 2.5vw, 3.5rem);
+	align-items: center;
+	min-height: min(34rem, 70dvh);
+}
+
+.im-homehero-title {
+	font-family: var(--im-font-heading);
+	font-size: clamp(2.5rem, 1.6rem + 3.8vw, 4.75rem);
+	font-weight: 600;
+	line-height: 1;
+	letter-spacing: var(--im-tracking-tight);
+	text-wrap: balance;
+}
+
+.im-homehero-title > em {
+	font-style: normal;
+	color: var(--im-accent);
+}
+
+/* The right side: a stack of small proofs — a post card, a repo, a number. */
+.im-homehero-side {
+	display: grid;
+	gap: 0.875rem;
+}
+
+@media (width < 56rem) {
+	.im-homehero { grid-template-columns: minmax(0, 1fr); min-height: 0; }
+}
+
+/* ---- résumé: two columns, the facts left, the story right ---- */
+.im-resume {
+	display: grid;
+	grid-template-columns: minmax(0, 17rem) minmax(0, 1fr);
+	gap: clamp(1.5rem, 1rem + 2.5vw, 3.5rem);
+	align-items: start;
+}
+
+.im-resume-side {
+	position: sticky;
+	top: calc(var(--im-bar-height) + 1.25rem);
+	display: grid;
+	gap: 1.25rem;
+}
+
+.im-resume-section + .im-resume-section {
+	margin-top: 2rem;
+	padding-top: 2rem;
+	border-top: 1px solid var(--im-line);
+}
+
+.im-resume-role {
+	display: grid;
+	grid-template-columns: 7rem minmax(0, 1fr);
+	gap: 0.25rem 1.25rem;
+	padding-block: 1rem;
+}
+
+.im-resume-role + .im-resume-role { border-top: 1px solid var(--im-line); }
+
+.im-resume-when {
+	grid-row: span 3;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	line-height: 1.6;
+}
+
+.im-resume-role > b { color: var(--im-ink); font-weight: 600; }
+.im-resume-role > small { color: var(--im-muted); font-size: var(--im-text-sm); }
+.im-resume-role > p { color: var(--im-body); font-size: var(--im-text-sm); line-height: 1.55; }
+
+.im-skills {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.375rem;
+}
+
+@media (width < 48rem) {
+	.im-resume { grid-template-columns: minmax(0, 1fr); }
+	.im-resume-side { position: static; }
+	.im-resume-role { grid-template-columns: minmax(0, 1fr); }
+	.im-resume-when { grid-row: auto; }
+}
+
+/* ---- guestbook: fixed words left, the wall right ---- */
+.im-guestbook {
+	display: grid;
+	grid-template-columns: minmax(0, 20rem) minmax(0, 1fr);
+	gap: clamp(1.5rem, 1rem + 2.5vw, 3.5rem);
+	align-items: start;
+}
+
+.im-guestbook-intro {
+	position: sticky;
+	top: calc(var(--im-bar-height) + 1.25rem);
+	display: grid;
+	gap: 1rem;
+}
+
+.im-guestbook-wall {
+	columns: 2;
+	column-gap: 1rem;
+}
+
+.im-guestbook-wall > * {
+	break-inside: avoid;
+	margin-bottom: 1rem;
+}
+
+.im-guest {
+	display: grid;
+	gap: 0.5rem;
+	padding: 1rem 1.125rem;
+	border-radius: var(--im-radius-lg);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	background-color: var(--im-canvas);
+}
+
+.im-guest-head { display: flex; align-items: center; gap: 0.625rem; }
+.im-guest-name { color: var(--im-ink); font-size: var(--im-text-sm); font-weight: 600; }
+.im-guest-from { color: var(--im-muted); font-size: var(--im-text-xs); }
+.im-guest-when { margin-left: auto; color: var(--im-faint); font-family: var(--im-font-mono); font-size: var(--im-text-xs); }
+.im-guest-text { color: var(--im-body); font-size: var(--im-text-sm); line-height: 1.55; text-wrap: pretty; }
+
+@media (width < 56rem) {
+	.im-guestbook { grid-template-columns: minmax(0, 1fr); }
+	.im-guestbook-intro { position: static; }
+	.im-guestbook-wall { columns: 1; }
+}
+
+/* ---- about as a story: a rail of years, the chapters beside it ---- */
+.im-story {
+	display: grid;
+	grid-template-columns: 6rem minmax(0, 1fr);
+	gap: 0 clamp(1.25rem, 1rem + 2vw, 3rem);
+}
+
+.im-story-year {
+	position: sticky;
+	top: calc(var(--im-bar-height) + 1.25rem);
+	align-self: start;
+	padding-block: 0.25rem 2.5rem;
+	color: var(--im-muted);
+	font-family: var(--im-font-pixel, var(--im-font-mono));
+	font-size: var(--im-text-h4);
+	line-height: 1;
+}
+
+.im-story-year::after {
+	content: "";
+	display: block;
+	width: 0.5rem;
+	height: 0.5rem;
+	margin-top: 0.75rem;
+	border-radius: var(--im-radius-full);
+	background-color: var(--im-accent);
+}
+
+.im-story-chapter {
+	position: relative;
+	padding: 0.25rem 0 2.5rem 1.5rem;
+	border-left: 1px solid var(--im-line);
+}
+
+.im-story-chapter > h2 {
+	color: var(--im-ink);
+	font-size: var(--im-text-h4);
+	font-weight: 600;
+	line-height: var(--im-leading-h4);
+	letter-spacing: var(--im-tracking-tight);
+}
+
+.im-story-chapter > p { margin-top: 0.625rem; color: var(--im-body); line-height: 1.65; text-wrap: pretty; }
+
+.im-story-chapter > img {
+	width: 100%;
+	max-width: 30rem;
+	margin-top: 1rem;
+	aspect-ratio: 3 / 2;
+	border-radius: var(--im-radius-lg);
+	object-fit: cover;
+}
+
+@media (width < 40rem) {
+	.im-story { grid-template-columns: minmax(0, 1fr); }
+	.im-story-year { position: static; padding-bottom: 0.5rem; }
+	.im-story-year::after { display: none; }
+}
+
+/* ---- contact: the ways in, as cards ---- */
+.im-ways {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(14rem, 100%), 1fr));
+	gap: 0.75rem;
+}
+
+.im-way {
+	display: grid;
+	grid-template-columns: 2.25rem minmax(0, 1fr);
+	gap: 0.125rem 0.875rem;
+	align-items: center;
+	padding: 0.875rem 1rem;
+	border-radius: var(--im-radius-lg);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	color: var(--im-ink);
+	text-decoration: none;
+	transition: background-color var(--im-duration-fast) var(--im-ease-out);
+}
+
+.im-way:hover { background-color: var(--im-hover-bg); }
+.im-way > .im-icon { grid-row: span 2; font-size: 1.375rem; color: var(--im-accent); }
+.im-way > b { font-size: var(--im-text-sm); font-weight: 600; }
+.im-way > small { color: var(--im-muted); font-size: var(--im-text-xs); }

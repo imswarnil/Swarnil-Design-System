@@ -108,13 +108,6 @@
 	text-decoration: line-through;
 }
 
-.im-price-note {
-	color: var(--im-muted);
-	font-family: var(--im-font-body);
-	font-size: var(--im-text-xs);
-	font-weight: 400;
-}
-
 .im-price-free {
 	color: var(--im-success);
 }
@@ -346,100 +339,10 @@
 /* ---- role ----------------------------------------------------------------
    A job, on the timeline. The mark is the employer's, so a CV reads as a row
    of places rather than a row of dots. */
-.im-role-mark {
-	display: grid;
-	place-items: center;
-	width: 100%;
-	height: 100%;
-	overflow: hidden;
-	border-radius: var(--im-radius-sm);
-	background-color: var(--im-surface);
-	color: var(--im-muted);
-	font-family: var(--im-font-mono);
-	font-size: var(--im-text-sm);
-	font-weight: 600;
-}
-
-.im-role-mark > img {
-	width: 100%;
-	height: 100%;
-	object-fit: contain;
-}
-
-.im-timeline-role .im-timeline-marker {
-	border-radius: var(--im-radius-sm);
-	background-color: transparent;
-	box-shadow: inset 0 0 0 1px var(--im-line);
-	overflow: hidden;
-	padding: 0;
-}
-
-.im-role-at {
-	color: var(--im-muted);
-	font-size: var(--im-text-sm);
-}
-
-.im-role-at > b {
-	color: var(--im-ink);
-	font-weight: 600;
-}
-
-.im-role-list {
-	display: flex;
-	flex-direction: column;
-	gap: 0.375rem;
-	max-width: 62ch;
-	padding-top: 0.5rem;
-	color: var(--im-body);
-	font-size: var(--im-text-sm);
-}
-
-.im-role-list > li {
-	display: grid;
-	grid-template-columns: 0.75rem minmax(0, 1fr);
-	gap: 0.625rem;
-}
-
-.im-role-list > li::before {
-	content: "";
-	width: 0.3125rem;
-	height: 0.3125rem;
-	margin-top: 0.6em;
-	border-radius: 50%;
-	background-color: var(--im-faint);
-}
 
 /* ---- wish ----------------------------------------------------------------
    A thing you want. It is the affiliate card with the buying taken out and a
    PRIORITY put in — which is the only fact that matters on a wishlist. */
-.im-wish-priority {
-	display: inline-flex;
-	align-items: center;
-	gap: 0.375rem;
-	color: var(--im-muted);
-	font-family: var(--im-font-mono);
-	font-size: var(--im-text-xs);
-	letter-spacing: 0.04em;
-	text-transform: uppercase;
-}
-
-.im-wish-priority::before {
-	content: "";
-	display: flex;
-	width: 2.5rem;
-	height: 0.25rem;
-	border-radius: var(--im-radius-full);
-	background:
-		linear-gradient(var(--im-wish-color, var(--im-accent)), var(--im-wish-color, var(--im-accent))) left / var(--im-wish, 33%) 100% no-repeat,
-		var(--im-line);
-}
-
-.im-wish-got {
-	--im-wish: 100%;
-	--im-wish-color: var(--im-success);
-
-	color: var(--im-success);
-}
 
 /* ---- episode number ------------------------------------------------------
    A series is watched in order, so the number is navigation. Set like one. */

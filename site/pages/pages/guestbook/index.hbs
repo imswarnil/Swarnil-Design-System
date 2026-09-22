@@ -1,0 +1,40 @@
+---
+title: Guestbook
+layout: home
+description: A fixed invitation on the left and the wall of entries on the right — the one page where the comments are the content.
+eyebrow: Pages
+source: src/components/pages.css · comments.css
+---
+<section class="im-section im-wrap" style="padding-top: 1.5rem; --im-section-gap: 1.5rem">
+	<p class="im-eyebrow">Pages · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+</section>
+
+<div class="im-wrap-wide im-guestbook">
+	<aside class="im-guestbook-intro">
+		<h1 class="im-collhead-title">Sign the book</h1>
+		<p class="im-lede" style="margin: 0">Where you are, and one line. That is all it asks, and it is the page I reread most.</p>
+		<form class="im-form">
+			<div class="im-field"><label class="im-label" for="g-name">Name</label><input class="im-input" id="g-name" type="text" required></div>
+			<div class="im-field"><label class="im-label" for="g-from">Where from</label><input class="im-input" id="g-from" type="text" placeholder="A city is enough"></div>
+			<div class="im-field"><label class="im-label" for="g-text">One line</label><textarea class="im-textarea" id="g-text" rows="3" required maxlength="240"></textarea><p class="im-hint">240 characters. No links.</p></div>
+			<button class="im-btn im-btn-primary" type="submit">{{icon "pencil"}}Sign</button>
+		</form>
+		<div class="im-widget-stats"><div><strong data-im-count>412</strong><span>Entries</span></div><div><strong data-im-count>38</strong><span>Countries</span></div><div><strong>2019</strong><span>Since</span></div></div>
+	</aside>
+
+	<div class="im-guestbook-wall">
+		{{#each demo.comments}}
+		<article class="im-guest"><p class="im-guest-head">{{> "components/avatar" size="sm" src=avatar name=name}}<span><span class="im-guest-name">{{name}}</span><br><span class="im-guest-from">Rotterdam</span></span><time class="im-guest-when">{{when}}</time></p><p class="im-guest-text">{{text}}</p></article>
+		{{#each replies}}<article class="im-guest"><p class="im-guest-head">{{> "components/avatar" size="sm" src=avatar name=name}}<span><span class="im-guest-name">{{name}}</span><br><span class="im-guest-from">Amsterdam</span></span><time class="im-guest-when">{{when}}</time></p><p class="im-guest-text">{{text}}</p></article>{{/each}}
+		{{/each}}
+		<article class="im-guest"><p class="im-guest-head"><span class="im-guest-name">A reader</span><time class="im-guest-when">3 Sep</time></p><p class="im-guest-text">Found the design system through the dark-mode post. Bought it the same evening.</p></article>
+		<article class="im-guest"><p class="im-guest-head"><span class="im-guest-name">Tomas</span><span class="im-guest-from">Berlin</span><time class="im-guest-when">28 Aug</time></p><p class="im-guest-text">Drove the Amalfi road on your itinerary. Take the bus, you were right.</p></article>
+		<article class="im-guest"><p class="im-guest-head"><span class="im-guest-name">Priya</span><span class="im-guest-from">Chennai</span><time class="im-guest-when">14 Aug</time></p><p class="im-guest-text">Hello from a Salesforce dev who reads every issue.</p></article>
+	</div>
+</div>
+
+<section class="im-section im-wrap"><div class="im-prose">
+<p><code>im-guestbook</code>: the invitation is sticky, the wall is two CSS columns with <code>break-inside: avoid</code>. Entries are <code>im-guest</code> — name, where from, when, one line. In a Ghost theme the wall is a page's own comment thread read through the Members API; the form posts to it.</p>
+</div></section>

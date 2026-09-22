@@ -769,14 +769,6 @@
 	scroll-snap-stop: always;
 }
 
-/* Under a top bar rather than filling the window. */
-.im-shortfeed-inset {
-	height: calc(100dvh - var(--im-bar-height));
-}
-
-.im-shortfeed-inset > .im-short {
-	--im-short-room: calc(100dvh - var(--im-bar-height) - var(--im-short-gutter) * 2);
-}
 
 /* Somebody who has turned motion down should not be thrown between clips by
    a smooth scroll they did not ask for; the snap still works. */
@@ -816,10 +808,11 @@
 .im-thumb-lock::after {
 	content: "";
 	position: absolute;
+	z-index: 2; /* above a positioned <img> and any flag row */
 	inset: 0;
 	margin: auto;
-	width: var(--im-thumb-mark, 2.75rem);
-	height: var(--im-thumb-mark, 2.75rem);
+	width: var(--im-thumb-mark, 2.25rem);
+	height: var(--im-thumb-mark, 2.25rem);
 	border-radius: var(--im-radius-full);
 	background-color: rgb(20 20 20 / 60%);
 	background-repeat: no-repeat;
@@ -845,14 +838,6 @@
 :is(a, button, .im-vidcard, .im-post-card, .im-stream-item):is(:hover, :focus-within) .im-thumb-play::after {
 	background-color: var(--im-danger);
 	scale: 1.06;
-}
-
-.im-thumb-sm {
-	--im-thumb-mark: 1.75rem;
-}
-
-.im-thumb-lg {
-	--im-thumb-mark: 4rem;
 }
 
 /* ---- series card -------------------------------------------------------

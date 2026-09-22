@@ -233,11 +233,6 @@
 	box-shadow: inset 0 0 0 1px var(--im-line), var(--im-shadow-float);
 }
 
-/* Squared off rather than a pill, for a system that is not round. */
-.im-topbar-island-square,
-.im-topbar-float-square[data-im-stuck] {
-	border-radius: var(--im-radius-xl);
-}
 
 /* Reduced motion: it should still change, just not slide. */
 @media (prefers-reduced-motion: reduce) {

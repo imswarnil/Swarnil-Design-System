@@ -142,3 +142,78 @@
 @keyframes im-bg-drift {
 	to { background-position: var(--im-pattern-size, 2.5rem) var(--im-pattern-size, 2.5rem); }
 }
+
+/* ---- more line work ---- */
+/* Diagonal hatch, one direction. */
+@utility im-bg-hatch {
+	background-image: repeating-linear-gradient(45deg, var(--im-pattern-color, var(--im-line)) 0 var(--im-pattern-weight, 1px), transparent var(--im-pattern-weight, 1px) var(--im-pattern-size, 0.75rem));
+}
+
+/* Both directions — a lattice. */
+@utility im-bg-lattice {
+	background-image:
+		repeating-linear-gradient(45deg, var(--im-pattern-color, var(--im-line)) 0 1px, transparent 1px var(--im-pattern-size, 1.25rem)),
+		repeating-linear-gradient(-45deg, var(--im-pattern-color, var(--im-line)) 0 1px, transparent 1px var(--im-pattern-size, 1.25rem));
+}
+
+/* Concentric rings from one corner — a radar. */
+@utility im-bg-radar {
+	background-image: repeating-radial-gradient(circle at 100% 0, transparent 0 calc(var(--im-pattern-size, 2.5rem) - 1px), var(--im-pattern-color, var(--im-line)) calc(var(--im-pattern-size, 2.5rem) - 1px) var(--im-pattern-size, 2.5rem));
+}
+
+/* Wavy rules — drawn with two offset radial tiles. */
+@utility im-bg-waves {
+	background-image:
+		radial-gradient(circle at 50% 100%, transparent calc(var(--im-pattern-size, 1.5rem) * 0.55), var(--im-pattern-color, var(--im-line)) calc(var(--im-pattern-size, 1.5rem) * 0.55 + 1px), transparent calc(var(--im-pattern-size, 1.5rem) * 0.55 + 2px)),
+		radial-gradient(circle at 50% 0, transparent calc(var(--im-pattern-size, 1.5rem) * 0.55), var(--im-pattern-color, var(--im-line)) calc(var(--im-pattern-size, 1.5rem) * 0.55 + 1px), transparent calc(var(--im-pattern-size, 1.5rem) * 0.55 + 2px));
+	background-size: var(--im-pattern-size, 1.5rem) var(--im-pattern-size, 1.5rem);
+	background-position: 0 0, calc(var(--im-pattern-size, 1.5rem) / 2) calc(var(--im-pattern-size, 1.5rem) / 2);
+}
+
+/* Bricks. */
+@utility im-bg-bricks {
+	background-image:
+		linear-gradient(to bottom, var(--im-pattern-color, var(--im-line)) 1px, transparent 1px),
+		linear-gradient(to right, var(--im-pattern-color, var(--im-line)) 1px, transparent 1px),
+		linear-gradient(to right, var(--im-pattern-color, var(--im-line)) 1px, transparent 1px);
+	background-size:
+		var(--im-pattern-size, 2.5rem) calc(var(--im-pattern-size, 2.5rem) / 2),
+		var(--im-pattern-size, 2.5rem) var(--im-pattern-size, 2.5rem),
+		var(--im-pattern-size, 2.5rem) var(--im-pattern-size, 2.5rem);
+	background-position: 0 0, 0 0, calc(var(--im-pattern-size, 2.5rem) / 2) calc(var(--im-pattern-size, 2.5rem) / 2);
+}
+
+/* Plus signs, tiled from gradients (smaller than im-bg-cross, no SVG). */
+@utility im-bg-plus {
+	background-image:
+		linear-gradient(var(--im-pattern-color, var(--im-line)) 1px, transparent 1px),
+		linear-gradient(90deg, var(--im-pattern-color, var(--im-line)) 1px, transparent 1px);
+	background-size: var(--im-pattern-size, 1.5rem) var(--im-pattern-size, 1.5rem);
+	background-position: calc(var(--im-pattern-size, 1.5rem) / 2 - 0.1875rem) 0, 0 calc(var(--im-pattern-size, 1.5rem) / 2 - 0.1875rem);
+	-webkit-mask-image: radial-gradient(circle, #000 0.25rem, transparent 0.3rem);
+	mask-image: radial-gradient(circle, #000 0.25rem, transparent 0.3rem);
+	-webkit-mask-size: var(--im-pattern-size, 1.5rem) var(--im-pattern-size, 1.5rem);
+	mask-size: var(--im-pattern-size, 1.5rem) var(--im-pattern-size, 1.5rem);
+	-webkit-mask-position: calc(var(--im-pattern-size, 1.5rem) / 2) calc(var(--im-pattern-size, 1.5rem) / 2);
+	mask-position: calc(var(--im-pattern-size, 1.5rem) / 2) calc(var(--im-pattern-size, 1.5rem) / 2);
+}
+
+/* ---- variations: fade, corner, density ----
+   Any pattern above, masked so it belongs to one corner or one edge — a
+   pattern that fills a whole panel is wallpaper; one that fades out is a
+   mark. Combine: `im-bg-grid im-bg-fade-r`. */
+@utility im-bg-fade-r {
+	-webkit-mask-image: linear-gradient(to right, transparent, #000 60%);
+	mask-image: linear-gradient(to right, transparent, #000 60%);
+}
+@utility im-bg-fade-b {
+	-webkit-mask-image: linear-gradient(to bottom, #000 40%, transparent);
+	mask-image: linear-gradient(to bottom, #000 40%, transparent);
+}
+@utility im-bg-corner {
+	-webkit-mask-image: radial-gradient(circle at 100% 0, #000 20%, transparent 70%);
+	mask-image: radial-gradient(circle at 100% 0, #000 20%, transparent 70%);
+}
+@utility im-bg-dense { --im-pattern-size: 0.75rem; }
+@utility im-bg-loose { --im-pattern-size: 4rem; }
+@utility im-bg-accent { --im-pattern-color: color-mix(in oklab, var(--im-accent) 35%, transparent); }

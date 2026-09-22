@@ -109,7 +109,7 @@ export async function build({ quiet = false } = {}) {
 
 	const demo = {
 		topics,
-		post: fixtures.posts[0],
+		post: { ...fixtures.posts[0], featured: true },
 		three: fixtures.posts.slice(0, 3),
 		four: fixtures.posts.slice(0, 4),
 		six: fixtures.posts.slice(0, 6),
@@ -163,10 +163,12 @@ export async function build({ quiet = false } = {}) {
 			{ name: 'no-ai-content', owner: 'imswarnil', text: 'A badge, a manifesto and a verifier for pages written by a person.', lang: 'JavaScript', langColor: '#f1e05a', stars: '1.9k', forks: '140', updated: 'yesterday', topics: ['manifesto', 'web'], visibility: 'Public', image: fixtures.posts[5].feature_image, demo_url: '#', code_url: '#', state: 'live', state_label: 'Live', stack: [{name:'JavaScript',icon:'file-code'},{name:'Vercel',icon:'globe'}], took: '2 weeks', since: 'Jun 2026', commits: '190', url: '/collections/project/page/' },
 		],
 		log: [
-			{ when: 'March 2026', title: 'Rebuilt the token layer', text: 'Primitives and semantics split into two files. A component now names what a value is FOR and never what it is, which is what made dark mode a change to one file instead of forty.', state: 'done', tag: 'v0.4', shot: fixtures.posts[2].feature_image },
-			{ when: 'June 2026', title: 'Forty components, one hover', text: 'Every card, row, tile and chip answers the same way: it fills. Three competing ideas — a border sharpening, a picture growing, a shadow lifting — were removed in an afternoon and nothing was lost.', state: 'done', tag: 'v0.5' },
-			{ when: 'September 2026', title: 'Collections: post, project, video', text: 'The three page-shapes every site is made of, each one a collection, a card and a page, built from components that already existed. Nothing new was invented to make them.', state: 'current', tag: 'v0.7', shot: fixtures.posts[4].feature_image },
-			{ when: 'Next', title: 'Ship it', text: 'A licence, a landing page, and a price.', state: 'upcoming' },
+			{ day: '1', when: '3 Jan 2026', title: 'Empty folder, one decision', text: 'Own every line. The licence clause that started it, written down before any code.', tag: 'v0.0', km: '0', cost: '2h' },
+			{ day: '14', when: '16 Jan', title: 'Rebuilt the token layer', text: 'Primitives and semantics split into two files. A component names what a value is FOR, never what it is.', tag: 'v0.1', shot: 0, cost: '3 days' },
+			{ day: '61', when: '4 Mar', title: 'Forty components, one hover', text: 'Every card, row, tile and chip answers the same way: it fills. Three competing ideas removed in an afternoon.', tag: 'v0.3', cost: '1 day' },
+			{ day: '140', when: '22 May', title: 'The docs render the real partials', text: 'A page breaks if a component does. Screenshots in a README would have been wrong within a month.', tag: 'v0.4', shot: 2, cost: '1 week' },
+			{ day: '231', when: '21 Sep', title: 'Collections, nine of them', text: 'Post, project, video, series, course, shop, newsletter, tags, timeline. One look.', tag: 'v0.6', state: 'current', cost: '2 weeks' },
+			{ day: '—', when: 'Next', title: 'Ship it', text: 'A licence, a landing page, and a price.', state: 'upcoming', tag: 'v1.0' },
 		],
 		videos: [
 			{ title: 'Driving the Amalfi Coast — the whole road in 8 minutes', time: '8:12', views: '412k', when: '3 days ago', thumb: fixtures.posts[0].feature_image, channel: fixtures.author.name, avatar: fixtures.author.profile_image },
@@ -251,11 +253,11 @@ export async function build({ quiet = false } = {}) {
 			{ title: 'Tromsø, for the lights', country: 'Norway', when: 'February 2027', days: '5', km: '—', route: ['Oslo', 'Tromsø', 'Sommarøy'], text: 'Booked. Three nights of standing in a field being cold and hopeful.', state: 'upcoming' },
 		],
 		itinerary: [
-			{ day: '1', legs: ['Naples', 'Sorrento'], title: 'Getting out of Naples', text: 'The Circumvesuviana takes an hour and is the single least pleasant part of the whole trip. Do it early and get it over with.', sleep: 'Sorrento', cost: '\u20ac64', km: '52', hours: '2h 10' },
+			{ day: '1', shot: 1, legs: ['Naples', 'Sorrento'], title: 'Getting out of Naples', text: 'The Circumvesuviana takes an hour and is the single least pleasant part of the whole trip. Do it early and get it over with.', sleep: 'Sorrento', cost: '\u20ac64', km: '52', hours: '2h 10' },
 			{ day: '2', legs: ['Sorrento'], title: 'Doing nothing, on purpose', text: 'A day of walking the cliff path and eating too much. The town is the least interesting thing on this coast and the best place to be based on it.', sleep: 'Sorrento', cost: '\u20ac41', km: '9', hours: '0h 40' },
-			{ day: '3', legs: ['Sorrento', 'Positano'], title: 'The road', text: 'Two hours for forty kilometres, east to west, sea side. Buses fold their mirrors in to pass. Worth every minute.', sleep: 'Positano', cost: '\u20ac118', km: '41', hours: '2h 05', state: 'current', cta: 'The car we hired' },
+			{ day: '3', shot: 0, legs: ['Sorrento', 'Positano'], title: 'The road', text: 'Two hours for forty kilometres, east to west, sea side. Buses fold their mirrors in to pass. Worth every minute.', sleep: 'Positano', cost: '\u20ac118', km: '41', hours: '2h 05', state: 'current', cta: 'The car we hired' },
 			{ day: '4', legs: ['Positano', 'Amalfi'], title: 'Parking, and other lies', text: 'Ten euro an hour is the published price and fifteen is the actual one in August. Take the SITA bus.', sleep: 'Amalfi', cost: '\u20ac96', km: '17', hours: '1h 15', cta: 'The bus timetable' },
-			{ day: '5', legs: ['Amalfi', 'Ravello'], title: 'Up the hill', text: 'Three hundred and forty metres above the sea and worth the climb for the view alone.', sleep: 'Ravello', cost: '\u20ac72', km: '7', hours: '0h 50' },
+			{ day: '5', shot: 3, legs: ['Amalfi', 'Ravello'], title: 'Up the hill', text: 'Three hundred and forty metres above the sea and worth the climb for the view alone.', sleep: 'Ravello', cost: '\u20ac72', km: '7', hours: '0h 50' },
 			{ day: '6', legs: ['Ravello', 'Naples'], title: 'The way back', text: 'West to east this time, on the cliff side, which is a completely different drive.', sleep: '\u2014', cost: '\u20ac88', km: '68', hours: '2h 30' },
 		],
 		experience: [
@@ -392,6 +394,9 @@ export async function build({ quiet = false } = {}) {
 			__blocks: {},
 			page: { ...meta, url },
 			name: NAME,
+			// Every helper the shim models, for /guides/helpers/. Read from the
+			// registry so the page cannot list one that does not exist.
+			helpers: Object.keys(hbs.helpers).filter((h) => !['lookup','log','if','unless','each','with','blockHelperMissing','helperMissing'].includes(h)).sort(),
 			// The whole tree, for /pages/sitemap/. It is the SAME array the side
 			// nav is built from, so the sitemap cannot drift out of date — adding
 			// a page adds a row there, and there is nothing to remember.

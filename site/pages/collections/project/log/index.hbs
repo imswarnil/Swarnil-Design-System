@@ -28,15 +28,15 @@ source: src/components/repo-card.css · timeline.css
 			<p class="im-collhead-meta"><span>{{demo.log.length}} entries</span><span>v0.1 — v0.7</span><a href="#log">RSS</a></p>
 		</header>
 
-		<ol class="im-timeline im-timeline-numbered im-log" id="log">
+		<ol class="im-legs" id="log">
 			{{#each demo.log}}
-			<li class="im-timeline-item" data-state="{{state}}">
-				<span class="im-timeline-marker"></span>
-				<time class="im-timeline-time">{{when}}</time>
-				<h2 class="im-timeline-title">{{title}}</h2>
-				<p class="im-timeline-text">{{text}}</p>
-				{{#if shot}}<figure class="im-log-shot"><img src="{{shot}}" alt="" loading="lazy"><figcaption>{{title}}</figcaption></figure>{{/if}}
-				{{#if tag}}<p class="im-log-meta"><span class="im-badge im-badge-outline">{{tag}}</span><a class="im-btn im-btn-sm im-btn-ghost" href="/collections/project/page/">{{icon "arrow-right"}}The release</a></p>{{/if}}
+			<li class="im-leg"{{#if state}} data-state="{{state}}"{{/if}}>
+				<span class="im-leg-day"><b>{{day}}</b>Day</span>
+				<p class="im-leg-route"><span>{{when}}</span><span>{{tag}}</span></p>
+				<h2 class="im-leg-title">{{title}}</h2>
+				<p class="im-leg-text">{{text}}</p>
+				{{#if shot}}<figure class="im-log-shot"><img src="{{lookup ../demo.shots shot}}" alt="" loading="lazy"><figcaption>{{title}}</figcaption></figure>{{/if}}
+				{{#if cost}}<p class="im-leg-facts"><span>{{icon "clock"}}<b>{{cost}}</b> of work</span><span>{{icon "git-commit-vertical"}}<b>{{tag}}</b></span></p>{{/if}}
 			</li>
 			{{/each}}
 		</ol>
@@ -63,7 +63,7 @@ source: src/components/repo-card.css · timeline.css
 					<ol class="im-timeline im-timeline-compact im-widget-series">
 						{{#each demo.log}}
 						<li class="im-timeline-item" data-state="{{state}}">
-							<span class="im-timeline-marker">{{#if tag}}{{tag}}{{else}}—{{/if}}</span>
+							<span class="im-timeline-marker">{{day}}</span>
 							<h3 class="im-timeline-title">{{#match state "=" "current"}}<span>{{title}}</span>{{else}}<a href="#log">{{title}}</a>{{/match}}</h3>
 						</li>
 						{{/each}}
@@ -87,43 +87,6 @@ source: src/components/repo-card.css · timeline.css
 	</aside>
 </div>
 
-<section class="im-section im-wrap">
-	<div class="im-prose">
-		<h2>Why the log is its own page</h2>
-		<p>On the <a href="/collections/project/page/">project page</a> the log is a section near the bottom, four entries long, and that is right for somebody deciding whether to use the thing. It is <strong>wrong</strong> for somebody who already uses it and wants to know what changed in v0.6 — they have scrolled past a case study to get to it, and there are only ever four entries there.</p>
-		<p>So the log gets a URL: every version, its own RSS feed, and a page somebody can be sent a link to. The project page keeps its four and links here.</p>
-		<div class="im-table-scroll">
-		<table>
-			<thead><tr><th>Page</th><th>For</th><th>Shows</th></tr></thead>
-			<tbody>
-				<tr><td><a href="/collections/project/page/">Project</a></td><td>Deciding whether to use it</td><td>The case study, and the last four entries</td></tr>
-				<tr><td><a href="/collections/project/log/">Log</a></td><td>Already using it</td><td>Every version, in order, with what changed</td></tr>
-				<tr><td><a href="/collections/timeline/">Timeline</a></td><td>Neither — it is the working notes</td><td>What you <em>thought</em>, including what did not ship</td></tr>
-			</tbody>
-		</table>
-		</div>
-		<p>That last row is the distinction worth holding on to. <strong>The journal is what you thought; the log is what shipped.</strong> A note about a pseudo-element inheriting is a journal entry; "v0.7 — collections" is a log entry. Cross-link them — the log's rail carries the notes that went into it — but do not merge them, because one is dated by day and the other by version, and a list sorted two ways at once is sorted neither.</p>
-
-		<h2>It is the timeline, tuned</h2>
-		<p><code>im-timeline im-timeline-numbered im-log</code> — the same stepper the project page uses, at full page width. <code>data-state</code> does the work: <code>done</code> fills the mark in ink and draws a solid line, <code>current</code> puts it in the accent, <code>upcoming</code> fades the entry and dashes the line to it.</p>
-		{{{{code "hbs"}}}}
-{{#get "posts" filter="tag:#log+tag:#im-design-system" order="published_at desc" limit="all"}}
-	<ol class="im-timeline im-timeline-numbered im-log">
-		{{#foreach posts}}
-		<li class="im-timeline-item" data-state="{{@custom.state}}">
-			<span class="im-timeline-marker"></span>
-			<time class="im-timeline-time">{{date format="MMMM YYYY"}}</time>
-			<h2 class="im-timeline-title">{{title}}</h2>
-			<div class="im-timeline-text">{{content}}</div>
-		</li>
-		{{/foreach}}
-	</ol>
-{{/get}}
-		{{{{/code}}}}
-		<ul>
-			<li><strong>Keep the reverted ones.</strong> "This shipped and came back out in v0.6" is the most useful line a changelog can contain, and the only one nobody writes.</li>
-			<li><strong>A shot where it helps.</strong> <code>im-log-shot</code> — for a version whose change is visual. Most are not.</li>
-			<li><strong>Newest first here</strong>, unlike a <a href="/collections/series/">series</a>: somebody reading a log wants the latest, and somebody reading a series wants episode one.</li>
-		</ul>
-	</div>
-</section>
+<section class="im-section im-wrap"><div class="im-prose">
+<p>A log is progress, so it counts in <strong>days</strong>, not dates: the same <code>im-legs</code> a <a href="/collections/travel/trip/">trip</a> uses, with the version where the route goes and the hours where the cost goes. The current step is marked; the next is dashed. The rail lists the versions and links each to its step.</p>
+</div></section>

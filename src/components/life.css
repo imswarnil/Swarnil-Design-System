@@ -388,66 +388,6 @@
 	--im-timeline-gap: 1.75rem;
 }
 
-.im-itinerary .im-timeline-marker {
-	--im-timeline-marker: 2.75rem;
-
-	flex-direction: column;
-	gap: 0;
-	/* Square, not round: a day is a box on a calendar, and a column of
-	   circles running down a page already means "step" elsewhere. */
-	border-radius: var(--im-radius-md);
-	background-color: var(--im-surface);
-	box-shadow: inset 0 0 0 1px var(--im-line);
-	color: var(--im-muted);
-	font-family: var(--im-font-mono);
-	font-size: 0.625rem;
-	letter-spacing: 0.06em;
-	line-height: 1.2;
-	text-transform: uppercase;
-}
-
-.im-itinerary .im-timeline-marker > b {
-	color: var(--im-ink);
-	font-family: var(--im-font-pixel, var(--im-font-mono));
-	font-size: var(--im-text-base);
-	letter-spacing: normal;
-}
-
-.im-itinerary .im-timeline-item[data-state="current"] .im-timeline-marker {
-	background-color: var(--im-accent);
-	box-shadow: none;
-	color: color-mix(in oklab, var(--im-on-accent) 78%, transparent);
-}
-
-.im-itinerary .im-timeline-item[data-state="current"] .im-timeline-marker > b {
-	color: var(--im-on-accent);
-}
-
-.im-itinerary .im-timeline-title {
-	font-size: var(--im-text-h5);
-	line-height: var(--im-leading-h5);
-}
-
-/* Where you slept, what it cost, how far you went — the three facts a day of
-   a trip has that a paragraph should not have to carry. */
-.im-itinerary-facts {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 0.375rem 1rem;
-	padding-top: 0.5rem;
-	color: var(--im-muted);
-	font-size: var(--im-text-xs);
-}
-
-.im-itinerary-facts > span {
-	display: inline-flex;
-	align-items: center;
-	gap: 0.375rem;
-}
-
-.im-itinerary-facts .im-icon {
-	font-size: 0.875rem;
-}
 
 /* ---- the bucket list, as two columns -----------------------------------
    Everything still to do on the left, everything done on the right. It is
@@ -897,4 +837,10 @@
 		width: 2.5rem;
 		height: 2.5rem;
 	}
+}
+
+/* A picture on a leg — the one photograph from that day, not a gallery. */
+.im-leg-shot {
+	max-width: 30rem;
+	margin-top: 0.5rem;
 }

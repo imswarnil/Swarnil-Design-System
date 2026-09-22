@@ -33,11 +33,6 @@
 .im-skeleton-media { aspect-ratio: 16 / 10; border-radius: var(--im-radius-lg); }
 .im-skeleton-btn { width: 6.5rem; height: 2.5rem; border-radius: var(--im-radius-full); }
 
-/* Pulse instead of a sweep — calmer, for many skeletons at once. */
-.im-skeleton-pulse {
-	background-image: none;
-	animation: im-pulse 1.6s var(--im-ease-in-out) infinite;
-}
 
 /* A region that is loading:  <div class="im-loading" aria-busy="true">…skeletons…</div>
    When aria-busy goes false, the real content fades up. */

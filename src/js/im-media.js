@@ -35,6 +35,7 @@
 				<button class="im-lightbox-prev" type="button" aria-label="Previous image">${svg(ICON.left)}</button>
 				<figure class="im-lightbox-figure">
 					<img alt="">
+					<p class="im-lightbox-title">${(document.documentElement.dataset.imLightboxTitle || document.title.split(' — ').pop() || '').replace(/[<>&]/g, '')}</p>
 					<button class="im-lightbox-close" type="button" data-close aria-label="Close">${svg(ICON.x)}</button>
 				</figure>
 				<button class="im-lightbox-next" type="button" aria-label="Next image">${svg(ICON.right)}</button>

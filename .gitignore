@@ -1,3 +1,7 @@
 node_modules/
 dist/
 .DS_Store
+
+# Local tooling, not part of the product
+CLAUDE.md
+.claude/
