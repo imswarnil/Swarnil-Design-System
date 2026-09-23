@@ -29,6 +29,8 @@ jobs:
       - run: npm run build
         env:
           SITE_URL: https://design.imswarnil.com/
+      # Dead CSS, a broken link or a provenance hit stops the deploy.
+      - run: npm run check
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with: { path: dist }

@@ -10,6 +10,7 @@ The design system behind **[imswarnil.com](https://imswarnil.com)** and its Ghos
 npm install
 npm run dev      # http://localhost:4700
 npm run build    # writes the docs to dist/ and checks every Ghost helper is modelled
+npm run check    # dead CSS, broken links, provenance — CI runs this before deploying
 npm run mcp      # an MCP server, so an AI assistant can build with the system
 ```
 
