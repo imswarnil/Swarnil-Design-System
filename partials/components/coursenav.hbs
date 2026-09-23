@@ -1,0 +1,43 @@
+{{!-- Course navigation — the course, its progress, units that open and close,
+	a row per lesson with its state mark, and "next up" pinned to the bottom.
+	One partial for the player's side, a rail and a sheet, so the lesson list
+	is written once.
+
+	Params
+	  title, href        the course and its page
+	  done, total        lessons finished / in the course
+	  percent, value     the same as 29 and .29 (the bar reads the fraction)
+	  units              [{ n, name, time, open, lessons: [{ n, title, time,
+	                       href, image, state: done|current, locked, current }] }]
+	  next               { n, title, href } — omit to leave the foot off
+	  flush=true         no card — for the player's side, which draws its own edge
+	  plain=true         no stills — for a narrow rail or a sheet
+	  close=true         a button that closes the player's drawer / collapses it --}}
+<nav class="im-coursenav{{#if flush}} im-coursenav-flush{{/if}}{{#if plain}} im-coursenav-plain{{/if}}" aria-label="{{t "Lessons"}}">
+	<div class="im-coursenav-head">
+		<p class="im-coursenav-title">{{> "icons/graduation-cap"}}<a href="{{href}}">{{title}}</a>{{#if close}}<button class="im-btn im-btn-sm im-btn-icon im-btn-ghost" type="button" data-im-player-toggle aria-label="{{t "Hide the lessons"}}">{{> "icons/panel-left"}}</button>{{/if}}</p>
+		<p class="im-coursenav-progress"><span>{{done}} of {{total}} done</span><span>{{percent}}%</span><span class="im-progress" role="progressbar" aria-label="{{t "Through the course"}}" aria-valuenow="{{percent}}" aria-valuemin="0" aria-valuemax="100" style="--im-value: {{value}}"></span></p>
+	</div>
+	<div class="im-coursenav-body">
+		{{#each units}}
+		<details class="im-coursenav-unit"{{#if open}} open{{/if}}>
+			<summary><b>{{n}}</b><span>{{name}}</span><small>{{time}}</small></summary>
+			{{#each lessons}}
+			<a class="im-coursenav-lesson" href="{{href}}" data-state="{{#if locked}}locked{{else}}{{state}}{{/if}}"{{#if current}} aria-current="page"{{/if}}>
+				<span class="im-coursenav-mark" aria-hidden="true"></span>
+				<span class="im-coursenav-shot">{{#if image}}<img src="{{image}}" alt="" loading="lazy">{{/if}}</span>
+				<span>{{title}}</span>
+				<small>{{time}}</small>
+			</a>
+			{{/each}}
+		</details>
+		{{/each}}
+	</div>
+	{{#if next}}
+	<a class="im-coursenav-next" href="{{next.href}}">
+		<small>{{t "Next up"}} · {{next.n}}</small>
+		<b>{{next.title}}</b>
+		{{> "icons/arrow-right"}}
+	</a>
+	{{/if}}
+</nav>

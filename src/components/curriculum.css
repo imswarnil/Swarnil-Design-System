@@ -94,45 +94,6 @@
 }
 
 
-/* ---- the lesson menu on a phone ----------------------------------------
-   Under `lg` the curriculum rail has nowhere to be, so it becomes a sheet.
-   A <dialog>, because it is modal and the browser is better at that than we
-   are — and the trigger is a real button in the lesson's own header rather
-   than a floating tab, so it is where a thumb already is. */
-.im-lessonmenu {
-	width: min(30rem, calc(100vw - 2rem));
-	max-height: min(80dvh, 42rem);
-	inset: 0;
-	margin: auto;
-	padding: 0;
-	border-radius: var(--im-radius-2xl);
-	background-color: var(--im-canvas);
-	color: var(--im-body);
-	overflow: hidden;
-}
-
-.im-lessonmenu::backdrop {
-	background-color: rgb(10 10 10 / 55%);
-	-webkit-backdrop-filter: blur(3px);
-	backdrop-filter: blur(3px);
-}
-
-.im-lessonmenu > .im-curriculum {
-	max-height: min(80dvh, 42rem);
-	border: 0;
-	border-radius: 0;
-}
-
-.im-lessonmenu-trigger {
-	display: inline-flex;
-}
-
-@media (width >= 64rem) {
-	.im-lessonmenu-trigger {
-		display: none;
-	}
-}
-
 /* ---- previous / next, with the picture ---------------------------------
    Pagination on a lesson is the most-pressed control on the page, so it is
    a pair of cards rather than two links: the still says which lesson, which

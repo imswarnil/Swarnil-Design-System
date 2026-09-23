@@ -1,0 +1,198 @@
+/* Player — the full-width shell for watching a sequence: a course's lessons,
+   a series' episodes, a playlist. It replaces .im-shell on those templates:
+   no site side nav, no page cap, one fixed column of lessons on the LEFT and
+   everything else given to the lesson.
+
+   <div class="im-player">
+     <header class="im-topbar im-player-bar"> … </header>
+     <aside class="im-player-side" id="lessons">  {{> "components/coursenav" flush=true …}}  </aside>
+     <button class="im-player-scrim" type="button" data-im-player-toggle aria-label="Close"></button>
+     <main class="im-player-main" id="main">
+       <div class="im-player-stage"> <div class="im-video im-video-full">…</div> </div>
+       <div class="im-player-body"> … </div>
+     </main>
+   </div>
+
+   The side is sticky in its own grid column and exactly one window tall, so
+   it never moves while the lesson scrolls — it reads as fixed, but it cannot
+   cover the page or need an offset kept in step with its width.
+
+   One switch, [data-im-player-toggle] (im.js):
+     width ≥ 64rem   collapses / restores the side — remembered, and restored
+                     before first paint as <html data-player-side="off">.
+     below           opens the side as a drawer over the page with a scrim;
+                     Esc, the scrim or the same button close it.
+
+   Knobs (on .im-player or any ancestor):
+     --im-player-side          the side's width            22rem
+     --im-player-measure       the reading column          60rem
+     --im-player-stage-max     the tallest the video gets  74dvh
+     --im-player-stage-bg      behind the video            surface
+   Modifier: im-player-theatre — the stage goes black in both themes. */
+
+.im-player {
+	--im-player-side: 22rem;
+	--im-player-measure: 60rem;
+	--im-player-stage-max: 74dvh;
+	--im-player-stage-bg: var(--im-surface);
+
+	display: grid;
+	grid-template-columns: var(--im-player-side) minmax(0, 1fr);
+	grid-template-rows: var(--im-bar-height) 1fr;
+	grid-template-areas:
+		"bar  bar"
+		"side main";
+	min-height: 100dvh;
+	transition: grid-template-columns 220ms var(--im-ease-out);
+}
+
+/* The bar is .im-topbar (it already takes grid-area: bar), with a line under
+   it: over a lesson there is no side nav edge to meet it. */
+.im-player-bar {
+	grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+	padding-inline: 0.625rem var(--im-gutter);
+	box-shadow: inset 0 -1px 0 var(--im-line);
+}
+
+.im-player-back {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	min-width: 0;
+	color: var(--im-ink);
+	font-size: var(--im-text-sm);
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.im-player-back > span:not(.im-icon) {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.im-player-back:hover { color: var(--im-accent); }
+
+/* The middle of the bar: where you are in the sequence. */
+.im-player-where {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	white-space: nowrap;
+}
+
+.im-player-where > .im-progress { width: 7rem; }
+
+.im-player-side {
+	grid-area: side;
+	position: sticky;
+	top: var(--im-bar-height);
+	z-index: 20;
+	display: flex;
+	flex-direction: column;
+	height: calc(100dvh - var(--im-bar-height));
+	min-width: 0;
+	overflow: hidden;
+	box-shadow: inset -1px 0 0 var(--im-line);
+	background-color: var(--im-canvas);
+}
+
+/* Whatever sits in the side fills it; only the list inside scrolls. */
+.im-player-side > * {
+	flex: 1 1 auto;
+	min-height: 0;
+}
+
+.im-player-main {
+	grid-area: main;
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+}
+
+.im-player-stage {
+	--im-video-max: calc(var(--im-player-stage-max) * 16 / 9);
+
+	padding: clamp(0.75rem, 0.4rem + 1.4vw, 1.75rem) var(--im-gutter);
+	background-color: var(--im-player-stage-bg);
+}
+
+.im-player-theatre {
+	--im-player-stage-bg: var(--im-gray-950);
+}
+
+.im-player-body {
+	display: flex;
+	flex-direction: column;
+	gap: var(--im-player-gap, 2rem);
+	width: 100%;
+	max-width: calc(var(--im-player-measure) + var(--im-gutter) * 2);
+	margin-inline: auto;
+	padding: 1.75rem var(--im-gutter) var(--im-section-gap);
+}
+
+/* The scrim only exists for the drawer. */
+.im-player-scrim { display: none; }
+
+/* ---- desktop: the side collapses to nothing ---- */
+@media (width >= 64rem) {
+	[data-player-side="off"] .im-player {
+		grid-template-columns: 0 minmax(0, 1fr);
+	}
+
+	[data-player-side="off"] .im-player-side {
+		visibility: hidden;
+	}
+}
+
+/* ---- below 64rem: one column, the side is a drawer ---- */
+@media (width < 64rem) {
+	.im-player {
+		grid-template-columns: minmax(0, 1fr);
+		grid-template-areas:
+			"bar"
+			"main";
+	}
+
+	.im-player-where > .im-progress { display: none; }
+
+	.im-player-side {
+		position: fixed;
+		inset: var(--im-bar-height) auto 0 0;
+		z-index: 45;
+		width: min(var(--im-player-side), 88vw);
+		height: auto;
+		box-shadow: inset -1px 0 0 var(--im-line), var(--im-shadow-float);
+		translate: -100% 0;
+		visibility: hidden;
+		transition: translate 240ms var(--im-ease-out), visibility 0s linear 240ms;
+	}
+
+	.im-player[data-drawer="open"] .im-player-side {
+		translate: 0 0;
+		visibility: visible;
+		transition: translate 240ms var(--im-ease-out), visibility 0s;
+	}
+
+	.im-player[data-drawer="open"] .im-player-scrim {
+		display: block;
+		position: fixed;
+		inset: var(--im-bar-height) 0 0;
+		z-index: 44;
+		background-color: rgb(10 10 10 / 45%);
+		cursor: default;
+	}
+}
+
+@media (width < 40rem) {
+	.im-player-where { display: none; }
+	.im-player-bar { grid-template-columns: minmax(0, 1fr) auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.im-player,
+	.im-player-side { transition: none; }
+}

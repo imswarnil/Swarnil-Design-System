@@ -376,6 +376,36 @@
 .im-coursenav-lesson[data-state="locked"] { color: var(--im-muted); }
 .im-coursenav-lesson[data-state="locked"] .im-coursenav-shot > img { filter: grayscale(1); opacity: 0.5; }
 
+/* Edge to edge of whatever holds it — the player's side — so no card sits
+   inside a column that is already drawn with a line. */
+.im-coursenav-flush {
+	border-radius: 0;
+	box-shadow: none;
+	background-color: transparent;
+}
+
+/* "Next up", pinned under the list: the one thing most people want next. */
+.im-coursenav-next {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	gap: 0.125rem 0.75rem;
+	align-items: center;
+	padding: 0.875rem 1.25rem;
+	border-top: 1px solid var(--im-line);
+	background-color: var(--im-surface);
+	color: var(--im-ink);
+	text-decoration: none;
+	transition: background-color var(--im-duration-fast) var(--im-ease-out);
+}
+
+.im-coursenav-next:hover { background-color: var(--im-hover-bg); --im-hover-bg: var(--im-surface-2); }
+.im-coursenav-next > small { color: var(--im-muted); font-family: var(--im-font-mono); font-size: var(--im-text-xs); }
+.im-coursenav-next > b { grid-row: 2; overflow: hidden; font-size: var(--im-text-sm); white-space: nowrap; text-overflow: ellipsis; }
+.im-coursenav-next > .im-icon { grid-column: 2; grid-row: 1 / span 2; color: var(--im-accent); }
+
+.im-coursenav-title > a { color: inherit; text-decoration: none; }
+.im-coursenav-title > a:hover { color: var(--im-accent); }
+
 /* Without stills, in a narrow rail or a sheet. */
 .im-coursenav-plain .im-coursenav-lesson { grid-template-columns: 1.5rem minmax(0, 1fr) auto; }
 .im-coursenav-plain .im-coursenav-shot { display: none; }

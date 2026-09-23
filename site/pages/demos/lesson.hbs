@@ -1,0 +1,108 @@
+---
+title: Lesson player demo
+layout: home
+shell: frame
+---
+{{!-- Loaded in an iframe by /collections/course/lesson/, and worth opening on
+	its own: the player shell is a whole document — a bar across, the lessons
+	fixed down the left, the lesson taking every other pixel. --}}
+<div class="im-player im-player-theatre">
+	<header class="im-topbar im-player-bar">
+		<div class="im-topbar-start">
+			<button class="im-btn im-btn-ghost im-btn-icon" type="button" data-im-player-toggle aria-controls="lessons" aria-label="Lessons" aria-expanded="true">{{> "icons/panel-left"}}</button>
+			<a class="im-player-back" href="/collections/course/page/" target="_top">{{> "icons/arrow-left"}}<span>Design tokens, properly</span></a>
+		</div>
+		<p class="im-player-where"><span>Lesson 03 of 07</span><span class="im-progress" role="progressbar" aria-label="Through the course" aria-valuenow="29" aria-valuemin="0" aria-valuemax="100" style="--im-value: .29"></span><span>29%</span></p>
+		<div class="im-topbar-end">
+			<a class="im-btn im-btn-ghost im-btn-icon" href="/demos/lesson/" rel="prev" aria-label="Previous lesson">{{> "icons/chevron-left"}}</a>
+			<a class="im-btn im-btn-sm im-btn-primary" href="/demos/lesson/" rel="next"><span>Next lesson</span>{{> "icons/arrow-right"}}</a>
+			{{> "components/theme-button"}}
+		</div>
+	</header>
+
+	<aside class="im-player-side" id="lessons">
+		{{> "components/coursenav" flush=true title="Design tokens, properly" href="/collections/course/page/" done="2" total="7" percent="29" value=".29" units=demo.sections next=demo.lessons.[3]}}
+	</aside>
+	<button class="im-player-scrim" type="button" data-im-player-toggle aria-label="Close the lessons" tabindex="-1"></button>
+
+	<main class="im-player-main" id="main">
+		{{#with demo.lessons.[2]}}
+		<div class="im-player-stage">
+			<div class="im-video im-video-full" id="lesson" data-im-video="aqz-KE-bpKQ" data-im-video-title="{{title}}">
+				<img class="im-video-poster" src="{{image}}" alt="" loading="eager">
+				<button class="im-video-play" type="button" aria-label="Play">{{> "icons/play"}}</button>
+			</div>
+		</div>
+
+		<div class="im-player-body">
+			<header class="im-stack im-stack-xs">
+				<p class="im-snipcard-meta"><span class="im-lesson-kind">{{> "icons/square-play"}}Video</span><span>{{time}}</span><span>Lesson {{n}} of 07</span></p>
+				<h1 class="im-collhead-title text-h2">{{title}}</h1>
+				<p class="im-lede im-m0">{{text}}</p>
+			</header>
+		{{/with}}
+
+			<section class="im-section im-section-tight">
+				<h2 class="im-caption">Chapters</h2>
+				<ol class="im-chapters" data-im-chapters="#lesson" data-im-duration="14:05" aria-label="Chapters">
+					<li><button type="button" data-t="0:00"><time>0:00</time><span>What we are fixing</span></button></li>
+					<li><button type="button" data-t="2:40"><time>2:40</time><span>The two blocks, written out</span></button></li>
+					<li><button type="button" data-t="7:15"><time>7:15</time><span>Why a reference cycle throws both away</span></button></li>
+					<li><button type="button" data-t="11:30"><time>11:30</time><span>Testing it properly</span></button></li>
+				</ol>
+			</section>
+
+			<section class="im-content im-content-flush">
+				<h2>The two blocks</h2>
+				<p>Dark mode is not a filter and it is not a second stylesheet. It is the <strong>semantic</strong> layer, written twice — once under the light theme and once under the dark one — with the primitives untouched in both.</p>
+				<pre><code class="language-css">:root {
+	--im-canvas: var(--im-white);
+	--im-ink: var(--im-gray-950);
+}
+
+:root[data-theme="dark"] {
+	--im-canvas: var(--im-gray-950);
+	--im-ink: var(--im-white);
+}</code></pre>
+				<p>Two <strong>literal</strong> blocks. Not <code>--a: var(--b); --b: var(--a)</code> — that is a reference cycle, and CSS throws both declarations away without a word in the console.</p>
+
+				<figure class="im-shot">
+					<img src="{{demo.shots.[2]}}" alt="" loading="lazy">
+					<figcaption><b>Both themes, one component.</b> The card names no colour at all — only <code>--im-surface</code> and <code>--im-ink</code>.</figcaption>
+				</figure>
+
+				<h2>What to check before you move on</h2>
+				<ul>
+					<li>A component with a hard-coded colour in it. There should be none; grep for <code>#</code>.</li>
+					<li>An inverted block — a dark footer on a light page — which needs its own two literal blocks for the same reason.</li>
+					<li><code>color-scheme</code> on anything inverted, or the scrollbars and form controls stay the wrong way round.</li>
+				</ul>
+			</section>
+
+			<nav class="im-lessonnav" aria-label="Lessons">
+				<a class="im-lessonnav-item" href="/demos/lesson/" rel="prev">
+					<img src="{{demo.shots.[1]}}" alt="" loading="lazy">
+					<span>
+						<small>{{> "icons/arrow-left"}}Previous · Lesson 02</small>
+						<b>Primitives and semantics</b>
+					</span>
+				</a>
+				<a class="im-lessonnav-item" href="/demos/lesson/" rel="next" data-next>
+					<img src="{{demo.shots.[3]}}" alt="" loading="lazy">
+					<span>
+						<small>Next · Lesson 04{{> "icons/arrow-right"}}</small>
+						<b>The page shell</b>
+					</span>
+				</a>
+			</nav>
+
+			{{> "components/comments" thread=demo.comments count="24" lean=true limit="1"}}
+		</div>
+	</main>
+</div>
+
+{{#contentFor "scripts"}}
+<script src="/assets/im-code.js"></script>
+<script src="/assets/im-media.js"></script>
+<script src="/assets/im-content.js"></script>
+{{/contentFor}}

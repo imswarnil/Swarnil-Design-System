@@ -1,146 +1,32 @@
 ---
 title: Lesson page
 layout: home
-description: The player layout — the lesson filling the page, the curriculum beside it, and one button that does the only thing anybody wants next. Nothing else on the screen.
+description: The player — full width, the lessons fixed down the left, the lesson taking everything else. A shell of its own, im-player, in place of the site's side nav.
 eyebrow: Collections · Course
-source: src/components/curriculum.css · video.css
+source: src/layout/player.css · src/components/coursenav.css · partials/components/coursenav.hbs
 ---
 <section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Collections · Course · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
+	<p class="im-cluster"><a class="im-btn im-btn-primary" href="/demos/lesson/">Open the player full screen {{icon "arrow-up-right"}}</a><a class="im-btn" href="/collections/course/page/">The course page</a></p>
 </section>
 
-<div class="im-single im-wrap-wide im-single-aside-md" id="lesson-layout" data-sidebar="on">
-	<article class="im-stack im-stack-md im-content-wide" >
-		{{#with demo.lessons.[2]}}
-		<div class="im-cluster">
-			<nav aria-label="Breadcrumb" style="flex: 1">
-				<ol class="im-breadcrumb im-breadcrumb-chevron">
-					<li><a href="/collections/course/">{{> "icons/graduation-cap"}}<span>Design tokens, properly</span></a></li>
-					<li><a href="/collections/course/">{{> "icons/layers"}}<span>The token layer</span></a></li>
-					<li><span aria-current="page">Lesson {{n}}</span></li>
-				</ol>
-			</nav>
-			<button class="im-btn im-btn-sm" type="button" id="rail-show" hidden onclick="document.getElementById('lesson-layout').dataset.sidebar='on';this.hidden=true">{{icon "panel-right"}}Lessons</button>
-			<button class="im-btn im-btn-sm im-lessonmenu-trigger" type="button" popovertarget="lessons-sheet" onclick="document.getElementById('lessons-sheet').showModal()">{{icon "list"}}Lessons <span class="im-hint im-m0">3/7</span></button>
-		</div>
-
-		<div class="im-video im-video-full" id="lesson" data-im-video="aqz-KE-bpKQ" data-im-video-title="{{title}}">
-			<img class="im-video-poster" src="{{lookup ../demo.shots shot}}" alt="" loading="eager">
-			<button class="im-video-play" type="button" aria-label="Play">{{> "icons/play"}}</button>
-		</div>
-
-		<header class="im-stack im-stack-xs">
-			<p class="im-snipcard-meta"><span class="im-lesson-kind">{{icon "square-play"}}Video</span><span>{{time}}</span><span>Lesson {{n}} of 07</span></p>
-			<h1 class="im-collhead-title" style="font-size: var(--im-text-h2)">{{title}}</h1>
-			<p class="im-lede im-m0">{{text}}</p>
-		</header>
-		{{/with}}
-
-		<section class="im-section im-section-tight">
-			<h2 class="im-caption">Chapters</h2>
-			<ol class="im-chapters" data-im-chapters="#lesson" data-im-duration="14:05" aria-label="Chapters">
-				<li><button type="button" data-t="0:00"><time>0:00</time><span>What we are fixing</span></button></li>
-				<li><button type="button" data-t="2:40"><time>2:40</time><span>The two blocks, written out</span></button></li>
-				<li><button type="button" data-t="7:15"><time>7:15</time><span>Why a reference cycle throws both away</span></button></li>
-				<li><button type="button" data-t="11:30"><time>11:30</time><span>Testing it properly</span></button></li>
-			</ol>
-		</section>
-
-		<section class="im-content im-content-flush">
-			<h2>The two blocks</h2>
-			<p>Dark mode is not a filter and it is not a second stylesheet. It is the <strong>semantic</strong> layer, written twice — once under the light theme and once under the dark one — with the primitives untouched in both.</p>
-			<pre><code class="language-css">:root {
-	--im-canvas: var(--im-white);
-	--im-ink: var(--im-gray-950);
-}
-
-:root[data-theme="dark"] {
-	--im-canvas: var(--im-gray-950);
-	--im-ink: var(--im-white);
-}</code></pre>
-			<p>Two <strong>literal</strong> blocks. Not <code>--a: var(--b); --b: var(--a)</code> — that is a reference cycle, and CSS throws both declarations away without a word in the console. It is the single most common way this goes wrong, and it took me an afternoon the first time.</p>
-
-			<figure class="im-shot">
-				<img src="{{demo.shots.[2]}}" alt="" loading="lazy">
-				<figcaption><b>Both themes, one component.</b> The card names no colour at all — only <code>--im-surface</code> and <code>--im-ink</code>.</figcaption>
-			</figure>
-
-			<h2>What to check before you move on</h2>
-			<ul>
-				<li>A component with a hard-coded colour in it. There should be none; grep for <code>#</code>.</li>
-				<li>An inverted block — a dark footer on a light page — which needs its own two literal blocks for the same reason.</li>
-				<li><code>color-scheme</code> on anything inverted, or the scrollbars and form controls stay the wrong way round.</li>
-			</ul>
-		</section>
-
-		<nav class="im-lessonnav" aria-label="Lessons">
-			<a class="im-lessonnav-item" href="/collections/course/lesson/" rel="prev">
-				<img src="{{demo.shots.[1]}}" alt="" loading="lazy">
-				<span>
-					<small>{{icon "arrow-left"}}Previous · Lesson 02</small>
-					<b>Primitives and semantics</b>
-				</span>
-			</a>
-			<a class="im-lessonnav-item" href="/collections/course/lesson/" rel="next" data-next>
-				<img src="{{demo.shots.[3]}}" alt="" loading="lazy">
-				<span>
-					<small>Next · Lesson 04{{icon "arrow-right"}}</small>
-					<b>The page shell</b>
-				</span>
-			</a>
-		</nav>
-
-		{{> "components/comments" thread=demo.comments count="24" lean=true limit="1"}}
-	</article>
-
-	<aside>
-		<div class="im-sticky-rail im-sticky-rail-full">
-			<nav class="im-coursenav" aria-label="Lessons">
-				<div class="im-coursenav-head">
-					<p class="im-coursenav-title">{{icon "graduation-cap"}}Design tokens, properly<button class="im-btn im-btn-sm im-btn-icon" type="button" aria-label="Hide the lessons" onclick="document.getElementById('lesson-layout').dataset.sidebar='off';document.getElementById('rail-show').hidden=false">{{icon "panel-right"}}</button></p>
-					<p class="im-coursenav-progress"><span>2 of 7 done</span><span>29%</span><span class="im-progress" role="progressbar" aria-label="Through the course" aria-valuenow="29" aria-valuemin="0" aria-valuemax="100" style="--im-value: .29"></span></p>
-				</div>
-				<div class="im-coursenav-body">
-					{{#each demo.sections}}
-					<details class="im-coursenav-unit"{{#match n "<" "3"}} open{{/match}}>
-						<summary><b>{{n}}</b><span>{{name}}</span><small>{{time}}</small></summary>
-						{{#each ../demo.lessons}}{{#match n ">=" ../from}}{{#match n "<=" ../to}}
-						<a class="im-coursenav-lesson" href="/collections/course/lesson/" data-state="{{#if locked}}locked{{else}}{{state}}{{/if}}"{{#match state "=" "current"}} aria-current="page"{{/match}}>
-							<span class="im-coursenav-mark" aria-hidden="true"></span>
-							<span class="im-coursenav-shot"><img src="{{lookup @root.demo.shots shot}}" alt="" loading="lazy"></span>
-							<span>{{title}}</span>
-							<small>{{time}}</small>
-						</a>
-						{{/match}}{{/match}}{{/each}}
-					</details>
-					{{/each}}
-				</div>
-			</nav>
-		</div>
-	</aside>
-</div>
-
-<dialog class="im-lessonmenu" id="lessons-sheet" aria-label="Lessons">
-	<nav class="im-coursenav im-coursenav-plain im-flat" >
-		<div class="im-coursenav-head">
-			<p class="im-coursenav-title">{{icon "graduation-cap"}}Design tokens, properly<button class="im-btn im-btn-sm im-btn-icon" type="button" aria-label="Close" onclick="this.closest('dialog').close()">{{icon "x"}}</button></p>
-			<p class="im-coursenav-progress"><span>2 of 7 done</span><span>29%</span><span class="im-progress" role="progressbar" aria-label="Through the course" aria-valuenow="29" aria-valuemin="0" aria-valuemax="100" style="--im-value: .29"></span></p>
-		</div>
-		<div class="im-coursenav-body">
-			{{#each demo.sections}}
-			<details class="im-coursenav-unit" open>
-				<summary><b>{{n}}</b><span>{{name}}</span><small>{{time}}</small></summary>
-				{{#each ../demo.lessons}}{{#match n ">=" ../from}}{{#match n "<=" ../to}}
-				<a class="im-coursenav-lesson" href="/collections/course/lesson/" data-state="{{#if locked}}locked{{else}}{{state}}{{/if}}"{{#match state "=" "current"}} aria-current="page"{{/match}}><span class="im-coursenav-mark" aria-hidden="true"></span><span>{{title}}</span><small>{{time}}</small></a>
-				{{/match}}{{/match}}{{/each}}
-			</details>
-			{{/each}}
-		</div>
-	</nav>
-</dialog>
+<section class="im-section im-wrap-wide">
+	<iframe class="demo-frame im-demo-tall" src="/demos/lesson/" title="The lesson player" loading="lazy"></iframe>
+</section>
 
 <section class="im-section im-wrap"><div class="im-prose">
-<p>The rail is <code>im-coursenav</code>: the course and its progress in the head, units that open and close, a row per lesson with its state mark (tick, play, lock), a still, the title and the length, and "next up" pinned to the bottom. The panel-right button collapses it; the header brings it back. Under 64rem the same nav, without stills (<code>im-coursenav-plain</code>), is the sheet. The course page's curriculum is the same vocabulary at full width: <code>im-syllabus</code>.</p>
+<h2>The shell</h2>
+<p>A lesson template does not render <code>.im-shell</code>. It renders <code>.im-player</code>: the top bar across (the same <code>im-topbar</code>, with <code>im-player-bar</code>), the lessons in <code>im-player-side</code> down the left, and <code>im-player-main</code> for the rest — a <code>im-player-stage</code> band for the video, then <code>im-player-body</code> for the words. Nothing is capped to the page width; only the reading column has a measure.</p>
+<p>The side is one window tall and sticks under the bar, so it stays put while the lesson scrolls, and only its list scrolls inside it. The panel button in the bar collapses it on a desktop — the choice is remembered and restored before first paint as <code>&lt;html data-player-side="off"&gt;</code>. Under 64rem the same button opens it as a drawer over the lesson, and Esc or the scrim closes it.</p>
+</div></section>
+
+<section class="im-section im-wrap">
+	<h2 class="im-caption">On a phone</h2>
+	<iframe class="demo-frame im-max-sm im-mx-auto im-block im-demo-tall" src="/demos/lesson/" title="The lesson player on a phone" loading="lazy"></iframe>
+</section>
+
+<section class="im-section im-wrap"><div class="im-prose">
+<p>One way to build a lesson page, not the only one. It is <code>im-player</code>, <code>components/coursenav</code> and the usual components; every knob is on <a href="/guides/helpers/">Helpers &amp; utilities</a>.</p>
 </div></section>

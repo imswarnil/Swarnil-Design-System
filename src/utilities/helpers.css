@@ -1,0 +1,60 @@
+/* Helpers — a fixed set of Tailwind utilities that ALWAYS ship in im.css.
+
+   Tailwind only writes the utilities it finds in the files it scans, and a
+   theme that vendors im.css does not run Tailwind at all — so without this, a
+   theme could only use the handful of utilities the docs happened to use. This
+   list is the promise: every class below is in the bundle, whatever the docs
+   say, and every one of them reads a token (p-4 is 4 × --im-space, text-muted
+   is --im-muted, rounded-xl is --im-radius-xl), so dark mode and any retuned
+   token reach them for free.
+
+   They are unprefixed on purpose: they are Tailwind's, and the system's own
+   classes are the ones that carry im-. Use them to compose a page the
+   components do not already make, or to nudge one instance of a component;
+   to change a component EVERYWHERE, set its knob (the --im-* custom
+   properties listed on /guides/helpers/) instead of repeating utilities.
+
+   Responsive prefixes (sm: md: lg: xl:) are generated where a page layout
+   needs them — spacing, display, flex, grid, width, type size. */
+
+/* ---- spacing: the token scale, 0 … 24 × --im-space ---- */
+@source inline("{sm:,md:,lg:,}{p,px,py,pt,pb,m,mx,my,mt,mb,gap,gap-x,gap-y}-{0,1,2,3,4,5,6,8,10,12,16,20,24}");
+@source inline("{pl,pr,ml,mr,space-y,space-x}-{0,1,2,3,4,6,8}");
+@source inline("{sm:,md:,lg:,}{m,mx,my,mt,mb,ml,mr}-auto");
+
+/* ---- display and position ---- */
+@source inline("{sm:,md:,lg:,xl:,}{block,inline-block,inline,flex,inline-flex,grid,inline-grid,hidden,contents}");
+@source inline("{relative,absolute,fixed,sticky,static,isolate,inset-0,top-0,bottom-0,left-0,right-0,z-0,z-10,z-20,z-30}");
+@source inline("{overflow-hidden,overflow-auto,overflow-x-auto,overflow-y-auto,overflow-visible,sr-only,not-sr-only,invisible,visible}");
+
+/* ---- flex and grid ---- */
+@source inline("{sm:,md:,lg:,}{flex-row,flex-col,flex-row-reverse,flex-col-reverse,flex-wrap,flex-nowrap,flex-1,flex-auto,flex-none,grow,shrink-0}");
+@source inline("{sm:,md:,lg:,}{items-start,items-center,items-end,items-baseline,items-stretch,justify-start,justify-center,justify-end,justify-between,self-start,self-center,self-end,self-stretch,place-items-center,place-content-center}");
+@source inline("{sm:,md:,lg:,xl:,}grid-cols-{1,2,3,4,5,6,12}");
+@source inline("{sm:,md:,lg:,xl:,}col-span-{1,2,3,4,5,6,7,8,9,10,11,12,full}");
+@source inline("{sm:,md:,lg:,}{order-first,order-last,order-none}");
+
+/* ---- sizing: the three measures, and the escape hatches ---- */
+@source inline("{sm:,md:,lg:,}{w-full,w-auto,h-full,h-auto,min-w-0,min-h-0,max-w-prose,max-w-page,max-w-wide,max-w-none,min-h-dvh}");
+@source inline("{aspect-video,aspect-square,aspect-auto,object-cover,object-contain,object-center,object-top}");
+
+/* ---- type: the token sizes, weights and families ---- */
+@source inline("{sm:,md:,lg:,}text-{xs,sm,base,lg,h6,h5,h4,h3,h2,h1,display}");
+@source inline("{sm:,md:,}text-{left,center,right}");
+@source inline("font-{normal,medium,semibold,bold,sans,mono,pixel,heading,body}");
+@source inline("tracking-{tight,tighter,normal,wide}");
+@source inline("{uppercase,normal-case,italic,not-italic,truncate,text-balance,text-pretty,whitespace-nowrap,break-words,tabular-nums,underline,no-underline}");
+@source inline("line-clamp-{1,2,3,4}");
+
+/* ---- colour: semantic tokens only — nothing here names a hue ---- */
+@source inline("{,hover:}text-{ink,body,muted,faint,accent,on-accent,success,warning,danger,info}");
+@source inline("{,hover:}bg-{canvas,surface,surface-2,surface-3,accent,accent-tint,success-tint,warning-tint,danger-tint,info-tint,transparent}");
+@source inline("border-{line,ink,accent,transparent}");
+
+/* ---- edges: borders, radii, the one shadow ---- */
+@source inline("{border,border-0,border-t,border-b,border-l,border-r,border-y,border-x}");
+@source inline("rounded-{none,xs,sm,md,lg,xl,2xl,full}");
+@source inline("{shadow-float,shadow-none,opacity-0,opacity-50,opacity-100}");
+
+/* ---- motion: the system's easing and default duration ---- */
+@source inline("{transition,transition-colors,transition-none,ease-out,ease-in-out}");

@@ -372,7 +372,28 @@ export async function build({ quiet = false } = {}) {
 	// outer item — the fix belongs in the data, not in a path nobody can read.
 	for (const g of demo.expgroups) g.items = demo.experience.filter((e) => e.group === g.tag);
 	for (const g of demo.usegroups) g.items = demo.uses.filter((u) => u.group === g.tag);
+	// The course nav reads units that already hold their lessons (a partial
+	// cannot reach the outer item from a nested each), each with its picture.
+	for (const l of demo.lessons) Object.assign(l, { image: demo.shots[l.shot], href: '/demos/lesson/', current: l.state === 'current' });
+	for (const u of demo.sections) Object.assign(u, { lessons: demo.lessons.filter((l) => +l.n >= u.from && +l.n <= u.to), open: u.from <= 3 });
 
+
+	/* -- knobs --
+	   Every custom property a component, layout or effect exposes — declared
+	   on its own selector, or read with a fallback — minus the global tokens.
+	   Read from the CSS at build time for /guides/helpers/, so the table is
+	   the stylesheet and cannot fall behind it. */
+	const tokenDir = path.join(SRC, 'foundation/tokens');
+	const globals = new Set(fs.readdirSync(tokenDir).flatMap((f) => [...fs.readFileSync(path.join(tokenDir, f), 'utf8').matchAll(/(--im-[\w-]+)\s*:/g)].map((m) => m[1])));
+	const knobs = ['layout', 'components', 'effects', 'motion'].flatMap((dir) =>
+		fs.readdirSync(path.join(SRC, dir)).filter((f) => f.endsWith('.css') && f !== 'index.css').sort().map((f) => {
+			const css = fs.readFileSync(path.join(SRC, dir, f), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+			const found = new Map();
+			for (const m of css.matchAll(/(--im-[\w-]+)\s*:\s*([^;{}]+);/g)) if (!globals.has(m[1]) && !found.has(m[1])) found.set(m[1], m[2].trim());
+			for (const m of css.matchAll(/var\((--im-[\w-]+)\s*,\s*([^()]*(?:\([^()]*\)[^()]*)*)\)/g)) if (!globals.has(m[1]) && !found.has(m[1])) found.set(m[1], m[2].trim());
+			return { file: `src/${dir}/${f}`, list: [...found].map(([name, value]) => ({ name, value })) };
+		}).filter((k) => k.list.length),
+	);
 
 	/* -- docs helpers -- */
 	const examples = [];
@@ -434,6 +455,7 @@ export async function build({ quiet = false } = {}) {
 			version: JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8')).version,
 			// Every helper the shim models, for /guides/helpers/. Read from the
 			// registry so the page cannot list one that does not exist.
+			knobs,
 			helpers: Object.keys(hbs.helpers).filter((h) => !['lookup','log','if','unless','each','with','blockHelperMissing','helperMissing'].includes(h)).sort(),
 			// The whole tree, for /pages/sitemap/. It is the SAME array the side
 			// nav is built from, so the sitemap cannot drift out of date — adding

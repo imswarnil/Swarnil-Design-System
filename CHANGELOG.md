@@ -1,5 +1,32 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+**`im-player`** — a full-width shell for a lesson (or an episode, or a
+playlist): the top bar across, the lessons fixed down the left, the lesson
+taking the rest. `[data-im-player-toggle]` collapses the side on a desktop
+(remembered, applied before first paint as `data-player-side`) and opens it
+as a drawer under 64rem. The lesson page is rebuilt on it; see
+`/demos/lesson/`.
+
+**`components/coursenav`** — the lesson list as one partial, with
+`im-coursenav-flush` for the player's side and `im-coursenav-next` for the
+"next up" foot.
+
+**Helpers that always ship** — `src/utilities/helpers.css` guarantees a
+fixed set of token-backed Tailwind utilities (spacing, display, flex, grid,
+sizing, type, semantic colour, edges) is in `im.css`, so a theme that only
+vendors the bundle can still compose and nudge pages. `/guides/helpers/`
+now also lists every component knob with its default, read from the CSS at
+build time.
+
+### Removed
+
+`im-lessonmenu` (the phone sheet — the player's drawer replaces it) and
+`im-content-wide`.
+
 ## 0.7.0 — 23 September 2026
 
 The collections release. Fourteen content collections, the pages a personal

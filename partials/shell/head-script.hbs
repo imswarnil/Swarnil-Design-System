@@ -1,4 +1,4 @@
-{{!-- In <head>, before any stylesheet: applies the saved theme and nav state
+{{!-- In <head>, before any stylesheet: applies the saved theme, nav and player-side state
 	before first paint so nothing flashes. The theme is LIGHT or DARK — there is
 	no third "system" state to remember; a visitor who has never chosen is shown
 	what their system prefers, and follows it until they press the switch.
@@ -7,5 +7,5 @@
 <script>
 (function(){var d=document.documentElement,g=function(k){try{return localStorage.getItem(k)}catch(e){return null}},t=g('theme');
 if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
-d.dataset.theme=t;d.dataset.imJs='';d.dataset.nav=g('nav')==='rail'?'rail':'open'})();
+d.dataset.theme=t;d.dataset.imJs='';d.dataset.nav=g('nav')==='rail'?'rail':'open';d.dataset.playerSide=g('player-side')==='off'?'off':'on'})();
 </script>

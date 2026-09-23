@@ -1,4 +1,5 @@
 @import "./patterns.css";
+@import "./helpers.css";
 
 /* Custom utilities — @utility, so variants work (md:grid-auto, hover:ring-line).
 
@@ -134,7 +135,6 @@
 @utility im-exps-md { --im-exps-min: 19rem; }
 @utility im-vidgrid-sm { --im-vidgrid-min: 11rem; }
 @utility im-auth-wide { --im-auth-width: 28rem; }
-@utility im-content-wide { --im-content-main: 56rem; }
 @utility im-on-dark { color: color-mix(in oklab, #fff 80%, transparent); }
 @utility im-demo-tall { height: 40rem; }
 @utility im-art-post { --im-art: var(--im-c-post); }

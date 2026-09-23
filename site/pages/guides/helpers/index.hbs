@@ -1,10 +1,49 @@
 ---
 title: Helpers & utilities
-description: Every Ghost helper the docs model, the docs-only helpers, and the utility classes — one reference, generated from the registry so it cannot drift.
+description: The three ways to customise a page in depth — a component's knobs, the utilities that always ship, and the layout classes — plus every Ghost helper the docs model. Generated from the source, so none of it can drift.
 eyebrow: Guides
-source: site/lib/ghost.mjs · src/utilities/
+source: src/utilities/helpers.css · src/utilities/index.css · site/lib/ghost.mjs
 ---
 <p>Two kinds of helper live here. <strong>Ghost's</strong> are modelled by <code>site/lib/ghost.mjs</code> so every partial renders in the docs exactly as it will in a theme; <strong>the docs' own</strong> exist only on this site. The utilities are Tailwind <code>@utility</code> rules, so they take variants (<code>md:im-stack</code>).</p>
+
+<h2>Customising in depth</h2>
+<p>The pages under Collections and Pages are <strong>compositions, not templates to copy whole</strong>: every one is components plus a few layout classes, and everything they are made of reads a token. So there are three levels to change a page at, and the right one is the lowest that does the job:</p>
+<ol>
+<li><strong>A token</strong> — <code>--im-accent</code>, <code>--im-radius-xl</code>, <code>--im-width-page</code>. Changes every component that uses it, in both themes. See Foundation.</li>
+<li><strong>A knob</strong> — a component's own custom property, like <code>--im-player-side</code> or <code>--im-navpanel-width</code>. Set it on the component, a wrapper, or <code>:root</code>; every one is listed below with its default.</li>
+<li><strong>A helper</strong> — a utility on one element, for one instance: <code>md:grid-cols-3</code>, <code>gap-6</code>, <code>text-muted</code>, <code>rounded-2xl</code>. Utilities sit in the last layer, so they beat any component rule without <code>!important</code>.</li>
+</ol>
+
+<h2>Helpers that always ship</h2>
+<p>Tailwind only writes the utilities it finds, and a theme that vendors <code>im.css</code> does not run Tailwind — so <code>src/utilities/helpers.css</code> guarantees a fixed set is in the bundle whatever the docs use. They are Tailwind's own names, unprefixed, and each one reads a token: <code>p-4</code> is 4 × <code>--im-space</code>, <code>bg-surface</code> is <code>--im-surface</code>. Nothing here names a hue: <code>bg-red-500</code> does not exist.</p>
+<div class="im-table-scroll"><table>
+<thead><tr><th>Group</th><th>Classes</th><th>Prefixes</th></tr></thead>
+<tbody>
+<tr><td>Spacing</td><td><code>p px py pt pb m mx my mt mb gap gap-x gap-y</code> × <code>0 1 2 3 4 5 6 8 10 12 16 20 24</code>; <code>pl pr ml mr space-y space-x</code> × <code>0–8</code>; <code>m*-auto</code></td><td><code>sm: md: lg:</code></td></tr>
+<tr><td>Display</td><td><code>block inline-block inline flex inline-flex grid inline-grid hidden contents</code></td><td><code>sm: md: lg: xl:</code></td></tr>
+<tr><td>Position</td><td><code>relative absolute fixed sticky static isolate inset-0 top-0 … z-0 z-10 z-20 z-30</code>, <code>overflow-*</code>, <code>sr-only</code></td><td>—</td></tr>
+<tr><td>Flex</td><td><code>flex-row flex-col flex-wrap flex-1 flex-none grow shrink-0 items-* justify-* self-* place-items-center order-first order-last</code></td><td><code>sm: md: lg:</code></td></tr>
+<tr><td>Grid</td><td><code>grid-cols-1 … 6, 12</code> · <code>col-span-1 … 12, full</code></td><td><code>sm: md: lg: xl:</code></td></tr>
+<tr><td>Sizing</td><td><code>w-full h-full min-w-0 min-h-0 min-h-dvh max-w-prose max-w-page max-w-wide max-w-none</code>, <code>aspect-video aspect-square object-cover</code></td><td><code>sm: md: lg:</code></td></tr>
+<tr><td>Type</td><td><code>text-xs sm base lg h6 … h1 display</code> · <code>text-left center right</code> · <code>font-normal medium semibold bold sans mono pixel heading</code> · <code>tracking-*</code> · <code>truncate line-clamp-1…4 text-balance text-pretty uppercase tabular-nums</code></td><td>size: <code>sm: md: lg:</code></td></tr>
+<tr><td>Colour</td><td><code>text-ink body muted faint accent on-accent success warning danger info</code> · <code>bg-canvas surface surface-2 surface-3 accent accent-tint *-tint</code> · <code>border-line ink accent</code></td><td><code>hover:</code></td></tr>
+<tr><td>Edges</td><td><code>border border-t … border-0</code> · <code>rounded-none xs sm md lg xl 2xl full</code> · <code>shadow-float</code> · <code>opacity-0 50 100</code></td><td>—</td></tr>
+</tbody></table></div>
+<p>Need one that is not on the list? A theme that runs Tailwind itself can use any utility against the same bridge (<code>src/foundation/tokens/tailwind.css</code>); a theme that only vendors <code>im.css</code> adds a line to <code>helpers.css</code> and rebuilds. To change a component everywhere, set its knob rather than repeating utilities on every instance.</p>
+
+<h2>Knobs, component by component</h2>
+<p>Every custom property a component exposes, read from its stylesheet at build time — declared on its own selector, or read with a fallback so it only exists when you set it (the default then shows as the fallback). Set a knob on the component itself for one instance, on a wrapper for a region, or on <code>:root</code> for the whole site.</p>
+<!--x--><div class="im-accordion">
+{{#each knobs}}
+	<details name="knobs">
+		<summary><span><code>{{file}}</code> <span class="im-muted">· {{list.length}}</span></span></summary>
+		<div class="im-accordion-body"><div class="im-table-scroll"><table>
+			<thead><tr><th>Knob</th><th>Default</th></tr></thead>
+			<tbody>{{#each list}}<tr><td><code>{{name}}</code></td><td><code>{{value}}</code></td></tr>{{/each}}</tbody>
+		</table></div></div>
+	</details>
+{{/each}}
+</div><!--/x-->
 
 <h2>Helpers modelled</h2>
 <p>{{helpers.length}} names, read from the registry at build time.</p>
