@@ -34,6 +34,23 @@ for (const f of files) {
 // a class written as `im-post-card-{{layout}}` in a partial covers its variants
 const prefixes = [...used].filter((u) => u.endsWith('-'));
 
-const unused = [...defined].filter((c) => !used.has(c) && !prefixes.some((p) => c.startsWith(p))).sort();
+// Names that are correct to define and never write in this repository:
+// entrances are named by data-im-in="…", and a few families are complete
+// sets a theme picks from (one art colour per collection, every ad size,
+// every video shape). Anything else this script prints is really dead.
+const generated = [
+	/^im-in-/,                 // entrances, chosen by name at runtime
+	/^im-art-/,                // one per collection; a theme picks
+	/^im-ad-(billboard|portrait)$/,
+	/^im-(video|videobg)-(bleed|square|vertical)$/,
+	/^im-mediabg-(full|parallax)$/,
+	/^im-bg-fade-b$/,
+	/^im-(radio|support)-accent$/,
+];
+const unused = [...defined]
+	.filter((c) => !used.has(c) && !prefixes.some((p) => c.startsWith(p)))
+	.filter((c) => !generated.some((re) => re.test(c)))
+	.sort();
 console.log(unused.join('\n'));
 console.error(`${defined.size} defined · ${unused.length} unused`);
+if (unused.length) process.exitCode = 1; // anything this prints is dead: delete it or use it

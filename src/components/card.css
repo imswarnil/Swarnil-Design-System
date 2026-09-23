@@ -400,7 +400,7 @@
    card that lifts by a hair. Everything else in the system moves through a
    fill (--im-hover-bg), so these are the only motions a hand feels. */
 @media (prefers-reduced-motion: no-preference) {
-	:is(.im-btn, .im-tag, .im-short-act):active {
+	:is(.im-btn, .im-tag):active {
 		scale: 0.97;
 		transition-duration: var(--im-duration-instant);
 	}
@@ -421,46 +421,23 @@
 	}
 
 	/* Every card in the system, one list, one movement. */
-	:is(.im-card-link, .im-post-card, .im-repo, .im-product, .im-exp, .im-seriescard, .im-vidcard, .im-tagcard, .im-issue, .im-bucket, .im-done, .im-tool, .im-way, .im-guest, .im-lessonnav-item, .im-affiliate, .im-snipcard, .im-promptcard, .im-stream-item, .im-queue-item, .im-tier):is(:hover, :focus-within) {
+	:is(.im-card-link, .im-post-card, .im-repo, .im-product, .im-exp, .im-seriescard, .im-vidcard, .im-tagcard, .im-bucket, .im-tool, .im-way, .im-lessonnav-item, .im-affiliate, .im-snipcard, .im-promptcard, .im-stream-item, .im-queue-item, .im-tier):is(:hover, :focus-within) {
 		translate: 0 -1px;
 	}
 
-	:is(.im-card-link, .im-post-card, .im-repo, .im-product, .im-exp, .im-seriescard, .im-vidcard, .im-tagcard, .im-issue, .im-bucket, .im-done, .im-tool, .im-way, .im-guest, .im-lessonnav-item, .im-affiliate, .im-snipcard, .im-promptcard, .im-stream-item, .im-queue-item, .im-tier) {
+	:is(.im-card-link, .im-post-card, .im-repo, .im-product, .im-exp, .im-seriescard, .im-vidcard, .im-tagcard, .im-bucket, .im-tool, .im-way, .im-lessonnav-item, .im-affiliate, .im-snipcard, .im-promptcard, .im-stream-item, .im-queue-item, .im-tier) {
 		transition: background-color var(--im-duration-fast) var(--im-ease-out), translate var(--im-duration-fast) var(--im-ease-out), box-shadow var(--im-duration-fast) var(--im-ease-out);
 	}
 }
 
-
-/* The word, once, on the card's top-right edge — still. The edge is the
-   only motion. */
-.im-featured-tag {
-	position: absolute;
-	top: -0.625rem;
-	right: 1rem;
-	z-index: 3;
-	display: inline-flex;
-	align-items: center;
-	gap: 0.375rem;
-	padding: 0.1875rem 0.5rem 0.1875rem 0.4375rem;
-	border-radius: var(--im-radius-full);
-	background-color: var(--im-accent);
-	color: #fff;
-	font-size: 0.625rem;
-	font-weight: 700;
-	letter-spacing: 0.08em;
-	text-transform: uppercase;
-	white-space: nowrap;
-}
-.im-featured-tag::before { content: ""; width: 0.375rem; height: 0.375rem; border-radius: var(--im-radius-full); background-color: #fff; }
 
 /* ---- one line-under-the-title, every card ----------------------------
    The sentence on a card — excerpt, text, note — is the same size and
    leading on every card in the system. Set once here, so a grid of mixed
    collections reads as one typeface and not as eleven. */
 :is(.im-post-card-excerpt, .im-vidcard-text, .im-repo-text, .im-exp-text, .im-product-text, .im-seriescard-text,
-    .im-snipcard-text, .im-promptcard-text, .im-affiliate-text, .im-stream-text, .im-tripcard-more, .im-done-text,
-    .im-bucket-note, .im-issue-text, .im-tagcard-text, .im-guest-text, .im-review-text, .im-lessonrow-meta,
-    .im-viddesc-body, .im-timeline-text, .im-leg-text, .im-module-text, .im-widget-sponsor) {
+    .im-snipcard-text, .im-affiliate-text, .im-stream-text, .im-tripcard-more, .im-bucket-note, .im-issue-text, .im-tagcard-text, .im-review-text, .im-lessonrow-meta,
+    .im-viddesc-body, .im-timeline-text, .im-leg-text, .im-widget-sponsor) {
 	font-size: var(--im-text-sm);
 	line-height: var(--im-leading-card, 1.55);
 	color: var(--im-body);

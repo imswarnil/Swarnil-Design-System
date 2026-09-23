@@ -213,12 +213,6 @@
 	color: var(--im-accent);
 }
 
-.im-promptcard-text {
-	color: var(--im-body);
-	font-size: var(--im-text-sm);
-	line-height: 1.6;
-}
-
 .im-promptcards {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-promptcards-min, 26rem), 100%), 1fr));
@@ -234,16 +228,6 @@
 	.im-chat-turn {
 		grid-template-columns: 1.5rem minmax(0, 1fr);
 	}
-}
-
-.im-promptcard-teaser {
-	padding: 0.75rem 0.875rem;
-	border-left: 2px solid var(--im-c-prompt);
-	background-color: var(--im-surface);
-	color: var(--im-muted);
-	font-size: var(--im-text-sm);
-	font-style: italic;
-	line-height: 1.5;
 }
 
 /* The card IS a small chat window: the model at the top, an empty log with

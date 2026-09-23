@@ -24,6 +24,13 @@ npm run mcp      # an MCP server, so an AI assistant can build with the system
 | `sections/` | self-contained page sections |
 | `site/` | the documentation site — Handlebars pages with a Ghost shim |
 | `mcp/` | the MCP server (`list_components`, `get_component`, `list_tokens`, `search`, `get_page`, `rules`) |
+| `scripts/` | `unused-css.mjs` — every `im-*` class nothing puts on an element (it returns nothing today) |
+
+Fourteen collections ship with a listing, a card and a single page each: post,
+project, series, course, video, shop, newsletter, uses, snippets, prompts,
+travel, experience, tags and the timeline, plus an archive of all of them. The
+pages a personal site needs — about, now, contact, membership, sign in, résumé,
+guestbook, sitemap, home — are in `site/pages/pages/`.
 
 ## Using it in a theme
 

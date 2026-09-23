@@ -36,25 +36,6 @@
 }
 
 /* ---- résumé: two columns, the facts left, the story right ---- */
-.im-resume {
-	display: grid;
-	grid-template-columns: minmax(0, 17rem) minmax(0, 1fr);
-	gap: clamp(1.5rem, 1rem + 2.5vw, 3.5rem);
-	align-items: start;
-}
-
-.im-resume-side {
-	position: sticky;
-	top: calc(var(--im-bar-height) + 1.25rem);
-	display: grid;
-	gap: 1.25rem;
-}
-
-.im-resume-section + .im-resume-section {
-	margin-top: 2rem;
-	padding-top: 2rem;
-	border-top: 1px solid var(--im-line);
-}
 
 .im-resume-role {
 	display: grid;
@@ -84,8 +65,6 @@
 }
 
 @media (width < 48rem) {
-	.im-resume { grid-template-columns: minmax(0, 1fr); }
-	.im-resume-side { position: static; }
 	.im-resume-role { grid-template-columns: minmax(0, 1fr); }
 	.im-resume-when { grid-row: auto; }
 }
@@ -114,21 +93,6 @@
 	break-inside: avoid;
 	margin-bottom: 1rem;
 }
-
-.im-guest {
-	display: grid;
-	gap: 0.5rem;
-	padding: 1rem 1.125rem;
-	border-radius: var(--im-radius-lg);
-	box-shadow: inset 0 0 0 1px var(--im-line);
-	background-color: var(--im-canvas);
-}
-
-.im-guest-head { display: flex; align-items: center; gap: 0.625rem; }
-.im-guest-name { color: var(--im-ink); font-size: var(--im-text-sm); font-weight: 600; }
-.im-guest-from { color: var(--im-muted); font-size: var(--im-text-xs); }
-.im-guest-when { margin-left: auto; color: var(--im-faint); font-family: var(--im-font-mono); font-size: var(--im-text-xs); }
-.im-guest-text { color: var(--im-body); font-size: var(--im-text-sm); line-height: 1.55; text-wrap: pretty; }
 
 @media (width < 56rem) {
 	.im-guestbook { grid-template-columns: minmax(0, 1fr); }

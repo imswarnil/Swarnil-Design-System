@@ -167,7 +167,7 @@ export async function build({ quiet = false } = {}) {
 			{ day: '14', when: '16 Jan', title: 'Rebuilt the token layer', text: 'Primitives and semantics split into two files. A component names what a value is FOR, never what it is.', tag: 'v0.1', shot: 0, cost: '3 days' },
 			{ day: '61', when: '4 Mar', title: 'Forty components, one hover', text: 'Every card, row, tile and chip answers the same way: it fills. Three competing ideas removed in an afternoon.', tag: 'v0.3', cost: '1 day' },
 			{ day: '140', when: '22 May', title: 'The docs render the real partials', text: 'A page breaks if a component does. Screenshots in a README would have been wrong within a month.', tag: 'v0.4', shot: 2, cost: '1 week' },
-			{ day: '231', when: '21 Sep', title: 'Collections, nine of them', text: 'Post, project, video, series, course, shop, newsletter, tags, timeline. One look.', tag: 'v0.6', state: 'current', cost: '2 weeks' },
+			{ day: '231', when: '21 Sep', title: 'Collections, nine of them', text: 'Post, project, video, series, course, shop, newsletter, tags, timeline. One look.', tag: 'v0.6', cost: '2 weeks' },
 			{ day: '—', when: 'Next', title: 'Ship it', text: 'A licence, a landing page, and a price.', state: 'upcoming', tag: 'v1.0' },
 		],
 		videos: [
@@ -331,7 +331,7 @@ export async function build({ quiet = false } = {}) {
 		],
 		stream: [
 			{ month: 'September 2026', items: [
-				{ kind: 'release', mark: 'rocket', label: 'Shipped a release', when: '21 Sep', title: 'Im Design System v0.6 — one look, nine collections', text: 'The style scope is gone. Two looks was one look too many: everything is one component styled once now, and the page is quieter for it.', url: '/collections/project/page/', links: ['Changelog', 'Repo'] },
+				{ kind: 'release', mark: 'rocket', label: 'Shipped a release', when: '21 Sep', title: 'Im Design System v0.7 — fourteen collections, one look', text: 'The style scope is gone. Two looks was one look too many: everything is one component styled once now, and the page is quieter for it.', url: '/collections/project/page/', links: ['Changelog', 'Repo'] },
 				{ kind: 'video', mark: 'video', label: 'Published a video', when: '18 Sep', title: 'Driving the Amalfi Coast — the whole road in 8 minutes', text: 'Four days of footage, eight minutes of road, one lens.', url: '/collections/video/page/', image: 1 },
 				{ kind: 'post', mark: 'pencil', label: 'Wrote a post', when: '14 Sep', title: 'Four hours on a pseudo-element', text: 'A registered custom property read by a ::before must inherit. It does not, by default. Nothing about that is in any tutorial.', url: '/collections/post/single/' },
 				{ kind: 'product', mark: 'package', label: 'Bought something', when: '11 Sep', title: 'Fujifilm X100VI', text: 'Replaced the body I have carried for three years. Every picture on this site since is from it.', url: '/collections/uses/page/' },
@@ -347,7 +347,7 @@ export async function build({ quiet = false } = {}) {
 			{ kind: 'learning', mark: 'graduation-cap', when: 'Oct 2026', title: 'Created a course: Design tokens, properly', text: 'Seven lessons, two of them free.' },
 			{ kind: 'learning', mark: 'square-play', when: 'Oct 2026', title: 'Added three lessons', text: 'The page shell, the top bar, components that read tokens.' },
 			{ kind: 'event', mark: 'video', when: 'Sep 2026', title: 'Started a series: The Amalfi Road', text: 'Four films about one road.' },
-			{ kind: 'release', mark: 'rocket', when: 'Sep 2026', title: 'Im Design System v0.6', text: 'One look, nine collections, and the theme this site runs on.', shot: 0 },
+			{ kind: 'release', mark: 'rocket', when: 'Sep 2026', title: 'Im Design System v0.7', text: 'One look, nine collections, and the theme this site runs on.', shot: 0 },
 			{ kind: 'trip', mark: 'map-pin', when: 'Nov 2025', title: 'The Amalfi Coast, slowly', text: 'Six days, four towns, one road.' },
 			{ kind: 'learning', mark: 'graduation-cap', when: 'Apr 2025', title: 'Application Architect', text: 'The eighth certification, and the one that changed the conversations.' },
 			{ kind: 'life', mark: 'house', when: 'Jan 2025', title: 'Moved to Amsterdam', text: 'Every number from the move is in issue 39.' },
@@ -431,6 +431,7 @@ export async function build({ quiet = false } = {}) {
 			__blocks: {},
 			page: { ...meta, url },
 			name: NAME,
+			version: JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8')).version,
 			// Every helper the shim models, for /guides/helpers/. Read from the
 			// registry so the page cannot list one that does not exist.
 			helpers: Object.keys(hbs.helpers).filter((h) => !['lookup','log','if','unless','each','with','blockHelperMissing','helperMissing'].includes(h)).sort(),

@@ -23,6 +23,20 @@ source: site/lib/ghost.mjs · src/utilities/
 <tr><td><code>{{"{{#match a op b}}"}}</code></td><td>Ghost's, extended: <code>= != &gt; &lt; &gt;= &lt;= ~ ~^ ~$</code>.</td></tr>
 </tbody></table></div>
 
+<h2>Layout knobs, as classes</h2>
+<p>A template carries no <code>style</code> attribute for layout. Every knob is a class; a <code>style</code> is only ever <strong>data</strong> — a rating, a bar's width, a language's colour, a carousel's slide count.</p>
+<div class="im-table-scroll"><table>
+<thead><tr><th>Class</th><th>Sets</th></tr></thead>
+<tbody>
+<tr><td><code>im-stack-xs</code> … <code>im-stack-xl</code></td><td><code>--im-stack-gap</code>, 0.5rem to 4rem</td></tr>
+<tr><td><code>im-section-tight</code> · <code>im-section-sm</code></td><td><code>--im-section-gap</code></td></tr>
+<tr><td><code>im-grid-sm</code> … <code>im-grid-lg</code></td><td><code>--im-grid-min</code></td></tr>
+<tr><td><code>im-max-sm</code> · <code>im-max-md</code> · <code>im-max-lg</code></td><td>a measure cap</td></tr>
+<tr><td><code>im-single-aside-sm|md</code></td><td>the rail's width</td></tr>
+<tr><td><code>im-art-<em>collection</em></code></td><td><code>--im-art</code>, the head pattern's colour</td></tr>
+<tr><td><code>im-cluster-tight</code> · <code>im-m0</code> · <code>im-mx-auto</code> · <code>im-center</code></td><td>the small ones</td></tr>
+</tbody></table></div>
+
 <h2>Layout utilities</h2>
 <div class="im-table-scroll"><table>
 <thead><tr><th>Class</th><th>Knob</th><th></th></tr></thead>

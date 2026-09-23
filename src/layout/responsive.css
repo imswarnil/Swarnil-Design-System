@@ -13,21 +13,20 @@
 		--im-grid-gap: 1rem;
 	}
 
-	/* Any row of controls wraps; nothing is allowed to push the page wider. */
+/* Any row of controls wraps; nothing is allowed to push the page wider. */
 	.im-collbar,
-	.im-collbar-filters,
-	.im-collhead-meta,
-	.im-home-head,
-	.home-head,
-	.im-vidhead-bar,
-	.im-vidhead-actions,
-	.im-projecthero-actions,
-	.im-coursehead-meta,
-	.im-letterhead-note,
-	.im-tripcard-meta,
-	.im-lessonrow-meta,
-	.im-repo-facts,
-	.im-widget-stats {
+.im-collbar-filters,
+.im-collhead-meta,
+.home-head,
+.im-vidhead-bar,
+.im-vidhead-actions,
+.im-projecthero-actions,
+.im-coursehead-meta,
+.im-letterhead-note,
+.im-tripcard-meta,
+.im-lessonrow-meta,
+.im-repo-facts,
+.im-widget-stats {
 		flex-wrap: wrap;
 		row-gap: 0.5rem;
 	}
@@ -36,18 +35,16 @@
 	.im-collbar-filters { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 0.25rem; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
 	.im-collbar-filters > * { flex: none; }
 
-	/* Two-column heads stack. */
+/* Two-column heads stack. */
 	.im-coursehead,
-	.im-letterhead,
-	.im-homehero,
-	.im-cv-head,
-	.im-cv,
-	.im-resume,
-	.im-guestbook,
-	.im-abouthero,
-	.im-story,
-	.im-bucketboard,
-	.im-shortwatch {
+.im-letterhead,
+.im-homehero,
+.im-cv-head,
+.im-cv,
+.im-guestbook,
+.im-abouthero,
+.im-story,
+.im-shortwatch {
 		grid-template-columns: minmax(0, 1fr);
 	}
 
@@ -62,8 +59,9 @@
 	.im-homehero-title { font-size: clamp(2rem, 1.4rem + 5vw, 3rem); }
 	.im-collhead-title { font-size: clamp(1.75rem, 1.3rem + 3.5vw, 2.5rem); }
 
-	/* Stat panels: two across, never five. */
-	.im-tripstats, .im-bignums { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+/* Stat panels: two across,
+never five. */
+	.im-tripstats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 	.im-expstats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 	.im-widget-person-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
@@ -97,7 +95,8 @@
 }
 
 @media (width < 34rem) {
-	.im-tripstats, .im-bignums, .im-expstats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+	.im-tripstats,
+	.im-expstats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 	.im-regions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 	.im-trips { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 	.im-tripcard { aspect-ratio: 3 / 4; }
@@ -114,7 +113,6 @@
 /* The top bar on a phone: the mark, a search button, the menu. Nothing wraps. */
 @media (width < 40rem) {
 	.im-topbar { gap: 0.5rem; }
-	.im-topbar .im-search-field, .im-topbar .search-trigger { min-width: 0; }
 	.im-topbar .im-btn > span:not(.im-icon) { display: none; }
 	.im-brand .im-logo { --im-logo-size: 1rem; }
 }

@@ -295,8 +295,6 @@
 
 .im-timeline-big .im-timeline-marker > .im-icon { font-size: 1.375rem; }
 
-.im-timeline-cta { margin-top: 0.75rem; }
-
 /* Detailed: the widget stepper with room — a line per part and the date. */
 .im-timeline-detailed {
 	--im-timeline-marker: 1.75rem;

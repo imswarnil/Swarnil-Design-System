@@ -94,15 +94,12 @@
 @utility im-grid-sm { --im-grid-min: 12rem; }
 @utility im-grid-md { --im-grid-min: 16rem; }
 @utility im-grid-lg { --im-grid-min: 20rem; }
-@utility im-grid-xl { --im-grid-min: 24rem; }
 @utility im-grid-start { align-items: start; }
 @utility im-max-sm { max-width: 24rem; }
 @utility im-max-md { max-width: 32rem; }
 @utility im-max-lg { max-width: 44rem; }
-@utility im-max-xl { max-width: 56rem; }
 @utility im-m0 { margin: 0; }
 @utility im-mt-sm { margin-top: 0.75rem; }
-@utility im-mt-md { margin-top: 1.25rem; }
 @utility im-mt-lg { margin-top: 2rem; }
 @utility im-ml-auto { margin-left: auto; }
 @utility im-w-full { width: 100%; }
@@ -110,17 +107,14 @@
 @utility im-center { text-align: center; }
 @utility im-mx-auto { margin-inline: auto; }
 @utility im-single-aside-md { --im-single-aside: 21rem; }
-@utility im-single-aside-lg { --im-single-aside: 22rem; }
 @utility im-single-aside-sm { --im-single-aside: 19rem; }
 @utility im-repos-tight { --im-repos-min: 16rem; }
 @utility im-repos-md { --im-repos-min: 18rem; }
 @utility im-mediabg-sm { --im-mediabg-min: 14rem; }
 @utility im-mediabg-md { --im-mediabg-min: 18rem; }
 @utility im-mediabg-lg { --im-mediabg-min: 22rem; }
-@utility im-feed-sm { --im-feed-min: 13rem; }
 @utility im-feed-md { --im-feed-min: 15rem; }
 @utility im-ratio-4-3 { aspect-ratio: 4 / 3; overflow: hidden; }
-@utility im-ratio-1 { aspect-ratio: 1; }
 @utility im-ratio-16-10 { aspect-ratio: 16 / 10; }
 @utility im-pt-sm { padding-top: 1.5rem; }
 @utility im-pb-0 { padding-bottom: 0; }
