@@ -1,29 +1,47 @@
-/* Guides — the twelve columns, drawn inside one container while you build.
+/* Guides — the twelve columns, drawn on the page.
 
-   The system does not draw its grid on the page: a section fits the grid by
-   being MEASURED in it (--im-col, --im-span-N, im-cols), and the lines stay
-   in your head. When you want to see them, put a guide inside a container
-   that is `position: relative` and take it out again:
+   Swiss: the grid is not a secret. Behind everything, the full height of the
+   page, a hairline at BOTH edges of every column — so the gutters read as
+   channels and every section, card and column of text sits inside its
+   columns. Anything with a ground (a card, a panel, a block of text) covers
+   the lines; the lines show in the gutters, the margins and the empty space.
 
-     <div class="im-cols" style="position: relative">
-       <span class="im-guides" aria-hidden="true"></span>
+     <main class="im-shell-main">
+       <div class="im-guides" aria-hidden="true"></div>
        …
-     </div>
+     </main>
 
-   Knobs: --im-guide-line, --im-guide-columns (12; 4 under 48rem). */
+   On by default. <html data-im-guides="off"> turns it off; [data-im-guides-
+   toggle] (im.js) flips and remembers it, the head script restores it before
+   first paint. The lines are cream in the light theme and a faint white in
+   the dark one (--im-guide-line). Knob: --im-guide-columns (12; 4 on a phone). */
 
 .im-guides {
 	--im-guide-columns: 12;
-	--im-guide-line: color-mix(in oklab, var(--im-accent) 22%, transparent);
 
 	position: absolute;
-	inset: 0;
+	inset: 0 var(--im-gutter);
 	z-index: -1;
-	/* Column k starts at k × (column + gap); the period of the tiling is
-	   therefore (100% + gap) / 12, and no column is measured by hand. */
-	background-image: repeating-linear-gradient(to right, var(--im-guide-line) 0 1px, transparent 1px calc((100% + var(--im-grid-gap)) / var(--im-guide-columns)));
-	box-shadow: inset -1px 0 0 var(--im-guide-line);
+	width: min(100% - 2 * var(--im-gutter), var(--im-width-wide));
+	margin-inline: auto;
+	/* Column k starts at k × (column + gap); the tile is one column and one
+	   gap wide, with a line at its start and one at the column's end. */
+	background-image: repeating-linear-gradient(to right,
+		var(--im-guide-line) 0 1px,
+		transparent 1px calc(var(--im-col) - 1px),
+		var(--im-guide-line) calc(var(--im-col) - 1px) var(--im-col),
+		transparent var(--im-col) calc(var(--im-col) + var(--im-grid-gap)));
 	pointer-events: none;
+}
+
+[data-im-guides="off"] .im-guides { display: none; }
+
+/* Words sit ON the grid, not under it: a block of running text has a ground
+   (so do cards, panels and widgets, by their own rules). Titles, captions and
+   the space between things stay on the grid — which is where it is read. */
+.im-prose,
+.im-content {
+	background-color: var(--im-canvas);
 }
 
 /* A container that is the grid itself: put children on it with col-span-*. */
@@ -34,6 +52,6 @@
 }
 
 @media (width < 48rem) {
-	.im-guides { --im-guide-columns: 4; }
+	.im-guides { --im-guide-columns: 4; --im-col: calc((100% - 3 * var(--im-grid-gap)) / 4); }
 	.im-cols { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }

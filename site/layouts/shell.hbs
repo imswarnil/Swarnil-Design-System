@@ -21,6 +21,7 @@
 	<div class="im-shell">
 		{{#> "shell/topbar" search_custom=true github="https://github.com/imswarnil/Swarnil-Design-System"}}
 			<span class="im-badge im-badge-outline max-sm:hidden">v{{version}}</span>
+			<button class="im-btn im-btn-ghost im-btn-icon" type="button" data-im-guides-toggle aria-pressed="true" aria-label="{{t "Show or hide the grid"}}" title="{{t "Show or hide the grid"}}">{{> "icons/grid-3x3"}}</button>
 		{{/"shell/topbar"}}
 
 		<aside class="im-sidenav" aria-label="{{t "Documentation"}}">
@@ -29,6 +30,7 @@
 		</aside>
 
 		<main class="im-shell-main" id="main">
+			<div class="im-guides" aria-hidden="true"></div>
 			{{{body}}}
 		</main>
 

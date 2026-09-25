@@ -70,7 +70,9 @@ column sit on the same lines; layouts are measured in the grid rather than in
 rems: `--im-col` and `--im-span-2…9` in the tokens; a widget rail is four
 columns, a contents rail two, the player's side three, a hero's words seven,
 the clip's room five. `im-cols` is the grid for placing things; `im-guides`
-draws it inside one container while building, never over the page.
+draws it on the page, Swiss style — cream hairlines at both edges of every
+column behind everything, on unless `data-im-guides="off"`; running text
+carries a canvas ground so the lines live in the gutters.
 
 **A skill** — `skills/im-design-system/SKILL.md` teaches an agent the rules
 and the shapes; with the MCP server it reads the real components. Documented at

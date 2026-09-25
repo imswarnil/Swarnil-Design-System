@@ -134,6 +134,7 @@
 	   box it is used in. A rail is 3 or 4 of them, a hero's measure 7, a
 	   clip's room 5 — so every part of a page is a whole number of columns
 	   and the grid never has to be drawn to be felt. */
+	--im-guide-line: oklch(88% 0.035 80);   /* the columns drawn on the page: cream */
 	--im-col: calc((100% - 11 * var(--im-grid-gap)) / 12);
 	--im-span-2: calc(2 * var(--im-col) + 1 * var(--im-grid-gap));
 	--im-span-3: calc(3 * var(--im-col) + 2 * var(--im-grid-gap));
@@ -166,6 +167,7 @@
 	--im-danger: #f97066;
 	--im-info: #6ea8fe;
 	--im-shadow-float: 0 1px 2px rgb(0 0 0 / 40%), 0 16px 40px -8px rgb(0 0 0 / 70%);
+	--im-guide-line: rgb(255 255 255 / 9%);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -187,5 +189,6 @@
 		--im-danger: #f97066;
 		--im-info: #6ea8fe;
 		--im-shadow-float: 0 1px 2px rgb(0 0 0 / 40%), 0 16px 40px -8px rgb(0 0 0 / 70%);
+		--im-guide-line: rgb(255 255 255 / 9%);
 	}
 }

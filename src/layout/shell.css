@@ -26,6 +26,8 @@
 
 .im-shell-main {
 	grid-area: main;
+	position: relative;
+	isolation: isolate;
 	display: flex;
 	flex-direction: column;
 	gap: var(--im-section-gap);

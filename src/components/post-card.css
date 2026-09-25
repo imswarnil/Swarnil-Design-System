@@ -29,6 +29,8 @@ a.im-post-card {
 
 .im-post-card {
 	--im-post-card-radius: var(--im-radius-xl);
+	/* A ground, so the page's grid stays in the gutters around the card. */
+	background-color: var(--im-canvas);
 	--im-post-card-ratio: 16 / 10;
 	--im-post-card-bleed: 1rem;
 

@@ -36,16 +36,24 @@ source: src/utilities/index.css
 {{/example}}
 
 <h2>The twelve columns</h2>
-<p>Every layout in the system is <strong>measured</strong> in one 12-column grid with one gap, <code>--im-grid-gap</code>: a widget rail is four columns (<code>--im-span-4</code>), a contents rail two, a hero's measure seven, a clip's room five, the player's side three. The grid is never drawn on a page — a section fits it by being sized in it. <code>im-cols</code> is the grid itself, for placing things with <code>col-span-*</code>; <code>im-guides</code> draws the columns inside one container while you build, and comes out again.</p>
+<p>Every layout in the system is <strong>measured</strong> in one 12-column grid with one gap, <code>--im-grid-gap</code>: a widget rail is four columns (<code>--im-span-4</code>), a contents rail two, a hero's measure seven, a clip's room five, the player's side three. And the grid is drawn: <code>im-guides</code>, behind everything on the page, a cream hairline at both edges of every column (a faint white in the dark theme), so the gutters read as channels and every section sits inside its columns — a card, a panel or a block of text covers the lines, and they show in the gutters, the margins and the empty space. It is on unless <code>&lt;html data-im-guides="off"&gt;</code>. Any <code>[data-im-guides-toggle]</code> button switches it and the choice is remembered (the grid button in this top bar is one); a theme exposes it as a setting and the head script restores it before first paint. <code>im-cols</code> is the grid itself, for placing things with <code>col-span-*</code>.</p>
 {{#example}}
-<div class="im-cols" style="position: relative">
-	<span class="im-guides" aria-hidden="true"></span>
+<div class="im-cols">
 	<div class="col-span-8 im-ring-line rounded-lg p-4 text-sm text-muted bg-canvas">col-span-8 — an article</div>
 	<div class="col-span-4 im-ring-line rounded-lg p-4 text-sm text-muted bg-canvas">col-span-4 — its rail</div>
 	<div class="col-span-7 im-ring-line rounded-lg p-4 text-sm text-muted bg-canvas">7 — a hero's measure</div>
 	<div class="col-span-5 im-ring-line rounded-lg p-4 text-sm text-muted bg-canvas">5 — a clip's room</div>
 </div>
 {{/example}}
+{{{{code "hbs"}}}}
+{{!-- default.hbs: the site setting decides the start; the visitor can still flip it --}}
+<html data-im-guides="{{#if @custom.show_grid}}on{{else}}off{{/if}}">
+…
+<main class="im-shell-main">
+	<div class="im-guides" aria-hidden="true"></div>
+	…
+<button class="im-btn im-btn-ghost im-btn-icon" type="button" data-im-guides-toggle aria-label="Show or hide the grid">{{> "icons/grid-3x3"}}</button>
+{{{{/code}}}}
 <div class="im-table-scroll"><table>
 <thead><tr><th>Token</th><th>Is</th><th>Used by</th></tr></thead>
 <tbody>

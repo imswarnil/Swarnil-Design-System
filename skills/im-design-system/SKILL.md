@@ -65,8 +65,11 @@ creator's own channel. Everything it defines is namespaced `im-` / `--im-*`.
 | One post, rail on a switch | `.im-single[data-sidebar]` | posts, pages |
 | Reading + contents + widgets | `.im-with-rails` | long posts |
 
-Every container is on the 12-column grid (`--im-grid-gap`); `.im-cols` is the
-grid itself, `.im-guides` draws it, `<html data-im-guides="on">` shows it.
+Every container is measured in the 12-column grid (`--im-col`, `--im-span-N`,
+`--im-grid-gap`); `.im-cols` is the grid itself and `.im-guides` (first child of
+`.im-shell-main`) draws it on the page — on unless `<html data-im-guides="off">`;
+any `[data-im-guides-toggle]` button flips and remembers it. Anything with
+running text needs a canvas ground so the lines stay in the gutters.
 
 ## Helpers that always ship
 

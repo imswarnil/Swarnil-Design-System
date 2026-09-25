@@ -5,6 +5,7 @@
  *   theme     [data-theme-toggle]            light ⇄ dark  ([data-theme-set] picks one)
  *   nav       [data-nav-toggle]              side nav ↔ icon rail
  *   player    [data-im-player-toggle]        the player's side: collapse, or fold open on a phone
+ *   guides    [data-im-guides-toggle]        the twelve columns drawn on the page, remembered
  *   drawer    [data-drawer-open="#id"]       opens a <dialog class="drawer">
  *   menu      <div class="im-menu" popover>  positioned under its button
  *   mega      <div class="im-mega" popover>  the same, centred and wide
@@ -100,6 +101,18 @@
 		store.set('nav', 'open');
 		applyNav();
 	});
+
+	/* ── guides: the columns drawn on the page (on unless turned off) ─── */
+	function applyGuides() {
+		for (const b of document.querySelectorAll('[data-im-guides-toggle]')) b.setAttribute('aria-pressed', String(root.dataset.imGuides !== 'off'));
+	}
+	document.addEventListener('click', (e) => {
+		if (!e.target.closest('[data-im-guides-toggle]')) return;
+		root.dataset.imGuides = root.dataset.imGuides === 'off' ? 'on' : 'off';
+		store.set('guides', root.dataset.imGuides);
+		applyGuides();
+	});
+	applyGuides();
 
 	/* ── player: the lessons side ─────────────────────────────────────── */
 	/* Wide: collapse or restore the side, remembered like the nav. Narrow: the

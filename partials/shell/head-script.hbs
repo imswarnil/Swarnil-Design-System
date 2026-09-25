@@ -7,5 +7,5 @@
 <script>
 (function(){var d=document.documentElement,g=function(k){try{return localStorage.getItem(k)}catch(e){return null}},t=g('theme');
 if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
-d.dataset.theme=t;d.dataset.imJs='';d.dataset.nav=g('nav')==='rail'?'rail':'open';d.dataset.playerSide=g('player-side')==='off'?'off':'on'})();
+d.dataset.theme=t;d.dataset.imJs='';d.dataset.nav=g('nav')==='rail'?'rail':'open';d.dataset.playerSide=g('player-side')==='off'?'off':'on';d.dataset.imGuides=g('guides')==='off'?'off':'on'})();
 </script>
