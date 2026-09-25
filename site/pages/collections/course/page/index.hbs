@@ -54,30 +54,8 @@ source: src/components/curriculum.css · commerce.css
 		</section>
 
 		<section class="im-section im-section-tight" id="curriculum">
-			<div class="home-head"><p class="im-caption" data-index="curriculum">The curriculum</p><p class="im-hint im-m0">3 units · 7 lessons · 81 min · 2 free</p></div>
-			<ol class="im-syllabus">
-				{{#each demo.sections}}
-				<li class="im-unit"{{#match n "=" "1"}} data-open{{/match}}>
-					<button class="im-unit-head" type="button" aria-expanded="{{#match n "=" "1"}}true{{else}}false{{/match}}">
-						<span class="im-unit-n">{{n}}</span>
-						<span class="im-unit-title">{{name}}</span>
-						<span class="im-unit-meta"><span>{{time}}</span><span>{{when}}</span></span>
-						<span class="im-unit-count">{{#match n "=" "1"}}2 / 3{{else}}0 / 2{{/match}}</span>
-						<span class="im-unit-chev" aria-hidden="true"></span>
-					</button>
-					<ol class="im-unit-lessons">
-						{{#each ../demo.lessons}}{{#match n ">=" ../from}}{{#match n "<=" ../to}}
-						<li class="im-lessonrow" data-state="{{#if locked}}locked{{else}}{{#if state}}{{state}}{{else}}{{#match n "<" "03"}}free{{else}}next{{/match}}{{/if}}{{/if}}">
-							<span class="im-lessonrow-shot"><img src="{{lookup @root.demo.shots shot}}" alt="" loading="lazy"></span>
-							<a class="im-lessonrow-title" href="/collections/course/lesson/"><small>{{n}}</small>{{title}}</a>
-							<span class="im-lessonrow-meta"><span>{{#match kind "=" "video"}}{{icon "square-play"}}Video{{else}}{{icon "file-text"}}Article{{/match}}</span><span>{{icon "clock"}}{{time}}</span></span>
-							<span class="im-lessonrow-state">{{#if locked}}Members{{else}}{{#match state "=" "done"}}Done{{/match}}{{#match state "=" "current"}}Playing{{/match}}{{#unless state}}{{#match n "<" "03"}}Free{{/match}}{{/unless}}{{/if}}</span>
-						</li>
-						{{/match}}{{/match}}{{/each}}
-					</ol>
-				</li>
-				{{/each}}
-			</ol>
+			<h2 class="im-caption" data-index="curriculum">The curriculum</h2>
+			{{> "components/syllabus" units=demo.sections lessons="7" minutes="81" free="2" done="2" total="7" percent="29" value=".29"}}
 		</section>
 
 		<section class="im-section im-section-tight" id="said">
@@ -123,7 +101,7 @@ source: src/components/curriculum.css · commerce.css
 					<ul class="im-offer-list"><li>{{icon "check"}}7 lessons, 81 minutes</li><li>{{icon "check"}}Every source file, and the finished token set</li><li>{{icon "check"}}Lifetime updates</li><li>{{icon "check"}}14-day refund, no reason needed</li></ul>
 					<p class="im-offer-note">Free on <a href="/pages/membership/">Workshop</a> · two lessons free without an account</p>
 				</section>
-				{{#with demo.author}}{{> "components/author-widget" title="Who made it"}}{{/with}}
+				{{#with demo.author}}{{> "components/author" status="Open to work"}}{{/with}}
 				<section class="im-widget" aria-labelledby="c-facts">
 					<h2 class="im-widget-title" id="c-facts">At a glance</h2>
 					<dl class="im-widget-facts">

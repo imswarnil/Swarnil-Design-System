@@ -1,0 +1,641 @@
+/* Studio — frames for the channel, drawn in the system's look.
+
+   A frame is a fixed-size canvas — a thumbnail, channel art, a live scene —
+   built from the same tokens as the site, so a video and the page it lands
+   on share one voice. Each is a page under /frames/ (shell: frame): open it
+   at its own size to screenshot, or load it as a browser source.
+
+     <div class="im-studio im-studio-thumb" style="--im-studio-w: 1280; --im-studio-h: 720">
+       <span class="im-studio-bg im-bg-blueprint" aria-hidden="true"></span>
+       <img class="im-studio-photo" src="…" alt="">
+       <div class="im-studio-copy"> kicker · title · sub </div>
+       <p class="im-studio-mark"> logo · name </p>
+     </div>
+
+   ONE unit inside: the em, set from the frame's shorter side (27 of them),
+   so the same markup is right at 1280×720, 1920×1080 and 2560×1440. Nothing
+   inside names a pixel.
+
+   Frames:  im-studio-thumb (+ -travel, -series, -short; -dark for live and tutorial)
+            im-studio-banner (channel art) · im-studio-profile
+            im-studio-scene-starting · -live · -brb · -ending
+            im-studio-lower · im-studio-chat · im-studio-alert   (overlays: no background)
+   Knobs:   --im-studio-w / -h (the canvas, as numbers), --im-studio-bg */
+
+.im-studio {
+	--im-studio-w: 1920;
+	--im-studio-h: 1080;
+	--im-studio-bg: var(--im-canvas);
+
+	position: relative;
+	isolation: isolate;
+	display: grid;
+	width: calc(var(--im-studio-w) * 1px);
+	height: calc(var(--im-studio-h) * 1px);
+	overflow: hidden;
+	background-color: var(--im-studio-bg);
+	color: var(--im-ink);
+	font-family: var(--im-font-heading);
+	font-size: calc(min(var(--im-studio-w), var(--im-studio-h)) * 1px / 27);
+	line-height: 1;
+}
+
+/* Cream: a warm off-white ground for art that should not look like a web
+   page — banners, covers. With im-bg-grid the lines come out faint. */
+.im-studio-cream {
+	--im-studio-bg: oklch(96.5% 0.012 85);
+	--im-canvas: oklch(96.5% 0.012 85);
+	--im-surface: oklch(93% 0.014 85);
+}
+
+.im-studio-cream > .im-studio-bg,
+.im-studio-dark > .im-studio-bg {
+	--im-pattern-color: color-mix(in oklab, var(--im-ink) 9%, transparent);
+}
+
+/* Dark frames: the ink is the ground. Restated, not inverted. */
+.im-studio-dark {
+	--im-studio-bg: var(--im-media-ink);
+	--im-canvas: var(--im-media-ink);
+	--im-surface: oklch(20% 0 0);
+	--im-surface-2: oklch(27% 0 0);
+	--im-line: rgb(255 255 255 / 16%);
+	--im-ink: #fff;
+	--im-body: var(--im-on-media-dim);
+	--im-muted: var(--im-on-media-faint);
+	--im-faint: rgb(255 255 255 / 45%);
+
+	color-scheme: dark;
+}
+
+/* ---- layers ---- */
+.im-studio-bg {
+	position: absolute;
+	inset: 0;
+	z-index: -2;
+	--im-pattern-size: 2em;
+	--im-pattern-color: color-mix(in oklab, var(--im-accent) 18%, transparent);
+}
+
+.im-studio-photo {
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.im-studio-scrim {
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	background: var(--im-media-scrim);
+}
+
+/* ---- type ---- */
+.im-studio-copy {
+	display: grid;
+	align-content: end;
+	gap: 0.5em;
+	min-width: 0;
+	padding: 1.5em 1.5em 3.25em;   /* room for the mark under it */
+}
+
+.im-studio-kicker {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4em;
+	width: fit-content;
+	color: var(--im-accent);
+	font-family: var(--im-font-mono);
+	font-size: 0.55em;
+	font-weight: 500;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+
+.im-studio-kicker::before {
+	content: "";
+	width: 0.5em;
+	height: 0.5em;
+	border-radius: 50%;
+	background-color: currentcolor;
+}
+
+.im-studio-title {
+	font-size: 2.6em;
+	font-weight: 600;
+	line-height: 0.98;
+	letter-spacing: var(--im-tracking-tighter);
+	text-wrap: balance;
+}
+
+.im-studio-title > em {
+	color: var(--im-accent);
+	font-style: normal;
+}
+
+.im-studio-sub {
+	max-width: 22em;
+	color: var(--im-body);
+	font-family: var(--im-font-body);
+	font-size: 0.8em;
+	line-height: 1.35;
+	text-wrap: pretty;
+}
+
+/* The mark, wherever a frame signs itself: the square, then the name. */
+.im-studio-mark {
+	position: absolute;
+	left: 1.5em;
+	bottom: 1.25em;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5em;
+	color: var(--im-ink);
+	font-size: 0.7em;
+	font-weight: 600;
+	letter-spacing: var(--im-tracking-tight);
+}
+
+.im-studio-mark > .im-logo { --im-logo-size: 1.1em; }
+
+.im-studio-corner {
+	position: absolute;
+	right: 1.5em;
+	top: 1.25em;
+	display: inline-flex;
+	gap: 0.4em;
+}
+
+/* ---- chips ---- */
+.im-studio-chip {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35em;
+	padding: 0.35em 0.75em;
+	border-radius: var(--im-radius-full);
+	background-color: var(--im-glass);
+	color: var(--im-on-media);
+	font-family: var(--im-font-mono);
+	font-size: 0.55em;
+	font-weight: 600;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+.im-studio-chip-accent { background-color: var(--im-accent); color: var(--im-on-accent); }
+.im-studio-chip-ink { background-color: var(--im-ink); color: var(--im-canvas); }
+.im-studio-chip-canvas { background-color: var(--im-canvas); color: var(--im-ink); box-shadow: inset 0 0 0 1px var(--im-line); }
+
+/* Live: the recording light. */
+.im-studio-live::before {
+	content: "";
+	width: 0.6em;
+	height: 0.6em;
+	border-radius: 50%;
+	background-color: var(--im-accent);
+	box-shadow: 0 0 0 0.25em color-mix(in oklab, var(--im-accent) 35%, transparent);
+	animation: im-studio-pulse 1.6s var(--im-ease-in-out) infinite;
+}
+
+.im-studio-chip-accent.im-studio-live::before { background-color: #fff; box-shadow: 0 0 0 0.25em rgb(255 255 255 / 35%); }
+
+@keyframes im-studio-pulse {
+	50% { opacity: 0.45; }
+}
+
+/* A face, ringed with the canvas so it reads on anything. */
+.im-studio-face {
+	width: 6em;
+	height: 6em;
+	border-radius: 50%;
+	object-fit: cover;
+	box-shadow: 0 0 0 0.18em var(--im-canvas), 0 0 0 0.3em var(--im-accent);
+}
+
+/* A giant numeral — an episode, a lesson, a year. */
+.im-studio-num {
+	color: var(--im-accent);
+	font-family: var(--im-font-pixel);
+	font-size: 7em;
+	font-weight: 400;
+	line-height: 0.85;
+	letter-spacing: -0.02em;
+}
+
+/* ---- thumbnail: 1280 × 720 ----
+   The PERSON is the picture. A portrait fills the right half and fades into
+   the ground on its left edge; the words are few and large on the left — a
+   kicker and a title, nothing under it. Every collection changes ONE thing
+   (see the modifiers), so a channel of mixed films still reads as one. */
+.im-studio-thumb {
+	grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+	grid-template-areas: "copy person";
+}
+
+.im-studio-thumb > .im-studio-copy {
+	grid-area: copy;
+	position: relative;
+	z-index: 1;
+	padding-right: 0;
+}
+
+.im-studio-thumb .im-studio-title { font-size: 3em; }
+
+/* The portrait: right-anchored, full height, fading into the ground. */
+.im-studio-person {
+	grid-area: person;
+	margin-left: -4em;
+	overflow: hidden;
+	-webkit-mask-image: linear-gradient(to right, transparent, #000 35%);
+	mask-image: linear-gradient(to right, transparent, #000 35%);
+}
+
+.im-studio-person > img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center top;
+}
+
+/* A block of the accent behind the person's shoulder — the one colour. It
+   sits on the frame, under the portrait, and shows where the portrait fades. */
+.im-studio-person-block::before {
+	content: "";
+	position: absolute;
+	inset: 30% -6% -10% 50%;
+	z-index: -2;
+	border-radius: 2em 0 0 0;
+	background-color: var(--im-accent);
+}
+
+.im-studio-person-block { position: static; }
+
+/* -- travel: the place is the picture; the person is small, ringed, with
+      the price in pixel type. -- */
+.im-studio-thumb-travel {
+	grid-template-columns: minmax(0, 1fr);
+	grid-template-areas: "copy";
+}
+
+.im-studio-thumb-travel > .im-studio-copy { color: var(--im-on-media); }
+.im-studio-thumb-travel .im-studio-mark { color: var(--im-on-media); }
+
+.im-studio-thumb-travel > .im-studio-face {
+	position: absolute;
+	right: 1.5em;
+	bottom: 1.5em;
+	width: 5em;
+	height: 5em;
+}
+
+.im-studio-price {
+	color: var(--im-accent);
+	font-family: var(--im-font-pixel);
+	font-size: 3.6em;
+	line-height: 0.9;
+}
+
+/* A route line across a travel frame: from → to. */
+.im-studio-route {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5em;
+	color: var(--im-on-media);
+	font-family: var(--im-font-mono);
+	font-size: 0.6em;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+}
+
+.im-studio-route::before,
+.im-studio-route::after {
+	content: "";
+	width: 0.55em;
+	height: 0.55em;
+	border-radius: 50%;
+	background-color: var(--im-accent);
+}
+
+.im-studio-route > i {
+	flex: 1 1 4em;
+	height: 1px;
+	background-image: linear-gradient(to right, currentcolor 50%, transparent 50%);
+	background-size: 0.6em 1px;
+}
+
+/* -- tutorial: dark, the person, and one line of code as the kicker. -- */
+.im-studio-code {
+	display: inline-block;
+	width: fit-content;
+	padding: 0.5em 0.8em;
+	border-radius: var(--im-radius-md);
+	background-color: var(--im-surface);
+	color: var(--im-body);
+	font-family: var(--im-font-mono);
+	font-size: 0.62em;
+	line-height: 1.4;
+	white-space: pre;
+}
+
+.im-studio-code > b { color: var(--im-accent); font-weight: 400; }
+.im-studio-code > i { color: var(--im-success); font-style: normal; }
+
+/* -- series: the episode numeral is the picture behind the person. -- */
+.im-studio-thumb-series > .im-studio-num {
+	position: absolute;
+	left: 0.25em;
+	top: -0.1em;
+	font-size: 13em;
+	color: color-mix(in oklab, var(--im-accent) 14%, transparent);
+}
+
+/* -- short: 1080 × 1920, the person fills it, the words at the foot. -- */
+.im-studio-thumb-short {
+	grid-template-columns: minmax(0, 1fr);
+	grid-template-rows: minmax(0, 1fr) auto;
+	grid-template-areas: "person" "copy";
+}
+
+.im-studio-thumb-short > .im-studio-person {
+	margin: 0;
+	-webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent);
+	mask-image: linear-gradient(to bottom, #000 60%, transparent);
+}
+
+.im-studio-thumb-short > .im-studio-copy { padding: 0 1.5em 3.5em; }
+.im-studio-thumb-short .im-studio-title { font-size: 4em; }
+
+/* ---- channel art: 2560 × 1440 ----
+   One picture and the name. The portrait fills the frame, faded to the
+   ground on the left; the name sits in the middle band every device shows,
+   set huge. No schedule, no line — a banner is read in half a second. The
+   safe area (1546 × 423, centred) is drawn only with data-safe. */
+.im-studio-banner {
+	grid-template-columns: minmax(0, 1fr) 52%;
+	grid-template-areas: "words person";
+	align-items: center;
+}
+
+.im-studio-banner > .im-studio-person {
+	grid-area: person;
+	align-self: stretch;   /* the banner centres its items; the portrait must fill */
+	height: 100%;
+	margin: 0;
+	-webkit-mask-image: linear-gradient(to right, transparent, #000 45%);
+	mask-image: linear-gradient(to right, transparent, #000 45%);
+}
+
+/* The face has to land in the band a desk keeps (the middle 29% of the
+   height): the portrait is drawn taller than the frame and anchored at the
+   top, which brings the eyes down to about 48%. */
+.im-studio-banner > .im-studio-person > img {
+	height: 132%;
+	object-position: center top;
+}
+
+.im-studio-banner > .im-studio-copy {
+	grid-area: words;
+	align-content: center;
+	justify-items: start;
+	padding: 0 0 0 20.2%;   /* the safe area's left edge: (2560 − 1546) / 2 */
+}
+
+.im-studio-banner .im-studio-title { font-size: 4.2em; }
+
+.im-studio-banner[data-safe]::after {
+	content: "1546 × 423";
+	position: absolute;
+	left: 20.2%;
+	top: 35.3%;
+	width: 60.4%;
+	height: 29.4%;
+	outline: 1px dashed var(--im-accent);
+	color: var(--im-accent);
+	font-family: var(--im-font-mono);
+	font-size: 0.5em;
+	text-align: right;
+	padding-top: 30%;
+	box-sizing: border-box;
+}
+
+/* ---- profile art: 800 × 800 ----
+   The person, and the brand's one mark: a dot in the accent, top right,
+   inside a hairline ring — swap the picture, the art stays. */
+.im-studio-profile > .im-studio-photo {
+	-webkit-mask-image: radial-gradient(circle at 50% 42%, #000 62%, transparent 75%);
+	mask-image: radial-gradient(circle at 50% 42%, #000 62%, transparent 75%);
+}
+
+.im-studio-profile::before {
+	content: "";
+	position: absolute;
+	inset: 1.4em;
+	border-radius: 50%;
+	box-shadow: inset 0 0 0 0.12em var(--im-line);
+}
+
+.im-studio-profile::after {
+	content: "";
+	position: absolute;
+	top: 3.6em;
+	right: 3.6em;
+	width: 2.4em;
+	height: 2.4em;
+	border-radius: 50%;
+	background-color: var(--im-accent);
+	box-shadow: 0 0 0 0.35em var(--im-canvas);
+}
+
+/* ---- live scenes: 1920 × 1080 ---- */
+.im-studio-scene {
+	grid-template-rows: auto minmax(0, 1fr) auto;
+	grid-template-areas: "top" "mid" "bar";
+}
+
+.im-studio-top {
+	grid-area: top;
+	display: flex;
+	align-items: center;
+	gap: 0.6em;
+	padding: 1em 1.5em 0;
+}
+
+.im-studio-top > .im-studio-mark { position: static; }
+.im-studio-top > .im-studio-spacer { flex: 1; }
+
+/* Starting soon / BRB / ending: one big thing in the middle. */
+.im-studio-mid {
+	grid-area: mid;
+	display: grid;
+	place-content: center;
+	justify-items: center;
+	gap: 0.8em;
+	text-align: center;
+}
+
+.im-studio-mid .im-studio-title { font-size: 3.4em; max-width: 12em; }
+.im-studio-mid .im-studio-sub { text-align: center; }
+
+.im-studio-countdown {
+	display: flex;
+	gap: 0.6em;
+	font-family: var(--im-font-pixel);
+	font-size: 5em;
+	line-height: 1;
+	letter-spacing: -0.02em;
+}
+
+.im-studio-countdown > span { padding: 0.15em 0.25em; border-radius: 0.1em; background-color: var(--im-surface); }
+.im-studio-countdown > i { font-style: normal; color: var(--im-accent); }
+
+/* The bottom bar: the title of the stream, a ticker, where else to find you. */
+.im-studio-bar {
+	grid-area: bar;
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr) auto;
+	align-items: center;
+	gap: 1em;
+	margin: 0 1.5em 1.25em;
+	padding: 0.7em 1em;
+	border-radius: var(--im-radius-xl);
+	background-color: var(--im-surface);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	font-size: 0.7em;
+}
+
+.im-studio-bar > b { font-weight: 600; white-space: nowrap; }
+.im-studio-bar > .im-studio-ticker { overflow: hidden; color: var(--im-muted); font-family: var(--im-font-mono); white-space: nowrap; }
+.im-studio-bar > .im-studio-social { display: flex; gap: 0.8em; color: var(--im-muted); font-family: var(--im-font-mono); font-size: 0.85em; }
+
+/* The live layout: the screen, the camera in its corner. */
+.im-studio-scene-live > .im-studio-mid {
+	display: block;
+	position: relative;
+	margin: 0.8em 1.5em;
+}
+
+.im-studio-screen {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	border-radius: var(--im-radius-xl);
+	background-color: var(--im-surface);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+}
+
+.im-studio-screen > img { width: 100%; height: 100%; object-fit: cover; }
+
+.im-studio-cam {
+	position: absolute;
+	right: 1em;
+	bottom: 1em;
+	width: 26%;
+	aspect-ratio: 16 / 9;
+	overflow: hidden;
+	border-radius: var(--im-radius-lg);
+	background-color: var(--im-surface-2);
+	box-shadow: 0 0 0 0.12em var(--im-canvas), var(--im-shadow-float);
+}
+
+.im-studio-cam > img { width: 100%; height: 100%; object-fit: cover; }
+
+.im-studio-cam > .im-studio-chip {
+	position: absolute;
+	left: 0.6em;
+	bottom: 0.6em;
+}
+
+/* ---- overlays: no ground of their own; they sit over the picture ---- */
+.im-studio-overlay {
+	--im-studio-bg: transparent;
+}
+
+/* A lower third: name on the accent, the line under it on the canvas. */
+.im-studio-lower {
+	position: absolute;
+	left: 1.5em;
+	bottom: 2em;
+	display: grid;
+	width: fit-content;
+	filter: drop-shadow(0 0.2em 0.6em rgb(0 0 0 / 25%));
+}
+
+.im-studio-lower > b {
+	padding: 0.4em 0.9em;
+	background-color: var(--im-accent);
+	color: var(--im-on-accent);
+	font-size: 1.1em;
+	font-weight: 600;
+	letter-spacing: var(--im-tracking-tight);
+}
+
+.im-studio-lower > span {
+	width: fit-content;
+	padding: 0.35em 0.9em;
+	background-color: var(--im-canvas);
+	color: var(--im-body);
+	font-family: var(--im-font-mono);
+	font-size: 0.6em;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+}
+
+/* Chat: a column of messages, newest at the bottom, fading up. */
+.im-studio-chat {
+	position: absolute;
+	right: 1.5em;
+	bottom: 2em;
+	display: grid;
+	justify-items: start;
+	gap: 0.4em;
+	width: 14em;
+	-webkit-mask-image: linear-gradient(to bottom, transparent, #000 25%);
+	mask-image: linear-gradient(to bottom, transparent, #000 25%);
+}
+
+.im-studio-chat > p {
+	padding: 0.45em 0.75em;
+	border-radius: var(--im-radius-lg);
+	background-color: var(--im-glass);
+	color: var(--im-on-media);
+	font-family: var(--im-font-body);
+	font-size: 0.6em;
+	line-height: 1.35;
+}
+
+.im-studio-chat > p > b { color: var(--im-accent); font-weight: 600; }
+
+/* An alert: a new member, a tip. Slides in, stays, leaves. */
+.im-studio-alert {
+	position: absolute;
+	left: 50%;
+	top: 1.5em;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.6em;
+	padding: 0.5em 1em 0.5em 0.5em;
+	border-radius: var(--im-radius-full);
+	background-color: var(--im-canvas);
+	color: var(--im-ink);
+	box-shadow: inset 0 0 0 1px var(--im-line), var(--im-shadow-float);
+	font-size: 0.75em;
+	translate: -50% 0;
+	animation: im-studio-alert 6s var(--im-ease-glide) both;
+}
+
+.im-studio-alert > .im-avatar { --im-avatar-size: 1.6em; }
+.im-studio-alert > b { font-weight: 600; }
+.im-studio-alert > span { color: var(--im-muted); }
+
+@keyframes im-studio-alert {
+	0%, 100% { translate: -50% -3em; opacity: 0; }
+	12%, 88% { translate: -50% 0; opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.im-studio-live::before, .im-studio-alert { animation: none; }
+}

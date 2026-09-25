@@ -21,9 +21,9 @@ shell: frame
 	</header>
 
 	<aside class="im-player-side" id="lessons">
-		{{> "components/coursenav" flush=true title="Design tokens, properly" href="/collections/course/page/" done="2" total="7" percent="29" value=".29" units=demo.sections next=demo.lessons.[3]}}
+		<button class="im-player-handle" type="button" data-im-player-toggle aria-controls="lessons">{{> "icons/graduation-cap"}}<span>Design tokens, properly</span><small>3 / 7</small>{{> "icons/chevron-down"}}</button>
+		<div class="im-player-list">{{> "components/coursenav" flush=true title="Design tokens, properly" href="/collections/course/page/" done="2" total="7" percent="29" value=".29" units=demo.sections next=demo.lessons.[3]}}</div>
 	</aside>
-	<button class="im-player-scrim" type="button" data-im-player-toggle aria-label="Close the lessons" tabindex="-1"></button>
 
 	<main class="im-player-main" id="main">
 		{{#with demo.lessons.[2]}}

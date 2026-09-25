@@ -1,0 +1,24 @@
+---
+title: Live · the layout
+layout: home
+shell: frame
+---
+{{!-- A frame for the channel: 1920 × 1080. Open at that size to screenshot,
+	or load as a browser source. Built from tokens — see src/components/studio.css. --}}
+<div class="im-studio im-studio-scene im-studio-scene-live im-studio-dark" style="--im-studio-w: 1920; --im-studio-h: 1080">
+	<div class="im-studio-top">
+		<p class="im-studio-mark">{{> "components/logo" mark=true}}<span>imswarnil</span></p>
+		<span class="im-studio-spacer"></span>
+		<span class="im-studio-chip im-studio-chip-accent im-studio-live">Live</span>
+		<span class="im-studio-chip">2,412 watching</span>
+	</div>
+	<div class="im-studio-mid">
+		<div class="im-studio-screen"><img src="{{demo.shots.[2]}}" alt=""></div>
+		<div class="im-studio-cam"><img src="{{demo.author.profile_image}}" alt=""><span class="im-studio-chip">Swarnil</span></div>
+	</div>
+	<div class="im-studio-bar">
+		<b>Building the comment wall</b>
+		<span class="im-studio-ticker">Ghost's own comments, styled from scratch · ask anything in chat · code at imswarnil.com/live</span>
+		<span class="im-studio-social"><span>youtube.com/@imswarnil</span><span>x.com/imswarnil</span></span>
+	</div>
+</div>

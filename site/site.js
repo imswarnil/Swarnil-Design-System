@@ -165,3 +165,12 @@
 		}
 	}
 })();
+
+/* Docs only: scale a .frame-preview's iframe to the box. */
+(() => {
+	const boxes = document.querySelectorAll('.frame-preview');
+	if (!boxes.length) return;
+	const fit = (b) => b.style.setProperty('--fs', (b.clientWidth / Number(getComputedStyle(b).getPropertyValue('--fw'))).toString());
+	const ro = new ResizeObserver((entries) => entries.forEach((e) => fit(e.target)));
+	boxes.forEach((b) => { fit(b); ro.observe(b); });
+})();

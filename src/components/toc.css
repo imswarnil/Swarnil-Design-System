@@ -36,7 +36,7 @@
 	font-weight: 500;
 	line-height: 1.35;
 	text-decoration: none;
-	transition: background-color 120ms, color 120ms;
+	transition: background-color var(--im-duration-instant), color var(--im-duration-instant);
 }
 
 .im-toc-link[data-depth="3"] {
@@ -88,7 +88,7 @@
 	border-right: 1.5px solid var(--im-muted);
 	border-bottom: 1.5px solid var(--im-muted);
 	rotate: 45deg;
-	transition: rotate 160ms var(--im-ease-out);
+	transition: rotate var(--im-duration-instant) var(--im-ease-out);
 }
 
 .im-toc-box[open] > summary::after {

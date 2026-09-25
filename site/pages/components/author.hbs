@@ -1,0 +1,29 @@
+---
+title: Author
+description: Who made this — a face on a patterned band, the name, a line about them, three facts and the ways to follow. Nothing to press before it says who wrote the post.
+eyebrow: Component
+source: src/components/author.css · partials/components/author.hbs
+---
+<h2>In a column</h2>
+<p>The rail of a single page. The band is the only colour on the card; the face crosses its edge.</p>
+{{#example style="max-width: 22rem"}}
+{{#with demo.author}}{{> "components/author" status="Open to work" badge="Creator" badge_2="Since 2019"}}{{/with}}
+{{/example}}
+
+<h2>With a picture, and in one line</h2>
+<p><code>cover</code> puts a photograph in the band instead of a pattern; <code>mini=true</code> is the same person as a byline.</p>
+{{#example style="max-width: 22rem"}}
+{{#with demo.author}}{{> "components/author" cover=../demo.shots.[3] role="Salesforce consultant · design systems" badge="Creator"}}{{/with}}
+{{/example}}
+{{#example}}
+{{#with demo.author}}{{> "components/author" mini=true}}{{/with}}
+{{/example}}
+
+<h2>Lying down</h2>
+<p><code>row=true</code> — the foot of a post. The band becomes a square with the face in it. Under 40rem it stands back up.</p>
+{{#example}}
+{{#with demo.author}}{{> "components/author" row=true status="Open to work" pattern="im-bg-rings"}}{{/with}}
+{{/example}}
+
+<h2>Tuning it</h2>
+<p><code>pattern</code> takes any <a href="/foundation/patterns/">pattern</a> utility; <code>--im-author-art</code> colours it (a collection colour, say). <code>--im-author-band</code> and <code>--im-author-face</code> set the band's height and the face's size.</p>

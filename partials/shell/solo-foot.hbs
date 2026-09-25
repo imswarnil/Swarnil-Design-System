@@ -1,0 +1,6 @@
+{{!-- The one line at the foot of a page that stands on its own (.im-solo).
+	A block, if given, adds links after the name — privacy, terms. --}}
+<footer class="im-solo-foot">
+	<span>© {{date format="YYYY"}} {{@site.title}}</span>
+	{{#if @partial-block}}{{> @partial-block}}{{/if}}
+</footer>

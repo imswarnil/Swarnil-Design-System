@@ -1,0 +1,12 @@
+{{!-- The bar of a page that stands on its own (.im-solo): the way back, the
+	mark, the theme. Params: back (URL, default the home page), back_label
+	(default "Back to home"). A block, if given, goes before the theme button —
+	a print button, a link to the other form. --}}
+<header class="im-solo-bar">
+	<a class="im-btn im-btn-ghost im-btn-sm" href="{{#if back}}{{back}}{{else}}{{@site.url}}{{/if}}">{{> "icons/arrow-left"}}<span>{{#if back_label}}{{back_label}}{{else}}{{t "Back to home"}}{{/if}}</span></a>
+	<a class="im-brand" href="{{@site.url}}" aria-label="{{@site.title}}">{{> "components/logo"}}</a>
+	<div class="im-solo-end">
+		{{#if @partial-block}}{{> @partial-block}}{{/if}}
+		{{> "components/theme-button"}}
+	</div>
+</header>

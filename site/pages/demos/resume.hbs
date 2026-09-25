@@ -1,0 +1,84 @@
+---
+title: Résumé demo
+layout: home
+shell: frame
+---
+{{!-- Loaded in an iframe by /pages/resume/. Who you are, pinned on the left;
+	the career, scrolling on the right; the way home and a PDF in the bar. --}}
+<div class="im-solo im-solo-split im-solo-scroll im-solo-panel-top im-solo-lg">
+	<aside class="im-solo-panel">
+		<span class="im-solo-pattern im-bg-blueprint im-bg-loose" aria-hidden="true"></span>
+		{{> "components/avatar" size="xl" src=demo.author.profile_image name=demo.author.name}}
+		<div class="im-stack im-stack-xs">
+			<span class="im-author-status">Two days a week from November</span>
+			<h1 class="im-cv-name">{{demo.author.name}}</h1>
+			<p class="im-cv-role">Salesforce consultant who builds design systems on the side.</p>
+		</div>
+		<p class="im-cv-contact">
+			<a href="/pages/contact/">{{> "icons/mail"}}hello@imswarnil.com</a>
+			<a href="/">{{> "icons/globe"}}imswarnil.com</a>
+			<a href="https://github.com/imswarnil">{{> "icons/brand-github"}}imswarnil</a>
+			<a href="/pages/about/">{{> "icons/map-pin"}}{{demo.author.location}}</a>
+		</p>
+		<div class="im-cv-blocks">
+			<div class="im-cv-block"><h3>Skills</h3>
+				<p class="im-cv-bar"><span>Salesforce</span><span style="--im-bar: 95%"></span></p>
+				<p class="im-cv-bar"><span>Design systems</span><span style="--im-bar: 85%"></span></p>
+				<p class="im-cv-bar"><span>CSS / Tailwind</span><span style="--im-bar: 90%"></span></p>
+				<p class="im-cv-bar"><span>Writing</span><span style="--im-bar: 75%"></span></p>
+			</div>
+			<div class="im-cv-block"><h3>Languages</h3><ul><li>English — fluent</li><li>Hindi — native</li><li>Dutch — A2</li></ul></div>
+		</div>
+	</aside>
+
+	{{#> "shell/solo-bar"}}<button class="im-btn im-btn-sm im-btn-primary" type="button" onclick="print()">{{> "icons/download"}}<span>PDF</span></button>{{/"shell/solo-bar"}}
+
+	<main class="im-solo-main">
+		<div class="im-stack im-stack-xl">
+			<div class="im-cv-glance">
+				<div><strong data-im-count>8</strong><span>years on Salesforce</span></div>
+				<div><strong data-im-count>40</strong><span>orgs untangled</span></div>
+				<div><strong>1.2k</strong><span>students taught</span></div>
+				<div><strong>128k</strong><span>on the channel</span></div>
+			</div>
+
+			<section class="im-cv-section" id="summary">
+				<h2 data-n="01">Summary</h2>
+				<p class="im-cv-summary">Eight years delivering Salesforce for public-sector teams, the last four independently. I take on the programmes that are already late, leave each one with a document a stranger can act on, and tell a third of first conversations that they do not need me.</p>
+			</section>
+
+			<section class="im-cv-section" id="career">
+				<h2 data-n="02">Career</h2>
+				<ol class="im-timeline im-timeline-big">
+					<li class="im-timeline-item" data-kind="job" data-state="current"><span class="im-timeline-marker">{{> "icons/briefcase"}}</span><time class="im-timeline-time">2022 — now</time><h3 class="im-timeline-title">Independent consultant</h3><p class="im-timeline-text">Public sector, mostly. Two days a week, six weeks at a time. Inherited orgs nobody documented; documented them.</p></li>
+					<li class="im-timeline-item" data-kind="job" data-state="done"><span class="im-timeline-marker">{{> "icons/briefcase"}}</span><time class="im-timeline-time">2018 — 2022</time><h3 class="im-timeline-title">Senior consultant, a Salesforce partner</h3><p class="im-timeline-text">Delivery lead on three multi-year programmes.</p></li>
+					<li class="im-timeline-item" data-kind="job" data-state="done"><span class="im-timeline-marker">{{> "icons/rocket"}}</span><time class="im-timeline-time">2016 — 2018</time><h3 class="im-timeline-title">Co-founder, a clinic CRM</h3><p class="im-timeline-text">The market was real; our timing was not.</p></li>
+					<li class="im-timeline-item" data-kind="learning" data-state="done"><span class="im-timeline-marker">{{> "icons/graduation-cap"}}</span><time class="im-timeline-time">2012 — 2016</time><h3 class="im-timeline-title">B.Tech, Computer Science</h3><p class="im-timeline-text">A degree I do not use, from a college I liked.</p></li>
+				</ol>
+			</section>
+
+			<section class="im-cv-section" id="work">
+				<h2 data-n="03">Selected work</h2>
+				<div class="im-repos im-repos-tight">{{#each demo.projects}}{{#match @index "<" 2}}{{> "components/repo-card"}}{{/match}}{{/each}}</div>
+			</section>
+
+			<section class="im-cv-section" id="teaching">
+				<h2 data-n="04">Teaching & writing</h2>
+				<div>
+					<div class="im-resume-role"><span class="im-resume-when">2026</span><b>Design tokens, properly</b><small>A seven-lesson course · 1,240 students</small></div>
+					<div class="im-resume-role"><span class="im-resume-when">2019 — now</span><b>Field Notes</b><small>A letter every fortnight · 4,210 readers</small></div>
+					<div class="im-resume-role"><span class="im-resume-when">2021</span><b>Why your Ghost theme fights you</b><small>Forty minutes, a conference in Berlin</small></div>
+				</div>
+			</section>
+
+			<section class="im-cv-section" id="said">
+				<h2 data-n="05">Said about the work</h2>
+				<div class="im-reviews">{{#each demo.testimonials}}{{#match @index "<" 2}}<article class="im-review"><p class="im-review-head"><span class="im-review-by">{{by}}</span><time class="im-review-when">{{role}}</time></p><p class="im-review-text">{{text}}</p></article>{{/match}}{{/each}}</div>
+			</section>
+		</div>
+	</main>
+
+	{{#> "shell/solo-foot"}}<a href="/pages/contact/">Contact</a>{{/"shell/solo-foot"}}
+</div>
+
+{{#contentFor "scripts"}}<script src="/assets/im-view.js"></script>{{/contentFor}}

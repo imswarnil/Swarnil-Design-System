@@ -44,7 +44,7 @@
 		var(--im-fx-arm) var(--_w), var(--_w) var(--im-fx-arm),
 		var(--im-fx-arm) var(--_w), var(--_w) var(--im-fx-arm),
 		var(--im-fx-arm) var(--_w), var(--_w) var(--im-fx-arm);
-	transition: --im-fx-arm var(--im-fx-speed, 620ms) var(--im-ease-glide);
+	transition: --im-fx-arm var(--im-fx-speed, var(--im-duration-slow)) var(--im-ease-glide);
 }
 
 .im-fx-corners:is(:hover, :focus-within) {
@@ -55,7 +55,7 @@
    simply arrives at once instead of travelling. */
 @supports not (transition-property: --im-fx-arm) {
 	.im-fx-corners {
-		transition: background-size var(--im-fx-speed, 620ms) var(--im-ease-glide);
+		transition: background-size var(--im-fx-speed, var(--im-duration-slow)) var(--im-ease-glide);
 	}
 }
 

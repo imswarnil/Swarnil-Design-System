@@ -1,0 +1,20 @@
+---
+title: Series
+description: Where this post sits in a run of them. It is the timeline in a widget, and it is what belongs at the top of the right rail whenever there is a contents rail on the left: the contents say where you are in the post, the series says where you are in the run. The part being read is not a link to itself.
+eyebrow: Component · Widget
+source: src/components/widget.css
+---
+<p>Where this post sits in a run of them. It is the <a href="/components/timeline/">timeline</a> in a widget, and it is what belongs at the <strong>top of the right rail whenever there is a contents rail on the left</strong>: the contents say where you are in the post, the series says where you are in the run. The part being read is not a link to itself.</p>
+{{#example style="max-width: 22rem"}}
+<section class="im-widget">
+	<h2 class="im-widget-title">This series <a href="#series">4 parts</a></h2>
+	<ol class="im-timeline im-timeline-detailed im-widget-series">
+		{{#each demo.series}}
+		<li class="im-timeline-item" data-state="{{state}}">
+			<span class="im-timeline-marker">{{part}}</span>
+			<h3 class="im-timeline-title">{{#if url}}<a href="{{url}}">{{title}}</a>{{else}}<span>{{title}}</span>{{/if}}</h3>
+		</li>
+		{{/each}}
+	</ol>
+</section>
+{{/example}}

@@ -334,19 +334,19 @@
 	position: absolute;
 	inset: 0;
 	z-index: -1;
-	background: linear-gradient(to top, rgb(0 0 0 / 78%), rgb(0 0 0 / 30%) 55%, rgb(0 0 0 / 5%));
+	background: var(--im-media-scrim);
 }
 
 .im-posthero-cover .im-posthero-title {
-	color: #fff;
+	color: var(--im-on-media);
 }
 
 .im-posthero-cover :is(.im-posthero-excerpt, .im-posthero-meta, .im-posthero-kicker) {
-	color: color-mix(in oklab, #fff 82%, transparent);
+	color: var(--im-on-media-dim);
 }
 
 .im-posthero-cover .im-posthero-meta a {
-	color: #fff;
+	color: var(--im-on-media);
 }
 
 .im-posthero-cover .im-posthero-media > figcaption {

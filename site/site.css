@@ -29,8 +29,9 @@
 		max-width: var(--im-width-wide);
 	}
 
+	/* Eight of the twelve columns of the wide measure. */
 	.shell-doc .im-prose {
-		max-width: 62rem;
+		max-width: calc(var(--im-width-wide) * 8 / 12 - var(--im-grid-gap) / 3);
 	}
 
 	.doc {
@@ -136,6 +137,77 @@
 		height: 28rem;
 		border: 0;
 		background-color: var(--im-canvas);
+	}
+
+	/* A frame at its real size, scaled to fit: the iframe is 1280×720 (or
+	   whatever --fw/--fh say) and a script scales it to the box's width. */
+	.frame-preview {
+		position: relative;
+		display: block;
+		overflow: hidden;
+		aspect-ratio: var(--fw) / var(--fh);
+		border-radius: var(--im-radius-lg);
+		box-shadow: inset 0 0 0 1px var(--im-line);
+		background-color: var(--im-surface);
+	}
+
+	.frame-preview > iframe {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: calc(var(--fw) * 1px);
+		height: calc(var(--fh) * 1px);
+		border: 0;
+		transform-origin: 0 0;
+		transform: scale(var(--fs, 1));
+	}
+
+	/* A channel header as YouTube draws it: the banner cropped to the band a
+	   desk shows (2560 × 423 of 2560 × 1440), then the avatar, the name, the
+	   handle and the button. Docs only. */
+	.yt-mock {
+		overflow: hidden;
+		border-radius: var(--im-radius-xl);
+		box-shadow: inset 0 0 0 1px var(--im-line);
+		background-color: var(--im-canvas);
+	}
+
+	.yt-mock-banner {
+		position: relative;
+		overflow: hidden;
+		aspect-ratio: 2560 / 423;
+	}
+
+	.yt-mock-banner > .frame-preview {
+		position: absolute;
+		top: -120.3%;   /* the band starts 508.5px down a 1440px frame: 508.5 / 423 */
+		left: 0;
+		width: 100%;
+		border-radius: 0;
+		box-shadow: none;
+	}
+
+	.yt-mock-head {
+		display: grid;
+		grid-template-columns: auto minmax(0, 1fr) auto;
+		align-items: center;
+		gap: 1.25rem;
+		padding: 1.25rem 1.5rem;
+	}
+
+	.yt-mock-head > .frame-preview {
+		width: 5rem;
+		border-radius: 50%;
+		box-shadow: none;
+	}
+
+	.yt-mock-name { display: grid; gap: 0.125rem; }
+	.yt-mock-name > b { font-size: var(--im-text-h4); font-weight: 600; letter-spacing: var(--im-tracking-tight); }
+	.yt-mock-name > span { color: var(--im-muted); font-size: var(--im-text-sm); }
+
+	/* Overlays are shown over a picture. */
+	.frame-preview-photo {
+		background: url("https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=1600&q=70") center / cover;
 	}
 
 	/* For demos whose content opens outside its box: hover cards, tooltips. */

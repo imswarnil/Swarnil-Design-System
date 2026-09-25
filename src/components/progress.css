@@ -20,7 +20,7 @@
 	height: 100%;
 	border-radius: inherit;
 	background-color: var(--im-progress-color, var(--im-accent));
-	transition: width 600ms var(--im-ease-out);
+	transition: width var(--im-duration-slow) var(--im-ease-out);
 }
 
 .im-progress-sm { --im-progress-height: 0.1875rem; }
@@ -88,7 +88,7 @@
 .im-progress-steps > i {
 	border-radius: var(--im-radius-full);
 	background-color: var(--im-surface-2);
-	transition: background-color 300ms;
+	transition: background-color var(--im-duration-base);
 }
 
 .im-progress-steps > i[data-on] {
@@ -125,7 +125,7 @@
 	background:
 		radial-gradient(closest-side, var(--im-ring-ground, var(--im-canvas)) calc(100% - var(--im-ring-width)), transparent calc(100% - var(--im-ring-width) + 1px)),
 		conic-gradient(var(--im-progress-color, var(--im-accent)) 25%, var(--im-surface-2) 0);
-	animation: im-spin 900ms linear infinite;
+	animation: im-spin var(--im-duration-long) linear infinite;
 }
 
 /* A ring with a caption under it. */

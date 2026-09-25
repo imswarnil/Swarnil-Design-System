@@ -1,0 +1,10 @@
+---
+title: Author
+description: Who wrote this — components/author, the same card that closes a post lying down (row=true). On a post page it belongs high in the column; on a collection page it belongs low or not at all — a reader scanning a list has not met anyone yet.
+eyebrow: Component · Widget
+source: src/components/widget.css
+---
+<p>Who wrote this — <code>components/author</code>, the same card that closes a post lying down (<code>row=true</code>). On a post page it belongs high in the column; on a collection page it belongs low or not at all — a reader scanning a list has not met anyone yet.</p>
+{{#example style="max-width: 22rem"}}
+{{#with demo.author}}{{> "components/author" status="Open to work"}}{{/with}}
+{{/example}}

@@ -41,7 +41,7 @@
 	font-weight: 500;
 	white-space: nowrap;
 	cursor: pointer;
-	transition: color 200ms;
+	transition: color var(--im-duration-fast);
 }
 
 .im-switcher > label > input {
@@ -57,7 +57,7 @@
 }
 
 .im-switcher > label:has(:focus-visible) {
-	outline: 2px solid var(--im-accent);
+	outline: var(--im-ring-width) solid var(--im-ring);
 	outline-offset: 1px;
 }
 
@@ -72,9 +72,9 @@
 	width: calc((100% - var(--im-switcher-pad) * 2) / var(--_n, 2));
 	border-radius: inherit;
 	background-color: var(--im-canvas);
-	box-shadow: 0 1px 2px rgb(0 0 0 / 14%), inset 0 0 0 1px var(--im-line);
+	box-shadow: var(--im-shadow-sm), inset 0 0 0 1px var(--im-line);
 	translate: calc(var(--_i, 0) * 100%) 0;
-	transition: translate 320ms var(--im-ease-spring), width 200ms;
+	transition: translate var(--im-duration-base) var(--im-ease-spring), width var(--im-duration-fast);
 }
 
 .im-switcher:has(> label:nth-child(2):last-child) { --_n: 2; }

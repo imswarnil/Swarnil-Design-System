@@ -121,20 +121,6 @@
 	min-width: 0;
 }
 
-/* One column of row cards — a tag page, an archive, a search result. */
-.im-feed-list {
-	grid-template-columns: minmax(0, 1fr);
-	gap: 0;
-}
-
-.im-feed-list > * {
-	padding-block: var(--im-feed-gap);
-}
-
-.im-feed-list > * + * {
-	border-top: 1px solid var(--im-line);
-}
-
 /* The first post takes the top, at full width. On one column there is no
    difference to make, so the rule waits for two. */
 @media (width >= 48rem) {
@@ -160,6 +146,151 @@
 		font-size: var(--im-text-h2);
 		line-height: var(--im-leading-h2);
 	}
+}
+
+/* ---- four views, one attribute ----
+   <div class="im-feed" data-view="card | grid | list | simple">, switched by
+   im-view.js from a group with data-im-view="#feed" and remembered per
+   reader. The cards never change markup; the feed decides their shape.
+
+     card    the first post leads across the top, the rest in a grid
+     grid    every card the same
+     list    one column, the picture beside the words
+     simple  one column, a title and a date — an index, not a feed */
+@media (width >= 48rem) {
+	.im-feed[data-view="card"] > :first-child { grid-column: 1 / -1; }
+
+	.im-feed[data-view="card"] > .im-post-card:first-child {
+		flex-direction: row;
+		align-items: center;
+		gap: clamp(1.25rem, 3vw, 2rem);
+	}
+
+	.im-feed[data-view="card"] > .im-post-card:first-child > .im-post-card-media { flex: 0 0 clamp(14rem, 50%, 34rem); }
+
+	.im-feed[data-view="card"] > .im-post-card:first-child .im-post-card-title {
+		font-size: var(--im-text-h2);
+		line-height: var(--im-leading-h2);
+	}
+}
+
+.im-feed:is([data-view="list"], [data-view="simple"]) {
+	grid-template-columns: minmax(0, 1fr);
+	gap: 0;
+}
+
+.im-feed:is([data-view="list"], [data-view="simple"]) > * + * { border-top: 1px solid var(--im-line); }
+.im-feed[data-view="list"] > * { padding-block: var(--im-feed-gap); }
+
+.im-feed[data-view="list"] > .im-post-card {
+	flex-direction: row;
+	align-items: center;
+	gap: clamp(1rem, 2.5vw, 1.75rem);
+}
+
+.im-feed[data-view="list"] > .im-post-card > .im-post-card-media { flex: 0 0 clamp(7rem, 30%, 15rem); }
+
+.im-feed[data-view="simple"] > * { padding-block: 0.875rem; }
+.im-feed[data-view="simple"] > .im-post-card :is(.im-post-card-media, .im-post-card-excerpt) { display: none; }
+
+.im-feed[data-view="simple"] > .im-post-card .im-post-card-title {
+	font-size: var(--im-text-base);
+	line-height: var(--im-leading-base);
+}
+
+@media (width < 30rem) {
+	.im-feed[data-view="list"] > .im-post-card { flex-direction: column; align-items: stretch; }
+}
+
+/* ---- the collection hero ----
+   The head of a listing at full width — edge to edge of the page, not of the
+   reading column — with the collection's pattern on the right, a display
+   title, and along its foot the two things a reader does here: pick a topic
+   and pick how to see it.
+
+     <header class="im-collhero">
+       <span class="im-collhero-art im-bg-rules im-art-post" aria-hidden="true"></span>
+       <div class="im-collhero-copy"> caption · h1.im-collhero-title · p.im-collhero-text · meta </div>
+       <div class="im-collhero-bar"> <div class="im-collbar-filters">…</div> <div class="im-btn-group" data-im-view="#feed">…</div> </div>
+     </header>
+
+   It bleeds out of the page's gutter by --im-collhero-bleed (the gutter,
+   and the shell's top padding above it); the words line up with the wide
+   measure inside. Knobs: --im-collhero-bleed, --im-collhero-measure. */
+.im-collhero {
+	--im-collhero-bleed: var(--im-gutter);
+	--im-collhero-measure: var(--im-width-wide);
+
+	position: relative;
+	isolation: isolate;
+	display: grid;
+	/* minmax(0, …): the row of topic chips is as wide as all of them, and an
+	   auto track would grow to it and push the words off a phone. */
+	grid-template-columns: minmax(0, 1fr);
+	gap: clamp(1.5rem, 4vh, 2.5rem);
+	margin: -1.25rem calc(var(--im-collhero-bleed) * -1) 0;
+	padding: clamp(2.5rem, 8vh, 6rem) var(--im-collhero-bleed) 0;
+	overflow: hidden;
+	background-color: var(--im-surface);
+}
+
+.im-collhero > :not(.im-collhero-art) {
+	width: 100%;
+	max-width: var(--im-collhero-measure);
+	margin-inline: auto;
+}
+
+.im-collhero-art {
+	position: absolute;
+	inset: 0 0 0 auto;
+	z-index: -1;
+	width: min(55%, 44rem);
+	opacity: var(--im-art-opacity, 0.6);
+	pointer-events: none;
+	--im-pattern-color: var(--im-art, var(--im-accent));
+	-webkit-mask-image: linear-gradient(to left, #000 20%, transparent);
+	mask-image: linear-gradient(to left, #000 20%, transparent);
+}
+
+.im-collhero-copy {
+	display: grid;
+	gap: 1rem;
+}
+
+.im-collhero-copy > * { max-width: var(--im-span-7); }
+
+.im-collhero-title {
+	color: var(--im-ink);
+	font-family: var(--im-font-heading);
+	font-size: clamp(2.75rem, 1.6rem + 5vw, 5.5rem);
+	font-weight: 600;
+	line-height: 0.95;
+	letter-spacing: var(--im-tracking-tighter);
+}
+
+.im-collhero-text {
+	color: var(--im-body);
+	font-size: var(--im-text-lg);
+	line-height: var(--im-leading-lg);
+	text-wrap: pretty;
+}
+
+/* The foot: topics left, the view switch right, on a hairline. */
+.im-collhero-bar {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	padding-block: 0.875rem;
+	border-top: 1px solid var(--im-line);
+}
+
+.im-collhero-bar > .im-collbar-filters { flex: 1 1 auto; min-width: 0; }
+.im-collhero-bar > .im-btn-group { flex: none; }
+
+@media (width < 48rem) {
+	.im-collhero-bar { flex-wrap: wrap; }
+	.im-collhero-bar > .im-collbar-filters { flex-basis: 100%; }
+	.im-collhero-art { width: 100%; opacity: 0.35; }
 }
 
 .im-feed-empty {
@@ -208,10 +339,10 @@
 	top: 0.5rem;
 	left: 0.5rem;
 	z-index: 2;
-	background-color: rgb(20 20 20 / 62%);
+	background-color: var(--im-glass);
 	-webkit-backdrop-filter: blur(8px);
 	backdrop-filter: blur(8px);
-	color: #fff;
+	color: var(--im-on-media);
 }
 
 /* Each kind gets the accent of its own only where it helps tell them apart in
@@ -234,7 +365,7 @@
 .im-kind[data-kind="tag"] > .im-icon { color: var(--im-c-tag); }
 
 .im-kind-over > .im-icon {
-	color: #fff !important;
+	color: var(--im-on-media) !important;
 }
 
 /* ---- playlist card ------------------------------------------------------
@@ -282,10 +413,10 @@
 	align-items: center;
 	justify-content: center;
 	width: 38%;
-	background-color: rgb(20 20 20 / 72%);
+	background-color: var(--im-glass);
 	-webkit-backdrop-filter: blur(6px);
 	backdrop-filter: blur(6px);
-	color: #fff;
+	color: var(--im-on-media);
 	font-size: var(--im-text-sm);
 	font-weight: 600;
 }
@@ -745,7 +876,7 @@
 	border-radius: var(--im-radius-md);
 	color: var(--im-ink);
 	text-decoration: none;
-	transition: background-color 120ms;
+	transition: background-color var(--im-duration-instant);
 }
 
 .im-archive-row:hover {
@@ -901,8 +1032,8 @@
 	bottom: 0.1875rem;
 	padding: 0 0.25rem;
 	border-radius: var(--im-radius-xs);
-	background-color: rgb(20 20 20 / 80%);
-	color: #fff;
+	background-color: var(--im-glass);
+	color: var(--im-on-media);
 	font-family: var(--im-font-mono);
 	font-size: 0.625rem;
 	line-height: 1.5;
@@ -1044,10 +1175,10 @@
 	left: 0.625rem;
 	padding: 0.125rem 0.5rem;
 	border-radius: var(--im-radius-full);
-	background-color: rgb(20 20 20 / 70%);
+	background-color: var(--im-glass);
 	-webkit-backdrop-filter: blur(4px);
 	backdrop-filter: blur(4px);
-	color: #fff;
+	color: var(--im-on-media);
 	font-family: var(--im-font-mono);
 	font-size: var(--im-text-xs);
 }

@@ -1,0 +1,87 @@
+---
+title: Widgets
+description: The blocks of a sidebar — one frame, sixteen contents. Each widget has a page of its own; this one is the frame, the column, and how to choose.
+eyebrow: Component
+source: src/components/widget.css
+---
+<p>A widget is a <strong>frame</strong> and something inside it. The frame is always the same — a ruled block, a mono caption, an optional link on the right — and everything below is what goes in. Each one here stands alone: copy the markup, drop it in a column, done.</p>
+
+{{#example title="A column of them" surface=true}}
+<aside class="im-widgets im-max-sm" aria-label="Sidebar">
+	<section class="im-widget" style="background-color: var(--im-canvas)">
+		<h2 class="im-widget-title">Most read <a href="#a-column-of-them">All →</a></h2>
+		<ol class="im-widget-list im-widget-list-ranked">
+			{{#foreach demo.three}}<li><a href="#a-column-of-them">{{title}}<small>{{primary_tag.name}} · {{reading_time}} min</small></a></li>{{/foreach}}
+		</ol>
+	</section>
+	<section class="im-widget im-widget-accent">
+		<h2 class="im-widget-title">Newsletter</h2>
+		<p class="im-widget-heading">One email when something lands.</p>
+		<a class="im-btn im-btn-ink im-btn-block" href="#a-column-of-them">Subscribe {{> "icons/arrow-right"}}</a>
+	</section>
+</aside>
+{{/example}}
+
+<h2>The frame</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Class</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>im-widgets</code></td><td>The column. Put it in the rail of <code>im-with-aside</code> or <code>im-with-rails</code>, inside an <code>im-sticky-rail</code> if it should follow the reader.</td></tr>
+		<tr><td><code>im-widget</code></td><td>One ruled block.</td></tr>
+		<tr><td>… <code>im-widget-fill</code></td><td>A surface instead of a rule.</td></tr>
+		<tr><td>… <code>im-widget-accent</code></td><td>The accent. For the one widget that should be seen — never two.</td></tr>
+		<tr><td>… <code>im-widget-bare</code></td><td>No frame at all, for a widget used somewhere that already has one: a footer column, a card, the menu panel.</td></tr>
+		<tr><td><code>im-widget-title</code></td><td>The mono caption. May hold a link on the right ("All →").</td></tr>
+		<tr><td><code>im-widget-heading</code></td><td>A larger line, for a promotional widget.</td></tr>
+		<tr><td><code>im-widget-media</code></td><td>A picture that fills the top of the frame, corners and all.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>In a Ghost theme</h2>
+{{{{code "hbs"}}}}
+<aside class="im-widgets">
+	{{#primary_author}}
+	{{> "components/author"}}
+	{{/primary_author}}
+
+	{{#get "posts" filter="featured:true" limit="5" as |popular|}}
+	<section class="im-widget">
+		<h2 class="im-widget-title">{{t "Most read"}}</h2>
+		<ol class="im-widget-list im-widget-list-ranked">
+			{{#foreach popular}}<li><a href="{{url}}">{{title}}<small>{{reading_time}}</small></a></li>{{/foreach}}
+		</ol>
+	</section>
+	{{/get}}
+</aside>
+{{{{/code}}}}
+
+<h2>Choosing</h2>
+<ul>
+	<li><strong>Three widgets is a sidebar; seven is a second page nobody reads.</strong> On a phone the column drops under the article — put the one that matters first.</li>
+	<li><strong>The order says what the page is for.</strong> Post page: series, author, popular, newsletter. Collection page: newsletter, topics, archive.</li>
+	<li><strong>One accent block per page.</strong> Two is none.</li>
+	<li><strong>Every widget has a caption</strong>, even when it looks obvious — it is what a screen reader lands on, and <code>aria-labelledby</code> should point at it.</li>
+	<li><strong>Nothing in a widget should be the only way to reach something.</strong> A sidebar is not printed on a phone until after the article, and a reader on a phone may never arrive.</li>
+</ul>
+
+<h2>Every widget</h2>
+<ul>
+	<li><a href="/components/widgets/author/">Author</a></li>
+	<li><a href="/components/widgets/series/">Series</a></li>
+	<li><a href="/components/widgets/most-read/">Most read</a></li>
+	<li><a href="/components/widgets/latest/">Latest</a></li>
+	<li><a href="/components/widgets/things-i-use/">Things I use</a></li>
+	<li><a href="/components/widgets/support/">Support</a></li>
+	<li><a href="/components/widgets/newsletter/">Newsletter</a></li>
+	<li><a href="/components/widgets/topics/">Topics</a></li>
+	<li><a href="/components/widgets/on-this-page/">On this page</a></li>
+	<li><a href="/components/widgets/about-this-post/">About this post</a></li>
+	<li><a href="/components/widgets/now/">Now</a></li>
+	<li><a href="/components/widgets/quote/">Quote</a></li>
+	<li><a href="/components/widgets/archive/">Archive</a></li>
+	<li><a href="/components/widgets/featured/">Featured</a></li>
+	<li><a href="/components/widgets/sponsor/">Sponsor</a></li>
+	<li><a href="/components/widgets/follow-and-search/">Follow &amp; search</a></li>
+</ul>

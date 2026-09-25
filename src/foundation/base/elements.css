@@ -43,7 +43,7 @@ a {
 	text-decoration-thickness: 1px;
 	text-underline-offset: 0.18em;
 	text-decoration-color: color-mix(in oklab, currentcolor 35%, transparent);
-	transition: color 120ms, text-decoration-color 120ms;
+	transition: color var(--im-duration-instant), text-decoration-color var(--im-duration-instant);
 }
 
 a:hover {
@@ -58,8 +58,8 @@ b {
 }
 
 :focus-visible {
-	outline: 2px solid var(--im-accent);
-	outline-offset: 2px;
+	outline: var(--im-ring-width) solid var(--im-ring);
+	outline-offset: var(--im-ring-offset);
 }
 
 ::selection {

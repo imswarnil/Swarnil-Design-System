@@ -1,0 +1,33 @@
+---
+title: Content creation
+description: The channel, drawn with the same tokens as the site — thumbnails, channel art, live scenes. One voice on the page and in the player.
+eyebrow: Content creation
+source: src/components/studio.css
+---
+<p>A site and a channel are two doors into the same house. The frames here are built from the system’s own tokens — the same accent, the same Geist, the same patterns, the same motion — so a viewer who arrives from a video finds the place they expected, and a reader who clicks through to the channel does too.</p>
+
+<h2>What is here</h2>
+<ul>
+	<li><strong><a href="/content-creation/youtube/">YouTube</a></strong> — channel art with the safe area, profile art, the thumbnail as a cover, and how a set of them reads in a grid.</li>
+	<li><strong><a href="/content-creation/thumbnails/">Thumbnails</a></strong> — one system, several styles: a film, a live stream, a trip, a tutorial, an episode, a short.</li>
+	<li><strong><a href="/live/">Live stream</a></strong> — starting soon, the live layout, be right back, the ending, and the overlays; and the thinking behind them.</li>
+</ul>
+
+<h2>How a frame works</h2>
+<p>Every frame is a page under <code>/frames/</code> at its real size — a thumbnail is 1280 × 720, a live scene 1920 × 1080, channel art 2560 × 1440 — with <code>im-studio</code> on the root and one unit inside: the em, set from the frame’s shorter side, so the same markup is right at every size. It is a web page, so it takes a real photograph, live text and the real fonts, and it is never out of date with the site.</p>
+<div class="im-table-scroll"><table>
+<thead><tr><th>Use it as</th><th>How</th></tr></thead>
+<tbody>
+<tr><td>A picture</td><td>Open the frame at its size and take a screenshot — a browser at 100% zoom gives exact pixels. Change the words in the page first.</td></tr>
+<tr><td>A browser source</td><td>OBS, Streamlabs, vMix: add the frame’s URL as a browser source at 1920 × 1080. Overlays have no background of their own.</td></tr>
+<tr><td>In an edit</td><td>The frames are plain HTML on <code>im.css</code>; any tool that renders a web page — including an HTML-first video renderer — can put one on the timeline. Motion tokens are published as <code>assets/im-motion.json</code> so a cut can use the site’s curves.</td></tr>
+</tbody></table></div>
+
+<h2>The rules a frame keeps</h2>
+<ul>
+	<li><strong>One accent, on one thing.</strong> A word in the title, the live dot, a chip — never a fill behind the words.</li>
+	<li><strong>The person is the picture.</strong> A portrait fills the right half and fades into the ground; a channel is a person, and a face is what a thumb stops on.</li>
+	<li><strong>Less text, more type.</strong> A kicker and a title of five or six words, set huge, one word in the accent. Nothing under the title.</li>
+	<li><strong>One thing per style.</strong> Travel swaps the person for the place; series puts a numeral behind them; tutorial puts a line of code where the kicker was; live goes dark. The rest stays.</li>
+	<li><strong>The mark signs every frame</strong>, small, bottom left.</li>
+</ul>

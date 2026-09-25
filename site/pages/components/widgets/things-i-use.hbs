@@ -1,0 +1,22 @@
+---
+title: Things I use
+description: The tools, the camera, the chair. A name, what it is for, and where to get it — the mark on the left is a logo if there is one and the initial if there is not, so a row never collapses. Add rel='sponsored' to any link that pays.
+eyebrow: Component · Widget
+source: src/components/widget.css
+---
+<p>The tools, the camera, the chair. A name, what it is for, and where to get it — the mark on the left is a logo if there is one and the initial if there is not, so a row never collapses. Add <code>rel="sponsored"</code> to any link that pays.</p>
+{{#example style="max-width: 22rem"}}
+<section class="im-widget">
+	<h2 class="im-widget-title">Things I use <a href="#things-i-use">All →</a></h2>
+	<div class="im-widget-products">
+		{{#each demo.products}}
+		<a class="im-widget-product" href="#things-i-use">
+			<span class="im-widget-product-mark">{{name.[0]}}</span>
+			<span class="im-widget-product-name">{{name}}</span>
+			<span class="im-widget-product-note">{{note}}</span>
+			{{icon "arrow-up-right"}}
+		</a>
+		{{/each}}
+	</div>
+</section>
+{{/example}}

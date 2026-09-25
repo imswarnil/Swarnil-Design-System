@@ -39,12 +39,8 @@
 	.im-coursehead,
 .im-letterhead,
 .im-homehero,
-.im-cv-head,
-.im-cv,
-.im-guestbook,
 .im-abouthero,
-.im-story,
-.im-shortwatch {
+.im-story {
 		grid-template-columns: minmax(0, 1fr);
 	}
 
@@ -63,7 +59,6 @@
 never five. */
 	.im-tripstats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 	.im-expstats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-	.im-widget-person-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
 	/* Rails: below the article, never sticky, never full height. */
 	.im-sticky-rail, .im-sticky-rail-full { position: static; min-height: 0; }
@@ -106,7 +101,7 @@ never five. */
 	.im-unit-head { padding: 0.875rem 1rem; }
 	.im-lessonrow { grid-template-columns: 4rem minmax(0, 1fr); }
 	.im-lessonrow-state { grid-row: 3; grid-column: 2; }
-	.im-letterhead, .im-cv-head { padding: 1.25rem; }
+	.im-letterhead { padding: 1.25rem; }
 	.im-widget { padding: 1rem; }
 }
 

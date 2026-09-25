@@ -1,9 +1,9 @@
 ---
 title: Résumé
 layout: home
-description: A real CV — a profile header on a pattern, the summary and the career timeline at seventy percent, the facts at thirty. Prints as it reads.
+description: A CV as a page of its own — who you are pinned on the left, the career scrolling on the right, the way home and a PDF in the bar. Prints as it reads.
 eyebrow: Pages
-source: src/components/pages.css
+source: src/layout/solo.css · src/components/pages.css
 ---
 <section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Pages · {{page.title}}</p>
@@ -11,68 +11,12 @@ source: src/components/pages.css
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
-<div class="im-wrap-wide im-stack im-stack-lg">
-	<header class="im-cv-head">
-		<span class="im-cv-pattern im-bg-blueprint im-bg-accent" aria-hidden="true"></span>
-		{{> "components/avatar" size="xl" src=demo.author.profile_image name=demo.author.name}}
-		<div>
-			<h1 class="im-cv-name">{{demo.author.name}}</h1>
-			<p class="im-cv-role">Salesforce consultant · design systems · Amsterdam</p>
-			<p class="im-cv-contact"><span>{{icon "mail"}}hello@imswarnil.com</span><span>{{icon "globe"}}imswarnil.com</span><span>{{icon "brand-github"}}imswarnil</span><span>{{icon "map-pin"}}Amsterdam, NL</span></p>
-		</div>
-		<p class="im-cluster im-cluster-tight"><a class="im-btn im-btn-primary im-btn-sm" href="#">{{icon "download"}}PDF</a><a class="im-btn im-btn-sm" href="/pages/contact/">Contact</a></p>
-	</header>
+<section class="im-section im-wrap-wide">
+	<p class="im-cluster"><a class="im-btn im-btn-primary im-btn-sm" href="/demos/resume/">Open full screen {{icon "arrow-up-right"}}</a><span class="im-hint">A page of its own: <code>im-solo-split</code>, the way home in the bar, a PDF beside it.</span></p>
+	<iframe class="demo-frame im-demo-tall" src="/demos/resume/" title="The résumé" loading="lazy"></iframe>
+	<iframe class="demo-frame im-max-sm im-mx-auto im-block im-demo-tall" src="/demos/resume/" title="The résumé on a phone" loading="lazy"></iframe>
+</section>
 
-	<div class="im-cv">
-		<article>
-			<section class="im-cv-section">
-				<h2>Summary</h2>
-				<p class="im-cv-summary">Eight years delivering Salesforce for public-sector teams, the last four independently. I take on the programmes that are already late, leave every one with a document a stranger can act on, and tell roughly a third of first conversations that they do not need me. On the side I built and sell a design system, and write a letter every fortnight about what things cost.</p>
-			</section>
-
-			<section class="im-cv-section">
-				<h2>Career</h2>
-				<ol class="im-timeline im-timeline-big" style="--im-timeline-gap: 1.75rem">
-					<li class="im-timeline-item" data-kind="job" data-state="current"><span class="im-timeline-marker">{{icon "briefcase"}}</span><time class="im-timeline-time">2022 — now</time><h3 class="im-timeline-title">Independent consultant</h3><p class="im-timeline-text">Public sector, mostly. Two days a week, six weeks at a time. Inherited orgs nobody documented; documented them.</p></li>
-					<li class="im-timeline-item" data-kind="job" data-state="done"><span class="im-timeline-marker">{{icon "briefcase"}}</span><time class="im-timeline-time">2018 — 2022</time><h3 class="im-timeline-title">Senior consultant, a Salesforce partner</h3><p class="im-timeline-text">Delivery lead on three multi-year programmes. Learned what not to do, at scale, on somebody else's budget.</p></li>
-					<li class="im-timeline-item" data-kind="job" data-state="done"><span class="im-timeline-marker">{{icon "rocket"}}</span><time class="im-timeline-time">2016 — 2018</time><h3 class="im-timeline-title">Co-founder, a clinic CRM</h3><p class="im-timeline-text">The market was real; our timing was not.</p></li>
-					<li class="im-timeline-item" data-kind="learning" data-state="done"><span class="im-timeline-marker">{{icon "graduation-cap"}}</span><time class="im-timeline-time">2012 — 2016</time><h3 class="im-timeline-title">B.Tech, Computer Science</h3><p class="im-timeline-text">A degree I do not use, from a college I liked.</p></li>
-				</ol>
-			</section>
-
-			<section class="im-cv-section">
-				<h2>Projects</h2>
-				<div class="im-repos im-repos-tight">{{#each demo.projects}}{{#match @index "<" 2}}{{> "components/repo-card"}}{{/match}}{{/each}}</div>
-			</section>
-
-			<section class="im-cv-section">
-				<h2>Talks & teaching</h2>
-				<div class="im-resume-role"><span class="im-resume-when">2026</span><b>Design tokens, properly</b><small>A seven-lesson course · 1,240 students</small></div>
-				<div class="im-resume-role"><span class="im-resume-when">2021</span><b>Why your Ghost theme fights you</b><small>Forty minutes, a conference in Berlin</small></div>
-			</section>
-			<section class="im-cv-section">
-				<h2>Writing</h2>
-				<div class="im-resume-role"><span class="im-resume-when">2019 — now</span><b>Field Notes</b><small>A letter every fortnight · 4,210 readers · 42 issues</small></div>
-				<div class="im-resume-role"><span class="im-resume-when">2023 — now</span><b>The channel</b><small>Films about roads, tools and what things cost · 128k subscribers</small></div>
-			</section>
-			<section class="im-cv-section">
-				<h2>Education</h2>
-				<div class="im-resume-role"><span class="im-resume-when">2012 — 2016</span><b>B.Tech, Computer Science</b><small>A degree I do not use, from a college I liked.</small></div>
-			</section>
-			<section class="im-cv-section">
-				<h2>Said about the work</h2>
-				<div class="im-reviews">{{#each demo.testimonials}}{{#match @index "<" 2}}<article class="im-review"><p class="im-review-head"><span class="im-review-by">{{by}}</span><time class="im-review-when">{{role}}</time></p><p class="im-review-text">{{text}}</p></article>{{/match}}{{/each}}</div>
-			</section>
-		</article>
-
-		<aside class="im-cv-side">
-			<div><h3>Skills</h3><div class="im-stack im-stack-xs"><p class="im-cv-bar"><span>Salesforce</span><span style="--im-bar: 95%"></span></p><p class="im-cv-bar"><span>Design systems</span><span style="--im-bar: 85%"></span></p><p class="im-cv-bar"><span>CSS / Tailwind</span><span style="--im-bar: 90%"></span></p><p class="im-cv-bar"><span>Ghost themes</span><span style="--im-bar: 80%"></span></p><p class="im-cv-bar"><span>Writing</span><span style="--im-bar: 75%"></span></p></div></div>
-			<div><h3>Certifications</h3><ul><li>Application Architect (2024)</li><li>Platform Developer II</li><li>Sales & Service Cloud Consultant</li></ul></div>
-			<div><h3>Languages</h3><ul><li>English — fluent</li><li>Hindi — native</li><li>Dutch — A2</li></ul></div>
-			<div><h3>Tools</h3><p class="im-skills">{{#each demo.projects.[0].stack}}<span class="im-tag">{{icon this.icon}}{{this.name}}</span>{{/each}}</p></div>
-			<div><h3>Availability</h3><ul><li>Two days a week from November</li><li>Remote, or Amsterdam</li></ul></div>
-			<div><h3>Interests</h3><ul><li>Diving, freediving</li><li>Long roads, slowly</li><li>Cameras I can carry</li></ul></div>
-			<div><h3>References</h3><ul><li>On request — two clients, one partner</li></ul></div>
-		</aside>
-	</div>
-</div>
+<section class="im-section im-wrap"><div class="im-prose">
+<p>Who you are stays pinned on the left — name, what you do, whether you are free, how to reach you, what you are good at. The story scrolls on the right: four numbers, then numbered sections. On a phone the panel is a band at the top. <code>PDF</code> prints it; the print rules drop the bar and let the panel go.</p>
+</div></section>

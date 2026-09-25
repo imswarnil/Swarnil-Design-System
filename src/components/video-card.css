@@ -80,8 +80,8 @@
 	z-index: 1;
 	padding: 0.0625rem 0.3125rem;
 	border-radius: var(--im-radius-xs);
-	background-color: rgb(20 20 20 / 78%);
-	color: #fff;
+	background-color: var(--im-glass);
+	color: var(--im-on-media);
 	font-size: var(--im-text-xs);
 	font-weight: 500;
 	font-variant-numeric: tabular-nums;
@@ -103,7 +103,7 @@
 	width: 0.375rem;
 	height: 0.375rem;
 	border-radius: 50%;
-	background-color: #fff;
+	background-color: var(--im-on-media);
 }
 
 /* How far in the viewer got last time. */
@@ -595,8 +595,8 @@
 	flex-direction: column;
 	gap: 0.625rem;
 	padding: clamp(0.875rem, 3%, 1.5rem);
-	background-image: linear-gradient(to top, rgb(0 0 0 / 82%), rgb(0 0 0 / 30%) 60%, transparent);
-	color: #fff;
+	background-image: var(--im-media-scrim);
+	color: var(--im-on-media);
 }
 
 .im-short-by {
@@ -608,7 +608,7 @@
 }
 
 .im-short-by > a {
-	color: #fff;
+	color: var(--im-on-media);
 	text-decoration: none;
 }
 
@@ -627,7 +627,7 @@
 	display: flex;
 	flex-wrap: wrap;
 	gap: 0.375rem;
-	color: color-mix(in oklab, #fff 80%, transparent);
+	color: var(--im-on-media-dim);
 	font-size: var(--im-text-xs);
 }
 
@@ -637,13 +637,13 @@
 	inset: auto 0 0;
 	z-index: 2;
 	height: 3px;
-	background-color: rgb(255 255 255 / 28%);
+	background-color: var(--im-glass-light);
 }
 
 .im-short-bar > span {
 	display: block;
 	height: 100%;
-	background-color: #fff;
+	background-color: var(--im-on-media);
 }
 
 /* ---- the rail ----
@@ -766,7 +766,7 @@
 	width: var(--im-thumb-mark, 2.25rem);
 	height: var(--im-thumb-mark, 2.25rem);
 	border-radius: 50%;
-	background-color: rgb(20 20 20 / 62%);
+	background-color: var(--im-glass);
 	-webkit-backdrop-filter: blur(4px);
 	backdrop-filter: blur(4px);
 	transition: background-color var(--im-duration-fast) var(--im-ease-out);
@@ -779,7 +779,7 @@
 	z-index: 3;
 	width: calc(var(--im-thumb-mark, 2.25rem) * 0.42);
 	height: calc(var(--im-thumb-mark, 2.25rem) * 0.42);
-	background-color: #fff;
+	background-color: var(--im-on-media);
 	-webkit-mask: var(--im-play-glyph) center / contain no-repeat;
 	mask: var(--im-play-glyph) center / contain no-repeat;
 }
@@ -931,57 +931,61 @@
 	}
 }
 
-/* ---- the short WATCH page ----------------------------------------------
-   The other thing a 9:16 page can be. `im-short` is the feed shape — one
-   clip filling the window, nothing else. This is the desk shape: the clip on
-   the left at its real proportion, and everything a viewer would scroll for
-   on the right, inside the same viewport. Nothing scrolls except the panel,
-   and the panel scrolls itself.
+/* ---- short watch: a 9:16 clip as a page on a desk ----------------------
+   Two columns. The left five of twelve are the clip's room: a quiet surface with the
+   clip standing in the middle of it at its real proportion — nothing over
+   the picture, no title, no bar — and up / down beside it. The right 60%
+   is the post, left aligned on a measure, vertically centred when it is
+   short and scrolling on its own when it is not.
 
      <div class="im-shortwatch">
-       <div class="im-shortwatch-stage"> …the 9:16 player… </div>
-       <div class="im-shortwatch-panel"> …title, channel, description, comments… </div>
+       <div class="im-shortwatch-stage">
+         <div class="im-shortwatch-player"> <img|video|iframe> </div>
+         <div class="im-shortwatch-step"> ↑ ↓ </div>
+       </div>
+       <div class="im-shortwatch-panel"> …title, byline, body, facts, comments… </div>
      </div>
 
-   Under 64rem there is no room for two columns, so it becomes an ordinary
-   page: the clip, then the panel under it, and the window scrolls. A layout
-   that insists on fitting when it cannot is how controls end up off-screen. */
+   Under 64rem it is an ordinary page: the clip (still 9:16, capped to the
+   screen's height) with its arrows, then the post under it.
+
+   Knobs: --im-shortwatch-split (the clip's room, 5 of 12 columns), --im-shortwatch-measure
+   (the post's line length, 40rem), --im-shortwatch-top (what sits above it,
+   the bar's height). */
 .im-shortwatch {
-	--im-shortwatch-gutter: clamp(0.75rem, 2vh, 1.75rem);
-	align-items: center;
-	--im-shortwatch-room: calc(100dvh - var(--im-bar-height) - var(--im-shortwatch-gutter) * 2);
-	--im-shortwatch-panel: 24rem;
+	--im-shortwatch-split: var(--im-span-5);
+	--im-shortwatch-measure: 40rem;
+	--im-shortwatch-top: var(--im-bar-height);
+	--im-shortwatch-gutter: clamp(1rem, 3vh, 2.25rem);
+	--im-shortwatch-room: calc(100dvh - var(--im-shortwatch-top) - var(--im-shortwatch-gutter) * 2);
 
 	display: grid;
-	grid-template-columns: auto minmax(0, var(--im-shortwatch-panel));
-	gap: clamp(1rem, 2vw, 2rem);
-	justify-content: center;
-	height: calc(100dvh - var(--im-bar-height));
-	padding: var(--im-shortwatch-gutter);
-	overflow: hidden;
+	grid-template-columns: minmax(0, var(--im-shortwatch-split)) minmax(0, 1fr);
+	height: calc(100dvh - var(--im-shortwatch-top));
 }
 
 .im-shortwatch-stage {
 	display: flex;
-	align-items: flex-end;
-	gap: clamp(0.5rem, 1vw, 0.875rem);
-	height: 100%;
+	align-items: center;
+	justify-content: center;
+	gap: clamp(0.75rem, 1.2vw, 1.25rem);
+	min-width: 0;
+	padding: var(--im-shortwatch-gutter);
+	background-color: var(--im-surface);
 }
 
-/* Same two-constraint sizing as the feed, but stated as a DEFINITE width
-   with a max — not `min(100%, …)`. The stage is a flex row in an `auto`
-   grid column, so it is sized by its contents; a percentage against it is a
-   cycle and CSS resolves the cycle as zero. `max-width` is ignored during
-   that sizing pass, which is exactly what is wanted here. */
+/* The column is a definite 40%, so a percentage here resolves: the clip is
+   as tall as the room allows, or as wide as the column minus the arrows —
+   whichever is smaller — and the ratio does the rest. */
 .im-shortwatch-player {
 	position: relative;
-	width: calc(var(--im-shortwatch-room) * 9 / 16);
-	max-width: 100%;
+	flex: none;
+	width: min(calc(var(--im-shortwatch-room) * 9 / 16), calc(100% - 3.75rem));
 	aspect-ratio: 9 / 16;
-	max-height: 100%;
 	overflow: hidden;
 	border-radius: var(--im-radius-xl);
 	background-color: #000;
+	box-shadow: var(--im-shadow-float);
 	isolation: isolate;
 }
 
@@ -994,66 +998,59 @@
 	object-fit: cover;
 }
 
-/* The panel owns the only scrollbar on the page. */
-.im-shortwatch-panel {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	gap: 1rem;
-	max-height: 100%;
-	overflow-y: auto;
-	overscroll-behavior: contain;
-	scrollbar-width: thin;
-	padding-right: 0.25rem;
-}
-
-.im-shortwatch-title {
-	color: var(--im-ink);
-	font-size: var(--im-text-h5);
-	font-weight: 600;
-	line-height: var(--im-leading-h5);
-	letter-spacing: var(--im-tracking-tight);
-	text-wrap: pretty;
-}
-
-/* Previous and next, as full-height edges rather than as floating buttons:
-   the whole left and right of the stage is the target, which is what a
-   keyboard-and-mouse viewer actually wants on a page like this. */
 .im-shortwatch-step {
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
-	justify-content: center;
-	height: 100%;
 }
 
-.im-shortwatch-step > .im-btn {
+.im-shortwatch-step > .im-btn { flex: none; }
+
+/* The post: its own scrollbar, left aligned on a measure. `safe center`
+   centres it when it is short and starts it at the top when it is not —
+   plain `center` would push the top of a long post out of reach. */
+.im-shortwatch-panel {
+	display: flex;
+	flex-direction: column;
+	justify-content: safe center;
+	gap: 1.25rem;
+	min-width: 0;
+	height: 100%;
+	padding: clamp(1.5rem, 1rem + 3vw, 4.5rem);
+	overflow-y: auto;
+	overscroll-behavior: contain;
+	scrollbar-width: thin;
+}
+
+.im-shortwatch-panel > * {
 	flex: none;
+	width: 100%;
+	max-width: var(--im-shortwatch-measure);
+}
+
+.im-shortwatch-title {
+	color: var(--im-ink);
+	font-family: var(--im-font-heading);
+	font-size: var(--im-text-h2);
+	font-weight: 600;
+	line-height: var(--im-leading-h2);
+	letter-spacing: var(--im-tracking-tight);
+	text-wrap: balance;
 }
 
 @media (width < 64rem) {
-	/* On a phone the clip is a 16:9 post hero, not a portrait: a 9:16 frame
-	   in a narrow column is a whole screen of picture before any words. */
-	.im-shortwatch-player {
-		width: 100%;
-		aspect-ratio: 16 / 9;
-		max-height: none;
-	}
-
 	.im-shortwatch {
 		grid-template-columns: minmax(0, 1fr);
 		height: auto;
-		overflow: visible;
 	}
 
-	.im-shortwatch-stage {
-		height: auto;
-		justify-content: center;
+	.im-shortwatch-player {
+		width: min(calc(72svh * 9 / 16), calc(100% - 3.75rem));
 	}
-
 
 	.im-shortwatch-panel {
 		height: auto;
+		padding: 1.5rem var(--im-gutter) var(--im-section-gap);
 		overflow: visible;
 	}
 }

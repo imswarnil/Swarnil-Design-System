@@ -1,185 +1,229 @@
-/* Sitemap — the whole site as a tree.
+/* Sitemap — the whole site as a tree that branches, always open.
 
-     <ul class="im-sitemap">
-       <li><a href="/">Home</a>
-         <ul>
-           <li><a href="/blog/">Writing</a></li>
-         </ul>
-       </li>
-     </ul>
+     <div class="im-sitetree">
+       <ul>
+         <li>
+           <span class="im-sitetree-node im-sitetree-root">imswarnil.com</span>
+           <ul>
+             <li>
+               <a class="im-sitetree-node im-sitetree-branch" href="/writing/">Writing <small>12</small></a>
+               <ul> <li><a class="im-sitetree-node" href="/writing/a/">A post</a></li> … </ul>
+             </li>
+           </ul>
+         </li>
+       </ul>
+     </div>
 
-   Drawn with rules rather than with dashes or box-drawing characters, so a
-   screen reader is given a nested list and nothing else, and so the lines are
-   real lines at any zoom. Every rule is one pseudo-element per item: the
-   vertical goes from the top of the item to its centre, the horizontal from
-   the vertical to the label. The LAST child's vertical stops at its centre,
-   which is what closes the branch. */
+   A plain nested list — a screen reader gets structure and nothing else —
+   drawn as a tree growing to the right: every parent sits level with the
+   middle of its children, and each child hangs off one vertical spine by a
+   short arm. The spine is two half-lines per child (above and below its own
+   middle), so it starts at the FIRST child and stops at the LAST without
+   anyone measuring anything: the first child draws only its lower half, the
+   last only its upper half, an only child neither.
 
-.im-sitemap {
-	--im-tree-indent: 1.25rem;
-	--im-tree-row: 1.75rem;
+   Under 48rem there is no room to grow sideways, so the same list becomes a
+   tree growing downward: every level indents, the spine runs down the left,
+   the arms reach across to each label.
 
+   Knobs: --im-tree-arm (the arm's length), --im-tree-gap (between siblings),
+   --im-tree-line (the line's colour), --im-tree-section (a section node's
+   width, so the pages line up). */
+
+.im-sitetree {
+	--im-tree-arm: 1.75rem;
+	--im-tree-gap: 0.375rem;
+	--im-tree-line: var(--im-line);
+
+	overflow-x: auto;
+	padding-bottom: 0.5rem;
+	font-size: var(--im-text-sm);
+	scrollbar-width: thin;
+}
+
+.im-sitetree ul {
 	margin: 0;
 	padding: 0;
 	list-style: none;
-	font-size: var(--im-text-sm);
 }
 
-.im-sitemap ul {
-	margin: 0;
-	padding-left: var(--im-tree-indent);
-	list-style: none;
-}
-
-.im-sitemap li {
+/* A fork: the node, then its children beside it, centred on each other. */
+.im-sitetree li {
 	position: relative;
-	padding-left: 1rem;
+	display: flex;
+	align-items: center;
 }
 
-/* The vertical rule: full height, except on the last item where it stops
-   halfway — that is what makes the branch look finished. */
-.im-sitemap li::before {
+.im-sitetree li > ul {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: var(--im-tree-gap);
+	padding-left: var(--im-tree-arm);
+}
+
+/* The parent's arm, from its node to the spine. */
+.im-sitetree li > ul::before {
 	content: "";
 	position: absolute;
-	top: 0;
-	bottom: 0;
+	top: 50%;
+	left: 0;
+	width: calc(var(--im-tree-arm) / 2);
+	height: 1px;
+	background-color: var(--im-tree-line);
+}
+
+/* Each child's arm, from the spine to its node… */
+.im-sitetree li > ul > li {
+	padding-left: calc(var(--im-tree-arm) / 2);
+}
+
+.im-sitetree li > ul > li::before {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 0;
+	width: calc(var(--im-tree-arm) / 2);
+	height: 1px;
+	background-color: var(--im-tree-line);
+}
+
+/* …and its share of the spine: the full height, less the half the first and
+   the last child do not need. The gap between siblings is bridged by
+   reaching half of it past each edge. */
+.im-sitetree li > ul > li::after {
+	content: "";
+	position: absolute;
+	top: calc(var(--im-tree-gap) / -2);
+	bottom: calc(var(--im-tree-gap) / -2);
 	left: 0;
 	width: 1px;
-	background-color: var(--im-line);
+	background-color: var(--im-tree-line);
 }
 
-.im-sitemap li:last-child::before {
-	bottom: auto;
-	height: calc(var(--im-tree-row) / 2);
+.im-sitetree li > ul > li:first-child::after { top: 50%; }
+.im-sitetree li > ul > li:last-child::after { bottom: 50%; }
+.im-sitetree li > ul > li:only-child::after { display: none; }
+
+/* The trunk. The root sits at the top and the sections run DOWN from it,
+   each one branching sideways — a tree growing only to the right would put
+   the root halfway down a page as tall as the site. Sections are spaced
+   wider than pages, and their nodes share one width so every set of pages
+   starts on the same line. */
+.im-sitetree > ul > li { display: block; }
+
+.im-sitetree > ul > li > ul {
+	--im-tree-gap: 0.875rem;
+
+	margin-left: 1.25rem;
+	padding-top: var(--im-tree-gap);
 }
 
-/* The elbow into the label. */
-.im-sitemap li::after {
-	content: "";
-	position: absolute;
-	top: calc(var(--im-tree-row) / 2);
-	left: 0;
-	width: 0.625rem;
-	height: 1px;
-	background-color: var(--im-line);
-}
+.im-sitetree > ul > li > ul::before { display: none; }
+.im-sitetree > ul > li > ul > li:first-child::after { top: calc(var(--im-tree-gap) * -1); }
+.im-sitetree > ul > li > ul > li:only-child::after { display: block; }
+.im-sitetree > ul > li > ul > li > .im-sitetree-node { min-width: var(--im-tree-section, 12rem); }
+.im-sitetree li li > ul { --im-tree-gap: 0.375rem; }
 
-/* The outermost level has nothing to hang from. */
-.im-sitemap > li {
-	padding-left: 0;
-}
-
-.im-sitemap > li::before,
-.im-sitemap > li::after {
-	content: none;
-}
-
-.im-sitemap-node {
+/* ---- nodes ---- */
+.im-sitetree-node {
+	position: relative;
+	z-index: 1;
 	display: inline-flex;
+	flex: none;
 	align-items: center;
-	gap: 0.4375rem;
-	min-height: var(--im-tree-row);
-	padding: 0 0.375rem;
-	margin-left: -0.375rem;
-	border-radius: var(--im-radius-sm);
-	color: var(--im-ink);
+	gap: 0.5rem;
+	padding: 0.3125rem 0.75rem;
+	border-radius: var(--im-radius-full);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	background-color: var(--im-canvas);
+	color: var(--im-body);
 	text-decoration: none;
-	transition: background-color 120ms, color 120ms;
+	white-space: nowrap;
+	transition: background-color var(--im-duration-fast) var(--im-ease-out), color var(--im-duration-fast) var(--im-ease-out);
 }
 
-.im-sitemap-node:hover {
+a.im-sitetree-node:hover {
 	background-color: var(--im-hover-bg);
-	color: var(--im-accent);
-}
-
-.im-sitemap-node > .im-icon {
-	color: var(--im-muted);
-	font-size: 0.9375rem;
-}
-
-.im-sitemap-node:hover > .im-icon {
-	color: inherit;
-}
-
-/* A branch heading — a folder rather than a page. */
-.im-sitemap-branch {
 	color: var(--im-ink);
-	font-weight: 600;
 }
 
-.im-sitemap-branch > .im-icon {
-	color: var(--im-accent);
-}
+.im-sitetree-node > .im-icon { color: var(--im-muted); font-size: 0.875rem; }
 
-/* How many pages are under it. */
-.im-sitemap-count {
-	color: var(--im-faint);
+.im-sitetree-node > small {
+	color: var(--im-muted);
 	font-family: var(--im-font-mono);
 	font-size: var(--im-text-xs);
 }
 
-/* A page that is behind the members wall. */
-.im-sitemap-node[data-locked]::after {
+/* A folder: on the surface, bolder. */
+.im-sitetree-branch {
+	background-color: var(--im-surface);
+	color: var(--im-ink);
+	font-weight: 600;
+	box-shadow: none;
+}
+
+.im-sitetree-branch > .im-icon { color: var(--im-accent); }
+
+/* The root: ink, the one heavy node on the page. */
+.im-sitetree-root {
+	padding: 0.625rem 1rem;
+	background-color: var(--im-ink);
+	box-shadow: none;
+	color: var(--im-canvas);
+	font-weight: 600;
+}
+
+.im-sitetree-root > .im-icon { color: inherit; }
+
+/* Behind the members' wall: a lock after the label. */
+.im-sitetree-node[data-locked]::after {
 	content: "";
 	width: 0.75rem;
 	height: 0.75rem;
-	background-color: var(--im-warning);
-	-webkit-mask-image: var(--im-lock-glyph);
-	mask-image: var(--im-lock-glyph);
-	-webkit-mask-size: contain;
-	mask-size: contain;
-	-webkit-mask-repeat: no-repeat;
-	mask-repeat: no-repeat;
+	background-color: currentcolor;
+	-webkit-mask: var(--im-lock-glyph) center / contain no-repeat;
+	mask: var(--im-lock-glyph) center / contain no-repeat;
+	opacity: 0.6;
 }
 
-/* Two or three columns of the tree on a wide window. `break-inside` keeps a
-   branch whole — a tree split across a column boundary is unreadable. */
-.im-sitemap-cols {
-	columns: var(--im-sitemap-cols, 2);
-	column-gap: 2.5rem;
-}
-
-.im-sitemap-cols > .im-sitemap > li {
-	break-inside: avoid;
-	margin-bottom: 1.5rem;
-}
-
+/* ---- growing downward, on a phone ---- */
 @media (width < 48rem) {
-	.im-sitemap-cols {
-		columns: 1;
+	.im-sitetree { overflow-x: visible; }
+
+	.im-sitetree li {
+		display: block;
 	}
-}
 
+	.im-sitetree li > ul {
+		padding-top: var(--im-tree-gap);
+		padding-left: 0;
+		margin-left: 1rem;
+	}
 
-/* ---- branches that open and close ----
-   A branch is a <details>; its summary is the branch node. Closed, a long
-   branch shows its first few pages and a count of the rest. */
-.im-sitemap details > summary { list-style: none; cursor: pointer; }
-.im-sitemap details > summary::-webkit-details-marker { display: none; }
-.im-sitemap details > summary .im-sitemap-node::after {
-	content: "";
-	width: 0.625rem;
-	height: 0.625rem;
-	margin-left: 0.25rem;
-	background-color: var(--im-faint);
-	-webkit-mask-image: var(--im-chevron-glyph);
-	mask-image: var(--im-chevron-glyph);
-	-webkit-mask-size: contain;
-	mask-size: contain;
-	-webkit-mask-repeat: no-repeat;
-	mask-repeat: no-repeat;
-	transition: rotate var(--im-duration-fast) var(--im-ease-out);
-}
-.im-sitemap details[open] > summary .im-sitemap-node::after { rotate: 180deg; }
+	.im-sitetree li > ul::before { display: none; }
 
-/* Truncated: past the limit, items hide until the branch's "more" is opened. */
-.im-sitemap [data-more] > li:nth-child(n + 7) { display: none; }
-.im-sitemap [data-more][data-open] > li { display: list-item; }
-.im-sitemap-more {
-	padding: 0.25rem 0 0 1rem;
-	color: var(--im-accent);
-	font-size: var(--im-text-xs);
-	cursor: pointer;
-	background: none;
+	.im-sitetree li > ul > li {
+		padding-left: var(--im-tree-arm);
+	}
+
+	/* The arm reaches the label's middle, a fixed distance down. */
+	.im-sitetree li > ul > li::before {
+		top: 1rem;
+		width: calc(var(--im-tree-arm) - 0.25rem);
+	}
+
+	.im-sitetree li > ul > li::after {
+		top: calc(var(--im-tree-gap) * -1);
+		bottom: 0;
+	}
+
+	.im-sitetree li > ul > li:first-child::after { top: calc(var(--im-tree-gap) * -1); }
+	.im-sitetree li > ul > li:last-child::after { bottom: auto; height: calc(1rem + var(--im-tree-gap)); }
+	.im-sitetree li > ul > li:only-child::after { display: block; }
+
+	.im-sitetree-node { white-space: normal; }
+	.im-sitetree > ul > li > ul { margin-left: 1rem; }
+	.im-sitetree > ul > li > ul > li > .im-sitetree-node { min-width: 0; }
 }
-.im-sitemap [data-open] + .im-sitemap-more { display: none; }

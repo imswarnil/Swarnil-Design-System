@@ -1,0 +1,20 @@
+---
+title: Support
+description: The small version of the panel that goes under a post. The amounts are ordinary buttons: whatever a theme wires them to — a payment link, a Ghost tier, a form — is the theme's business.
+eyebrow: Component · Widget
+source: src/components/widget.css
+---
+<p>The small version of the panel that goes under a post. The amounts are ordinary buttons: whatever a theme wires them to — a payment link, a Ghost tier, a form — is the theme's business.</p>
+{{#example style="max-width: 22rem"}}
+<section class="im-widget im-widget-fill">
+	<h2 class="im-widget-title">Support</h2>
+	<p class="im-widget-heading">Buy me a coffee</p>
+	<p>Everything here is free and paid for by nobody. If it saved you an afternoon, you can send something back.</p>
+	<div class="im-widget-support-amounts">
+		<button class="im-btn im-btn-sm" type="button">€3</button>
+		<button class="im-btn im-btn-sm" type="button">€5</button>
+		<button class="im-btn im-btn-sm" type="button">€10</button>
+	</div>
+	<a class="im-btn im-btn-primary im-btn-block im-btn-sm" href="#support">{{> "icons/wallet"}}Send it</a>
+</section>
+{{/example}}

@@ -1,0 +1,39 @@
+/* Guides — the twelve columns, drawn inside one container while you build.
+
+   The system does not draw its grid on the page: a section fits the grid by
+   being MEASURED in it (--im-col, --im-span-N, im-cols), and the lines stay
+   in your head. When you want to see them, put a guide inside a container
+   that is `position: relative` and take it out again:
+
+     <div class="im-cols" style="position: relative">
+       <span class="im-guides" aria-hidden="true"></span>
+       …
+     </div>
+
+   Knobs: --im-guide-line, --im-guide-columns (12; 4 under 48rem). */
+
+.im-guides {
+	--im-guide-columns: 12;
+	--im-guide-line: color-mix(in oklab, var(--im-accent) 22%, transparent);
+
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	/* Column k starts at k × (column + gap); the period of the tiling is
+	   therefore (100% + gap) / 12, and no column is measured by hand. */
+	background-image: repeating-linear-gradient(to right, var(--im-guide-line) 0 1px, transparent 1px calc((100% + var(--im-grid-gap)) / var(--im-guide-columns)));
+	box-shadow: inset -1px 0 0 var(--im-guide-line);
+	pointer-events: none;
+}
+
+/* A container that is the grid itself: put children on it with col-span-*. */
+.im-cols {
+	display: grid;
+	grid-template-columns: repeat(12, minmax(0, 1fr));
+	gap: var(--im-grid-gap);
+}
+
+@media (width < 48rem) {
+	.im-guides { --im-guide-columns: 4; }
+	.im-cols { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}

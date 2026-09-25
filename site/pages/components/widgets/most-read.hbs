@@ -1,0 +1,15 @@
+---
+title: Most read
+description: Mono numerals from a CSS counter — nothing is numbered in the markup, so the list can be reordered or cut without renumbering.
+eyebrow: Component · Widget
+source: src/components/widget.css
+---
+<p>Mono numerals from a CSS counter — nothing is numbered in the markup, so the list can be reordered or cut without renumbering.</p>
+{{#example style="max-width: 22rem"}}
+<section class="im-widget">
+	<h2 class="im-widget-title">Most read <a href="#most-read">All →</a></h2>
+	<ol class="im-widget-list im-widget-list-ranked">
+		{{#foreach demo.four}}<li><a href="#most-read">{{title}}<small>{{primary_tag.name}} · {{reading_time}} min</small></a></li>{{/foreach}}
+	</ol>
+</section>
+{{/example}}

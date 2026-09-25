@@ -265,7 +265,7 @@
 }
 
 .im-card-cta > .im-icon {
-	transition: translate 160ms var(--im-ease-out);
+	transition: translate var(--im-duration-instant) var(--im-ease-out);
 }
 
 .im-card:hover .im-card-cta > .im-icon,
@@ -423,6 +423,7 @@
 	/* Every card in the system, one list, one movement. */
 	:is(.im-card-link, .im-post-card, .im-repo, .im-product, .im-exp, .im-seriescard, .im-vidcard, .im-tagcard, .im-bucket, .im-tool, .im-way, .im-lessonnav-item, .im-affiliate, .im-snipcard, .im-promptcard, .im-stream-item, .im-queue-item, .im-tier):is(:hover, :focus-within) {
 		translate: 0 -1px;
+		box-shadow: var(--im-card-hover-shadow, var(--im-shadow-sm));
 	}
 
 	:is(.im-card-link, .im-post-card, .im-repo, .im-product, .im-exp, .im-seriescard, .im-vidcard, .im-tagcard, .im-bucket, .im-tool, .im-way, .im-lessonnav-item, .im-affiliate, .im-snipcard, .im-promptcard, .im-stream-item, .im-queue-item, .im-tier) {

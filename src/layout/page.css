@@ -47,15 +47,15 @@
    The width FOLLOWS THE SIDE NAV: collapse the nav to its rail and the space
    it gives up goes to the content, instead of becoming a wider empty margin. */
 .im-with-aside {
-	--im-aside-width: 13.5rem;
+	--im-aside-width: var(--im-span-3);
 
 	display: grid;
 	grid-template-columns: minmax(0, 1fr) var(--im-aside-width);
-	gap: 2rem clamp(1.5rem, 3vw, 3.5rem);
+	gap: 2rem var(--im-grid-gap);
 	width: 100%;
 	max-width: var(--im-width-page);
 	margin-inline: auto;
-	transition: max-width 220ms var(--im-ease-out);
+	transition: max-width var(--im-duration-fast) var(--im-ease-out);
 }
 
 [data-nav="rail"] .im-with-aside {
@@ -132,9 +132,9 @@
 }
 
 /* Wide enough for real widgets — an author card, a newsletter, a top-five —
-   rather than the slim rail a table of contents needs. */
+   rather than the slim rail a table of contents needs: four columns. */
 .im-with-aside-wide {
-	--im-aside-width: 19rem;
+	--im-aside-width: var(--im-span-4);
 }
 
 /* ---- one post layout, with the rail on a switch ----
@@ -154,8 +154,8 @@
    than stretching to fill a column that is suddenly 19rem wider: a 70rem line
    of body text is not a wider page, it is an unreadable one. */
 .im-single {
-	--im-single-aside: 19rem;
-	--im-single-gap: clamp(1.5rem, 3vw, 3.5rem);
+	--im-single-aside: var(--im-span-4);
+	--im-single-gap: var(--im-grid-gap);
 
 	display: grid;
 	grid-template-columns: minmax(0, 1fr) var(--im-single-aside);
@@ -164,7 +164,7 @@
 	max-width: var(--im-width-page);
 	margin-inline: auto;
 	align-items: start;
-	transition: max-width 220ms var(--im-ease-out), grid-template-columns 220ms var(--im-ease-out);
+	transition: max-width var(--im-duration-fast) var(--im-ease-out), grid-template-columns var(--im-duration-fast) var(--im-ease-out);
 }
 
 [data-nav="rail"] .im-single {
@@ -218,12 +218,12 @@
    under xl the contents rail sits above the article and the widgets keep
    their column; under lg everything stacks in reading order. */
 .im-with-rails {
-	--im-rail-width: 12.5rem;
-	--im-aside-width: 18rem;
+	--im-rail-width: var(--im-span-2);
+	--im-aside-width: var(--im-span-3);
 	/* One gap, used on both sides: the article sits the same distance from the
 	   contents rail as from the widgets. Two values here is how a three-column
 	   page starts looking lopsided. */
-	--im-rail-gap: clamp(1.5rem, 2.5vw, 3rem);
+	--im-rail-gap: var(--im-grid-gap);
 
 	display: grid;
 	grid-template-columns: var(--im-rail-width) minmax(0, 1fr) var(--im-aside-width);

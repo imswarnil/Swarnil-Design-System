@@ -1,0 +1,22 @@
+---
+title: Newsletter
+description: One per page. Either the accent block with a button, or the form itself — the form if this is the only place on the page a reader can subscribe.
+eyebrow: Component · Widget
+source: src/components/widget.css
+---
+<p>One per page. Either the accent block with a button, or the form itself — the form if this is the only place on the page a reader can subscribe.</p>
+{{#example style="max-width: 22rem"}}
+<div class="im-widgets">
+	<section class="im-widget im-widget-accent">
+		<h2 class="im-widget-title">Newsletter</h2>
+		<p class="im-widget-heading">One email when something lands.</p>
+		<p>Nothing else, ever. Unsubscribe in one click.</p>
+		<a class="im-btn im-btn-ink im-btn-block" href="#newsletter">Subscribe {{> "icons/arrow-right"}}</a>
+	</section>
+	<section class="im-widget im-widget-fill">
+		<h2 class="im-widget-title">Newsletter</h2>
+		<p class="im-widget-heading">Join 4,100 readers.</p>
+		{{> "components/subscribe" id="widget-email" button="Join"}}
+	</section>
+</div>
+{{/example}}

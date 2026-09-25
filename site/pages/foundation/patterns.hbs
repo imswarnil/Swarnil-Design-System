@@ -89,12 +89,15 @@ source: src/utilities/patterns.css
 </div>
 {{/example}}
 
-<h2>Drifting</h2>
-<p><code>im-bg-drift</code> pans a repeating pattern by exactly one pitch, forever, so the loop has no seam. <code>--im-pattern-speed</code> (40s). It stops under reduced motion.</p>
+<h2>Moving</h2>
+<p>Slowly — a pattern that moves is felt, not watched. Each one pans by exactly one pitch, or one turn of the light, so the loop has no seam; <code>--im-pattern-speed</code> (40s) sets the pace, and every one stops under reduced motion.</p>
 {{#example}}
 <div class="im-grid-auto im-grid-sm">
-	<div class="pattern-tile im-bg-grid im-bg-drift" style="--im-pattern-speed: 12s">grid, drifting</div>
-	<div class="pattern-tile im-bg-dots im-bg-drift" style="--im-pattern-size: 1.25rem; --im-pattern-speed: 8s">dots, drifting</div>
+	<div class="pattern-tile im-bg-grid im-bg-drift" style="--im-pattern-speed: 12s">im-bg-drift</div>
+	<div class="pattern-tile im-bg-columns im-bg-drift-x" style="--im-pattern-speed: 6s">im-bg-drift-x</div>
+	<div class="pattern-tile im-bg-rules im-bg-drift-y" style="--im-pattern-speed: 6s">im-bg-drift-y</div>
+	<div class="pattern-tile im-bg-glow im-bg-breathe" style="--im-pattern-at: 50% 50%">im-bg-breathe</div>
+	<div class="pattern-tile im-bg-glow im-bg-sweep" style="--im-pattern-at: 50% 50%">im-bg-sweep</div>
 </div>
 {{/example}}
 

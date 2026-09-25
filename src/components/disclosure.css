@@ -22,7 +22,7 @@
 	font-weight: 500;
 	list-style: none;
 	cursor: pointer;
-	transition: color 120ms;
+	transition: color var(--im-duration-instant);
 }
 
 .im-accordion > details > summary::-webkit-details-marker {
@@ -42,7 +42,7 @@
 	background:
 		linear-gradient(currentcolor, currentcolor) center / 100% 1.5px no-repeat,
 		linear-gradient(currentcolor, currentcolor) center / 1.5px 100% no-repeat;
-	transition: rotate 220ms var(--im-ease-out), background-size 220ms;
+	transition: rotate var(--im-duration-fast) var(--im-ease-out), background-size var(--im-duration-fast);
 }
 
 .im-accordion > details[open] > summary::after {
@@ -89,7 +89,7 @@ details[open] > .im-accordion-body {
 	background-color: var(--im-surface);
 	color: var(--im-muted);
 	font-size: 1rem;
-	transition: background-color 160ms, color 160ms;
+	transition: background-color var(--im-duration-instant), color var(--im-duration-instant);
 }
 
 .im-accordion > details > summary:has(.im-accordion-icon) {
@@ -121,7 +121,7 @@ details[open] > .im-accordion-body {
 .im-accordion-cards > details + details {
 	border: 1px solid var(--im-line);
 	border-radius: var(--im-radius-lg);
-	transition: border-color 160ms;
+	transition: border-color var(--im-duration-instant);
 }
 
 .im-accordion-cards > details[open] {
@@ -163,7 +163,7 @@ details[open] > .im-accordion-body {
 	font-size: var(--im-text-sm);
 	font-weight: 500;
 	cursor: pointer;
-	transition: color 120ms;
+	transition: color var(--im-duration-instant);
 }
 
 .im-tab:hover {
@@ -177,7 +177,7 @@ details[open] > .im-accordion-body {
 	height: 2px;
 	background-color: var(--im-ink);
 	scale: 0 1;
-	transition: scale 220ms var(--im-ease-out);
+	transition: scale var(--im-duration-fast) var(--im-ease-out);
 }
 
 .im-tab[aria-selected="true"] {
@@ -217,7 +217,7 @@ details[open] > .im-accordion-body {
 
 .im-tablist-pills > .im-tab[aria-selected="true"] {
 	background-color: var(--im-canvas);
-	box-shadow: 0 1px 2px rgb(0 0 0 / 12%);
+	box-shadow: var(--im-shadow-sm);
 }
 
 .im-tab > .im-icon {

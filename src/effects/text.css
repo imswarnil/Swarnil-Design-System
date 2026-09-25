@@ -124,7 +124,7 @@ a:hover .im-fx-outline-fill {
 	vector-effect: non-scaling-stroke;
 	stroke-dasharray: 1;
 	stroke-dashoffset: 1;
-	transition: stroke-dashoffset 900ms var(--im-ease-in-out) 200ms;
+	transition: stroke-dashoffset var(--im-duration-long) var(--im-ease-in-out) var(--im-duration-fast);
 }
 
 .im-scribble[data-im-revealed] > .im-scribble-mark > path,
@@ -147,7 +147,7 @@ a:hover .im-fx-outline-fill {
 }
 
 .im-fx-wiggle .im-split-unit {
-	animation: im-fx-wiggle 900ms var(--im-ease-in-out) infinite;
+	animation: im-fx-wiggle var(--im-duration-long) var(--im-ease-in-out) infinite;
 	animation-delay: calc(var(--im-i, 0) * -130ms);
 }
 
@@ -212,7 +212,7 @@ a:hover .im-fx-outline-fill {
 	vertical-align: bottom;
 	animation:
 		im-fx-type calc(var(--im-fx-chars, 20) * 70ms) steps(var(--im-fx-chars, 20)) backwards,
-		im-blink 900ms steps(1) infinite;
+		im-blink var(--im-duration-long) steps(1) infinite;
 }
 
 @keyframes im-fx-type {
@@ -222,7 +222,7 @@ a:hover .im-fx-outline-fill {
 
 @media (prefers-reduced-motion: reduce) {
 	.im-fx-typewriter {
-		animation: im-blink 900ms steps(1) infinite;
+		animation: im-blink var(--im-duration-long) steps(1) infinite;
 	}
 }
 

@@ -22,7 +22,7 @@
 	overflow: hidden;
 	isolation: isolate;
 	border-radius: var(--im-radius-2xl);
-	color: #fff;
+	color: var(--im-on-media);
 	background-color: var(--im-gray-900);
 }
 
@@ -61,7 +61,7 @@
 .im-mediabg[data-blend="screen"] .im-mediabg-scrim { mix-blend-mode: screen; }
 .im-mediabg[data-blend="overlay"] .im-mediabg-scrim { mix-blend-mode: overlay; }
 .im-mediabg[data-blend="luminosity"] .im-mediabg-scrim { mix-blend-mode: luminosity; background-color: var(--im-gray-800); }
-.im-mediabg[data-blend="difference"] .im-mediabg-scrim { mix-blend-mode: difference; background-color: #fff; }
+.im-mediabg[data-blend="difference"] .im-mediabg-scrim { mix-blend-mode: difference; background-color: var(--im-on-media); }
 
 /* Text blended with the picture underneath it. */
 .im-mediabg-copy[data-blend="difference"] { mix-blend-mode: difference; }
@@ -75,7 +75,7 @@
 
 .im-mediabg-knockout .im-mediabg-scrim {
 	background-image: none;
-	background-color: #fff;
+	background-color: var(--im-on-media);
 	mix-blend-mode: screen;
 	z-index: 1;
 }

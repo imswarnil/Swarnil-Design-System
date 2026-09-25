@@ -106,7 +106,7 @@
 	text-align: left;
 	text-decoration: none;
 	cursor: pointer;
-	transition: background-color 120ms, color 120ms;
+	transition: background-color var(--im-duration-instant), color var(--im-duration-instant);
 }
 
 .im-menu-item > .im-icon {
@@ -115,7 +115,7 @@
 	color: var(--im-muted);
 	font-size: 1.125rem;
 	stroke-width: 1.7;
-	transition: color 120ms;
+	transition: color var(--im-duration-instant);
 }
 
 .im-menu-item > span {

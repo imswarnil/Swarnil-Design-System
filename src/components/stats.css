@@ -62,7 +62,7 @@
 	border-radius: var(--im-radius-xs) var(--im-radius-xs) 0 0;
 	background-color: var(--im-surface-3);
 	transform-origin: 50% 100%;
-	transition: background-color 160ms;
+	transition: background-color var(--im-duration-instant);
 }
 
 .im-bars > i:hover,
@@ -95,7 +95,7 @@
 	}
 
 	.im-bars[data-im-reveal] > i {
-		transition: scale 800ms var(--im-ease-out), background-color 160ms;
+		transition: scale var(--im-duration-slow) var(--im-ease-out), background-color var(--im-duration-instant);
 	}
 
 	.im-bars[data-im-reveal] > i:nth-child(n) { transition-delay: calc((var(--n, 0)) * 40ms); }

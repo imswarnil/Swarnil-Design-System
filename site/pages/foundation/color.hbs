@@ -36,6 +36,35 @@ source: src/foundation/tokens/semantic.css
 </div>
 {{/example}}
 
+<h2>Interaction</h2>
+<p>The accent one step darker for a hover on something already filled with it, two for a press, the focus ring every focusable thing draws, and how faded "disabled" is — set once, so a button, a field, a switch and a card agree without knowing each other. The ring reads <code>--im-ring</code> / <code>--im-ring-width</code> / <code>--im-ring-offset</code> from the base styles; nothing draws its own.</p>
+{{#example code=false}}
+<div class="im-cluster">
+	<span class="bg-accent text-on-accent rounded-full px-4 py-2 text-sm font-medium">accent</span>
+	<span class="rounded-full px-4 py-2 text-sm font-medium text-on-accent" style="background-color: var(--im-accent-hover)">accent-hover</span>
+	<span class="rounded-full px-4 py-2 text-sm font-medium text-on-accent" style="background-color: var(--im-accent-active)">accent-active</span>
+	<button class="im-btn" type="button" style="outline: var(--im-ring-width) solid var(--im-ring); outline-offset: var(--im-ring-offset)">the ring</button>
+	<button class="im-btn" type="button" disabled>disabled</button>
+</div>
+{{/example}}
+<div class="im-table-scroll"><table><thead><tr><th>Token</th><th>Value</th></tr></thead><tbody>{{#each tokens.interaction}}<tr><td><code>{{name}}</code></td><td><code>{{light}}</code></td></tr>{{/each}}</tbody></table></div>
+
+<h2>Over a picture</h2>
+<p>Words and chips that sit on a photograph or a video are the same in both themes, because the picture is: white ink in three strengths, a dark glass for a chip, and the scrim that darkens the foot of a picture so the words can be read. Never <code>--im-ink</code> on a picture — it goes white in dark mode and vanishes.</p>
+{{#example code=false}}
+<div class="rounded-xl overflow-hidden relative" style="aspect-ratio: 21 / 9; background: url({{demo.shots.[0]}}) center / cover">
+	<span class="absolute inset-0" style="background: var(--im-media-scrim)"></span>
+	<span class="absolute top-4 left-4 rounded-full px-3 py-1 text-xs font-medium" style="background: var(--im-glass); color: var(--im-on-media)">glass · on-media</span>
+	<span class="absolute top-4 right-4 rounded-full px-3 py-1 text-xs font-medium" style="background: var(--im-glass-light); color: var(--im-on-media)">glass-light</span>
+	<p class="absolute bottom-4 left-4 right-4 m-0"><b class="text-h4 font-semibold" style="color: var(--im-on-media)">on-media</b><br><span style="color: var(--im-on-media-dim)">on-media-dim, for the line under it</span><br><small style="color: var(--im-on-media-faint)">on-media-faint, for the meta</small></p>
+</div>
+{{/example}}
+<div class="im-table-scroll"><table><thead><tr><th>Token</th><th>Value</th></tr></thead><tbody>{{#each tokens.media}}<tr><td><code>{{name}}</code></td><td><code>{{light}}</code></td></tr>{{/each}}</tbody></table></div>
+
+<h2>Layers</h2>
+<p>Five <code>z-index</code> steps, so nothing argues with a magic number: <code>raised</code> (10) for something lifted in the page, <code>sticky</code> (20), <code>bar</code> (40) for the top bar, <code>menu</code> (50) for a menu, a hover card or a toast, <code>modal</code> (60) for a sheet over everything.</p>
+<div class="im-table-scroll"><table><thead><tr><th>Token</th><th>Value</th></tr></thead><tbody>{{#each tokens.layers}}<tr><td><code>{{name}}</code></td><td><code>{{light}}</code></td></tr>{{/each}}</tbody></table></div>
+
 <h2>Status</h2>
 <p>Each status has a <code>-tint</code>: the colour mixed at low strength over the <em>current</em> canvas, so tints need no dark value of their own.</p>
 {{#example code=false}}

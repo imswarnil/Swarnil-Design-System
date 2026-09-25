@@ -25,7 +25,7 @@
    pushes in. The default treatment for a grid of pictures. */
 .im-fx-colour > :is(img, video) {
 	filter: grayscale(1) contrast(1.06);
-	transition: filter 700ms var(--im-ease-out), scale 900ms var(--im-ease-out);
+	transition: filter var(--im-duration-slow) var(--im-ease-out), scale var(--im-duration-long) var(--im-ease-out);
 }
 
 .im-fx-colour:is(:hover, :focus-within) > :is(img, video) {
@@ -69,11 +69,11 @@
 
 .im-fx-glare:is(:hover, :focus-within)::before {
 	translate: 60% 0;
-	transition: translate 900ms var(--im-ease-out);
+	transition: translate var(--im-duration-long) var(--im-ease-out);
 }
 
 .im-fx-glare > :is(img, video) {
-	transition: scale 900ms var(--im-ease-out);
+	transition: scale var(--im-duration-long) var(--im-ease-out);
 }
 
 .im-fx-glare:is(:hover, :focus-within) > :is(img, video) {
@@ -98,7 +98,7 @@
 	font-size: var(--im-text-sm);
 	text-align: left;
 	clip-path: inset(100% 0 0 0);
-	transition: clip-path 600ms var(--im-ease-out);
+	transition: clip-path var(--im-duration-slow) var(--im-ease-out);
 }
 
 .im-fx-curtain > figcaption > strong {
@@ -109,7 +109,7 @@
 }
 
 .im-fx-curtain > :is(img, video) {
-	transition: scale 900ms var(--im-ease-out);
+	transition: scale var(--im-duration-long) var(--im-ease-out);
 }
 
 .im-fx-curtain:is(:hover, :focus-within) > figcaption {
@@ -125,7 +125,7 @@
 		inset: auto 0 0;
 		padding-top: 2.5rem;
 		background: linear-gradient(to top, rgb(0 0 0 / 80%), transparent);
-		color: #fff;
+		color: var(--im-on-media);
 		clip-path: none;
 	}
 }
@@ -164,7 +164,7 @@
 
 	.im-fx-reveal {
 		clip-path: inset(0 0 0 0);
-		transition: clip-path 900ms var(--im-ease-out);
+		transition: clip-path var(--im-duration-long) var(--im-ease-out);
 	}
 
 	[data-im-js] .im-fx-reveal[data-im-reveal]:not([data-im-revealed]) > :is(img, video) {

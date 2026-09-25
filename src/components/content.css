@@ -63,7 +63,7 @@
 	text-decoration-color: var(--im-accent);
 	text-decoration-thickness: 1.5px;
 	text-underline-offset: 0.2em;
-	transition: text-decoration-color 140ms, color 140ms;
+	transition: text-decoration-color var(--im-duration-instant), color var(--im-duration-instant);
 }
 
 .im-content a:not([class]):hover {
@@ -170,7 +170,7 @@
 }
 
 .im-content tbody tr {
-	transition: background-color 120ms;
+	transition: background-color var(--im-duration-instant);
 }
 
 .im-content tbody tr:hover {

@@ -1,0 +1,43 @@
+{{!-- Author — a face on a band, the name, a line about them, three facts, the
+	ways to follow. Context: an author (Ghost's {{#primary_author}} or
+	{{#author}}). Nothing opens: it says who wrote this on first sight.
+
+	Params
+	  role      the line under the name (default: the author's location)
+	  status    a short state for the band's corner — "Open to work"
+	  pattern   the band's pattern utility (default im-bg-blueprint)
+	  cover     a picture for the band instead of a pattern
+	  badge, badge_2   up to two small badges under the name — "Creator", "Member"
+	  cta       the primary button's words (default "All posts")
+	  row=true  lies down, for the foot of a post
+	  mini=true one line — avatar, name, role — for a byline --}}
+{{#if mini}}
+<a class="im-author-mini" href="{{url}}">{{> "components/avatar" src=profile_image name=name}}<b>{{name}}</b><small>{{#if role}}{{role}}{{else}}{{location}}{{/if}}</small></a>
+{{else}}
+<article class="im-author{{#if row}} im-author-row{{/if}}">
+	<div class="im-author-band">
+		{{#if cover}}<img class="im-author-cover" src="{{cover}}" alt="" loading="lazy">{{else}}<span class="im-author-pattern {{#if pattern}}{{pattern}}{{else}}im-bg-blueprint{{/if}}" aria-hidden="true"></span>{{/if}}
+		{{#if row}}{{> "components/avatar" size="xl" src=profile_image name=name}}{{else}}{{#if status}}<span class="im-author-status">{{status}}</span>{{/if}}{{/if}}
+	</div>
+	<div class="im-author-id">
+		{{#unless row}}{{> "components/avatar" size="xl" src=profile_image name=name}}{{/unless}}
+		<a class="im-author-name" href="{{url}}">{{name}}</a>
+		<p class="im-author-role">{{#if role}}{{role}}{{else}}{{location}}{{/if}}</p>
+		{{#if badge}}<span class="im-author-badges"><span class="im-badge im-badge-outline">{{badge}}</span>{{#if badge_2}}<span class="im-badge im-badge-outline">{{badge_2}}</span>{{/if}}</span>{{/if}}
+		{{#if row}}{{#if status}}<span class="im-author-status">{{status}}</span>{{/if}}{{/if}}
+	</div>
+	{{#if bio}}<p class="im-author-bio">{{bio}}</p>{{/if}}
+	<dl class="im-author-facts">
+		{{#if count.posts}}<div><dt>{{t "Posts"}}</dt><dd>{{count.posts}}</dd></div>{{/if}}
+		{{#if location}}<div><dt>{{t "Based in"}}</dt><dd>{{location}}</dd></div>{{/if}}
+		<div><dt>{{t "Writes"}}</dt><dd>{{t "Fortnightly"}}</dd></div>
+	</dl>
+	<div class="im-author-links">
+		<a class="im-btn im-btn-sm im-btn-primary" href="{{url}}">{{#if cta}}{{cta}}{{else}}{{t "All posts"}}{{/if}} {{> "icons/arrow-right"}}</a>
+		{{#if website}}<a class="im-btn im-btn-sm im-btn-icon" href="{{website}}" rel="noopener noreferrer" aria-label="{{t "Website"}}">{{> "icons/globe"}}</a>{{/if}}
+		{{#if twitter}}<a class="im-btn im-btn-sm im-btn-icon" href="https://x.com/{{twitter}}" rel="noopener noreferrer" aria-label="X">{{> "icons/brand-x"}}</a>{{/if}}
+		{{#if facebook}}<a class="im-btn im-btn-sm im-btn-icon" href="https://www.facebook.com/{{facebook}}" rel="noopener noreferrer" aria-label="Facebook">{{> "icons/brand-facebook"}}</a>{{/if}}
+		<a class="im-btn im-btn-sm im-btn-icon" href="{{@site.url}}/rss/" aria-label="RSS">{{> "icons/rss"}}</a>
+	</div>
+</article>
+{{/if}}

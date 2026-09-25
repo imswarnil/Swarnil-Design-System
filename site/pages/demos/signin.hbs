@@ -1,0 +1,51 @@
+---
+title: Sign in demo
+layout: home
+shell: frame
+---
+{{!-- Loaded in an iframe by /pages/auth/. A page with no site chrome: the
+	way home, the form, and a panel that talks while you type. --}}
+<div class="im-solo im-solo-split">
+	<aside class="im-solo-panel">
+		<span class="im-solo-pattern im-bg-radar" aria-hidden="true"></span>
+		<p class="im-caption" data-index="4,210">Readers</p>
+		<p class="im-solo-quote">“The only newsletter I have never unsubscribed from. It tells you what things actually cost.”</p>
+		<p class="im-solo-by">{{> "components/avatar" src=demo.comments.[0].avatar name="Mara Lindqvist"}}<span><b>Mara Lindqvist</b> · reader since 2021</span></p>
+	</aside>
+
+	{{#> "shell/solo-bar" back="/pages/auth/"}}{{/"shell/solo-bar"}}
+
+	<main class="im-solo-main">
+		<div class="im-auth im-flat im-p-0" id="auth" data-mode="in">
+			<div class="im-auth-head">
+				<h1 class="im-auth-title"><span data-when="in">Welcome back</span><span data-when="up">Start reading</span></h1>
+				<p class="im-auth-text"><span data-when="in">Sign in to pick up where you left off.</span><span data-when="up">Free. One email a fortnight, and every members-only post.</span></p>
+			</div>
+			<div class="im-auth-switch" role="tablist" aria-label="Sign in or sign up" data-im-mode="#auth">
+				<button type="button" role="tab" value="in" aria-selected="true" aria-controls="auth-form">Sign in</button>
+				<button type="button" role="tab" value="up" aria-selected="false" aria-controls="auth-form">Sign up</button>
+			</div>
+			<form class="im-auth-form" id="auth-form" data-members-form="signin">
+				<div class="im-field" data-when="up">
+					<label class="im-label" for="auth-name">Name</label>
+					<input class="im-input" id="auth-name" type="text" name="name" autocomplete="name" placeholder="How you would like to be greeted">
+				</div>
+				<div class="im-field">
+					<label class="im-label" for="auth-email">Email</label>
+					<input class="im-input" id="auth-email" type="email" name="email" autocomplete="email" required placeholder="you@example.com" data-members-email>
+				</div>
+				<p class="im-auth-note">{{> "icons/mail"}}<span>No password. We send a link that signs you in.</span></p>
+				<button class="im-btn im-btn-primary" type="submit"><span data-when="in">Email me a link</span><span data-when="up">Create my account</span></button>
+			</form>
+			<p class="im-auth-or">or</p>
+			<div class="im-auth-social">
+				<button class="im-btn" type="button">{{> "icons/brand-github"}}Continue with GitHub</button>
+			</div>
+			<p class="im-auth-foot"><span data-when="in"><a href="/demos/reset/">Trouble signing in?</a></span><span data-when="up">We do not sell anything to anybody, ever.</span></p>
+		</div>
+	</main>
+
+	{{#> "shell/solo-foot"}}<a href="/pages/about/">About</a><a href="/pages/contact/">Contact</a>{{/"shell/solo-foot"}}
+</div>
+
+{{#contentFor "scripts"}}<script src="/assets/im-view.js"></script>{{/contentFor}}

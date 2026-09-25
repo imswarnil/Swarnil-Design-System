@@ -19,20 +19,7 @@
 	</div>
 
 	{{#if author}}
-		{{#primary_author}}
-			<div class="im-author-card">
-				{{> "components/avatar" size="xl" src=profile_image name=name}}
-				<a class="im-author-card-name" href="{{url}}">{{name}}</a>
-				<p class="im-author-card-role">{{#if location}}{{location}}{{#if count.posts}} · {{/if}}{{/if}}{{#if count.posts}}{{count.posts}} {{t "posts"}}{{/if}}</p>
-				{{#if bio}}<p class="im-author-card-bio">{{bio}}</p>{{/if}}
-				<div class="im-author-card-links">
-					<a class="im-btn im-btn-sm im-btn-primary" href="{{url}}">{{t "All posts"}} {{> "icons/arrow-right"}}</a>
-					{{#if website}}<a class="im-btn im-btn-sm im-btn-icon" href="{{website}}" rel="noopener noreferrer" aria-label="{{t "Website"}}">{{> "icons/globe"}}</a>{{/if}}
-					{{#if twitter}}<a class="im-btn im-btn-sm im-btn-icon" href="https://x.com/{{twitter}}" rel="noopener noreferrer" aria-label="X">{{> "icons/brand-x"}}</a>{{/if}}
-					{{#if facebook}}<a class="im-btn im-btn-sm im-btn-icon" href="https://www.facebook.com/{{facebook}}" rel="noopener noreferrer" aria-label="Facebook">{{> "icons/brand-facebook"}}</a>{{/if}}
-				</div>
-			</div>
-		{{/primary_author}}
+		{{#primary_author}}{{> "components/author" row=true}}{{/primary_author}}
 	{{/if}}
 
 	{{#if support}}

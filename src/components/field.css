@@ -82,7 +82,7 @@
 	box-shadow: inset 0 0 0 1px var(--im-input-ring);
 	color: var(--im-ink);
 	font-size: var(--im-text-sm);
-	transition: box-shadow 140ms, background-color 140ms;
+	transition: box-shadow var(--im-duration-instant), background-color var(--im-duration-instant);
 }
 
 .im-textarea {
@@ -169,7 +169,7 @@
 	box-shadow: inset 0 0 0 1px var(--im-line);
 	color: var(--im-muted);
 	font-size: var(--im-text-sm);
-	transition: box-shadow 140ms;
+	transition: box-shadow var(--im-duration-instant);
 }
 
 .im-input-group:hover {
@@ -234,7 +234,7 @@
 	font-size: var(--im-text-sm);
 	pointer-events: none;
 	transform-origin: 0 50%;
-	transition: translate 180ms var(--im-ease-out), scale 180ms var(--im-ease-out), color 180ms;
+	transition: translate var(--im-duration-instant) var(--im-ease-out), scale var(--im-duration-instant) var(--im-ease-out), color var(--im-duration-instant);
 }
 
 .im-float > .im-input:is(:focus, :not(:placeholder-shown)) + label {
@@ -270,7 +270,7 @@
 	background-color: var(--im-canvas);
 	box-shadow: inset 0 0 0 1.5px var(--im-faint);
 	cursor: pointer;
-	transition: background-color 160ms, box-shadow 160ms, scale 120ms;
+	transition: background-color var(--im-duration-instant), box-shadow var(--im-duration-instant), scale var(--im-duration-instant);
 }
 
 .im-radio > input {
@@ -286,8 +286,8 @@
 }
 
 :is(.im-check, .im-radio) > input:focus-visible {
-	outline: 2px solid var(--im-accent);
-	outline-offset: 2px;
+	outline: var(--im-ring-width) solid var(--im-ring);
+	outline-offset: var(--im-ring-offset);
 }
 
 .im-check > input:is(:checked, :indeterminate),
@@ -308,7 +308,7 @@
 	border-bottom: 2px solid var(--im-canvas);
 	rotate: 45deg;
 	clip-path: inset(0 100% 0 0);
-	transition: clip-path 260ms var(--im-ease-out) 60ms;
+	transition: clip-path var(--im-duration-fast) var(--im-ease-out) 60ms;
 }
 
 .im-check > input:checked::after {
@@ -333,7 +333,7 @@
 	border-radius: 50%;
 	background-color: var(--im-canvas);
 	scale: 0;
-	transition: scale 260ms var(--im-ease-spring);
+	transition: scale var(--im-duration-fast) var(--im-ease-spring);
 }
 
 .im-radio > input:checked::after {
@@ -379,7 +379,7 @@
 	color: var(--im-body);
 	font-size: var(--im-text-sm);
 	cursor: pointer;
-	transition: box-shadow 160ms, background-color 160ms;
+	transition: box-shadow var(--im-duration-instant), background-color var(--im-duration-instant);
 }
 
 .im-choice:hover {
@@ -392,8 +392,8 @@
 }
 
 .im-choice:has(:focus-visible) {
-	outline: 2px solid var(--im-accent);
-	outline-offset: 2px;
+	outline: var(--im-ring-width) solid var(--im-ring);
+	outline-offset: var(--im-ring-offset);
 }
 
 .im-choice > input {
@@ -406,7 +406,7 @@
 	margin: 0;
 	border-radius: 50%;
 	box-shadow: inset 0 0 0 1.5px var(--im-faint);
-	transition: background-color 160ms, box-shadow 160ms;
+	transition: background-color var(--im-duration-instant), box-shadow var(--im-duration-instant);
 }
 
 .im-choice > input[type="checkbox"] {
@@ -452,7 +452,7 @@
 	border-radius: 50%;
 	background-color: var(--im-canvas);
 	box-shadow: inset 0 0 0 2px var(--im-ink);
-	transition: scale 160ms var(--im-ease-spring);
+	transition: scale var(--im-duration-instant) var(--im-ease-spring);
 }
 
 .im-range::-moz-range-thumb {
@@ -498,7 +498,7 @@
 	font-size: var(--im-text-sm);
 	text-align: center;
 	cursor: pointer;
-	transition: background-color 160ms, color 160ms;
+	transition: background-color var(--im-duration-instant), color var(--im-duration-instant);
 }
 
 .im-drop > input {
@@ -591,7 +591,7 @@
 	border-radius: var(--im-radius-full);
 	background-color: var(--im-canvas);
 	box-shadow: inset 0 0 0 1px var(--im-line);
-	transition: box-shadow 120ms;
+	transition: box-shadow var(--im-duration-instant);
 }
 
 .im-subscribe-field:focus-within {

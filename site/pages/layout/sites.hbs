@@ -1,0 +1,37 @@
+---
+title: Site layouts
+description: Two whole sites built from the same parts — one with its links in a bar across the top, one with them down a side nav — plus the page shapes that leave the site chrome behind.
+eyebrow: Layout
+source: partials/shell/navbar.hbs · partials/shell/topbar.hbs · src/layout/shell.css · src/layout/solo.css · src/layout/player.css
+---
+<h2>Top navbar</h2>
+<p>No side nav; the page gets the full width. <code>shell/navbar</code> carries the primary links, a mega menu and "More"; under 64rem they move into the menu panel behind ☰. <a href="/demos/site-top/">Open it full screen</a>.</p>
+{{#example flush=true code=false}}
+<iframe class="demo-frame im-demo-tall" src="/demos/site-top/" title="A site with a top navbar" loading="lazy"></iframe>
+{{/example}}
+{{{{code "hbs"}}}}
+{{> "shell/navbar" line=true mega="mega" github="https://github.com/you/repo"}}
+<main>…</main>
+{{> "shell/footer" wide=true}}
+{{{{/code}}}}
+
+<h2>Sidebar navbar</h2>
+<p><code>.im-shell</code>: the app bar across, the side nav down the left with groups, trees, counts and badges, the page, the footer. The panel button folds the side nav to an icon rail and remembers it; on a phone its links move into the menu panel. <a href="/demos/site-side/">Open it full screen</a>.</p>
+{{#example flush=true code=false}}
+<iframe class="demo-frame im-demo-tall" src="/demos/site-side/" title="A site with a sidebar" loading="lazy"></iframe>
+{{/example}}
+{{{{code "hbs"}}}}
+<div class="im-shell">
+	{{> "shell/topbar"}}
+	<aside class="im-sidenav"> <nav class="im-navgroup">…im-navlink, im-navtree…</nav> </aside>
+	<main class="im-shell-main">…</main>
+	{{> "shell/footer" strip_only=true}}
+</div>
+{{{{/code}}}}
+
+<h2>Pages that leave the chrome behind</h2>
+<p>Some pages are better without the site around them. Each is a shell of its own, with the way back in its bar:</p>
+<ul>
+	<li><strong><code>im-solo</code></strong> — one thing in the middle and "Back to home": <a href="/demos/reset/">reset</a>. With a pinned panel, <code>im-solo-split</code>: <a href="/demos/signin/">sign in</a>, the <a href="/demos/guestbook/">guestbook</a>, the <a href="/demos/resume/">résumé</a>.</li>
+	<li><strong><code>im-player</code></strong> — full width, the list fixed on the left: <a href="/demos/lesson/">a lesson</a>.</li>
+</ul>

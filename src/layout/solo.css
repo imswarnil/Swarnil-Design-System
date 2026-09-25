@@ -1,0 +1,184 @@
+/* Solo — a page that stands on its own: sign in, sign up, reset, the
+   guestbook, a résumé. No site nav, no side nav, no footer columns; a slim bar
+   with the way back home, the page, and one line at the foot.
+
+   <div class="im-solo">
+     <header class="im-solo-bar">
+       <a class="im-btn im-btn-ghost im-btn-sm" href="/">{{> "icons/arrow-left"}}<span>Back to home</span></a>
+       <a class="im-brand" href="/">…logo…</a>
+       <div class="im-solo-end"> {{> "components/theme-button"}} </div>
+     </header>
+     <main class="im-solo-main"> …one centred thing… </main>
+     <footer class="im-solo-foot"> © 2026 · Privacy · Terms </footer>
+   </div>
+
+   im-solo-split puts a panel beside it — the whole height of the window,
+   pinned, with a pattern and whatever the page wants to say while you are
+   busy with the form. The bar, the main and the foot move to the other
+   column. The panel can hold a quote (sign in), the explanation (a
+   guestbook), or who you are (a résumé).
+
+     <div class="im-solo im-solo-split">
+       <aside class="im-solo-panel">
+         <span class="im-solo-pattern im-bg-radar" aria-hidden="true"></span>
+         …anything, pinned to the bottom of the panel…
+       </aside>
+       <header class="im-solo-bar">…</header> <main class="im-solo-main">…</main> <footer class="im-solo-foot">…</footer>
+     </div>
+
+   Modifiers
+     im-solo-panel-top    under 64rem the panel stays, as a band over the page
+                          (by default it goes: on a phone the form is the page)
+     im-solo-scroll       the main is a long page (a résumé, a wall of
+                          entries), not one centred thing: it starts at the top
+
+   Knobs: --im-solo-panel (its width, 44%), --im-solo-measure (the main's
+   cap, 28rem; im-solo-lg = 48rem), --im-solo-panel-bg. */
+
+.im-solo {
+	--im-solo-panel: 44%;
+	--im-solo-measure: 28rem;
+	--im-solo-panel-bg: var(--im-surface);
+
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	grid-template-rows: auto 1fr auto;
+	grid-template-areas: "bar" "main" "foot";
+	min-height: 100dvh;
+	background-color: var(--im-canvas);
+}
+
+.im-solo-bar {
+	grid-area: bar;
+	position: sticky;
+	top: 0;
+	z-index: var(--im-z-bar);
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+	align-items: center;
+	gap: 0.75rem;
+	height: var(--im-bar-height);
+	padding-inline: var(--im-gutter);
+	background-color: color-mix(in oklab, var(--im-canvas) 86%, transparent);
+	backdrop-filter: saturate(1.6) blur(12px);
+}
+
+.im-solo-bar > :first-child { justify-self: start; }
+
+.im-solo-end {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 0.375rem;
+}
+
+.im-solo-main {
+	grid-area: main;
+	display: grid;
+	align-content: center;
+	justify-items: center;
+	min-width: 0;
+	padding: clamp(1.5rem, 4vh, 3rem) var(--im-gutter);
+}
+
+.im-solo-main > * {
+	width: 100%;
+	max-width: var(--im-solo-measure);
+}
+
+.im-solo-scroll .im-solo-main {
+	align-content: start;
+}
+
+.im-solo-foot {
+	grid-area: foot;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 0.25rem 1rem;
+	padding: 1rem var(--im-gutter) 1.5rem;
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+}
+
+.im-solo-foot a { color: inherit; text-decoration: none; }
+.im-solo-foot a:hover { color: var(--im-ink); }
+
+/* ---- split ---- */
+.im-solo-panel { display: none; }
+
+.im-solo-split > .im-solo-panel {
+	grid-area: panel;
+	position: relative;
+	isolation: isolate;
+	display: flex;
+	flex-direction: column;
+	justify-content: safe flex-end;
+	gap: 1.25rem;
+	min-width: 0;
+	padding: clamp(1.5rem, 4vw, 3.5rem);
+	overflow-x: hidden;
+	overflow-y: auto;
+	scrollbar-width: thin;
+	background-color: var(--im-solo-panel-bg);
+	color: var(--im-body);
+}
+
+@media (width >= 64rem) {
+	.im-solo-split {
+		grid-template-columns: var(--im-solo-panel) minmax(0, 1fr);
+		grid-template-areas:
+			"panel bar"
+			"panel main"
+			"panel foot";
+	}
+
+	.im-solo-split > .im-solo-panel {
+		position: sticky;
+		top: 0;
+		height: 100dvh;
+	}
+}
+
+/* The pattern fills the panel and fades toward the words at its foot. */
+.im-solo-pattern {
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	opacity: 0.55;
+	--im-pattern-color: var(--im-solo-art, var(--im-accent));
+	-webkit-mask-image: linear-gradient(to bottom, #000, transparent 65%);
+	mask-image: linear-gradient(to bottom, #000, transparent 65%);
+}
+
+/* A big line for the panel — a quote, a claim. */
+.im-solo-quote {
+	max-width: 30rem;
+	color: var(--im-ink);
+	font-family: var(--im-font-heading);
+	font-size: clamp(1.5rem, 1rem + 1.6vw, 2.25rem);
+	font-weight: 600;
+	line-height: 1.15;
+	letter-spacing: var(--im-tracking-tight);
+	text-wrap: balance;
+}
+
+.im-solo-by {
+	display: flex;
+	align-items: center;
+	gap: 0.625rem;
+	color: var(--im-muted);
+	font-size: var(--im-text-sm);
+}
+
+.im-solo-by b { color: var(--im-ink); font-weight: 600; }
+
+@media (width < 64rem) {
+	.im-solo-split { grid-template-areas: "bar" "panel" "main" "foot"; grid-template-rows: auto auto 1fr auto; }
+	.im-solo-split > .im-solo-panel { display: none; }
+	.im-solo-split.im-solo-panel-top > .im-solo-panel { display: flex; justify-content: flex-start; }
+}
+
+@media (width < 40rem) {
+	.im-solo-bar .im-btn > span:not(.im-icon) { display: none; }
+}

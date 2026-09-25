@@ -19,7 +19,7 @@ source: src/layout/player.css · src/components/coursenav.css · partials/compon
 <section class="im-section im-wrap"><div class="im-prose">
 <h2>The shell</h2>
 <p>A lesson template does not render <code>.im-shell</code>. It renders <code>.im-player</code>: the top bar across (the same <code>im-topbar</code>, with <code>im-player-bar</code>), the lessons in <code>im-player-side</code> down the left, and <code>im-player-main</code> for the rest — a <code>im-player-stage</code> band for the video, then <code>im-player-body</code> for the words. Nothing is capped to the page width; only the reading column has a measure.</p>
-<p>The side is one window tall and sticks under the bar, so it stays put while the lesson scrolls, and only its list scrolls inside it. The panel button in the bar collapses it on a desktop — the choice is remembered and restored before first paint as <code>&lt;html data-player-side="off"&gt;</code>. Under 64rem the same button opens it as a drawer over the lesson, and Esc or the scrim closes it.</p>
+<p>The side is one window tall and sticks under the bar, so it stays put while the lesson scrolls, and only its list scrolls inside it. The panel button in the bar collapses it on a desktop — the choice is remembered and restored before first paint as <code>&lt;html data-player-side="off"&gt;</code>. Under 64rem the lessons fold under the video: one bar with the course and where you are, which opens the list and closes it again.</p>
 </div></section>
 
 <section class="im-section im-wrap">

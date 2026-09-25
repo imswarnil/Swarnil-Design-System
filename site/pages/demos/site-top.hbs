@@ -1,0 +1,26 @@
+---
+title: Top navbar site demo
+layout: home
+shell: frame
+---
+{{!-- Loaded in an iframe by /layout/sites/. A whole site with the links in a
+	bar across the top: shell/navbar with a mega menu, a hero, a feed, the
+	footer. No side nav — the page gets the full width. --}}
+{{> "shell/navbar" id="top" line=true mega="docs/mega-demo" github="https://github.com/imswarnil"}}
+
+<main class="im-stack im-stack-xl" id="main">
+	<section class="im-wrap-wide im-stack im-stack-md px-4 md:px-8 pt-16 pb-8">
+		<p class="im-caption" data-index="01">A site with a top navbar</p>
+		<h1 class="text-display font-semibold tracking-tight max-w-page">Notes on building things, and the roads in between.</h1>
+		<p class="im-lede im-m0">Every link lives in the bar: the primary ones inline, a mega menu under Explore, the rest under More. Under 64rem they move into the menu panel behind ☰.</p>
+		<p class="im-cluster"><a class="im-btn im-btn-primary" href="#main">Start reading</a><a class="im-btn" href="#main">Subscribe</a></p>
+	</section>
+
+	<section class="im-wrap-wide px-4 md:px-8 pb-16">
+		<div class="im-feed" data-view="grid">
+			{{#foreach demo.six}}{{> "components/post-card" excerpt=true}}{{/foreach}}
+		</div>
+	</section>
+</main>
+
+{{> "shell/footer" wide=true}}

@@ -1,0 +1,15 @@
+---
+title: Latest
+description: The same list with a thumbnail. Use one or the other in a column, not both.
+eyebrow: Component · Widget
+source: src/components/widget.css
+---
+<p>The same list with a thumbnail. Use one or the other in a column, not both.</p>
+{{#example style="max-width: 22rem"}}
+<section class="im-widget">
+	<h2 class="im-widget-title">Latest</h2>
+	<ul class="im-widget-list im-widget-list-thumbs">
+		{{#foreach demo.three}}<li><a href="#latest"><img src="{{feature_image}}" alt="" loading="lazy">{{title}}<small>{{date format="D MMM"}}</small></a></li>{{/foreach}}
+	</ul>
+</section>
+{{/example}}

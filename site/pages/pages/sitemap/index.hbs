@@ -14,56 +14,51 @@ source: src/components/sitemap.css
 <section class="im-section im-wrap-wide">
 	<div class="im-collbar">
 		<p class="im-caption im-m0" data-index="tree">Everything</p>
-		<p class="im-cluster im-cluster-tight"><button class="im-btn im-btn-sm" type="button" onclick="document.querySelectorAll('.im-sitemap details').forEach(d=>d.open=true)">Expand all</button><button class="im-btn im-btn-sm" type="button" onclick="document.querySelectorAll('.im-sitemap details').forEach(d=>d.open=false)">Collapse all</button></p>
 		<p class="im-snipcard-meta"><span>{{sitemap.length}} sections</span><a class="im-card-cta" href="/sitemap.xml">sitemap.xml {{icon "external-link"}}</a></p>
 	</div>
 
-	<div class="im-sitemap-cols" style="--im-sitemap-cols: 1">
-		<ul class="im-sitemap">
+	<nav class="im-sitetree" aria-label="Sitemap">
+		<ul>
 			<li>
-				<span class="im-sitemap-node im-sitemap-branch">{{icon "file-text"}}Pages<span class="im-sitemap-count">6</span></span>
+				<a class="im-sitetree-node im-sitetree-root" href="/">{{icon "globe"}}{{name}}</a>
 				<ul>
-					<li><a class="im-sitemap-node" href="/pages/home/">{{icon "house"}}Home</a></li>
-					<li><a class="im-sitemap-node" href="/pages/about/">{{icon "user"}}About</a></li>
-					<li><a class="im-sitemap-node" href="/pages/resume/">{{icon "briefcase"}}Résumé</a></li>
-					<li><a class="im-sitemap-node" href="/pages/guestbook/">{{icon "pencil"}}Guestbook</a></li>
-					<li><a class="im-sitemap-node" href="/pages/now/">{{icon "clock"}}Now</a></li>
-					<li><a class="im-sitemap-node" href="/pages/contact/">{{icon "mail"}}Contact</a></li>
-					<li><a class="im-sitemap-node" href="/pages/membership/">{{icon "credit-card"}}Membership</a></li>
-					<li><a class="im-sitemap-node" href="/pages/auth/">{{icon "log-in"}}Sign in / Sign up</a></li>
-					<li><a class="im-sitemap-node" href="/pages/sitemap/">{{icon "list"}}Sitemap</a></li>
-				</ul>
-			</li>
-			{{#each sitemap}}
-			{{#unless title}}{{#each items}}<li><a class="im-sitemap-node im-sitemap-branch" href="{{url}}">{{icon icon}}{{label}}</a></li>{{/each}}{{else}}
-			<li>
-				<details open>
-				<summary><span class="im-sitemap-node im-sitemap-branch">{{icon icon}}{{title}}<span class="im-sitemap-count">{{count}}</span></span></summary>
-				<ul{{#match count ">" 6}} data-more{{/match}}>
-					{{#each items}}
-					{{#if children}}
 					<li>
-						<details>
-						<summary><span class="im-sitemap-node im-sitemap-branch">{{icon icon}}{{label}}<span class="im-sitemap-count">{{children.length}}</span></span></summary>
+						<span class="im-sitetree-node im-sitetree-branch">{{icon "file-text"}}Pages <small>9</small></span>
 						<ul>
-							{{#each children}}<li><a class="im-sitemap-node" href="{{url}}">{{icon "file-text"}}{{label}}</a></li>{{/each}}
+							<li><a class="im-sitetree-node" href="/pages/home/">{{icon "house"}}Home</a></li>
+							<li><a class="im-sitetree-node" href="/pages/about/">{{icon "user"}}About</a></li>
+							<li><a class="im-sitetree-node" href="/pages/resume/">{{icon "briefcase"}}Résumé</a></li>
+							<li><a class="im-sitetree-node" href="/pages/guestbook/">{{icon "pencil"}}Guestbook</a></li>
+							<li><a class="im-sitetree-node" href="/pages/now/">{{icon "clock"}}Now</a></li>
+							<li><a class="im-sitetree-node" href="/pages/contact/">{{icon "mail"}}Contact</a></li>
+							<li><a class="im-sitetree-node" href="/pages/membership/" data-locked>{{icon "credit-card"}}Membership</a></li>
+							<li><a class="im-sitetree-node" href="/pages/auth/">{{icon "log-in"}}Sign in / Sign up</a></li>
+							<li><a class="im-sitetree-node" href="/pages/sitemap/">{{icon "list"}}Sitemap</a></li>
 						</ul>
-						</details>
 					</li>
-					{{else}}
-					<li><a class="im-sitemap-node" href="{{url}}">{{icon "file-text"}}{{label}}</a></li>
-					{{/if}}
+					{{#each sitemap}}
+					{{#unless title}}{{#each items}}<li><a class="im-sitetree-node im-sitetree-branch" href="{{url}}">{{icon icon}}{{label}}</a></li>{{/each}}{{else}}
+					<li>
+						<span class="im-sitetree-node im-sitetree-branch">{{icon icon}}{{title}} <small>{{count}}</small></span>
+						<ul>
+							{{#each items}}
+							{{#if children}}
+							<li>
+								<a class="im-sitetree-node im-sitetree-branch" href="{{children.[0].url}}">{{icon icon}}{{label}} <small>{{children.length}}</small></a>
+								<ul>{{#each children}}<li><a class="im-sitetree-node" href="{{url}}">{{label}}</a></li>{{/each}}</ul>
+							</li>
+							{{else}}
+							<li><a class="im-sitetree-node" href="{{url}}">{{label}}</a></li>
+							{{/if}}
+							{{/each}}
+						</ul>
+					</li>
+					{{/unless}}
 					{{/each}}
-				</ul>
-				{{#match count ">" 6}}<button class="im-sitemap-more" type="button" onclick="this.previousElementSibling.setAttribute('data-open','');this.hidden=true">Show all {{count}}</button>{{/match}}
-				</details>
-			</li>
-			{{/unless}}
-			{{/each}}
 				</ul>
 			</li>
 		</ul>
-	</div>
+	</nav>
 </section>
 
 <section class="im-section im-wrap">
@@ -71,22 +66,8 @@ source: src/components/sitemap.css
 		<h2>Generated, not written</h2>
 		<p>The tree above iterates the <em>same array</em> the side navigation is built from. Adding a page adds a row here and there is nothing to remember — which is the only kind of sitemap that stays true, because a hand-written one is wrong within a month and then actively misleads.</p>
 
-		<h2>Rules, not characters</h2>
-		<p>The branches are drawn with two pseudo-elements per item rather than with dashes or box-drawing characters. A screen reader is handed a plain nested list and nothing else, and the lines stay one pixel at any zoom. The <strong>last</strong> child's vertical stops at its own centre — that half-height rule is the whole reason a tree looks finished rather than cut off.</p>
-		{{{{code "css"}}}}
-.im-sitemap li::before {           /* the vertical, full height */
-	position: absolute;
-	inset: 0 auto 0 0;
-	width: 1px;
-	background-color: var(--im-line);
-}
-
-.im-sitemap li:last-child::before { /* …except on the last one */
-	bottom: auto;
-	height: calc(var(--im-tree-row) / 2);
-}
-		{{{{/code}}}}
-
+		<h2>A tree that branches</h2>
+		<p>Every parent sits level with the middle of its children, and each child hangs off one spine by a short arm. The spine is two half-lines per child — above and below its own middle — so it starts at the first child and stops at the last without anything being measured. Nothing folds: the whole site is on the page at once. Under 48rem the same list grows downward instead of sideways.</p>
 		<h2>Two sitemaps, two readers</h2>
 		<div class="im-table-scroll">
 		<table>
@@ -101,17 +82,7 @@ source: src/components/sitemap.css
 		<p>Both should exist and neither replaces the other. Link the XML one from here, as above — it is the only place on a site where that link is useful to anybody.</p>
 
 		<h2>Marking what is behind the wall</h2>
-		<p><code>data-locked</code> on a node draws a small lock after the label, from the same <code>--im-lock-glyph</code> the <a href="/collections/video/card/">thumbnails</a> use. A sitemap that silently lists members-only pages sends people to a gate without warning them; one that hides them is lying about what the site contains.</p>
-		<div class="im-table-scroll">
-		<table>
-			<thead><tr><th>Class</th><th></th></tr></thead>
-			<tbody>
-				<tr><td><code>im-sitemap</code></td><td>The tree. A plain nested <code>&lt;ul&gt;</code> — the rules are drawn, the structure is real.</td></tr>
-				<tr><td><code>im-sitemap-branch</code></td><td>A folder rather than a page. It may be a <code>&lt;span&gt;</code> when nothing lives at that URL.</td></tr>
-				<tr><td><code>im-sitemap-count</code></td><td>How many pages are under it.</td></tr>
-				<tr><td><code>im-sitemap-cols</code></td><td>Multi-column on a wide window, with <code>break-inside: avoid</code> so a branch is never split across a column boundary.</td></tr>
-			</tbody>
-		</table>
-		</div>
+		<p><code>data-locked</code> on a node draws a small lock after the label. A sitemap that silently lists members-only pages sends people to a gate without warning them; one that hides them is lying about what the site contains.</p>
+		<p>Classes: <code>im-sitetree</code> (a plain nested list), <code>im-sitetree-node</code>, <code>im-sitetree-branch</code> (a folder), <code>im-sitetree-root</code>. Knobs: <code>--im-tree-arm</code>, <code>--im-tree-gap</code>, <code>--im-tree-line</code>.</p>
 	</div>
 </section>

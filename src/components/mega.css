@@ -130,7 +130,7 @@
 	font-weight: 500;
 	line-height: 1.35;
 	text-decoration: none;
-	transition: background-color 120ms, color 120ms;
+	transition: background-color var(--im-duration-instant), color var(--im-duration-instant);
 }
 
 .im-navitem > .im-icon {
@@ -139,7 +139,7 @@
 	color: var(--im-muted);
 	font-size: 1.125rem;
 	stroke-width: 1.7;
-	transition: color 120ms;
+	transition: color var(--im-duration-instant);
 }
 
 .im-navitem > span {

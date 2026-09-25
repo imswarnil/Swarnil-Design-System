@@ -4,6 +4,7 @@
    fast     small things that move: a toggle, a chevron, a press
    base     a panel, a menu, a card entering
    slow     a whole section arriving; a hero
+   long     a picture still moving after the hand has settled
    Curves: `out` for things ARRIVING (fast start, soft landing — the default),
    `in` for things LEAVING, `in-out` for things that travel and stay on screen,
    `spring` for a little overshoot on something small and playful, `glide` for
@@ -14,6 +15,8 @@
 	--im-duration-fast: 200ms;
 	--im-duration-base: 360ms;
 	--im-duration-slow: 640ms;
+	/* long: a picture that keeps moving after the hand has settled — a zoom, a reveal. */
+	--im-duration-long: 900ms;
 
 	--im-ease-in: cubic-bezier(0.5, 0, 0.9, 0.4);
 	--im-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);

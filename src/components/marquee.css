@@ -111,7 +111,7 @@
 	width: auto;
 	color: var(--im-muted);
 	opacity: 0.75;
-	transition: opacity 160ms, color 160ms;
+	transition: opacity var(--im-duration-instant), color var(--im-duration-instant);
 }
 
 .im-marquee-logo:hover {

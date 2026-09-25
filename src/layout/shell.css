@@ -21,7 +21,7 @@
 		"nav  main"
 		"nav  foot";
 	min-height: 100dvh;
-	transition: grid-template-columns 220ms var(--im-ease-out);
+	transition: grid-template-columns var(--im-duration-fast) var(--im-ease-out);
 }
 
 .im-shell-main {
@@ -211,7 +211,7 @@
 	line-height: 1.25;
 	text-decoration: none;
 	cursor: pointer;
-	transition: background-color 140ms, box-shadow 140ms;
+	transition: background-color var(--im-duration-instant), box-shadow var(--im-duration-instant);
 }
 
 .im-navtile > .im-icon {
@@ -290,7 +290,7 @@
 	border-bottom: 1.5px solid var(--im-muted);
 	rotate: 45deg;
 	translate: 0 -0.125rem;
-	transition: rotate 160ms var(--im-ease-out);
+	transition: rotate var(--im-duration-instant) var(--im-ease-out);
 }
 
 /* With a count, the count takes the auto margin and the chevron follows it. */

@@ -1,0 +1,15 @@
+---
+title: Archive
+description: A year, how much of it there is, and a bar showing that as a share of the busiest year — set inline as --im-share. Cheap, and the only widget that shows a site has history.
+eyebrow: Component · Widget
+source: src/components/widget.css
+---
+<p>A year, how much of it there is, and a bar showing that as a share of the busiest year — set inline as <code>--im-share</code>. Cheap, and the only widget that shows a site has history.</p>
+{{#example style="max-width: 22rem"}}
+<section class="im-widget">
+	<h2 class="im-widget-title">Archive</h2>
+	<nav class="im-widget-archive" aria-label="Archive">
+		{{#each demo.archive}}<a href="#archive" style="--im-share: {{share}}">{{year}}<small>{{posts}}</small></a>{{/each}}
+	</nav>
+</section>
+{{/example}}

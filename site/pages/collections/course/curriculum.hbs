@@ -5,27 +5,16 @@ description: The curriculum on the course page and the navigation on a lesson pa
 eyebrow: Collections · Course
 source: src/components/coursenav.css · src/js/im-view.js
 ---
-<p>Two components, one vocabulary: <code>im-syllabus</code> is the curriculum on the course page; <code>im-coursenav</code> is the rail on a lesson page. States are marks — tick, play, lock — never a word alone.</p>
+<p>Two components, one vocabulary: <code>im-syllabus</code> is the curriculum on the course page, <code>im-coursenav</code> the list in the lesson player. The same numerals and the same state marks — tick, play, lock, a ring for free — so a student learns them once; what differs is the job. The syllabus is wide, says a line about every lesson and sells; the coursenav is narrow, terse and gets you to the next one.</p>
 
 <h2>The syllabus, on the course page</h2>
-<p><code>im-syllabus</code>: units that open and close, a row per lesson — still, number and title, kind and length, and the state on the right as a mark with a word. Done, playing, free, members.</p>
+<p><code>components/syllabus</code>: the head sums the course up and shows progress once started; every unit is a card with its numeral, a line about it and its meta; every lesson is a row with the state mark, a still wearing its length, the number and title, one line about it, what it is and what comes with it, a preview button when it is free, and the state on the right. Wide and descriptive, because this page sells.</p>
 {{#example}}
-<ol class="im-syllabus">
-	{{#each demo.sections}}{{#match @index "<" 2}}
-	<li class="im-unit"{{#match n "=" "1"}} data-open{{/match}}>
-		<button class="im-unit-head" type="button" aria-expanded="{{#match n "=" "1"}}true{{else}}false{{/match}}"><span class="im-unit-n">{{n}}</span><span class="im-unit-title">{{name}}</span><span class="im-unit-meta"><span>{{time}}</span><span>{{when}}</span></span><span class="im-unit-count">{{#match n "=" "1"}}2 / 3{{else}}0 / 2{{/match}}</span><span class="im-unit-chev" aria-hidden="true"></span></button>
-		<ol class="im-unit-lessons">
-			{{#each ../demo.lessons}}{{#match n ">=" ../from}}{{#match n "<=" ../to}}
-			<li class="im-lessonrow" data-state="{{#if locked}}locked{{else}}{{#if state}}{{state}}{{else}}{{#match n "<" "03"}}free{{else}}next{{/match}}{{/if}}{{/if}}"><span class="im-lessonrow-shot"><img src="{{lookup @root.demo.shots shot}}" alt="" loading="lazy"></span><a class="im-lessonrow-title" href="#"><small>{{n}}</small>{{title}}</a><span class="im-lessonrow-meta"><span>{{#match kind "=" "video"}}{{icon "square-play"}}Video{{else}}{{icon "file-text"}}Article{{/match}}</span><span>{{icon "clock"}}{{time}}</span></span><span class="im-lessonrow-state">{{#if locked}}Members{{else}}{{#match state "=" "done"}}Done{{/match}}{{#match state "=" "current"}}Playing{{/match}}{{#unless state}}{{#match n "<" "03"}}Free{{/match}}{{/unless}}{{/if}}</span></li>
-			{{/match}}{{/match}}{{/each}}
-		</ol>
-	</li>
-	{{/match}}{{/each}}
-</ol>
+{{> "components/syllabus" units=demo.sections lessons="7" minutes="81" free="2" done="2" total="7" percent="29" value=".29"}}
 {{/example}}
 
 <h2>The rail, on the lesson page</h2>
-<p><code>im-coursenav</code>: the same states as marks, with a still per row or without (<code>im-coursenav-plain</code>, the sheet on a phone).</p>
+<p><code>components/coursenav</code>: the same states as marks, a still per row or without (<code>im-coursenav-plain</code>), and "next up" pinned to the foot. In the player it sits flush in the fixed side; here it is a card.</p>
 {{#example}}
 <div class="im-grid-auto im-grid-lg im-grid-start">
 	<nav class="im-coursenav" aria-label="Lessons">

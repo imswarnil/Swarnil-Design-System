@@ -11,22 +11,12 @@ source: src/components/auth.css
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
-<section class="im-authpage im-bg-radar im-bg-accent im-bg-loose im-bg-surface" >
-	<div class="im-auth im-auth-wide" data-mode="in" >
-		<div class="im-auth-head">
-			{{> "components/logo" size="1.5rem"}}
-			<h1 class="im-auth-title">Forgot your password?</h1>
-			<p class="im-auth-text">You never had one. Enter the email you signed up with and we will send a link that signs you in on this device.</p>
-		</div>
-		<form class="im-auth-form" data-members-form="signin">
-			<div class="im-field"><label class="im-label" for="r-email">Email</label><input class="im-input" id="r-email" type="email" required autocomplete="email" placeholder="you@example.com" data-members-email></div>
-			<button class="im-btn im-btn-primary" type="submit">{{icon "mail"}}Email me a link</button>
-			<p class="im-auth-note">{{icon "info"}}<span>The link works once and expires in 24 hours. Check spam before asking for another — three in a row and the address is paused for an hour.</span></p>
-		</form>
-		<p class="im-auth-foot">Not a member yet? <a href="/pages/auth/">Sign up</a> — it is the same one field.</p>
-	</div>
+<section class="im-section im-wrap-wide">
+	<p class="im-cluster"><a class="im-btn im-btn-primary im-btn-sm" href="/demos/reset/">Open full screen {{icon "arrow-up-right"}}</a><span class="im-hint">A page of its own: <code>im-solo</code>, the way home in the bar.</span></p>
+	<iframe class="demo-frame im-demo-tall" src="/demos/reset/" title="Reset" loading="lazy"></iframe>
+	<iframe class="demo-frame im-max-sm im-mx-auto im-block im-demo-tall" src="/demos/reset/" title="Reset on a phone" loading="lazy"></iframe>
 </section>
 
 <section class="im-section im-wrap"><div class="im-prose">
-<p>Ghost signs members in by link, so "forgot password" and "sign in" are the same request with a different heading. The heading matters: somebody who arrives here is worried, and the first sentence has to remove the worry before it asks for anything. <code>im-authpage</code> centres the card in the window with nothing else on it.</p>
+<p>Ghost signs members in by link, so "forgot password" and "sign in" are the same request with a different heading. The heading matters: somebody who arrives here is worried, and the first sentence has to remove the worry before it asks for anything. <code>im-solo</code> centres the card in the window with nothing else on it but the way back.</p>
 </div></section>

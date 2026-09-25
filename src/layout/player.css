@@ -5,8 +5,10 @@
 
    <div class="im-player">
      <header class="im-topbar im-player-bar"> … </header>
-     <aside class="im-player-side" id="lessons">  {{> "components/coursenav" flush=true …}}  </aside>
-     <button class="im-player-scrim" type="button" data-im-player-toggle aria-label="Close"></button>
+     <aside class="im-player-side" id="lessons">
+       <button class="im-player-handle" type="button" data-im-player-toggle>…course · 3/7 · chevron…</button>
+       <div class="im-player-list"> {{> "components/coursenav" flush=true …}} </div>
+     </aside>
      <main class="im-player-main" id="main">
        <div class="im-player-stage"> <div class="im-video im-video-full">…</div> </div>
        <div class="im-player-body"> … </div>
@@ -20,18 +22,19 @@
    One switch, [data-im-player-toggle] (im.js):
      width ≥ 64rem   collapses / restores the side — remembered, and restored
                      before first paint as <html data-player-side="off">.
-     below           opens the side as a drawer over the page with a scrim;
-                     Esc, the scrim or the same button close it.
+     below           the side folds under the video; its handle
+                     (.im-player-handle, a toggle too) opens and closes it.
 
    Knobs (on .im-player or any ancestor):
-     --im-player-side          the side's width            22rem
+     --im-player-side          the side's width            3 columns
      --im-player-measure       the reading column          60rem
      --im-player-stage-max     the tallest the video gets  74dvh
      --im-player-stage-bg      behind the video            surface
    Modifier: im-player-theatre — the stage goes black in both themes. */
 
 .im-player {
-	--im-player-side: 22rem;
+	/* Three columns of the window. */
+	--im-player-side: calc(3 * (100vw - 11 * var(--im-grid-gap)) / 12 + 2 * var(--im-grid-gap));
 	--im-player-measure: 60rem;
 	--im-player-stage-max: 74dvh;
 	--im-player-stage-bg: var(--im-surface);
@@ -43,7 +46,7 @@
 		"bar  bar"
 		"side main";
 	min-height: 100dvh;
-	transition: grid-template-columns 220ms var(--im-ease-out);
+	transition: grid-template-columns var(--im-duration-fast) var(--im-ease-out);
 }
 
 /* The bar is .im-topbar (it already takes grid-area: bar), with a line under
@@ -84,13 +87,13 @@
 	white-space: nowrap;
 }
 
-.im-player-where > .im-progress { width: 7rem; }
+.im-player-where > .im-progress { width: clamp(8rem, 22vw, 20rem); }
 
 .im-player-side {
 	grid-area: side;
 	position: sticky;
 	top: var(--im-bar-height);
-	z-index: 20;
+	z-index: var(--im-z-sticky);
 	display: flex;
 	flex-direction: column;
 	height: calc(100dvh - var(--im-bar-height));
@@ -100,8 +103,15 @@
 	background-color: var(--im-canvas);
 }
 
-/* Whatever sits in the side fills it; only the list inside scrolls. */
-.im-player-side > * {
+/* The list fills the side; only the nav's own body scrolls. */
+.im-player-list {
+	display: flex;
+	flex-direction: column;
+	flex: 1 1 auto;
+	min-height: 0;
+}
+
+.im-player-list > * {
 	flex: 1 1 auto;
 	min-height: 0;
 }
@@ -134,8 +144,9 @@
 	padding: 1.75rem var(--im-gutter) var(--im-section-gap);
 }
 
-/* The scrim only exists for the drawer. */
-.im-player-scrim { display: none; }
+/* The phone's handle on the lessons — hidden on a desk, where they are
+   always beside the lesson. */
+.im-player-handle { display: none; }
 
 /* ---- desktop: the side collapses to nothing ---- */
 @media (width >= 64rem) {
@@ -148,43 +159,65 @@
 	}
 }
 
-/* ---- below 64rem: one column, the side is a drawer ---- */
+/* ---- below 64rem: one column; the lessons fold under the video ----
+   <main> steps out of the way (display: contents) so the side can sit
+   BETWEEN the stage and the words, where a phone reader looks for "what
+   is next" — without the markup changing order. Closed, the side is one
+   bar: the course, where you are, a chevron. Open, the list, capped at
+   60% of the screen so the lesson is still one flick away. */
 @media (width < 64rem) {
 	.im-player {
 		grid-template-columns: minmax(0, 1fr);
+		grid-template-rows: var(--im-bar-height) auto auto 1fr;
 		grid-template-areas:
 			"bar"
-			"main";
+			"stage"
+			"side"
+			"body";
 	}
 
+	.im-player-main { display: contents; }
+	.im-player-stage { grid-area: stage; }
+	.im-player-body { grid-area: body; }
 	.im-player-where > .im-progress { display: none; }
 
 	.im-player-side {
-		position: fixed;
-		inset: var(--im-bar-height) auto 0 0;
-		z-index: 45;
-		width: min(var(--im-player-side), 88vw);
+		position: static;
 		height: auto;
-		box-shadow: inset -1px 0 0 var(--im-line), var(--im-shadow-float);
-		translate: -100% 0;
-		visibility: hidden;
-		transition: translate 240ms var(--im-ease-out), visibility 0s linear 240ms;
+		box-shadow: inset 0 -1px 0 var(--im-line);
 	}
 
-	.im-player[data-drawer="open"] .im-player-side {
-		translate: 0 0;
-		visibility: visible;
-		transition: translate 240ms var(--im-ease-out), visibility 0s;
+	/* The list is wrapped in .im-player-list, which this layer owns: the nav
+	   inside it is a component, and a component's display outranks any rule
+	   in this layer. */
+	.im-player-list { display: none; }
+
+	.im-player[data-lessons="open"] .im-player-list {
+		display: flex;
+		max-height: 60svh;
 	}
 
-	.im-player[data-drawer="open"] .im-player-scrim {
-		display: block;
-		position: fixed;
-		inset: var(--im-bar-height) 0 0;
-		z-index: 44;
-		background-color: rgb(10 10 10 / 45%);
-		cursor: default;
+	.im-player-handle {
+		display: grid;
+		grid-template-columns: auto minmax(0, 1fr) auto auto;
+		align-items: center;
+		gap: 0.75rem;
+		width: 100%;
+		padding: 0.875rem var(--im-gutter);
+		background-color: var(--im-surface);
+		color: var(--im-ink);
+		font-size: var(--im-text-sm);
+		font-weight: 600;
+		text-align: left;
+		cursor: pointer;
 	}
+
+	.im-player-handle > .im-icon:first-child { color: var(--im-accent); }
+	.im-player-handle > span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+	.im-player-handle > small { color: var(--im-muted); font-family: var(--im-font-mono); font-size: var(--im-text-xs); font-weight: 400; }
+	.im-player-handle > .im-icon:last-child { transition: rotate var(--im-duration-fast) var(--im-ease-out); }
+	.im-player[data-lessons="open"] .im-player-handle > .im-icon:last-child { rotate: 180deg; }
+
 }
 
 @media (width < 40rem) {

@@ -18,7 +18,7 @@
 	border-radius: var(--im-radius-full);
 	background-color: var(--im-surface-3);
 	cursor: pointer;
-	transition: background-color 180ms;
+	transition: background-color var(--im-duration-instant);
 }
 
 .im-switch > input::after {
@@ -29,9 +29,9 @@
 	width: 1rem;
 	height: 1rem;
 	border-radius: 50%;
-	background-color: #fff;
+	background-color: var(--im-on-media);
 	box-shadow: 0 1px 2px rgb(0 0 0 / 25%);
-	transition: translate 220ms var(--im-ease-spring, var(--im-ease-out)), width 160ms;
+	transition: translate var(--im-duration-fast) var(--im-ease-spring, var(--im-ease-out)), width var(--im-duration-instant);
 }
 
 .im-switch > input:active::after {
@@ -51,7 +51,7 @@
 }
 
 .im-switch > input:disabled {
-	opacity: 0.5;
+	opacity: var(--im-opacity-disabled);
 	cursor: not-allowed;
 }
 
@@ -67,7 +67,7 @@
 	position: absolute;
 	bottom: calc(100% + 0.5rem);
 	left: 50%;
-	z-index: 50;
+	z-index: var(--im-z-menu);
 	width: max-content;
 	max-width: 16rem;
 	padding: 0.3125rem 0.5rem;
@@ -84,7 +84,7 @@
 	opacity: 0;
 	translate: -50% 0.25rem;
 	pointer-events: none;
-	transition: opacity 140ms, translate 180ms var(--im-ease-out);
+	transition: opacity var(--im-duration-instant), translate var(--im-duration-instant) var(--im-ease-out);
 }
 
 [data-im-tip-side="bottom"]::after {
@@ -96,7 +96,7 @@
 [data-im-tip]:is(:hover, :focus-visible)::after {
 	opacity: 1;
 	translate: -50% 0;
-	transition-delay: 250ms;
+	transition-delay: var(--im-duration-fast);
 }
 
 /* Dialog — a native modal.  <dialog class="im-dialog" id="d">…</dialog>

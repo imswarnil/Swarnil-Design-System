@@ -3,7 +3,7 @@ title: Guestbook
 layout: home
 description: What it is and why, fixed on the left; the entries on the right, which are Ghost's own comments on this page.
 eyebrow: Pages
-source: src/components/pages.css · comments.css
+source: src/layout/solo.css · comments.css
 ---
 <section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Pages · {{page.title}}</p>
@@ -11,20 +11,10 @@ source: src/components/pages.css · comments.css
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
-<div class="im-wrap-wide im-guestbook">
-	<aside class="im-guestbook-intro">
-		<h1 class="im-collhead-title">The guestbook</h1>
-		<p class="im-lede im-m0">Where you are and one line. No accounts to make, no thread to follow — the page I reread most.</p>
-		<ul class="im-widget-now">
-			<li>{{icon "pencil"}}<span><b>Sign it</b> from the box on the right; it is this page's own comment thread.</span></li>
-			<li>{{icon "map-pin"}}<span><b>Say where</b> — that is the whole point of a guestbook.</span></li>
-			<li>{{icon "circle-check"}}<span><b>Kept forever.</b> Entries are never pruned.</span></li>
-		</ul>
-		<div class="im-widget-stats"><div><strong data-im-count>412</strong><span>Entries</span></div><div><strong data-im-count>38</strong><span>Countries</span></div><div><strong>2019</strong><span>Since</span></div></div>
-	</aside>
-	<div class="im-guestbook-wall im-guestbook-comments">
-		{{> "components/comments" thread=demo.comments count="412"}}
-	</div>
-</div>
+<section class="im-section im-wrap-wide">
+	<p class="im-cluster"><a class="im-btn im-btn-primary im-btn-sm" href="/demos/guestbook/">Open full screen {{icon "arrow-up-right"}}</a><span class="im-hint">A page of its own: <code>im-solo</code>, the way home in the bar.</span></p>
+	<iframe class="demo-frame im-demo-tall" src="/demos/guestbook/" title="The guestbook" loading="lazy"></iframe>
+	<iframe class="demo-frame im-max-sm im-mx-auto im-block im-demo-tall" src="/demos/guestbook/" title="The guestbook on a phone" loading="lazy"></iframe>
+</section>
 
-<section class="im-section im-wrap"><div class="im-prose"><p>In a theme the right column is <code>{{"{{comments}}"}}</code> on a page called Guestbook. The left is sticky and explains; it never asks for anything the comment box does not.</p></div></section>
+<section class="im-section im-wrap"><div class="im-prose"><p>In a theme the right column is <code>{{"{{comments}}"}}</code> on a page called Guestbook. The left is the <code>im-solo-split</code> panel, pinned; it explains and never asks for anything the comment box does not. On a phone it stays, as a band over the entries (<code>im-solo-panel-top</code>).</p></div></section>

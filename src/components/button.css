@@ -30,7 +30,7 @@
 	white-space: nowrap;
 	cursor: pointer;
 	user-select: none;
-	transition: background-color 140ms, color 140ms, opacity 140ms, scale 140ms;
+	transition: background-color var(--im-duration-instant), color var(--im-duration-instant), opacity var(--im-duration-instant), scale var(--im-duration-instant), translate var(--im-duration-instant), box-shadow var(--im-duration-instant);
 }
 
 .im-btn:hover,
@@ -40,20 +40,36 @@
 	color: var(--im-btn-fg-hover);
 }
 
+/* A filled button lifts a pixel under the pointer and casts a hairline, the
+   way a card does — the one movement the whole system shares. Ghost and
+   outline buttons only fill: they have nothing to lift. */
+@media (hover: hover) {
+	.im-btn:not(.im-btn-ghost, .im-btn-outline, :disabled, [aria-disabled="true"]):hover {
+		translate: 0 -1px;
+		box-shadow: var(--im-shadow-sm);
+	}
+}
+
+/* Pressed: it gives, and it gives at once. */
 .im-btn:active {
-	scale: 0.98;
+	translate: 0;
+	box-shadow: none;
+	scale: 0.97;
+	transition-duration: 0s;
 }
 
 .im-btn:disabled,
 .im-btn[aria-disabled="true"] {
-	opacity: 0.5;
+	opacity: var(--im-opacity-disabled);
 	cursor: not-allowed;
 	scale: 1;
+	translate: 0;
+	box-shadow: none;
 }
 
 .im-btn > .im-icon {
 	font-size: 1rem;
-	transition: translate 200ms var(--im-ease-out);
+	transition: translate var(--im-duration-fast) var(--im-ease-out);
 }
 
 /* THE button interaction (there is one): it gives under the press, and a
@@ -68,6 +84,12 @@
 	--im-btn-fg: var(--im-on-accent);
 	--im-btn-bg-hover: var(--im-ink);
 	--im-btn-fg-hover: var(--im-canvas);
+}
+
+/* Held down it is the accent, two steps darker — not the ink it hovers to. */
+.im-btn-primary:active {
+	--im-btn-bg-hover: var(--im-accent-active);
+	--im-btn-fg-hover: var(--im-on-accent);
 }
 
 .im-btn-ink {

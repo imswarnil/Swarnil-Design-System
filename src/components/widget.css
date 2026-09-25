@@ -76,23 +76,6 @@
 	letter-spacing: var(--im-tracking-tight);
 }
 
-/* ---- author ---- */
-.im-widget-author {
-	align-items: flex-start;
-}
-
-.im-widget-author-name {
-	color: var(--im-ink);
-	font-size: var(--im-text-h5);
-	font-weight: 600;
-	text-decoration: none;
-}
-
-.im-widget-author-role {
-	color: var(--im-muted);
-	font-size: var(--im-text-xs);
-}
-
 .im-widget-stats {
 	display: flex;
 	flex-wrap: wrap;
@@ -285,7 +268,7 @@
 	border-radius: var(--im-radius-md);
 	color: var(--im-ink);
 	text-decoration: none;
-	transition: background-color 120ms;
+	transition: background-color var(--im-duration-instant);
 }
 
 .im-widget-product:hover {
@@ -324,7 +307,7 @@
 .im-widget-product > .im-icon {
 	grid-row: span 2;
 	color: var(--im-faint);
-	transition: color 120ms, translate 200ms var(--im-ease-out);
+	transition: color var(--im-duration-instant), translate var(--im-duration-fast) var(--im-ease-out);
 }
 
 .im-widget-product:hover > .im-icon {
@@ -612,40 +595,3 @@
 	width: 100%;
 }
 
-/* ---- the author card ----
-   On the light ground every hover and active state uses; centred; the
-   numbers carry icons. Nothing stacked, nothing raised. */
-.im-widget-person {
-	text-align: center;
-	background-color: var(--im-surface);
-	box-shadow: none;
-}
-
-.im-widget-person .im-avatar { --im-avatar-size: 4.5rem; margin-inline: auto; }
-.im-widget-person .im-widget-author-name { margin-top: 0.75rem; font-size: var(--im-text-base); }
-.im-widget-person .im-widget-author-role { color: var(--im-muted); }
-.im-widget-person .im-widget-sponsor { margin-top: 0.5rem; }
-
-.im-widget-person-stats {
-	display: grid;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
-	gap: 0.5rem;
-	margin-top: 0.875rem;
-	padding-top: 0.875rem;
-	border-top: 1px solid var(--im-line);
-}
-
-.im-widget-person-stats > div { display: grid; gap: 0.125rem; }
-.im-widget-person-stats .im-icon { margin-inline: auto; color: var(--im-accent); font-size: 1rem; }
-.im-widget-person-stats strong { font-family: var(--im-font-mono); font-size: var(--im-text-sm); font-variant-numeric: tabular-nums; }
-.im-widget-person-stats span { color: var(--im-muted); font-size: 0.6875rem; }
-.im-widget-person .im-cluster { justify-content: center; }
-
-/* Collapsed by default: the face, the name, the role, a button. Open: the
-   line about them, the numbers, the socials. */
-details.im-widget-person > summary { list-style: none; cursor: pointer; display: grid; justify-items: center; gap: 0.125rem; }
-details.im-widget-person > summary::-webkit-details-marker { display: none; }
-details.im-widget-person > summary .im-btn { margin-top: 0.75rem; }
-details.im-widget-person[open] > summary .im-widget-person-open { display: none; }
-details.im-widget-person:not([open]) > summary .im-widget-person-close { display: none; }
-.im-widget-person-body { display: grid; gap: 0.5rem; margin-top: 0.75rem; }

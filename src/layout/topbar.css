@@ -4,7 +4,7 @@
 	grid-area: bar;
 	position: sticky;
 	top: 0;
-	z-index: 40;
+	z-index: var(--im-z-bar);
 	display: grid;
 	grid-template-columns: minmax(0, 1fr) minmax(0, 28rem) minmax(0, 1fr);
 	align-items: center;
@@ -44,9 +44,25 @@
 }
 
 .im-brand > img {
-	height: 1.75rem;
+	height: 1.5rem;
 	width: auto;
 }
+
+/* The square: a site icon, or the logo's mark. One slot, 1.75rem. */
+.im-brand-icon {
+	flex: none;
+	width: 1.75rem;
+	height: 1.75rem;
+	border-radius: var(--im-radius-sm);
+	object-fit: cover;
+}
+
+.im-brand-name {
+	font-size: var(--im-text-base);
+	letter-spacing: var(--im-tracking-tight);
+}
+
+.im-brand > .im-logo { --im-logo-size: 1.125rem; }
 
 /* The search field is a button that LOOKS like a field: it opens a dialog. */
 .im-searchbar {
@@ -62,7 +78,7 @@
 	font-size: var(--im-text-sm);
 	text-align: left;
 	cursor: pointer;
-	transition: background-color 120ms, color 120ms;
+	transition: background-color var(--im-duration-instant), color var(--im-duration-instant);
 }
 
 .im-searchbar:hover {
@@ -123,7 +139,7 @@
 	text-decoration: none;
 	white-space: nowrap;
 	cursor: pointer;
-	transition: background-color 120ms, color 120ms;
+	transition: background-color var(--im-duration-instant), color var(--im-duration-instant);
 }
 
 .im-toplink:hover,
@@ -145,7 +161,7 @@
 .im-toplink > .im-icon {
 	color: var(--im-muted);
 	font-size: 0.875rem;
-	transition: rotate 160ms var(--im-ease-out);
+	transition: rotate var(--im-duration-instant) var(--im-ease-out);
 }
 
 .im-toplink[aria-expanded="true"] > .im-icon {
@@ -212,12 +228,12 @@
 	top: 0;
 	left: 0;
 	right: 0;
-	z-index: 40;
+	z-index: var(--im-z-bar);
 	height: var(--im-bar-height);
 	border-radius: 0;
 	background-color: color-mix(in oklab, var(--im-canvas) 86%, transparent);
 	box-shadow: none;
-	transition: top 280ms var(--im-ease-out), left 280ms var(--im-ease-out), right 280ms var(--im-ease-out), height 280ms var(--im-ease-out), border-radius 280ms var(--im-ease-out), box-shadow 280ms var(--im-ease-out), background-color 280ms;
+	transition: top var(--im-duration-fast) var(--im-ease-out), left var(--im-duration-fast) var(--im-ease-out), right var(--im-duration-fast) var(--im-ease-out), height var(--im-duration-fast) var(--im-ease-out), border-radius var(--im-duration-fast) var(--im-ease-out), box-shadow var(--im-duration-fast) var(--im-ease-out), background-color var(--im-duration-fast);
 }
 
 /* The island proper — and what the floating bar becomes once the page moves. */

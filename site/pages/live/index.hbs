@@ -1,0 +1,28 @@
+---
+title: Live stream
+description: Five scenes and three overlays for a stream, in the system’s look — and the thinking: a stream is a room, and the room should look like the site.
+eyebrow: Live stream
+source: src/components/studio.css
+---
+<p>A live stream is a room people walk into. The scenes below are its walls: what they see while they wait, while it runs, while you step out, and as they leave — all in the system’s look, so the room is recognisably the same place as the site. Every one is a page under <code>/frames/</code> at 1920 × 1080; add it as a browser source and it is live.</p>
+
+<h2>The scenes</h2>
+<ul>
+	<li><a href="/live/starting-soon/">Starting soon</a> — the countdown, the title, the schedule. Dark, so the first frame of the stream lifts out of it.</li>
+	<li><a href="/live/live-layout/">The live layout</a> — the screen with the camera in its corner, the live chip and the count at the top, the title and a ticker along the foot.</li>
+	<li><a href="/live/brb/">Be right back</a> — the same room with the lights down.</li>
+	<li><a href="/live/ending/">Ending</a> — thanks, where the code is, when the next one is, two ways to stay.</li>
+	<li><a href="/live/overlays/">Overlays</a> — a lower third, chat, an alert. No ground of their own.</li>
+</ul>
+
+<h2>The ideology</h2>
+<ul>
+	<li><strong>One layout, the whole stream.</strong> The screen and the camera do not move; chat and alerts come and go around them. A viewer who looks away and back should find everything where it was.</li>
+	<li><strong>The foot is the only furniture.</strong> Title, ticker, where else to find you — one bar. Nothing else is permanently on screen.</li>
+	<li><strong>The accent means live.</strong> The recording-light dot, on the chip and the mark, and nowhere else.</li>
+	<li><strong>Dark scenes, light overlays.</strong> Waiting scenes are dark so the stream’s first frame arrives as a change; overlays are the canvas colour so they read on any screen share.</li>
+	<li><strong>Every scene says when the next one is.</strong> Starting soon, ending — the schedule is on both.</li>
+</ul>
+
+<h2>In OBS</h2>
+<p>Add each frame as a browser source at 1920 × 1080 with “shutdown source when not visible” off, so the countdown keeps its time. The overlays go on top of the live scene. For overlays driven by the stream itself — a real countdown, real chat, real alerts — see <a href="https://github.com/imswarnil/Tally">Tally</a>, which is built for OBS and only inspired by this system.</p>

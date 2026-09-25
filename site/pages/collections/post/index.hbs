@@ -6,51 +6,31 @@ eyebrow: Collections · Post
 source: src/components/collection.css · post-card.css · pagination.css
 ---
 {{!-- layout: home — the page's <h1> belongs to the collection being shown. --}}
-<section class="im-section im-wrap im-pt-sm im-section-sm">
-	<p class="im-eyebrow">Collections · Post · {{page.title}}</p>
-	<p class="im-lede">{{page.description}}</p>
-	<p class="doc-source"><code>{{page.source}}</code></p>
-
-	<div class="demo-controls">
-		<p class="im-caption">Feed</p>
-		<div class="im-btn-group" role="group" aria-label="Feed layout"
-			data-demo-target="#feed" data-demo-label="#feed-class">
-			<button class="im-btn im-btn-sm im-feed im-feed-lead" type="button" aria-pressed="true"
-				data-demo->Lead</button>
-			<button class="im-btn im-btn-sm im-feed" type="button"
-				data-demo->Grid</button>
-			<button class="im-btn im-btn-sm im-feed im-feed-list" type="button"
-				data-demo->List</button>
-		</div>
-		<code class="doc-source im-ml-auto" id="feed-class"></code>
+<header class="im-collhero">
+	<span class="im-collhero-art im-bg-rules im-art-post" aria-hidden="true"></span>
+	<div class="im-collhero-copy">
+		<p class="im-caption" data-index="{{fixtures.posts.length}}">Posts</p>
+		<h1 class="im-collhero-title">Journal</h1>
+		<p class="im-collhero-text">Notes on building things, the roads in between, and the tools that survived the year. Long enough to be worth the trip; never longer.</p>
+		<p class="im-collhead-meta"><span>Updated weekly</span><a href="/components/icons/">RSS</a><a href="/forms/inputs/">Subscribe</a></p>
 	</div>
-</section>
+	<div class="im-collhero-bar">
+		<div class="im-collbar-filters">
+			<a class="im-tag" href="#feed" aria-current="page">All</a>
+			{{#each fixtures.tags}}<a class="im-tag" href="#feed">{{name}} <small>{{count.posts}}</small></a>{{/each}}
+		</div>
+		<div class="im-btn-group im-viewswitch" role="group" aria-label="How to show the posts" data-im-view="#feed">
+			<button class="im-btn im-btn-sm" type="button" value="card" aria-pressed="true">{{icon "layout-grid"}}<span>Card</span></button>
+			<button class="im-btn im-btn-sm" type="button" value="grid" aria-pressed="false">{{icon "grid-2x2"}}<span>Grid</span></button>
+			<button class="im-btn im-btn-sm" type="button" value="list" aria-pressed="false">{{icon "rows-3"}}<span>List</span></button>
+			<button class="im-btn im-btn-sm" type="button" value="simple" aria-pressed="false">{{icon "list"}}<span>Simple</span></button>
+		</div>
+	</div>
+</header>
 
 <div class="im-single im-wrap-wide" data-sidebar="on">
 	<article class="im-stack im-stack-md">
-		<header class="im-collhead im-collhead-patterned">
-			<span class="im-collhead-art im-bg-rules im-art-post" aria-hidden="true"></span>
-			<p class="im-eyebrow">Collection</p>
-			<h1 class="im-collhead-title">Journal</h1>
-			<p class="im-collhead-text">Notes on building things, the roads in between, and the tools that survived the year. Long enough to be worth the trip; never longer.</p>
-			<p class="im-collhead-meta">
-				<span>{{fixtures.posts.length}} posts</span>
-				<a href="/components/icons/">RSS</a>
-				<a href="/forms/inputs/">Subscribe</a>
-			</p>
-		</header>
-
-		<div class="im-collbar">
-			<div class="im-collbar-filters">
-				<a class="im-tag" href="#feed" aria-current="page">All</a>
-				{{#each fixtures.tags}}<a class="im-tag" href="#feed">{{name}} <small>{{count.posts}}</small></a>{{/each}}
-			</div>
-			<div class="im-cluster im-cluster-tight">
-				<button class="im-btn im-btn-sm" type="button">{{icon "list-filter"}}Newest</button>
-			</div>
-		</div>
-
-		<div class="im-feed im-feed-lead" id="feed">
+		<div class="im-feed" id="feed" data-view="card">
 			{{#foreach demo.ten}}{{> "components/post-card" excerpt=true}}{{/foreach}}
 		</div>
 
@@ -161,14 +141,14 @@ source: src/components/collection.css · post-card.css · pagination.css
 		{{/example}}
 
 		<h2>The feed</h2>
-		<p>One grid, three dressings — the buttons at the top of this page. Whichever one a theme picks, it picks it for <em>every</em> page of the feed: a reader scanning a list of posts should not have to relearn it between the home page and a tag.</p>
+		<p>One grid, four views — the switch in the hero. The reader picks, and the choice is remembered for every page of the feed.</p>
 		<div class="im-table-scroll">
 		<table>
 			<thead><tr><th>Class</th><th></th></tr></thead>
 			<tbody>
 				<tr><td><code>im-feed</code></td><td>As many columns as fit at <code>--im-feed-min</code> (16rem). No breakpoints.</td></tr>
 				<tr><td><code>im-feed-lead</code></td><td>The newest post takes the top row and <strong>lies down</strong> — picture beside the words — from 48rem up. Below that there is only one column, so there is no difference to make.</td></tr>
-				<tr><td><code>im-feed-list</code></td><td>One column, separated by rules rather than gaps. For a tag page, an archive, a search result. Give the cards <code>layout="row"</code>.</td></tr>
+				<tr><td><code>data-view</code></td><td><code>card</code> (the first leads) · <code>grid</code> · <code>list</code> (picture beside the words) · <code>simple</code> (a title and a date). Set by <code>im-view.js</code> from <code>data-im-view="#feed"</code>.</td></tr>
 				<tr><td><code>im-feed-empty</code></td><td>A dashed box for "nothing here yet" — which a tag page will hit.</td></tr>
 			</tbody>
 		</table>
@@ -205,3 +185,7 @@ source: src/components/collection.css · post-card.css · pagination.css
 		</ul>
 	</div>
 </section>
+
+<section class="im-section im-wrap"><div class="im-prose">
+<p>One idea for a listing: <code>im-collhero</code> across the whole page — the pattern, a display title, the topics and the view switch along its foot — then the feed and a rail. The switch sets <code>data-view</code> on <code>.im-feed</code> (card · grid · list · simple) and remembers it; the cards never change markup.</p>
+</div></section>

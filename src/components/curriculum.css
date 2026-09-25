@@ -1,98 +1,19 @@
-/* Curriculum — the navigation of a course: modules that open, lessons inside
-   them with their state, and how far along you are.
+/* Lesson furniture — what sits around a lesson on its page: the kind chip in
+   its head, and the previous / next pair at its foot. The curriculum itself
+   is im-syllabus (the course page) and im-coursenav (the player), both in
+   coursenav.css. */
 
-   <button class="im-btn im-curriculum-open" data-im-curriculum-open="#course">{{> "icons/menu"}} Curriculum</button>
-   <aside class="im-curriculum" id="course" aria-label="Course curriculum">
-     <header class="im-curriculum-head"> title · progress </header>
-     <details class="im-module" open>
-       <summary><span class="im-module-index">01</span><span class="im-module-title">Foundations</span><small>3 / 4</small></summary>
-       <ol class="im-lessons">
-         <li><a class="im-lesson" href="…" data-state="done"> <span class="im-lesson-mark"></span> <span>Lesson</span> <small>6:20</small> </a></li>
-       </ol>
-     </details>
-   </aside>
-
-   From lg it is a sticky column beside the lesson. Below lg it is off-screen and
-   the open button shows; pressed, it slides in as a panel over the page.
-   Lesson states: done · current (aria-current="page") · locked. */
-
-.im-curriculum {
-	--im-curriculum-width: 20rem;
-
-	display: flex;
-	flex-direction: column;
-	min-width: 0;
-	border: 1px solid var(--im-line);
-	border-radius: var(--im-radius-lg);
-	background-color: var(--im-canvas);
-	font-size: var(--im-text-sm);
+.im-lesson-kind {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.3125rem;
+	color: var(--im-c-course);
+	font-weight: 600;
 }
-
-
-
-/* ---- layout: lesson + curriculum ---- */
-
-@media (width >= 64rem) {
-}
-
-/* Below lg: a panel that slides in over the page. */
-@media (width < 64rem) {
-}
-
-/* ---- a shot on a lesson ----
-   A course whose lessons are videos has a still for each one {
-	flex: none;
-	width: var(--im-lesson-shot, 4rem);
-	aspect-ratio: 16 / 10;
-	overflow: hidden;
-	border-radius: var(--im-radius-sm);
-	background-color: var(--im-surface-2);
-}
-
-
-.im-lesson > :is(.im-lesson-mark, .im-lesson-shot, .im-lesson-kind, .im-lesson-free, small) {
-	flex: none;
-}
-
-/* ---- the course page ---------------------------------------------------
-   A course sells on four things, in this order: what it is, who made it, how
-   much of it there is, and what somebody who took it says. Everything below
-   serves that order. */
-
-
-@media (width < 60rem) {
-}
-
-/* Numbers that count up. The animation is decoration on top of a number
-   that is already correct in the markup — the element's text IS the final
-   value,
-   and a script only replaces it while it runs. Nothing is ever blank,
-   nothing is wrong with JavaScript off {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(min(9rem, 100%), 1fr));
-	gap: 1px;
-	overflow: hidden;
-	border-radius: var(--im-radius-lg);
-	box-shadow: inset 0 0 0 1px var(--im-line);
-	background-color: var(--im-line);
-}
-
-.im-bignum .im-icon {
-	color: var(--im-accent);
-	font-size: 0.9375rem;
-}
-
-/* ---- a section of the curriculum ----
-   Ghost has no "module", so a section is a heading with a range of lessons
-   under it. It carries its own meta — how long, when it was last updated —
-   because "updated September" on a course page and "updated September" on
-   ONE section of it are very different claims. */
-
 
 .im-lesson-kind > .im-icon {
 	font-size: 0.875rem;
 }
-
 
 /* ---- previous / next, with the picture ---------------------------------
    Pagination on a lesson is the most-pressed control on the page, so it is

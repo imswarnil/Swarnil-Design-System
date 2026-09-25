@@ -1,0 +1,58 @@
+---
+title: Sidebar navbar site demo
+layout: home
+shell: frame
+---
+{{!-- Loaded in an iframe by /layout/sites/. A whole site with the links down
+	the left: .im-shell — the app bar across, the side nav with groups, a tree
+	and counts, the page, the footer. The side nav collapses to a rail (the
+	panel button) and on a phone its links move into the menu panel. --}}
+<div class="im-shell">
+	{{> "shell/topbar" drawer="side-panel"}}
+
+	<aside class="im-sidenav" aria-label="Site">
+		<nav class="im-navgroup" aria-label="Site">
+			<a class="im-navlink" href="#main" aria-current="page">{{> "icons/house"}}<span>Home</span></a>
+			<a class="im-navlink" href="#main">{{> "icons/book-open"}}<span>Journal</span><small>48</small></a>
+			<details class="im-navtree" open>
+				<summary class="im-navlink">{{> "icons/layers"}}<span>Collections</span></summary>
+				<div class="im-navtree-items">
+					<a class="im-navlink" href="#main"><span>Projects</span></a>
+					<a class="im-navlink" href="#main"><span>Videos</span></a>
+					<a class="im-navlink" href="#main"><span>Courses</span></a>
+					<a class="im-navlink" href="#main"><span>Travel</span></a>
+				</div>
+			</details>
+			<a class="im-navlink" href="#main">{{> "icons/graduation-cap"}}<span>Courses</span><span class="im-badge im-badge-accent">New</span></a>
+			<a class="im-navlink" href="#main">{{> "icons/user"}}<span>About</span></a>
+			<a class="im-navlink" href="#main">{{> "icons/mail"}}<span>Contact</span></a>
+		</nav>
+		<p class="im-sidenav-foot">Written in Amsterdam</p>
+	</aside>
+
+	<main class="im-shell-main" id="main">
+		<section class="im-wrap im-stack im-stack-md pt-8">
+			<p class="im-caption" data-index="02">A site with a sidebar</p>
+			<h1 class="text-h1 font-semibold tracking-tight">Everything on the left, always one click away.</h1>
+			<p class="im-lede im-m0">For a site with many sections: the side nav holds them all, with icons, counts and trees. The panel button in the bar folds it to an icon rail, and the choice is remembered.</p>
+		</section>
+		<section class="im-wrap">
+			<div class="im-feed" data-view="list">
+				{{#foreach demo.six}}{{#match @number "<" 5}}{{> "components/post-card" excerpt=true}}{{/match}}{{/foreach}}
+			</div>
+		</section>
+	</main>
+
+	{{> "shell/footer" strip_only=true}}
+</div>
+
+<dialog class="im-navpanel" id="side-panel" aria-label="Navigation">
+	<div class="im-navpanel-head"><a class="im-brand" href="#main">{{> "components/logo"}}</a><button class="im-btn im-btn-ghost im-btn-icon" type="button" data-drawer-close aria-label="Close">{{> "icons/x"}}</button></div>
+	<nav class="im-navpanel-cols" aria-label="Site">
+		<div class="im-navcols">
+			<div class="im-navcol im-navcol-compact"><p class="im-navcol-title">Site</p><a class="im-navitem" href="#main"><span>Home</span></a><a class="im-navitem" href="#main"><span>Journal</span></a><a class="im-navitem" href="#main"><span>Courses</span></a><a class="im-navitem" href="#main"><span>About</span></a></div>
+			<div class="im-navcol im-navcol-compact"><p class="im-navcol-title">Collections</p><a class="im-navitem" href="#main"><span>Projects</span></a><a class="im-navitem" href="#main"><span>Videos</span></a><a class="im-navitem" href="#main"><span>Travel</span></a></div>
+		</div>
+	</nav>
+	<div class="im-navpanel-foot">{{> "components/theme-switch" size="sm"}}</div>
+</dialog>

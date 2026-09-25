@@ -34,7 +34,7 @@
 }
 
 .im-video-poster {
-	transition: scale 900ms var(--im-ease-out), opacity 300ms;
+	transition: scale var(--im-duration-long) var(--im-ease-out), opacity var(--im-duration-base);
 }
 
 .im-video:hover > .im-video-poster {
@@ -48,7 +48,7 @@
 	z-index: 1;
 	background-image: linear-gradient(to top, rgb(0 0 0 / 55%), transparent 55%);
 	pointer-events: none;
-	transition: opacity 300ms;
+	transition: opacity var(--im-duration-base);
 }
 
 .im-video-play {
@@ -66,7 +66,7 @@
 	color: var(--im-on-accent);
 	font-size: 1.5rem;
 	cursor: pointer;
-	transition: scale 220ms var(--im-ease-spring);
+	transition: scale var(--im-duration-fast) var(--im-ease-spring);
 }
 
 .im-video-play > .im-icon {
@@ -94,7 +94,7 @@
 	justify-content: space-between;
 	gap: 1rem;
 	padding: 1rem 1.25rem;
-	color: #fff;
+	color: var(--im-on-media);
 	font-size: var(--im-text-sm);
 	font-weight: 500;
 	pointer-events: none;
@@ -141,7 +141,7 @@
 	text-align: left;
 	text-decoration: none;
 	cursor: pointer;
-	transition: color 120ms, background-color 120ms;
+	transition: color var(--im-duration-instant), background-color var(--im-duration-instant);
 }
 
 .im-chapters time {
@@ -184,7 +184,7 @@
 	background-color: var(--im-accent);
 	transform-origin: 0 50%;
 	scale: var(--im-chapter-progress, 0) 1;
-	transition: scale 500ms linear;
+	transition: scale var(--im-duration-slow) linear;
 }
 
 /* Beside the player, from lg. */
@@ -328,7 +328,7 @@
 	align-items: flex-start;
 	gap: 1rem;
 	padding: clamp(1.5rem, 1rem + 3vw, 3.5rem);
-	color: #fff;
+	color: var(--im-on-media);
 }
 
 .im-videobg-center {
@@ -352,7 +352,7 @@
 
 .im-videobg-text {
 	max-width: 46ch;
-	color: color-mix(in oklab, #fff 84%, transparent);
+	color: var(--im-on-media-dim);
 	font-size: var(--im-text-lg);
 	line-height: var(--im-leading-lg);
 	text-wrap: pretty;
@@ -404,12 +404,12 @@
 
 /* The same trick, the other way up. */
 :root[data-theme="dark"] .im-videobg-knockout {
-	color: #fff;
+	color: var(--im-on-media);
 	mix-blend-mode: multiply;
 }
 
 .im-videobg-blend {
-	color: #fff;
+	color: var(--im-on-media);
 	mix-blend-mode: difference;
 }
 

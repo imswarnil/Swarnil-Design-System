@@ -120,7 +120,7 @@ a.im-post-card {
 	min-height: 1.5rem;
 	padding: 0 0.5rem;
 	border-radius: var(--im-radius-sm);
-	background-color: rgb(20 20 20 / 62%);
+	background-color: var(--im-glass);
 	backdrop-filter: blur(10px) saturate(1.6);
 	color: var(--im-white);
 	font-size: var(--im-text-xs);
@@ -385,7 +385,7 @@ a.im-post-card {
 	--im-post-card-inset: 0.9375rem;
 	--im-post-card-fill: var(--im-accent);
 	--im-post-card-on-fill: var(--im-on-accent);
-	--im-post-card-speed: 620ms;
+	--im-post-card-speed: var(--im-duration-slow);
 
 	padding: var(--im-post-card-pad);
 	overflow: hidden;
@@ -422,7 +422,7 @@ a.im-post-card {
 	height: var(--im-post-card-seed);
 	border-radius: 50%;
 	background-color: var(--im-post-card-fill);
-	transition: background-color 260ms 140ms;
+	transition: background-color var(--im-duration-fast) var(--im-duration-instant);
 	pointer-events: none;
 }
 
@@ -502,12 +502,12 @@ a.im-post-card {
    a link is worth following needs this one to be findable. */
 .im-post-card-flag-lock {
 	background-color: color-mix(in oklab, var(--im-warning) 82%, #000);
-	color: #fff;
+	color: var(--im-on-media);
 }
 
 .im-post-card-flag-free {
 	background-color: color-mix(in oklab, var(--im-success) 78%, #000);
-	color: #fff;
+	color: var(--im-on-media);
 }
 
 /* A locked card's picture is dimmed a little as well as marked. Not blurred:
@@ -538,10 +538,10 @@ a.im-post-card {
 	height: 1.25rem;
 	padding: 0 0.3125rem;
 	border-radius: var(--im-radius-full);
-	background-color: rgb(20 20 20 / 60%);
+	background-color: var(--im-glass);
 	-webkit-backdrop-filter: blur(4px);
 	backdrop-filter: blur(4px);
-	color: #fff;
+	color: var(--im-on-media);
 	font-size: 0.625rem;
 	font-weight: 700;
 	letter-spacing: 0.08em;
@@ -582,7 +582,7 @@ a.im-post-card {
 	place-content: center;
 	justify-items: center;
 	gap: 0.375rem;
-	color: #fff;
+	color: var(--im-on-media);
 	text-align: center;
 	background-image: linear-gradient(rgb(10 10 10 / 25%), rgb(10 10 10 / 45%));
 }

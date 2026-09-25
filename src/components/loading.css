@@ -67,7 +67,7 @@
 	opacity: 0;
 	scale: 1.04;
 	filter: blur(14px);
-	transition: opacity 600ms, scale 900ms var(--im-ease-out), filter 700ms;
+	transition: opacity var(--im-duration-slow), scale var(--im-duration-long) var(--im-ease-out), filter var(--im-duration-slow);
 }
 
 [data-im-js] .im-lazy > img[data-im-loaded] {

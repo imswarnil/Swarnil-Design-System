@@ -32,7 +32,7 @@
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
-	transition: scale 700ms var(--im-ease-out), filter 500ms;
+	transition: scale var(--im-duration-slow) var(--im-ease-out), filter var(--im-duration-slow);
 }
 
 .im-gallery-item:is(:hover, :focus-visible) > img {
@@ -80,8 +80,8 @@
 	opacity: var(--im-expand-idle);
 	scale: 0.92;
 	transition:
-		opacity 200ms,
-		scale 260ms var(--im-ease-glide);
+		opacity var(--im-duration-fast),
+		scale var(--im-duration-fast) var(--im-ease-glide);
 	pointer-events: none;
 }
 
@@ -158,17 +158,23 @@
 	cursor: zoom-in;
 }
 
-/* ---- the lightbox (built by the script) ----
-   A PLAIN SHEET, not a frosted pane: the canvas colour, opaque — white in
-   light mode, near-black in dark — so nothing of the page shows through and
-   the picture is the only thing in the room. It arrives on a long bezier:
-   the sheet fades, the picture rises and settles.
+/* Lightbox — a dark theatre, whatever the page's theme: a photograph is
+   judged against black, and a white sheet around it flattens it.
 
-   The way out is a bare cross ON THE PICTURE'S top-right corner. Not a
-   button: over a photograph, a chip with a border is furniture. The hit area
-   is still 2.75rem — the cross is small, the target is not. */
+     top    where you are (03 / 12, the site) · zoom · the original · close
+     stage  the picture, an arrow each side; press the picture to zoom into
+            the point pressed, move to look around, press again (or Esc) to
+            come back out
+     foot   the caption, and a strip of every picture in the set
+
+   Built by im-media.js on first use, one <dialog> for the page: focus trap
+   and scroll lock come from the browser. Keys: ← → Home End, z to zoom, Esc.
+   The colours are literal on purpose — the theatre is dark in both themes. */
 .im-lightbox {
-	--im-lightbox-foot: 4.5rem;
+	--im-lightbox-ink: rgb(255 255 255 / 92%);
+	--im-lightbox-dim: rgb(255 255 255 / 55%);
+	--im-lightbox-glass: rgb(255 255 255 / 10%);
+	--im-lightbox-strip: 3.25rem;
 
 	width: 100vw;
 	max-width: none;
@@ -177,17 +183,20 @@
 	margin: 0;
 	padding: 0;
 	border: 0;
-	background-color: var(--im-canvas);
-	color: var(--im-ink);
+	background-color: rgb(10 10 10 / 94%);
+	color: var(--im-lightbox-ink);
+	color-scheme: dark;
 }
 
 .im-lightbox::backdrop {
-	background: none;
+	background: rgb(10 10 10 / 40%);
+	-webkit-backdrop-filter: blur(10px);
+	backdrop-filter: blur(10px);
 }
 
 .im-lightbox[open] {
 	display: grid;
-	grid-template: "stage" minmax(0, 1fr) "foot" auto / minmax(0, 1fr);
+	grid-template-rows: auto minmax(0, 1fr) auto;
 	animation: im-lightbox-sheet 260ms var(--im-ease-glide);
 }
 
@@ -200,8 +209,70 @@
 	from { opacity: 0; }
 }
 
+/* ---- top ---- */
+.im-lightbox-top {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	padding: 0.75rem clamp(0.75rem, 2vw, 1.25rem);
+}
+
+.im-lightbox-where {
+	display: flex;
+	align-items: baseline;
+	gap: 0.875rem;
+	min-width: 0;
+}
+
+.im-lightbox-count {
+	flex: none;
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-sm);
+	font-variant-numeric: tabular-nums;
+	letter-spacing: 0.06em;
+}
+
+.im-lightbox-title {
+	overflow: hidden;
+	color: var(--im-lightbox-dim);
+	font-size: var(--im-text-sm);
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.im-lightbox-tools { display: flex; gap: 0.375rem; }
+
+.im-lightbox-tool,
+.im-lightbox-prev,
+.im-lightbox-next {
+	display: grid;
+	place-items: center;
+	width: 2.5rem;
+	height: 2.5rem;
+	padding: 0;
+	border: 0;
+	border-radius: var(--im-radius-full);
+	background-color: var(--im-lightbox-glass);
+	color: var(--im-lightbox-ink);
+	cursor: pointer;
+	transition: background-color var(--im-duration-instant), color var(--im-duration-instant), translate var(--im-duration-fast) var(--im-ease-glide);
+}
+
+.im-lightbox-tool > .im-icon { font-size: 1.125rem; }
+
+:is(.im-lightbox-tool, .im-lightbox-prev, .im-lightbox-next):is(:hover, :focus-visible) {
+	background-color: var(--im-glass-light);
+	color: var(--im-on-media);
+}
+
+.im-lightbox-tool[aria-pressed="true"] {
+	background-color: var(--im-on-media);
+	color: var(--im-media-ink);
+}
+
+/* ---- stage ---- */
 .im-lightbox-stage {
-	grid-area: stage;
 	position: relative;
 	display: grid;
 	/* One definite track, so anything sized against it has something to be a
@@ -209,34 +280,40 @@
 	grid-template: minmax(0, 1fr) / minmax(0, 1fr);
 	place-items: center;
 	min-height: 0;
-	padding-inline: clamp(0.5rem, 6vw, 5rem);
+	padding-inline: clamp(0.5rem, 7vw, 6rem);
+	overflow: hidden;
 	touch-action: pan-y;
 }
 
-/* Shrink-wraps the picture, so the cross sits on the PICTURE'S corner and not
-   in the corner of the window. Its height is bounded in viewport units rather
-   than 100%, which would resolve against an auto height and be dropped. */
 .im-lightbox-figure {
-	position: relative;
-	display: block;
-	max-width: 100%;
+	display: grid;
+	place-items: center;
+	width: 100%;
+	height: 100%;
 	margin: 0;
 	animation: im-lightbox-in 520ms var(--im-ease-glide) backwards;
 }
 
 .im-lightbox-figure > img {
 	display: block;
-	width: auto;
-	height: auto;
 	max-width: 100%;
-	max-height: calc(100dvh - var(--im-lightbox-foot) - 2.5rem);
-	border-radius: var(--im-radius-lg);
-	box-shadow: 0 0 0 1px var(--im-line), 0 2.5rem 5rem -2rem rgb(0 0 0 / 35%);
+	max-height: 100%;
+	border-radius: var(--im-radius-md);
+	cursor: zoom-in;
 	user-select: none;
-	/* The script replaces this node to move between pictures, and a fresh node
-	   restarts the fade — so stepping through a gallery is not a hard cut. */
+	transition: scale var(--im-duration-base) var(--im-ease-glide);
+	/* A fresh node per picture restarts the fade, so stepping through a
+	   gallery is not a hard cut. */
 	animation: im-lightbox-swap 300ms var(--im-ease-glide);
 }
+
+.im-lightbox[data-zoomed] .im-lightbox-figure > img {
+	scale: 2.25;
+	border-radius: 0;
+	cursor: zoom-out;
+}
+
+.im-lightbox[data-zoomed] :is(.im-lightbox-prev, .im-lightbox-next) { opacity: 0; pointer-events: none; }
 
 @keyframes im-lightbox-swap {
 	from { opacity: 0; }
@@ -245,8 +322,8 @@
 @keyframes im-lightbox-in {
 	from {
 		opacity: 0;
-		scale: 0.94;
-		translate: 0 1.5rem;
+		scale: 0.96;
+		translate: 0 1rem;
 	}
 }
 
@@ -254,126 +331,79 @@
 	animation: im-lightbox-in 200ms var(--im-ease-in) reverse forwards;
 }
 
-/* The cross. A button element, because it is one; nothing of a button about
-   it but the hit area. It is white over the picture and picks up a disc only
-   while it is hovered or focused. */
-/* The site's name, top left, where a title bar would put it: says whose
-   window this is while the picture fills the rest. `data-im-lightbox-title`
-   on <html> sets it; otherwise the last part of the document title. */
-.im-lightbox-title {
-	position: absolute;
-	top: 0.875rem;
-	left: 1rem;
-	z-index: 2;
-	color: var(--im-muted);
-	font-size: var(--im-text-sm);
-	font-weight: 600;
-	letter-spacing: var(--im-tracking-tight);
-	pointer-events: none;
-}
-
-.im-lightbox-title:empty { display: none; }
-
-.im-lightbox-close {
-	position: absolute;
-	top: 0;
-	right: 0;
-	display: grid;
-	place-items: center;
-	width: 2.75rem;
-	height: 2.75rem;
-	padding: 0;
-	border: 0;
-	border-radius: var(--im-radius-md);
-	background: none;
-	color: #fff;
-	cursor: pointer;
-	filter: drop-shadow(0 1px 3px rgb(0 0 0 / 55%));
-	transition: background-color 200ms, rotate 320ms var(--im-ease-glide);
-}
-
-.im-lightbox-close > .im-icon {
-	font-size: 1.375rem;
-	stroke-width: 1.75;
-}
-
-.im-lightbox-close:is(:hover, :focus-visible) {
-	background-color: rgb(20 20 20 / 45%);
-	rotate: 90deg;
-}
-
-/* Caption and counter, under the picture. */
-.im-lightbox-foot {
-	grid-area: foot;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: 1rem;
-	min-height: var(--im-lightbox-foot);
-	padding: 1rem 1.25rem 1.5rem;
-	text-align: center;
-}
-
-.im-lightbox-caption {
-	color: var(--im-body);
-	font-size: var(--im-text-sm);
-	text-wrap: pretty;
-}
-
-.im-lightbox-count {
-	flex: none;
-	color: var(--im-muted);
-	font-family: var(--im-font-mono);
-	font-size: var(--im-text-xs);
-	font-variant-numeric: tabular-nums;
-	letter-spacing: 0.08em;
-}
-
-.im-lightbox-caption:not(:empty) + .im-lightbox-count::before {
-	content: "·";
-	margin-right: 1rem;
-	color: var(--im-faint);
-}
-
-/* The arrows: the same bare treatment as the cross, at the edges of the room. */
 .im-lightbox-prev,
 .im-lightbox-next {
 	position: absolute;
 	top: 50%;
 	z-index: 1;
-	display: grid;
-	place-items: center;
 	width: 3rem;
 	height: 3rem;
-	padding: 0;
-	border: 0;
-	border-radius: var(--im-radius-full);
-	background: none;
-	color: var(--im-muted);
 	translate: 0 -50%;
-	cursor: pointer;
-	transition: color 160ms, background-color 160ms, translate 260ms var(--im-ease-glide);
 }
 
 .im-lightbox-prev > .im-icon,
-.im-lightbox-next > .im-icon {
-	font-size: 1.5rem;
-}
+.im-lightbox-next > .im-icon { font-size: 1.375rem; }
 
-.im-lightbox-prev:is(:hover, :focus-visible),
-.im-lightbox-next:is(:hover, :focus-visible) {
-	background-color: var(--im-surface);
-	color: var(--im-ink);
-}
-
-.im-lightbox-prev { left: 0.25rem; }
-.im-lightbox-next { right: 0.25rem; }
-
+.im-lightbox-prev { left: clamp(0.5rem, 2vw, 1.5rem); }
+.im-lightbox-next { right: clamp(0.5rem, 2vw, 1.5rem); }
 .im-lightbox-prev:is(:hover, :focus-visible) { translate: -0.125rem -50%; }
 .im-lightbox-next:is(:hover, :focus-visible) { translate: 0.125rem -50%; }
 
-.im-lightbox[data-single] :is(.im-lightbox-prev, .im-lightbox-next, .im-lightbox-count) {
-	display: none;
+/* ---- foot: the caption, then the strip ---- */
+.im-lightbox-foot {
+	display: grid;
+	justify-items: center;
+	gap: 0.75rem;
+	padding: 0.75rem 1rem 1rem;
+}
+
+.im-lightbox-caption {
+	max-width: 48rem;
+	color: var(--im-lightbox-dim);
+	font-size: var(--im-text-sm);
+	text-align: center;
+	text-wrap: pretty;
+}
+
+.im-lightbox-caption:empty { display: none; }
+
+.im-lightbox-strip {
+	display: flex;
+	gap: 0.375rem;
+	max-width: 100%;
+	padding: 0.25rem;
+	overflow-x: auto;
+	scrollbar-width: none;
+}
+
+.im-lightbox-strip:empty { display: none; }
+
+.im-lightbox-strip > button {
+	flex: none;
+	width: calc(var(--im-lightbox-strip) * 1.4);
+	height: var(--im-lightbox-strip);
+	padding: 0;
+	overflow: hidden;
+	border: 0;
+	border-radius: var(--im-radius-sm);
+	background: none;
+	opacity: 0.4;
+	cursor: pointer;
+	transition: opacity var(--im-duration-instant);
+}
+
+.im-lightbox-strip > button:hover { opacity: 0.8; }
+.im-lightbox-strip > button[aria-current] { opacity: 1; box-shadow: 0 0 0 2px #fff; }
+.im-lightbox-strip img { width: 100%; height: 100%; object-fit: cover; }
+
+.im-lightbox[data-single] :is(.im-lightbox-prev, .im-lightbox-next, .im-lightbox-count) { display: none; }
+
+/* A phone: swipe instead of arrows, a smaller strip. */
+@media (width < 40rem) {
+	.im-lightbox { --im-lightbox-strip: 2.5rem; }
+	.im-lightbox-prev, .im-lightbox-next { display: none; }
+	.im-lightbox-stage { padding-inline: 0; }
+	.im-lightbox-figure > img { border-radius: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {

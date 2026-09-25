@@ -97,7 +97,7 @@
 	background: none;
 	color: var(--im-muted);
 	cursor: pointer;
-	transition: background-color 160ms, color 160ms, rotate 320ms var(--im-ease-glide);
+	transition: background-color var(--im-duration-instant), color var(--im-duration-instant), rotate var(--im-duration-base) var(--im-ease-glide);
 }
 
 .im-ad-close > .im-icon {
@@ -112,13 +112,13 @@
 
 /* Over a picture the cross needs to survive any creative underneath it. */
 .im-ad-close-over {
-	color: #fff;
+	color: var(--im-on-media);
 	filter: drop-shadow(0 1px 3px rgb(0 0 0 / 55%));
 }
 
 .im-ad-close-over:is(:hover, :focus-visible) {
-	background-color: rgb(20 20 20 / 45%);
-	color: #fff;
+	background-color: var(--im-glass-soft);
+	color: var(--im-on-media);
 }
 
 /* ---- the slot ----
@@ -172,7 +172,7 @@
 	text-decoration-color: color-mix(in oklab, currentcolor 35%, transparent);
 	text-underline-offset: 0.2em;
 	cursor: pointer;
-	transition: color 140ms, text-decoration-color 140ms;
+	transition: color var(--im-duration-instant), text-decoration-color var(--im-duration-instant);
 }
 
 .im-ad-remove:hover {
@@ -232,10 +232,10 @@
 	gap: 0.375rem;
 	padding: 0.1875rem 0.5rem;
 	border-radius: var(--im-radius-full);
-	background-color: rgb(20 20 20 / 62%);
+	background-color: var(--im-glass);
 	-webkit-backdrop-filter: blur(6px);
 	backdrop-filter: blur(6px);
-	color: #fff;
+	color: var(--im-on-media);
 	font-family: var(--im-font-mono);
 	font-size: var(--im-text-xs);
 	font-variant-numeric: tabular-nums;
@@ -247,7 +247,7 @@
 	inset: auto 0 0;
 	z-index: 2;
 	height: 2px;
-	background-color: rgb(255 255 255 / 25%);
+	background-color: var(--im-glass-light);
 }
 
 .im-ad-progress > span {
@@ -334,7 +334,7 @@
 
 	position: fixed;
 	inset: auto 0 0;
-	z-index: 60;
+	z-index: var(--im-z-modal);
 	width: min(var(--im-ad-max), calc(100vw - 1rem));
 	margin: 0 auto 0.5rem;
 	border-radius: var(--im-radius-lg);
@@ -354,8 +354,8 @@
 
 .im-ad-sticky {
 	transition:
-		translate 420ms var(--im-ease-glide),
-		opacity 300ms;
+		translate var(--im-duration-base) var(--im-ease-glide),
+		opacity var(--im-duration-base);
 }
 
 @media (width < 40rem) {
@@ -369,15 +369,15 @@
 	position: fixed;
 	right: 1rem;
 	bottom: 1rem;
-	z-index: 60;
+	z-index: var(--im-z-modal);
 	width: min(20rem, calc(100vw - 2rem));
 	margin: 0;
 	border-radius: var(--im-radius-xl);
 	background-color: var(--im-canvas);
 	box-shadow: inset 0 0 0 1px var(--im-line), var(--im-shadow-float);
 	transition:
-		translate 420ms var(--im-ease-glide),
-		opacity 300ms;
+		translate var(--im-duration-base) var(--im-ease-glide),
+		opacity var(--im-duration-base);
 }
 
 .im-ad-floating:not([data-im-ad-shown]) {
@@ -506,7 +506,7 @@
 	font-family: var(--im-font-mono);
 	font-size: var(--im-text-sm);
 	text-decoration: none;
-	transition: color 140ms, background-color 140ms;
+	transition: color var(--im-duration-instant), background-color var(--im-duration-instant);
 }
 
 .im-sponsors > a:hover {
@@ -522,7 +522,7 @@
 	   bringing seven brand colours into a quiet footer. */
 	filter: grayscale(1);
 	opacity: 0.7;
-	transition: filter 200ms, opacity 200ms;
+	transition: filter var(--im-duration-fast), opacity var(--im-duration-fast);
 }
 
 .im-sponsors > a:hover img {
@@ -714,7 +714,7 @@
 	background: none;
 	color: var(--im-muted);
 	cursor: pointer;
-	transition: background-color 160ms, color 160ms, rotate 320ms var(--im-ease-glide);
+	transition: background-color var(--im-duration-instant), color var(--im-duration-instant), rotate var(--im-duration-base) var(--im-ease-glide);
 }
 
 .im-gate-close:is(:hover, :focus-visible) {
@@ -999,5 +999,5 @@
 	color: var(--im-ink);
 	transition: background-color var(--im-duration-fast) var(--im-ease-out), color var(--im-duration-fast) var(--im-ease-out);
 }
-.im-affiliate-compact .im-affiliate-go:hover { background-color: var(--im-accent); color: #fff; box-shadow: none; }
+.im-affiliate-compact .im-affiliate-go:hover { background-color: var(--im-accent); color: var(--im-on-accent); box-shadow: none; }
 .im-affiliate-compact .im-affiliate-text, .im-affiliate-compact .im-affiliate-actions { display: none; }

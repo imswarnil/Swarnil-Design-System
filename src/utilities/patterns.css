@@ -134,13 +134,63 @@
 @utility im-fade-radial { mask-image: radial-gradient(ellipse at center, #000 35%, transparent 75%); }
 @utility im-fade-corner { mask-image: radial-gradient(ellipse 90% 90% at 100% 0%, #000 20%, transparent 70%); }
 
-/* ---- motion: a pattern that slowly drifts ---- */
+/* ---- motion: a pattern that moves ----
+   Slowly. A pattern that moves is felt, not watched: forty seconds a pitch.
+   Every one pans by exactly one pitch (or one turn of the light), so the
+   loop has no seam, and every one stops under reduced motion.
+
+     im-bg-drift     diagonally, one pitch            (grid, dots, plus…)
+     im-bg-drift-x   sideways — columns, lines, hatch
+     im-bg-drift-y   downward — rules, waves, a scan
+     im-bg-breathe   the light swells and settles      (glow, mesh)
+     im-bg-sweep     the light crosses once and again  (glow)
+
+   Knob: --im-pattern-speed (40s). */
 @utility im-bg-drift {
 	animation: im-bg-drift var(--im-pattern-speed, 40s) linear infinite;
 }
 
+@utility im-bg-drift-x {
+	animation: im-bg-drift-x var(--im-pattern-speed, 40s) linear infinite;
+}
+
+@utility im-bg-drift-y {
+	animation: im-bg-drift-y var(--im-pattern-speed, 40s) linear infinite;
+}
+
+@utility im-bg-breathe {
+	animation: im-bg-breathe var(--im-pattern-speed, 8s) var(--im-ease-in-out) infinite;
+}
+
+@utility im-bg-sweep {
+	background-size: 200% 100%;
+	background-repeat: no-repeat;
+	animation: im-bg-sweep var(--im-pattern-speed, 12s) var(--im-ease-in-out) infinite;
+}
+
 @keyframes im-bg-drift {
 	to { background-position: var(--im-pattern-size, 2.5rem) var(--im-pattern-size, 2.5rem); }
+}
+
+@keyframes im-bg-drift-x {
+	to { background-position: var(--im-pattern-size, 2.5rem) 0; }
+}
+
+@keyframes im-bg-drift-y {
+	to { background-position: 0 var(--im-pattern-size, 2.5rem); }
+}
+
+@keyframes im-bg-breathe {
+	50% { opacity: 0.55; }
+}
+
+@keyframes im-bg-sweep {
+	from { background-position: 0% 0; }
+	to { background-position: 100% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.im-bg-drift, .im-bg-drift-x, .im-bg-drift-y, .im-bg-breathe, .im-bg-sweep { animation: none; }
 }
 
 /* ---- more line work ---- */

@@ -170,7 +170,7 @@
 	min-height: 1.875rem;
 	color: inherit;
 	text-decoration: none;
-	transition: color 120ms;
+	transition: color var(--im-duration-instant);
 }
 
 .im-footer-links a:hover,
@@ -211,7 +211,7 @@
 	height: 2.25rem;
 	border-radius: var(--im-radius-full);
 	color: var(--im-muted);
-	transition: background-color 140ms, color 140ms;
+	transition: background-color var(--im-duration-instant), color var(--im-duration-instant);
 }
 
 .im-footer-social a:hover,
@@ -293,7 +293,7 @@
 }
 
 .im-footer-top > .im-icon {
-	transition: translate 160ms var(--im-ease-out);
+	transition: translate var(--im-duration-instant) var(--im-ease-out);
 }
 
 .im-footer-top:hover > .im-icon {

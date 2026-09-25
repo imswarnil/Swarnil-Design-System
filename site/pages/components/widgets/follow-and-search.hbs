@@ -1,0 +1,23 @@
+---
+title: Follow & search
+description: Neither needs anything of its own: the first is a cluster of brand buttons, the second an input group.
+eyebrow: Component · Widget
+source: src/components/widget.css
+---
+<p>Neither needs anything of its own: the first is a cluster of <a href="/components/share/">brand buttons</a>, the second an <a href="/forms/inputs/">input group</a>.</p>
+{{#example style="max-width: 22rem"}}
+<div class="im-widgets">
+	<section class="im-widget">
+		<h2 class="im-widget-title">Elsewhere</h2>
+		<div class="im-cluster im-cluster-tight">
+			<a class="im-btn im-btn-brand im-btn-brand-soft im-btn-sm" data-brand="x" href="#follow-search">{{> "icons/brand-x"}}<span>X</span></a>
+			<a class="im-btn im-btn-brand im-btn-brand-soft im-btn-sm" data-brand="github" href="#follow-search">{{> "icons/brand-github"}}<span>GitHub</span></a>
+			<a class="im-btn im-btn-brand im-btn-brand-soft im-btn-sm" data-brand="youtube" href="#follow-search">{{> "icons/brand-youtube"}}<span>YouTube</span></a>
+		</div>
+	</section>
+	<section class="im-widget">
+		<h2 class="im-widget-title">Search</h2>
+		<div class="im-input-group">{{icon "search"}}<input class="im-input" type="search" placeholder="Search the journal…" aria-label="Search the journal"></div>
+	</section>
+</div>
+{{/example}}

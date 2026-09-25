@@ -91,7 +91,7 @@
 	height: 100%;
 	border-radius: 0;
 	object-fit: cover;
-	transition: scale 600ms var(--im-ease-out);
+	transition: scale var(--im-duration-slow) var(--im-ease-out);
 }
 
 .kg-gallery-image:hover img {
@@ -118,7 +118,7 @@
 	box-shadow: inset 0 0 0 1px var(--im-line);
 	color: var(--im-body);
 	text-decoration: none;
-	transition: box-shadow 160ms;
+	transition: box-shadow var(--im-duration-instant);
 }
 
 .kg-bookmark-container:hover,
@@ -302,7 +302,7 @@
 	background-color: var(--im-surface);
 	color: var(--im-ink);
 	cursor: pointer;
-	transition: background-color 140ms, rotate 220ms var(--im-ease-out);
+	transition: background-color var(--im-duration-instant), rotate var(--im-duration-fast) var(--im-ease-out);
 }
 
 .kg-toggle-card-icon svg {
@@ -379,7 +379,7 @@
 	line-height: 1.2;
 	text-decoration: none;
 	cursor: pointer;
-	transition: opacity 140ms, scale 140ms;
+	transition: opacity var(--im-duration-instant), scale var(--im-duration-instant);
 }
 
 :is(.kg-btn, .kg-header-card-button, .kg-product-card-button, .kg-cta-button, .kg-signup-card-button):hover {
@@ -428,7 +428,7 @@
 
 .kg-header-card.kg-style-dark {
 	background-color: var(--im-gray-950, #0a0a0a);
-	color: #fff;
+	color: var(--im-on-media);
 }
 
 .kg-header-card.kg-style-accent {
@@ -437,7 +437,7 @@
 }
 
 .kg-header-card.kg-style-image {
-	color: #fff;
+	color: var(--im-on-media);
 }
 
 .kg-header-card.kg-style-image::before {
@@ -477,8 +477,8 @@
 
 .kg-header-card.kg-style-dark:not(.kg-v2) .kg-header-card-button,
 .kg-header-card.kg-style-image:not(.kg-v2) .kg-header-card-button {
-	background-color: #fff;
-	color: #0a0a0a;
+	background-color: var(--im-on-media);
+	color: var(--im-media-ink);
 }
 
 .kg-header-card.kg-style-accent:not(.kg-v2) .kg-header-card-button {
@@ -640,7 +640,7 @@
 	border-radius: var(--im-radius-full);
 	background-color: var(--im-canvas);
 	box-shadow: inset 0 0 0 1px var(--im-line);
-	transition: box-shadow 160ms;
+	transition: box-shadow var(--im-duration-instant);
 }
 
 .kg-signup-card-fields:focus-within {
@@ -799,7 +799,7 @@
 	box-shadow: inset 0 0 0 1px var(--im-line);
 	color: var(--im-body);
 	text-decoration: none;
-	transition: box-shadow 160ms;
+	transition: box-shadow var(--im-duration-instant);
 }
 
 .kg-file-card-container:hover,
@@ -863,7 +863,7 @@
 .kg-file-card-icon svg {
 	width: 1.375rem;
 	height: 1.375rem;
-	transition: translate 200ms var(--im-ease-out);
+	transition: translate var(--im-duration-fast) var(--im-ease-out);
 }
 
 /* The arrow leans the way the file goes: down. */
@@ -1071,7 +1071,7 @@
 	color: var(--im-ink);
 	box-shadow: var(--im-shadow-float);
 	cursor: pointer;
-	transition: scale 200ms var(--im-ease-spring, ease-out), background-color 160ms, color 160ms;
+	transition: scale var(--im-duration-fast) var(--im-ease-spring, ease-out), background-color var(--im-duration-instant), color var(--im-duration-instant);
 }
 
 .kg-video-large-play-icon svg {

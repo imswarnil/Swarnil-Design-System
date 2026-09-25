@@ -1,0 +1,22 @@
+---
+title: With an AI: skill & MCP
+description: Two ways for an assistant to build with the system instead of guessing at it — a skill that teaches the rules and the shapes, and an MCP server that reads the real components at call time. Better together.
+eyebrow: Guides
+source: skills/im-design-system/SKILL.md · mcp/server.mjs
+---
+<p>Most design systems hand an AI a screenshot and hope. This one hands it two things it can actually use.</p>
+
+<h2>The skill</h2>
+<p><code>skills/im-design-system/SKILL.md</code> is an <a href="https://skills.sh/">agent skill</a>: the rules (three layers of tokens, the two states, words over a picture, Ghost's reserved helper names, provenance), the page shapes, the helpers that always ship, the motion tokens and the frames for the channel — everything an assistant needs to <em>know</em> before it writes a line. Install it into any agent that reads skills:</p>
+{{{{code "bash"}}}}
+npx skills add https://github.com/imswarnil/Swarnil-Design-System --skill im-design-system
+{{{{/code}}}}
+
+<h2>The MCP server</h2>
+<p><code>mcp/server.mjs</code> lets the assistant <em>look</em>: <code>list_components</code>, <code>get_component</code> (the CSS, the partial, the docs), <code>list_tokens</code>, <code>search</code>, <code>get_page</code> and <code>rules</code>. It reads this repository at call time, so it can never describe a component that has changed.</p>
+{{{{code "json"}}}}
+{ "mcpServers": { "im-design-system": { "command": "node", "args": ["mcp/server.mjs"] } } }
+{{{{/code}}}}
+
+<h2>Why both</h2>
+<p>The skill is judgement; the server is facts. With only the skill an assistant knows the rules but invents class names. With only the server it can read every file but does not know that a component never sets its own margin, or that <code>{{"{{date}}"}}</code> is a helper. With both it builds a page the way this system would.</p>

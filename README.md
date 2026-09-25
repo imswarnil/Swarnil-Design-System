@@ -41,6 +41,13 @@ Rules that matter: every field a template reads must not share a Ghost helper's 
 
 ## With an AI assistant
 
+Two ways in, and they are better together. The **skill** teaches an agent the rules and the
+shapes; the **MCP server** lets it read the real components at call time.
+
+```bash
+npx skills add https://github.com/imswarnil/Swarnil-Design-System --skill im-design-system
+```
+
 ```json
 { "mcpServers": { "im-design-system": { "command": "node", "args": ["mcp/server.mjs"] } } }
 ```

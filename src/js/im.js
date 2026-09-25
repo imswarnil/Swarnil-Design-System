@@ -4,7 +4,7 @@
  *
  *   theme     [data-theme-toggle]            light ⇄ dark  ([data-theme-set] picks one)
  *   nav       [data-nav-toggle]              side nav ↔ icon rail
- *   player    [data-im-player-toggle]        the player's side: collapse, or a drawer
+ *   player    [data-im-player-toggle]        the player's side: collapse, or fold open on a phone
  *   drawer    [data-drawer-open="#id"]       opens a <dialog class="drawer">
  *   menu      <div class="im-menu" popover>  positioned under its button
  *   mega      <div class="im-mega" popover>  the same, centred and wide
@@ -103,44 +103,27 @@
 
 	/* ── player: the lessons side ─────────────────────────────────────── */
 	/* Wide: collapse or restore the side, remembered like the nav. Narrow: the
-	   side is a drawer over the lesson, opened and closed by the same button
-	   and never remembered — nobody wants a drawer open on arrival. */
+	   side folds under the video and the same toggle opens it there — not
+	   remembered, so a phone always arrives on the lesson. */
 	const wide = matchMedia('(width >= 64rem)');
 	function applyPlayer() {
 		const off = root.dataset.playerSide === 'off';
 		for (const p of document.querySelectorAll('.im-player')) {
-			const open = wide.matches ? !off : p.dataset.drawer === 'open';
+			const open = wide.matches ? !off : p.dataset.lessons === 'open';
 			for (const b of p.querySelectorAll('[data-im-player-toggle]')) b.setAttribute('aria-expanded', String(open));
 		}
 	}
-	function closeDrawer(p) {
-		if (p?.dataset.drawer !== 'open') return;
-		delete p.dataset.drawer;
-		applyPlayer();
-	}
 	document.addEventListener('click', (e) => {
-		const b = e.target.closest('[data-im-player-toggle]');
-		const p = b?.closest('.im-player');
+		const p = e.target.closest('[data-im-player-toggle]')?.closest('.im-player');
 		if (!p) return;
 		if (wide.matches) {
 			root.dataset.playerSide = root.dataset.playerSide === 'off' ? 'on' : 'off';
 			store.set('player-side', root.dataset.playerSide);
-		} else if (p.dataset.drawer === 'open') {
-			delete p.dataset.drawer;
-		} else {
-			p.dataset.drawer = 'open';
-		}
+		} else if (p.dataset.lessons === 'open') delete p.dataset.lessons;
+		else p.dataset.lessons = 'open';
 		applyPlayer();
 	});
-	document.addEventListener('keydown', (e) => {
-		if (e.key === 'Escape') for (const p of document.querySelectorAll('.im-player[data-drawer="open"]')) closeDrawer(p);
-	});
-	// A lesson picked from the drawer navigates; a drawer left open by a
-	// window that grew past 64rem would otherwise come back on the way down.
-	wide.addEventListener('change', () => {
-		for (const p of document.querySelectorAll('.im-player')) delete p.dataset.drawer;
-		applyPlayer();
-	});
+	wide.addEventListener('change', applyPlayer);
 	applyPlayer();
 
 	/* ── drawer ────────────────────────────────────────────────────────── */
@@ -391,30 +374,6 @@
 		el.append(clone);
 		el.setAttribute('data-im-ready', '');
 	}
-
-	/* ── curriculum panel (below lg) ───────────────────────────────────── */
-	const curriculum = (panel, open) => {
-		panel.toggleAttribute('data-im-open', open);
-		const openers = [...document.querySelectorAll('[data-im-curriculum-open]')].filter((b) => document.querySelector(b.dataset.imCurriculumOpen) === panel);
-		for (const b of openers) b.setAttribute('aria-expanded', String(open));
-		// Focus goes into the panel, and back to the button that opened it.
-		(open ? panel.querySelector('[data-im-curriculum-close]') : openers[0])?.focus();
-	};
-	for (const b of document.querySelectorAll('[data-im-curriculum-open]')) b.setAttribute('aria-expanded', 'false');
-	document.addEventListener('click', (e) => {
-		const opener = e.target.closest('[data-im-curriculum-open]');
-		if (opener) {
-			const panel = document.querySelector(opener.dataset.imCurriculumOpen);
-			if (panel) curriculum(panel, true);
-			return;
-		}
-		const open = document.querySelector('.im-curriculum[data-im-open]');
-		if (open && (e.target.closest('[data-im-curriculum-close]') || !e.target.closest('.im-curriculum'))) curriculum(open, false);
-	});
-	document.addEventListener('keydown', (e) => {
-		const open = e.key === 'Escape' && document.querySelector('.im-curriculum[data-im-open]');
-		if (open) curriculum(open, false);
-	});
 
 	/* ── range: keep the filled track in step with the value ───────────── */
 	const fill = (r) => r.style.setProperty('--im-value', ((r.value - (r.min || 0)) / ((r.max || 100) - (r.min || 0))).toFixed(4));

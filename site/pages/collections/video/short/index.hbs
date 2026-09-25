@@ -7,14 +7,14 @@ source: src/components/video-card.css
 <p>A 16:9 video sits <em>in</em> a post. A 9:16 clip <strong>is</strong> the post on a phone — one viewport, the clip, its title and who made it. On a desk the same clip goes left and the post goes right. There are no like, share or "more" buttons anywhere: they belong to a feed of strangers, and this is a blog.</p>
 
 <h2>The page</h2>
-<p>The clip on the left at its real proportion, previous and next beside it, and on the right the post: title, byline, body, facts, one comment — vertically centred against the clip. One viewport; the panel owns the only scrollbar. Loaded in an iframe because that is the only honest way to show a layout whose claim is "it fits".</p>
+<p>Two columns. The left 40% is the clip's room: the clip standing in the middle at its real proportion with nothing over it, up and down beside it. The right 60% is the post, left aligned on a measure, centred when it is short and scrolling on its own when it is not. <a href="/demos/shortwatch/">Open it full screen</a>.</p>
 {{#example flush=true code=false}}
 <iframe class="demo-frame im-demo-tall" src="/demos/shortwatch/" title="A vertical clip with its post beside it"  loading="lazy"></iframe>
 {{/example}}
 <ul>
-	<li><strong>Clip left, words right.</strong> A 9:16 clip on a 16:9 screen leaves two thirds of the window empty; the post lives there.</li>
-	<li><strong>Up and down, beside the clip.</strong> The only controls. No reactions — this is a blog, not a feed of strangers.</li>
-	<li><strong>On a phone the clip is a 16:9 head</strong> and the post follows underneath; the window scrolls.</li>
+	<li><strong>40 / 60.</strong> <code>--im-shortwatch-split</code> moves the line; <code>--im-shortwatch-measure</code> caps the post.</li>
+	<li><strong>Nothing on the picture.</strong> No title, no bar, no buttons over the clip — the words are all on the right.</li>
+	<li><strong>On a phone</strong> the clip stays 9:16, capped to the screen's height, with its arrows; the post follows underneath.</li>
 </ul>
 
 <h2>On a phone</h2>

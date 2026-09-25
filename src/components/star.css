@@ -23,7 +23,7 @@
 	font-weight: 500;
 	text-decoration: none;
 	white-space: nowrap;
-	transition: box-shadow 140ms, background-color 140ms;
+	transition: box-shadow var(--im-duration-instant), background-color var(--im-duration-instant);
 }
 
 .im-star:hover,

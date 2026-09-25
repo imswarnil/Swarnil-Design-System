@@ -145,7 +145,7 @@
 	font-weight: 500;
 	text-decoration: none;
 	cursor: pointer;
-	transition: background-color 120ms, color 120ms;
+	transition: background-color var(--im-duration-instant), color var(--im-duration-instant);
 }
 
 .im-comment-action > .im-icon {

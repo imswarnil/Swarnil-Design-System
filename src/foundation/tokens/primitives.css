@@ -37,8 +37,8 @@
 	--im-text-h5: 1rem;
 	--im-text-h4: 1.125rem;
 	--im-text-h3: 1.25rem;
-	--im-text-h2: 1.5rem;
-	--im-text-h1: 1.875rem;
+	--im-text-h2: clamp(1.375rem, 1.2rem + 0.7vw, 1.5rem);
+	--im-text-h1: clamp(1.625rem, 1.3rem + 1.3vw, 1.875rem);
 	--im-text-display: clamp(2.25rem, 1.4rem + 3.4vw, 3.75rem);
 
 	--im-leading-xs: 1.4;
@@ -72,10 +72,15 @@
 	--im-radius-2xl: 1.5rem;
 	--im-radius-full: 999px;
 
-	/* ---- Widths ------------------------------------------------------------ */
-	--im-width-prose: 44rem;
-	--im-width-page: 72rem;
+	/* ---- Widths ---------------------------------------------------------------
+	   One wide measure, and the other two are whole columns of it: the page is
+	   ten of the twelve (columns 2–11), the prose six (the middle half). So a
+	   centred im-wrap, an im-wrap-wide and a reading column all sit on the
+	   SAME grid lines — the grid is never drawn, it is felt. The arithmetic is
+	   N/12 of the width less the gaps a span of N does not contain. */
 	--im-width-wide: 90rem;
+	--im-width-page: calc(var(--im-width-wide) * 10 / 12 - var(--im-grid-gap) / 6);
+	--im-width-prose: calc(var(--im-width-wide) / 2 - var(--im-grid-gap) / 2);
 
 	/* ---- Motion ------------------------------------------------------------ */
 	--im-ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);

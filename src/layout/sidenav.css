@@ -52,7 +52,7 @@
 	text-decoration: none;
 	white-space: nowrap;
 	cursor: pointer;
-	transition: background-color 120ms;
+	transition: background-color var(--im-duration-instant);
 }
 
 .im-navlink > .im-icon {
@@ -60,7 +60,7 @@
 	font-size: 1.125rem;
 	stroke-width: 1.7;
 	color: var(--im-muted);
-	transition: color 120ms;
+	transition: color var(--im-duration-instant);
 }
 
 .im-navlink > span {
@@ -130,7 +130,7 @@
 	border-right: 1.5px solid var(--im-muted);
 	border-bottom: 1.5px solid var(--im-muted);
 	rotate: -45deg;
-	transition: rotate 160ms var(--im-ease-out);
+	transition: rotate var(--im-duration-instant) var(--im-ease-out);
 }
 
 .im-navtree[open] > summary::after {

@@ -1,0 +1,24 @@
+---
+title: Reset demo
+layout: home
+shell: frame
+---
+{{!-- Loaded in an iframe by /pages/reset/. The plain solo page: no panel,
+	one thing in the middle of the window. --}}
+<div class="im-solo">
+	{{#> "shell/solo-bar" back="/demos/signin/" back_label="Back to sign in"}}{{/"shell/solo-bar"}}
+	<main class="im-solo-main">
+		<div class="im-auth im-flat im-p-0" data-mode="in">
+			<div class="im-auth-head">
+				<h1 class="im-auth-title">Forgot your password?</h1>
+				<p class="im-auth-text">You never had one. Enter the email you signed up with and we will send a link that signs you in on this device.</p>
+			</div>
+			<form class="im-auth-form" data-members-form="signin">
+				<div class="im-field"><label class="im-label" for="r-email">Email</label><input class="im-input" id="r-email" type="email" required autocomplete="email" placeholder="you@example.com" data-members-email></div>
+				<button class="im-btn im-btn-primary" type="submit">{{> "icons/mail"}}Email me a link</button>
+				<p class="im-auth-note">{{> "icons/info"}}<span>The link works once and expires in 24 hours.</span></p>
+			</form>
+		</div>
+	</main>
+	{{> "shell/solo-foot"}}
+</div>

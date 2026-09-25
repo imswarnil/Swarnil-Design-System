@@ -1,0 +1,16 @@
+---
+title: Thumbnail · tutorial
+layout: home
+shell: frame
+---
+{{!-- A frame for the channel: 1280 × 720. Open at that size to screenshot,
+	or load as a browser source. Built from tokens — see src/components/studio.css. --}}
+<div class="im-studio im-studio-thumb im-studio-dark" style="--im-studio-w: 1280; --im-studio-h: 720">
+	<span class="im-studio-bg im-bg-blueprint im-bg-fade-r" aria-hidden="true"></span>
+	<div class="im-studio-copy">
+		<pre class="im-studio-code"><b>:root</b>[data-theme="dark"] { --im-ink: <i>#fff</i> }</pre>
+		<h1 class="im-studio-title">Dark mode in <em>one</em> file</h1>
+	</div>
+	<div class="im-studio-person im-studio-person-block"><img src="{{demo.portrait}}" alt=""></div>
+	<p class="im-studio-mark">{{> "components/logo" mark=true}}<span>imswarnil</span></p>
+</div>

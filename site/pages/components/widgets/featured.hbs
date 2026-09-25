@@ -1,0 +1,18 @@
+---
+title: Featured
+description: One post, given a picture. im-widget-media fills the top of the frame; the rest is an ordinary heading and line.
+eyebrow: Component · Widget
+source: src/components/widget.css
+---
+<p>One post, given a picture. <code>im-widget-media</code> fills the top of the frame; the rest is an ordinary heading and line.</p>
+{{#example style="max-width: 22rem"}}
+{{#with demo.three.[1]}}
+<section class="im-widget">
+	<h2 class="im-widget-title">Editor's pick</h2>
+	<span class="im-widget-media"><img src="{{feature_image}}" alt="" loading="lazy"></span>
+	<p class="im-widget-heading">{{title}}</p>
+	<p>{{excerpt words="18"}}</p>
+	<a class="im-btn im-btn-sm" href="#featured">Read it {{> "icons/arrow-right"}}</a>
+</section>
+{{/with}}
+{{/example}}

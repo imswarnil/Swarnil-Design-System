@@ -244,15 +244,23 @@
 	else start();
 })();
 
-/** im-syllabus: units open and close. The attribute does the work; this only toggles it. */
+/** im-syllabus: units open and close; [data-im-syllabus-all] opens or closes every one. */
 (() => {
+	const set = (unit, open) => {
+		unit.toggleAttribute('data-open', open);
+		unit.querySelector('.im-unit-head')?.setAttribute('aria-expanded', String(open));
+	};
 	document.addEventListener('click', (e) => {
+		const all = e.target.closest('[data-im-syllabus-all]');
+		if (all) {
+			const units = [...all.closest('.im-syllabus').querySelectorAll('.im-unit')];
+			const open = !units.every((u) => u.hasAttribute('data-open'));
+			units.forEach((u) => set(u, open));
+			all.querySelector('span:not(.im-icon)').textContent = open ? 'Collapse all' : 'Expand all';
+			return;
+		}
 		const head = e.target.closest('.im-unit-head');
-		if (!head) return;
-		const unit = head.closest('.im-unit');
-		const open = unit.hasAttribute('data-open');
-		unit.toggleAttribute('data-open', !open);
-		head.setAttribute('aria-expanded', String(!open));
+		if (head) set(head.closest('.im-unit'), !head.closest('.im-unit').hasAttribute('data-open'));
 	});
 })();
 

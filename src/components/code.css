@@ -39,7 +39,7 @@
 	font-size: var(--im-text-xs);
 	font-weight: 500;
 	cursor: pointer;
-	transition: background-color 120ms, color 120ms;
+	transition: background-color var(--im-duration-instant), color var(--im-duration-instant);
 }
 
 .im-code-copy:hover {

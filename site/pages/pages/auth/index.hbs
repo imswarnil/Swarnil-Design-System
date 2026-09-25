@@ -11,47 +11,10 @@ source: src/components/auth.css
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
-<section class="im-authpage im-bg-radar im-bg-accent im-bg-loose im-bg-surface" >
-	<div class="im-auth im-auth-wide" id="auth" data-mode="in" >
-		<div class="im-auth-head">
-			{{> "components/logo" size="1.5rem"}}
-			<h1 class="im-auth-title"><span data-when="in">Welcome back</span><span data-when="up">Start reading</span></h1>
-			<p class="im-auth-text"><span data-when="in">Sign in to pick up where you left off.</span><span data-when="up">Free. One email a fortnight, and every members-only post.</span></p>
-		</div>
-
-		<div class="im-auth-switch" role="tablist" aria-label="Sign in or sign up" data-im-mode="#auth">
-			<button type="button" role="tab" value="in" aria-selected="true" aria-controls="auth-form">Sign in</button>
-			<button type="button" role="tab" value="up" aria-selected="false" aria-controls="auth-form">Sign up</button>
-		</div>
-
-		<form class="im-auth-form" id="auth-form" data-members-form="signin">
-			<div class="im-field" data-when="up">
-				<label class="im-label" for="auth-name">Name</label>
-				<input class="im-input" id="auth-name" type="text" name="name" autocomplete="name" placeholder="How you would like to be greeted">
-			</div>
-
-			<div class="im-field">
-				<label class="im-label" for="auth-email">Email</label>
-				<input class="im-input" id="auth-email" type="email" name="email" autocomplete="email" required placeholder="you@example.com" data-members-email>
-			</div>
-
-			<p class="im-auth-note">{{icon "mail"}}<span>No password. We send a link that signs you in — it works on every device and there is nothing to forget.</span></p>
-
-			<button class="im-btn im-btn-primary" type="submit"><span data-when="in">Email me a link</span><span data-when="up">Create my account</span></button>
-		</form>
-
-		<p class="im-auth-or">or</p>
-
-		<div class="im-auth-social">
-			<button class="im-btn" type="button">{{icon "brand-github"}}Continue with GitHub</button>
-			<button class="im-btn" type="button">{{icon "at-sign"}}Continue with a passkey</button>
-		</div>
-
-		<p class="im-auth-foot">
-			<span data-when="in">No account yet? Use the switch above — it is the same form. <a href="/pages/reset/">Forgot your password?</a></span>
-			<span data-when="up">By signing up you agree to the <a href="/pages/about/">terms</a>. We do not sell anything to anybody, ever.</span>
-		</p>
-	</div>
+<section class="im-section im-wrap-wide">
+	<p class="im-cluster"><a class="im-btn im-btn-primary im-btn-sm" href="/demos/signin/">Open full screen {{icon "arrow-up-right"}}</a><span class="im-hint">A page of its own: <code>im-solo</code>, the way home in the bar.</span></p>
+	<iframe class="demo-frame im-demo-tall" src="/demos/signin/" title="Sign in" loading="lazy"></iframe>
+	<iframe class="demo-frame im-max-sm im-mx-auto im-block im-demo-tall" src="/demos/signin/" title="Sign in on a phone" loading="lazy"></iframe>
 </section>
 
 <section class="im-section im-wrap">
@@ -77,7 +40,7 @@ source: src/components/auth.css
 				<tr><td><code>im-auth-switch</code></td><td>The segmented control. Same fill-and-weight active state as the rest of the system.</td></tr>
 				<tr><td><code>data-when</code></td><td>Which mode an element belongs to. Space-separated for both.</td></tr>
 				<tr><td><code>im-auth-note</code></td><td>The thing that would otherwise surprise somebody.</td></tr>
-				<tr><td><code>im-authpage</code></td><td>The page wrapper when the card is the only thing on it — centred in the window, no chrome.</td></tr>
+				<tr><td><code>im-solo</code> · <code>im-solo-split</code></td><td>The page around it: the way home, the card, and a panel that talks while you type. <code>src/layout/solo.css</code>.</td></tr>
 			</tbody>
 		</table>
 		</div>

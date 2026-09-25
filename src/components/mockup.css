@@ -213,7 +213,7 @@
 .im-mock-terminal .im-mock-dots::before,
 .im-mock-terminal .im-mock-dots::after,
 .im-mock-terminal .im-mock-dots > i {
-	background-color: rgb(255 255 255 / 22%);
+	background-color: var(--im-glass-light);
 }
 
 .im-mock-terminal .im-mock-title {
@@ -231,7 +231,7 @@
 }
 
 .im-mock-terminal .im-mock-body b {
-	color: #fff;
+	color: var(--im-on-media);
 	font-weight: 500;
 }
 
@@ -345,7 +345,7 @@
 /* Tilted, for a hero — the frame leans back a little and lifts on hover. */
 .im-mock-tilt {
 	transform: perspective(1400px) rotateX(9deg) rotateY(-12deg) rotateZ(2deg);
-	transition: transform 600ms var(--im-ease-glide);
+	transition: transform var(--im-duration-slow) var(--im-ease-glide);
 }
 
 .im-mock-tilt:hover {

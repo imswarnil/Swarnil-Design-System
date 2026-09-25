@@ -21,14 +21,62 @@
    colour with a round numeral; a LESSON is a row inside it on the canvas.
    The two are told apart by ground and by indent, not by decoration. */
 
-/* ---- syllabus ---------------------------------------------------------- */
+/* ---- syllabus ----------------------------------------------------------
+   The head sums the course up (units · lessons · minutes · how many are
+   free, and progress once started); each UNIT is a card on the surface with
+   a round numeral, its own line and its meta; each LESSON is a row on the
+   canvas: mark · still with the length on it · number and title · one line
+   about it · what it is and what comes with it · the state, right. */
 .im-syllabus {
+	display: grid;
+	gap: 1rem;
+}
+
+.im-syllabus-head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.75rem 1.25rem;
+	padding-bottom: 0.875rem;
+	border-bottom: 1px solid var(--im-line);
+}
+
+.im-syllabus-sum {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 0.25rem 0.875rem;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+.im-syllabus-sum > b { color: var(--im-ink); font-weight: 600; }
+.im-syllabus-free { color: var(--im-success); }
+
+.im-syllabus-progress {
+	display: flex;
+	flex: 1 1 14rem;
+	align-items: center;
+	gap: 0.75rem;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	white-space: nowrap;
+}
+
+.im-syllabus-progress > .im-progress { flex: 1 1 auto; }
+.im-syllabus-progress > b { color: var(--im-ink); }
+.im-syllabus-head > .im-btn { margin-left: auto; }
+
+.im-syllabus-units {
 	display: grid;
 	gap: 0.75rem;
 	margin: 0;
 	padding: 0;
 	list-style: none;
-	counter-reset: im-unit;
 }
 
 .im-unit {
@@ -40,7 +88,7 @@
 
 .im-unit-head {
 	display: grid;
-	grid-template-columns: 3rem minmax(0, 1fr) auto 1.5rem;
+	grid-template-columns: 3rem minmax(0, 1fr) 1.5rem;
 	gap: 0.25rem 1rem;
 	align-items: center;
 	width: 100%;
@@ -55,7 +103,7 @@
 .im-unit-head:hover { background-color: var(--im-surface-2); }
 
 .im-unit-n {
-	grid-row: 1 / span 2;
+	grid-row: 1 / span 3;
 	display: grid;
 	place-items: center;
 	width: 3rem;
@@ -69,52 +117,42 @@
 
 .im-unit-title {
 	grid-column: 2;
-	grid-row: 1;
 	font-size: var(--im-text-h5);
 	font-weight: 600;
 	line-height: 1.3;
 	letter-spacing: var(--im-tracking-tight);
 }
 
+.im-unit-text {
+	grid-column: 2;
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+	line-height: 1.5;
+	text-wrap: pretty;
+}
+
 .im-unit-meta {
 	grid-column: 2;
-	grid-row: 2;
 	display: flex;
 	flex-wrap: wrap;
-	gap: 0.25rem 0.75rem;
+	gap: 0.25rem 0.875rem;
+	margin-top: 0.125rem;
 	color: var(--im-muted);
+	font-family: var(--im-font-mono);
 	font-size: var(--im-text-xs);
 }
 
-.im-unit-meta > .im-progress {
-	width: 6rem;
-	align-self: center;
-}
-
-/* Done / total on the right; the chevron after it. */
-.im-unit-count {
-	grid-column: 3;
-	grid-row: 1 / span 2;
-	color: var(--im-muted);
-	font-family: var(--im-font-mono);
-	font-size: var(--im-text-sm);
-	white-space: nowrap;
-}
+.im-unit-meta > span { display: inline-flex; align-items: center; gap: 0.3125rem; }
+.im-unit-meta .im-icon { font-size: 0.875rem; }
 
 .im-unit-chev {
-	grid-column: 4;
-	grid-row: 1 / span 2;
+	grid-column: 3;
+	grid-row: 1 / span 3;
 	width: 1.5rem;
 	height: 1.5rem;
 	background-color: var(--im-muted);
-	-webkit-mask-image: var(--im-chevron-glyph);
-	mask-image: var(--im-chevron-glyph);
-	-webkit-mask-size: 1rem;
-	mask-size: 1rem;
-	-webkit-mask-repeat: no-repeat;
-	mask-repeat: no-repeat;
-	-webkit-mask-position: center;
-	mask-position: center;
+	-webkit-mask: var(--im-chevron-glyph) center / 1rem no-repeat;
+	mask: var(--im-chevron-glyph) center / 1rem no-repeat;
 	transition: rotate var(--im-duration-fast) var(--im-ease-out);
 }
 
@@ -123,19 +161,20 @@
 .im-unit-lessons {
 	display: none;
 	margin: 0;
-	padding: 0.625rem;
+	padding: 0.5rem;
 	border-top: 1px solid var(--im-line);
 	list-style: none;
 }
 
 .im-unit[data-open] > .im-unit-lessons { display: grid; gap: 0.125rem; }
 
-/* A lesson row: still · number + title + kind · length · state. */
+/* A lesson row: mark · still · number + title · line · meta · state. */
 .im-lessonrow {
 	position: relative;
 	display: grid;
-	grid-template-columns: 5.5rem minmax(0, 1fr) auto;
-	gap: 0.125rem 1rem;
+	grid-template-columns: 1.5rem 6.5rem minmax(0, 1fr) auto;
+	grid-template-rows: auto auto auto;
+	gap: 0.1875rem 1rem;
 	align-items: center;
 	padding: 0.75rem 0.875rem;
 	border-radius: var(--im-radius-lg);
@@ -146,8 +185,27 @@
 
 .im-lessonrow:hover { background-color: var(--im-hover-bg); }
 
+/* The same mark the coursenav draws — one vocabulary. */
+.im-lessonrow-mark {
+	grid-row: 1 / span 3;
+	width: 1.5rem;
+	height: 1.5rem;
+	border-radius: var(--im-radius-full);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	background-color: var(--im-state-bg, transparent);
+	-webkit-mask: var(--im-state-glyph, none) center / 0.75rem no-repeat, linear-gradient(#000 0 0);
+	mask: var(--im-state-glyph, none) center / 0.75rem no-repeat, linear-gradient(#000 0 0);
+	-webkit-mask-composite: xor;
+	mask-composite: exclude;
+}
+
+.im-lessonrow[data-state="done"] .im-lessonrow-mark { --im-state-bg: var(--im-success); --im-state-glyph: var(--im-tick-glyph); box-shadow: none; }
+.im-lessonrow[data-state="current"] .im-lessonrow-mark { --im-state-bg: var(--im-accent); --im-state-glyph: var(--im-play-glyph); box-shadow: none; }
+.im-lessonrow[data-state="locked"] .im-lessonrow-mark { --im-state-bg: var(--im-surface-3); --im-state-glyph: var(--im-lock-glyph); box-shadow: none; }
+.im-lessonrow[data-state="free"] .im-lessonrow-mark { box-shadow: inset 0 0 0 1px var(--im-success); }
+
 .im-lessonrow-shot {
-	grid-row: 1 / span 2;
+	grid-row: 1 / span 3;
 	position: relative;
 	aspect-ratio: 16 / 10;
 	overflow: hidden;
@@ -157,27 +215,59 @@
 
 .im-lessonrow-shot > img { width: 100%; height: 100%; object-fit: cover; }
 
+/* The length, on the still, as every thumbnail in the system wears it. */
+.im-lessonrow-shot > small {
+	position: absolute;
+	right: 0.25rem;
+	bottom: 0.25rem;
+	padding: 0.0625rem 0.3125rem;
+	border-radius: var(--im-radius-xs);
+	background-color: var(--im-glass);
+	color: var(--im-on-media);
+	font-family: var(--im-font-mono);
+	font-size: 0.625rem;
+	font-variant-numeric: tabular-nums;
+}
+
 .im-lessonrow-title {
-	grid-column: 2;
+	grid-column: 3;
 	grid-row: 1;
 	display: flex;
 	align-items: baseline;
 	gap: 0.5rem;
+	color: var(--im-ink);
 	font-size: var(--im-text-base);
 	font-weight: 600;
 	line-height: 1.3;
+	text-decoration: none;
 }
 
 .im-lessonrow-title > small {
 	color: var(--im-muted);
-	font-family: var(--im-font-mono);
+	font-family: var(--im-font-pixel, var(--im-font-mono));
 	font-size: var(--im-text-xs);
 	font-weight: 400;
 }
 
-.im-lessonrow-meta {
-	grid-column: 2;
+.im-lessonrow-title:hover { color: var(--im-accent); }
+/* The row is the link: the title's box covers it. */
+.im-lessonrow-title::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+.im-lessonrow-preview { position: relative; z-index: 1; }
+
+.im-lessonrow-text {
+	grid-column: 3;
 	grid-row: 2;
+	overflow: hidden;
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+	line-height: 1.5;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.im-lessonrow-meta {
+	grid-column: 3;
+	grid-row: 3;
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -186,56 +276,48 @@
 	font-size: var(--im-text-xs);
 }
 
-.im-lessonrow-meta > span { display: inline-flex; align-items: center; gap: 0.3125rem; }
+.im-lessonrow-meta > span, .im-lessonrow-preview { display: inline-flex; align-items: center; gap: 0.3125rem; }
 .im-lessonrow-meta .im-icon { font-size: 0.875rem; }
 
-/* The state, on the right: a mark in a ring and a word beside it. */
+.im-lessonrow-preview {
+	padding: 0.125rem 0.5rem;
+	border-radius: var(--im-radius-full);
+	background-color: var(--im-success-tint);
+	color: var(--im-success);
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.im-lessonrow-preview:hover { background-color: var(--im-success); color: var(--im-white); }
+
+/* The state, right: a word in the mark's colour. */
 .im-lessonrow-state {
-	grid-column: 3;
-	grid-row: 1 / span 2;
-	display: inline-flex;
-	align-items: center;
-	gap: 0.5rem;
+	grid-column: 4;
+	grid-row: 1 / span 3;
 	color: var(--im-muted);
+	font-family: var(--im-font-mono);
 	font-size: var(--im-text-xs);
 	font-weight: 600;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
 	white-space: nowrap;
 }
 
-.im-lessonrow-state::before {
-	content: "";
-	width: 1.75rem;
-	height: 1.75rem;
-	border-radius: var(--im-radius-full);
-	box-shadow: inset 0 0 0 1px var(--im-line);
-	background-color: var(--im-state-bg, transparent);
-	-webkit-mask: var(--im-state-glyph, none) center / 0.875rem no-repeat, linear-gradient(#000 0 0);
-	mask: var(--im-state-glyph, none) center / 0.875rem no-repeat, linear-gradient(#000 0 0);
-	-webkit-mask-composite: xor;
-	mask-composite: exclude;
-}
-
-.im-lessonrow[data-state="done"] .im-lessonrow-state { color: var(--im-success); --im-state-bg: var(--im-success); --im-state-glyph: var(--im-tick-glyph); }
-.im-lessonrow[data-state="current"] .im-lessonrow-state { color: var(--im-accent); --im-state-bg: var(--im-accent); --im-state-glyph: var(--im-play-glyph); }
-.im-lessonrow[data-state="locked"] .im-lessonrow-state { color: var(--im-warning); --im-state-bg: var(--im-warning); --im-state-glyph: var(--im-lock-glyph); }
-.im-lessonrow[data-state="free"] .im-lessonrow-state { color: var(--im-success); --im-state-bg: var(--im-success-tint); --im-state-glyph: none; }
-.im-lessonrow[data-state="free"] .im-lessonrow-state::before { box-shadow: inset 0 0 0 1px var(--im-success); }
-
+.im-lessonrow[data-state="done"] .im-lessonrow-state { color: var(--im-success); }
+.im-lessonrow[data-state="current"] .im-lessonrow-state { color: var(--im-accent); }
+.im-lessonrow[data-state="free"] .im-lessonrow-state { color: var(--im-success); }
 .im-lessonrow[data-state="current"] { background-color: var(--im-current-bg); }
 .im-lessonrow[data-state="locked"] { color: var(--im-muted); }
+.im-lessonrow[data-state="locked"] .im-lessonrow-title { color: var(--im-muted); }
 .im-lessonrow[data-state="locked"] .im-lessonrow-shot > img { filter: grayscale(1); opacity: 0.5; }
 
-/* Nothing here is a link on its own; the row is. */
-.im-lessonrow > a::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
-
-@media (width < 34rem) {
+@media (width < 40rem) {
+	.im-syllabus-head > .im-btn { margin-left: 0; }
 	.im-unit-head { grid-template-columns: 2.5rem minmax(0, 1fr) 1.5rem; }
 	.im-unit-n { width: 2.5rem; height: 2.5rem; font-size: var(--im-text-base); }
-	.im-unit-count { display: none; }
-	.im-unit-chev { grid-column: 3; }
-	.im-lessonrow { grid-template-columns: 4.5rem minmax(0, 1fr); }
-	.im-lessonrow-state { grid-row: 3; grid-column: 2; }
-	.im-lessonrow-state::before { width: 1.25rem; height: 1.25rem; }
+	.im-lessonrow { grid-template-columns: 1.5rem 5rem minmax(0, 1fr); }
+	.im-lessonrow-text { display: none; }
+	.im-lessonrow-state { grid-column: 3; grid-row: 3; justify-self: end; }
 }
 
 /* ---- course navigation (the rail) ------------------------------------- */
@@ -382,6 +464,12 @@
 	border-radius: 0;
 	box-shadow: none;
 	background-color: transparent;
+}
+
+/* In the player on a phone the handle above the list already names the
+   course and the progress, so the nav's own head steps aside. */
+@media (width < 64rem) {
+	.im-player-list > .im-coursenav > .im-coursenav-head { display: none; }
 }
 
 /* "Next up", pinned under the list: the one thing most people want next. */

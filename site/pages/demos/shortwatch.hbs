@@ -3,18 +3,18 @@ title: Short watch demo
 layout: home
 shell: frame
 ---
-{{!-- Loaded in an iframe by /collections/video/short/. Clip on the left at
-	its real proportion, everything else on the right, one viewport. --}}
+{{!-- Loaded in an iframe by /collections/video/short/. The clip standing in
+	the left 40% with nothing on it, the post left-aligned in the right 60%. --}}
 {{#with demo.videos.[0]}}
+{{> "shell/solo-bar" back="/collections/video/" back_label="All videos"}}
 <div class="im-shortwatch">
 	<div class="im-shortwatch-stage">
+		<div class="im-shortwatch-player">
+			<img src="{{thumb}}" alt="">
+		</div>
 		<div class="im-shortwatch-step">
 			<button class="im-btn im-btn-icon" type="button" aria-label="Previous">{{> "icons/chevron-up"}}</button>
 			<button class="im-btn im-btn-icon" type="button" aria-label="Next">{{> "icons/chevron-down"}}</button>
-		</div>
-		<div class="im-shortwatch-player">
-			<img src="{{thumb}}" alt="">
-			<span class="im-short-bar"><span style="width: 38%"></span></span>
 		</div>
 	</div>
 

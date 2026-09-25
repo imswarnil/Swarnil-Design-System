@@ -1,0 +1,56 @@
+{{!-- Syllabus — the whole curriculum on the course page: what it is made of,
+	how far along you are, and every lesson with enough said about it that
+	a buyer knows what they are buying before they pay.
+
+	It shares the lesson list's vocabulary with the player's coursenav —
+	the same numerals, the same state marks (tick, play, lock, dot) — and
+	differs in what it is FOR: this is wide, descriptive and sells; the
+	coursenav is narrow, terse and navigates.
+
+	Params
+	  units        [{ n, name, time, when, text, open, lessons: [{ n, title,
+	               time, kind, text, href, image, state, locked, free, files }] }]
+	  done, total, percent, value   progress — omit for a course not started
+	  lessons, minutes, free        the totals in the head
+	  href         where "Start" goes; free=lesson count that is free --}}
+<div class="im-syllabus">
+	<header class="im-syllabus-head">
+		<div class="im-syllabus-sum">
+			<b>{{units.length}} {{t "units"}}</b><span>{{lessons}} {{t "lessons"}}</span><span>{{minutes}} {{t "min"}}</span>{{#if free}}<span class="im-syllabus-free">{{free}} {{t "free"}}</span>{{/if}}
+		</div>
+		{{#if percent}}
+		<p class="im-syllabus-progress"><span>{{done}} {{t "of"}} {{total}} {{t "done"}}</span><span class="im-progress" role="progressbar" aria-label="{{t "Through the course"}}" aria-valuenow="{{percent}}" aria-valuemin="0" aria-valuemax="100" style="--im-value: {{value}}"></span><b>{{percent}}%</b></p>
+		{{/if}}
+		<button class="im-btn im-btn-sm im-btn-ghost" type="button" data-im-syllabus-all>{{> "icons/chevrons-up-down"}}<span>{{t "Expand all"}}</span></button>
+	</header>
+
+	<ol class="im-syllabus-units">
+		{{#each units}}
+		<li class="im-unit"{{#if open}} data-open{{/if}}>
+			<button class="im-unit-head" type="button" aria-expanded="{{#if open}}true{{else}}false{{/if}}">
+				<span class="im-unit-n">{{n}}</span>
+				<span class="im-unit-title">{{name}}</span>
+				<span class="im-unit-text">{{text}}</span>
+				<span class="im-unit-meta"><span>{{> "icons/square-play"}}{{lessons.length}} {{t "lessons"}}</span><span>{{> "icons/clock"}}{{time}}</span><span>{{when}}</span></span>
+				<span class="im-unit-chev" aria-hidden="true"></span>
+			</button>
+			<ol class="im-unit-lessons">
+				{{#each lessons}}
+				<li class="im-lessonrow" data-state="{{#if locked}}locked{{else}}{{#if state}}{{state}}{{else}}{{#if free}}free{{else}}next{{/if}}{{/if}}{{/if}}">
+					<span class="im-lessonrow-mark" aria-hidden="true"></span>
+					<span class="im-lessonrow-shot">{{#if image}}<img src="{{image}}" alt="" loading="lazy">{{/if}}<small>{{time}}</small></span>
+					<a class="im-lessonrow-title" href="{{href}}"><small>{{n}}</small>{{title}}</a>
+					<span class="im-lessonrow-text">{{text}}</span>
+					<span class="im-lessonrow-meta">
+						<span>{{#match kind "=" "video"}}{{> "icons/square-play"}}{{t "Video"}}{{else}}{{> "icons/file-text"}}{{t "Article"}}{{/match}}</span>
+						{{#if files}}<span>{{> "icons/download"}}{{files}} {{t "files"}}</span>{{/if}}
+						{{#if free}}{{#unless state}}<a class="im-lessonrow-preview" href="{{href}}">{{> "icons/play"}}{{t "Preview"}}</a>{{/unless}}{{/if}}
+					</span>
+					<span class="im-lessonrow-state">{{#if locked}}{{t "Members"}}{{else}}{{#match state "=" "done"}}{{t "Done"}}{{/match}}{{#match state "=" "current"}}{{t "Playing"}}{{/match}}{{#unless state}}{{#if free}}{{t "Free"}}{{else}}{{t "Next"}}{{/if}}{{/unless}}{{/if}}</span>
+				</li>
+				{{/each}}
+			</ol>
+		</li>
+		{{/each}}
+	</ol>
+</div>

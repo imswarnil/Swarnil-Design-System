@@ -15,7 +15,7 @@
 	font-weight: 500;
 	text-decoration: none;
 	white-space: nowrap;
-	transition: background-color 120ms;
+	transition: background-color var(--im-duration-instant);
 }
 
 /* A chip has three steps and they are the system's three: a hairline at rest,

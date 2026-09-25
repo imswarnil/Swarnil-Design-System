@@ -35,6 +35,41 @@
 	--im-info-tint: color-mix(in oklab, var(--im-info) 10%, var(--im-canvas));
 	--im-accent-tint: color-mix(in oklab, var(--im-accent) 10%, var(--im-canvas));
 
+	/* ---- Interaction --------------------------------------------------------
+	   The accent one and two steps darker, for a press and a hold; the focus
+	   ring every focusable thing draws; how faded "disabled" is. Set once, so
+	   a button, a field, a switch and a card agree without knowing each other. */
+	--im-accent-hover: oklch(from var(--im-accent) calc(l - 0.08) c h);
+	--im-accent-active: oklch(from var(--im-accent) calc(l - 0.14) c h);
+	--im-ring: var(--im-accent);
+	--im-ring-width: 2px;
+	--im-ring-offset: 2px;
+	--im-opacity-disabled: 0.5;
+
+	/* ---- Over a picture -------------------------------------------------------
+	   Words and chips that sit ON a photograph or a video are the same in both
+	   themes, because the picture is: white ink in three strengths, a dark
+	   glass for a chip, and the scrim that darkens the foot of a picture so
+	   the words can be read. Never use --im-ink on a picture. */
+	--im-on-media: #fff;
+	--im-on-media-dim: rgb(255 255 255 / 80%);
+	--im-on-media-faint: rgb(255 255 255 / 70%);
+	--im-media-ink: #0a0a0a;
+	--im-glass: rgb(20 20 20 / 62%);
+	--im-glass-soft: rgb(20 20 20 / 45%);
+	--im-glass-light: rgb(255 255 255 / 25%);
+	--im-media-scrim: linear-gradient(to top, rgb(0 0 0 / 82%), rgb(0 0 0 / 30%) 55%, rgb(0 0 0 / 5%));
+
+	/* ---- Layers ---------------------------------------------------------------
+	   Five steps, so nothing ever argues with a magic number: something raised
+	   in the page, something sticky, the bar, a menu or a card that floats, a
+	   modal over everything. */
+	--im-z-raised: 10;
+	--im-z-sticky: 20;
+	--im-z-bar: 40;
+	--im-z-menu: 50;
+	--im-z-modal: 60;
+
 	/* ---- Two states, defined once -------------------------------------------
 	   CURRENT — "you are here". A light fill and a bolder label, on every kind
 	   of navigation in the system: the side nav, the top bar, a menu row, a
@@ -83,7 +118,8 @@
 	--im-chevron-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
 	--im-lock-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='11' width='18' height='11' rx='2'/%3E%3Cpath d='M7 11V7a5 5 0 0 1 10 0v4'/%3E%3C/svg%3E");
 
-	/* ---- Shadow: only for things that float -------------------------------- */
+	/* ---- Shadow: a hairline of depth, and one for things that float ----------- */
+	--im-shadow-sm: 0 1px 2px rgb(0 0 0 / 12%);
 	--im-shadow-float: 0 1px 2px rgb(0 0 0 / 6%), 0 12px 32px -8px rgb(0 0 0 / 18%);
 
 	/* ---- Frame metrics ------------------------------------------------------ */
@@ -93,6 +129,20 @@
 	--im-gutter: clamp(1rem, 0.4rem + 2.4vw, 2rem);
 	--im-section-gap: clamp(3.5rem, 2.5rem + 3vw, 5.5rem);
 	--im-flow: 1.5rem;
+	/* ---- The twelve columns ---------------------------------------------------
+	   One column of a 12-column grid with the gap below, as a length of the
+	   box it is used in. A rail is 3 or 4 of them, a hero's measure 7, a
+	   clip's room 5 — so every part of a page is a whole number of columns
+	   and the grid never has to be drawn to be felt. */
+	--im-col: calc((100% - 11 * var(--im-grid-gap)) / 12);
+	--im-span-2: calc(2 * var(--im-col) + 1 * var(--im-grid-gap));
+	--im-span-3: calc(3 * var(--im-col) + 2 * var(--im-grid-gap));
+	--im-span-4: calc(4 * var(--im-col) + 3 * var(--im-grid-gap));
+	--im-span-5: calc(5 * var(--im-col) + 4 * var(--im-grid-gap));
+	--im-span-6: calc(6 * var(--im-col) + 5 * var(--im-grid-gap));
+	--im-span-7: calc(7 * var(--im-col) + 6 * var(--im-grid-gap));
+	--im-span-8: calc(8 * var(--im-col) + 7 * var(--im-grid-gap));
+	--im-span-9: calc(9 * var(--im-col) + 8 * var(--im-grid-gap));
 	/* One gap for every grid of cards. Two cards or twelve, hovered or not, the
 	   distance between them is this and nothing else. */
 	--im-grid-gap: clamp(1.25rem, 0.9rem + 1.4vw, 2rem);

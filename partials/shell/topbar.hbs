@@ -13,8 +13,12 @@
 		{{!-- The wordmark IS the name — a logo the visitor can read. A theme
 		      that uploads its own picture gets the picture and the name beside
 		      it, as Ghost's own settings expect. --}}
+		{{!-- The brand is small: a square icon, then the name. The square is
+		      Ghost's site icon when there is one and the logo's own mark
+		      when there is not — the same slot either way. --}}
 		<a class="im-brand" href="{{@site.url}}">
-			{{#if @site.logo}}<img src="{{@site.logo}}" alt="{{@site.title}}"><span>{{@site.title}}</span>{{else}}{{> "components/logo"}}{{/if}}
+			{{#if @site.icon}}<img class="im-brand-icon" src="{{@site.icon}}" alt="" width="28" height="28">{{else}}{{> "components/logo" mark=true size="1.125rem" class="im-brand-icon"}}{{/if}}
+			{{#if @site.logo}}<img src="{{@site.logo}}" alt="{{@site.title}}">{{else}}<span class="im-brand-name">{{@site.title}}</span>{{/if}}
 		</a>
 		{{#if @partial-block}}{{> @partial-block}}{{/if}}
 	</div>

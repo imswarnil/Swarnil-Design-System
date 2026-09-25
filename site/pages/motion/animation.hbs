@@ -21,6 +21,7 @@ source: src/foundation/tokens/motion.css · src/motion/animate.css · src/js/im-
 		<tr><td><code>--im-duration-fast</code></td><td>200ms</td><td>Small things that move: a toggle, a chevron, a press.</td></tr>
 		<tr><td><code>--im-duration-base</code></td><td>360ms</td><td>A panel, a menu, a card entering.</td></tr>
 		<tr><td><code>--im-duration-slow</code></td><td>640ms</td><td>A whole section arriving; a hero.</td></tr>
+		<tr><td><code>--im-duration-long</code></td><td>900ms</td><td>A picture still moving after the hand has settled — a zoom, a reveal.</td></tr>
 		<tr><td><code>--im-ease-out</code> · <code>-in</code> · <code>-in-out</code> · <code>-spring</code></td><td>curves</td><td>Arriving · leaving · travelling · a small, playful overshoot.</td></tr>
 		<tr><td><code>--im-distance</code></td><td>1rem</td><td>How far an entering thing travels.</td></tr>
 		<tr><td><code>--im-stagger</code></td><td>70ms</td><td>The gap between one staggered item and the next.</td></tr>
@@ -119,6 +120,14 @@ source: src/foundation/tokens/motion.css · src/motion/animate.css · src/js/im-
 <span class="font-mono text-sm text-ink">ready<span class="im-blink">_</span></span>
 {{/example}}
 <p><code>im-spin</code> · <code>im-pulse</code> · <code>im-bounce</code> · <code>im-float</code> · <code>im-wiggle</code> · <code>im-ping</code> · <code>im-dots</code> · <code>im-blink</code>. A loop draws the eye for as long as it runs — keep one to a view, and stop it when its reason ends.</p>
+
+<h2>In video</h2>
+<p>A cut in a film and a hover on the page should feel like the same hand. The build publishes the motion tokens as <code>assets/im-motion.json</code> — durations in milliseconds, curves as the four numbers of a cubic bezier, the distance and the stagger — read from the token file, so it cannot drift from the site. Give it to whatever renders the video: an HTML-first renderer can use the beziers as they are; in a keyframe tool, <code>out</code> is <code>0.2, 0.8, 0.2, 1</code>, <code>glide</code> is <code>0.22, 1, 0.36, 1</code>. The <a href="/content-creation/">frames for the channel</a> use the same file.</p>
+{{{{code "json"}}}}
+{ "durations": { "instant": 120, "fast": 200, "base": 360, "slow": 640, "long": 900 },
+  "eases": { "out": [0.2, 0.8, 0.2, 1], "in-out": [0.65, 0, 0.35, 1], "glide": [0.22, 1, 0.36, 1], … },
+  "distance": "1rem", "stagger": 70 }
+{{{{/code}}}}
 
 <h2>Reduced motion</h2>
 <p>The base styles cut every animation and transition to nothing under <code>prefers-reduced-motion: reduce</code>. On top of that: reveals never hide, counters show their final number, the marquee and carousel autoplay stop, pointer effects are skipped. You do not need to handle it per component.</p>

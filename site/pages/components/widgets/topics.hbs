@@ -1,0 +1,13 @@
+---
+title: Topics
+description: A cluster of tags with their counts. It wraps; it does not scroll — a sidebar is not a filter bar.
+eyebrow: Component · Widget
+source: src/components/widget.css
+---
+<p>A cluster of <a href="/components/badge/#tag">tags</a> with their counts. It wraps; it does not scroll — a sidebar is not a filter bar.</p>
+{{#example style="max-width: 22rem"}}
+<section class="im-widget">
+	<h2 class="im-widget-title">Topics</h2>
+	<div class="im-cluster im-cluster-tight">{{#foreach fixtures.tags}}<a class="im-tag" href="#topics">{{name}} <small class="text-muted">{{count.posts}}</small></a>{{/foreach}}</div>
+</section>
+{{/example}}

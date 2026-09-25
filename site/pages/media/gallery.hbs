@@ -1,6 +1,6 @@
 ---
 title: Gallery & lightbox
-description: A grid of pictures that opens into a full-screen viewer — arrows, a counter, captions, swipe and the keyboard. The thumbnails are plain links to the large image, so it works before, and without, the script.
+description: A grid of pictures that opens into a dark full-screen viewer — a counter, zoom, the original, arrows, a caption and a strip of every picture. The thumbnails are plain links to the large image, so it works before, and without, the script.
 eyebrow: Media
 source: src/components/gallery.css · src/js/im-media.js
 ---
@@ -11,9 +11,8 @@ source: src/components/gallery.css · src/js/im-media.js
 	{{#foreach demo.six}}<a class="im-gallery-item" href="{{feature_image}}" data-caption="{{title}}"><img src="{{feature_image}}" alt="{{title}}" loading="lazy"></a>{{/foreach}}
 </div>
 {{/example}}
-<p>In the viewer: <kbd>←</kbd> <kbd>→</kbd> move, <kbd>Esc</kbd> closes, a swipe moves on touch, and the cross — or a click anywhere around the picture — closes it.</p>
-<p>The surround is a <strong>plain sheet</strong>, not a frosted pane: the canvas colour, opaque, white in light mode and near-black in dark. Nothing of the page shows through, because a page showing through is a page still asking to be read. It arrives on a long bezier — <code>--im-ease-glide</code>, half a second of which most is the settle — with the sheet fading and the picture rising into it, and it leaves the same way in a third of the time.</p>
-<p>The way out is a <strong>bare cross on the picture's own top-right corner</strong>. Not a button: over a photograph, a chip with a border and a fill is furniture. It is white with a drop shadow so it survives a bright sky, it turns ninety degrees under the pointer, and its hit area is 2.75rem — the cross is small, the target is not.</p>
+<p>In the viewer: <kbd>←</kbd> <kbd>→</kbd> move, <kbd>Home</kbd> <kbd>End</kbd> jump, <kbd>z</kbd> zooms, <kbd>Esc</kbd> comes out of a zoom and then closes, a swipe moves on touch, and a click in the dark around the picture closes it.</p>
+<p>It is a <strong>dark theatre in both themes</strong> — a photograph is judged against black. Along the top: where you are (<code>03 / 12</code> and the site), zoom, the original in a new tab, close. Press the picture to zoom into the point you pressed; move to look around. Along the foot: the caption, then a strip of every picture in the set, the current one ringed, to jump straight to any of them. On a phone the arrows go (swipe) and the strip gets smaller.</p>
 <p>It is one native <code>&lt;dialog&gt;</code>, built the first time it is needed, so focus is trapped, the page behind cannot scroll, and focus returns to the thumbnail afterwards — all from the browser. <kbd>Esc</kbd> is caught rather than left to the browser, so the viewer leaves the way it arrived. Neighbouring images are warmed in the background so the arrows feel instant.</p>
 
 <h2>The frame mark</h2>
