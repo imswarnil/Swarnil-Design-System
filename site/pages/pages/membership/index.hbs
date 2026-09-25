@@ -5,13 +5,13 @@ description: Ghost's tiers, drawn so the difference between them is legible in f
 eyebrow: Pages
 source: src/components/pricing.css
 ---
-<section class="im-section im-wrap im-pt-sm im-section-sm">
+<section class="im-section im-wrap-wide im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Pages · {{page.title}}</p>
 	<p class="im-lede">{{page.description}}</p>
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
-<section class="im-section im-wrap">
+<section class="im-section im-wrap-wide">
 	<header class="im-collhead im-center" style="align-items: center">
 		<p class="im-eyebrow">Membership</p>
 		<h1 class="im-collhead-title">Read everything</h1>
@@ -81,9 +81,9 @@ source: src/components/pricing.css
 	</div>
 </section>
 
-<section class="im-section im-wrap">
+<section class="im-section im-wrap-wide">
 	<h2 class="im-caption" data-index="why">Why become a member</h2>
-	<div class="im-grid-auto im-grid-md">
+	<div class="im-grid-12 im-grid-span-4">
 		<div class="im-card im-card-outline"><span class="im-card-title">{{icon "lock"}} The long pieces</span><span>The posts with the numbers in them — what a move cost, what a rebuild cost — are for members.</span></div>
 		<div class="im-card im-card-outline"><span class="im-card-title">{{icon "git-commit-vertical"}} The project logs</span><span>Every build, day by day, including the parts that did not ship.</span></div>
 		<div class="im-card im-card-outline"><span class="im-card-title">{{icon "message-circle"}} A thread that is read</span><span>Comments are members-only, so they stay a conversation.</span></div>
@@ -91,7 +91,7 @@ source: src/components/pricing.css
 	</div>
 </section>
 
-<section class="im-section im-wrap">
+<section class="im-section im-wrap-wide">
 	<h2 class="im-caption" data-index="compare">Exactly what differs</h2>
 	<div class="im-table-scroll">
 	<table class="im-compare">
@@ -112,7 +112,7 @@ source: src/components/pricing.css
 	</div>
 </section>
 
-<section class="im-section im-wrap">
+<section class="im-section im-wrap-wide">
 	<h2 class="im-caption" data-index="q">Before you pay</h2>
 	<div class="im-accordion">
 		<details class="im-disclosure"><summary>What happens if I cancel?</summary><div class="im-disclosure-body"><p>You keep everything you paid for until the period ends, and then the account drops to free. Nothing is deleted and you can come back to the same email address.</p></div></details>
@@ -122,7 +122,7 @@ source: src/components/pricing.css
 	</div>
 </section>
 
-<section class="im-section im-wrap">
+<section class="im-section im-wrap-wide">
 	<div class="im-prose">
 		<h2>Three cards answer "which one", a table answers "what exactly"</h2>
 		<p>A site with tiers needs both. The cards are read first and fast, so every column has <strong>the same number of rows</strong> and the differences fall on the <strong>same lines</strong> — which is only possible if a tier lists what it does <em>not</em> include rather than omitting the row. A missing row is read as an oversight; a struck one is read as an answer.</p>

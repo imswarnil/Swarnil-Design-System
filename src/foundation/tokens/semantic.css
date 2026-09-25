@@ -124,7 +124,10 @@
 
 	/* ---- Frame metrics ------------------------------------------------------ */
 	--im-bar-height: 3.5rem;
-	--im-nav-width: 15rem;
+	/* The side nav is TWO COLUMNS of the wide grid, not a round number that
+	   happened to look right: 90rem / 12 × 2 = 15rem. Widen the grid and the
+	   nav widens with it, and the page keeps meeting the lines. */
+	--im-nav-width: calc(var(--im-width-wide) * 2 / 12);
 	--im-nav-rail: 4.25rem;
 	--im-gutter: clamp(1rem, 0.4rem + 2.4vw, 2rem);
 	--im-section-gap: clamp(3.5rem, 2.5rem + 3vw, 5.5rem);
@@ -134,19 +137,44 @@
 	   box it is used in. A rail is 3 or 4 of them, a hero's measure 7, a
 	   clip's room 5 — so every part of a page is a whole number of columns
 	   and the grid never has to be drawn to be felt. */
-	--im-guide-line: oklch(88% 0.035 80);   /* the columns drawn on the page: cream */
-	--im-col: calc((100% - 11 * var(--im-grid-gap)) / 12);
-	--im-span-2: calc(2 * var(--im-col) + 1 * var(--im-grid-gap));
-	--im-span-3: calc(3 * var(--im-col) + 2 * var(--im-grid-gap));
-	--im-span-4: calc(4 * var(--im-col) + 3 * var(--im-grid-gap));
-	--im-span-5: calc(5 * var(--im-col) + 4 * var(--im-grid-gap));
-	--im-span-6: calc(6 * var(--im-col) + 5 * var(--im-grid-gap));
-	--im-span-7: calc(7 * var(--im-col) + 6 * var(--im-grid-gap));
-	--im-span-8: calc(8 * var(--im-col) + 7 * var(--im-grid-gap));
-	--im-span-9: calc(9 * var(--im-col) + 8 * var(--im-grid-gap));
+	/* The columns drawn on the page: a very light black — one hairline in the
+	   middle of every gutter. Scaffolding, at the limit of what prints. */
+	--im-guide-line: rgb(0 0 0 / 5%);
+	/* NOTHING ABOUT THE GRID IS DECLARED HERE. A count and a span are
+	   properties of a BOX, not of the document: --im-grid-of is published by
+	   each container (src/layout/fit.css) and read with a fallback of twelve,
+	   and a span is written where it is used, as N * var(--im-col). Declared
+	   on :root they would be computed once against :root — twelve columns of
+	   whatever box happened to read them — which is the trap this avoids.
+	   --im-col and --im-track are on `*` below, so each element computes its
+	   own. The gap stays: it is a distance, and a distance has no context. */
 	/* One gap for every grid of cards. Two cards or twelve, hovered or not, the
 	   distance between them is this and nothing else. */
 	--im-grid-gap: clamp(1.25rem, 0.9rem + 1.4vw, 2rem);
+}
+
+
+/* --im-col AND --im-track ARE DECLARED ON EVERY ELEMENT, not on :root.
+
+   A custom property is computed where it is DECLARED. Written on :root, this
+   one would substitute :root's --im-grid-of (twelve) once, and every
+   descendant would inherit that computed value — so a box that says it holds
+   eight columns would still divide by twelve, silently. Declared on `*`, each
+   element substitutes ITS OWN count and a nested grid measures itself.
+
+   The percentage resolves against whatever the value is finally used in: the
+   element's own content box in grid-template-columns and width, the
+   containing block in max-width. That is the right answer in both cases.
+
+   Kept in the tokens layer so a later layer can still shadow it —
+   .im-guides redefines --im-col from its own column count. */
+*,
+::before,
+::after {
+	--im-col: calc((100% - (var(--im-grid-of, 12) - 1) * var(--im-grid-gap)) / var(--im-grid-of, 12));
+	/* One track of a feed: --im-track-span columns of the current box, a hair
+	   under so sub-pixel rounding cannot drop a track. */
+	--im-track: calc(var(--im-track-span, 3) * var(--im-col) + (var(--im-track-span, 3) - 1) * var(--im-grid-gap) - 1px);
 }
 
 :root[data-theme="dark"] {
@@ -167,7 +195,7 @@
 	--im-danger: #f97066;
 	--im-info: #6ea8fe;
 	--im-shadow-float: 0 1px 2px rgb(0 0 0 / 40%), 0 16px 40px -8px rgb(0 0 0 / 70%);
-	--im-guide-line: rgb(255 255 255 / 9%);
+	--im-guide-line: rgb(255 255 255 / 7%);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -189,6 +217,6 @@
 		--im-danger: #f97066;
 		--im-info: #6ea8fe;
 		--im-shadow-float: 0 1px 2px rgb(0 0 0 / 40%), 0 16px 40px -8px rgb(0 0 0 / 70%);
-		--im-guide-line: rgb(255 255 255 / 9%);
+		--im-guide-line: rgb(255 255 255 / 7%);
 	}
 }

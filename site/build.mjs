@@ -18,7 +18,7 @@ import { loadFixtures } from './lib/fixtures.mjs';
 import { createGhost } from './lib/ghost.mjs';
 import { DIST, PARTIALS, PORT, ROOT, SECTIONS, SITE, SRC } from './lib/paths.mjs';
 import { readTokens } from './lib/tokens.mjs';
-import { NAME, navigation, site as siteConfig } from './site.config.mjs';
+import { NAME, navigation, REPO, site as siteConfig } from './site.config.mjs';
 
 const run = promisify(execFile);
 const TAILWIND = path.join(ROOT, 'node_modules/.bin/tailwindcss');
@@ -464,8 +464,9 @@ export async function build({ quiet = false } = {}) {
 			context: layout === 'home' ? ['home', 'index'] : ['page'],
 			meta_title: url === "/" ? NAME : `${meta.title} — ${NAME}`,
 			__blocks: {},
-			page: { ...meta, url },
+			page: { ...meta, url, file: path.relative(ROOT, file).split(path.sep).join('/') },
 			name: NAME,
+			repo: REPO,
 			version: JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8')).version,
 			// Every helper the shim models, for /guides/helpers/. Read from the
 			// registry so the page cannot list one that does not exist.

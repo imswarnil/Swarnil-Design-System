@@ -20,6 +20,33 @@
 	/* ---- Space: one unit; everything is a multiple of it. ----------------- */
 	--im-space: 0.25rem;
 
+	/* ---- The golden ratio -----------------------------------------------------
+	   The grid rules the page across; φ rules everything the grid has nothing
+	   to say about — how tall a picture is against its width, how far one size
+	   of type is from the next, how a fixed frame divides inside itself.
+
+	   Twelve columns cannot hold a golden split: φ of twelve is 7.42, and a
+	   block that ends in the middle of a gutter is the one mistake a drawn
+	   grid makes impossible to miss. So ACROSS THE PAGE the nearest whole
+	   columns win (seven and five, `im-cols` + col-span-*), and φ is exact
+	   only INSIDE a block that has already taken its columns — see
+	   `im-golden` in src/utilities/index.css.
+
+	   The ladder is one step of φ apart, so any two rungs are in the ratio and
+	   the whole set is one geometric series. Rung 3 is 1rem, which is why the
+	   ladder lands on sizes the rest of the system already uses. */
+	--im-phi: 1.618034;
+	--im-phi-inv: 0.618034;                 /* 1/φ = φ−1 */
+	--im-ratio-golden: 1.618034 / 1;        /* aspect-ratio, landscape */
+	--im-phi-1: 0.236rem;
+	--im-phi-2: 0.382rem;
+	--im-phi-3: 0.618rem;
+	--im-phi-4: 1rem;
+	--im-phi-5: 1.618rem;
+	--im-phi-6: 2.618rem;
+	--im-phi-7: 4.236rem;
+	--im-phi-8: 6.854rem;
+
 	/* ---- Fonts: Geist, Geist Mono, Geist Pixel — nothing else. ------------ */
 	--im-font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 	--im-font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
@@ -78,9 +105,9 @@
 	   centred im-wrap, an im-wrap-wide and a reading column all sit on the
 	   SAME grid lines — the grid is never drawn, it is felt. The arithmetic is
 	   N/12 of the width less the gaps a span of N does not contain. */
-	--im-width-wide: 90rem;
-	--im-width-page: calc(var(--im-width-wide) * 10 / 12 - var(--im-grid-gap) / 6);
-	--im-width-prose: calc(var(--im-width-wide) / 2 - var(--im-grid-gap) / 2);
+	--im-width-wide: 90rem;                                                         /* twelve columns */
+	--im-width-page: calc(var(--im-width-wide) * 10 / 12 - var(--im-grid-gap) / 6); /* ten */
+	--im-width-prose: calc(var(--im-width-wide) / 2 - var(--im-grid-gap) / 2);      /* six */
 
 	/* ---- Motion ------------------------------------------------------------ */
 	--im-ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);

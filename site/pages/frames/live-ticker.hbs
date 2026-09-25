@@ -1,0 +1,25 @@
+---
+title: Live source · ticker
+layout: home
+shell: frame
+---
+{{!-- A frame for the channel: 1920 × 1080. Open at that size to screenshot,
+	or load as a browser source. Built from tokens — see src/components/studio.css. --}}
+<div class="im-studio im-studio-overlay" style="--im-studio-w: 1920; --im-studio-h: 1080">
+	<span class="im-studio-backdrop im-studio-backdrop-scrim" aria-hidden="true"></span>
+	<div class="im-studio-ticker im-studio-glass">
+		<b>On the desk</b>
+		{{!-- The items are written twice: the track travels half its own width
+			and starts again, so the loop has no seam. --}}
+		<div class="im-studio-ticker-track">
+			<span>Ghost's own comments, styled from scratch</span>
+			<span>Ask anything in chat</span>
+			<span>Code at imswarnil.com/live</span>
+			<span>Next stream Thursday, 19:00 IST</span>
+			<span aria-hidden="true">Ghost's own comments, styled from scratch</span>
+			<span aria-hidden="true">Ask anything in chat</span>
+			<span aria-hidden="true">Code at imswarnil.com/live</span>
+			<span aria-hidden="true">Next stream Thursday, 19:00 IST</span>
+		</div>
+	</div>
+</div>

@@ -13,6 +13,66 @@
 	line-height: var(--im-leading-h2);
 }
 
+/* ---- a section MEASURED in the twelve columns ------------------------------
+   The ordinary .im-section is a stack: everything in it is as wide as the
+   page column. This one IS the grid, so a block of a page can take a whole
+   number of columns and land on the drawn lines.
+
+     <section class="im-section im-section-grid">
+       <header class="im-section-head">
+         <p class="im-caption" data-index="03">Live</p>
+         <h2 class="im-section-title">…</h2>
+         <p class="im-lede">…</p>
+       </header>
+       <div class="col-span-8">…</div>
+       <aside class="col-span-4">…</aside>
+     </section>
+
+   A child with no span takes all twelve — so a section only says what is NOT
+   full width, which is the short way round. The head takes seven by default
+   (a title and a lede want a measure, not a page), on the knob
+   --im-section-head-span.
+
+   Below md the grid is four columns wide and a span written for twelve cannot
+   be honoured, so every child goes full width — see src/layout/responsive.css. */
+.im-section-grid {
+	display: grid;
+	grid-template-columns: repeat(12, minmax(0, 1fr));
+	gap: var(--im-section-row, 1.75rem) var(--im-grid-gap);
+	align-content: start;
+}
+
+.im-section-grid > * {
+	grid-column: 1 / -1;
+	min-width: 0;
+}
+
+/* col-span-* is Tailwind's own, and the utilities layer comes after this one,
+   so a span always beats the full-width default above. Nothing to restate. */
+.im-section-head {
+	display: flex;
+	flex-direction: column;
+	gap: 0.625rem;
+	grid-column: 1 / span var(--im-section-head-span, 7);
+}
+
+.im-section-head > * { margin: 0; }
+
+/* The head measured differently, as a class rather than an inline style. */
+.im-section-head-wide { --im-section-head-span: 9; }
+.im-section-head-full { --im-section-head-span: 12; }
+.im-section-head-narrow { --im-section-head-span: 5; }
+
+/* A section head with the words on the left and an action on the right, both
+   inside the head's measure. */
+.im-section-head-bar {
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--im-grid-gap);
+	--im-section-head-span: 12;
+}
+
 .im-lede {
 	max-width: var(--im-width-prose);
 	color: var(--im-body);
@@ -47,7 +107,7 @@
    The width FOLLOWS THE SIDE NAV: collapse the nav to its rail and the space
    it gives up goes to the content, instead of becoming a wider empty margin. */
 .im-with-aside {
-	--im-aside-width: var(--im-span-3);
+	--im-aside-width: calc(3 * var(--im-col) + 2 * var(--im-grid-gap));
 
 	display: grid;
 	grid-template-columns: minmax(0, 1fr) var(--im-aside-width);
@@ -58,14 +118,15 @@
 	transition: max-width var(--im-duration-fast) var(--im-ease-out);
 }
 
-[data-nav="rail"] .im-with-aside {
-	max-width: calc(var(--im-width-page) + var(--im-nav-width) - var(--im-nav-rail));
-}
+/* Collapsing the nav USED TO WIDEN THE CONTENT by the width the nav gave up.
+   It no longer does, and the space becomes margin instead.
 
-/* Anything else that is capped at the page width widens the same way. */
-[data-nav="rail"] .im-wrap {
-	--im-wrap: calc(var(--im-width-page) + var(--im-nav-width) - var(--im-nav-rail));
-}
+   A CENTRED MEASURE MUST BE AN EVEN NUMBER OF COLUMNS. Centring leaves half
+   the difference on each side, so twelve less an odd span leaves half a
+   column: eleven columns centred in twelve starts in the MIDDLE of column
+   one, and the ten-and-two-thirds the nav happened to give up was worse
+   still. Ten is right in both states, and `.im-shell-main` stops at the wide
+   measure anyway — so there is nothing left to recover. */
 
 /* Anything that should follow the reader down a column. It stands on its own,
    so both the two- and the three-column layout use the same class.
@@ -131,10 +192,46 @@
 	order: -1;
 }
 
+/* ---- the head above, the rail under it ----
+   A contents rail level with the title is a list of places to go before the
+   reader has been told where they are. Give the layout a <header> of its own
+   and the rail starts where the BODY starts: eyebrow, title and lede are read
+   first, then the way in.
+
+     <div class="im-with-aside im-with-aside-head">
+       <header>…title, lede…</header>
+       <article id="article">…</article>
+       <aside><nav class="im-toc" data-toc="#article"></nav></aside>
+     </div>
+
+   The head keeps the article's measure rather than spanning both columns: a
+   lede set across twelve columns is not a lede. Anything that is not the
+   header or the aside is the body, so a layout may hold more than one block. */
+.im-with-aside-head {
+	grid-template-areas:
+		"head ."
+		"body side";
+}
+
+.im-with-aside-head > header { grid-area: head; }
+.im-with-aside-head > aside { grid-area: side; }
+.im-with-aside-head > :not(header, aside) { grid-area: body; }
+
+/* Stacked, the contents rail still comes before the body — it is a way in,
+   and the head has already said where the reader is. */
+@media (width < 64rem) {
+	.im-with-aside-head {
+		grid-template-areas:
+			"head"
+			"side"
+			"body";
+	}
+}
+
 /* Wide enough for real widgets — an author card, a newsletter, a top-five —
    rather than the slim rail a table of contents needs: four columns. */
 .im-with-aside-wide {
-	--im-aside-width: var(--im-span-4);
+	--im-aside-width: calc(4 * var(--im-col) + 3 * var(--im-grid-gap));
 }
 
 /* ---- one post layout, with the rail on a switch ----
@@ -154,7 +251,7 @@
    than stretching to fill a column that is suddenly 19rem wider: a 70rem line
    of body text is not a wider page, it is an unreadable one. */
 .im-single {
-	--im-single-aside: var(--im-span-4);
+	--im-single-aside: calc(4 * var(--im-col) + 3 * var(--im-grid-gap));
 	--im-single-gap: var(--im-grid-gap);
 
 	display: grid;
@@ -165,10 +262,6 @@
 	margin-inline: auto;
 	align-items: start;
 	transition: max-width var(--im-duration-fast) var(--im-ease-out), grid-template-columns var(--im-duration-fast) var(--im-ease-out);
-}
-
-[data-nav="rail"] .im-single {
-	max-width: calc(var(--im-width-page) + var(--im-nav-width) - var(--im-nav-rail));
 }
 
 .im-single > article {
@@ -191,7 +284,7 @@
 
 .im-single[data-sidebar="off"] {
 	grid-template-columns: minmax(0, 1fr);
-	max-width: calc(var(--im-width-prose) + var(--im-gutter) * 2);
+	max-width: var(--im-width-prose);
 }
 
 .im-single[data-sidebar="off"] > aside {
@@ -218,8 +311,8 @@
    under xl the contents rail sits above the article and the widgets keep
    their column; under lg everything stacks in reading order. */
 .im-with-rails {
-	--im-rail-width: var(--im-span-2);
-	--im-aside-width: var(--im-span-3);
+	--im-rail-width: calc(2 * var(--im-col) + 1 * var(--im-grid-gap));
+	--im-aside-width: calc(3 * var(--im-col) + 2 * var(--im-grid-gap));
 	/* One gap, used on both sides: the article sits the same distance from the
 	   contents rail as from the widgets. Two values here is how a three-column
 	   page starts looking lopsided. */
@@ -299,8 +392,9 @@
    header — and because the claim is the part that has to be read first. */
 .im-abouthero {
 	display: grid;
-	grid-template-columns: auto minmax(0, 1fr);
-	gap: clamp(1rem, 0.6rem + 1.6vw, 2rem);
+	/* The portrait takes two columns and the claim the other ten. */
+	grid-template-columns: calc(2 * var(--im-col) + 1 * var(--im-grid-gap)) minmax(0, 1fr);
+	gap: clamp(1rem, 0.6rem + 1.6vw, 2rem) var(--im-grid-gap);
 	align-items: center;
 }
 

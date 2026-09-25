@@ -1,0 +1,82 @@
+---
+title: On air
+description: The sources assembled into one screen — the lamp, the clock, the countdown, the chips, the goal and the lower third on a dark ground. A whole scene the system did not ship, built from parts it did.
+eyebrow: Live stream
+source: src/components/studio.css
+---
+<p>The four scenes beside this one are finished rooms. <a href="/live/sources/">Live sources</a> takes them apart. This page is the point of taking them apart: <strong>a screen the system has never seen</strong>, assembled in one sitting from parts it already had, and still recognisably the same channel. Nothing below is new to the system except the goal bar — every other line is a class that was already here.</p>
+
+<div class="frame-preview" style="--fw: 1920; --fh: 1080"><iframe src="/frames/live-onair/" title="live-onair" loading="lazy"></iframe></div>
+<p class="im-cluster"><a class="im-btn im-btn-sm" href="/frames/live-onair/">Open at 1920 × 1080 {{icon "arrow-up-right"}}</a><span class="im-hint"><code>im-studio-scene</code> on <code>im-studio-dark</code>, with the sources laid into its three rows and its two bottom corners</span></p>
+
+<h2>What it is made of</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Where</th><th>Class</th><th>What it does here</th></tr></thead>
+	<tbody>
+		<tr><td>The ground</td><td><code>im-studio-dark</code> + <code>im-studio-bg im-bg-isometric im-bg-fade-b</code></td><td>The ink is the ground, restated rather than inverted; isometric paper over it, masked away toward the foot so the words at the bottom sit on nothing.</td></tr>
+		<tr><td>Over it</td><td><code>im-studio-backdrop-vignette</code></td><td>Darkens the corners and leaves the middle alone, so the title keeps the light and the corner pieces keep their contrast.</td></tr>
+		<tr><td>Top left</td><td><code>im-studio-mark</code></td><td>The logo as live text and the name — the same mark the site signs itself with.</td></tr>
+		<tr><td>Top, after it</td><td><code>im-studio-chip</code> ×2</td><td>The handle and the URL. Mono, caps, pill — small on purpose: they are for the viewer who arrived late.</td></tr>
+		<tr><td>Top right</td><td><code>im-studio-chip-accent im-studio-live</code></td><td>The on-air pill: a short caps label with the recording light pulsing in front of it. The dot is a marker, never an active state.</td></tr>
+		<tr><td>Top right</td><td><code>im-studio-clock</code></td><td>The time in the mono face. <code>[data-im-clock]</code> keeps it honest; the markup carries a time so the frame is right before any script runs.</td></tr>
+		<tr><td>The middle</td><td><code>im-studio-kicker</code> · <code>im-studio-countdown-mono</code> · <code>im-studio-title</code> · <code>im-studio-sub</code></td><td>One thing to read, in the display scale, with the figure above it.</td></tr>
+		<tr><td>Bottom left</td><td><code>im-studio-lower</code></td><td>The lower third: the name on the accent, the line under it on the canvas.</td></tr>
+		<tr><td>Bottom right</td><td><code>im-studio-goal</code></td><td>The goal bar — a label, a figure and a thin <code>im-progress</code> track.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>The countdown, in mono</h2>
+<p><code>im-studio-countdown</code> sets its figure in Geist Pixel: an arcade score, right for a stream that is about to be fun. <code>im-studio-countdown-mono</code> is the same component in Geist Mono with tabular figures — a <em>timer</em>, right for a stream that is about to be work. A modifier on the component, not a second countdown: the tiles, the gap and the accent colon are the ones it already had.</p>
+{{{{code "html"}}}}
+<p class="im-studio-countdown im-studio-countdown-mono"><span>04</span><i>:</i><span>30</span></p>
+{{{{/code}}}}
+
+<h2>The goal bar</h2>
+<p>The one piece this screen needed and the system did not have. A label, the figure, and a thin track — and the track is the system's own <a href="/components/progress/"><code>im-progress</code></a>, which already reads <code>--im-value</code>, so a goal on a stream and a goal on a page are one component with one API. What <code>im-studio-goal</code> adds is the <strong>size</strong>: everything in it is measured in the frame's em, so it is the right bar at 1280 × 720 and at 2560 × 1440, and <code>--im-studio-scale</code> moves it with every other source.</p>
+<p>Its colours come from the words above it — the track is a share of <code>currentcolor</code>, not a named grey — so the same bar reads on glass over a bright screen share and on the canvas. It sits on the bottom corner offsets the lower third uses, so the two line up across the foot of the screen.</p>
+{{{{code "html"}}}}
+<div class="im-studio-goal im-studio-glass">
+	<b>Members</b><span>412 / 500</span>
+	<div class="im-progress" role="progressbar" aria-label="Members" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100" style="--im-value: .82"></div>
+</div>
+{{{{/code}}}}
+
+<h2>The whole screen</h2>
+<p>Three rows and two corners. <code>im-studio-scene</code> gives the rows — <code>top</code>, <code>mid</code>, <code>bar</code> — and every source that wants a corner takes one by being absolutely placed, which is how they are written. Drop the bottom bar and the middle simply centres in what is left.</p>
+{{{{code "html"}}}}
+<div class="im-studio im-studio-scene im-studio-dark" style="--im-studio-w: 1920; --im-studio-h: 1080">
+	<span class="im-studio-bg im-bg-isometric im-bg-fade-b" aria-hidden="true"></span>
+	<span class="im-studio-backdrop im-studio-backdrop-vignette" aria-hidden="true"></span>
+	<div class="im-studio-top">
+		<p class="im-studio-mark">{{> "components/logo" mark=true}}<span>imswarnil</span></p>
+		<span class="im-studio-chip">@imswarnil</span>
+		<span class="im-studio-chip im-studio-chip-canvas">imswarnil.com/live</span>
+		<span class="im-studio-spacer"></span>
+		<span class="im-studio-chip im-studio-chip-accent im-studio-live">On air</span>
+		<p class="im-studio-clock im-studio-glass" data-im-clock="HH:mm">19:04</p>
+	</div>
+	<div class="im-studio-mid">
+		<p class="im-studio-kicker">First build in</p>
+		<p class="im-studio-countdown im-studio-countdown-mono"><span>04</span><i>:</i><span>30</span></p>
+		<h1 class="im-studio-title">The comment wall, <em>live</em></h1>
+		<p class="im-studio-sub">Ghost's own comments, styled from scratch.</p>
+	</div>
+	<div class="im-studio-lower"><b>Swarnil Singhai</b><span>Salesforce consultant · imswarnil.com</span></div>
+	<div class="im-studio-goal im-studio-glass">
+		<b>Members</b><span>412 / 500</span>
+		<div class="im-progress" role="progressbar" aria-label="Members" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100" style="--im-value: .82"></div>
+	</div>
+</div>
+{{{{/code}}}}
+
+<h2>Rules this screen keeps</h2>
+<ul>
+	<li><strong>One em, set by the canvas.</strong> Nothing in the markup names a pixel; the frame's font size is its shorter side over 27, so the same markup is right at every size.</li>
+	<li><strong>Nothing over a picture names a colour.</strong> The glass, the ink on it and the scrim are <code>--im-glass</code>, <code>--im-on-media</code> and <code>--im-media-scrim</code> — fixed in both themes, because the stream is.</li>
+	<li><strong>The accent means live</strong>, and it appears three times: the lamp, the countdown's colon, the goal's fill. Nowhere else.</li>
+	<li><strong>The dot is a marker.</strong> It marks <em>on air</em> here, and it is the only thing on the screen that moves apart from the bar filling.</li>
+	<li><strong>A browser source cannot click.</strong> Everything that animates starts on load, and every animation stops under <code>prefers-reduced-motion</code>.</li>
+</ul>
+<p>For overlays driven by the stream itself — a real countdown, a real goal, OBS's own state — see <a href="https://github.com/imswarnil/Tally">Tally</a>, which draws the same ideas natively inside OBS and shares no code with this system in either direction.</p>

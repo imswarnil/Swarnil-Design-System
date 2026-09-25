@@ -132,7 +132,8 @@
 
 .im-exps {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-exps-min, 18rem), 100%), 1fr));
+	--im-track-span: 4;
+	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-track), 100%), 1fr));
 	gap: var(--im-grid-gap);
 	align-items: start;
 }
@@ -417,7 +418,8 @@
 
 .im-trips {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-trips-min, 14rem), 100%), 1fr));
+	--im-track-span: 3;
+	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-track), 100%), 1fr));
 	gap: var(--im-grid-gap);
 	align-items: stretch;
 }
@@ -886,7 +888,7 @@
 /* ---- regions: square tiles ---------------------------------------------
    A picture, the name, how many trips. Square, because a region is a place
    on a map and a map tile is square. */
-.im-regions { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(11rem, 100%), 1fr)); gap: var(--im-grid-gap); }
+.im-regions { display: grid; --im-track-span: 2; grid-template-columns: repeat(auto-fill, minmax(min(var(--im-track), 100%), 1fr)); gap: var(--im-grid-gap); }
 .im-region {
 	position: relative;
 	display: grid;

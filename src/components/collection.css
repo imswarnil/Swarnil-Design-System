@@ -112,11 +112,11 @@
 
 /* ---- the feed ---- */
 .im-feed {
-	--im-feed-min: 16rem;
+	--im-track-span: 4;
 	--im-feed-gap: var(--im-grid-gap);
 
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-feed-min), 100%), 1fr));
+	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-track), 100%), 1fr));
 	gap: var(--im-feed-gap);
 	min-width: 0;
 }
@@ -257,7 +257,7 @@
 	gap: 1rem;
 }
 
-.im-collhero-copy > * { max-width: var(--im-span-7); }
+.im-collhero-copy > * { max-width: calc(7 * var(--im-col) + 6 * var(--im-grid-gap)); }
 
 .im-collhero-title {
 	color: var(--im-ink);

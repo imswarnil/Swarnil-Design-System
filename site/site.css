@@ -50,12 +50,40 @@
 		@apply text-sm;
 	}
 
+	/* Two halves of FOUR COLUMNS each, pushed apart. Nine columns cannot hold
+	   two equal tracks — nothing divides nine but three — so the pager takes
+	   four on the left, four on the right, and the column between them is the
+	   gap. Symmetric and on the lines, which grid-cols-2 could never be. */
 	.doc-pager {
-		@apply grid grid-cols-2 gap-4 mt-8 pt-8 border-t border-line;
+		@apply grid mt-8 pt-8 border-t border-line;
+
+		grid-template-columns: repeat(2, calc(4 * var(--im-col) + 3 * var(--im-grid-gap)));
+		justify-content: space-between;
+		gap: 1rem 0;
+	}
+
+	@media (width < 48rem) {
+		.doc-pager { grid-template-columns: minmax(0, 1fr); }
 	}
 
 	.doc-pager-next {
 		@apply items-end text-right;
+	}
+
+	/* The source of the page you are reading, on GitHub. Under the contents,
+	   because that is where a reader looks when they want the page itself
+	   rather than a place in it. The repository is public so the link works;
+	   the LICENCE is unchanged, and nothing here invites a fork. */
+	.doc-edit {
+		@apply inline-flex items-center gap-2 mt-4 pt-4 text-sm text-muted no-underline border-t border-line w-full;
+	}
+
+	.doc-edit:hover {
+		@apply text-ink;
+	}
+
+	.doc-edit .im-icon {
+		@apply text-muted;
 	}
 
 	/* ---- example: a stage and its source ---- */
@@ -398,7 +426,10 @@
 	.home-hero {
 		position: relative;
 		display: grid;
-		grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+		/* Seven columns to five — the nearest the twelve come to φ. The panel
+		   has no gap, so the copy takes seven columns PLUS the gutter that would
+		   have followed them, and the seam lands on a drawn line. */
+		grid-template-columns: calc(calc(7 * var(--im-col) + 6 * var(--im-grid-gap)) + var(--im-grid-gap)) minmax(0, 1fr);
 		align-items: stretch;
 		overflow: hidden;
 		isolation: isolate;
@@ -482,9 +513,12 @@
 	}
 
 	.home-split {
-		@apply grid items-center gap-8;
+		@apply grid items-center;
 
-		grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+		gap: var(--im-grid-gap);
+
+		/* Seven columns to five, on the gap the grid already uses. */
+		grid-template-columns: calc(7 * var(--im-col) + 6 * var(--im-grid-gap)) minmax(0, 1fr);
 	}
 
 	@media (width < 56rem) {

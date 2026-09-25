@@ -26,6 +26,7 @@
 /* Motion and effects: above components, so an effect can restyle one. */
 @import "./motion/index.css" layer(effects);
 @import "./effects/index.css" layer(effects);
+@import "./layout/fit.css" layer(effects);
 
 @import "tailwindcss/utilities.css" layer(utilities) source(none);
 @import "./utilities/index.css";

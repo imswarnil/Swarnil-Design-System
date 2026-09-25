@@ -420,6 +420,29 @@
 		select(tabs.find((t) => t.getAttribute('aria-selected') === 'true') || tabs[0]);
 	}
 
+	/* ── studio clock ──────────────────────────────────────────────────── */
+	/* [data-im-clock] writes the time into the element, once a second. The
+	   value is a locale hour format ("HH:mm" or "HH:mm:ss"); the markup keeps
+	   a time of its own, so a frame is right before this ever runs and stays
+	   right if it never does. A timer, not rAF: a browser source is a tab
+	   nobody is painting, and rAF does not fire in one. */
+	const clocks = [...document.querySelectorAll('[data-im-clock]')];
+	if (clocks.length) {
+		const tick = () => {
+			for (const el of clocks) {
+				const seconds = el.dataset.imClock.includes('ss');
+				el.textContent = new Date().toLocaleTimeString(el.dataset.imClockLocale || undefined, {
+					hour: '2-digit',
+					minute: '2-digit',
+					...(seconds ? { second: '2-digit' } : {}),
+					hour12: el.dataset.imClock.includes('a'),
+				});
+			}
+		};
+		tick();
+		setInterval(tick, 1000);
+	}
+
 	/* ── table of contents ─────────────────────────────────────────────── */
 	for (const toc of document.querySelectorAll('[data-toc]')) {
 		const scope = document.querySelector(toc.dataset.toc);

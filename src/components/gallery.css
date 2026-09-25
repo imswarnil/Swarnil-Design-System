@@ -10,11 +10,11 @@
    Layouts:  (default) even grid · -masonry · -mosaic (first one large) · -strip. */
 
 .im-gallery {
-	--im-gallery-min: 12rem;
 	--im-gallery-gap: 0.5rem;
 
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-gallery-min), 100%), 1fr));
+	--im-track-span: 3;
+	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-track), 100%), 1fr));
 	gap: var(--im-gallery-gap);
 }
 
@@ -108,7 +108,7 @@
 
 .im-gallery-masonry {
 	display: block;
-	columns: var(--im-gallery-min) auto;
+	columns: var(--im-gallery-col, 12rem) auto;
 	column-gap: var(--im-gallery-gap);
 }
 

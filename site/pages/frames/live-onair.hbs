@@ -1,0 +1,30 @@
+---
+title: Live · on air
+layout: home
+shell: frame
+---
+{{!-- A frame for the channel: 1920 × 1080. Open at that size to screenshot,
+	or load as a browser source. Built from tokens — see src/components/studio.css. --}}
+<div class="im-studio im-studio-scene im-studio-dark" style="--im-studio-w: 1920; --im-studio-h: 1080">
+	<span class="im-studio-bg im-bg-isometric im-bg-fade-b" aria-hidden="true"></span>
+	<span class="im-studio-backdrop im-studio-backdrop-vignette" aria-hidden="true"></span>
+	<div class="im-studio-top">
+		<p class="im-studio-mark">{{> "components/logo" mark=true}}<span>imswarnil</span></p>
+		<span class="im-studio-chip">@imswarnil</span>
+		<span class="im-studio-chip im-studio-chip-canvas">imswarnil.com/live</span>
+		<span class="im-studio-spacer"></span>
+		<span class="im-studio-chip im-studio-chip-accent im-studio-live">On air</span>
+		<p class="im-studio-clock im-studio-glass" data-im-clock="HH:mm">19:04</p>
+	</div>
+	<div class="im-studio-mid">
+		<p class="im-studio-kicker">First build in</p>
+		<p class="im-studio-countdown im-studio-countdown-mono"><span>04</span><i>:</i><span>30</span></p>
+		<h1 class="im-studio-title">The comment wall, <em>live</em></h1>
+		<p class="im-studio-sub">Ghost's own comments, styled from scratch.</p>
+	</div>
+	<div class="im-studio-lower"><b>Swarnil Singhai</b><span>Salesforce consultant · imswarnil.com</span></div>
+	<div class="im-studio-goal im-studio-glass">
+		<b>Members</b><span>412 / 500</span>
+		<div class="im-progress" role="progressbar" aria-label="Members" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100" style="--im-value: .82"></div>
+	</div>
+</div>

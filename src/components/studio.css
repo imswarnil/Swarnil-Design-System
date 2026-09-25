@@ -466,6 +466,8 @@
 
 .im-studio-top > .im-studio-mark { position: static; }
 .im-studio-top > .im-studio-spacer { flex: 1; }
+/* The clock is a corner source; in the top row the row IS the corner. */
+.im-studio-top > .im-studio-clock { position: static; }
 
 /* Starting soon / BRB / ending: one big thing in the middle. */
 .im-studio-mid {
@@ -491,6 +493,16 @@
 
 .im-studio-countdown > span { padding: 0.15em 0.25em; border-radius: 0.1em; background-color: var(--im-surface); }
 .im-studio-countdown > i { font-style: normal; color: var(--im-accent); }
+
+/* The same figure in the mono face — a timer rather than an arcade score.
+   Tabular figures, so the tiles do not shift as the seconds change. */
+.im-studio-countdown-mono {
+	font-family: var(--im-font-mono);
+	font-size: 4em;
+	font-weight: 500;
+	font-variant-numeric: tabular-nums;
+	letter-spacing: 0;
+}
 
 /* The bottom bar: the title of the stream, a ticker, where else to find you. */
 .im-studio-bar {
@@ -638,4 +650,403 @@
 
 @media (prefers-reduced-motion: reduce) {
 	.im-studio-live::before, .im-studio-alert { animation: none; }
+}
+
+/* ═══ Live sources ═══════════════════════════════════════════════════════════
+   The parts a stream is assembled from, each one able to stand alone over a
+   screen share: a tally light, a ticker, a camera frame, a visualiser, a
+   clock, a goal bar, an announcement card and a backdrop. Put one in an im-studio-overlay
+   frame and the page is a browser source; put several in a scene and it is a
+   layout.
+
+   They are the system's own, written from tokens. The same set of ideas is in
+   Tally (obs.imswarnil.com), which draws them natively inside OBS in C — no
+   line of CSS crosses between the two, in either direction. This is the look;
+   that is the plugin.
+
+   ONE LOOK, three knobs, shared by every source below:
+     --im-studio-accent   the colour that says "on air"       (default: --im-accent)
+     --im-studio-scale    type, padding and radius together   (default: 1)
+     --im-studio-tone     im-studio-glass | -solid — the ground under the words
+
+   Proportion: the grid does not reach a 1920 × 1080 canvas — there are no
+   columns on a camera — so what divides a source inside itself is φ. A card
+   is φ wide against its height, the lamp is φ² from the word, the ticker's
+   tag is the minor part of its own bar. See --im-phi in the tokens. */
+
+.im-studio {
+	--im-studio-accent: var(--im-accent);
+	--im-studio-scale: 1;
+	--im-studio-pad: calc(0.6em * var(--im-studio-scale));
+	--im-studio-round: calc(0.42em * var(--im-studio-scale));
+}
+
+/* The ground a source sits on. Glass reads on any screen share; solid is for
+   a source that must stay legible over a moving picture. */
+.im-studio-glass {
+	background-color: var(--im-glass);
+	color: var(--im-on-media);
+	backdrop-filter: blur(10px) saturate(1.2);
+}
+
+.im-studio-solid {
+	background-color: var(--im-canvas);
+	color: var(--im-ink);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+}
+
+/* ---- the tally light ------------------------------------------------------
+   The small red lamp on a studio camera that says THIS ONE IS ON AIR. A lamp
+   and a word, one φ-step apart; the lamp breathes while it is lit and is a
+   flat ring when it is not.
+
+     <p class="im-studio-tally im-studio-glass" data-state="live"><i></i>Live</p>
+
+   data-state: live (the accent) · rec (danger) · off (muted, no breath). */
+.im-studio-tally {
+	position: absolute;
+	top: calc(1.4em * var(--im-studio-scale));
+	left: calc(1.4em * var(--im-studio-scale));
+	display: inline-flex;
+	align-items: center;
+	gap: var(--im-phi-4);
+	margin: 0;
+	padding: var(--im-studio-pad) calc(var(--im-studio-pad) * var(--im-phi));
+	border-radius: var(--im-radius-full);
+	font-family: var(--im-font-mono);
+	font-size: calc(0.6em * var(--im-studio-scale));
+	font-weight: 500;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	line-height: 1;
+}
+
+.im-studio-tally > i {
+	width: 0.75em;
+	height: 0.75em;
+	border-radius: var(--im-radius-full);
+	background-color: var(--im-studio-lamp, var(--im-muted));
+	box-shadow: 0 0 0 0.25em color-mix(in oklab, var(--im-studio-lamp, var(--im-muted)) 30%, transparent);
+	animation: im-studio-breathe 2.4s var(--im-ease-in-out) infinite;
+}
+
+.im-studio-tally[data-state="live"] { --im-studio-lamp: var(--im-studio-accent); }
+.im-studio-tally[data-state="rec"] { --im-studio-lamp: var(--im-danger); }
+.im-studio-tally[data-state="off"] { --im-studio-lamp: var(--im-faint); color: var(--im-muted); }
+.im-studio-tally[data-state="off"] > i { animation: none; box-shadow: none; }
+
+@keyframes im-studio-breathe {
+	0%, 100% { box-shadow: 0 0 0 0.2em color-mix(in oklab, var(--im-studio-lamp) 32%, transparent); }
+	50% { box-shadow: 0 0 0 0.6em color-mix(in oklab, var(--im-studio-lamp) 0%, transparent); }
+}
+
+/* ---- the ticker -----------------------------------------------------------
+   A tag and a line of items sliding across the foot of the screen. The tag is
+   the MINOR part of the bar (the items take φ of it), so the eye reads the
+   tag once and then stops seeing it, which is what a tag is for.
+
+     <div class="im-studio-ticker im-studio-glass">
+       <b>Now playing</b>
+       <div class="im-studio-ticker-track"><span>…</span><span>…</span></div>
+     </div> */
+.im-studio-ticker {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: flex;
+	align-items: stretch;
+	overflow: hidden;
+	font-size: calc(0.58em * var(--im-studio-scale));
+}
+
+.im-studio-ticker > b {
+	flex: none;
+	display: flex;
+	align-items: center;
+	padding: calc(var(--im-studio-pad) * 1.4) calc(var(--im-studio-pad) * var(--im-phi));
+	background-color: var(--im-studio-accent);
+	color: var(--im-on-accent);
+	font-family: var(--im-font-mono);
+	font-weight: 600;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+/* The track is AS WIDE AS ITS CONTENT — flex: none and max-content, not a
+   1fr item — because it travels -50% of its own box, and that has to land on
+   exactly one copy of the items. As a 1fr item it was the width of the bar,
+   half of which is not one set, and the loop jumped every pass.
+
+   Even then it is half a gap short: eight items have seven gaps between them,
+   so half the track is one set plus three and a half gaps, not one set plus
+   four. The padding on the end is the eighth gap, and it is INSIDE the box
+   the percentage is measured against — which is why the lead-in on the other
+   end has to be a margin. The bar clips both. */
+.im-studio-ticker-track {
+	flex: none;
+	display: flex;
+	align-items: center;
+	gap: var(--im-studio-ticker-gap, calc(var(--im-studio-pad) * 3));
+	width: max-content;
+	margin-left: var(--im-studio-ticker-gap, calc(var(--im-studio-pad) * 3));
+	padding-right: var(--im-studio-ticker-gap, calc(var(--im-studio-pad) * 3));
+	font-family: var(--im-font-mono);
+	white-space: nowrap;
+	animation: im-studio-ticker var(--im-studio-ticker-speed, 26s) linear infinite;
+}
+
+.im-studio-ticker-track > span { display: inline-flex; align-items: center; gap: 0.6em; }
+.im-studio-ticker-track > span::before {
+	content: "";
+	width: 0.36em;
+	height: 0.36em;
+	border-radius: var(--im-radius-full);
+	background-color: var(--im-studio-accent);
+}
+
+@keyframes im-studio-ticker {
+	from { translate: 0 0; }
+	to { translate: -50% 0; }
+}
+
+/* ---- the camera frame -----------------------------------------------------
+   An outline with a chip on its corner, to sit over the camera. No ground: it
+   is the edge of the picture, not a panel on it.
+
+     <div class="im-studio-camframe"><span class="im-studio-chip …">Swarnil</span></div> */
+.im-studio-camframe {
+	position: absolute;
+	inset: auto calc(1.4em * var(--im-studio-scale)) calc(1.4em * var(--im-studio-scale)) auto;
+	width: calc(9em * var(--im-studio-scale));
+	aspect-ratio: var(--im-ratio-golden);
+	border-radius: calc(var(--im-studio-round) * 2);
+	box-shadow: inset 0 0 0 calc(0.09em * var(--im-studio-scale)) var(--im-studio-accent);
+}
+
+.im-studio-camframe > .im-studio-chip {
+	position: absolute;
+	left: calc(0.5em * var(--im-studio-scale));
+	bottom: calc(0.5em * var(--im-studio-scale));
+	font-size: calc(0.48em * var(--im-studio-scale));
+}
+
+/* A frame that holds a picture rather than framing one behind it. */
+.im-studio-camframe > img,
+.im-studio-camframe > video {
+	width: 100%;
+	height: 100%;
+	border-radius: inherit;
+	object-fit: cover;
+}
+
+/* ---- the visualiser -------------------------------------------------------
+   Bars that move with the sound. This is the LOOK of one: the bars run on a
+   demo signal, as a browser source with no audio must. A real level needs an
+   analyser; the markup does not change when one is wired to it, only the
+   height of each bar.
+
+     <div class="im-studio-viz"><i></i><i></i>… (twelve or so) </div>
+
+   im-studio-viz-mirror doubles it about the centre line. */
+.im-studio-viz {
+	position: absolute;
+	left: calc(1.4em * var(--im-studio-scale));
+	bottom: calc(1.4em * var(--im-studio-scale));
+	display: flex;
+	align-items: flex-end;
+	gap: calc(0.16em * var(--im-studio-scale));
+	height: calc(2.2em * var(--im-studio-scale));
+}
+
+.im-studio-viz > i {
+	width: calc(0.22em * var(--im-studio-scale));
+	height: 100%;
+	border-radius: var(--im-radius-full);
+	background-color: var(--im-studio-accent);
+	transform-origin: bottom;
+	/* Seven periods, none a multiple of another, so the row never repeats. */
+	animation: im-studio-viz 0.9s var(--im-ease-in-out) infinite alternate;
+}
+
+.im-studio-viz > i:nth-child(7n + 1) { animation-duration: 0.62s; scale: 1 0.35; }
+.im-studio-viz > i:nth-child(7n + 2) { animation-duration: 0.91s; scale: 1 0.7; }
+.im-studio-viz > i:nth-child(7n + 3) { animation-duration: 0.74s; scale: 1 0.5; }
+.im-studio-viz > i:nth-child(7n + 4) { animation-duration: 1.13s; scale: 1 0.9; }
+.im-studio-viz > i:nth-child(7n + 5) { animation-duration: 0.83s; scale: 1 0.45; }
+.im-studio-viz > i:nth-child(7n + 6) { animation-duration: 1.01s; scale: 1 0.65; }
+.im-studio-viz > i:nth-child(7n + 7) { animation-duration: 0.69s; scale: 1 0.3; }
+
+@keyframes im-studio-viz {
+	from { scale: 1 0.18; }
+	to { scale: 1 1; }
+}
+
+.im-studio-viz-mirror { align-items: center; }
+.im-studio-viz-mirror > i { transform-origin: center; }
+
+/* ---- the clock ------------------------------------------------------------
+   The time, in the mono face. [data-im-clock] in im.js keeps it honest; the
+   markup carries a time so the frame is right before any script runs. */
+.im-studio-clock {
+	position: absolute;
+	top: calc(1.4em * var(--im-studio-scale));
+	right: calc(1.4em * var(--im-studio-scale));
+	margin: 0;
+	padding: var(--im-studio-pad) calc(var(--im-studio-pad) * var(--im-phi));
+	border-radius: var(--im-radius-full);
+	font-family: var(--im-font-mono);
+	font-size: calc(0.72em * var(--im-studio-scale));
+	font-variant-numeric: tabular-nums;
+	letter-spacing: 0.04em;
+	line-height: 1;
+}
+
+/* ---- the goal bar ---------------------------------------------------------
+   The road to the next thing: members this month, a fundraiser, the last
+   seats. A label, the figure, and a thin track — the track is the system's
+   own im-progress, which already reads --im-value, sized here in the frame's
+   em so the bar belongs to the canvas and not to the page. It shares the
+   bottom corner offsets with the lower third, so the two line up across the
+   foot of the screen — which is why the box itself stays at the frame's em
+   and the words are the only thing shrunk: an inset written in em on an
+   element that has just changed its own font-size measures the new em, not
+   the canvas's, and the corner moves.
+
+     <div class="im-studio-goal im-studio-glass">
+       <b>Members</b><span>412 / 500</span>
+       <div class="im-progress" role="progressbar" style="--im-value: .82"></div>
+     </div> */
+.im-studio-goal {
+	position: absolute;
+	inset: auto calc(1.5em * var(--im-studio-scale)) calc(2em * var(--im-studio-scale)) auto;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	align-items: baseline;
+	gap: calc(0.42em * var(--im-studio-scale)) calc(0.7em * var(--im-studio-scale));
+	width: calc(8.6em * var(--im-studio-scale));
+	margin: 0;
+	padding: calc(0.45em * var(--im-studio-scale)) calc(0.6em * var(--im-studio-scale));
+	border-radius: var(--im-studio-round);
+	font-family: var(--im-font-mono);
+	line-height: 1;
+}
+
+.im-studio-goal > b {
+	font-size: calc(0.55em * var(--im-studio-scale));
+	font-weight: 600;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+.im-studio-goal > span {
+	color: color-mix(in oklab, currentcolor 65%, transparent);
+	font-size: calc(0.55em * var(--im-studio-scale));
+	font-variant-numeric: tabular-nums;
+	white-space: nowrap;
+}
+
+/* The track takes its colours from the words above it, so one bar reads on
+   glass over a bright screen share and on the canvas alike. */
+.im-studio-goal > .im-progress {
+	--im-progress-height: calc(0.14em * var(--im-studio-scale));
+	--im-progress-color: var(--im-studio-accent);
+
+	grid-column: 1 / -1;
+	background-color: color-mix(in oklab, currentcolor 20%, transparent);
+}
+
+/* ---- the announcement card ------------------------------------------------
+   The one that says "starting soon", "back in five", "thanks for watching".
+   A golden rectangle: its width is φ times its height, and inside it the copy
+   takes the major part and the chips the minor.
+
+     <div class="im-studio-card im-studio-solid">
+       <p class="im-studio-card-eyebrow"><i></i>Recording</p>
+       <h2 class="im-studio-title">Starting soon</h2>
+       <p class="im-studio-sub">…</p>
+       <p class="im-studio-card-chips"><span class="im-studio-chip …">…</span></p>
+     </div> */
+.im-studio-card {
+	position: absolute;
+	/* inset 0 + margin auto is what centres a box on both axes. The height
+	   comes from the ratio, so it must stay auto. */
+	inset: 0;
+	margin: auto;
+	display: grid;
+	grid-template-rows: minmax(0, 1fr) auto;
+	gap: calc(var(--im-studio-pad) * 2);
+	width: calc(18em * var(--im-studio-scale));
+	aspect-ratio: var(--im-ratio-golden);
+	height: auto;
+	padding: calc(var(--im-studio-pad) * 2.6);
+	border-radius: calc(var(--im-studio-round) * 2.5);
+}
+
+/* The card is its own frame: the copy inside it has no padding of its own,
+   and the title is sized to the card rather than to the canvas — 2.6em is a
+   thumbnail's title and would take three lines of a golden rectangle. */
+.im-studio-card > .im-studio-copy {
+	align-content: center;
+	gap: 0.55em;
+	padding: 0;
+}
+
+.im-studio-card .im-studio-title { font-size: 1.7em; }
+.im-studio-card .im-studio-sub { max-width: 18em; font-size: 0.62em; }
+
+.im-studio-card-eyebrow {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--im-phi-4);
+	margin: 0;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: 0.5em;
+	font-weight: 500;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+}
+
+.im-studio-card-eyebrow > i {
+	width: 0.6em;
+	height: 0.6em;
+	border-radius: var(--im-radius-full);
+	background-color: var(--im-danger);
+	animation: im-studio-breathe 2.4s var(--im-ease-in-out) infinite;
+	--im-studio-lamp: var(--im-danger);
+}
+
+.im-studio-card-chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: calc(var(--im-studio-pad) * 0.8);
+	margin: 0;
+	font-size: 0.55em;
+}
+
+/* ---- the backdrop ---------------------------------------------------------
+   What everything else sits on: a solid, a scrim over a picture, or a
+   vignette that leaves the middle alone. It is the frame's own ground, so it
+   goes first in the markup and takes no z-index of its own. */
+.im-studio-backdrop {
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	background-color: var(--im-studio-bg);
+}
+
+.im-studio-backdrop-scrim { background-color: var(--im-media-scrim); }
+
+.im-studio-backdrop-vignette {
+	background: radial-gradient(120% 95% at 50% 45%, transparent 38%, rgb(0 0 0 / 55%) 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.im-studio-tally > i,
+	.im-studio-card-eyebrow > i,
+	.im-studio-viz > i,
+	.im-studio-ticker-track { animation: none; }
 }

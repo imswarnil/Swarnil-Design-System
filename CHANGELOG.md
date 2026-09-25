@@ -1,5 +1,33 @@
 # Changelog
 
+
+### Fit to the grid (2026-09-25)
+- `src/layout/fit.css`: a data-span cell fills its columns (buttons, fields, pictures); `data-ratio` shapes pictures; `im-cols-modules` + `data-rows` gives square modules (rows one column tall); `im-fit`, `im-w-1…12`; `--im-span-1/10/11`. Docs: `/layout/fit/`.
+
+
+### The contents rail starts under the head (2026-09-26)
+- `im-with-aside-head`: the layout takes a `<header>` of its own and the rail begins where the BODY begins, instead of level with the title. A contents rail beside the title is a list of places to go before the reader has been told where they are. The head keeps the article's measure — a lede across twelve columns is not a lede — and stacked the order is head, contents, body.
+- The docs use it (`site/layouts/doc.hbs`): the page head moved out of `<article>`, so `#article` is now the body alone and the table of contents is built from that.
+
+### Everything on the page lands, including the pager (2026-09-26)
+- `doc-pager` is two halves of FOUR columns pushed apart, with the ninth column between them as the gap. Nine columns cannot hold two equal tracks, so `grid-cols-2` was off on every one of the 32 docs pages that has a pager.
+- `im-ways`, `im-form-row` and `im-tiers` measure their tracks in columns on the grid's own gap, like the other feeds.
+- The membership page takes twelve columns rather than ten: it holds three-up blocks, and ten takes only 2 and 5.
+- Documented on `/layout/fit/`: which counts take which N-up (12 → 2, 3, 4, 6; 10 → 2, 5; 9 → 3; 8 → 2, 4), and the third thing that is deliberately not measured — a row whose first track is a marker gutter.
+
+### The grid comes off :root (2026-09-26)
+- `--im-grid-of` and the whole `--im-span-1…12` ladder are gone from `:root`. A count and a span belong to a BOX, not to the document: declared on `:root` they were computed once, against `:root`, so `--im-span-4` meant "four twelfths of whatever box later read it" — a rail inside a ten-column wrap came out 3.33 columns wide.
+- A span is now written where it is used, `calc(N * var(--im-col) + (N-1) * var(--im-grid-gap))`, and `--im-col`/`--im-track` are declared on `*` so every element computes its own from the count it inherits. `--im-grid-of` is read with a fallback of twelve and published only by containers. `--im-grid-gap` stays a token: a distance has no context.
+- `im-wrap` carries its own `--im-wrap-cap`, written in twelfths, because the element publishes ten for what goes inside it.
+- Fixed with it: `im-homehero` is seven columns to five, `im-abouthero` and `im-story` are two and ten, and `im-single[data-sidebar="off"]` no longer publishes six when a wrap has overridden the reading cap.
+
+### Every grid on the page lands on the drawn lines (2026-09-25)
+- `--im-grid-of` — how many columns the current box holds. `--im-col` divides the box by it, so `--im-span-N` and the new `--im-track` mean "of the box I am in" and a nested grid measures itself correctly. Published by `im-shell-main` (12), `im-cols`/`im-section-grid`/`im-wrap-wide` (12), `im-wrap` (10), `im-single` (8/4), `im-with-aside` (9/3), `im-with-aside-wide` (8/4), `im-with-rails` (2/7/3), every `data-span` cell (its span), and 4 on a phone — each at the width where those columns exist.
+- The feeds are measured in columns instead of rems, so a track is always a whole number of them: `im-feed` (4), `im-repos` (4), `im-vidgrid` (4), `im-exps` (4), `im-gallery` (3), `im-trips` (3), `im-regions` (2), `im-snipcards` (6), `im-sponsors` (2). The `--im-*-min` knobs became `--im-track-span`.
+- `im-wrap` now caps at `var(--im-span-10)` — exactly ten columns at every window. The old rem length equalled ten only at 90rem and was the full twelve below 1194px.
+- The home hero and split are seven columns to five, on the grid's own gap.
+- The rule, documented on `/layout/fit/`: an N-up grid lands on the lines only when N divides the box's count. A reading measure and a grid of chips are deliberately not measured.
+
 ## Unreleased
 
 ### Added
@@ -69,10 +97,36 @@ the prose measure six, so a centred `im-wrap`, an `im-wrap-wide` and a reading
 column sit on the same lines; layouts are measured in the grid rather than in
 rems: `--im-col` and `--im-span-2…9` in the tokens; a widget rail is four
 columns, a contents rail two, the player's side three, a hero's words seven,
-the clip's room five. `im-cols` is the grid for placing things; `im-guides`
-draws it on the page, Swiss style — cream hairlines at both edges of every
-column behind everything, on unless `data-im-guides="off"`; running text
-carries a canvas ground so the lines live in the gutters.
+the clip's room five, the side nav two. `im-cols` is the grid for placing
+things, with `data-span` and `data-start`; `im-section-grid` is a section that
+IS the grid, with an `im-section-head` measured at seven. `im-guides` draws it
+on the page, Swiss style — **one** very light black hairline down the middle of
+every gutter, eleven of them behind everything, with a border closing the frame
+at each edge; on unless `data-im-guides="off"`; running text carries a canvas
+ground so the lines live in the gutters. `.im-shell-main` stops at the wide
+measure, so nothing the page can hold is wider than the grid drawn behind it,
+and collapsing the side nav no longer widens the content by the two-thirds of a
+column it gave up: a centred measure has to be an even number of columns, or it
+starts in the middle of one. `im-wrap-prose` and `im-bleed` exist, having been
+documented for a while without being written.
+
+**The golden ratio** — `--im-phi`, `--im-phi-inv`, `--im-ratio-golden` and a
+ladder `--im-phi-1…8`, each rung φ from the last. The grid rules the page
+across; φ rules what the grid cannot measure — a picture's ratio
+(`im-ratio-golden`, `-tall`), the split inside a block that has already taken
+its columns (`im-golden`, `im-golden-flip`, `im-golden-rows`), and a fixed
+canvas, where there are no columns at all. Twelve columns have no golden split,
+so across the page the nearest whole columns win: seven and five. Documented at
+`/layout/golden/`.
+
+**Live sources** — the parts a stream is assembled from, each able to stand
+alone over a screen share: `im-studio-tally` (the lamp that says *on air*,
+`data-state="live | rec | off"`), `im-studio-ticker`, `im-studio-camframe`,
+`im-studio-viz`, `im-studio-clock` (`[data-im-clock]`, a timer not rAF),
+`im-studio-card` and `im-studio-backdrop`. One Look across all of them —
+`--im-studio-accent`, `--im-studio-scale`, `im-studio-glass` / `-solid` — and φ
+inside each, since a camera has no columns. Four more pages under `/frames/`,
+documented at `/live/sources/`.
 
 **A skill** — `skills/im-design-system/SKILL.md` teaches an agent the rules
 and the shapes; with the MCP server it reads the real components. Documented at

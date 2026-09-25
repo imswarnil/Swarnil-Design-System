@@ -1,12 +1,12 @@
-<div class="im-with-aside shell-doc">
-	<article class="doc" id="article">
-		<header class="doc-head">
-			{{#if page.eyebrow}}<p class="im-eyebrow">{{page.eyebrow}}</p>{{/if}}
-			<h1>{{page.title}}</h1>
-			{{#if page.description}}<p class="im-lede">{{page.description}}</p>{{/if}}
-			{{#if page.source}}<p class="doc-source"><code>{{page.source}}</code></p>{{/if}}
-		</header>
+<div class="im-with-aside im-with-aside-head shell-doc">
+	<header class="doc-head">
+		{{#if page.eyebrow}}<p class="im-eyebrow">{{page.eyebrow}}</p>{{/if}}
+		<h1>{{page.title}}</h1>
+		{{#if page.description}}<p class="im-lede">{{page.description}}</p>{{/if}}
+		{{#if page.source}}<p class="doc-source"><code>{{page.source}}</code></p>{{/if}}
+	</header>
 
+	<article class="doc" id="article">
 		{{{doc_body}}}
 
 		<nav class="doc-pager" aria-label="Pages">
@@ -16,6 +16,9 @@
 	</article>
 
 	<aside>
-		<div class="im-sticky-rail"><nav class="im-toc" data-toc="#article" aria-label="On this page"></nav></div>
+		<div class="im-sticky-rail">
+			<nav class="im-toc" data-toc="#article" aria-label="On this page"></nav>
+			{{#if page.file}}<a class="doc-edit" href="{{repo}}/blob/main/{{page.file}}" target="_blank" rel="noopener noreferrer">{{> "icons/pencil"}}<span>Edit this page</span></a>{{/if}}
+		</div>
 	</aside>
 </div>

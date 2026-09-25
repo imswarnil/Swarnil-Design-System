@@ -22,7 +22,7 @@ layout: home
 		<div class="home-hero-art">{{> "docs/home-art"}}</div>
 	</section>
 
-	<section class="im-grid-auto im-grid-sm">
+	<section class="im-grid-12 im-grid-span-3">
 		<div class="im-card im-card-outline"><strong class="stat-figure">{{tokens.count}}</strong><span class="im-caption">Tokens · --im-*</span></div>
 		<div class="im-card im-card-outline"><strong class="stat-figure">40+</strong><span class="im-caption">Components</span></div>
 		<div class="im-card im-card-outline"><strong class="stat-figure">{{icons.length}}</strong><span class="im-caption">Icons, as partials</span></div>
@@ -31,7 +31,7 @@ layout: home
 
 	<section class="im-section">
 		<div class="home-head"><p class="im-caption" data-index="01">Foundation</p><a class="im-card-cta" href="/foundation/principles/">Principles {{> "icons/arrow-right"}}</a></div>
-		<div class="im-grid-auto im-grid-md">
+		<div class="im-grid-12 im-grid-span-3">
 			<a class="im-card im-card-outline im-card-link" href="/foundation/color/"><span class="im-card-icon">{{> "icons/palette"}}</span><span class="im-card-title">Color</span><span>A neutral ramp, and names for what a colour is for. Dark mode for free.</span></a>
 			<a class="im-card im-card-outline im-card-link" href="/foundation/typography/"><span class="im-card-icon">{{> "icons/type"}}</span><span class="im-card-title">Typography</span><span>Geist to read, Geist Mono for code, Geist Pixel for display.</span></a>
 			<a class="im-card im-card-outline im-card-link" href="/foundation/logo/"><span class="im-card-icon">{{> "icons/sparkles"}}</span><span class="im-card-title">Logo</span><span>Letters, and a dot at the top right of the last one.</span></a>
@@ -43,7 +43,7 @@ layout: home
 
 	<section class="im-section">
 		<div class="home-head"><p class="im-caption" data-index="02">Components — rendered by the real partials</p><a class="im-card-cta" href="/collections/post/card/">Post card {{> "icons/arrow-right"}}</a></div>
-		<div class="im-grid-auto im-grid-md">
+		<div class="im-grid-12 im-grid-span-3">
 			{{#foreach demo.four}}{{> "components/post-card" eager=true}}{{/foreach}}
 		</div>
 	</section>
@@ -60,7 +60,7 @@ layout: home
 
 	<section class="im-section">
 		<div class="home-head"><p class="im-caption" data-index="04">Build on it</p></div>
-		<div class="im-grid-auto im-grid-md">
+		<div class="im-grid-12 im-grid-span-3">
 			<a class="im-card im-card-outline im-card-link" href="/guides/add-a-token/"><span class="im-badge im-badge-info" style="align-self: start">Guide</span><span class="im-card-title">Add a token</span><span>One declaration becomes a variable and a utility.</span></a>
 			<a class="im-card im-card-outline im-card-link" href="/guides/add-a-component/"><span class="im-badge im-badge-info" style="align-self: start">Guide</span><span class="im-card-title">Add a component</span><span>One file, tokens only, knobs as variables.</span></a>
 			<a class="im-card im-card-outline im-card-link" href="/motion/animation/"><span class="im-badge im-badge-accent" style="align-self: start">New</span><span class="im-card-title">Motion &amp; effects</span><span>Motion tokens, reveals, two signature interactions, and text, image and border effects.</span></a>

@@ -5,8 +5,10 @@
 /* ---- home hero: the person, left; the proof, right ---- */
 .im-homehero {
 	display: grid;
-	grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-	gap: clamp(1.5rem, 1rem + 2.5vw, 3.5rem);
+	/* Seven columns to five, on the grid's own gap — a split measured in
+	   fractions lands the seam inside a column instead of in a gutter. */
+	grid-template-columns: calc(7 * var(--im-col) + 6 * var(--im-grid-gap)) minmax(0, 1fr);
+	gap: clamp(1.5rem, 1rem + 2.5vw, 3.5rem) var(--im-grid-gap);
 	align-items: center;
 	min-height: min(34rem, 70dvh);
 }
@@ -67,8 +69,10 @@
 /* ---- about as a story: a rail of years, the chapters beside it ---- */
 .im-story {
 	display: grid;
-	grid-template-columns: 6rem minmax(0, 1fr);
-	gap: 0 clamp(1.25rem, 1rem + 2vw, 3rem);
+	/* The rail of years is TWO COLUMNS, so the chapters beside it start on a
+	   drawn line rather than 6rem from the edge. */
+	grid-template-columns: calc(2 * var(--im-col) + 1 * var(--im-grid-gap)) minmax(0, 1fr);
+	gap: 0 var(--im-grid-gap);
 }
 
 .im-story-year {
@@ -124,8 +128,9 @@
 /* ---- contact: the ways in, as cards ---- */
 .im-ways {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(min(14rem, 100%), 1fr));
-	gap: 0.75rem;
+	--im-track-span: 4;
+	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-track), 100%), 1fr));
+	gap: var(--im-grid-gap);
 }
 
 .im-way {

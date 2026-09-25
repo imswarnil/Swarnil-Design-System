@@ -299,7 +299,8 @@
 /* ---- a grid of them ---- */
 .im-vidgrid {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-vidgrid-min, 17rem), 100%), 1fr));
+	--im-track-span: 4;
+	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-track), 100%), 1fr));
 	gap: var(--im-grid-gap);
 	align-items: start;
 }
@@ -953,7 +954,7 @@
    (the post's line length, 40rem), --im-shortwatch-top (what sits above it,
    the bar's height). */
 .im-shortwatch {
-	--im-shortwatch-split: var(--im-span-5);
+	--im-shortwatch-split: calc(5 * var(--im-col) + 4 * var(--im-grid-gap));
 	--im-shortwatch-measure: 40rem;
 	--im-shortwatch-top: var(--im-bar-height);
 	--im-shortwatch-gutter: clamp(1rem, 3vh, 2.25rem);

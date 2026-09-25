@@ -10,20 +10,49 @@ source: src/utilities/index.css
 <table>
 	<thead><tr><th>Utility</th><th>Max width</th><th>For</th></tr></thead>
 	<tbody>
-		<tr><td><code>im-wrap-prose</code></td><td>44rem</td><td>Reading: a post body, a doc.</td></tr>
-		<tr><td><code>im-wrap</code></td><td>72rem</td><td>A page: article plus rail, a landing page. Override with <code>--im-wrap</code>.</td></tr>
-		<tr><td><code>im-wrap-wide</code></td><td>90rem</td><td>Galleries, feeds.</td></tr>
-		<tr><td><code>im-bleed</code></td><td>—</td><td>Break out of the gutter to the viewport edges.</td></tr>
+		<tr><td><code>im-wrap-prose</code></td><td>six columns</td><td>Reading: a post body, a doc.</td></tr>
+		<tr><td><code>im-wrap</code></td><td>ten columns</td><td>A page: article plus rail, a landing page. Override with <code>--im-wrap</code>.</td></tr>
+		<tr><td><code>im-wrap-wide</code></td><td>all twelve — 90rem</td><td>Galleries, feeds.</td></tr>
+		<tr><td><code>im-bleed</code></td><td>—</td><td>Out of the gutter, to the edges of the page column.</td></tr>
 	</tbody>
 </table>
 </div>
-<p>The same widths exist as <code>max-w-prose</code>, <code>max-w-page</code>, <code>max-w-wide</code>.</p>
+{{#example}}
+<div class="im-wrap-prose im-ring-line rounded-lg p-4 text-sm text-muted bg-canvas im-center">im-wrap-prose — six columns, the reading measure</div>
+<div class="im-bleed im-ring-line rounded-lg p-4 text-sm text-muted bg-surface im-center im-mt-sm">im-bleed — out of the gutter, to the edges of the page column</div>
+{{/example}}
+<p>The same widths exist as <code>max-w-prose</code>, <code>max-w-page</code>, <code>max-w-wide</code>. Each is a whole number of columns of the wide measure — prose is six, the page ten, wide all twelve — so a centred wrap, a reading column and a full-width gallery all sit inside the same columns. Each is an <strong>even</strong> number of them, and that is not a coincidence: centring leaves half the difference on each side, so twelve less an odd span leaves half a column and the block starts in the middle of one. Collapsing the side nav no longer widens the content for the same reason — eleven columns centred in twelve is the one measure the drawn grid makes impossible to miss.</p>
 
 <h2>im-grid-auto</h2>
-<p>As many columns as fit at a minimum width. Set <code>--im-grid-min</code> and <code>--im-grid-gap</code>. This is the workhorse: post feeds, card lists, swatches.</p>
+<p>As many columns as fit at a minimum width. Set <code>--im-grid-min</code> and <code>--im-grid-gap</code>. No breakpoints, and the cell size is whatever the contents need — right for swatches, chips and icon lists. It is <em>not</em> measured in the page's columns; for blocks that should sit on the drawn lines use <a href="#im-grid-12"><code>im-grid-12</code></a> below.</p>
 {{#example}}
 <div class="im-grid-auto im-grid-sm">
 	<div class="demo-cell">1</div><div class="demo-cell">2</div><div class="demo-cell">3</div><div class="demo-cell">4</div><div class="demo-cell">5</div>
+</div>
+{{/example}}
+
+<h2>im-grid-12</h2>
+<p><code>im-grid-auto</code> takes its minimum in rems, so the number of tracks is whatever happens to fit — and a track is a whole number of page columns only when that <strong>count divides twelve</strong>. The default, 16rem, gives five tracks at the wide measure; five does not divide twelve, so every card in that feed is 2.4 columns wide and its edges fall inside the columns rather than in the gutters the grid draws.</p>
+<p><code>im-grid-12</code> states the minimum <strong>in columns</strong> instead. The count is then <code>floor(12 / span)</code> — 12, 6, 4, 3, 2, 2, 1, 1 — and every one of those divides twelve, so a cell is a whole number of columns at every width, with no breakpoint. Below 48rem the page grid is four columns and <code>floor(4 / span)</code> does the same job. Reach for this whenever the cells are big enough to read as blocks of the page; keep <code>im-grid-auto</code> for swatches, chips and anything whose size is set by its contents rather than by the page.</p>
+{{#example}}
+<div class="im-grid-12 im-grid-span-4">
+	<div class="demo-cell">four columns</div><div class="demo-cell">four</div><div class="demo-cell">four</div>
+</div>
+{{/example}}
+<p><code>im-grid-span-2</code> (six-up), <code>-3</code> (four-up, the default), <code>-4</code> (three-up) and <code>-6</code> (two-up), or set <code>--im-grid-span</code>.</p>
+{{#example}}
+<div class="im-grid-12 im-grid-span-2 im-stack-sm">
+	<div class="demo-cell">2</div><div class="demo-cell">2</div><div class="demo-cell">2</div><div class="demo-cell">2</div><div class="demo-cell">2</div><div class="demo-cell">2</div>
+</div>
+{{/example}}
+{{#example}}
+<div class="im-grid-12 im-grid-span-3">
+	<div class="demo-cell">3</div><div class="demo-cell">3</div><div class="demo-cell">3</div><div class="demo-cell">3</div>
+</div>
+{{/example}}
+{{#example}}
+<div class="im-grid-12 im-grid-span-6">
+	<div class="demo-cell">six columns</div><div class="demo-cell">six</div>
 </div>
 {{/example}}
 
@@ -36,15 +65,59 @@ source: src/utilities/index.css
 {{/example}}
 
 <h2>The twelve columns</h2>
-<p>Every layout in the system is <strong>measured</strong> in one 12-column grid with one gap, <code>--im-grid-gap</code>: a widget rail is four columns (<code>--im-span-4</code>), a contents rail two, a hero's measure seven, a clip's room five, the player's side three. And the grid is drawn: <code>im-guides</code>, behind everything on the page, a cream hairline at both edges of every column (a faint white in the dark theme), so the gutters read as channels and every section sits inside its columns — a card, a panel or a block of text covers the lines, and they show in the gutters, the margins and the empty space. It is on unless <code>&lt;html data-im-guides="off"&gt;</code>. Any <code>[data-im-guides-toggle]</code> button switches it and the choice is remembered (the grid button in this top bar is one); a theme exposes it as a setting and the head script restores it before first paint. <code>im-cols</code> is the grid itself, for placing things with <code>col-span-*</code>.</p>
+<p>Every layout in the system is <strong>measured</strong> in one 12-column grid with one gap, <code>--im-grid-gap</code>: a widget rail is four columns, a contents rail two, a hero's measure seven, a clip's room five, the player's side three. The side nav is two — <code>--im-nav-width</code> is <code>90rem / 12 × 2</code>, not a round number that happened to look right — and the page column itself stops at exactly twelve, so nothing the page can hold is wider than the grid it is drawn on.</p>
+<p>And the grid <strong>is</strong> drawn: <code>im-guides</code>, behind everything on the page, <strong>one hairline down the middle of every gutter</strong> — eleven lines for twelve columns, plus one at each outer edge to close the frame. A line at both edges of every column drew the column as a box and the page as twenty-four rules; a single line draws the <em>division</em>, which is the only thing a reader has to see. It is a very light black (<code>--im-guide-line</code>), a faint white in the dark theme: near the limit of what prints, because it is scaffolding and must never compete with a word. A card, a panel or a block of running text covers the lines; they show in the gutters, the margins and the empty space.</p>
+<p>It is on unless <code>&lt;html data-im-guides="off"&gt;</code>. Any <code>[data-im-guides-toggle]</code> button switches it and the choice is remembered (the grid button in this top bar is one); a theme exposes it as a setting and the head script restores it before first paint.</p>
+
+<h3>im-cols</h3>
+<p><code>im-cols</code> is the grid itself. <strong>Measure with <code>data-span</code></strong>, not <code>col-span-*</code>: a span written for twelve columns cannot be honoured by the four a phone has — it opens implicit columns and takes the page's width with it — and <code>data-span</code> is the system's own, so the phone rule can drop it to one column. <code>data-start</code> places a block; <code>im-cols-hold</code> holds the twelve at 390px, for small cells that genuinely do sit three- or four-up on a phone.</p>
 {{#example}}
 <div class="im-cols">
-	<div class="col-span-8 im-ring-line rounded-lg p-4 text-sm text-muted bg-canvas">col-span-8 — an article</div>
-	<div class="col-span-4 im-ring-line rounded-lg p-4 text-sm text-muted bg-canvas">col-span-4 — its rail</div>
-	<div class="col-span-7 im-ring-line rounded-lg p-4 text-sm text-muted bg-canvas">7 — a hero's measure</div>
-	<div class="col-span-5 im-ring-line rounded-lg p-4 text-sm text-muted bg-canvas">5 — a clip's room</div>
+	<div data-span="8" class="im-ring-line rounded-lg p-4 text-sm text-muted bg-canvas">data-span="8" — an article</div>
+	<div data-span="4" class="im-ring-line rounded-lg p-4 text-sm text-muted bg-canvas">4 — its rail</div>
+	<div data-span="7" class="im-ring-line rounded-lg p-4 text-sm text-muted bg-canvas">7 — a hero's measure</div>
+	<div data-span="5" class="im-ring-line rounded-lg p-4 text-sm text-muted bg-canvas">5 — a clip's room</div>
+	<div data-span="8" data-start="3" class="im-ring-line rounded-lg p-4 text-sm text-muted bg-canvas">data-start="3" data-span="8" — columns 3–10</div>
 </div>
 {{/example}}
+
+<h3>im-section-grid</h3>
+<p>The ordinary <code>im-section</code> is a stack: everything in it is as wide as the page column. <code>im-section-grid</code> <em>is</em> the grid, so a block of a page can take a whole number of columns and land on the drawn lines. A child with no <code>data-span</code> takes all twelve, so a section only says what is <strong>not</strong> full width. The head takes seven (a title and a lede want a measure, not a page) — <code>im-section-head-narrow</code>, <code>-wide</code>, <code>-full</code>, or <code>im-section-head-bar</code> for words on the left and an action on the right.</p>
+{{#example}}
+<section class="im-section im-section-grid">
+	<header class="im-section-head">
+		<p class="im-caption" data-index="03">Live</p>
+		<h4 class="im-section-title im-m0">A section measured in columns</h4>
+		<p class="im-lede im-m0">The head takes seven of the twelve; the two blocks under it take eight and four.</p>
+	</header>
+	<div data-span="8" class="im-ring-line rounded-lg p-4 text-sm text-muted bg-canvas">8</div>
+	<aside data-span="4" class="im-ring-line rounded-lg p-4 text-sm text-muted bg-canvas">4</aside>
+</section>
+{{/example}}
+{{{{code "html"}}}}
+<section class="im-section im-section-grid">
+	<header class="im-section-head im-section-head-wide">…</header>
+	<div data-span="8">…</div>
+	<aside data-span="4">…</aside>
+</section>
+{{{{/code}}}}
+{{#example}}
+<section class="im-section im-section-grid">
+	<header class="im-section-head im-section-head-bar">
+		<h4 class="im-section-title im-m0">im-section-head-bar</h4>
+		<a class="im-btn im-btn-sm" href="#im-section-grid">All of them {{icon "arrow-right"}}</a>
+	</header>
+	<p class="im-section-head im-section-head-narrow im-m0 text-sm text-muted">…-narrow is five columns, for a head that is only a title.</p>
+	<p class="im-section-head im-section-head-full im-m0 text-sm text-muted">…-full is all twelve, for a head that carries a rule across the page.</p>
+	<div class="im-cols im-cols-hold" data-span="12">
+		<span data-span="3" class="im-badge im-center">holds</span>
+		<span data-span="3" class="im-badge im-center">the</span>
+		<span data-span="3" class="im-badge im-center">twelve</span>
+		<span data-span="3" class="im-badge im-center">at 390px</span>
+	</div>
+</section>
+{{/example}}
+<p>Across the page the splits that land on the lines are 8 : 4 and 7 : 5. Seven and five is as near as twelve columns come to the <a href="/layout/golden/">golden ratio</a> — φ of twelve is 7.42, and a block that wide ends in the middle of a gutter.</p>
 {{{{code "hbs"}}}}
 {{!-- default.hbs: the site setting decides the start; the visitor can still flip it --}}
 <html data-im-guides="{{#if @custom.show_grid}}on{{else}}off{{/if}}">
@@ -58,16 +131,15 @@ source: src/utilities/index.css
 <thead><tr><th>Token</th><th>Is</th><th>Used by</th></tr></thead>
 <tbody>
 <tr><td><code>--im-col</code></td><td>one column of the box it is read in</td><td>everything below</td></tr>
-<tr><td><code>--im-span-2</code></td><td>two columns and a gap</td><td><code>im-with-rails</code>' contents rail</td></tr>
-<tr><td><code>--im-span-3</code></td><td>three</td><td><code>im-with-aside</code>, <code>im-single-aside-sm</code>, the player's side</td></tr>
-<tr><td><code>--im-span-4</code></td><td>four</td><td><code>im-single</code>, <code>im-with-aside-wide</code></td></tr>
-<tr><td><code>--im-span-5</code></td><td>five</td><td><code>im-shortwatch</code>'s clip</td></tr>
-<tr><td><code>--im-span-7</code></td><td>seven</td><td><code>im-collhero</code>'s words</td></tr>
+<tr><td><code>--im-grid-of</code></td><td>how many columns the box holds — read with a fallback of twelve</td><td>published by every container</td></tr>
+<tr><td><code>--im-track</code></td><td>one track of a feed, <code>--im-track-span</code> columns wide</td><td><code>im-grid-12</code>, <code>im-feed</code>, <code>im-repos</code>, every feed</td></tr>
+<tr><td><code>--im-guide-line</code></td><td>the drawn hairline</td><td><code>im-guides</code></td></tr>
 </tbody></table></div>
 <p>Under 48rem it is four columns, which is what a phone can hold.</p>
+<p><strong>None of this is declared on <code>:root</code>.</strong> A count and a span belong to a <em>box</em>, not to the document: a rail four columns wide is written where it is used, as <code>calc(4 * var(--im-col) + 3 * var(--im-grid-gap))</code>, and <code>--im-col</code> is declared on <code>*</code> so every element computes its own from the count it inherits. A <code>--im-span-4</code> token on <code>:root</code> would be computed once, against <code>:root</code> — four twelfths of whatever box later read it — which is the trap this avoids. The gap stays a token: a distance has no context.</p>
 
 <h2>im-grid-page</h2>
-<p>Twelve columns, for a deliberate composition. Place children with Tailwind's <code>col-span-*</code>, responsive as usual.</p>
+<p>The same twelve columns as a utility, for a composition inside a component rather than on the page. Place children with Tailwind's <code>col-span-*</code>, responsive as usual — this one has no <code>data-span</code>, because a component knows its own breakpoints.</p>
 {{#example}}
 <div class="im-grid-page">
 	<div class="demo-cell col-span-12 md:col-span-8">col-span-12 md:col-span-8</div>

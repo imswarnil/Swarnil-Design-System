@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="332" viewBox="0 0 1200 332" role="img" aria-label="Twelve columns: eight and four, seven and five, three blocks of four">
+  <style>
+    .canvas { fill: #fafafa }
+    .guide  { stroke: #0a0a0a; stroke-opacity: .07 }
+    .frame  { stroke: #0a0a0a; stroke-opacity: .12 }
+    .block  { fill: #f0f0f0 }
+    .rail   { fill: #e5e5e5 }
+    .ink    { fill: #0a0a0a }
+    .muted  { fill: #737373 }
+    .accent { fill: #ff5a1f }
+    @media (prefers-color-scheme: dark) {
+      .canvas { fill: #0a0a0a }
+      .guide  { stroke: #fafafa; stroke-opacity: .10 }
+      .frame  { stroke: #fafafa; stroke-opacity: .16 }
+      .block  { fill: #1f1f1f }
+      .rail   { fill: #171717 }
+      .ink    { fill: #fafafa }
+      .muted  { fill: #a3a3a3 }
+    }
+  </style>
+
+  <rect class="canvas" width="1200" height="332"/>
+
+  <!-- One hairline down the middle of every gutter: eleven of them, plus the
+       two that close the frame. The grid is not a secret. -->
+  <g class="guide" stroke-width="1">
+    <path d="M150 40V300M240 40V300M330 40V300M420 40V300M510 40V300M600 40V300M690 40V300M780 40V300M870 40V300M960 40V300M1050 40V300"/>
+  </g>
+  <g class="frame" stroke-width="1">
+    <path d="M72 40V300M1128 40V300"/>
+  </g>
+
+  <g font-family="Geist Mono, ui-monospace, monospace" font-size="13">
+    <!-- eight and four -->
+    <rect class="block" x="72" y="64" width="696" height="64" rx="8"/>
+    <rect class="rail"  x="792" y="64" width="336" height="64" rx="8"/>
+    <text class="muted" x="84" y="102">8 — an article</text>
+    <text class="muted" x="804" y="102">4 — its rail</text>
+
+    <!-- seven and five -->
+    <rect class="block" x="72" y="148" width="606" height="52" rx="8"/>
+    <rect class="rail"  x="702" y="148" width="426" height="52" rx="8"/>
+    <text class="muted" x="84" y="180">7 — a measure</text>
+    <text class="muted" x="714" y="180">5 — a clip</text>
+
+    <!-- three of four -->
+    <rect class="block" x="72"  y="220" width="336" height="56" rx="8"/>
+    <rect class="block" x="432" y="220" width="336" height="56" rx="8"/>
+    <rect class="block" x="792" y="220" width="336" height="56" rx="8"/>
+    <text class="muted" x="84"  y="254">4</text>
+    <text class="muted" x="444" y="254">4</text>
+    <text class="muted" x="804" y="254">4 — three-up, exactly</text>
+  </g>
+
+  <g font-family="Geist, Inter, system-ui, sans-serif">
+    <text class="ink" x="72" y="26" font-size="17" font-weight="600" letter-spacing="-.2">Twelve columns, drawn</text>
+    <circle class="accent" cx="285" cy="20" r="4"/>
+    <text class="muted" x="1128" y="26" font-size="13" text-anchor="end" font-family="Geist Mono, ui-monospace, monospace">N-up fits when N divides the box</text>
+  </g>
+</svg>

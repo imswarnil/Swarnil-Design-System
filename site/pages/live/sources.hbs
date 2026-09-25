@@ -1,0 +1,51 @@
+---
+title: Live sources
+description: The parts a stream is assembled from — a tally light, a ticker, a camera frame, a visualiser, a clock, an announcement card and a backdrop. Each one stands alone over a screen share.
+eyebrow: Live stream
+source: src/components/studio.css
+---
+<p>A scene is not a design, it is an <strong>assembly</strong>. The pages beside this one show four finished ones; this page shows the sources they are made of, so a scene the system has never seen can be built from the same parts and still look like the same channel.</p>
+
+<p>Every source sits in an <code>im-studio-overlay</code> frame — no ground of its own — and reads three knobs, so a whole scene changes together:</p>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Knob</th><th>Default</th><th>What it moves</th></tr></thead>
+	<tbody>
+		<tr><td><code>--im-studio-accent</code></td><td><code>--im-accent</code></td><td>The colour that says <em>on air</em>: the lamp, the ticker's tag, the frame's edge, the bars.</td></tr>
+		<tr><td><code>--im-studio-scale</code></td><td><code>1</code></td><td>Type, padding and radius together. One number makes every source bigger.</td></tr>
+		<tr><td><code>im-studio-glass</code> / <code>-solid</code></td><td>—</td><td>The ground under the words: blurred glass, or the canvas with a hairline.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>Proportion: φ, not columns</h2>
+<p>The twelve columns do not reach a 1920 × 1080 canvas — there are no columns on a camera. What divides a source inside itself is the <a href="/layout/golden/">golden ratio</a>: the card is a golden rectangle, the camera frame is one too, the ticker's tag is the minor part of its own bar, and the lamp sits one φ-step from its word. See <code>--im-phi</code> in the tokens.</p>
+
+<h2>Tally light &amp; clock</h2>
+<p><code>im-studio-tally</code> is the small red lamp on a studio camera: the one that says <em>this one is on air</em>. A lamp and a word; the lamp breathes while it is lit and is a flat dot when it is not. <code>data-state</code> is <code>live</code>, <code>rec</code> or <code>off</code>. Beside it, <code>im-studio-clock</code> in the mono face — <code>[data-im-clock]</code> keeps it on the real time, and the markup carries a time so the frame is right before any script runs.</p>
+<div class="frame-preview frame-preview-photo" style="--fw: 1920; --fh: 1080"><iframe src="/frames/live-tally/" title="live-tally" loading="lazy"></iframe></div>
+<p class="im-cluster"><a class="im-btn im-btn-sm" href="/frames/live-tally/">Open at 1920 × 1080 {{icon "arrow-up-right"}}</a><span class="im-hint">The lamp on <code>im-studio-glass</code>, the clock on <code>im-studio-solid</code> — both tones, one frame.</span></p>
+{{{{code "html"}}}}
+<p class="im-studio-tally im-studio-glass" data-state="live"><i></i>Live</p>
+<p class="im-studio-clock im-studio-glass" data-im-clock="HH:mm">19:04</p>
+{{{{/code}}}}
+
+<h2>Ticker</h2>
+<p>A tag and a line of items sliding across the foot of the screen. The tag is the <strong>minor</strong> part of the bar, so the eye reads it once and then stops seeing it — which is what a tag is for. Write the items twice: the track travels half its own width and begins again, so the loop has no seam. <code>--im-studio-ticker-speed</code> is the one pass.</p>
+<div class="frame-preview frame-preview-photo" style="--fw: 1920; --fh: 1080"><iframe src="/frames/live-ticker/" title="live-ticker" loading="lazy"></iframe></div>
+<p class="im-cluster"><a class="im-btn im-btn-sm" href="/frames/live-ticker/">Open at 1920 × 1080 {{icon "arrow-up-right"}}</a><span class="im-hint"><code>im-studio-ticker</code> over an <code>im-studio-backdrop-scrim</code></span></p>
+
+<h2>Camera frame &amp; visualiser</h2>
+<p><code>im-studio-camframe</code> is an outline with a chip on its corner, a golden rectangle, to sit over the camera — it is the edge of the picture, not a panel on it. Put an <code>&lt;img&gt;</code> or a <code>&lt;video&gt;</code> inside and it holds the picture instead.</p>
+<p><code>im-studio-viz</code> is the look of an audio meter: bars on seven periods, none a multiple of another, so the row never repeats. They run on a demo signal, as a browser source with no audio must; wiring a real analyser changes the height of each bar and nothing else.</p>
+<div class="frame-preview frame-preview-photo" style="--fw: 1920; --fh: 1080"><iframe src="/frames/live-camframe/" title="live-camframe" loading="lazy"></iframe></div>
+<p class="im-cluster"><a class="im-btn im-btn-sm" href="/frames/live-camframe/">Open at 1920 × 1080 {{icon "arrow-up-right"}}</a><span class="im-hint"><code>im-studio-viz-mirror</code> doubles the bars about the centre line</span></p>
+
+<h2>Announcement card &amp; backdrop</h2>
+<p>The one that says <em>starting soon</em>, <em>back in five</em>, <em>thanks for watching</em>. A golden rectangle — it is φ wide against its height, whatever <code>--im-studio-scale</code> says, and the title is sized to the card rather than to the canvas. Under it, <code>im-studio-backdrop</code> — a solid, a <code>-scrim</code> over a picture, or a <code>-vignette</code> that leaves the middle alone.</p>
+<div class="frame-preview" style="--fw: 1920; --fh: 1080"><iframe src="/frames/live-card/" title="live-card" loading="lazy"></iframe></div>
+<p class="im-cluster"><a class="im-btn im-btn-sm" href="/frames/live-card/">Open at 1920 × 1080 {{icon "arrow-up-right"}}</a><span class="im-hint"><code>im-studio-card</code> on <code>im-studio-backdrop-vignette</code></span></p>
+
+<h2>The same ideas, natively, in OBS</h2>
+<p><a href="https://github.com/imswarnil/Tally">Tally</a> is an OBS Studio plugin that draws this same set of sources — a tally light, a lower third, a ticker, a camera frame, a visualiser, a clock, a countdown, a card and a backdrop — inside OBS itself, in C against libobs, with no browser source and no URL to paste. Its light reads OBS's real streaming state, which a web page cannot.</p>
+<p>The two are <strong>independent by design</strong>. Tally is MIT and public; this system is sold. Not a line of code crosses between them in either direction — what they share is a sensibility, and that is all they are allowed to share. Use the pages above when the overlay is a browser source or a screenshot, and Tally when it is a source in OBS's own <em>+</em> menu.</p>

@@ -6,6 +6,10 @@ The design system behind **[imswarnil.com](https://imswarnil.com)** and its Ghos
 
 **Docs:** [design.imswarnil.com](https://design.imswarnil.com) — every example renders the real partial, so a page breaks if a component does.
 
+<p align="center"><img src=".github/grid.svg" alt="Twelve columns: eight and four, seven and five, three blocks of four" width="100%"></p>
+
+Every layout is **measured** in one twelve-column grid, and the grid is drawn — one hairline down the middle of each gutter, behind everything. A rail is three or four columns, a hero's measure seven, the side nav two. Each container publishes how many columns it holds (`--im-grid-of`), so a feed inside an eight-column article divides eight and not twelve. An N-up grid lands on the lines only when **N divides the box's count**: twelve takes 2, 3, 4 and 6, which is why twelve is the number.
+
 ```bash
 npm install
 npm run dev      # http://localhost:4700
@@ -19,13 +23,16 @@ npm run mcp      # an MCP server, so an AI assistant can build with the system
 | | |
 | --- | --- |
 | `src/foundation` | primitive and semantic tokens, motion, type, the two shared states (`--im-current-*`, `--im-hover-bg`) |
-| `src/layout` | shell, top bar, side nav, the single and rails page layouts, footer |
+| `src/layout` | shell, top bar, side nav, the single and rails page layouts, the player, the footer |
+| `src/layout/guides.css` | the twelve columns, drawn on the page |
+| `src/layout/fit.css` | the column context every container publishes, and what fills a cell |
 | `src/components` | cards for every collection, editor, chat, stream, tiers, auth, sitemap, ads, comments, widgets… |
 | `partials/` | the Handlebars partials a Ghost theme copies in |
 | `sections/` | self-contained page sections |
 | `site/` | the documentation site — Handlebars pages with a Ghost shim |
 | `mcp/` | the MCP server (`list_components`, `get_component`, `list_tokens`, `search`, `get_page`, `rules`) |
 | `scripts/` | `unused-css.mjs` — every `im-*` class nothing puts on an element (it returns nothing today) |
+| `.github/` | the banner and the grid drawing above, both plain SVG that follow the reader's colour scheme |
 
 Fourteen collections ship with a listing, a card and a single page each: post,
 project, series, course, video, shop, newsletter, uses, snippets, prompts,
@@ -53,6 +60,12 @@ npx skills add https://github.com/imswarnil/Swarnil-Design-System --skill im-des
 ```
 
 The server reads this repository at call time, so it can never describe a component that has changed.
+
+## Reading a page's source
+
+Every page of the docs carries an **Edit this page** link under its contents, straight to the
+`.hbs` it is written in. The repository is public so the link works and the whole system can be
+read; the licence below is unchanged.
 
 ## Provenance
 

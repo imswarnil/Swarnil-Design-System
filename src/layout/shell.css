@@ -24,6 +24,10 @@
 	transition: grid-template-columns var(--im-duration-fast) var(--im-ease-out);
 }
 
+/* The page column IS the grid. It stops at the wide measure plus a gutter on
+   each side, so the widest thing the page can hold is exactly twelve columns
+   — the twelve `.im-guides` draws. It used to stop at 160rem, which meant a
+   section with no wrap of its own ran forty rem past the last line. */
 .im-shell-main {
 	grid-area: main;
 	position: relative;
@@ -32,7 +36,7 @@
 	flex-direction: column;
 	gap: var(--im-section-gap);
 	width: 100%;
-	max-width: 160rem;
+	max-width: calc(var(--im-width-wide) + 2 * var(--im-gutter));
 	margin-inline: auto;
 	padding: 1.25rem var(--im-gutter) var(--im-section-gap);
 }

@@ -18,8 +18,9 @@
 	--im-tier-min: 17rem;
 
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(min(var(--im-tier-min), 100%), 1fr));
-	gap: 1rem;
+	--im-track-span: 4;
+	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-track), 100%), 1fr));
+	gap: var(--im-grid-gap);
 	align-items: stretch;
 }
 

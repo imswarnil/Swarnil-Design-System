@@ -63,12 +63,21 @@ source: src/layout/ · partials/shell/topbar.hbs
 <table>
 	<thead><tr><th>Class</th><th></th></tr></thead>
 	<tbody>
-		<tr><td><code>im-with-aside</code></td><td>Reading column, then a 13.5rem rail. Its width <strong>follows the side nav</strong>: collapse the nav and the space it gives up goes to the content.</td></tr>
-		<tr><td><code>im-with-aside-wide</code></td><td>A 19rem column — wide enough for real <a href="/components/widgets/">widgets</a> rather than a contents rail.</td></tr>
+		<tr><td><code>im-with-aside</code></td><td>Nine columns of reading, then a rail of <strong>three</strong>. Measured in the page grid, so the article and the rail both land on the drawn lines.</td></tr>
+		<tr><td><code>im-with-aside-wide</code></td><td>A column of <strong>four</strong>, leaving the article eight — wide enough for real <a href="/components/widgets/">widgets</a> rather than a contents rail, and eight takes a two-up or a four-up where nine does not.</td></tr>
 		<tr><td><code>im-with-aside-start</code></td><td>The column on the left. Only the tracks swap; nothing moves in the markup.</td></tr>
+		<tr><td><code>im-with-aside-head</code></td><td>Takes a <code>&lt;header&gt;</code> of its own and starts the rail <strong>under</strong> it — so the title and the lede are read before the contents. This page uses it.</td></tr>
 	</tbody>
 </table>
 </div>
+<p>A contents rail level with the title is a list of places to go before the reader has been told where they are, so <code>im-with-aside-head</code> gives the layout a header of its own and begins the rail where the body begins. The head keeps the article's measure rather than spanning both columns — a lede set across twelve columns is not a lede. Stacked, the order is head, contents, body.</p>
+{{{{code "html"}}}}
+<div class="im-with-aside im-with-aside-head">
+  <header>…title, lede…</header>
+  <article id="article">…</article>
+  <aside><nav class="im-toc" data-toc="#article"></nav></aside>
+</div>
+{{{{/code}}}}
 <p>Below <code>lg</code> both fold to one column. A <strong>contents</strong> rail moves above the article, because it is a way in; a <strong>wide</strong> column stays below it, because it is further reading. <a href="/collections/post/single/">A full article</a> has all three on a switch.</p>
 
 <h2>Metrics</h2>

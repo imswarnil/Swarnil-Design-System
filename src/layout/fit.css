@@ -1,0 +1,229 @@
+/* Fit — whatever sits in a column, fills the column.
+
+   The grid (guides.css) says where the lines are; this says that a button, a
+   picture, a field or a whole section put on them lands EXACTLY on them. Nothing
+   is sized in rems to "look about right": a cell is a whole number of columns
+   wide, and what is inside takes all of it.
+
+   Loaded in the `effects` layer, above `components`, because a component sets
+   its own `display` and `width` and a layout-layer rule could never win.
+
+   1. A CELL FILLS. Inside a data-span cell, the thing put there is as wide as
+      the cell: a button, a link-button, a picture, a video, a field, a card.
+   2. `im-fit` says it anywhere — on the element, not on its parent.
+   3. `data-ratio` gives a picture its shape. Pictures never set their own
+      height from the file; the cell decides, and the picture covers it.
+   4. `im-cols-modules` is the MODULAR grid: rows are one column tall, so a cell
+      of data-rows="2" is exactly two columns and one gap high, and a picture in
+      it is a true module. Opt in; ordinary grids keep auto rows.
+   5. `im-w-N` puts an element on N columns of whatever box it is in.
+
+   The row unit is `--im-cell`, one column as a length, from the container's
+   own width (cqw) — a percentage cannot size a grid ROW. */
+
+/* 0 — THE CONTEXT: every container says how many columns it holds -------------
+   `--im-grid-of` is the whole architecture in one variable. `--im-col` (tokens)
+   divides the CURRENT box by it, so `--im-span-4`, `--im-track` and every grid
+   measured in columns mean "of the box I am in" and a nested grid is right
+   without being told anything.
+
+   The page column is twelve. An article beside a three-column rail is nine;
+   beside a four-column rail, eight. A `data-span="8"` cell is eight. A phone
+   is four. Publish it once here and the whole tree inherits it.
+
+   THE RULE IT MAKES VISIBLE: an N-up grid lands on the drawn lines only when
+   N DIVIDES the box's count. Twelve takes 2, 3, 4 and 6; nine takes 3; eight
+   takes 2 and 4. `im-grid-12` picks a count that divides, so it is always
+   safe — reach for it rather than writing `repeat(3, 1fr)` and hoping. */
+
+.im-shell-main { --im-grid-of: 12; }
+
+/* A grid that re-establishes twelve tracks of its OWN box resets the count —
+   otherwise it would inherit its parent cell's and measure itself wrongly. */
+.im-cols,
+.im-section-grid,
+.im-wrap-wide { --im-grid-of: 12; }
+
+/* .im-wrap caps at ten columns of the box it sits in (--im-wrap-cap), so
+   the cap always bites and the count is always true. .im-wrap-prose is absent
+   on purpose: a reading measure is set in rems, not columns (see the utility),
+   so it holds no whole number of them and publishes nothing. */
+.im-wrap { --im-grid-of: 10; }
+
+/* A cell publishes its own span. Same numbers as --im-cols-span above, so a
+   grid inside a cell divides the cell and not the page. */
+:is(.im-cols, .im-section-grid) > [data-span="1"] { --im-grid-of: 1; }
+:is(.im-cols, .im-section-grid) > [data-span="2"] { --im-grid-of: 2; }
+:is(.im-cols, .im-section-grid) > [data-span="3"] { --im-grid-of: 3; }
+:is(.im-cols, .im-section-grid) > [data-span="4"] { --im-grid-of: 4; }
+:is(.im-cols, .im-section-grid) > [data-span="5"] { --im-grid-of: 5; }
+:is(.im-cols, .im-section-grid) > [data-span="6"] { --im-grid-of: 6; }
+:is(.im-cols, .im-section-grid) > [data-span="7"] { --im-grid-of: 7; }
+:is(.im-cols, .im-section-grid) > [data-span="8"] { --im-grid-of: 8; }
+:is(.im-cols, .im-section-grid) > [data-span="9"] { --im-grid-of: 9; }
+:is(.im-cols, .im-section-grid) > [data-span="10"] { --im-grid-of: 10; }
+:is(.im-cols, .im-section-grid) > [data-span="11"] { --im-grid-of: 11; }
+:is(.im-cols, .im-section-grid) > [data-span="12"] { --im-grid-of: 12; }
+.im-section-grid > .im-section-head { --im-grid-of: 7; }
+.im-section-grid > .im-section-head-wide { --im-grid-of: 9; }
+.im-section-grid > .im-section-head-narrow { --im-grid-of: 5; }
+.im-section-grid > :is(.im-section-head-full, .im-section-head-bar) { --im-grid-of: 12; }
+
+/* The page layouts, each count stated at the width where those columns EXIST.
+   All of them stack below 64rem, and a stacked child holds the page column —
+   which it already inherits, so there is nothing to say below that width. */
+@media (width >= 64rem) {
+	.im-with-aside > * { --im-grid-of: 9; }
+	.im-with-aside > aside { --im-grid-of: 3; }
+	.im-with-aside-wide > * { --im-grid-of: 8; }
+	.im-with-aside-wide > aside { --im-grid-of: 4; }
+	.im-single > * { --im-grid-of: 8; }
+	.im-single > aside { --im-grid-of: 4; }
+	/* In a ten-column wrap the same layout is six and four, not eight and four. */
+	.im-single.im-wrap > * { --im-grid-of: 6; }
+	.im-single.im-wrap > aside { --im-grid-of: 4; }
+	.im-with-aside.im-wrap > * { --im-grid-of: 7; }
+	.im-with-aside.im-wrap > aside { --im-grid-of: 3; }
+	/* With the rail off the whole layout caps at the reading measure, so the
+	   article holds six — not twelve, and not the eight it holds beside a rail.
+	   Unless a wrap overrides that cap, in which case the wrap's count wins:
+	   the cap a container publishes is only true while it is the one applying. */
+	.im-single[data-sidebar="off"] > * { --im-grid-of: 6; }
+	.im-single[data-sidebar="off"].im-wrap > * { --im-grid-of: 10; }
+	.im-single[data-sidebar="off"].im-wrap-wide > * { --im-grid-of: 12; }
+	/* Two rails: until 80rem the contents rail sits ABOVE the article and the
+	   two share one nine-column column, with the widgets keeping their three. */
+	.im-with-rails > :is(article, nav) { --im-grid-of: 9; }
+	.im-with-rails > aside { --im-grid-of: 3; }
+}
+
+@media (width >= 80rem) {
+	.im-with-rails > article { --im-grid-of: 7; }
+	.im-with-rails > nav { --im-grid-of: 2; }
+}
+
+/* A phone has four columns, so every box that stacked to full width holds
+   four — and a rail that is still beside the text holds its own share. */
+@media (width < 48rem) {
+	.im-shell-main,
+	.im-cols:not(.im-cols-hold),
+	.im-section-grid:not(.im-cols-hold),
+	.im-wrap, .im-wrap-wide,
+	:is(.im-cols, .im-section-grid):not(.im-cols-hold) > [data-span],
+	.im-section-grid:not(.im-cols-hold) > .im-section-head {
+		--im-grid-of: 4;
+	}
+}
+
+/* 1 — a cell fills ----------------------------------------------------------- */
+:is(.im-cols, .im-section-grid) > [data-span] > :is(img, picture, video, canvas, svg.im-fit, iframe),
+:is(.im-cols, .im-section-grid) > :is(img, picture, video, canvas, iframe)[data-span] {
+	display: block;
+	width: 100%;
+	max-width: 100%;
+	height: auto;
+}
+
+:is(.im-cols, .im-section-grid) > [data-span] > :is(.im-btn, .im-input, .im-select, .im-textarea, .im-input-group),
+:is(.im-cols, .im-section-grid) > :is(.im-btn, .im-input, .im-select, .im-textarea)[data-span] {
+	display: flex;
+	width: 100%;
+	min-width: 0;
+}
+
+/* A button that is a cell wraps its label rather than spilling out of its
+   columns. Height stays the button's own — the row rhythm is the button's. */
+:is(.im-cols, .im-section-grid) > .im-btn[data-span],
+:is(.im-cols, .im-section-grid) > [data-span] > .im-btn {
+	white-space: normal;
+	text-wrap: balance;
+	padding-block: 0.5rem;
+}
+
+/* 2 — im-fit, anywhere ------------------------------------------------------- */
+.im-fit {
+	width: 100%;
+	max-width: 100%;
+	min-width: 0;
+}
+
+:is(img, picture, video, canvas, iframe).im-fit { display: block; height: auto; }
+:is(.im-btn, .im-input, .im-select, .im-textarea).im-fit { display: flex; }
+
+/* 3 — the picture's shape ---------------------------------------------------- */
+[data-ratio] { overflow: hidden; }
+
+:is(img, video, picture, .im-fit)[data-ratio],
+[data-span] > :is(img, video)[data-ratio] {
+	height: auto;
+	object-fit: cover;
+}
+
+[data-ratio="1:1"]    { aspect-ratio: 1 / 1; }
+[data-ratio="4:3"]    { aspect-ratio: 4 / 3; }
+[data-ratio="3:2"]    { aspect-ratio: 3 / 2; }
+[data-ratio="16:10"]  { aspect-ratio: 16 / 10; }
+[data-ratio="16:9"]   { aspect-ratio: 16 / 9; }
+[data-ratio="21:9"]   { aspect-ratio: 21 / 9; }
+[data-ratio="3:4"]    { aspect-ratio: 3 / 4; }
+[data-ratio="9:16"]   { aspect-ratio: 9 / 16; }
+[data-ratio="golden"] { aspect-ratio: var(--im-ratio-golden); }
+
+/* A picture in a cell that already has a shape (a module) covers it. */
+:is(.im-cols, .im-section-grid) > [data-span] > :is(img, video, picture):only-child:not([data-ratio]) {
+	object-fit: cover;
+}
+
+/* 4 — the modular grid ------------------------------------------------------- */
+/* An element cannot read its OWN container's units, so the grid is the
+   container and each CELL states its height: rows × one column + the gaps
+   between them. The grid's auto rows then come out one column tall. */
+.im-cols-modules {
+	--im-cols-n: 12;
+	container-type: inline-size;
+}
+
+@media (width < 48rem) {
+	.im-cols-modules:not(.im-cols-hold) { --im-cols-n: 4; }
+}
+
+.im-cols.im-cols-modules > [data-span][data-rows] {
+	--im-cell: calc((100cqw - (var(--im-cols-n) - 1) * var(--im-grid-gap)) / var(--im-cols-n));
+	grid-row: span var(--im-cols-rows, 1);
+	height: calc(var(--im-cols-rows, 1) * var(--im-cell) + (var(--im-cols-rows, 1) - 1) * var(--im-grid-gap));
+}
+.im-cols-modules > [data-rows="1"] { --im-cols-rows: 1; }
+.im-cols-modules > [data-rows="2"] { --im-cols-rows: 2; }
+.im-cols-modules > [data-rows="3"] { --im-cols-rows: 3; }
+.im-cols-modules > [data-rows="4"] { --im-cols-rows: 4; }
+.im-cols-modules > [data-rows="5"] { --im-cols-rows: 5; }
+.im-cols-modules > [data-rows="6"] { --im-cols-rows: 6; }
+
+/* A module is exactly its box: pictures and panels fill it, whatever they hold. */
+.im-cols-modules > [data-span] { min-height: 0; overflow: hidden; }
+.im-cols-modules > [data-span] > :is(img, video, picture, .im-fit):only-child {
+	height: 100%;
+	aspect-ratio: auto;
+	object-fit: cover;
+}
+.im-cols.im-cols-modules > :is(img, video)[data-span] { object-fit: cover; }
+
+/* 5 — width in columns of the box it is in ----------------------------------- */
+.im-w-1  { width: calc(1 * var(--im-col) + 0 * var(--im-grid-gap)); max-width: 100%; }
+.im-w-2  { width: calc(2 * var(--im-col) + 1 * var(--im-grid-gap)); max-width: 100%; }
+.im-w-3  { width: calc(3 * var(--im-col) + 2 * var(--im-grid-gap)); max-width: 100%; }
+.im-w-4  { width: calc(4 * var(--im-col) + 3 * var(--im-grid-gap)); max-width: 100%; }
+.im-w-5  { width: calc(5 * var(--im-col) + 4 * var(--im-grid-gap)); max-width: 100%; }
+.im-w-6  { width: calc(6 * var(--im-col) + 5 * var(--im-grid-gap)); max-width: 100%; }
+.im-w-7  { width: calc(7 * var(--im-col) + 6 * var(--im-grid-gap)); max-width: 100%; }
+.im-w-8  { width: calc(8 * var(--im-col) + 7 * var(--im-grid-gap)); max-width: 100%; }
+.im-w-9  { width: calc(9 * var(--im-col) + 8 * var(--im-grid-gap)); max-width: 100%; }
+.im-w-10 { width: calc(10 * var(--im-col) + 9 * var(--im-grid-gap)); max-width: 100%; }
+.im-w-11 { width: calc(11 * var(--im-col) + 10 * var(--im-grid-gap)); max-width: 100%; }
+.im-w-12 { width: 100%; }
+
+/* On a phone the box has four columns and a width written for twelve cannot
+   be honoured — the same rule as data-span: it becomes the whole box. */
+@media (width < 48rem) {
+	:is(.im-w-1, .im-w-2, .im-w-3, .im-w-4, .im-w-5, .im-w-6, .im-w-7, .im-w-8, .im-w-9, .im-w-10, .im-w-11) { width: 100%; }
+}

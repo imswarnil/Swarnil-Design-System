@@ -488,7 +488,8 @@
    page of its own. */
 .im-sponsors {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(min(8rem, 100%), 1fr));
+	--im-track-span: 2;
+	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-track), 100%), 1fr));
 	gap: 1px;
 	overflow: hidden;
 	border: 1px solid var(--im-line);

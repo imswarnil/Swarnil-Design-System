@@ -1,0 +1,87 @@
+---
+title: The golden ratio
+description: Twelve columns rule the page across. φ rules everything the columns have nothing to say about — how tall a picture is against its width, how a fixed frame divides inside itself, how far one size is from the next.
+eyebrow: Layout
+source: src/foundation/tokens/primitives.css
+---
+<h2>Where the grid stops</h2>
+<p>Every layout here is <a href="/layout/grid/">measured in twelve columns</a>, and the columns are <strong>drawn on the page</strong>, so a block that ends in the middle of a gutter is the one mistake nobody can miss. That is the rule across the page, and it is not negotiable.</p>
+<p>But a great deal of a design is not a page column. How tall is a picture against its width? How does a 1920 × 1080 frame divide inside itself, where there are no columns at all? How far is one size of type from the next? The grid is silent on all of it — and where the grid is silent, <strong>φ</strong> decides.</p>
+
+<div class="im-callout im-callout-info">
+	<p><strong>Twelve columns cannot hold a golden split.</strong> φ of twelve is 7.42 — a block that wide ends in the middle of a gutter. So across the page the nearest whole columns win: <strong>seven and five</strong>, which is 1.40 and reads as the same idea. φ is exact only <em>inside</em> a block that has already taken its columns.</p>
+</div>
+
+<h2>The seven-five split</h2>
+<p>The page's golden split, rounded to the lines it has to land on. A hero's measure is seven columns, its picture five; an article is seven, its rail five. Written with <code>data-span</code> so it collapses on a phone.</p>
+{{#example}}
+<div class="im-cols">
+	<div data-span="7" class="im-ring-line rounded-lg p-4 text-sm text-muted bg-canvas">7 — the major part: a hero's measure</div>
+	<div data-span="5" class="im-ring-line rounded-lg p-4 text-sm text-muted bg-canvas">5 — the minor: its picture</div>
+</div>
+{{/example}}
+
+<h2>im-golden</h2>
+<p>The exact split, for <strong>inside</strong> a block that has already taken its columns: a card's picture against its copy, a frame's art against its words. Two parts, the major first, φ apart to six places. <code>--im-golden-gap</code>, or <code>im-golden-tight</code> and <code>im-golden-flush</code>.</p>
+{{#example}}
+<div class="im-golden im-golden-tight">
+	<div class="im-ring-line rounded-lg p-4 text-sm text-muted bg-canvas">the major part — 0.618 of the room</div>
+	<div class="im-ring-line rounded-lg p-4 text-sm text-muted bg-canvas">the minor — 0.382</div>
+</div>
+{{/example}}
+<p><code>im-golden-flush</code> takes the gap away, for two halves of one surface that meet — a picture against the copy beside it.</p>
+{{#example}}
+<div class="im-golden im-golden-flush im-ring-line rounded-xl overflow-hidden">
+	<img class="im-w-full h-full object-cover" style="min-height: 9rem" src="{{demo.shots.[3]}}" alt="">
+	<div class="p-5 text-sm text-muted">The picture takes 0.618 of the card and the copy the rest, with nothing between them.</div>
+</div>
+{{/example}}
+<p><code>im-golden-flip</code> puts the minor part first, for a slim rail on the left of a wide body.</p>
+{{#example}}
+<div class="im-golden-flip im-golden-tight">
+	<div class="im-ring-line rounded-lg p-4 text-sm text-muted bg-canvas">the minor — a rail</div>
+	<div class="im-ring-line rounded-lg p-4 text-sm text-muted bg-canvas">the major — the body</div>
+</div>
+{{/example}}
+<p><code>im-golden-rows</code> is the same split down the page, for a frame of a fixed height — a thumbnail whose picture takes the major part and whose title takes the minor.</p>
+{{#example}}
+<div class="im-golden-rows im-golden-tight" style="height: 16rem">
+	<div class="im-ring-line rounded-lg p-4 text-sm text-muted bg-canvas">the picture</div>
+	<div class="im-ring-line rounded-lg p-4 text-sm text-muted bg-canvas">the title</div>
+</div>
+{{/example}}
+
+<h2>The golden rectangle</h2>
+<p><code>im-ratio-golden</code> is the shape a picture takes when nothing else decides it — wider than 4 : 3, calmer than 16 : 9. <code>im-ratio-golden-tall</code> is the portrait of it, for a poster or a phone screenshot.</p>
+{{#example}}
+<div class="im-grid-auto im-grid-md">
+	<figure class="im-m0"><img class="im-ratio-golden rounded-lg im-w-full object-cover" src="{{demo.shots.[0]}}" alt=""><figcaption class="im-caption im-mt-sm">im-ratio-golden</figcaption></figure>
+	<figure class="im-m0"><img class="im-ratio-golden-tall rounded-lg im-w-full object-cover" src="{{demo.shots.[1]}}" alt=""><figcaption class="im-caption im-mt-sm">im-ratio-golden-tall</figcaption></figure>
+</div>
+{{/example}}
+
+<h2>The ladder</h2>
+<p>Eight rungs, each one φ from the last, so any two of them are in the ratio and the whole set is one geometric series. Rung four is <code>1rem</code>, which is why the ladder lands on sizes the rest of the system already uses. Reach for it inside a fixed frame — the <a href="/live/sources/">live sources</a> are set on it — not for page spacing, which is the token scale's job.</p>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Token</th><th>Value</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>--im-phi-1</code></td><td>0.236rem</td><td><span class="im-block bg-accent rounded-xs" style="width: .236rem; height: 1rem"></span></td></tr>
+		<tr><td><code>--im-phi-2</code></td><td>0.382rem</td><td><span class="im-block bg-accent rounded-xs" style="width: .382rem; height: 1rem"></span></td></tr>
+		<tr><td><code>--im-phi-3</code></td><td>0.618rem</td><td><span class="im-block bg-accent rounded-xs" style="width: .618rem; height: 1rem"></span></td></tr>
+		<tr><td><code>--im-phi-4</code></td><td>1rem</td><td><span class="im-block bg-accent rounded-xs" style="width: 1rem; height: 1rem"></span></td></tr>
+		<tr><td><code>--im-phi-5</code></td><td>1.618rem</td><td><span class="im-block bg-accent rounded-xs" style="width: 1.618rem; height: 1rem"></span></td></tr>
+		<tr><td><code>--im-phi-6</code></td><td>2.618rem</td><td><span class="im-block bg-accent rounded-xs" style="width: 2.618rem; height: 1rem"></span></td></tr>
+		<tr><td><code>--im-phi-7</code></td><td>4.236rem</td><td><span class="im-block bg-accent rounded-xs" style="width: 4.236rem; height: 1rem"></span></td></tr>
+		<tr><td><code>--im-phi-8</code></td><td>6.854rem</td><td><span class="im-block bg-accent rounded-xs" style="width: 6.854rem; height: 1rem"></span></td></tr>
+	</tbody>
+</table>
+</div>
+<p><code>--im-phi</code> is 1.618034 and <code>--im-phi-inv</code> is 0.618034, for arithmetic of your own; <code>--im-ratio-golden</code> is the <code>aspect-ratio</code> value.</p>
+
+<h2>Where it is already used</h2>
+<ul>
+	<li>The <a href="/live/sources/">live sources</a>: the announcement card and the camera frame are golden rectangles, the ticker's tag is the minor part of its bar, the tally lamp sits one φ-step from its word.</li>
+	<li><code>im-ratio-golden</code> anywhere a picture has no ratio of its own.</li>
+</ul>
+<p>And where it is deliberately <em>not</em>: the page columns, the type scale and the spacing scale. Three ratios competing in one design is not a system, it is a coincidence.</p>

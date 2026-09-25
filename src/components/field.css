@@ -537,8 +537,9 @@
 
 .im-form-row {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(min(13rem, 100%), 1fr));
-	gap: 1.125rem;
+	--im-track-span: 4;
+	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-track), 100%), 1fr));
+	gap: var(--im-grid-gap);
 }
 
 .im-fieldset {

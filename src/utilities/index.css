@@ -7,9 +7,21 @@
    declared its own default would outrank a component trying to set it. */
 
 /* ---- containers: a max width, centred, with the page gutter ---------------- */
+/* Ten columns, MEASURED — not the 90rem-derived rem length it used to take.
+   Ten columns of the grid is always narrower than the twelve the page column
+   holds, so the cap always bites and the wrap is EXACTLY ten at every window;
+   the rem length only equalled ten at exactly 90rem and was the full twelve
+   below 1194px, so a feed inside it could not land on a line.
+
+   The cap is written in TWELFTHS rather than as var(--im-col), because this
+   element publishes --im-grid-of: 10 for what goes inside it — its own column
+   would already be one of ten. A percentage in max-width resolves against the
+   containing block, which is the page column the ten are ten of. */
 @utility im-wrap {
+	--im-wrap-cap: calc(10 * ((100% - 11 * var(--im-grid-gap)) / 12) + 9 * var(--im-grid-gap));
+
 	width: 100%;
-	max-width: var(--im-wrap, var(--im-width-page));
+	max-width: var(--im-wrap, var(--im-wrap-cap));
 	margin-inline: auto;
 }
 
@@ -17,6 +29,27 @@
 	width: 100%;
 	max-width: var(--im-width-wide);
 	margin-inline: auto;
+}
+
+/* THE READING MEASURE, and the one container that is NOT measured in columns:
+   a line of body text is set in rems because legibility does not scale with
+   the window — six columns would be 382px at a 1100px window. It is about six
+   columns at the wide measure, and it publishes no count, so a grid inside it
+   divides its own box rather than pretending to sit on the page's lines. */
+@utility im-wrap-prose {
+	width: 100%;
+	max-width: var(--im-width-prose);
+	margin-inline: auto;
+}
+
+/* Out of the gutter, to the edges of the page column — a hero's picture, a
+   strip of colour. Not to the edges of the WINDOW: the page column is offset
+   by the side nav and centred inside what is left, and a child cannot reach
+   past a margin it cannot measure. A section that must touch the window goes
+   outside .im-shell-main. */
+@utility im-bleed {
+	max-width: none;
+	margin-inline: calc(-1 * var(--im-gutter));
 }
 
 
@@ -35,11 +68,74 @@
 	gap: var(--im-grid-gap, 1.25rem);
 }
 
+/* im-grid-auto, but ON THE TWELVE COLUMNS -------------------------------------
+   The workhorse above takes a minimum track width in rems, so the number of
+   tracks is whatever happens to fit — and a track is a whole number of page
+   columns only when that COUNT DIVIDES TWELVE. The default (16rem) gives five
+   tracks at the wide measure, and five does not divide twelve: every card in
+   every feed sat 2.4 columns wide, with its edges inside the columns rather
+   than in the gutters the grid draws.
+
+   State the minimum in COLUMNS instead and the count is floor(12 / span),
+   which is 12, 6, 4, 3, 2, 2, 1, 1 — every one of them a divisor of twelve.
+   So a cell is always a whole number of columns, at every width, with no
+   breakpoint. The 1px is a hair off the minimum: the arithmetic lands exactly
+   on the boundary, and sub-pixel rounding would otherwise decide between six
+   tracks and five.
+
+   Below 48rem the page grid is four columns, not twelve — responsive.css sets
+   --im-grid-of, and floor(4 / span) does the rest.
+
+     <div class="im-grid-12 im-grid-span-4"> … </div>     three-up, four columns each
+
+   Knobs: --im-track-span (a cell's minimum, in columns; 3 = four-up)
+          --im-grid-of    (how many columns the BOX holds — published by every
+                           container in src/layout/fit.css, so a feed inside an
+                           eight-column article divides eight, not twelve) */
+@utility im-grid-12 {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-track), 100%), 1fr));
+	gap: var(--im-grid-gap);
+}
+
 /* A 12-column page grid; place children with Tailwind's col-span-*. */
 @utility im-grid-page {
 	display: grid;
 	grid-template-columns: repeat(12, minmax(0, 1fr));
 	gap: var(--im-grid-gap, 1.25rem);
+}
+
+/* ---- the golden ratio ------------------------------------------------------
+   Two parts, φ apart — the major first, then the minor. NOT a page layout:
+   twelve columns have no golden split (φ of twelve is 7.42, which ends in the
+   middle of a gutter), so across the page the nearest whole columns win, seven
+   and five. Use this INSIDE a block that has already taken its columns: a
+   card's picture against its copy, a frame's art against its words, a hero's
+   two halves. --im-golden-gap. */
+@utility im-golden {
+	display: grid;
+	grid-template-columns:
+		minmax(0, calc((100% - var(--im-golden-gap, var(--im-grid-gap, 1.25rem))) * 0.618034))
+		minmax(0, 1fr);
+	gap: var(--im-golden-gap, var(--im-grid-gap, 1.25rem));
+}
+
+/* The minor part first. */
+@utility im-golden-flip {
+	display: grid;
+	grid-template-columns:
+		minmax(0, calc((100% - var(--im-golden-gap, var(--im-grid-gap, 1.25rem))) * 0.381966))
+		minmax(0, 1fr);
+	gap: var(--im-golden-gap, var(--im-grid-gap, 1.25rem));
+}
+
+/* The same split down the page, for a frame of a fixed height. */
+@utility im-golden-rows {
+	display: grid;
+	grid-template-rows:
+		minmax(0, calc((100% - var(--im-golden-gap, var(--im-grid-gap, 1.25rem))) * 0.618034))
+		minmax(0, 1fr);
+	gap: var(--im-golden-gap, var(--im-grid-gap, 1.25rem));
 }
 
 /* ---- small arrangements --------------------------------------------------- */
@@ -92,6 +188,10 @@
 @utility im-section-tight { --im-section-gap: 1rem; }
 @utility im-section-sm { --im-section-gap: 1.5rem; }
 @utility im-cluster-tight { --im-cluster-gap: 0.375rem; }
+@utility im-grid-span-2 { --im-track-span: 2; }
+@utility im-grid-span-3 { --im-track-span: 3; }
+@utility im-grid-span-4 { --im-track-span: 4; }
+@utility im-grid-span-6 { --im-track-span: 6; }
 @utility im-grid-sm { --im-grid-min: 12rem; }
 @utility im-grid-md { --im-grid-min: 16rem; }
 @utility im-grid-lg { --im-grid-min: 20rem; }
@@ -107,16 +207,21 @@
 @utility im-block { display: block; }
 @utility im-center { text-align: center; }
 @utility im-mx-auto { margin-inline: auto; }
-@utility im-single-aside-md { --im-single-aside: var(--im-span-4); }
-@utility im-single-aside-sm { --im-single-aside: var(--im-span-3); }
-@utility im-repos-tight { --im-repos-min: 16rem; }
-@utility im-repos-md { --im-repos-min: 18rem; }
+@utility im-single-aside-md { --im-single-aside: calc(4 * var(--im-col) + 3 * var(--im-grid-gap)); }
+@utility im-single-aside-sm { --im-single-aside: calc(3 * var(--im-col) + 2 * var(--im-grid-gap)); }
+@utility im-repos-tight { --im-track-span: 3; }
+@utility im-repos-md { --im-track-span: 4; }
 @utility im-mediabg-sm { --im-mediabg-min: 14rem; }
 @utility im-mediabg-md { --im-mediabg-min: 18rem; }
 @utility im-mediabg-lg { --im-mediabg-min: 22rem; }
-@utility im-feed-md { --im-feed-min: 15rem; }
+@utility im-feed-md { --im-track-span: 3; }
 @utility im-ratio-4-3 { aspect-ratio: 4 / 3; overflow: hidden; }
 @utility im-ratio-16-10 { aspect-ratio: 16 / 10; }
+/* φ, the ratio a picture takes when nothing else decides it. */
+@utility im-ratio-golden { aspect-ratio: var(--im-ratio-golden); overflow: hidden; }
+@utility im-ratio-golden-tall { aspect-ratio: 1 / 1.618034; overflow: hidden; }
+@utility im-golden-tight { --im-golden-gap: 1rem; }
+@utility im-golden-flush { --im-golden-gap: 0px; }
 @utility im-pt-sm { padding-top: 1.5rem; }
 @utility im-pb-0 { padding-bottom: 0; }
 @utility im-p-0 { padding: 0; }
@@ -131,8 +236,8 @@
 @utility im-cover { object-fit: cover; width: 100%; }
 @utility im-mr-xs { margin-right: 0.375rem; }
 @utility im-ml-xs { margin-left: 0.5rem; }
-@utility im-exps-md { --im-exps-min: 19rem; }
-@utility im-vidgrid-sm { --im-vidgrid-min: 11rem; }
+@utility im-exps-md { --im-track-span: 6; }
+@utility im-vidgrid-sm { --im-track-span: 3; }
 @utility im-on-dark { color: color-mix(in oklab, #fff 80%, transparent); }
 @utility im-demo-tall { height: 40rem; }
 @utility im-art-post { --im-art: var(--im-c-post); }

@@ -13,6 +13,25 @@
 		--im-grid-gap: 1rem;
 	}
 
+	/* The grid is FOUR columns on a phone — .im-guides draws four — and a span
+	   written for twelve cannot be honoured by four: it opens implicit columns
+	   and takes the page's width with it. So every child of a measured grid
+	   goes full width, head included. */
+	.im-section-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+	:is(.im-cols, .im-section-grid):not(.im-cols-hold) > [data-span],
+	.im-section-grid:not(.im-cols-hold) > .im-section-head {
+		grid-column: 1 / -1;
+	}
+
+	/* im-cols-hold HOLDS THE TWELVE, for a row of small cells that genuinely
+	   does sit three- or four-up at 390px: chips, swatches, numbers. It is the
+	   opt-out, so the spans in the markup are the spans on the screen. */
+	.im-cols-hold { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+
+	/* A golden split is a proportion of a width a phone does not have. */
+	.im-golden, .im-golden-flip { grid-template-columns: minmax(0, 1fr); }
+
 /* Any row of controls wraps; nothing is allowed to push the page wider. */
 	.im-collbar,
 .im-collbar-filters,

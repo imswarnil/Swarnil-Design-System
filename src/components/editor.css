@@ -221,7 +221,8 @@
 
 .im-snipcards {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-snipcards-min, 26rem), 100%), 1fr));
+	--im-track-span: 6;
+	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-track), 100%), 1fr));
 	gap: var(--im-grid-gap);
 	align-items: start;
 }

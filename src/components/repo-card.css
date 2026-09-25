@@ -278,7 +278,8 @@
    descriptions of equal length — it is to clamp the text. */
 .im-repos {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-repos-min, 19rem), 100%), 1fr));
+	--im-track-span: 4;
+	grid-template-columns: repeat(auto-fill, minmax(min(var(--im-track), 100%), 1fr));
 	gap: var(--im-grid-gap);
 	align-items: stretch;
 }

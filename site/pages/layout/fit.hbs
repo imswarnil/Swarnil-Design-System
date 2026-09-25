@@ -1,0 +1,85 @@
+---
+title: Fit to the grid
+description: A button, a picture, a field or a whole section put in a column fills it exactly — and a modular grid makes the rows as exact as the columns.
+eyebrow: Layout
+source: src/layout/fit.css
+---
+<p>The <a href="/layout/grid/">twelve columns</a> say where the lines are. <strong>Fit</strong> says that whatever is put on them lands exactly on them. A cell is a whole number of columns wide, and what is inside takes all of it — nothing is sized in rems to look about right.</p>
+
+<h2>Every container says how many columns it holds</h2>
+<p>One variable carries the whole idea, and it lives on the boxes rather than on <code>:root</code>. <code>--im-grid-of</code> is <strong>how many columns the current box holds</strong>, and <code>--im-col</code> divides that box by it — so <code>--im-track</code>, a rail written as <code>calc(4 * var(--im-col) + 3 * var(--im-grid-gap))</code> and every grid measured in columns mean <em>of the box I am in</em>. A grid nested three levels deep is right without being told anything.</p>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Box</th><th>Holds</th></tr></thead>
+	<tbody>
+		<tr><td>The page column (<code>im-shell-main</code>), <code>im-cols</code>, <code>im-section-grid</code>, <code>im-wrap-wide</code></td><td>12</td></tr>
+		<tr><td><code>im-wrap</code></td><td>10</td></tr>
+		<tr><td><code>im-single</code> article / aside</td><td>8 / 4</td></tr>
+		<tr><td><code>im-with-aside</code> article / rail</td><td>9 / 3</td></tr>
+		<tr><td><code>im-with-rails</code> contents / article / widgets</td><td>2 / 7 / 3</td></tr>
+		<tr><td>A <code>data-span="N"</code> cell</td><td>N</td></tr>
+		<tr><td>A phone, and anything stacked on one</td><td>4</td></tr>
+	</tbody>
+</table>
+</div>
+<p><strong>The rule this makes visible: an N-up grid lands on the drawn lines only when N divides the box's count.</strong> That is why a three-up feed fits the page column but not the eight columns beside a widget rail, and why twelve is the number: it is the one small count that takes 2, 3, 4 and 6 at once.</p>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>A box of</th><th>Takes</th><th>Is</th></tr></thead>
+	<tbody>
+		<tr><td>12</td><td>2, 3, 4, 6</td><td>the page column — every card grid fits</td></tr>
+		<tr><td>10</td><td>2, 5</td><td><code>im-wrap</code> — no three-up or four-up; use <code>im-wrap-wide</code> for those</td></tr>
+		<tr><td>9</td><td>3</td><td>an article beside a contents rail</td></tr>
+		<tr><td>8</td><td>2, 4</td><td>an article beside a widget rail</td></tr>
+		<tr><td>6</td><td>2, 3</td><td>the reading article, rail off</td></tr>
+		<tr><td>4</td><td>2</td><td>a phone</td></tr>
+	</tbody>
+</table>
+</div>
+<p><a href="/layout/grid/#im-grid-12"><code>im-grid-12</code></a> does this arithmetic for you in the boxes that have divisors to spare — it states a cell's minimum in columns and takes <code>floor(of / span)</code> tracks. In twelve, eight, six and four that count always divides. In ten, nine or seven it cannot always, so pick a span from the table, or put the block in a wider box.</p>
+<p>Three things are deliberately <em>not</em> measured. A <strong>reading measure</strong> (<code>im-wrap-prose</code>, <code>im-prose</code>) is set in rems, because legibility does not scale with the window — six columns would be 382px at a 1100px window — so it publishes no count. And a grid whose cells are sized by their <strong>contents</strong> rather than by the page — chips, swatches, a country list — stays on <code>im-grid-auto</code> with its own tighter gap. And a <strong>row with a marker gutter</strong> — a comment beside its avatar, a chat turn, an entry against its dot, a lesson against its number — sizes that first track to the mark, not to a column: the gutter is as wide as the thing in it, the way a card's padding is. Everything that reads as a block of the page is measured.</p>
+
+<h2>A cell fills</h2>
+<p>Inside a <code>data-span</code> cell, a button, a link-button, a field, a picture or a video is as wide as the cell. A button wraps its label instead of spilling out of its columns, and its height stays its own.</p>
+{{#example}}
+<div class="im-cols">
+	<a class="im-btn im-btn-primary" data-span="3" href="#">Three columns</a>
+	<a class="im-btn" data-span="3" href="#">Three columns</a>
+	<a class="im-btn" data-span="6" href="#">Six columns</a>
+	<input class="im-input" data-span="8" placeholder="Eight columns">
+	<a class="im-btn im-btn-primary" data-span="4" href="#">Four</a>
+</div>
+{{/example}}
+
+<h2>data-ratio</h2>
+<p>A picture never takes its height from the file. The cell decides the width, <code>data-ratio</code> decides the shape, and the picture covers it: <code>1:1</code>, <code>4:3</code>, <code>3:2</code>, <code>16:10</code>, <code>16:9</code>, <code>21:9</code>, <code>3:4</code>, <code>9:16</code>, <code>golden</code>.</p>
+{{#example}}
+<div class="im-cols">
+	<img data-span="4" data-ratio="1:1" src="{{lookup demo.shots 0}}" alt="">
+	<img data-span="4" data-ratio="4:3" src="{{lookup demo.shots 1}}" alt="">
+	<img data-span="4" data-ratio="golden" src="{{lookup demo.shots 2}}" alt="">
+	<img data-span="8" data-ratio="16:9" src="{{lookup demo.shots 3}}" alt="">
+	<img data-span="4" data-ratio="3:4" src="{{lookup demo.shots 4}}" alt="">
+</div>
+{{/example}}
+
+<h2>The modular grid</h2>
+<p><code>im-cols-modules</code> makes the rows one column tall, so a cell with <code>data-rows="2"</code> is exactly two columns and a gap high, and a picture in it is a true module — the Swiss module grid. Each cell states its height from the grid's own width (<code>cqw</code>), because a percentage cannot size a grid row. Opt in; ordinary grids keep auto rows.</p>
+{{#example}}
+<div class="im-cols im-cols-modules">
+	<img data-span="6" data-rows="3" src="{{lookup demo.shots 0}}" alt="">
+	<img data-span="3" data-rows="1" src="{{lookup demo.shots 1}}" alt="">
+	<img data-span="3" data-rows="1" src="{{lookup demo.shots 2}}" alt="">
+	<div data-span="6" data-rows="2" class="im-ring-line rounded-lg p-4 text-sm text-muted bg-canvas">six by two modules</div>
+</div>
+{{/example}}
+
+<h2>im-fit and im-w-N</h2>
+<p><code>im-fit</code> says "fill" on the element itself, outside a grid. <code>im-w-1</code> … <code>im-w-12</code> set a width of that many columns of the box the element is in; on a phone they become the whole box, like <code>data-span</code>.</p>
+{{#example}}
+<div class="im-stack-sm">
+	<a class="im-btn im-btn-primary im-w-4" href="#">im-w-4</a>
+	<a class="im-btn im-w-6" href="#">im-w-6</a>
+	<img class="im-fit" data-ratio="21:9" src="{{lookup demo.shots 1}}" alt="">
+</div>
+{{/example}}

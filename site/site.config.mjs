@@ -3,6 +3,9 @@
  *
  * NAME appears nowhere else — rename the product here.
  */
+// The repository, for the docs' "Edit this page" link and the star button.
+export const REPO = 'https://github.com/imswarnil/Swarnil-Design-System';
+
 export const NAME = 'Im Design System';
 export const SHORT = 'Im';
 
@@ -62,6 +65,8 @@ export const navigation = [
 			{ label: 'Shell', url: '/layout/shell/' },
 			{ label: 'Site layouts', url: '/layout/sites/' },
 			{ label: 'Containers & grid', url: '/layout/grid/' },
+			{ label: 'Fit to the grid', url: '/layout/fit/' },
+			{ label: 'The golden ratio', url: '/layout/golden/' },
 			{ label: 'Footer', url: '/layout/footer/' },
 			{ label: 'Divider', url: '/layout/divider/' },
 		],
@@ -370,6 +375,8 @@ export const navigation = [
 			{ label: 'Be right back', url: '/live/brb/' },
 			{ label: 'Ending', url: '/live/ending/' },
 			{ label: 'Overlays', url: '/live/overlays/' },
+			{ label: 'Live sources', url: '/live/sources/' },
+			{ label: 'On air', url: '/live/on-air/' },
 		],
 	},
 	{

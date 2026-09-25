@@ -1,7 +1,7 @@
 /* Guides — the twelve columns, drawn on the page.
 
    Swiss: the grid is not a secret. Behind everything, the full height of the
-   page, a hairline at BOTH edges of every column — so the gutters read as
+   page, ONE hairline down the middle of every gutter — so the gutters read as
    channels and every section, card and column of text sits inside its
    columns. Anything with a ground (a card, a panel, a block of text) covers
    the lines; the lines show in the gutters, the margins and the empty space.
@@ -11,26 +11,44 @@
        …
      </main>
 
+   ONE LINE PER GAP, not two. A line at both edges of every column drew the
+   column as a box and the page as twenty-four rules; a single hairline in the
+   middle of the gap draws the DIVISION, which is the only thing a reader has
+   to see — eleven lines for twelve columns, plus one at each outer edge to
+   close the frame. The line is a very light black (`--im-guide-line`), a
+   faint white in the dark theme: near the limit of what prints, because it is
+   scaffolding and must never compete with a word.
+
    On by default. <html data-im-guides="off"> turns it off; [data-im-guides-
    toggle] (im.js) flips and remembers it, the head script restores it before
-   first paint. The lines are cream in the light theme and a faint white in
-   the dark one (--im-guide-line). Knob: --im-guide-columns (12; 4 on a phone). */
+   first paint. Knob: --im-guide-columns (12; 4 on a phone). */
 
 .im-guides {
+	/* The knob, and the ONLY place the count is written. --im-col is redefined
+	   here from it rather than read from the tokens, so changing the count
+	   moves the lines — it was a dead property beside a hand-written phone
+	   formula, which is how a knob quietly stops being one. It shadows the
+	   token on this element alone; nothing is inside .im-guides. */
 	--im-guide-columns: 12;
+	--im-col: calc((100% - (var(--im-guide-columns) - 1) * var(--im-grid-gap)) / var(--im-guide-columns));
 
 	position: absolute;
 	inset: 0 var(--im-gutter);
 	z-index: -1;
-	width: min(100% - 2 * var(--im-gutter), var(--im-width-wide));
-	margin-inline: auto;
-	/* Column k starts at k × (column + gap); the tile is one column and one
-	   gap wide, with a line at its start and one at the column's end. */
+	/* The frame's own two lines. border-box everywhere (preflight), so they
+	   sit INSIDE the width and the grid keeps its measure. */
+	border-inline: 1px solid var(--im-guide-line);
+	/* Both boxes are the border box, so 100% in the gradient below is the
+	   whole grid width and not the padding box's two pixels less. */
+	background-origin: border-box;
+	background-clip: border-box;
+	/* One tile is a column and the gap that follows it; the line sits in the
+	   middle of that gap. The twelfth line lands past the right edge and is
+	   clipped, which is right: the frame's border draws that edge. */
 	background-image: repeating-linear-gradient(to right,
-		var(--im-guide-line) 0 1px,
-		transparent 1px calc(var(--im-col) - 1px),
-		var(--im-guide-line) calc(var(--im-col) - 1px) var(--im-col),
-		transparent var(--im-col) calc(var(--im-col) + var(--im-grid-gap)));
+		transparent 0 calc(var(--im-col) + var(--im-grid-gap) / 2 - 0.5px),
+		var(--im-guide-line) calc(var(--im-col) + var(--im-grid-gap) / 2 - 0.5px) calc(var(--im-col) + var(--im-grid-gap) / 2 + 0.5px),
+		transparent calc(var(--im-col) + var(--im-grid-gap) / 2 + 0.5px) calc(var(--im-col) + var(--im-grid-gap)));
 	pointer-events: none;
 }
 
@@ -44,14 +62,61 @@
 	background-color: var(--im-canvas);
 }
 
-/* A container that is the grid itself: put children on it with col-span-*. */
+/* A container that IS the grid: twelve columns and the one gap.
+
+     <div class="im-cols">
+       <article data-span="8">…</article>
+       <aside   data-span="4">…</aside>
+     </div>
+
+   MEASURE WITH data-span, not col-span-*. Both work — Tailwind's utilities
+   layer comes last, so col-span-8 always wins — but a span written for twelve
+   columns cannot be honoured by the four a phone has: it opens implicit
+   columns and takes the page's width with it, and a utility in the last layer
+   is out of this file's reach. data-span is the system's own, so the phone
+   rule in src/layout/responsive.css can drop it to one column.
+
+   data-start places a block: data-start="3" data-span="8" is columns 3–10.
+   im-cols-hold keeps the spans on a phone, for chips and other small cells
+   that genuinely do sit two-up at 390px. */
 .im-cols {
 	display: grid;
 	grid-template-columns: repeat(12, minmax(0, 1fr));
 	gap: var(--im-grid-gap);
 }
 
+:is(.im-cols, .im-section-grid) > [data-span] {
+	grid-column: var(--im-cols-start, auto) / span var(--im-cols-span, 12);
+	min-width: 0;
+}
+
+:is(.im-cols, .im-section-grid) > [data-span="1"] { --im-cols-span: 1; }
+:is(.im-cols, .im-section-grid) > [data-span="2"] { --im-cols-span: 2; }
+:is(.im-cols, .im-section-grid) > [data-span="3"] { --im-cols-span: 3; }
+:is(.im-cols, .im-section-grid) > [data-span="4"] { --im-cols-span: 4; }
+:is(.im-cols, .im-section-grid) > [data-span="5"] { --im-cols-span: 5; }
+:is(.im-cols, .im-section-grid) > [data-span="6"] { --im-cols-span: 6; }
+:is(.im-cols, .im-section-grid) > [data-span="7"] { --im-cols-span: 7; }
+:is(.im-cols, .im-section-grid) > [data-span="8"] { --im-cols-span: 8; }
+:is(.im-cols, .im-section-grid) > [data-span="9"] { --im-cols-span: 9; }
+:is(.im-cols, .im-section-grid) > [data-span="10"] { --im-cols-span: 10; }
+:is(.im-cols, .im-section-grid) > [data-span="11"] { --im-cols-span: 11; }
+:is(.im-cols, .im-section-grid) > [data-span="12"] { --im-cols-span: 12; }
+
+:is(.im-cols, .im-section-grid) > [data-start="1"] { --im-cols-start: 1; }
+:is(.im-cols, .im-section-grid) > [data-start="2"] { --im-cols-start: 2; }
+:is(.im-cols, .im-section-grid) > [data-start="3"] { --im-cols-start: 3; }
+:is(.im-cols, .im-section-grid) > [data-start="4"] { --im-cols-start: 4; }
+:is(.im-cols, .im-section-grid) > [data-start="5"] { --im-cols-start: 5; }
+:is(.im-cols, .im-section-grid) > [data-start="6"] { --im-cols-start: 6; }
+:is(.im-cols, .im-section-grid) > [data-start="7"] { --im-cols-start: 7; }
+:is(.im-cols, .im-section-grid) > [data-start="8"] { --im-cols-start: 8; }
+:is(.im-cols, .im-section-grid) > [data-start="9"] { --im-cols-start: 9; }
+:is(.im-cols, .im-section-grid) > [data-start="10"] { --im-cols-start: 10; }
+:is(.im-cols, .im-section-grid) > [data-start="11"] { --im-cols-start: 11; }
+:is(.im-cols, .im-section-grid) > [data-start="12"] { --im-cols-start: 12; }
+
 @media (width < 48rem) {
-	.im-guides { --im-guide-columns: 4; --im-col: calc((100% - 3 * var(--im-grid-gap)) / 4); }
+	.im-guides { --im-guide-columns: 4; }
 	.im-cols { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
