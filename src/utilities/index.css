@@ -171,6 +171,22 @@
 	letter-spacing: 0;
 }
 
+/* The hand: a note in the margin, a word on a sticker — "say hi!", "tune in".
+   Caveat, a touch larger than the type beside it because a hand is lighter
+   than a typeface at the same size, and tilted a little with im-hand-tilt.
+   Never a sentence; one to three words, and the accent or the body ink. */
+@utility im-hand {
+	font-family: var(--im-font-hand);
+	font-weight: 500;
+	font-size: 1.25em;
+	line-height: 1;
+	letter-spacing: 0;
+}
+
+@utility im-hand-tilt { display: inline-block; rotate: -6deg; }
+@utility im-hand-tilt-r { display: inline-block; rotate: 6deg; }
+@utility im-hand-accent { color: var(--im-accent); }
+
 /* Clearance for a bar that floats over the page (im-topbar-island / -float). */
 @utility im-bar-offset {
 	padding-top: calc(var(--im-bar-height) + var(--im-island-gap, 0.75rem));
@@ -209,7 +225,6 @@
 @utility im-mx-auto { margin-inline: auto; }
 @utility im-single-aside-md { --im-single-aside: calc(4 * var(--im-col) + 3 * var(--im-grid-gap)); }
 @utility im-single-aside-sm { --im-single-aside: calc(3 * var(--im-col) + 2 * var(--im-grid-gap)); }
-@utility im-repos-tight { --im-track-span: 3; }
 @utility im-repos-md { --im-track-span: 4; }
 @utility im-mediabg-sm { --im-mediabg-min: 14rem; }
 @utility im-mediabg-md { --im-mediabg-min: 18rem; }

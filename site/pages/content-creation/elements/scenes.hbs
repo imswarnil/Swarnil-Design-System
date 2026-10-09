@@ -1,0 +1,50 @@
+---
+title: Scenes
+description: Reusable shots — intro, chapter, quote, stat, list, versus, device, route, outro — and the 9:16 story cut. Each is an arrangement of layers that already exist; fill it with placeholders and it is a template.
+eyebrow: Content creation · Elements
+source: src/studio/scene.css
+---
+<p>A scene is a frame with a job. <code>im-studio-scene</code> gives it a head row (the mark, a chip), a stage and a foot row (a mono line each side); the modifier gives the stage its grid. Everything on the stage is a layer with a time, so a scene is already a clip: open any of these and it plays.</p>
+
+<h2>Intro</h2>
+<div class="frame-preview" style="--fw: 1920; --fh: 1080"><iframe src="/frames/scene-intro/" title="intro" loading="lazy"></iframe></div>
+<p class="im-cluster"><a class="im-btn im-btn-sm" href="/frames/scene-intro/">Open {{icon "arrow-up-right"}}</a><span class="im-hint"><code>im-studio-scene-intro</code> — everything centred, the title huge, a note in the hand last.</span></p>
+
+<h2>Chapter</h2>
+<div class="frame-preview" style="--fw: 1920; --fh: 1080"><iframe src="/frames/scene-chapter/" title="chapter" loading="lazy"></iframe></div>
+<p class="im-cluster"><a class="im-btn im-btn-sm" href="/frames/scene-chapter/">Open {{icon "arrow-up-right"}}</a><span class="im-hint"><code>im-studio-scene-chapter</code> — the numeral and the words, seven columns; the picture, five; a stepper in the head.</span></p>
+
+<h2>Quote</h2>
+<div class="frame-preview" style="--fw: 1920; --fh: 1080"><iframe src="/frames/scene-quote/" title="quote" loading="lazy"></iframe></div>
+<p class="im-cluster"><a class="im-btn im-btn-sm" href="/frames/scene-quote/">Open {{icon "arrow-up-right"}}</a><span class="im-hint"><code>im-studio-scene-quote</code> — one line word by word, who said it under.</span></p>
+
+<h2>Stat</h2>
+<div class="frame-preview" style="--fw: 1920; --fh: 1080"><iframe src="/frames/scene-stat/" title="stat" loading="lazy"></iframe></div>
+<p class="im-cluster"><a class="im-btn im-btn-sm" href="/frames/scene-stat/">Open {{icon "arrow-up-right"}}</a><span class="im-hint"><code>im-studio-scene-stat</code> — the number is the scene, counted; three smaller under it.</span></p>
+
+<h2>List</h2>
+<div class="frame-preview" style="--fw: 1920; --fh: 1080"><iframe src="/frames/scene-list/" title="list" loading="lazy"></iframe></div>
+<p class="im-cluster"><a class="im-btn im-btn-sm" href="/frames/scene-list/">Open {{icon "arrow-up-right"}}</a><span class="im-hint"><code>im-studio-scene-list</code> + <code>im-studio-lines</code> — five lines, 320ms apart; the current one inverted.</span></p>
+
+<h2>Versus</h2>
+<div class="frame-preview" style="--fw: 1920; --fh: 1080"><iframe src="/frames/scene-versus/" title="versus" loading="lazy"></iframe></div>
+<p class="im-cluster"><a class="im-btn im-btn-sm" href="/frames/scene-versus/">Open {{icon "arrow-up-right"}}</a><span class="im-hint"><code>im-studio-scene-versus</code> — two halves in from either side, the mark between.</span></p>
+
+<h2>Device</h2>
+<div class="frame-preview" style="--fw: 1920; --fh: 1080"><iframe src="/frames/scene-device/" title="device" loading="lazy"></iframe></div>
+<p class="im-cluster"><a class="im-btn im-btn-sm" href="/frames/scene-device/">Open {{icon "arrow-up-right"}}</a><span class="im-hint"><code>im-studio-scene-device</code> — a screen, a box on part of it, a cursor, keys in the head, a readout in the foot.</span></p>
+
+<h2>Route</h2>
+<div class="frame-preview" style="--fw: 1920; --fh: 1080"><iframe src="/frames/scene-route/" title="route" loading="lazy"></iframe></div>
+<p class="im-cluster"><a class="im-btn im-btn-sm" href="/frames/scene-route/">Open {{icon "arrow-up-right"}}</a><span class="im-hint"><code>im-studio-scene-route</code> — the trail from the channel art, a plane, two places, a point with a fact.</span></p>
+
+<h2>Outro</h2>
+<div class="frame-preview" style="--fw: 1920; --fh: 1080"><iframe src="/frames/scene-outro/" title="outro" loading="lazy"></iframe></div>
+<p class="im-cluster"><a class="im-btn im-btn-sm" href="/frames/scene-outro/">Open {{icon "arrow-up-right"}}</a><span class="im-hint"><code>im-studio-scene-outro</code> — the end screen’s slots, inside a scene.</span></p>
+
+<h2>Story · 9:16</h2>
+<div class="frame-preview" style="--fw: 1080; --fh: 1920; max-width: 22rem"><iframe src="/frames/scene-story/" title="story" loading="lazy"></iframe></div>
+<p class="im-cluster"><a class="im-btn im-btn-sm" href="/frames/scene-story/">Open at 1080 × 1920 {{icon "arrow-up-right"}}</a><span class="im-hint"><code>im-studio-story</code> on any scene — one column, everything stacked.</span></p>
+
+<h2>Using one</h2>
+<p>Copy the frame’s page, keep the classes, change the words and the pictures, and the times if the voice-over needs them. The placeholders are the fixtures (<code>demo.shots</code>, <code>demo.me</code>); a theme points them at its own. Export with <code>npm run frames scene-</code>.</p>

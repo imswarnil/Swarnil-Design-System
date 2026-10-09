@@ -1,0 +1,122 @@
+/* The logo sting — the brand, as an intro.
+
+   Three seconds, in four beats, on the frame's clock:
+     0.0  the ground arrives: the golden pattern fades up
+     0.4  the DOT falls in and lands (im-logo-drop)
+     0.9  the S rises through a slot beside it; the tile grows behind the pair
+     1.7  the rest of the name unfolds out of the S, and the line in the hand
+          writes itself under it
+     3.0  hold
+
+     <div class="im-studio im-studio-sting" …>
+       <span class="im-studio-ground im-studio-ground-golden" aria-hidden="true"></span>
+       <div class="im-studio-sting-lockup">
+         <span class="im-logo im-logo-mark"><b class="im-logo-type">S</b><i class="im-logo-dot"></i></span>
+         <b class="im-studio-sting-rest">warnil</b>
+       </div>
+       <p class="im-studio-sting-line">Documenting my life.</p>
+     </div>
+
+   im-studio-sting-short is the 1.2-second cut for a bumper: dot, S, done.
+   --im-studio-sting-at delays the whole thing. */
+
+.im-studio-sting {
+	--im-studio-sting-at: 0s;
+	--im-studio-sting-size: 7em;
+
+	place-content: center;
+	justify-items: center;
+	gap: 1em;
+}
+
+.im-studio-sting > .im-studio-ground {
+	animation: im-studio-in-fade var(--im-duration-slow) var(--im-ease-out) both;
+	animation-delay: var(--im-studio-sting-at);
+}
+
+.im-studio-sting-lockup {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.08em;
+	font-size: var(--im-studio-sting-size);
+	line-height: 1;
+}
+
+.im-studio-sting-lockup > .im-logo { --im-logo-size: 1em; }
+
+/* The tile grows round the pair after the letter has risen. */
+.im-studio-sting-lockup > .im-logo-mark {
+	animation: im-studio-sting-tile var(--im-duration-slow) var(--im-ease-glide) both;
+	animation-delay: calc(var(--im-studio-sting-at) + 1.1s);
+}
+
+/* The letter: up through a slot. */
+.im-studio-sting-lockup > .im-logo > .im-logo-type {
+	animation: im-logo-slot var(--im-duration-slow) var(--im-ease-out) both;
+	animation-delay: calc(var(--im-studio-sting-at) + 0.9s);
+}
+
+/* The dot: falls and lands. */
+.im-studio-sting-lockup > .im-logo > .im-logo-dot {
+	animation: im-logo-fall var(--im-duration-long) var(--im-ease-in-out) both;
+	animation-delay: calc(var(--im-studio-sting-at) + 0.4s);
+}
+
+/* The rest of the name: hidden behind the S, then unfolds out of it. */
+.im-studio-sting-rest {
+	display: inline-block;
+	max-width: 0;
+	overflow: hidden;
+	color: var(--im-ink);
+	font-family: var(--im-font-heading);
+	font-size: 0.8em;
+	font-weight: 600;
+	letter-spacing: -0.035em;
+	white-space: nowrap;
+	animation: im-studio-sting-unfold var(--im-duration-long) var(--im-ease-glide) both;
+	animation-delay: calc(var(--im-studio-sting-at) + 1.7s);
+}
+
+/* The line in the hand: writes itself. A clip from the left, in steps, and
+   the width is the knob (--im-studio-sting-chars). */
+.im-studio-sting-line {
+	color: var(--im-studio-accent);
+	font-family: var(--im-font-hand);
+	font-size: 1.6em;
+	font-weight: 500;
+	line-height: 1;
+	white-space: nowrap;
+	animation: im-studio-in-type calc(var(--im-studio-sting-chars, 20) * 55ms) steps(var(--im-studio-sting-chars, 20), end) both;
+	animation-delay: calc(var(--im-studio-sting-at) + 2.1s);
+}
+
+@keyframes im-studio-sting-tile {
+	from { background-color: transparent; color: var(--im-ink); }
+	to { background-color: var(--im-ink); color: var(--im-canvas); }
+}
+
+@keyframes im-studio-sting-unfold {
+	from { max-width: 0; opacity: 0; translate: -0.2em 0; }
+	to { max-width: 6em; opacity: 1; translate: 0 0; }
+}
+
+/* The short cut: the dot and the S, together, in 1.2s, no name. */
+.im-studio-sting-short .im-studio-sting-rest,
+.im-studio-sting-short .im-studio-sting-line { display: none; }
+.im-studio-sting-short .im-studio-sting-lockup > .im-logo > .im-logo-dot { animation-delay: calc(var(--im-studio-sting-at) + 0.1s); }
+.im-studio-sting-short .im-studio-sting-lockup > .im-logo > .im-logo-type { animation-delay: calc(var(--im-studio-sting-at) + 0.3s); }
+.im-studio-sting-short .im-studio-sting-lockup > .im-logo-mark { animation-delay: calc(var(--im-studio-sting-at) + 0.5s); }
+
+/* The dark sting: the ink is the ground, the tile is the canvas. */
+.im-studio-sting.im-studio-dark .im-studio-sting-lockup > .im-logo-mark { animation-name: im-studio-sting-tile-dark; }
+@keyframes im-studio-sting-tile-dark {
+	from { background-color: transparent; color: var(--im-ink); }
+	to { background-color: var(--im-ink); color: var(--im-media-ink); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.im-studio-sting > .im-studio-ground, .im-studio-sting-lockup > .im-logo-mark, .im-studio-sting-lockup > .im-logo > .im-logo-type,
+	.im-studio-sting-lockup > .im-logo > .im-logo-dot, .im-studio-sting-rest, .im-studio-sting-line { animation: none; }
+	.im-studio-sting-rest { max-width: 6em; }
+	.im-studio-sting-lockup > .im-logo-mark { background-color: var(--im-ink); color: var(--im-canvas); }
+}

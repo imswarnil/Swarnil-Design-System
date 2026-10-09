@@ -6,6 +6,7 @@
  * to. Nothing here comes from another theme.
  *
  *   fonts   geist          SIL Open Font License 1.1   → assets/fonts/
+ *   hand    @fontsource-variable/caveat   SIL OFL 1.1  → assets/fonts/Caveat-Variable.woff2
  *   icons   lucide-static  ISC                         → partials/icons/<name>.hbs
  *   brands  simple-icons   CC0 1.0                     → partials/icons/brand-<name>.hbs
  *
@@ -53,6 +54,9 @@ fs.mkdirSync(fontsOut, { recursive: true });
 for (const [from, to] of fonts) fs.copyFileSync(nm('geist/dist/fonts', from), path.join(fontsOut, to));
 const ofl = ['LICENSE.TXT', 'LICENSE.txt', 'LICENSE', 'OFL.txt'].map((f) => nm('geist', f)).find((f) => fs.existsSync(f));
 if (ofl) fs.copyFileSync(ofl, path.join(fontsOut, 'OFL.txt'));
+// The hand: Caveat, latin subset of the variable file, with its own OFL beside it.
+fs.copyFileSync(nm('@fontsource-variable/caveat/files', 'caveat-latin-wght-normal.woff2'), path.join(fontsOut, 'Caveat-Variable.woff2'));
+fs.copyFileSync(nm('@fontsource-variable/caveat', 'LICENSE'), path.join(fontsOut, 'OFL-Caveat.txt'));
 
 /* ---- icons ---- */
 const iconsOut = path.join(ROOT, 'partials/icons');
@@ -102,6 +106,6 @@ Use: \`{{> "icons/search"}}\`. Sized by \`.im-icon\` (1em × 1em by default) and
 `,
 );
 
-console.log(`  fonts   ${fonts.length} files → assets/fonts/${ofl ? ' (+ OFL.txt)' : ''}`);
+console.log(`  fonts   ${fonts.length + 1} files → assets/fonts/${ofl ? ' (+ OFL.txt, OFL-Caveat.txt)' : ''}`);
 console.log(`  icons   ${ICONS.length - missing.filter((m) => !m.startsWith('brand')).length} Lucide + ${Object.keys(BRANDS).length} brand → partials/icons/`);
 if (missing.length) console.warn(`  ⚠︎ missing: ${missing.join(', ')}`);

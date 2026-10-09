@@ -1,0 +1,157 @@
+/* Parts of a whole — donut, pie, ring, gauge, waffle. All pure CSS: a
+   conic-gradient takes the shares, a radial one cuts the hole.
+
+   PIE / DONUT — up to five shares and the rest:
+     <div class="im-chart-pie" style="--s1: .46; --s2: .32; --s3: .12" role="img" aria-label="…">
+       <span class="im-chart-pie-center"> 1,204 </span>
+     </div>
+     im-chart-pie-donut   cuts the hole (the centre is then readable)
+     im-chart-pie-thin    a thinner ring
+
+   RING — one share, as a progress ring (components/progress.css im-ring).
+   GAUGE — a half ring with a needle:
+     <div class="im-chart-gauge" style="--v: .72"><b>72</b><span>of 100</span></div>
+   WAFFLE — ten by ten cells, filled to --v:
+     <div class="im-chart-waffle" style="--v: .64"></div> */
+
+.im-chart-pie {
+	--im-pie-size: 9rem;
+	--im-pie-hole: 0%;
+	--c1: var(--im-viz-1);
+	--c2: var(--im-viz-2);
+	--c3: var(--im-viz-3);
+	--c4: var(--im-viz-4);
+	--c5: var(--im-viz-5);
+	--im-pie-rest: var(--im-viz-track);
+	--s1: 0;
+	--s2: 0;
+	--s3: 0;
+	--s4: 0;
+	--s5: 0;
+
+	display: inline-grid;
+	place-items: center;
+	flex: none;
+	width: var(--im-pie-size);
+	height: var(--im-pie-size);
+	border-radius: 50%;
+	background:
+		radial-gradient(closest-side, var(--im-pie-ground, var(--im-canvas)) var(--im-pie-hole), transparent calc(var(--im-pie-hole) + 1px)),
+		conic-gradient(
+			var(--c1) 0 calc(var(--s1) * 360deg),
+			var(--c2) 0 calc((var(--s1) + var(--s2)) * 360deg),
+			var(--c3) 0 calc((var(--s1) + var(--s2) + var(--s3)) * 360deg),
+			var(--c4) 0 calc((var(--s1) + var(--s2) + var(--s3) + var(--s4)) * 360deg),
+			var(--c5) 0 calc((var(--s1) + var(--s2) + var(--s3) + var(--s4) + var(--s5)) * 360deg),
+			var(--im-pie-rest) 0
+		);
+	color: var(--im-ink);
+	text-align: center;
+}
+
+.im-chart-pie-donut { --im-pie-hole: 62%; }
+.im-chart-pie-thin { --im-pie-hole: 78%; }
+.im-chart-pie-sm { --im-pie-size: 5rem; }
+.im-chart-pie-lg { --im-pie-size: 13rem; }
+
+/* What sits in the hole: a figure and a word. */
+.im-chart-pie-center {
+	display: grid;
+	gap: 0.125rem;
+	line-height: 1.1;
+}
+
+.im-chart-pie-center > b {
+	font-size: var(--im-text-h3);
+	font-weight: 600;
+	letter-spacing: var(--im-tracking-tight);
+	font-variant-numeric: tabular-nums;
+}
+
+.im-chart-pie-center > span {
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+}
+
+/* ---- gauge: a half ring and a needle ---- */
+.im-chart-gauge {
+	--im-gauge-size: 10rem;
+	--im-gauge-width: 0.875rem;
+
+	position: relative;
+	display: grid;
+	align-content: end;
+	justify-items: center;
+	gap: 0;
+	width: var(--im-gauge-size);
+	aspect-ratio: 2 / 1.15;
+	overflow: hidden;
+	color: var(--im-ink);
+	text-align: center;
+}
+
+/* The arc: a full conic ring, half of it hidden under the box. */
+.im-chart-gauge::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: var(--im-gauge-size);
+	height: var(--im-gauge-size);
+	border-radius: 50%;
+	background:
+		radial-gradient(closest-side, var(--im-canvas) calc(100% - var(--im-gauge-width)), transparent calc(100% - var(--im-gauge-width) + 1px)),
+		conic-gradient(from -90deg, var(--c, var(--im-chart-color, var(--im-viz-1))) 0 calc(var(--v, 0) * 180deg), var(--im-viz-track) 0 180deg, transparent 0);
+}
+
+/* The needle: a pointer near the arc, turned by the value. It is rotated
+   about the arc's centre and then pushed out along its own axis, so it never
+   crosses the figure in the middle. */
+.im-chart-gauge::after {
+	content: "";
+	position: absolute;
+	left: 50%;
+	top: calc(var(--im-gauge-size) / 2);
+	width: calc(var(--im-gauge-size) * 0.16);
+	height: 3px;
+	border-radius: 2px;
+	background-color: var(--im-ink);
+	transform-origin: 0 50%;
+	transform: rotate(calc(-180deg + var(--v, 0) * 180deg)) translateX(calc(var(--im-gauge-size) * 0.28));
+	transition: transform var(--im-duration-long) var(--im-ease-out);
+}
+
+.im-chart-gauge > b {
+	position: relative;
+	font-size: var(--im-text-h2);
+	font-weight: 600;
+	line-height: 1;
+	letter-spacing: var(--im-tracking-tight);
+	font-variant-numeric: tabular-nums;
+}
+
+.im-chart-gauge > span {
+	position: relative;
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+}
+
+/* ---- waffle: a hundred cells, filled in reading order ----
+   Whole rows fill from the bottom; the partial row fills from the left. The
+   cells are a mask so one element does the whole thing. round() needs a
+   current browser; elsewhere the partial row is simply not drawn. */
+.im-chart-waffle {
+	--im-waffle-size: 8rem;
+	--im-waffle-rows: round(down, var(--v, 0) * 10, 1);
+	--im-waffle-part: calc(var(--v, 0) * 10 - var(--im-waffle-rows));
+
+	width: var(--im-waffle-size);
+	height: var(--im-waffle-size);
+	background:
+		linear-gradient(to right, var(--c, var(--im-chart-color, var(--im-viz-1))) calc(var(--im-waffle-part) * 100%), transparent 0) 0 calc((9 - var(--im-waffle-rows)) * 100% / 9) / 100% 10% no-repeat,
+		linear-gradient(to top, var(--c, var(--im-chart-color, var(--im-viz-1))) calc(var(--im-waffle-rows) * 10%), var(--im-viz-track) 0);
+	-webkit-mask-image: radial-gradient(circle, #000 0 38%, transparent 42%);
+	mask-image: radial-gradient(circle, #000 0 38%, transparent 42%);
+	-webkit-mask-size: 10% 10%;
+	mask-size: 10% 10%;
+}

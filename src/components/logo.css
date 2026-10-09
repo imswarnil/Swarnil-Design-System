@@ -4,6 +4,9 @@
    wordmark   <span class="im-logo"><b class="im-logo-type">Swarnil</b><i class="im-logo-dot"></i></span>
    square     <span class="im-logo im-logo-mark"><b class="im-logo-type">S</b><i class="im-logo-dot"></i></span>
 
+   The brand is the SQUARE: the S and the dot, centred on a tile as ONE group.
+   The wordmark is the same pair with the rest of the name between them.
+
    It is LIVE TEXT, not a picture: it takes the brand typeface, it is sharp at
    any size and on any screen, it inherits the theme's ink, it can be selected
    and searched, and it weighs nothing. The only drawn file in the system is
@@ -11,7 +14,19 @@
 
    Everything is sized from ONE knob, --im-logo-size — the height of the
    lockup — and everything inside it is in em, so the whole thing scales by
-   setting a single length. */
+   setting a single length. im-logo-xs … im-logo-3xl are that knob as classes.
+
+   Motion (one at a time; all stop under prefers-reduced-motion):
+     im-logo-type-in    the letters arrive one by one, then the dot      (needs data-im-split="chars" on the type)
+     im-logo-drop       the dot falls onto the cap line and settles
+     im-logo-reveal     the word rises through a slot, the dot blinks on
+     im-logo-morph      the wordmark folds into the square and back      (needs data-im-split="chars")
+     im-logo-states     the dot cycles record · play · stop · record
+     im-logo-live       the dot breathes, the way a recording light does
+
+   Surface (a window instead of ink):
+     im-logo-cutout     the letters are filled with a pattern or a picture (--im-logo-cut)
+     im-logo-knockout   the tile is solid and the letters are HOLES in it   (needs a ground behind) */
 
 .im-logo {
 	--im-logo-size: 1.625rem;
@@ -79,6 +94,17 @@
 	}
 }
 
+/* ---- the scale ----
+   Seven sizes, so a page never writes a length: the bar, a card, a footer, a
+   hero, a cover, a poster. Each is the knob and nothing else. */
+.im-logo-xs { --im-logo-size: 1rem; }
+.im-logo-sm { --im-logo-size: 1.25rem; }
+.im-logo-md { --im-logo-size: 1.625rem; }
+.im-logo-lg { --im-logo-size: 2.5rem; }
+.im-logo-xl { --im-logo-size: 4rem; }
+.im-logo-2xl { --im-logo-size: 6rem; }
+.im-logo-3xl { --im-logo-size: 9rem; }
+
 /* ---- the square ----
    One letter on a tile, with the same dot at its top right. For a favicon, an
    avatar, an island bar, a phone — anywhere the name will not fit. The tile is
@@ -87,7 +113,12 @@
 	/* A GRID, not the flex row above: in a flex row as tall as the tile, the
 	   dot's flex-start is the TILE's top, and the dot floats away from the
 	   letter. Here the row is only as tall as the letter and the grid centres
-	   it, so the dot sits on the cap line exactly as it does in the wordmark. */
+	   it, so the dot sits on the cap line exactly as it does in the wordmark.
+
+	   The LETTER AND THE DOT ARE CENTRED AS ONE GROUP — the pair is the mark,
+	   so the pair sits in the middle of the tile. (It used to pad the right by
+	   a dot so the letter alone was centred; the favicon and every export now
+	   agree with this one.) */
 	display: inline-grid;
 	grid-auto-flow: column;
 	place-content: center;
@@ -100,9 +131,6 @@
 	background-color: var(--im-ink);
 	color: var(--im-canvas);
 	font-size: calc(var(--im-logo-size) * 0.6);
-	/* The letter is optically centred: the pair leans right by the dot, so the
-	   ink, not the box, sits in the middle of the tile. */
-	padding-right: var(--im-logo-dot);
 }
 
 .im-logo-mark > .im-logo-type {
@@ -120,6 +148,12 @@
 
 	background-color: var(--im-accent);
 	color: var(--im-on-accent);
+}
+
+/* The tile in the canvas colour, for a dark picture or an inverted footer. */
+.im-logo-canvas {
+	background-color: var(--im-canvas);
+	color: var(--im-ink);
 }
 
 /* ---- on air ----
@@ -140,12 +174,6 @@
 	}
 }
 
-@media (prefers-reduced-motion: reduce) {
-	.im-logo-live > .im-logo-dot {
-		animation: none;
-	}
-}
-
 /* ---- in a brand link ----
    .im-brand is the link around it (layout/topbar.css). A wordmark already IS
    the name, so there is nothing beside it to space. */
@@ -155,6 +183,253 @@
 
 .im-brand > .im-logo-mark {
 	color: var(--im-canvas);
+}
+
+/* ═══ Motion ═══════════════════════════════════════════════════════════════
+   Each is a class on .im-logo and plays once on load (a frame, a hero, an
+   intro). Timing reads the motion tokens; the knobs are the stagger between
+   letters (--im-logo-step) and how long the whole thing takes (--im-logo-run).
+   The letter-by-letter ones need the type split: im-motion.js does it from
+   data-im-split="chars" on .im-logo-type, and the split units are not held
+   back for a scroll reveal — a logo is above the fold or it is not a logo. */
+.im-logo {
+	--im-logo-step: 70ms;
+	--im-logo-run: 1200ms;
+}
+
+[data-im-js] .im-logo [data-im-split]:not([data-im-revealed]) .im-split-unit,
+.im-logo [data-im-split] .im-split-unit {
+	opacity: 1;
+	translate: none;
+	filter: none;
+	transition: none;
+}
+
+.im-logo .im-split-unit { display: inline-block; }
+
+/* -- type-in: the letters arrive one after another, up through the baseline
+      and settling; the dot pops in after the last one. -- */
+.im-logo-type-in .im-split-unit {
+	animation: im-logo-letter var(--im-duration-base) var(--im-ease-out) both;
+	animation-delay: calc(var(--im-i, 0) * var(--im-logo-step));
+}
+
+.im-logo-type-in > .im-logo-dot {
+	animation: im-logo-pop var(--im-duration-base) var(--im-ease-spring) both;
+	animation-delay: calc(var(--im-logo-letters, 7) * var(--im-logo-step) + var(--im-duration-fast));
+}
+
+@keyframes im-logo-letter {
+	from { opacity: 0; translate: 0 0.35em; filter: blur(4px); }
+}
+
+@keyframes im-logo-pop {
+	from { opacity: 0; scale: 0; }
+	60% { scale: 1.35; }
+}
+
+/* -- drop: the dot falls onto the cap line, bounces once, and the letters are
+      already there — the light switching on is the whole event. -- */
+.im-logo-drop > .im-logo-dot {
+	animation: im-logo-fall var(--im-duration-long) var(--im-ease-in-out) both;
+}
+
+@keyframes im-logo-fall {
+	0% { opacity: 0; translate: 0 -2.2em; scale: 0.6; }
+	55% { opacity: 1; translate: 0 0.12em; scale: 1.1 0.85; }
+	72% { translate: 0 -0.06em; scale: 0.95 1.05; }
+	100% { translate: 0 0; scale: 1; }
+}
+
+/* -- reveal: the word rises through a slot cut on its own baseline; the dot
+      blinks on at the end. -- */
+.im-logo-reveal > .im-logo-type {
+	animation: im-logo-slot var(--im-duration-slow) var(--im-ease-out) both;
+}
+
+.im-logo-reveal > .im-logo-dot {
+	animation: im-logo-blink-on var(--im-duration-base) steps(1) both;
+	animation-delay: var(--im-duration-slow);
+}
+
+@keyframes im-logo-slot {
+	from { clip-path: inset(0 0 100% 0); translate: 0 100%; }
+	to { clip-path: inset(-10% -5% -20% -5%); translate: 0 0; }
+}
+
+@keyframes im-logo-blink-on {
+	0%, 40%, 70% { opacity: 0; }
+	20%, 55%, 100% { opacity: 1; }
+}
+
+/* -- morph: wordmark → square → wordmark. The letters after the first fold
+      away to nothing while a tile grows behind the S; then it all comes back.
+      The lockup is a wordmark that KNOWS how to be the square, so an intro can
+      open on the name and close on the mark without two elements. The tile is
+      a pseudo-element so no markup changes; the dot stays on the S's cap line
+      throughout because the row never moves — only the width between them. -- */
+.im-logo-morph {
+	position: relative;
+	isolation: isolate;
+	/* The tile grows round the S: the pair is padded by the tile's inset so
+	   the mark has the proportions of im-logo-mark when the word has gone. */
+	padding: 0.2em 0.26em 0.2em 0.3em;
+	margin: -0.2em -0.26em -0.2em -0.3em;
+}
+
+.im-logo-morph::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	border-radius: 26%;
+	background-color: var(--im-ink);
+	opacity: 0;
+	scale: 0.6;
+	animation: im-logo-tile var(--im-logo-run) var(--im-ease-in-out) var(--im-logo-run) infinite alternate;
+}
+
+.im-logo-morph .im-split-unit {
+	max-width: 1.2em;
+	overflow: hidden;
+	transition: none;
+	animation: im-logo-fold var(--im-logo-run) var(--im-ease-in-out) var(--im-logo-run) infinite alternate;
+	animation-delay: calc(var(--im-logo-run) + var(--im-i, 0) * -40ms);
+}
+
+.im-logo-morph .im-split-unit:first-child { animation: im-logo-first var(--im-logo-run) var(--im-ease-in-out) var(--im-logo-run) infinite alternate; }
+
+@keyframes im-logo-fold {
+	0%, 15% { max-width: 1.2em; opacity: 1; filter: blur(0); }
+	60%, 100% { max-width: 0; opacity: 0; filter: blur(3px); }
+}
+
+@keyframes im-logo-first {
+	0%, 40% { color: var(--im-ink); }
+	75%, 100% { color: var(--im-canvas); }
+}
+
+@keyframes im-logo-tile {
+	0%, 45% { opacity: 0; scale: 0.6; }
+	80%, 100% { opacity: 1; scale: 1; }
+}
+
+/* -- states: the dot is the recording light, so it can be every state a
+      recorder has. It cycles: record (the dot) → play (a triangle) → stop (a
+      square) → record. A clip-path morph; the colour stays the accent, because
+      the shape is the message. -- */
+.im-logo-states > .im-logo-dot {
+	border-radius: 0;
+	clip-path: circle(50% at 50% 50%);
+	animation: im-logo-states 4.8s var(--im-ease-in-out) infinite;
+}
+
+@keyframes im-logo-states {
+	0%, 22% { clip-path: circle(50% at 50% 50%); }
+	30%, 52% { clip-path: polygon(8% 0, 100% 50%, 8% 100%, 8% 100%); }
+	60%, 82% { clip-path: inset(6% round 12%); }
+	90%, 100% { clip-path: circle(50% at 50% 50%); }
+}
+
+/* ═══ Surface ══════════════════════════════════════════════════════════════ */
+
+/* -- cutout: the letters are a window. Whatever --im-logo-cut holds — a
+      pattern (a gradient is an image), a photograph, a video poster — shows
+      THROUGH the letters, and drifts slowly so the window is felt to be one.
+      Two knobs beside the picture: how strong it is (--im-logo-cut-opacity)
+      and how it meets what is under it (--im-logo-cut-blend). The dot stays
+      solid: a light does not have a picture in it. -- */
+.im-logo-cutout {
+	--im-logo-cut: linear-gradient(135deg, var(--im-ink), var(--im-accent));
+	--im-logo-cut-opacity: 1;
+	--im-logo-cut-blend: normal;
+	--im-logo-cut-speed: 24s;
+}
+
+.im-logo-cutout > .im-logo-type {
+	background: var(--im-logo-cut) center / 160% auto;
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+	opacity: var(--im-logo-cut-opacity);
+	mix-blend-mode: var(--im-logo-cut-blend);
+	animation: im-logo-cut-pan var(--im-logo-cut-speed) var(--im-ease-in-out) infinite alternate;
+}
+
+@keyframes im-logo-cut-pan {
+	from { background-position: 0% 50%; }
+	to { background-position: 100% 50%; }
+}
+
+/* A pattern through the letters: any im-bg-* on the type sets the image, so
+   the cut is the pattern itself, in the pattern's own ink. */
+.im-logo-cutout > .im-logo-type[class*="im-bg-"] {
+	--im-pattern-color: var(--im-ink);
+	--im-pattern-size: 0.35em;
+
+	background-color: color-mix(in oklab, var(--im-ink) 35%, transparent);
+	background-size: var(--im-pattern-size) var(--im-pattern-size);
+	animation: im-logo-cut-drift calc(var(--im-logo-cut-speed) / 3) linear infinite;
+}
+
+@keyframes im-logo-cut-drift {
+	to { background-position: 0.35em 0.35em; }
+}
+
+/* -- knockout: the tile is solid and the letters are HOLES in it. A white
+      tile with black letters, screened over whatever is behind — the black
+      becomes a window and the white stays white. It needs a ground: put the
+      mark inside something that has the picture or the pattern (and
+      isolation: isolate, or it blends with the whole page). The dot sits on
+      its own layer so it keeps the accent instead of screening to white. -- */
+.im-logo-knockout {
+	--im-logo-dot-color: var(--im-accent);
+
+	position: relative;
+	background-color: #fff;
+	color: #000;
+	mix-blend-mode: screen;
+}
+
+/* The stage a knockout is shown on: the ground is the pattern or picture, and
+   the blend is contained. */
+.im-logo-stage {
+	position: relative;
+	isolation: isolate;
+	display: inline-grid;
+	place-items: center;
+	padding: 1.5rem;
+	border-radius: var(--im-radius-xl);
+	overflow: hidden;
+	background-color: var(--im-ink);
+}
+
+.im-logo-stage > .im-logo-stage-ground {
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+	opacity: var(--im-logo-cut-opacity, 1);
+	mix-blend-mode: var(--im-logo-cut-blend, normal);
+	background: var(--im-logo-cut, none) center / cover;
+}
+
+.im-logo-stage > .im-logo { position: relative; z-index: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+	.im-logo-live > .im-logo-dot,
+	.im-logo-type-in .im-split-unit,
+	.im-logo-type-in > .im-logo-dot,
+	.im-logo-drop > .im-logo-dot,
+	.im-logo-reveal > .im-logo-type,
+	.im-logo-reveal > .im-logo-dot,
+	.im-logo-morph::before,
+	.im-logo-morph .im-split-unit,
+	.im-logo-states > .im-logo-dot,
+	.im-logo-cutout > .im-logo-type {
+		animation: none;
+	}
+
+	.im-logo-morph::before { opacity: 0; }
 }
 
 /* ---- the dot, as a marker ----------------------------------------------

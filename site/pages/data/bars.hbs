@@ -1,0 +1,169 @@
+---
+title: Bars & columns
+description: Columns for one thing over time, grouped and stacked for several, a ranking when the labels are long, a histogram for a distribution, a bullet for a measure against its target. All pure CSS, every value a share in --v.
+eyebrow: Data visualisation
+source: src/viz/chart.css
+---
+<h2>The frame</h2>
+<p>Every chart with an axis sits in <code>im-chart</code>: a head (title, a subtitle in mono, the tools at the end), the plot, a note. The plot is a grid — the y ticks down the left, the area, the x labels under it — and the area draws <code>--im-chart-rows</code> gridlines as hairlines. Nothing in it is a chart yet; it is the paper.</p>
+{{#example}}
+<figure class="im-chart">
+	<div class="im-chart-head"><p class="im-chart-title">Posts a month</p><p class="im-chart-sub">2026</p></div>
+	<div class="im-chart-plot">
+		<div class="im-chart-y" aria-hidden="true"><span>12</span><span>9</span><span>6</span><span>3</span><span>0</span></div>
+		<div class="im-chart-area">
+			<div class="im-chart-cols" role="img" aria-label="Posts a month: {{#each demo.viz.posts}}{{label}} {{n}}{{#unless @last}}, {{/unless}}{{/each}}">
+				{{#each demo.viz.posts}}<div class="im-chart-col"{{#if on}} data-on{{/if}} style="--n: {{@index}}"><i style="--v: {{v}}"></i></div>{{/each}}
+			</div>
+		</div>
+		<div class="im-chart-x im-chart-x-cells" aria-hidden="true">{{#each demo.viz.posts}}<span>{{label}}</span>{{/each}}</div>
+	</div>
+	<figcaption class="im-chart-note">June was the month the design system shipped.</figcaption>
+</figure>
+{{/example}}
+{{{{code "html"}}}}
+<figure class="im-chart">
+	<div class="im-chart-head"><p class="im-chart-title">Posts a month</p><p class="im-chart-sub">2026</p></div>
+	<div class="im-chart-plot">
+		<div class="im-chart-y" aria-hidden="true"><span>12</span><span>9</span><span>6</span><span>3</span><span>0</span></div>
+		<div class="im-chart-area">
+			<div class="im-chart-cols" role="img" aria-label="Posts a month: Jan 4, Feb 7, …">
+				<div class="im-chart-col"><i style="--v: .33"></i></div>
+				<div class="im-chart-col" data-on><i style="--v: 1"></i></div>
+				…
+			</div>
+		</div>
+		<div class="im-chart-x im-chart-x-cells" aria-hidden="true"><span>Jan</span><span>Feb</span>…</div>
+	</div>
+	<figcaption class="im-chart-note">…</figcaption>
+</figure>
+{{{{/code}}}}
+<div class="im-table-scroll"><table>
+<thead><tr><th>Knob</th><th>Default</th><th></th></tr></thead>
+<tbody>
+<tr><td><code>--im-chart-height</code></td><td>12rem</td><td>The plot’s height. A chart in a panel sets it; the width is the box’s.</td></tr>
+<tr><td><code>--im-chart-rows</code></td><td>4</td><td>Gridlines, and therefore the number of ticks less one.</td></tr>
+<tr><td><code>--im-chart-color</code></td><td><code>--im-viz-1</code></td><td>Series one. The only colour a page should need to set.</td></tr>
+<tr><td><code>--v</code></td><td>0</td><td>On a bar: its height as a share of the top of the axis.</td></tr>
+<tr><td><code>--n</code></td><td>0</td><td>On a column: its index, for the stagger when it grows in.</td></tr>
+</tbody></table></div>
+
+<h2>Columns</h2>
+<p><code>im-chart-cols</code> is the column chart: one <code>im-chart-col</code> per label, one <code>&lt;i&gt;</code> inside with its share. <code>data-on</code> marks the one to notice; with <code>im-chart-cols-focus</code> every other column goes to the track so the one stands out. <code>data-value</code> prints the figure above the column. With <code>data-im-reveal="none"</code> the columns grow in when scrolled to.</p>
+{{#example}}
+<figure class="im-chart">
+	<div class="im-chart-head"><p class="im-chart-title">Readers, thousands</p><p class="im-chart-sub">by month</p></div>
+	<div class="im-chart-plot" style="--im-chart-rows: 3">
+		<div class="im-chart-y" aria-hidden="true"><span>15k</span><span>10k</span><span>5k</span><span>0</span></div>
+		<div class="im-chart-area">
+			<div class="im-chart-cols im-chart-cols-focus" data-im-reveal="none" role="img" aria-label="Readers by month, thousands: {{#each demo.viz.months}}{{this}} {{lookup ../demo.viz.readers @index}}{{#unless @last}}, {{/unless}}{{/each}}">
+				{{#each demo.viz.readers}}<div class="im-chart-col" data-value="{{this}}k" style="--n: {{@index}}; --v: {{this}}"{{#if @last}} data-on{{/if}}><i style="--v: calc({{this}} / 15)"></i></div>{{/each}}
+			</div>
+		</div>
+		<div class="im-chart-x im-chart-x-cells" aria-hidden="true">{{#each demo.viz.months}}<span>{{this}}</span>{{/each}}</div>
+	</div>
+</figure>
+{{/example}}
+<p>A share can be written as arithmetic — <code>--v: calc(12.5 / 15)</code> — so the markup carries the real number and the top of the axis, and nothing is rounded by hand.</p>
+
+<h2>Grouped and stacked</h2>
+<p>Several <code>&lt;i&gt;</code> in a column are several series: side by side by default (<code>im-chart-cols-grouped</code> is the same thing, named), on top of one another with <code>im-chart-cols-stacked</code>. Each takes the next colour of the palette; a legend names them.</p>
+{{#example}}
+<div class="im-cols">
+	<figure class="im-chart" data-span="6">
+		<div class="im-chart-head"><p class="im-chart-title">Readers and members</p>
+			<ul class="im-legend im-legend-row im-chart-tools"><li style="--c: var(--im-viz-1)">Readers</li><li style="--c: var(--im-viz-2)">Members</li></ul>
+		</div>
+		<div class="im-chart-plot" style="--im-chart-rows: 3">
+			<div class="im-chart-y" aria-hidden="true"><span>12k</span><span>8k</span><span>4k</span><span>0</span></div>
+			<div class="im-chart-area">
+				<div class="im-chart-cols im-chart-cols-grouped" role="img" aria-label="Readers and members, thousands, Jul to Dec">
+					{{#each demo.viz.months}}{{#match @index ">=" 6}}<div class="im-chart-col" style="--n: {{@index}}"><i style="--v: calc({{lookup ../demo.viz.readers @index}} / 12)"></i><i style="--v: calc({{lookup ../demo.viz.members @index}} / 12)"></i></div>{{/match}}{{/each}}
+				</div>
+			</div>
+			<div class="im-chart-x im-chart-x-cells" aria-hidden="true">{{#each demo.viz.months}}{{#match @index ">=" 6}}<span>{{this}}</span>{{/match}}{{/each}}</div>
+		</div>
+	</figure>
+	<figure class="im-chart" data-span="6">
+		<div class="im-chart-head"><p class="im-chart-title">Where the readers came from</p>
+			<ul class="im-legend im-legend-row im-chart-tools"><li style="--c: var(--im-viz-1)">Search</li><li style="--c: var(--im-viz-2)">Direct</li><li style="--c: var(--im-viz-3)">Social</li></ul>
+		</div>
+		<div class="im-chart-plot" style="--im-chart-rows: 4">
+			<div class="im-chart-y" aria-hidden="true"><span>100%</span><span>75%</span><span>50%</span><span>25%</span><span>0</span></div>
+			<div class="im-chart-area">
+				<div class="im-chart-cols im-chart-cols-stacked" role="img" aria-label="Share of readers by source, Q1 to Q4: search 50 to 62 percent, direct 30 to 24, social 20 to 14">
+					<div class="im-chart-col"><i style="--v: .5"></i><i style="--v: .3"></i><i style="--v: .2"></i></div>
+					<div class="im-chart-col"><i style="--v: .54"></i><i style="--v: .28"></i><i style="--v: .18"></i></div>
+					<div class="im-chart-col"><i style="--v: .58"></i><i style="--v: .26"></i><i style="--v: .16"></i></div>
+					<div class="im-chart-col"><i style="--v: .62"></i><i style="--v: .24"></i><i style="--v: .14"></i></div>
+				</div>
+			</div>
+			<div class="im-chart-x im-chart-x-cells" aria-hidden="true"><span>Q1</span><span>Q2</span><span>Q3</span><span>Q4</span></div>
+		</div>
+	</figure>
+</div>
+{{/example}}
+
+<h2>The quick one</h2>
+<p><code>im-bars</code> is a column chart in one line, with no frame — the label is drawn under each bar from <code>data-label</code>. For a widget, a card, the foot of a stat. <code>im-bars-filled</code> colours every bar, not only the one that is on.</p>
+{{#example}}
+<div class="im-bars" data-im-reveal="none" role="img" aria-label="Posts per month: Jan 4, Feb 7, Mar 5, Apr 9, May 6, Jun 12, Jul 8, Aug 10">
+	{{#each demo.viz.posts}}<i style="--v: {{v}}; --n: {{@index}}" data-label="{{label}}"{{#if on}} data-on{{/if}}></i>{{/each}}
+</div>
+<div class="im-bars im-bars-filled" style="--im-bars-height: 5rem; --im-chart-color: var(--im-viz-2)" role="img" aria-label="Readers by quarter: 14k, 19k, 26k, 36k">
+	<i style="--v: .39" data-label="Q1"></i><i style="--v: .53" data-label="Q2"></i><i style="--v: .72" data-label="Q3"></i><i style="--v: 1" data-label="Q4"></i>
+</div>
+{{/example}}
+{{{{code "html"}}}}
+<div class="im-bars" data-im-reveal="none" role="img" aria-label="Posts per month: Jan 4, Feb 7, …">
+	<i style="--v: .33; --n: 0" data-label="Jan"></i>
+	<i style="--v: .58; --n: 1" data-label="Feb"></i>
+	<i style="--v: 1; --n: 5" data-label="Jun" data-on></i>
+	…
+</div>
+{{{{/code}}}}
+
+<h2>Ranking</h2>
+<p>Horizontal bars, for when the labels are words and the order is the point: label, bar, figure. <code>im-hbars-thick</code> puts the label above a taller bar, for a list that is read rather than scanned.</p>
+{{#example}}
+<div class="im-cols">
+	<div class="im-hbars" data-span="6" role="img" aria-label="Posts by topic: Travel 48, Craft 34, Career 24, Salesforce 16, Moving 11">
+		{{#each demo.viz.topics}}<span>{{name}}</span><i style="--v: {{v}}"></i><b>{{posts}}</b>{{/each}}
+	</div>
+	<div class="im-hbars im-hbars-thick" data-span="6" role="img" aria-label="Views by topic">
+		{{#each demo.viz.topics}}{{#match @index "<" 3}}<span>{{name}}</span><b>{{views}}</b><i style="--v: {{v}}"></i>{{/match}}{{/each}}
+	</div>
+</div>
+{{/example}}
+
+<h2>Histogram</h2>
+<p>A distribution: the bins touch, because the axis is continuous. <code>im-chart-cols-hist</code>.</p>
+{{#example}}
+<figure class="im-chart">
+	<div class="im-chart-head"><p class="im-chart-title">Reading time</p><p class="im-chart-sub">minutes, 246 posts</p></div>
+	<div class="im-chart-plot" style="--im-chart-rows: 2; --im-chart-height: 8rem">
+		<div class="im-chart-y" aria-hidden="true"><span>60</span><span>30</span><span>0</span></div>
+		<div class="im-chart-area">
+			<div class="im-chart-cols im-chart-cols-hist" role="img" aria-label="Posts by reading time: most are between four and eight minutes">
+				<div class="im-chart-col"><i style="--v: .1"></i></div><div class="im-chart-col"><i style="--v: .35"></i></div><div class="im-chart-col"><i style="--v: .7"></i></div><div class="im-chart-col"><i style="--v: 1"></i></div><div class="im-chart-col"><i style="--v: .85"></i></div><div class="im-chart-col"><i style="--v: .55"></i></div><div class="im-chart-col"><i style="--v: .3"></i></div><div class="im-chart-col"><i style="--v: .18"></i></div><div class="im-chart-col"><i style="--v: .1"></i></div><div class="im-chart-col"><i style="--v: .05"></i></div><div class="im-chart-col"><i style="--v: .03"></i></div><div class="im-chart-col"><i style="--v: .02"></i></div>
+			</div>
+		</div>
+		<div class="im-chart-x" aria-hidden="true"><span>0</span><span>6</span><span>12</span><span>18</span><span>24 min</span></div>
+	</div>
+</figure>
+{{/example}}
+
+<h2>Bullet</h2>
+<p>A measure against a target on a banded track: the bar is where you are, the tick is where you meant to be, the three bands are poor, fair and good. One line per measure; for a row of goals in a dashboard.</p>
+{{#example style="max-width: 32rem"}}
+<div class="im-stack im-stack-sm">
+	<div class="im-chart-bullet" style="--v: .72; --im-target: .85" role="img" aria-label="Revenue: 3,200 of a 4,500 target"><span>Revenue</span><i></i><b>$3.2k</b></div>
+	<div class="im-chart-bullet" style="--v: .91; --im-target: .8" role="img" aria-label="Members: 1,204 of a 1,050 target"><span>Members</span><i></i><b>1,204</b></div>
+	<div class="im-chart-bullet" style="--v: .41; --im-target: .6; --c: var(--im-viz-2)" role="img" aria-label="Open rate: 41 of a 60 percent target"><span>Open rate</span><i></i><b>41%</b></div>
+</div>
+{{/example}}
+{{{{code "html"}}}}
+<div class="im-chart-bullet" style="--v: .72; --im-target: .85" role="img" aria-label="Revenue: 3,200 of a 4,500 target">
+	<span>Revenue</span><i></i><b>$3.2k</b>
+</div>
+{{{{/code}}}}

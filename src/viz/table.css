@@ -1,0 +1,149 @@
+/* A table of numbers — the chart that is always right.
+
+     <div class="im-table-scroll">
+     <table class="im-viz-table">
+       <thead><tr><th>Topic</th><th class="im-viz-num" aria-sort="descending"><button>Posts</button></th>…</tr></thead>
+       <tbody><tr><td>Travel</td><td class="im-viz-num">48</td><td class="im-viz-bar" style="--v: 1"><i></i></td>…</tr></tbody>
+     </table></div>
+
+   im-viz-num      a numeric cell: right-aligned, tabular figures, mono
+   im-viz-bar      a bar in the cell, --v of the column's top
+   im-viz-delta    a movement: data-trend up | down | flat
+   im-viz-spark    a sparkline in the cell (the im-spark svg inside)
+   aria-sort on a <th> draws the arrow; a <button> inside is the control.
+   A theme sorts the rows itself — the table only shows which way. */
+
+.im-viz-table {
+	width: 100%;
+	border-collapse: collapse;
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+	line-height: 1.4;
+}
+
+.im-viz-table th,
+.im-viz-table td {
+	padding: 0.625rem 0.75rem;
+	border-bottom: 1px solid var(--im-viz-line);
+	text-align: left;
+	vertical-align: middle;
+}
+
+.im-viz-table th {
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	font-weight: 500;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+.im-viz-table tbody tr { transition: background-color var(--im-duration-instant); }
+.im-viz-table tbody tr:hover { background-color: var(--im-hover-bg); }
+
+.im-viz-table td:first-child { color: var(--im-ink); font-weight: 500; }
+
+/* Compact rows, for a dashboard panel. */
+.im-viz-table-sm th,
+.im-viz-table-sm td { padding: 0.4375rem 0.625rem; }
+
+/* The first column stays put while a wide table scrolls. */
+.im-viz-table-pinned th:first-child,
+.im-viz-table-pinned td:first-child {
+	position: sticky;
+	left: 0;
+	background-color: var(--im-canvas);
+}
+
+/* ---- cells ---- */
+.im-viz-num {
+	font-family: var(--im-font-mono);
+	font-variant-numeric: tabular-nums;
+	text-align: right !important;
+}
+
+.im-viz-table td.im-viz-num { color: var(--im-ink); }
+
+/* A sortable column: a button for the words, an arrow for the state. */
+.im-viz-table th > button {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.25rem;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: inherit;
+	font: inherit;
+	letter-spacing: inherit;
+	text-transform: inherit;
+	cursor: pointer;
+}
+
+.im-viz-table th > button:hover { color: var(--im-ink); }
+.im-viz-table th > button:focus-visible { outline: var(--im-ring-width) solid var(--im-ring); outline-offset: 2px; border-radius: 2px; }
+
+.im-viz-table th[aria-sort] > button { color: var(--im-ink); }
+
+.im-viz-table th[aria-sort] > button::after {
+	content: "";
+	width: 0.625em;
+	height: 0.625em;
+	background-color: currentcolor;
+	-webkit-mask: var(--im-chevron-glyph) center / contain no-repeat;
+	mask: var(--im-chevron-glyph) center / contain no-repeat;
+}
+
+.im-viz-table th[aria-sort="ascending"] > button::after { rotate: 180deg; }
+
+/* A bar in a cell. */
+.im-viz-bar {
+	width: 8rem;
+	min-width: 5rem;
+}
+
+.im-viz-bar > i {
+	display: block;
+	height: 0.5rem;
+	border-radius: var(--im-radius-full);
+	background: linear-gradient(to right, var(--c, var(--im-chart-color, var(--im-viz-1))) calc(var(--v, 0) * 100%), var(--im-viz-track) 0);
+}
+
+/* A movement in a cell. */
+.im-viz-delta {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.25rem;
+	color: var(--im-success);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	font-weight: 600;
+	font-variant-numeric: tabular-nums;
+	white-space: nowrap;
+}
+
+.im-viz-delta[data-trend="down"] { color: var(--im-danger); }
+.im-viz-delta[data-trend="flat"] { color: var(--im-muted); }
+
+/* A sparkline in a cell. */
+.im-viz-spark > .im-spark {
+	--im-spark-width: 5rem;
+	--im-spark-height: 1.25rem;
+
+	display: inline-block;
+	vertical-align: middle;
+}
+
+/* A total row. */
+.im-viz-table tfoot td {
+	border-top: 1px solid var(--im-ink);
+	border-bottom: 0;
+	color: var(--im-ink);
+	font-weight: 600;
+}
+
+/* Two columns side by side — this period against the last. */
+.im-viz-table .im-viz-was {
+	color: var(--im-muted);
+	font-weight: 400;
+}

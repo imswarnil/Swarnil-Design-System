@@ -1,0 +1,25 @@
+---
+title: Skeleton
+layout: home
+shell: frame
+---
+{{!-- The skeleton resolving into the content, after two seconds. --}}
+<div class="im-studio im-studio-scene im-studio-scene-chapter" style="--im-studio-w: 1920; --im-studio-h: 1080">
+	<div class="im-studio-scene-head"><p class="im-studio-mark">{{> "components/logo" mark=true text="Swarnil"}}<span>imswarnil</span></p></div>
+	<div class="im-studio-scene-stage">
+		<div class="im-studio-resolve">
+			<div class="im-studio-titleblock">
+				<p class="im-studio-kicker">Chapter two</p>
+				<h1 class="im-studio-title">Where to <em>stop</em></h1>
+				<p class="im-studio-sub">Five towns, and the one you should skip.</p>
+				<p class="im-studio-chip im-studio-chip-canvas">8 min</p>
+			</div>
+			<div class="im-studio-skeleton"><i class="im-studio-bone-chip"></i><i class="im-studio-bone-title"></i><i class="im-studio-bone-line"></i><i class="im-studio-bone-short"></i><i class="im-studio-bone-chip"></i></div>
+		</div>
+		<div class="im-studio-resolve">
+			<figure class="im-studio-media im-studio-media-shadow" style="--im-studio-media-w: 100%"><img src="{{demo.shots.[1]}}" alt=""></figure>
+			<div class="im-studio-skeleton"><i class="im-studio-bone-media"></i></div>
+		</div>
+	</div>
+	<div class="im-studio-scene-foot"><span>Loading, then not</span></div>
+</div>

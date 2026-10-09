@@ -1,5 +1,41 @@
 # Changelog
 
+## 0.8.0 — The channel (2026-10-09)
+
+### The logo is the S and the dot
+- The square is the brand: the S and the dot centred on the tile **as one group**; the wordmark is the same pair with the name between. Seven sizes (`im-logo-xs…3xl`), a `brand` param on the top bar so the docs' mark is the owner's letter, and the favicon redrawn from the S of Geist SemiBold (fontTools) with the dot beside it.
+- The logo moves: `im-logo-type-in` (letter by letter, then the dot), `-drop` (the dot falls and lands), `-reveal` (up through a slot, the dot blinks on), `-morph` (wordmark ⇄ square), `-states` (the dot cycles record · play · stop). Two surfaces: `im-logo-cutout` (the letters are a window onto `--im-logo-cut`, with opacity and blend knobs) and `im-logo-knockout` (the tile is solid and the letters are holes), on an `im-logo-stage`.
+- The docs' accent is the brand red `#f22f46`, the value the semantic token already defaulted to.
+
+### One hand
+- **Caveat** (OFL, `@fontsource-variable/caveat`) is the fourth face: `--im-font-hand`, `im-hand`, `-accent`, `-tilt`, `-tilt-r`; in a frame, `im-studio-note`. A note in the margin, never a paragraph.
+
+### Patterns and transitions
+- `im-bg-golden` and `im-bg-spiral`: the golden rectangle and its spiral as SVG tiles, the pitch being the tile's height.
+- Two page transitions that are the system's own: `dot` (the recording light swells from the click point and the next page is inside it) and `columns` (the twelve columns wipe the new page in). The same two are the cuts in a film.
+
+### Content creation, rebuilt — `src/studio/`
+- `components/studio.css` became a folder of thirteen: frame, youtube, background, media, motion, title, lower, hud, scene, grade, transition, sting, live. Every class is `im-studio-*`; the docs are `/content-creation/**` and the old `/live/` and `/content-creation/thumbnails/` sections are gone.
+- **Channel art** drawn like the owner's: the page grid edge to edge, a cover across the 423px band every device keeps, the intro (a Devanagari greeting, the name with the dot, facts, a line in the hand, links), a dashed trail from India to Budapest with a plane, the illustration rising out of the cover, six floating tiles with hand-written words, a follow row and a schedule for the desk. Light and dark. **Profile art**: the illustration, the mark, or a photograph. **End screen** with YouTube's slot sizes.
+- **Ten thumbnail styles**, each the film with one thing changed: film, vlog (REC, viewfinder corners, the day in the hand), travel, Q&A (the question in the hand, a giant pixel mark), series, live, commentary (the subject in a tilted window, a reaction with an arrow), skit (the accent is the ground), tutorial, short. Shown four a row in a channel grid, with the owner's portrait.
+- **Elements**: ten backgrounds that move; media frames (edges, shapes, REC, corners, play, live, before/after); the **layer system** (`im-studio-layer`, `data-in` × 20, `data-out` × 16, two times, a stagger); twelve loops; ten title styles and the ways a title arrives (`line-up`, `letters`, `words`, `type`, `track`, `pixel`, scramble, a rolling word); six lower thirds; twelve HUD callouts; nine scenes plus the 9:16 story cut; the skeleton and the blueprint; twelve colour grades with grain, vignette, letterbox; sixteen cuts with `im-studio-shot` + `data-cut`.
+- **The logo sting**: three seconds in four beats, plus a 1.2-second bumper and a dark cut.
+- **Live stream**, rebuilt from the elements: the stream (head row, screen with the camera ringed in its corner and the goal in the other, chat in a rail, the ticker), starting soon, be right back, ending; the sources (tally, clock, ticker, camera frame, visualiser, goal, chat with avatars and member/host marks, an alert that slides from the right, what-is-on, the card).
+- `npm run frames` exports every frame as a PNG at its real size through the machine's own Chrome (`puppeteer-core`, Apache-2.0); `--layers` adds a manifest of every text run. `npm run pixelmator` rebuilds each frame in Pixelmator Pro as the ground plus live text layers in the real fonts. `assets/brand/portrait.jpg` and `cover.png` are the owner's own pictures (`demo.me`, `demo.art`).
+
+### Data visualisation — `src/viz/`, `/data/*`
+- A new section: the chart frame (`im-chart` with a head, a plot of hairline gridlines, mono tick labels, a note), columns grouped/stacked/histogram, a ranking, a bullet; lines, areas, steps and a scatter drawn by `im-charts.js` with HTML points a keyboard can reach and a readout on each; pie/donut up to five shares, a gauge, a waffle; heatmap, calendar, matrix, treemap, funnel; legend toggles that dim a series, filter chips, a period switcher, a range; a numeric table with sort arrows, bars, deltas and sparklines in cells; `im-dash` panels on the twelve columns with a pinned filter rail.
+- One palette for every series, `--im-viz-1…6`, derived from the accent and the collection hues; a sequential scale is the one colour mixed into the track by `--v`.
+- `components/stats` is retired: `im-stat*`, `im-spark`, `im-bars`, `im-hbars`, `im-legend` moved to `src/viz/` unchanged; `im-donut` is replaced by `im-chart-pie`. `/components/stats/` → `/data/numbers/`.
+- `im-charts.js` grows from one chart to a line/area/step/scatter engine, still dependency-free, about 6 KB; a line's draw-in is a clip wipe, because a non-scaling stroke measures dashes in screen pixels.
+
+### Pages
+- `components/resume` — the résumé is two real columns on the grid: who you are pinned on the left (photo, wordmark, role, status, contact, skills bars, tools, certifications, languages) and the career on the right (`im-cv-glance`, six numbered sections; a job with dates, title, place, three bullets and its stack). It prints as the same two columns on A4. The `im-cv-*` rules left `pages.css`.
+- `components/journey` — the about page's story is a stack: each chapter sticks under the bar one step lower than the last; `im-journey-index` in the rail marks the chapter in view with the `--im-current-*` state. Replaces `im-story`. The about page takes the owner's portrait and a fixed rail.
+- `data-im-count` on the glance figures now carries the value; a bare attribute counted up to zero.
+- `im-view.js` ignores a bare `data-im-period` (the dashboard's own switcher) instead of querying an empty selector.
+
+
 
 ### Fit to the grid (2026-09-25)
 - `src/layout/fit.css`: a data-span cell fills its columns (buttons, fields, pictures); `data-ratio` shapes pictures; `im-cols-modules` + `data-rows` gives square modules (rows one column tall); `im-fit`, `im-w-1…12`; `--im-span-1/10/11`. Docs: `/layout/fit/`.

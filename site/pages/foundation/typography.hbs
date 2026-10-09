@@ -1,6 +1,6 @@
 ---
 title: Typography
-description: Three families, all Geist, all under the SIL Open Font License. Sans for reading, Mono for code, Pixel for a word that should feel like a display.
+description: Three families of Geist, and one hand. Sans for reading, Mono for code, Pixel for a word that should feel like a display, Caveat for a note in the margin. All under the SIL Open Font License.
 eyebrow: Foundation
 source: src/foundation/tokens/primitives.css · base/fonts.css
 ---
@@ -9,6 +9,7 @@ source: src/foundation/tokens/primitives.css · base/fonts.css
 <div class="specimen"><p class="font-sans text-h2 text-ink font-semibold tracking-tight">Geist — the quick brown fox</p><p class="specimen-meta">font-sans · variable 100–900 · headings and body</p></div>
 <div class="specimen"><p class="font-mono text-h3 text-ink">Geist Mono — const fox = "quick";</p><p class="specimen-meta">font-mono · variable 100–900 · code, tokens, tabular data</p></div>
 <div class="specimen"><p class="im-pixel text-h1 text-ink">Geist Pixel — 404 · LEVEL UP</p><p class="specimen-meta">font-pixel / .im-pixel · one weight · display only, never body text</p></div>
+<div class="specimen"><p class="im-hand text-h1 text-ink">Caveat — say hi! documenting my life</p><p class="specimen-meta">font-hand / .im-hand · variable 400–700 · a note, never a paragraph</p></div>
 {{/example}}
 <p><code>font-heading</code> and <code>font-body</code> read Ghost's font settings first (<code>--gh-font-heading</code>, <code>--gh-font-body</code>) and fall back to Geist, so a site owner's choice in Settings → Design still applies.</p>
 
@@ -23,6 +24,18 @@ source: src/foundation/tokens/primitives.css · base/fonts.css
 	<span style="font-family: 'Geist Pixel Line'">Line</span>
 </div>
 {{/example}}
+
+<h3>The hand</h3>
+<p>One handwritten face, Caveat, for the one thing on a page or a frame that is not typeset: a word in the margin, a sticker, “tune in!” on the channel art, “day 12” on a thumbnail. It is what makes a composed thing read as a person’s. The rules: one to three words, never a sentence; the accent or the body ink; a touch larger than the type beside it, because a hand is lighter than a typeface at the same size; and tilted a few degrees (<code>im-hand-tilt</code>, <code>-tilt-r</code>), because a note is never quite straight.</p>
+{{#example center=true}}
+<p class="text-h2 text-ink font-semibold tracking-tight">New this week <span class="im-hand im-hand-accent im-hand-tilt">finally!</span></p>
+<p class="text-lg text-body">Four days, five towns <span class="im-hand im-hand-tilt-r">and one road</span></p>
+<p class="im-hand text-h1 text-ink">say hi!</p>
+{{/example}}
+{{{{code "html"}}}}
+<span class="im-hand im-hand-accent im-hand-tilt">finally!</span>
+{{{{/code}}}}
+<p>In a frame it is <a href="/content-creation/"><code>im-studio-note</code></a>, placed on the canvas. On a page, keep it to one per view: two notes in the hand is a scrapbook.</p>
 
 <h2>Scale</h2>
 {{#example code=false}}

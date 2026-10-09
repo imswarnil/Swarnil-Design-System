@@ -1,0 +1,23 @@
+---
+title: Scene · intro
+layout: home
+shell: frame
+---
+{{!-- The film's title card. Every line is a layer with its own time. --}}
+<div class="im-studio im-studio-scene im-studio-scene-intro" style="--im-studio-w: 1920; --im-studio-h: 1080">
+	<span class="im-studio-ground im-studio-ground-grid" aria-hidden="true"></span>
+	<div class="im-studio-scene-head">
+		<p class="im-studio-mark im-studio-layer" data-in="fade">{{> "components/logo" mark=true text="Swarnil"}}<span>imswarnil</span></p>
+		<span class="im-studio-spacer"></span>
+		<span class="im-studio-chip im-studio-chip-canvas im-studio-layer" data-in="fade">Journal · EP 12</span>
+	</div>
+	<div class="im-studio-scene-stage im-studio-stagger">
+		<p class="im-studio-kicker im-studio-layer" data-in="rise">A film about a road</p>
+		<h1 class="im-studio-title im-studio-layer" data-in="line-up">The road <em>nobody</em> wants to arrive on</h1>
+		<p class="im-studio-sub im-studio-layer" data-in="rise">Forty kilometres, two hours, and nobody in a hurry.</p>
+		<span class="im-studio-note im-studio-note-lg im-studio-layer" data-in="pop" style="--im-studio-tilt: -6deg; --im-studio-in-at: 1.2s">part one</span>
+	</div>
+	<div class="im-studio-scene-foot">
+		<span>Budapest → Sorrento</span><span class="im-studio-spacer"></span><span>2026</span>
+	</div>
+</div>

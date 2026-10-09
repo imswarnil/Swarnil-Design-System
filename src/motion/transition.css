@@ -4,7 +4,14 @@
 
    Choose ONE on <html>:
        <html data-im-transition="rise">
-   fade · rise · slide · zoom · wipe · iris · sheet · blur
+   fade · rise · slide · zoom · wipe · iris · sheet · blur · dot · columns
+
+   Two are the system's own and nobody else's: DOT — the recording light
+   swells from the point that was clicked until it is the whole screen, and
+   the next page is inside it; and COLUMNS — the twelve columns the page is
+   drawn on wipe the new page in one after another. The same two are the
+   signature cuts in a video (src/studio/transition.css), so a film and the
+   site change scene the same way.
 
    In a Ghost theme, make it a custom setting:
        <html data-im-transition="{{@custom.page_transition}}">
@@ -137,3 +144,67 @@
 
 @keyframes im-vt-blur-out { to { opacity: 0; filter: blur(16px); } }
 @keyframes im-vt-blur-in { from { opacity: 0; filter: blur(16px); } }
+
+/* dot — the recording light fills the screen, and the next page is in it.
+   The accent swells from where the visitor clicked (the iris point; centre
+   without the script), covers everything, and then the new page opens out of
+   its middle. The system's own cut: the dot means "on air", and here it is
+   what carries you to the next page. */
+[data-im-transition="dot"]::view-transition-old(root) { animation: none; }
+
+[data-im-transition="dot"]::view-transition-new(root) {
+	animation-name: im-vt-dot-in;
+	animation-duration: calc(var(--im-vt-duration) * 1.1);
+	animation-delay: calc(var(--im-vt-duration) * 0.55);
+	animation-timing-function: var(--im-ease-glide);
+}
+
+/* The accent disc is the OLD snapshot's clip: the old page is covered by it
+   rather than painted over, so there is nothing to compose. */
+[data-im-transition="dot"]::view-transition-old(root) {
+	animation-name: im-vt-dot-cover;
+	animation-duration: calc(var(--im-vt-duration) * 0.6);
+	animation-timing-function: var(--im-ease-in);
+	animation-fill-mode: forwards;
+}
+
+@keyframes im-vt-dot-cover {
+	to { clip-path: circle(0 at var(--im-vt-x, 50%) var(--im-vt-y, 50%)); }
+}
+
+@keyframes im-vt-dot-in {
+	from { clip-path: circle(0 at var(--im-vt-x, 50%) var(--im-vt-y, 50%)); }
+	to { clip-path: circle(150vmax at var(--im-vt-x, 50%) var(--im-vt-y, 50%)); }
+}
+
+/* The disc itself: the accent, under the new snapshot, so the new page opens
+   OUT of a field of the accent and not out of the old page. */
+[data-im-transition="dot"]::view-transition-group(root) {
+	background-color: var(--im-accent);
+}
+
+/* columns — the twelve columns wipe the next page in, one after another,
+   left to right. The new snapshot is masked by twelve slats that open in
+   turn; the old page is behind them until they do. */
+[data-im-transition="columns"]::view-transition-old(root) { animation: none; }
+
+[data-im-transition="columns"]::view-transition-new(root) {
+	animation-name: im-vt-columns;
+	animation-duration: calc(var(--im-vt-duration) * 1.5);
+	animation-timing-function: var(--im-ease-in-out);
+	-webkit-mask-image: linear-gradient(to right, #000 var(--im-vt-slat, 0%), transparent var(--im-vt-slat, 0%));
+	mask-image: linear-gradient(to right, #000 var(--im-vt-slat, 0%), transparent var(--im-vt-slat, 0%));
+	-webkit-mask-size: calc(100% / 12) 100%;
+	mask-size: calc(100% / 12) 100%;
+}
+
+@property --im-vt-slat {
+	syntax: "<percentage>";
+	inherits: false;
+	initial-value: 0%;
+}
+
+@keyframes im-vt-columns {
+	from { --im-vt-slat: 0%; }
+	to { --im-vt-slat: 100%; }
+}

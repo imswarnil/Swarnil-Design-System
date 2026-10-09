@@ -1,0 +1,433 @@
+/* Live — a stream's sources, and the scenes they assemble into.
+
+   A scene is not a design, it is an ASSEMBLY. These are the parts, each
+   able to stand alone over a screen share as a browser source; the scenes
+   under /content-creation/live/ are four arrangements of them.
+
+   Sources:  im-studio-tally (the lamp) · -ticker · -camframe · -viz · -clock
+             · -goal · -card · -chat · -alert · -now (what is on) · -social
+   Scenes:   im-studio-stream: the live layout — a head row, the stage (the
+             screen with the camera in a corner), the foot (the ticker)
+             im-studio-wait: starting soon / be right back / ending — one
+             card in the middle on a moving ground
+
+   ONE LOOK, three knobs, shared by every source:
+     --im-studio-accent   the colour that says "on air"       (default: --im-accent)
+     --im-studio-scale    type, padding and radius together   (default: 1)
+     --im-studio-tone     im-studio-glass | -solid — the ground under the words
+
+   Proportion: the grid does not reach a 1920 × 1080 canvas — there are no
+   columns on a camera — so what divides a source inside itself is φ. */
+
+/* The ground a source sits on. Glass reads on any screen share; solid is for
+   a source that must stay legible over a moving picture. */
+.im-studio-glass {
+	background-color: var(--im-glass);
+	color: var(--im-on-media);
+	backdrop-filter: blur(10px) saturate(1.2);
+}
+
+.im-studio-solid {
+	background-color: var(--im-canvas);
+	color: var(--im-ink);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+}
+
+/* ---- the tally light: a lamp and a word, one φ-step apart. The lamp
+   breathes while it is lit and is a flat ring when it is not.
+     <p class="im-studio-tally im-studio-glass" data-state="live"><i></i>Live</p>
+   data-state: live (the accent) · rec (danger) · off (muted, no breath). */
+.im-studio-tally {
+	position: absolute;
+	top: calc(1.4em * var(--im-studio-scale));
+	left: calc(1.4em * var(--im-studio-scale));
+	display: inline-flex;
+	align-items: center;
+	gap: var(--im-phi-4);
+	margin: 0;
+	padding: var(--im-studio-pad) calc(var(--im-studio-pad) * var(--im-phi));
+	border-radius: var(--im-radius-full);
+	font-family: var(--im-font-mono);
+	font-size: calc(0.6em * var(--im-studio-scale));
+	font-weight: 500;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	line-height: 1;
+}
+
+.im-studio-tally > i {
+	width: 0.75em;
+	height: 0.75em;
+	border-radius: var(--im-radius-full);
+	background-color: var(--im-studio-lamp, var(--im-muted));
+	box-shadow: 0 0 0 0.25em color-mix(in oklab, var(--im-studio-lamp, var(--im-muted)) 30%, transparent);
+	animation: im-studio-breathe 2.4s var(--im-ease-in-out) infinite;
+}
+
+.im-studio-tally[data-state="live"] { --im-studio-lamp: var(--im-studio-accent); }
+.im-studio-tally[data-state="rec"] { --im-studio-lamp: var(--im-danger); }
+.im-studio-tally[data-state="off"] { --im-studio-lamp: var(--im-faint); color: var(--im-muted); }
+.im-studio-tally[data-state="off"] > i { animation: none; box-shadow: none; }
+.im-studio-tally-static { position: static; }
+
+@keyframes im-studio-breathe {
+	0%, 100% { box-shadow: 0 0 0 0.2em color-mix(in oklab, var(--im-studio-lamp) 32%, transparent); }
+	50% { box-shadow: 0 0 0 0.6em color-mix(in oklab, var(--im-studio-lamp) 0%, transparent); }
+}
+
+/* ---- the ticker: a tag and a line of items sliding across the foot. The
+   tag is the MINOR part of the bar (the items take φ of it). The items are
+   written twice: the track travels -50% of its own width and starts again.
+     <div class="im-studio-ticker im-studio-glass"><b>Now</b><div class="im-studio-ticker-track"><span>…</span>…</div></div> */
+.im-studio-ticker {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: flex;
+	align-items: stretch;
+	overflow: hidden;
+	font-size: calc(0.58em * var(--im-studio-scale));
+}
+
+.im-studio-ticker > b {
+	flex: none;
+	display: flex;
+	align-items: center;
+	gap: 0.6em;
+	padding: calc(var(--im-studio-pad) * 1.4) calc(var(--im-studio-pad) * var(--im-phi));
+	background-color: var(--im-studio-accent);
+	color: var(--im-on-accent);
+	font-family: var(--im-font-mono);
+	font-weight: 600;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+/* The track is AS WIDE AS ITS CONTENT — flex: none and max-content — because
+   it travels -50% of its own box, and that has to land on exactly one copy
+   of the items. N items have N−1 gaps: the padding on the end is the
+   missing gap, INSIDE the box; the lead-in on the other end is a margin. */
+.im-studio-ticker-track {
+	flex: none;
+	display: flex;
+	align-items: center;
+	gap: var(--im-studio-ticker-gap, calc(var(--im-studio-pad) * 3));
+	width: max-content;
+	margin-left: var(--im-studio-ticker-gap, calc(var(--im-studio-pad) * 3));
+	padding-right: var(--im-studio-ticker-gap, calc(var(--im-studio-pad) * 3));
+	font-family: var(--im-font-mono);
+	white-space: nowrap;
+	animation: im-studio-ticker var(--im-studio-ticker-speed, 26s) linear infinite;
+}
+
+.im-studio-ticker-track > span { display: inline-flex; align-items: center; gap: 0.6em; }
+.im-studio-ticker-track > span::before { content: ""; width: 0.36em; height: 0.36em; border-radius: var(--im-radius-full); background-color: var(--im-studio-accent); }
+
+@keyframes im-studio-ticker { from { translate: 0 0; } to { translate: -50% 0; } }
+
+/* ---- the camera frame: an outline with a chip on its corner, a golden
+   rectangle; holds a picture or a clip, or frames one behind it. */
+.im-studio-camframe {
+	position: absolute;
+	inset: auto calc(1.4em * var(--im-studio-scale)) calc(1.4em * var(--im-studio-scale)) auto;
+	width: calc(9em * var(--im-studio-scale));
+	aspect-ratio: var(--im-ratio-golden);
+	border-radius: calc(var(--im-studio-round) * 2);
+	box-shadow: inset 0 0 0 calc(0.09em * var(--im-studio-scale)) var(--im-studio-accent);
+}
+
+.im-studio-camframe > .im-studio-chip { position: absolute; left: calc(0.5em * var(--im-studio-scale)); bottom: calc(0.5em * var(--im-studio-scale)); font-size: calc(0.48em * var(--im-studio-scale)); }
+.im-studio-camframe > img, .im-studio-camframe > video { width: 100%; height: 100%; border-radius: inherit; object-fit: cover; }
+.im-studio-camframe-ring { box-shadow: 0 0 0 calc(0.12em * var(--im-studio-scale)) var(--im-canvas), 0 0 0 calc(0.22em * var(--im-studio-scale)) var(--im-studio-accent), var(--im-shadow-float); }
+
+/* ---- the visualiser: bars on a demo signal, seven periods, never repeats. */
+.im-studio-viz {
+	position: absolute;
+	left: calc(1.4em * var(--im-studio-scale));
+	bottom: calc(1.4em * var(--im-studio-scale));
+	display: flex;
+	align-items: flex-end;
+	gap: calc(0.16em * var(--im-studio-scale));
+	height: calc(2.2em * var(--im-studio-scale));
+}
+
+.im-studio-viz > i {
+	width: calc(0.22em * var(--im-studio-scale));
+	height: 100%;
+	border-radius: var(--im-radius-full);
+	background-color: var(--im-studio-accent);
+	transform-origin: bottom;
+	animation: im-studio-viz 0.9s var(--im-ease-in-out) infinite alternate;
+}
+
+.im-studio-viz > i:nth-child(7n + 1) { animation-duration: 0.62s; scale: 1 0.35; }
+.im-studio-viz > i:nth-child(7n + 2) { animation-duration: 0.91s; scale: 1 0.7; }
+.im-studio-viz > i:nth-child(7n + 3) { animation-duration: 0.74s; scale: 1 0.5; }
+.im-studio-viz > i:nth-child(7n + 4) { animation-duration: 1.13s; scale: 1 0.9; }
+.im-studio-viz > i:nth-child(7n + 5) { animation-duration: 0.83s; scale: 1 0.45; }
+.im-studio-viz > i:nth-child(7n + 6) { animation-duration: 1.01s; scale: 1 0.65; }
+.im-studio-viz > i:nth-child(7n + 7) { animation-duration: 0.69s; scale: 1 0.3; }
+
+@keyframes im-studio-viz { from { scale: 1 0.18; } to { scale: 1 1; } }
+
+.im-studio-viz-mirror { align-items: center; }
+.im-studio-viz-mirror > i { transform-origin: center; }
+
+/* ---- the clock: the time in the mono face; [data-im-clock] keeps it honest. */
+.im-studio-clock {
+	position: absolute;
+	top: calc(1.4em * var(--im-studio-scale));
+	right: calc(1.4em * var(--im-studio-scale));
+	margin: 0;
+	padding: var(--im-studio-pad) calc(var(--im-studio-pad) * var(--im-phi));
+	border-radius: var(--im-radius-full);
+	font-family: var(--im-font-mono);
+	font-size: calc(0.72em * var(--im-studio-scale));
+	font-variant-numeric: tabular-nums;
+	letter-spacing: 0.04em;
+	line-height: 1;
+}
+
+.im-studio-clock-static { position: static; }
+
+/* ---- the goal bar: a label, the figure, a thin im-progress track. */
+.im-studio-goal {
+	position: absolute;
+	inset: auto calc(1.5em * var(--im-studio-scale)) calc(2em * var(--im-studio-scale)) auto;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	align-items: baseline;
+	gap: calc(0.42em * var(--im-studio-scale)) calc(0.7em * var(--im-studio-scale));
+	width: calc(8.6em * var(--im-studio-scale));
+	margin: 0;
+	padding: calc(0.45em * var(--im-studio-scale)) calc(0.6em * var(--im-studio-scale));
+	border-radius: var(--im-studio-round);
+	font-family: var(--im-font-mono);
+	line-height: 1;
+}
+
+.im-studio-goal > b { font-size: calc(0.55em * var(--im-studio-scale)); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; }
+.im-studio-goal > span { color: color-mix(in oklab, currentcolor 65%, transparent); font-size: calc(0.55em * var(--im-studio-scale)); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.im-studio-goal > .im-progress { --im-progress-height: calc(0.14em * var(--im-studio-scale)); --im-progress-color: var(--im-studio-accent); grid-column: 1 / -1; background-color: color-mix(in oklab, currentcolor 20%, transparent); }
+
+/* ---- the announcement card: a golden rectangle in the middle. */
+.im-studio-card {
+	position: absolute;
+	inset: 0;
+	margin: auto;
+	display: grid;
+	grid-template-rows: minmax(0, 1fr) auto;
+	gap: calc(var(--im-studio-pad) * 2);
+	width: calc(18em * var(--im-studio-scale));
+	aspect-ratio: var(--im-ratio-golden);
+	height: auto;
+	padding: calc(var(--im-studio-pad) * 2.6);
+	border-radius: calc(var(--im-studio-round) * 2.5);
+}
+
+.im-studio-card > .im-studio-copy { align-content: center; gap: 0.55em; padding: 0; }
+.im-studio-card .im-studio-title { font-size: 1.7em; }
+.im-studio-card .im-studio-sub { max-width: 18em; font-size: 0.62em; }
+.im-studio-card .im-studio-countdown { font-size: 2.6em; }
+.im-studio-card .im-studio-countdown-mono { font-size: 2.2em; }
+
+.im-studio-card-eyebrow {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--im-phi-4);
+	margin: 0;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: 0.5em;
+	font-weight: 500;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+}
+
+.im-studio-card-eyebrow > i { width: 0.6em; height: 0.6em; border-radius: var(--im-radius-full); background-color: var(--im-studio-accent); --im-studio-lamp: var(--im-studio-accent); animation: im-studio-breathe 2.4s var(--im-ease-in-out) infinite; }
+.im-studio-card-chips { display: flex; flex-wrap: wrap; gap: calc(var(--im-studio-pad) * 0.8); margin: 0; font-size: 0.55em; }
+.im-studio-card-wide { width: calc(26em * var(--im-studio-scale)); aspect-ratio: auto; }
+
+/* ---- chat: a column of messages, newest at the foot, fading upward. Each
+   has the name in the accent and a small avatar ring; a member's message
+   carries a mark. */
+.im-studio-chat {
+	position: absolute;
+	right: calc(1.5em * var(--im-studio-scale));
+	bottom: calc(2em * var(--im-studio-scale));
+	display: grid;
+	justify-items: start;
+	gap: calc(0.4em * var(--im-studio-scale));
+	width: calc(14em * var(--im-studio-scale));
+	-webkit-mask-image: linear-gradient(to bottom, transparent, #000 25%);
+	mask-image: linear-gradient(to bottom, #000 0, #000 0), linear-gradient(to bottom, transparent, #000 25%);
+	-webkit-mask-composite: source-in;
+	mask-composite: intersect;
+}
+
+.im-studio-chat > p {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr);
+	gap: 0.15em 0.55em;
+	align-items: start;
+	padding: 0.5em 0.75em 0.5em 0.5em;
+	border-radius: var(--im-radius-lg);
+	background-color: var(--im-glass);
+	color: var(--im-on-media);
+	font-family: var(--im-font-body);
+	font-size: calc(0.6em * var(--im-studio-scale));
+	line-height: 1.35;
+	animation: im-studio-in-rise var(--im-duration-base) var(--im-ease-out) both;
+	animation-delay: calc(var(--im-i, 0) * 1.4s);
+}
+
+.im-studio-chat > p > i {
+	grid-row: span 2;
+	display: grid;
+	place-items: center;
+	width: 1.9em;
+	height: 1.9em;
+	border-radius: 50%;
+	background-color: var(--im-surface-3);
+	color: var(--im-ink);
+	font-size: 0.85em;
+	font-style: normal;
+	font-weight: 600;
+}
+
+.im-studio-chat > p > b { color: var(--im-studio-accent); font-weight: 600; }
+.im-studio-chat > p > span { grid-column: 2; }
+.im-studio-chat > p[data-member] > b::after { content: " ★"; color: var(--im-warning); }
+.im-studio-chat > p[data-host] > i { background-color: var(--im-studio-accent); color: var(--im-on-accent); }
+.im-studio-chat-static { position: static; mask-image: none; -webkit-mask-image: none; }
+.im-studio-chat-solid > p { background-color: var(--im-canvas); color: var(--im-ink); box-shadow: inset 0 0 0 1px var(--im-line); }
+
+/* ---- the alert: a new member, a tip. Slides in from the right, stays,
+   leaves. An avatar, the name, what happened, an accent edge. */
+.im-studio-alert {
+	position: absolute;
+	right: calc(1.5em * var(--im-studio-scale));
+	top: calc(1.5em * var(--im-studio-scale));
+	display: inline-grid;
+	grid-template-columns: auto minmax(0, 1fr);
+	gap: 0.1em 0.7em;
+	align-items: center;
+	padding: 0.6em 1.1em 0.6em 0.6em;
+	border-radius: var(--im-studio-round);
+	border-left: 0.25em solid var(--im-studio-accent);
+	background-color: var(--im-canvas);
+	color: var(--im-ink);
+	box-shadow: inset 0 0 0 1px var(--im-line), var(--im-shadow-float);
+	font-size: calc(0.75em * var(--im-studio-scale));
+	animation: im-studio-alert 6s var(--im-ease-glide) both;
+}
+
+.im-studio-alert > .im-avatar { grid-row: span 2; --im-avatar-size: 2em; }
+.im-studio-alert > b { font-weight: 600; }
+.im-studio-alert > span { color: var(--im-muted); font-size: 0.8em; }
+.im-studio-alert > span > em { color: var(--im-studio-accent); font-style: normal; font-weight: 600; }
+
+@keyframes im-studio-alert {
+	0%, 100% { translate: 120% 0; opacity: 0; }
+	12%, 88% { translate: 0 0; opacity: 1; }
+}
+
+/* ---- now: what is on — a tiny card with the mark, the title, the sub. */
+.im-studio-now {
+	position: absolute;
+	left: calc(1.4em * var(--im-studio-scale));
+	top: calc(1.4em * var(--im-studio-scale));
+	display: inline-grid;
+	grid-template-columns: auto minmax(0, 1fr);
+	gap: 0.1em 0.6em;
+	align-items: center;
+	padding: 0.45em 0.9em 0.45em 0.45em;
+	border-radius: var(--im-radius-full);
+	font-size: calc(0.7em * var(--im-studio-scale));
+	line-height: 1;
+}
+
+.im-studio-now > .im-logo { grid-row: span 2; --im-logo-size: 1.6em; }
+.im-studio-now > b { font-weight: 600; letter-spacing: var(--im-tracking-tight); }
+.im-studio-now > span { opacity: 0.7; font-family: var(--im-font-mono); font-size: 0.7em; letter-spacing: 0.06em; text-transform: uppercase; }
+.im-studio-now-static { position: static; }
+
+/* ---- social: where else to find you, a row of handles. */
+.im-studio-handles {
+	display: inline-flex;
+	gap: 1.1em;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: calc(0.5em * var(--im-studio-scale));
+	letter-spacing: 0.04em;
+}
+
+.im-studio-handles > span { display: inline-flex; align-items: center; gap: 0.5em; }
+.im-studio-handles .im-icon { font-size: 1.2em; }
+
+/* ═══ Scenes ═══════════════════════════════════════════════════════════════ */
+
+/* The live layout: a head row, the stage, the foot. The screen fills the
+   stage; the camera sits in its corner; chat has the right rail if there
+   is one. */
+.im-studio-stream {
+	grid-template-rows: auto minmax(0, 1fr) auto;
+	grid-template-areas: "head" "stage" "foot";
+	gap: 0.8em;
+	padding: 1em 1.5em 0;
+}
+
+.im-studio-stream-head {
+	grid-area: head;
+	display: flex;
+	align-items: center;
+	gap: 0.6em;
+}
+
+.im-studio-stream-head > .im-studio-spacer { flex: 1; }
+
+.im-studio-stream-stage {
+	grid-area: stage;
+	position: relative;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 0.8em;
+	min-height: 0;
+}
+
+.im-studio-stream-rail > .im-studio-stream-stage { grid-template-columns: minmax(0, 1fr) 11em; }
+
+.im-studio-screen {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	border-radius: var(--im-radius-xl);
+	background-color: var(--im-surface);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+}
+
+.im-studio-screen > img, .im-studio-screen > video { width: 100%; height: 100%; object-fit: cover; }
+/* In the stream the camera has the bottom-right corner; the goal takes the other one. */
+.im-studio-screen > .im-studio-goal { inset: auto auto calc(1.4em * var(--im-studio-scale)) calc(1.4em * var(--im-studio-scale)); }
+
+.im-studio-stream-foot {
+	grid-area: foot;
+	margin: 0 -1.5em;
+	position: relative;
+	height: 1.9em;
+}
+
+.im-studio-stream-foot > .im-studio-ticker { inset: 0 0 auto; }
+
+/* Waiting scenes: starting soon, be right back, ending. The card, centred,
+   over a ground that moves; the head row still signs it. */
+.im-studio-wait > .im-studio-stream-head { position: absolute; left: 1.5em; right: 1.5em; top: 1em; }
+.im-studio-wait > .im-studio-card { position: absolute; }
+.im-studio-wait > .im-studio-handles { position: absolute; left: 50%; bottom: 1.4em; translate: -50% 0; }
+
+@media (prefers-reduced-motion: reduce) {
+	.im-studio-tally > i, .im-studio-card-eyebrow > i, .im-studio-viz > i, .im-studio-ticker-track, .im-studio-chat > p, .im-studio-alert { animation: none; }
+}

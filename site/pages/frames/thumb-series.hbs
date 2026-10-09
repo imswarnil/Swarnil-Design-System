@@ -3,14 +3,14 @@ title: Thumbnail · series
 layout: home
 shell: frame
 ---
-{{!-- A frame for the channel: 1280 × 720. Open at that size to screenshot,
-	or load as a browser source. Built from tokens — see src/components/studio.css. --}}
+{{!-- Series: the episode numeral, huge and faint, behind the person. --}}
 <div class="im-studio im-studio-thumb im-studio-thumb-series" style="--im-studio-w: 1280; --im-studio-h: 720">
 	<span class="im-studio-num" aria-hidden="true">04</span>
 	<div class="im-studio-copy">
 		<p class="im-studio-kicker">The Amalfi Road · S2</p>
 		<h1 class="im-studio-title">What it <em>costs</em></h1>
 	</div>
-	<div class="im-studio-person im-studio-person-block"><img src="{{demo.portrait}}" alt=""></div>
-	<p class="im-studio-mark">{{> "components/logo" mark=true}}<span>imswarnil</span></p>
+	<div class="im-studio-person im-studio-person-ring" style="--im-studio-focus: 62% top"><img src="{{demo.me}}" alt=""></div>
+	<p class="im-studio-corner"><span class="im-studio-chip im-studio-chip-ink im-studio-chip-pixel">S2 E4</span></p>
+	<p class="im-studio-mark">{{> "components/logo" mark=true text="Swarnil"}}<span>imswarnil</span></p>
 </div>

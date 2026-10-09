@@ -1,13 +1,30 @@
 ---
-title: YouTube
-description: The four pictures a channel needs — art, a profile, a cover, and the grid they are seen in — in the system’s look.
+title: The channel
+description: The four pictures a channel needs — art, a profile, a cover, the end screen — and the grid they are seen in, in the system’s look. Plus the Pixelmator templates to edit any of them by hand.
 eyebrow: Content creation · YouTube
-source: src/components/studio.css
+source: src/studio/youtube.css
 ---
 <p>YouTube shows a channel through four pictures. Each has a size, a safe area and a job, and each is a frame here.</p>
 <ul>
-	<li><a href="/content-creation/youtube/channel-art/">Channel art</a> — 2560 × 1440, of which every device shows only the middle 1546 × 423.</li>
-	<li><a href="/content-creation/youtube/profile-art/">Profile art</a> — 800 × 800, shown as a circle at 40 pixels.</li>
-	<li><a href="/content-creation/youtube/thumbnail/">The thumbnail as a cover</a> — 1280 × 720, and the one picture that decides whether a film is watched.</li>
-	<li><a href="/content-creation/youtube/grid/">The grid</a> — how a set of them reads side by side, which is how they are always seen.</li>
+	<li><a href="/content-creation/youtube/channel-art/">Channel art</a> — 2560 × 1440, of which every device shows only a band 423 tall, and a phone only the middle 1546 of it.</li>
+	<li><a href="/content-creation/youtube/profile-art/">Profile art</a> — 800 × 800, shown as a circle at 40 pixels. Three: the illustration, the mark, a photograph.</li>
+	<li><a href="/content-creation/youtube/thumbnails/">Thumbnails</a> — 1280 × 720, ten styles, and the grid they are judged in.</li>
+	<li><a href="/content-creation/youtube/end-screen/">End screen</a> — 1920 × 1080, the last twenty seconds, with the slots where YouTube lays its tiles.</li>
+	<li><a href="/content-creation/youtube/pixelmator/">Pixelmator templates</a> — every frame rebuilt as editable layers, by script.</li>
 </ul>
+<h2>As YouTube draws it</h2>
+<p>The channel page, with the art cropped to its band, the profile beside the name, and four thumbnails in the grid. This is the only honest test of the set.</p>
+<div class="yt-mock">
+	<div class="yt-mock-banner"><div class="frame-preview" style="--fw: 2560; --fh: 1440"><iframe src="/frames/channel-art/" title="channel art, as YouTube crops it" loading="lazy"></iframe></div></div>
+	<div class="yt-mock-head">
+		<div class="frame-preview" style="--fw: 800; --fh: 800"><iframe src="/frames/profile-art/" title="profile art" loading="lazy" tabindex="-1"></iframe></div>
+		<p class="yt-mock-name"><b>Swarnil Singhai</b><span>@imswarnil · 128K subscribers · 214 videos</span><span>Documenting my life. Salesforce, AI, travel, and what things cost.</span></p>
+		<span class="im-cluster im-cluster-tight"><span class="im-btn im-btn-ink im-btn-sm">Subscribe</span><span class="im-btn im-btn-sm">Join</span></span>
+	</div>
+	<div class="yt-grid" style="padding: 1.25rem 1.5rem 1.5rem">
+		<div class="yt-tile"><div class="frame-preview" style="--fw: 1280; --fh: 720"><iframe src="/frames/thumb-film/" title="film" loading="lazy" tabindex="-1"></iframe><span class="yt-tile-time">8:12</span></div><div class="yt-tile-body"><img src="{{demo.me}}" alt=""><b>The road nobody wants to arrive on</b><span>412K views · 3 days ago</span></div></div>
+		<div class="yt-tile"><div class="frame-preview" style="--fw: 1280; --fh: 720"><iframe src="/frames/thumb-vlog/" title="vlog" loading="lazy" tabindex="-1"></iframe><span class="yt-tile-time">14:40</span></div><div class="yt-tile-body"><img src="{{demo.me}}" alt=""><b>Moving countries again — day 12 in Budapest</b><span>96K views · 1 week ago</span></div></div>
+		<div class="yt-tile"><div class="frame-preview" style="--fw: 1280; --fh: 720"><iframe src="/frames/thumb-qna/" title="Q&A" loading="lazy" tabindex="-1"></iframe><span class="yt-tile-time">21:05</span></div><div class="yt-tile-body"><img src="{{demo.me}}" alt=""><b>Why did you leave India? — you asked, I answer</b><span>128K views · 2 weeks ago</span></div></div>
+		<div class="yt-tile"><div class="frame-preview" style="--fw: 1280; --fh: 720"><iframe src="/frames/thumb-live/" title="live" loading="lazy" tabindex="-1"></iframe><span class="yt-tile-time">LIVE</span></div><div class="yt-tile-body"><img src="{{demo.me}}" alt=""><b>Building the comment wall, live</b><span>2.4K watching</span></div></div>
+	</div>
+</div>

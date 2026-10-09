@@ -47,10 +47,16 @@
 	--im-phi-7: 4.236rem;
 	--im-phi-8: 6.854rem;
 
-	/* ---- Fonts: Geist, Geist Mono, Geist Pixel — nothing else. ------------ */
+	/* ---- Fonts: Geist, Geist Mono, Geist Pixel — and one hand, Caveat. ------ */
 	--im-font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 	--im-font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 	--im-font-pixel: "Geist Pixel", "Geist Mono", ui-monospace, monospace;
+	/* The handwritten face: a note beside a thing, never the thing. Falls back
+	   to a cursive so the note is still a note where the file has not arrived. */
+	--im-font-hand: "Caveat", "Segoe Script", "Bradley Hand", cursive;
+	/* Devanagari has no Geist. A greeting on the channel art takes the system's
+	   own face for the script, in the same weight class as Geist. */
+	--im-font-devanagari: "Kohinoor Devanagari", "Devanagari Sangam MN", "Noto Sans Devanagari", "Mukta", sans-serif;
 	/* Ghost lets a site owner pick fonts in Settings → Design; honour that. */
 	--im-font-heading: var(--gh-font-heading, var(--im-font-sans));
 	--im-font-body: var(--gh-font-body, var(--im-font-sans));

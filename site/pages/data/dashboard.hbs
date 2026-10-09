@@ -1,0 +1,172 @@
+---
+title: Dashboard
+layout: home
+description: All of it on the twelve columns — a row of tiles, a line with a period switcher, columns with a legend that toggles, a heatmap, a donut, a table — and a rail of filters pinned beside them. Nothing on this page is new; it is the parts assembled.
+eyebrow: Data visualisation
+source: src/viz/dashboard.css
+---
+<section class="im-section im-wrap im-pt-sm im-section-sm">
+	<p class="im-eyebrow">Data visualisation · {{page.title}}</p>
+	<p class="im-lede">{{page.description}}</p>
+	<p class="doc-source"><code>{{page.source}}</code></p>
+</section>
+
+<section class="im-section im-wrap-wide">
+<div class="im-dash" id="dash">
+	<header class="im-dash-head">
+		<h1>Field Notes, in numbers</h1>
+		<div class="im-btn-group" role="group" aria-label="Period" data-im-period>
+			<button class="im-btn im-btn-sm" type="button" aria-pressed="false">7d</button>
+			<button class="im-btn im-btn-sm" type="button" aria-pressed="true">30d</button>
+			<button class="im-btn im-btn-sm" type="button" aria-pressed="false">90d</button>
+			<button class="im-btn im-btn-sm" type="button" aria-pressed="false">1y</button>
+		</div>
+		<a class="im-btn im-btn-sm" href="#dash">{{> "icons/download"}}Export</a>
+		<p>1 – 30 September 2026 · updated an hour ago</p>
+	</header>
+
+	<div class="im-dash-split">
+		<aside class="im-dash-side" aria-label="Filters">
+			<section data-im-chips>
+				<h3>Topics</h3>
+				<div class="im-viz-filters">
+					{{#foreach demo.viz.topics}}<button class="im-viz-chip" type="button" aria-pressed="{{#match @index "<" 3}}true{{else}}false{{/match}}"><i style="--c: var(--im-viz-{{@number}})"></i>{{name}}<b>{{posts}}</b></button>{{/foreach}}
+				</div>
+			</section>
+			<section data-im-chips>
+				<h3>Source</h3>
+				<div class="im-viz-filters">
+					<button class="im-viz-chip" type="button" aria-pressed="true">Search</button>
+					<button class="im-viz-chip" type="button" aria-pressed="true">Direct</button>
+					<button class="im-viz-chip" type="button" aria-pressed="true">Social</button>
+					<button class="im-viz-chip" type="button" aria-pressed="false">Newsletter</button>
+				</div>
+			</section>
+			<section>
+				<h3>Minimum read</h3>
+				<label class="im-viz-range"><input type="range" min="0" max="100" value="50" aria-label="Minimum reading, percent"><span><span>0%</span><b>50%</b><span>100%</span></span></label>
+			</section>
+			<section>
+				<h3>Compare</h3>
+				<label class="im-switch"><input type="checkbox" role="switch" checked><span>Against last period</span></label>
+			</section>
+		</aside>
+
+		<div class="im-cols im-dash-grid">
+			<div class="im-dash-panel im-dash-panel-bare" data-span="12">
+				<div class="im-stat-tiles">
+					{{#each demo.viz.glance}}
+					<div class="im-stat-tile">
+						<p class="im-caption" data-index="0{{@index}}">{{label}}</p>
+						<div class="im-stat"><span class="im-stat-figure"{{#if count}} data-im-count="{{count}}"{{/if}}>{{figure}}{{#if unit}}<span class="im-stat-unit">{{unit}}</span>{{/if}}</span><span class="im-stat-delta im-stat-delta-pill" data-trend="{{trend}}">{{#match trend "down"}}{{> "icons/trending-down"}}{{else match trend "flat"}}{{else}}{{> "icons/trending-up"}}{{/match}} {{delta}}</span></div>
+						<svg class="im-spark" data-im-spark="{{spark}}" data-im-area aria-hidden="true"{{#match @index ">" 1}}{{#match @index "<" 3}} style="--im-chart-color: var(--im-viz-2)"{{/match}}{{/match}}></svg>
+					</div>
+					{{/each}}
+				</div>
+			</div>
+
+			<section class="im-dash-panel" data-span="8" aria-labelledby="d-readers">
+				<div class="im-dash-panel-head"><h2 id="d-readers">Readers and members</h2><small>thousands</small>
+					<div class="im-dash-tools"><div class="im-legend im-legend-row im-legend-dots" data-im-legend>
+						<button class="im-legend-toggle" type="button" data-series="1" aria-pressed="true">Readers</button>
+						<button class="im-legend-toggle" type="button" data-series="2" aria-pressed="true">Members</button>
+					</div></div>
+				</div>
+				<figure class="im-chart" style="--im-chart-height: 14rem">
+					<div class="im-chart-line" data-im-labels="{{#each demo.viz.months}}{{this}}{{#unless @last}},{{/unless}}{{/each}}" data-im-area data-im-unit="k">
+						<data value="{{#each demo.viz.readers}}{{this}}{{#unless @last}},{{/unless}}{{/each}}" data-name="Readers"></data>
+						<data value="{{#each demo.viz.members}}{{this}}{{#unless @last}},{{/unless}}{{/each}}" data-name="Members"></data>
+					</div>
+				</figure>
+				<p class="im-dash-panel-foot"><span>Members are about a sixth of readers, and the ratio is holding.</span><a href="/data/lines/">Full report</a></p>
+			</section>
+
+			<section class="im-dash-panel" data-span="4" aria-labelledby="d-members">
+				<div class="im-dash-panel-head"><h2 id="d-members">Members</h2><small>by tier</small></div>
+				<div class="im-cluster" style="--im-cluster-gap: 1.25rem">
+					<div class="im-chart-pie im-chart-pie-donut im-chart-pie-sm" style="--s1: .46; --s2: .32; --s3: .14" role="img" aria-label="Members: 46% free, 32% monthly, 14% yearly, 8% comped"><span class="im-chart-pie-center"><b style="font-size: var(--im-text-base)">1,204</b></span></div>
+					<ul class="im-legend"><li data-series="1">Free<b>46%</b></li><li data-series="2">Monthly<b>32%</b></li><li data-series="3">Yearly<b>14%</b></li><li style="--c: var(--im-viz-track)">Comped<b>8%</b></li></ul>
+				</div>
+				<div class="im-stack im-stack-xs">
+					<div class="im-chart-bullet" style="--v: .72; --im-target: .85" role="img" aria-label="Revenue 3,200 of 4,500"><span>Revenue</span><i></i><b>$3.2k</b></div>
+					<div class="im-chart-bullet" style="--v: .91; --im-target: .8; --c: var(--im-viz-2)" role="img" aria-label="Members 1,204 of 1,050"><span>Members</span><i></i><b>1,204</b></div>
+				</div>
+				<p class="im-dash-panel-foot"><span>Goal: 1,500 by December.</span><a href="/data/parts/">Tiers</a></p>
+			</section>
+
+			<section class="im-dash-panel" data-span="6" aria-labelledby="d-source">
+				<div class="im-dash-panel-head"><h2 id="d-source">Where they came from</h2><small>share, by quarter</small>
+					<div class="im-dash-tools"><div class="im-legend im-legend-row" data-im-legend>
+						<button class="im-legend-toggle" type="button" data-series="1" aria-pressed="true">Search</button>
+						<button class="im-legend-toggle" type="button" data-series="2" aria-pressed="true">Direct</button>
+						<button class="im-legend-toggle" type="button" data-series="3" aria-pressed="true">Social</button>
+					</div></div>
+				</div>
+				<figure class="im-chart" style="--im-chart-height: 10rem">
+					<div class="im-chart-plot" style="--im-chart-rows: 4">
+						<div class="im-chart-y" aria-hidden="true"><span>100%</span><span>75%</span><span>50%</span><span>25%</span><span>0</span></div>
+						<div class="im-chart-area">
+							<div class="im-chart-cols im-chart-cols-stacked" role="img" aria-label="Share of readers by source, Q1 to Q4: search 50 to 62 percent, direct 30 to 24, social 20 to 14">
+								<div class="im-chart-col"><i data-series="1" style="--v: .5"></i><i data-series="2" style="--v: .3"></i><i data-series="3" style="--v: .2"></i></div>
+								<div class="im-chart-col"><i data-series="1" style="--v: .54"></i><i data-series="2" style="--v: .28"></i><i data-series="3" style="--v: .18"></i></div>
+								<div class="im-chart-col"><i data-series="1" style="--v: .58"></i><i data-series="2" style="--v: .26"></i><i data-series="3" style="--v: .16"></i></div>
+								<div class="im-chart-col"><i data-series="1" style="--v: .62"></i><i data-series="2" style="--v: .24"></i><i data-series="3" style="--v: .14"></i></div>
+							</div>
+						</div>
+						<div class="im-chart-x im-chart-x-cells" aria-hidden="true"><span>Q1</span><span>Q2</span><span>Q3</span><span>Q4</span></div>
+					</div>
+				</figure>
+			</section>
+
+			<section class="im-dash-panel" data-span="6" aria-labelledby="d-when">
+				<div class="im-dash-panel-head"><h2 id="d-when">When people read</h2><small>share of the week</small>
+					<p class="im-chart-scale im-dash-tools">less <i style="--v: 0"></i><i style="--v: .5"></i><i style="--v: 1"></i> more</p>
+				</div>
+				<div class="im-chart-heat im-chart-heat-wide" style="--im-heat-cols: 6" role="img" aria-label="Visits by day and hour: weekday evenings are busiest">
+					<span class="im-chart-heat-label"></span>{{#each demo.viz.hours}}<span class="im-chart-heat-head">{{this}}</span>{{/each}}
+					{{#each demo.viz.heat}}<span class="im-chart-heat-label">{{lookup ../demo.viz.days @index}}</span>{{#each this}}<i style="--v: {{this}}" data-label="{{lookup ../../demo.viz.days @../index}} {{lookup ../../demo.viz.hours @index}}:00 · {{this}}"></i>{{/each}}{{/each}}
+				</div>
+			</section>
+
+			<section class="im-dash-panel" data-span="8" aria-labelledby="d-topics">
+				<div class="im-dash-panel-head"><h2 id="d-topics">Topics</h2><small>this period</small></div>
+				<div class="im-table-scroll">
+				<table class="im-viz-table im-viz-table-sm">
+					<thead><tr><th><button type="button">Topic</button></th><th class="im-viz-num" aria-sort="descending"><button type="button">Posts</button></th><th>Share</th><th class="im-viz-num"><button type="button">Views</button></th><th>Trend</th><th class="im-viz-num"><button type="button">Change</button></th></tr></thead>
+					<tbody>
+						{{#each demo.viz.topics}}<tr><td>{{name}}</td><td class="im-viz-num">{{posts}}</td><td class="im-viz-bar" style="--v: {{v}}"><i></i></td><td class="im-viz-num">{{views}}</td><td class="im-viz-spark"><svg class="im-spark" data-im-spark="{{spark}}" aria-hidden="true"></svg></td><td class="im-viz-num"><span class="im-viz-delta" data-trend="{{trend}}">{{delta}}</span></td></tr>{{/each}}
+					</tbody>
+				</table>
+				</div>
+			</section>
+
+			<section class="im-dash-panel" data-span="4" aria-labelledby="d-funnel">
+				<div class="im-dash-panel-head"><h2 id="d-funnel">From visit to paid</h2></div>
+				<div class="im-chart-funnel" role="img" aria-label="Visited 12,480, read to the end 6,910, subscribed 1,204, paid 318">
+					{{#each demo.viz.funnel}}<div style="--v: {{v}}"><b>{{name}}</b><span>{{n}}</span></div>{{/each}}
+				</div>
+				<p class="im-dash-panel-foot"><span>2.5% of visitors pay.</span><a href="/data/grids/">Funnel</a></p>
+			</section>
+		</div>
+	</div>
+</div>
+</section>
+
+<section class="im-section im-wrap"><div class="im-prose">
+<h2>How it is put together</h2>
+<p><code>im-dash</code> is a head and a grid. The grid is the page’s own <code>im-cols</code>, so a panel is a whole number of columns and lands on the drawn lines — eight and four, six and six, twelve across for the tiles. <code>im-dash-split</code> pins three columns of filters on the left and gives the panels the nine beside them (which still divide by three: 3 + 6, three 3s). A panel is a hairline box with a head row and an optional foot; a chart inside it fills it and drops its own head, because the panel already has one.</p>
+<p>Every control on this page works the way it would on a real one — the period switcher presses one at a time, a legend toggle dims its series, a chip flips — and none of it fetches anything: what a filter <em>does</em> is the dashboard’s own business, and the system stops at the control. On a phone the rail goes above the panels and every panel takes the full width.</p>
+{{{{code "html"}}}}
+<div class="im-dash">
+	<header class="im-dash-head"><h1>…</h1> <div class="im-btn-group" data-im-period>…</div> <p>…</p></header>
+	<div class="im-dash-split">
+		<aside class="im-dash-side"> <section data-im-chips><h3>Topics</h3> <div class="im-viz-filters">…chips…</div></section> … </aside>
+		<div class="im-cols im-dash-grid">
+			<div class="im-dash-panel im-dash-panel-bare" data-span="12"> <div class="im-stat-tiles">…</div> </div>
+			<section class="im-dash-panel" data-span="8"> <div class="im-dash-panel-head"><h2>…</h2><small>…</small><div class="im-dash-tools">…</div></div> <figure class="im-chart">…</figure> <p class="im-dash-panel-foot">…</p> </section>
+			<section class="im-dash-panel" data-span="4">…</section>
+		</div>
+	</div>
+</div>
+{{{{/code}}}}
+</div></section>

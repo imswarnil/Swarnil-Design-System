@@ -33,8 +33,11 @@ const walk = (d, ok) => (fs.existsSync(d) ? fs.readdirSync(d, { withFileTypes: t
 
 const firstLine = (css) => (css.match(/^\/\*\s*([^\n]*)/) || [])[1]?.replace(/\s*-+\s*$/, '') || '';
 
+// Components live in three folders: the page's, the channel's (studio) and the charts' (viz).
+const COMPONENT_DIRS = ['src/components', 'src/studio', 'src/viz'];
+
 function components() {
-	return walk(at('src/components'), (p) => p.endsWith('.css') && !p.endsWith('index.css')).map((f) => ({
+	return COMPONENT_DIRS.flatMap((d) => walk(at(d), (p) => p.endsWith('.css') && !p.endsWith('index.css'))).map((f) => ({
 		name: path.basename(f, '.css'),
 		file: path.relative(ROOT, f),
 		summary: firstLine(read(f)),
@@ -57,7 +60,7 @@ server.tool('list_components', 'Every component in the system, with its file and
 }));
 
 server.tool('get_component', 'A component\'s CSS, its Handlebars partial if it has one, and its documentation page.', { name: z.string() }, async ({ name }) => {
-	const css = read(at('src/components', `${name}.css`)) || read(at('src/layout', `${name}.css`));
+	const css = [...COMPONENT_DIRS, 'src/layout'].map((d) => read(at(d, `${name}.css`))).find(Boolean);
 	const partial = read(at('partials/components', `${name}.hbs`));
 	const docs = walk(at('site/pages'), (p) => p.endsWith('.hbs')).filter((p) => p.includes(`/${name}`) || read(p).includes(`${name}.css`)).map((p) => `--- ${path.relative(ROOT, p)}\n${read(p)}`).join('\n\n');
 	if (!css) return { content: [{ type: 'text', text: `No component named "${name}". Try list_components.` }], isError: true };

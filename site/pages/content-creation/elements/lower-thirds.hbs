@@ -1,0 +1,25 @@
+---
+title: Lower thirds
+description: Who is talking, and one line about them. Six — block, line, pill, tag, hand, card — all layers, all staggering their own two lines so the name lands first.
+eyebrow: Content creation · Elements
+source: src/studio/lower.css
+---
+<p>A lower third is a name and a line, bottom left, in and out. <code>im-studio-lower</code> is the position; the style is a modifier; the two lines inside arrive one after the other on the layer’s own clock. <code>im-studio-lower-right</code> puts it on the other side; <code>--im-studio-lower-x / -y</code> move it.</p>
+{{#example flush=true}}
+<div class="frame-grid" data-replay style="padding: 1rem">
+	<figure><div class="frame-preview"><div class="im-studio im-studio-overlay" style="--im-studio-w: 960; --im-studio-h: 540"><img class="im-studio-photo im-studio-grade-film" src="{{demo.shots.[0]}}" alt=""><div class="im-studio-lower im-studio-lower-block im-studio-layer" data-in="rise"><b>Swarnil Singhai</b><span>Salesforce engineer · Budapest</span></div></div></div><figcaption>-block</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-studio-overlay" style="--im-studio-w: 960; --im-studio-h: 540"><img class="im-studio-photo im-studio-grade-film" src="{{demo.shots.[0]}}" alt=""><div class="im-studio-lower im-studio-lower-line im-studio-layer" data-in="fade"><b>Swarnil Singhai</b><span>imswarnil.com</span></div></div></div><figcaption>-line</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-studio-overlay" style="--im-studio-w: 960; --im-studio-h: 540"><img class="im-studio-photo im-studio-grade-film" src="{{demo.shots.[0]}}" alt=""><div class="im-studio-lower im-studio-lower-pill im-studio-layer" data-in="rise"><img src="{{demo.me}}" alt=""><b>Swarnil</b><span>@imswarnil</span></div></div></div><figcaption>-pill</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-studio-overlay" style="--im-studio-w: 960; --im-studio-h: 540"><img class="im-studio-photo im-studio-grade-film" src="{{demo.shots.[0]}}" alt=""><div class="im-studio-lower im-studio-lower-tag im-studio-layer" data-in="rise"><small>Guest</small><b>Mara Lindqvist</b><span>Design lead, Nordvik</span></div></div></div><figcaption>-tag</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-studio-overlay" style="--im-studio-w: 960; --im-studio-h: 540"><img class="im-studio-photo im-studio-grade-film" src="{{demo.shots.[0]}}" alt=""><div class="im-studio-lower im-studio-lower-hand im-studio-layer" data-in="pop"><b>that’s me</b><span>Swarnil · Budapest</span></div></div></div><figcaption>-hand</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-studio-overlay" style="--im-studio-w: 960; --im-studio-h: 540"><img class="im-studio-photo im-studio-grade-film" src="{{demo.shots.[0]}}" alt=""><div class="im-studio-lower im-studio-lower-card im-studio-layer" data-in="rise">{{> "components/logo" mark=true text="Swarnil"}}<b>Swarnil Singhai</b><span>Salesforce engineer</span></div></div></div><figcaption>-card</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-studio-overlay" style="--im-studio-w: 960; --im-studio-h: 540"><img class="im-studio-photo im-studio-grade-film" src="{{demo.shots.[0]}}" alt=""><div class="im-studio-lower im-studio-lower-line im-studio-lower-right im-studio-layer" data-in="fade"><b>On the right</b><span>im-studio-lower-right</span></div></div></div><figcaption>-right, any of them</figcaption></figure>
+</div>
+{{/example}}
+<p>In and out on one frame: in at 0.4s, out at 5s — <a href="/frames/lower-thirds/">open it</a> to see the whole pass.</p>
+{{{{code "html"}}}}
+<div class="im-studio-lower im-studio-lower-block im-studio-layer" data-in="rise" data-out="sink"
+     style="--im-studio-in-at: .4s; --im-studio-out-at: 5s">
+	<b>Swarnil Singhai</b><span>Salesforce engineer · Budapest</span>
+</div>
+{{{{/code}}}}

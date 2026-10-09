@@ -3,8 +3,8 @@ title: Thumbnail · travel
 layout: home
 shell: frame
 ---
-{{!-- A frame for the channel: 1280 × 720. Open at that size to screenshot,
-	or load as a browser source. Built from tokens — see src/components/studio.css. --}}
+{{!-- Travel: the place is the picture; the person small and ringed; a route
+	line and the price in pixel type. --}}
 <div class="im-studio im-studio-thumb im-studio-thumb-travel" style="--im-studio-w: 1280; --im-studio-h: 720">
 	<img class="im-studio-photo" src="{{demo.shots.[1]}}" alt="">
 	<span class="im-studio-scrim" aria-hidden="true"></span>
@@ -13,6 +13,7 @@ shell: frame
 		<p class="im-studio-price">€479</p>
 		<h1 class="im-studio-title">Four days, five towns</h1>
 	</div>
-	<img class="im-studio-face" src="{{demo.author.profile_image}}" alt="">
-	<p class="im-studio-mark">{{> "components/logo" mark=true}}<span>imswarnil</span></p>
+	<img class="im-studio-face" src="{{demo.me}}" alt="" style="object-position: 62% 30%">
+	<span class="im-studio-note im-studio-at" style="--im-studio-x: 72%; --im-studio-y: 22%; --im-studio-tilt: -8deg; color: var(--im-on-media)">all in!</span>
+	<p class="im-studio-mark">{{> "components/logo" mark=true text="Swarnil"}}<span>imswarnil</span></p>
 </div>

@@ -7,7 +7,8 @@
 
    Families:  lines (grid, blueprint, rules, columns, lines, diamond, isometric)
               marks (dots, cross, checker, rings, zigzag, stripes)
-              light (glow, mesh, spot)      texture (noise)                  */
+              light (glow, mesh, spot)      texture (noise)
+              φ (golden, spiral) — the golden rectangle, drawn               */
 
 /* ---- lines ---- */
 @utility im-bg-grid {
@@ -103,6 +104,27 @@
 /* Broad diagonal bands — caution tape, a "coming soon". */
 @utility im-bg-stripes {
 	background-image: repeating-linear-gradient(135deg, var(--im-pattern-color, var(--im-surface)) 0 var(--im-pattern-size, 0.75rem), transparent var(--im-pattern-size, 0.75rem) calc(var(--im-pattern-size, 0.75rem) * 2));
+}
+
+/* ---- φ: the golden rectangle, as a pattern ----
+   The system's other ruler, drawn. im-bg-golden tiles the golden rectangle
+   subdivided by its own squares — each square is φ smaller than the last,
+   seven of them, so the eye reads the ratio without being told. im-bg-spiral
+   adds the quarter arcs through the squares: the spiral every reader knows.
+
+   A spiral cannot be made of gradients, so both are inline SVG tiles (no
+   request). Like im-bg-cross their ink is therefore FIXED — a mid grey that
+   reads on light and dark — and --im-pattern-color does not apply; use
+   opacity to quieten one, and --im-pattern-size for the pitch (the tile is
+   φ wide against its height, so size it by the HEIGHT: 1 × φ). */
+@utility im-bg-golden {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='161.8' height='100' viewBox='0 0 161.8 100' fill='none' stroke='%23888' stroke-opacity='.7' stroke-width='1'%3E%3Crect x='.5' y='.5' width='160.8' height='99'/%3E%3Cpath d='M100.5 .5v99M100.5 61.8h60.8M138.7 61.8v37.7M138.7 85.4h22.6M153.2 85.4v14.1M153.2 94.4h8.1M158.7 94.4v5.1'/%3E%3C/svg%3E");
+	background-size: calc(var(--im-pattern-size, 2.5rem) * 1.618) var(--im-pattern-size, 2.5rem);
+}
+
+@utility im-bg-spiral {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='161.8' height='100' viewBox='0 0 161.8 100' fill='none' stroke='%23888' stroke-opacity='.7' stroke-width='1'%3E%3Crect x='.5' y='.5' width='160.8' height='99'/%3E%3Cpath d='M100.5 .5v99M100.5 61.8h60.8M138.7 61.8v37.7M138.7 85.4h22.6M153.2 85.4v14.1M153.2 94.4h8.1M158.7 94.4v5.1' stroke-opacity='.35'/%3E%3Cpath d='M.5 99.5A100 100 0 0 1 100.5 .5A61.8 61.8 0 0 1 161.3 61.8A38.2 38.2 0 0 1 138.7 99.5A23.6 23.6 0 0 1 115.1 85.4A14.6 14.6 0 0 1 138.7 76.4A9 9 0 0 1 153.2 85.4'/%3E%3C/svg%3E");
+	background-size: calc(var(--im-pattern-size, 2.5rem) * 1.618) var(--im-pattern-size, 2.5rem);
 }
 
 /* ---- light ---- */

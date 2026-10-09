@@ -1,6 +1,8 @@
 /* Geist, Geist Mono and Geist Pixel — SIL Open Font License 1.1, copied from
-   the official `geist` package by scripts/vendor.mjs (assets/fonts/OFL.txt).
-   These are the only three families the system uses.
+   the official `geist` package by scripts/vendor.mjs (assets/fonts/OFL.txt) —
+   and ONE handwritten face, Caveat (OFL, from `@fontsource-variable/caveat`,
+   assets/fonts/OFL-Caveat.txt): the note in the margin, the word on a sticker,
+   "say hi!" on a thumbnail. Four families; nothing else is ever loaded.
 
    Paths are root-absolute, which is how Ghost serves a theme's /assets/. */
 
@@ -56,4 +58,16 @@
 	font-weight: 400;
 	font-display: swap;
 	src: url("/assets/fonts/GeistPixel-Line.woff2") format("woff2");
+}
+
+/* Caveat — the hand. A note, never a paragraph: it is what the marker pen
+   writes on the channel art and the thumbnails, and it is the one face here
+   that is not Geist. Variable 400–700. Latin only; the other scripts are not
+   vendored. */
+@font-face {
+	font-family: "Caveat";
+	font-style: normal;
+	font-weight: 400 700;
+	font-display: swap;
+	src: url("/assets/fonts/Caveat-Variable.woff2") format("woff2");
 }

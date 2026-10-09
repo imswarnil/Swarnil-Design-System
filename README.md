@@ -15,6 +15,8 @@ npm install
 npm run dev      # http://localhost:4700
 npm run build    # writes the docs to dist/ and checks every Ghost helper is modelled
 npm run check    # dead CSS, broken links, provenance — CI runs this before deploying
+npm run frames   # exports/frames/*.png — thumbnails, channel art, scenes, at their real size
+npm run pixelmator   # exports/pixelmator/*.pxd — the same frames as editable layers (macOS)
 npm run mcp      # an MCP server, so an AI assistant can build with the system
 ```
 
@@ -26,12 +28,14 @@ npm run mcp      # an MCP server, so an AI assistant can build with the system
 | `src/layout` | shell, top bar, side nav, the single and rails page layouts, the player, the footer |
 | `src/layout/guides.css` | the twelve columns, drawn on the page |
 | `src/layout/fit.css` | the column context every container publishes, and what fills a cell |
-| `src/components` | cards for every collection, editor, chat, stream, tiers, auth, sitemap, ads, comments, widgets… |
+| `src/components` | cards for every collection, editor, chat, stream, tiers, auth, sitemap, ads, comments, widgets, the logo (the S and the dot, live text, with its motion), the résumé and the journey |
+| `src/studio` | the channel: frames at their real size, ten thumbnail styles, channel art, the end screen, and the elements a video is cut from — backgrounds that move, media frames, the logo sting, a layer's in/out, loops, titles, lower thirds, HUD callouts, scenes, the skeleton, colour grades, the cuts — plus the live stream's sources and scenes |
+| `src/viz` | data visualisation: stat tiles, the chart frame, columns and bars, lines and areas and scatters (`im-charts.js`), pie/donut/gauge/waffle, heatmaps and treemaps, legends and filters, a numeric table, dashboard panels on the twelve columns |
 | `partials/` | the Handlebars partials a Ghost theme copies in |
 | `sections/` | self-contained page sections |
 | `site/` | the documentation site — Handlebars pages with a Ghost shim |
 | `mcp/` | the MCP server (`list_components`, `get_component`, `list_tokens`, `search`, `get_page`, `rules`) |
-| `scripts/` | `unused-css.mjs` — every `im-*` class nothing puts on an element (it returns nothing today) |
+| `scripts/` | `check.mjs` (dead CSS, broken links, provenance), `frames.mjs` (every frame as a PNG through your own Chrome, `--layers` for the text manifest), `pixelmator.mjs` (each frame rebuilt in Pixelmator Pro as editable text layers), `vendor.mjs` |
 | `.github/` | the banner and the grid drawing above, both plain SVG that follow the reader's colour scheme |
 
 Fourteen collections ship with a listing, a card and a single page each: post,
@@ -69,4 +73,4 @@ read; the licence below is unchanged.
 
 ## Provenance
 
-Nothing here comes from a commercial theme, and everything from outside is openly licensed and listed in [PROVENANCE.md](PROVENANCE.md). Fonts are Geist, Geist Mono and Geist Pixel only. All rights reserved — see [LICENSE](LICENSE).
+Nothing here comes from a commercial theme, and everything from outside is openly licensed and listed in [PROVENANCE.md](PROVENANCE.md). Fonts are Geist, Geist Mono and Geist Pixel, and one hand — Caveat — for the note in the margin. All rights reserved — see [LICENSE](LICENSE).

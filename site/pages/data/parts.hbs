@@ -1,0 +1,80 @@
+---
+title: Parts of a whole
+description: A donut or a pie for three slices, five at most; a ring for one share; a gauge for a reading against its range; a waffle for one share of a hundred. All pure CSS — a conic gradient takes the shares.
+eyebrow: Data visualisation
+source: src/viz/parts.css · src/components/progress.css
+---
+<h2>Pie and donut</h2>
+<p>Up to five shares and the rest: <code>--s1</code> … <code>--s5</code>, each a share of one, in the palette’s order. <code>im-chart-pie-donut</code> cuts the hole and the centre becomes a place for the total; <code>im-chart-pie-thin</code> is a thinner ring. A pie with more than five slices is a <a href="/data/bars/#ranking">ranking</a> that has been folded up.</p>
+{{#example center=true}}
+<div class="im-cluster" style="--im-cluster-gap: 2rem">
+	<div class="im-chart-pie im-chart-pie-donut" style="--s1: .46; --s2: .32; --s3: .14" role="img" aria-label="Members: 46% free, 32% monthly, 14% yearly, 8% comped">
+		<span class="im-chart-pie-center"><b>1,204</b><span>members</span></span>
+	</div>
+	<ul class="im-legend" style="min-width: 11rem">
+		<li style="--c: var(--im-viz-1)">Free<b>46%</b></li>
+		<li style="--c: var(--im-viz-2)">Monthly<b>32%</b></li>
+		<li style="--c: var(--im-viz-3)">Yearly<b>14%</b></li>
+		<li style="--c: var(--im-viz-track)">Comped<b>8%</b></li>
+	</ul>
+</div>
+<div class="im-chart-pie im-chart-pie-lg" style="--s1: .62; --s2: .24; --s3: .14" role="img" aria-label="Readers by source: 62% search, 24% direct, 14% social"></div>
+<div class="im-chart-pie im-chart-pie-thin im-chart-pie-sm" style="--s1: .72" role="img" aria-label="72% of the goal"><span class="im-chart-pie-center"><b style="font-size: var(--im-text-sm)">72%</b></span></div>
+{{/example}}
+{{{{code "html"}}}}
+<div class="im-chart-pie im-chart-pie-donut" style="--s1: .46; --s2: .32; --s3: .14" role="img" aria-label="Members: 46% free, 32% monthly, 14% yearly, 8% comped">
+	<span class="im-chart-pie-center"><b>1,204</b><span>members</span></span>
+</div>
+<ul class="im-legend">
+	<li style="--c: var(--im-viz-1)">Free<b>46%</b></li>
+	…
+</ul>
+{{{{/code}}}}
+<div class="im-table-scroll"><table>
+<thead><tr><th>Knob</th><th>Default</th><th></th></tr></thead>
+<tbody>
+<tr><td><code>--s1</code> … <code>--s5</code></td><td>0</td><td>Each slice, as a share of one. The rest is the track.</td></tr>
+<tr><td><code>--c1</code> … <code>--c5</code></td><td><code>--im-viz-1…5</code></td><td>A slice’s colour, if not the palette’s.</td></tr>
+<tr><td><code>--im-pie-size</code></td><td>9rem</td><td>Or <code>im-chart-pie-sm</code> (5rem) and <code>-lg</code> (13rem).</td></tr>
+<tr><td><code>--im-pie-hole</code></td><td>0%</td><td>How much of the middle is cut: <code>-donut</code> 62%, <code>-thin</code> 78%.</td></tr>
+</tbody></table></div>
+
+<h2>Ring</h2>
+<p>One share, as the system’s progress ring — the same component a lesson uses for “3 of 7”. <code>--im-value</code> from 0 to 1; four sizes; <code>--im-progress-color</code> for another colour. See <a href="/components/progress/">Progress</a>.</p>
+{{#example center=true}}
+<span class="im-ring" style="--im-value: .72">72</span>
+<span class="im-ring im-ring-lg" style="--im-value: .41; --im-progress-color: var(--im-viz-2)">41%</span>
+<span class="im-ring-field"><span class="im-ring im-ring-lg" style="--im-value: .64; --im-progress-color: var(--im-success)">64%</span>of $5k</span>
+{{/example}}
+
+<h2>Gauge</h2>
+<p>A reading against its range: a half ring filled to <code>--v</code>, a needle at the same place, the figure under it. For something that has a floor and a ceiling — a score, a load, a rate.</p>
+{{#example center=true}}
+<div class="im-chart-gauge" style="--v: .72" role="img" aria-label="Performance score 72 of 100"><b>72</b><span>performance</span></div>
+<div class="im-chart-gauge" style="--v: .41; --c: var(--im-viz-2)" role="img" aria-label="Open rate 41 percent"><b>41%</b><span>open rate</span></div>
+<div class="im-chart-gauge" style="--v: .93; --c: var(--im-success)" role="img" aria-label="Uptime 99.3 percent"><b>99.3</b><span>uptime</span></div>
+{{/example}}
+{{{{code "html"}}}}
+<div class="im-chart-gauge" style="--v: .72" role="img" aria-label="Performance score 72 of 100"><b>72</b><span>performance</span></div>
+{{{{/code}}}}
+
+<h2>Waffle</h2>
+<p>A hundred cells, filled to <code>--v</code> in reading order from the bottom — one share of a hundred, read as a count rather than an angle. One element: the cells are a mask.</p>
+{{#example center=true}}
+<div class="im-cluster" style="--im-cluster-gap: 2rem">
+	<div class="im-chart-waffle" style="--v: .64" role="img" aria-label="64 of 100"></div>
+	<div class="im-chart-waffle" style="--v: .27; --c: var(--im-viz-2)" role="img" aria-label="27 of 100"></div>
+	<div class="im-stat"><span class="im-stat-figure">64<span class="im-stat-unit">%</span></span><span class="im-stat-label">of the goal, at the end of month nine</span></div>
+</div>
+{{/example}}
+{{{{code "html"}}}}
+<div class="im-chart-waffle" style="--v: .64" role="img" aria-label="64 of 100"></div>
+{{{{/code}}}}
+
+<h2>Rules</h2>
+<ul>
+	<li><strong>Three slices is right, five is the most.</strong> After that the eye cannot compare angles; use a ranking.</li>
+	<li><strong>The rest is the track</strong>, never a sixth colour: what is not any of the named shares should look like nothing.</li>
+	<li><strong>Say the total.</strong> A donut’s hole is for it; a pie without a total is a shape.</li>
+	<li><strong>Put the figures in the legend</strong>, in mono, so the chart is read in one pass.</li>
+</ul>

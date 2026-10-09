@@ -1,0 +1,33 @@
+---
+title: Backgrounds
+description: Grounds that move, slowly, for the back of a shot — the grid, the golden rectangles, the spiral, dots, a glow, a beam, rings, the twelve columns, grain, a turning gradient. A ground is felt, not watched.
+eyebrow: Content creation · Elements
+source: src/studio/background.css
+---
+<p>A background is the first layer on the timeline and the last thing anyone looks at. Each one here is a <code>span</code> behind everything (<code>im-studio-ground</code>) that moves by exactly one pitch, or one turn of the light, over forty seconds — so the loop has no seam and the eye never catches it moving. Combine two (a pattern and a glow) at most. All stop under reduced motion.</p>
+{{#example flush=true}}
+<div class="frame-grid" style="padding: 1rem">
+	<figure><div class="frame-preview"><div class="im-studio" style="--im-studio-w: 960; --im-studio-h: 540"><span class="im-studio-ground im-studio-ground-grid" style="--im-studio-ground-speed: 8s"></span></div></div><figcaption>im-studio-ground-grid</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-studio-cream" style="--im-studio-w: 960; --im-studio-h: 540"><span class="im-studio-ground im-studio-ground-golden im-bg-golden" style="--im-studio-ground-speed: 8s"></span></div></div><figcaption>im-studio-ground-golden</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-studio-cream" style="--im-studio-w: 960; --im-studio-h: 540"><span class="im-studio-ground im-studio-ground-spiral im-bg-spiral" style="--im-studio-ground-speed: 8s"></span></div></div><figcaption>im-studio-ground-spiral</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio" style="--im-studio-w: 960; --im-studio-h: 540"><span class="im-studio-ground im-studio-ground-dots" style="--im-studio-ground-speed: 8s"></span></div></div><figcaption>im-studio-ground-dots</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-studio-dark" style="--im-studio-w: 960; --im-studio-h: 540"><span class="im-studio-ground im-studio-ground-glow" style="--im-studio-ground-speed: 8s"></span></div></div><figcaption>im-studio-ground-glow</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-studio-dark" style="--im-studio-w: 960; --im-studio-h: 540"><span class="im-studio-ground im-studio-ground-beam" style="--im-studio-ground-speed: 8s"></span></div></div><figcaption>im-studio-ground-beam</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio" style="--im-studio-w: 960; --im-studio-h: 540"><span class="im-studio-ground im-studio-ground-rings" style="--im-studio-ground-speed: 8s"></span></div></div><figcaption>im-studio-ground-rings</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-studio-dark" style="--im-studio-w: 960; --im-studio-h: 540"><span class="im-studio-ground im-studio-ground-columns" style="--im-studio-ground-speed: 8s"></span></div></div><figcaption>im-studio-ground-columns</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-studio-dark" style="--im-studio-w: 960; --im-studio-h: 540"><span class="im-studio-ground im-studio-ground-noise"></span></div></div><figcaption>im-studio-ground-noise</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio" style="--im-studio-w: 960; --im-studio-h: 540"><span class="im-studio-ground im-studio-ground-gradient" style="--im-studio-ground-speed: 8s"></span></div></div><figcaption>im-studio-ground-gradient</figcaption></figure>
+</div>
+{{/example}}
+<p class="im-hint">Sped up here (8s a pitch) so the motion shows; the default is 40s.</p>
+
+<h2>Knobs</h2>
+<div class="im-table-scroll"><table>
+<thead><tr><th>Variable</th><th>Default</th><th></th></tr></thead>
+<tbody>
+<tr><td><code>--im-studio-ground-speed</code></td><td>40s</td><td>One pitch, one turn, one pass.</td></tr>
+<tr><td><code>--im-pattern-size</code></td><td>2em</td><td>The pitch of the grid, the dots, the rings.</td></tr>
+<tr><td><code>--im-pattern-color</code></td><td>8% ink</td><td>The ink. The golden ones carry a fixed ink (an SVG tile) — use <code>opacity</code>.</td></tr>
+<tr><td><code>--im-pattern-at</code></td><td>50% 40%</td><td>Where the glow sits.</td></tr>
+</tbody></table></div>
+<p>The golden ground is the same tile as <a href="/foundation/patterns/"><code>im-bg-golden</code></a> on the page; add that class beside the ground’s so the tile is there, and the ground only moves it. The grid here is the page’s grid; a frame that is measured can draw the twelve columns themselves with <code>im-studio-guides</code>.</p>

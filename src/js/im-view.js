@@ -76,7 +76,10 @@
  */
 (() => {
 	function bind(group, attribute) {
-		const el = document.querySelector(group.dataset[attribute === 'mode' ? 'imMode' : 'imPeriod']);
+		// A bare data-im-period (the dashboard's own switcher) names no target: nothing to drive here.
+		const sel = group.dataset[attribute === 'mode' ? 'imMode' : 'imPeriod'];
+		if (!sel) return;
+		const el = document.querySelector(sel);
 		if (!el) return;
 		group.addEventListener('click', (e) => {
 			const button = e.target.closest('button[value]');

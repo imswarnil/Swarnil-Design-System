@@ -1,0 +1,20 @@
+---
+title: Transitions
+layout: home
+shell: frame
+---
+{{!-- Three shots and two cuts: columns at 2s, the dot at 4.5s. --}}
+<div class="im-studio" style="--im-studio-w: 1920; --im-studio-h: 1080">
+	<div class="im-studio-shot im-studio-scene im-studio-scene-intro">
+		<span class="im-studio-ground im-studio-ground-grid" aria-hidden="true"></span>
+		<div class="im-studio-scene-stage"><h1 class="im-studio-title">Shot <em>one</em></h1></div>
+	</div>
+	<div class="im-studio-shot im-studio-scene im-studio-scene-intro im-studio-dark" data-cut="columns" style="--im-studio-cut-at: 2s">
+		<span class="im-studio-ground im-studio-ground-columns" aria-hidden="true"></span>
+		<div class="im-studio-scene-stage"><h1 class="im-studio-title">Shot <em>two</em> — the columns</h1></div>
+	</div>
+	<div class="im-studio-shot im-studio-scene im-studio-scene-intro im-studio-cream" data-cut="dot" style="--im-studio-cut-at: 4.5s">
+		<span class="im-studio-ground im-studio-ground-golden" aria-hidden="true"></span>
+		<div class="im-studio-scene-stage"><h1 class="im-studio-title">Shot <em>three</em> — the dot</h1></div>
+	</div>
+</div>

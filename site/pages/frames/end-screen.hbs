@@ -1,0 +1,26 @@
+---
+title: End screen
+layout: home
+shell: frame
+---
+{{!-- End screen: 1920 × 1080, the last twenty seconds. Two video slots on the
+	right where YouTube lays its tiles, the subscribe circle on the left. --}}
+<div class="im-studio im-studio-end" style="--im-studio-w: 1920; --im-studio-h: 1080">
+	<span class="im-studio-ground im-studio-ground-golden" aria-hidden="true"></span>
+	<div class="im-studio-copy im-studio-stagger">
+		<p class="im-studio-kicker im-studio-layer" data-in="rise">That was the film</p>
+		<h1 class="im-studio-title im-studio-layer" data-in="line-up">Thanks for <em>watching</em></h1>
+		<p class="im-studio-sub im-studio-layer" data-in="rise">Every Friday at six. The next one is already cut.</p>
+	</div>
+	<div class="im-studio-end-sub im-studio-layer" data-in="pop">
+		<img class="im-studio-face" src="{{demo.me}}" alt="" style="object-position: 62% 30%">
+		<b>Subscribe</b>
+	</div>
+	<div class="im-studio-end-slots im-studio-stagger">
+		<div class="im-studio-end-slot im-studio-layer" data-in="scale"><img src="{{demo.shots.[1]}}" alt=""><span>Next video</span></div>
+		<div class="im-studio-end-slot im-studio-layer" data-in="scale"><img src="{{demo.shots.[3]}}" alt=""><span>Best for you</span></div>
+	</div>
+	<span class="im-studio-note im-studio-note-lg im-studio-at" style="--im-studio-x: 66%; --im-studio-y: 42%; --im-studio-tilt: -6deg">watch this next</span>
+	<svg class="im-studio-arrow im-studio-at" style="--im-studio-x: 76%; --im-studio-y: 50%; width: 3em; --im-studio-tilt: 25deg" viewBox="0 0 100 60" aria-hidden="true"><path d="M4 8c30 10 55 30 90 44"/><path d="M78 56l16-4-6-15"/></svg>
+	<p class="im-studio-mark">{{> "components/logo" mark=true text="Swarnil"}}<span>imswarnil</span></p>
+</div>

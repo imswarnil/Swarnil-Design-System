@@ -1,9 +1,9 @@
 ---
 title: Résumé
 layout: home
-description: A CV as a page of its own — who you are pinned on the left, the career scrolling on the right, the way home and a PDF in the bar. Prints as it reads.
+description: A CV as a page of its own, in two columns — who you are pinned on the left, the career scrolling on the right, the way home and a PDF in the bar. Prints as the same two columns on A4.
 eyebrow: Pages
-source: src/layout/solo.css · src/components/pages.css
+source: src/components/resume.css · src/layout/solo.css
 ---
 <section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Pages · {{page.title}}</p>
@@ -12,11 +12,27 @@ source: src/layout/solo.css · src/components/pages.css
 </section>
 
 <section class="im-section im-wrap-wide">
-	<p class="im-cluster"><a class="im-btn im-btn-primary im-btn-sm" href="/demos/resume/">Open full screen {{icon "arrow-up-right"}}</a><span class="im-hint">A page of its own: <code>im-solo-split</code>, the way home in the bar, a PDF beside it.</span></p>
+	<p class="im-cluster"><a class="im-btn im-btn-primary im-btn-sm" href="/demos/resume/">Open full screen {{icon "arrow-up-right"}}</a><span class="im-hint">A page of its own: <code>im-solo</code> for the bar and the foot, <code>im-cv</code> for the two columns.</span></p>
 	<iframe class="demo-frame im-demo-tall" src="/demos/resume/" title="The résumé" loading="lazy"></iframe>
 	<iframe class="demo-frame im-max-sm im-mx-auto im-block im-demo-tall" src="/demos/resume/" title="The résumé on a phone" loading="lazy"></iframe>
 </section>
 
 <section class="im-section im-wrap"><div class="im-prose">
-<p>Who you are stays pinned on the left — name, what you do, whether you are free, how to reach you, what you are good at. The story scrolls on the right: four numbers, then numbered sections. On a phone the panel is a band at the top. <code>PDF</code> prints it; the print rules drop the bar and let the panel go.</p>
+<h2>The two columns</h2>
+<p><strong>Who you are</strong> is the side, four columns of the twelve, pinned under the bar: the photograph, the wordmark and the name, the role in one line, whether you are free, how to reach you, and the blocks — skills as bars, tools as chips, certifications and languages as rows with the year or the level on the right. <strong>The career</strong> is the main: four numbers at a glance, then numbered sections — summary, experience, education, selected projects (the repo cards), talks and writing, what people said.</p>
+<p>A role is one row: the dates on the left in the mono face (the current one carries the dot), the title, the company and place, three achievements with a number in each, and the stack as chips. Three bullets, not seven — a recruiter reads the first and skims the rest.</p>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Class</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>im-cv</code></td><td>The two columns, on the grid: the side is <code>--im-cv-side</code>, four columns.</td></tr>
+		<tr><td><code>im-cv-side</code></td><td>Sticky under the bar. <code>im-cv-photo</code> · <code>im-cv-name</code> · <code>im-cv-role</code> · <code>im-cv-status</code> (<code>data-state</code>: available · booked · closed) · <code>im-cv-contact</code> · <code>im-cv-blocks</code> &gt; <code>im-cv-block</code> (<code>im-cv-bar</code>, <code>im-cv-chips</code>).</td></tr>
+		<tr><td><code>im-cv-main</code></td><td><code>im-cv-glance</code>, then <code>im-cv-section</code> with <code>h2[data-n]</code>.</td></tr>
+		<tr><td><code>im-cv-jobs</code> · <code>im-cv-job</code></td><td>Experience. <code>time.im-cv-when</code> · <code>h3</code> · <code>small</code> · <code>ul</code> · chips. <code>data-state="current"</code> wears the dot.</td></tr>
+		<tr><td><code>im-cv-list</code></td><td>Education, talks, writing: a date, a title, a line, a link at the end.</td></tr>
+	</tbody>
+</table>
+</div>
+<h2>Narrow, and on paper</h2>
+<p>Under 64rem the side becomes a band across the top — photograph beside the name, the blocks in a row under them — and the career follows. Under 48rem everything is one column. <code>PDF</code> prints it: the bar and the foot go, the side lets go of the window and becomes the left column of an A4 sheet, the accent survives, and no role, section or card is cut by a page break.</p>
 </div></section>

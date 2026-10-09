@@ -1,0 +1,118 @@
+---
+title: Lines & areas
+description: A trend — one or a few series, many points. The curve is drawn by im-charts.js from the numbers in the markup; the points are buttons, so a keyboard reaches each one and its readout. A sparkline when there is no room.
+eyebrow: Data visualisation
+source: src/viz/line.css · src/js/im-charts.js
+---
+<h2>Line</h2>
+<p>The one chart that needs the script. Write the numbers as <code>&lt;data&gt;</code> elements inside <code>im-chart-line</code> — one per series, the labels on the element — and <code>im-charts.js</code> builds the plot: the y ticks on a round scale, the curve stretched to the box with its stroke kept at one width, the x labels, and a button at every point. Hover the area and the points appear; focus one and it speaks. Without the script the element shows nothing but its label, which is the numbers.</p>
+{{#example}}
+<figure class="im-chart">
+	<div class="im-chart-head"><p class="im-chart-title">Readers</p><p class="im-chart-sub">thousands, 2026</p>
+		<div class="im-legend im-legend-row im-legend-dots im-chart-tools" data-im-legend>
+			<button class="im-legend-toggle" type="button" data-series="1" aria-pressed="true">Readers</button>
+			<button class="im-legend-toggle" type="button" data-series="2" aria-pressed="true">Members</button>
+		</div>
+	</div>
+	<div class="im-chart-line" data-im-labels="{{#each demo.viz.months}}{{this}}{{#unless @last}},{{/unless}}{{/each}}" data-im-area data-im-unit="k" data-im-reveal="none">
+		<data value="{{#each demo.viz.readers}}{{this}}{{#unless @last}},{{/unless}}{{/each}}" data-name="Readers"></data>
+		<data value="{{#each demo.viz.members}}{{this}}{{#unless @last}},{{/unless}}{{/each}}" data-name="Members"></data>
+	</div>
+	<figcaption class="im-chart-note">Readers tripled over the year; members followed at about a sixth of them.</figcaption>
+</figure>
+{{/example}}
+{{{{code "html"}}}}
+<figure class="im-chart">
+	<div class="im-chart-head">
+		<p class="im-chart-title">Readers</p><p class="im-chart-sub">thousands, 2026</p>
+		<div class="im-legend im-legend-row im-legend-dots im-chart-tools" data-im-legend>
+			<button class="im-legend-toggle" type="button" data-series="1" aria-pressed="true">Readers</button>
+			<button class="im-legend-toggle" type="button" data-series="2" aria-pressed="true">Members</button>
+		</div>
+	</div>
+	<div class="im-chart-line" data-im-labels="Jan,Feb,Mar,…" data-im-area data-im-unit="k" data-im-reveal="none">
+		<data value="4.1,4.6,5.2,…" data-name="Readers"></data>
+		<data value="0.3,0.4,0.5,…" data-name="Members"></data>
+	</div>
+</figure>
+{{{{/code}}}}
+<div class="im-table-scroll"><table>
+<thead><tr><th>Attribute</th><th></th></tr></thead>
+<tbody>
+<tr><td><code>data-im-labels</code></td><td>The x labels, comma-separated. As many as the longest series.</td></tr>
+<tr><td><code>data-im-line="Jan:4,Feb:8"</code></td><td>One series as label:value pairs, instead of <code>&lt;data&gt;</code> children.</td></tr>
+<tr><td><code>data-im-area</code></td><td>Fills under each line, faintly.</td></tr>
+<tr><td><code>data-im-step</code></td><td>Joins the points with steps — for a count that changes at moments, not between them.</td></tr>
+<tr><td><code>data-im-max</code> · <code>data-im-min</code></td><td>The top and bottom of the axis. By default the bottom is zero and the top is the next round number above the data.</td></tr>
+<tr><td><code>data-im-unit</code></td><td>Printed after every figure: <code>k</code>, <code>%</code>, <code>ms</code>.</td></tr>
+<tr><td><code>data-im-rows</code></td><td>Gridlines (4).</td></tr>
+<tr><td><code>data-im-bare</code></td><td>No y axis — a line in a card.</td></tr>
+<tr><td><code>data-im-reveal="none"</code></td><td>The line draws itself in when scrolled to.</td></tr>
+<tr><td><code>im-chart-line-dots</code></td><td>Every point shown, not only on hover.</td></tr>
+</tbody></table></div>
+
+<h2>Step, and a reference line</h2>
+<p>A step line for something that changes at moments — a price, a member count — and <code>im-chart-ref</code> for a line across the plot at <code>--v</code>: a target, an average, a limit. A band (<code>im-chart-band</code>, <code>--from</code> to <code>--to</code>) shades a stretch of the x axis: a forecast, a holiday. Both go inside the area, which the page writes by hand when it has things to add to it.</p>
+{{#example}}
+<figure class="im-chart">
+	<div class="im-chart-head"><p class="im-chart-title">Members</p><p class="im-chart-sub">at the end of each month</p></div>
+	<div class="im-chart-line" data-im-labels="{{#each demo.viz.months}}{{this}}{{#unless @last}},{{/unless}}{{/each}}" data-im-step data-im-max="2" data-im-unit="k">
+		<data value="{{#each demo.viz.members}}{{this}}{{#unless @last}},{{/unless}}{{/each}}" data-name="Members"></data>
+		<div class="im-chart-plot" style="--im-chart-rows: 4">
+			<div class="im-chart-y" data-im-y aria-hidden="true"></div>
+			<div class="im-chart-area" data-im-area-box>
+				<div class="im-chart-band" style="--from: 75%; --to: 100%"></div>
+				<div class="im-chart-ref" style="--v: .75" data-label="goal 1.5k"></div>
+			</div>
+			<div class="im-chart-x" data-im-x aria-hidden="true"></div>
+		</div>
+	</div>
+</figure>
+{{/example}}
+<p class="im-hint">When a page lays out the plot itself, mark the parts — <code>data-im-y</code>, <code>data-im-area-box</code>, <code>data-im-x</code> — inside the <code>im-chart-line</code>, and the script fills those instead of making its own.</p>
+
+<h2>Scatter</h2>
+<p>Two measures, one point per thing. Each point is a button that says both numbers; a second <code>&lt;data&gt;</code> is a second series in the next colour.</p>
+{{#example}}
+<figure class="im-chart">
+	<div class="im-chart-head"><p class="im-chart-title">Words against readers</p><p class="im-chart-sub">per post, thousands</p>
+		<ul class="im-legend im-legend-row im-legend-dots im-chart-tools"><li style="--c: var(--im-viz-1)">Journal</li><li style="--c: var(--im-viz-2)">Newsletter</li></ul>
+	</div>
+	<div class="im-chart-scatter" data-im-max="14" data-im-max-x="2400" data-im-reveal="none">
+		<data value="{{demo.viz.scatter}}" data-name="Journal"></data>
+		<data value="{{demo.viz.scatter2}}" data-name="Newsletter"></data>
+	</div>
+	<figcaption class="im-chart-note">Longer posts are read more, up to about two thousand words.</figcaption>
+</figure>
+{{/example}}
+{{{{code "html"}}}}
+<div class="im-chart-scatter" data-im-max="14" data-im-max-x="2400">
+	<data value="820:4.1,1200:6.2,640:3.4,…" data-name="Journal"></data>
+	<data value="600:2.0,900:3.1,…" data-name="Newsletter"></data>
+</div>
+{{{{/code}}}}
+
+<h2>Sparkline</h2>
+<p>A trend with no axes, for beside a figure: <code>&lt;svg class="im-spark" data-im-spark="4,8,6,…"&gt;</code>. It scales to the SVG’s own box, so size it with CSS — <code>im-spark-wide</code> fills the width. <code>data-im-area</code> fills under the line. The last point gets the dot.</p>
+{{#example center=true}}
+<span class="inline-flex items-center gap-3 text-sm">Readers <svg class="im-spark" data-im-spark="3,5,4,7,6,9,8,12"></svg> <strong>+12%</strong></span>
+<span class="inline-flex items-center gap-3 text-sm">Churn <svg class="im-spark" data-im-spark="9,8,8,6,7,5,4,3" style="--im-chart-color: var(--im-success)"></svg> <strong>−4%</strong></span>
+<span class="inline-flex items-center gap-3 text-sm">Open rate <svg class="im-spark" data-im-spark="48,46,45,44,45,43,42,41" style="--im-chart-color: var(--im-viz-2)"></svg> <strong>41%</strong></span>
+{{/example}}
+{{#example}}
+<svg class="im-spark im-spark-wide" data-im-spark="4,6,5,9,8,12,10,15,13,18,16,22,19,26" data-im-area aria-label="Readers, last 14 weeks: from 4 thousand to 26 thousand"></svg>
+{{/example}}
+
+<h2>In a card</h2>
+<p>With <code>data-im-bare</code> the line has no y axis and fills whatever it is in — a stat tile, a widget. The figure beside it is the axis.</p>
+{{#example}}
+<div class="im-stat-tiles">
+	{{#each demo.viz.glance}}{{#match @index "<" 2}}
+	<div class="im-stat-tile">
+		<p class="im-caption" data-index="0{{@index}}">{{label}}</p>
+		<div class="im-stat"><span class="im-stat-figure" data-im-count="{{count}}">{{figure}}</span><span class="im-stat-delta" data-trend="{{trend}}">{{#match trend "down"}}{{> "icons/trending-down"}}{{else}}{{> "icons/trending-up"}}{{/match}} {{delta}}</span></div>
+		<div class="im-chart-line" data-im-bare data-im-area data-im-rows="2" style="--im-chart-height: 4rem" data-im-labels="w1,w2,w3,w4,w5,w6,w7,w8,w9,w10"><data value="{{spark}}" data-name="{{label}}"></data></div>
+	</div>
+	{{/match}}{{/each}}
+</div>
+{{/example}}

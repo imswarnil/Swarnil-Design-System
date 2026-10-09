@@ -19,7 +19,7 @@
 	<a class="im-btn im-btn-ink skip-link" href="#main">{{t "Skip to content"}}</a>
 
 	<div class="im-shell">
-		{{#> "shell/topbar" search_custom=true github="https://github.com/imswarnil/Swarnil-Design-System"}}
+		{{#> "shell/topbar" search_custom=true brand="Swarnil" github="https://github.com/imswarnil/Swarnil-Design-System"}}
 			<span class="im-badge im-badge-outline max-sm:hidden">v{{version}}</span>
 			<button class="im-btn im-btn-ghost im-btn-icon" type="button" data-im-guides-toggle aria-pressed="true" aria-label="{{t "Show or hide the grid"}}" title="{{t "Show or hide the grid"}}">{{> "icons/grid-3x3"}}</button>
 		{{/"shell/topbar"}}
@@ -39,7 +39,7 @@
 
 	<dialog class="im-navpanel" id="drawer" aria-label="{{t "Navigation"}}">
 		<div class="im-navpanel-head">
-			<a class="im-brand" href="/">{{> "components/logo" text=name size="1.375rem"}}</a>
+			<a class="im-brand" href="/">{{> "components/logo" mark=true text="Swarnil" size="1.375rem" class="im-brand-icon"}}<span class="im-brand-name">{{name}}</span></a>
 			<button class="im-btn im-btn-ghost im-btn-icon" type="button" data-drawer-close aria-label="{{t "Close"}}">{{> "icons/x"}}</button>
 		</div>
 		<nav class="im-navpanel-nav" aria-label="{{t "Documentation"}}">{{> "docs/nav-panel"}}</nav>

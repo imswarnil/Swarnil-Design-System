@@ -1,0 +1,59 @@
+---
+title: Data visualisation
+description: Numbers and the charts that explain them — one palette off the accent, hairlines for axes, the dot for a point, Geist Mono for every figure. Enough to build a dashboard, all of it drawn from tokens.
+eyebrow: Data visualisation
+source: src/viz/ · src/js/im-charts.js
+---
+<p>A chart here is for a <strong>glance</strong>: a trend, a share, a comparison of a few things, read in the time it takes to read a sentence. Everything in this section is built from the system’s own tokens — the series take the accent and the collection hues, the axes are the hairline, the figures are Geist Mono with tabular numerals — so a chart on a page looks like it belongs to the page, and dark mode is free. Most of it is pure CSS; the one thing CSS cannot draw, a line, is a 6 KB script.</p>
+
+<h2>What is here</h2>
+<div class="im-table-scroll"><table>
+<thead><tr><th>Page</th><th>For</th><th>Classes</th></tr></thead>
+<tbody>
+<tr><td><a href="/data/bars/">Bars &amp; columns</a></td><td>Comparing a few things, or one thing over time.</td><td><code>im-chart</code> · <code>im-chart-cols</code> · <code>im-bars</code> · <code>im-hbars</code> · <code>im-chart-bullet</code></td></tr>
+<tr><td><a href="/data/lines/">Lines &amp; areas</a></td><td>A trend. Many points, one or a few series.</td><td><code>im-chart-line</code> · <code>im-chart-scatter</code> · <code>im-spark</code></td></tr>
+<tr><td><a href="/data/parts/">Parts of a whole</a></td><td>Shares. Three slices, five at most.</td><td><code>im-chart-pie</code> · <code>im-ring</code> · <code>im-chart-gauge</code> · <code>im-chart-waffle</code></td></tr>
+<tr><td><a href="/data/grids/">Grids &amp; maps</a></td><td>Two dimensions at once; a year of days; a hierarchy; a funnel.</td><td><code>im-chart-heat</code> · <code>im-chart-cal</code> · <code>im-chart-matrix</code> · <code>im-chart-treemap</code> · <code>im-chart-funnel</code></td></tr>
+<tr><td><a href="/data/legend/">Legend, filters &amp; tooltips</a></td><td>What sits around a chart: the key, a readout, the controls.</td><td><code>im-legend</code> · <code>im-legend-toggle</code> · <code>im-viz-chip</code> · <code>im-viz-range</code></td></tr>
+<tr><td><a href="/data/numbers/">Numbers &amp; tables</a></td><td>A figure and how it moved; a table that is always right.</td><td><code>im-stat</code> · <code>im-stat-tiles</code> · <code>im-viz-table</code></td></tr>
+<tr><td><a href="/data/dashboard/">Dashboard</a></td><td>All of it, on the twelve columns.</td><td><code>im-dash</code> · <code>im-dash-panel</code> · <code>im-dash-side</code></td></tr>
+</tbody></table></div>
+
+<h2>Which chart</h2>
+<ul>
+	<li><strong>How much, of a few things</strong> — columns, or a ranking when the labels are long.</li>
+	<li><strong>How it changed</strong> — a line; an area when the amount matters more than the slope; a sparkline when there is no room.</li>
+	<li><strong>What share</strong> — a donut for three slices, a waffle for one share of a hundred, a ranking for more than five slices. A pie with eight slices is a ranking that has been folded.</li>
+	<li><strong>When, across a week or a year</strong> — a heatmap or the calendar.</li>
+	<li><strong>How two things relate</strong> — a scatter.</li>
+	<li><strong>Exactly</strong> — a table. Every chart on these pages is also its numbers, in an <code>aria-label</code> and in the markup, and a table is the honest form of all of them.</li>
+</ul>
+
+<h2>One palette</h2>
+<p>Six series colours, read from the accent so a theme that changes its accent changes its charts. One is the accent, two is the ink; three to six are collection hues, which already sit apart from one another. Set <code>data-series="n"</code> on a series (or <code>--c</code> on one element) to pick.</p>
+{{#example}}
+<ul class="im-legend im-legend-row">
+	<li style="--c: var(--im-viz-1)">--im-viz-1<b>accent</b></li>
+	<li style="--c: var(--im-viz-2)">--im-viz-2<b>ink</b></li>
+	<li style="--c: var(--im-viz-3)">--im-viz-3<b>project</b></li>
+	<li style="--c: var(--im-viz-4)">--im-viz-4<b>tag</b></li>
+	<li style="--c: var(--im-viz-5)">--im-viz-5<b>newsletter</b></li>
+	<li style="--c: var(--im-viz-6)">--im-viz-6<b>course</b></li>
+</ul>
+{{/example}}
+<p>A sequential scale — a heatmap, a treemap — is the one colour mixed into the track by the value, so <em>more</em> is always <em>more of the accent</em>. A chart never names a hue of its own: <code>--im-chart-color</code> is series one, and that is the only knob a page should need.</p>
+
+<h2>Numbers</h2>
+<ul>
+	<li><strong>Geist Mono, tabular figures</strong>, everywhere a number sits in a column or ticks an axis — so digits line up and a counting figure does not jitter.</li>
+	<li><strong>Short where the axis is short</strong>: <code>12k</code>, <code>1.2M</code>, never <code>12,480</code> on a tick. The script does this for a line’s axis; a page does it by hand for columns.</li>
+	<li><strong>The axis starts at zero</strong> for anything that is an amount. A line that measures a rate may start where the data starts, and says so in its note.</li>
+	<li><strong>A value is a share</strong>: every bar, cell and slice reads <code>--v</code> from 0 to 1, scaled by the page against the top of its own axis. The chart does no arithmetic it would have to guess at.</li>
+</ul>
+
+<h2>Honest limits</h2>
+<ul>
+	<li>No zoom, no brushing, no live data. For something a reader will <em>study</em>, embed a charting library and style it with the same tokens (<code>--im-viz-1…6</code>, <code>--im-viz-line</code>, <code>--im-font-mono</code>) so it belongs.</li>
+	<li>Every chart carries <code>role="img"</code> and an <code>aria-label</code> that <strong>says the numbers</strong>; the points of a line are buttons a keyboard can reach, and each one speaks its value.</li>
+	<li>Where a reader needs the figures, put the table beside the chart. It is on <a href="/data/numbers/">Numbers &amp; tables</a>.</li>
+</ul>

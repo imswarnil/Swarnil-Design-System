@@ -1,72 +1,157 @@
 ---
 title: Logo
-description: One idea in two lockups — letters, and a dot at the top right of the last one. It is set in the brand typeface as live text, not drawn as a picture, so it is sharp at any size, follows the theme and weighs nothing.
+description: The S and the dot. One idea in two lockups — the square, which is the brand, and the wordmark, which is the same pair with the name between. Live text in Geist, so it is sharp at any size, follows the theme and weighs nothing; and it moves, because the dot is a recording light.
 eyebrow: Foundation
 source: src/components/logo.css · partials/components/logo.hbs · assets/brand/mark.svg
 ---
-{{#example center=true surface=true style="padding-block: 3rem"}}
-<span class="im-logo" style="--im-logo-size: 4.5rem"><b class="im-logo-type">Im</b><i class="im-logo-dot"></i></span>
+{{#example center=true surface=true style="padding-block: 3rem; gap: 3rem"}}
+{{> "components/logo" mark=true text="Swarnil" size="3xl"}}
+{{> "components/logo" text="Swarnil" size="2xl"}}
 {{/example}}
 
-<p>The dot is a <strong>recording light</strong>: the site is on air, somebody is publishing. It sits at the <em>cap line</em> of the last letter, never above it and never beside its middle, and it is the accent — so the one coloured thing in the header is the same colour as the one coloured thing everywhere else.</p>
-
-<h2>The wordmark</h2>
-<p>Any name. The dot lands on the last letter whatever that letter is: the shoulder of an <b>l</b>, the right stem of an <b>m</b>, the bowl of an <b>o</b>.</p>
-{{#example center=true}}
-<span class="im-logo" style="--im-logo-size: 2.75rem"><b class="im-logo-type">Swarnil</b><i class="im-logo-dot"></i></span>
-<span class="im-logo" style="--im-logo-size: 2.75rem"><b class="im-logo-type">Im</b><i class="im-logo-dot"></i></span>
-<span class="im-logo" style="--im-logo-size: 2.75rem"><b class="im-logo-type">Studio</b><i class="im-logo-dot"></i></span>
-{{/example}}
-{{{{code "hbs"}}}}
-{{> "components/logo"}}                    {{!-- the site's title --}}
-{{> "components/logo" text="Swarnil"}}
-{{> "components/logo" size="3rem" live=true}}
-{{{{/code}}}}
+<p>The brand is the <strong>square</strong>: a capital S and a dot at its cap line, centred on a tile <em>as one group</em>. The dot is a <strong>recording light</strong> — the site is on air, somebody is publishing — and it is the accent, so the one coloured thing in the header is the same colour as the one coloured thing everywhere else. The <strong>wordmark</strong> is the same pair with the rest of the name between them: the dot lands on the last letter whatever that letter is.</p>
 
 <h2>The square</h2>
-<p>The first letter on a tile, with the same dot in the same place. For a favicon, an avatar, an island bar, an app icon, a phone — anywhere the name will not fit. The radius is a <strong>share of the tile</strong> (28%), so the shape holds at 20px and at 200px; a fixed radius makes a small mark look square and a large one look like a pill.</p>
+<p>The first letter on a tile, with the dot at its top right, and the pair centred on the tile as a group — not the letter alone, which is what the favicon, the profile art and every export now agree on. The radius is a <strong>share of the tile</strong> (26%), so the shape holds at 16px and at 800px; a fixed radius makes a small mark look square and a large one look like a pill.</p>
 {{#example center=true}}
-<span class="im-logo im-logo-mark" style="--im-logo-size: 5rem"><b class="im-logo-type">I</b><i class="im-logo-dot"></i></span>
-<span class="im-logo im-logo-mark im-logo-outline" style="--im-logo-size: 5rem"><b class="im-logo-type">S</b><i class="im-logo-dot"></i></span>
-<span class="im-logo im-logo-mark im-logo-accent" style="--im-logo-size: 5rem"><b class="im-logo-type">S</b><i class="im-logo-dot"></i></span>
+{{> "components/logo" mark=true text="Swarnil" size="xl"}}
+{{> "components/logo" mark=true text="Swarnil" size="xl" class="im-logo-outline"}}
+{{> "components/logo" mark=true text="Swarnil" size="xl" class="im-logo-accent"}}
+<span class="im-logo-stage" style="--im-logo-cut: url({{demo.shots.[1]}})"><span class="im-logo-stage-ground"></span>{{> "components/logo" mark=true text="Swarnil" size="xl" class="im-logo-canvas"}}</span>
 {{/example}}
+{{{{code "hbs"}}}}
+{{> "components/logo" mark=true}}                        {{!-- the site's initial --}}
+{{> "components/logo" mark=true text="Swarnil" size="xl"}}
+{{> "components/logo" mark=true text="Swarnil" class="im-logo-accent"}}
+{{{{/code}}}}
 <div class="im-table-scroll">
 <table>
 	<thead><tr><th>Class</th><th></th></tr></thead>
 	<tbody>
 		<tr><td><code>im-logo</code></td><td>The lockup. On its own it is the wordmark.</td></tr>
-		<tr><td><code>im-logo-mark</code></td><td>The square: ink tile, canvas letter.</td></tr>
+		<tr><td><code>im-logo-mark</code></td><td>The square: ink tile, canvas letter, the pair centred.</td></tr>
 		<tr><td>… <code>im-logo-outline</code></td><td>A ruled tile, for a light surface that already has a fill.</td></tr>
 		<tr><td>… <code>im-logo-accent</code></td><td>The accent tile. The dot turns white, because a dot in the accent on the accent is not a dot.</td></tr>
-		<tr><td><code>im-logo-live</code></td><td>The dot pulses, the way a recording light does. It stands down under <code>prefers-reduced-motion</code>.</td></tr>
+		<tr><td>… <code>im-logo-canvas</code></td><td>A canvas tile, for a dark picture or an inverted footer.</td></tr>
+		<tr><td><code>im-logo-live</code></td><td>The dot breathes, the way a recording light does. It stands down under <code>prefers-reduced-motion</code>.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>The wordmark</h2>
+<p>Any name. The dot lands on the last letter whatever that letter is: the shoulder of an <b>l</b>, the right stem of an <b>m</b>, the bowl of an <b>o</b>.</p>
+{{#example center=true}}
+{{> "components/logo" text="Swarnil" size="lg"}}
+{{> "components/logo" text="Im" size="lg"}}
+{{> "components/logo" text="Studio" size="lg"}}
+{{/example}}
+
+<h2 id="sizes">Sizes</h2>
+<p>Everything inside the lockup is in <code>em</code>, so one length scales all of it — the type, the dot, the gap, the tile, its radius. The scale is seven classes; a length still works for a one-off.</p>
+{{#example center=true}}
+{{> "components/logo" mark=true text="Swarnil" size="xs"}}
+{{> "components/logo" mark=true text="Swarnil" size="sm"}}
+{{> "components/logo" mark=true text="Swarnil" size="md"}}
+{{> "components/logo" mark=true text="Swarnil" size="lg"}}
+{{> "components/logo" mark=true text="Swarnil" size="xl"}}
+{{> "components/logo" mark=true text="Swarnil" size="2xl"}}
+{{> "components/logo" mark=true text="Swarnil" size="3xl"}}
+{{/example}}
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Class</th><th>Height</th><th>Where</th></tr></thead>
+	<tbody>
+		<tr><td><code>im-logo-xs</code></td><td>1rem · 16px</td><td>A favicon, a tab, a line of text.</td></tr>
+		<tr><td><code>im-logo-sm</code></td><td>1.25rem · 20px</td><td>A chip, a footer line, a card’s corner.</td></tr>
+		<tr><td><code>im-logo-md</code></td><td>1.625rem · 26px</td><td>The top bar. The default.</td></tr>
+		<tr><td><code>im-logo-lg</code></td><td>2.5rem · 40px</td><td>A footer, an author card, a frame’s mark.</td></tr>
+		<tr><td><code>im-logo-xl</code></td><td>4rem · 64px</td><td>A hero, a sign-in panel.</td></tr>
+		<tr><td><code>im-logo-2xl</code></td><td>6rem · 96px</td><td>A cover, a loading screen.</td></tr>
+		<tr><td><code>im-logo-3xl</code></td><td>9rem · 144px</td><td>A poster, the sting.</td></tr>
+	</tbody>
+</table>
+</div>
+<p>For a file — an app icon, a social avatar, a store listing — the square at <a href="/frames/profile-art-mark/">800 × 800</a> is a frame; <code>npm run frames profile-art-mark</code> writes the PNG, and any size under that is a resample of it. The favicon is the one drawn exception, below.</p>
+
+<h2 id="motion">Motion</h2>
+<p>The dot is a light, so the logo can do what a light does: switch on. Five, each a class on the lockup (or <code>anim=</code> on the partial), each playing once on load — a hero, a sign-in, a loading screen, the first frame of a film. All stand down under reduced motion.</p>
+{{#example center=true style="gap: 3rem 4rem"}}
+<div data-replay class="im-cluster" style="--im-cluster-gap: 3rem 4rem; justify-content: center">
+	{{> "components/logo" text="Swarnil" size="xl" anim="type-in"}}
+	{{> "components/logo" text="Swarnil" size="xl" anim="drop"}}
+	{{> "components/logo" text="Swarnil" size="xl" anim="reveal"}}
+	{{> "components/logo" text="Swarnil" size="xl" anim="morph"}}
+	{{> "components/logo" mark=true text="Swarnil" size="xl" anim="states"}}
+</div>
+{{/example}}
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Class</th><th>What happens</th></tr></thead>
+	<tbody>
+		<tr><td><code>im-logo-type-in</code></td><td>The letters arrive one after another, up through the baseline; the dot pops in after the last. Needs <code>data-im-split="chars"</code> on the type (the partial adds it) and <code>im-motion.js</code>.</td></tr>
+		<tr><td><code>im-logo-drop</code></td><td>The dot falls onto the cap line, bounces once, settles. The letters are already there: the light switching on is the whole event.</td></tr>
+		<tr><td><code>im-logo-reveal</code></td><td>The word rises through a slot cut on its own baseline; the dot blinks on at the end.</td></tr>
+		<tr><td><code>im-logo-morph</code></td><td>Wordmark → square → wordmark, forever: the letters after the S fold away while a tile grows behind the pair, then it all comes back. One element that knows how to be both lockups, so an intro can open on the name and close on the mark.</td></tr>
+		<tr><td><code>im-logo-states</code></td><td>The dot cycles through what a recorder has: record (the dot), play (a triangle), stop (a square), record. A clip-path morph, in the accent throughout.</td></tr>
+	</tbody>
+</table>
+</div>
+<p>Composed on a frame’s clock, the same beats are the <a href="/content-creation/elements/logo/">logo sting</a>: three seconds, the first frame of every film.</p>
+{{{{code "hbs"}}}}
+{{> "components/logo" text="Swarnil" size="xl" anim="drop"}}
+{{> "components/logo" mark=true text="Swarnil" anim="states"}}
+{{{{/code}}}}
+
+<h2 id="cut-out">Cut out</h2>
+<p>Two ways for the letters to be a window instead of ink. <code>im-logo-cutout</code> fills the letters with whatever <code>--im-logo-cut</code> holds — a gradient, a pattern, a photograph — and drifts it slowly so the window is felt to be one; <code>--im-logo-cut-opacity</code> says how strong it is and <code>--im-logo-cut-blend</code> how it meets what is under it. The dot stays solid: a light does not have a picture in it. <code>im-logo-knockout</code> is the other way round: the tile is solid and the letters are <em>holes</em> in it — a white tile with black letters, screened over the ground, so the black becomes a window. It needs something behind it; <code>im-logo-stage</code> is that something, with the picture or pattern as its ground.</p>
+{{#example center=true surface=true style="gap: 2rem 3rem"}}
+<span class="im-logo-stage" style="--im-logo-cut: url({{demo.shots.[0]}})"><span class="im-logo-stage-ground"></span>{{> "components/logo" text="Swarnil" size="xl" cut=true}}</span>
+<span class="im-logo-stage" style="--im-logo-cut: url({{demo.shots.[3]}}); --im-logo-cut-opacity: .75; --im-logo-cut-blend: luminosity"><span class="im-logo-stage-ground"></span>{{> "components/logo" mark=true text="Swarnil" size="2xl" class="im-logo-knockout"}}</span>
+<span class="im-logo-stage im-bg-golden" style="--im-logo-cut: none"><span class="im-logo-stage-ground"></span>{{> "components/logo" mark=true text="Swarnil" size="2xl" class="im-logo-knockout"}}</span>
+{{> "components/logo" text="Swarnil" size="xl" cut=true}}
+{{/example}}
+{{{{code "html"}}}}
+<!-- the letters filled with a picture, drifting -->
+<span class="im-logo im-logo-cutout im-logo-xl" style="--im-logo-cut: url(cover.jpg); --im-logo-cut-opacity: .9; --im-logo-cut-blend: multiply">
+	<b class="im-logo-type">Swarnil</b><i class="im-logo-dot"></i>
+</span>
+
+<!-- the tile with the letter cut out of it, on a stage that holds the ground -->
+<span class="im-logo-stage" style="--im-logo-cut: url(cover.jpg)">
+	<span class="im-logo-stage-ground"></span>
+	<span class="im-logo im-logo-mark im-logo-knockout im-logo-2xl"><b class="im-logo-type">S</b><i class="im-logo-dot"></i></span>
+</span>
+{{{{/code}}}}
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Variable</th><th>Default</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>--im-logo-cut</code></td><td>ink → accent gradient</td><td>What shows through the letters. Any image: a gradient, <code>url()</code>, or an <code>im-bg-*</code> pattern class on the type itself.</td></tr>
+		<tr><td><code>--im-logo-cut-opacity</code></td><td>1</td><td>How strong the window is.</td></tr>
+		<tr><td><code>--im-logo-cut-blend</code></td><td>normal</td><td>How it meets what is under it: multiply, screen, luminosity, overlay…</td></tr>
+		<tr><td><code>--im-logo-cut-speed</code></td><td>24s</td><td>One drift across and back.</td></tr>
 	</tbody>
 </table>
 </div>
 
 <h2>On air</h2>
-<p>The ring is drawn <strong>outside</strong> the dot with a <code>box-shadow</code>, so it cannot change the lockup's size and cannot move a letter by a pixel while it breathes. Use it on a site that is genuinely publishing something now — a live blog, a stream — and nowhere else; a light that is always on is not a light.</p>
+<p>The ring is drawn <strong>outside</strong> the dot with a <code>box-shadow</code>, so it cannot change the lockup’s size and cannot move a letter by a pixel while it breathes. Use it on a site that is genuinely publishing something now — a live blog, a stream — and nowhere else; a light that is always on is not a light.</p>
 {{#example center=true}}
-<span class="im-logo im-logo-live" style="--im-logo-size: 3rem"><b class="im-logo-type">Im</b><i class="im-logo-dot"></i></span>
-<span class="im-logo im-logo-mark im-logo-live" style="--im-logo-size: 3rem"><b class="im-logo-type">I</b><i class="im-logo-dot"></i></span>
+{{> "components/logo" text="Swarnil" size="lg" live=true}}
+{{> "components/logo" mark=true text="Swarnil" size="lg" live=true}}
 {{/example}}
 
-<h2>One knob</h2>
-<p>Everything inside the lockup is in <code>em</code>, so a single length scales all of it — the type, the dot, the gap, the tile, its radius. Nothing else needs touching to put the logo in a 20px bar or on a 200px cover.</p>
-{{#example center=true}}
-<span class="im-logo" style="--im-logo-size: 1.25rem"><b class="im-logo-type">Im</b><i class="im-logo-dot"></i></span>
-<span class="im-logo" style="--im-logo-size: 2rem"><b class="im-logo-type">Im</b><i class="im-logo-dot"></i></span>
-<span class="im-logo" style="--im-logo-size: 3.25rem"><b class="im-logo-type">Im</b><i class="im-logo-dot"></i></span>
-<span class="im-logo" style="--im-logo-size: 5rem"><b class="im-logo-type">Im</b><i class="im-logo-dot"></i></span>
-{{/example}}
+<h2>Knobs</h2>
 <div class="im-table-scroll">
 <table>
 	<thead><tr><th>Variable</th><th>Default</th><th></th></tr></thead>
 	<tbody>
-		<tr><td><code>--im-logo-size</code></td><td>1.625rem</td><td>The height of the lockup. The only one you normally set.</td></tr>
+		<tr><td><code>--im-logo-size</code></td><td>1.625rem</td><td>The height of the lockup. The only one you normally set — or one of the size classes.</td></tr>
 		<tr><td><code>--im-logo-dot</code></td><td>0.235em</td><td>The dot, against the type size.</td></tr>
 		<tr><td><code>--im-logo-gap</code></td><td>0.085em</td><td>Between the last letter and the dot. Tight: the dot belongs <em>to</em> the word.</td></tr>
-		<tr><td><code>--im-logo-drop</code></td><td>0.055em</td><td>How far the dot sits below the top of the letter's box — which lands it on the cap line. Where the browser can trim the box to the capital (<code>text-box-edge</code>) this is <code>0</code>, because then the top of the box <em>is</em> the cap line.</td></tr>
+		<tr><td><code>--im-logo-drop</code></td><td>0.055em</td><td>How far the dot sits below the top of the letter’s box — which lands it on the cap line. Where the browser can trim the box to the capital (<code>text-box-edge</code>) this is <code>0</code>, because then the top of the box <em>is</em> the cap line.</td></tr>
 		<tr><td><code>--im-logo-dot-color</code></td><td><code>--im-accent</code></td><td>Change it for one instance, not for the brand.</td></tr>
+		<tr><td><code>--im-logo-step</code> · <code>--im-logo-run</code></td><td>70ms · 1200ms</td><td>The stagger between letters, and how long a whole motion takes.</td></tr>
 	</tbody>
 </table>
 </div>
@@ -78,21 +163,24 @@ source: src/components/logo.css · partials/components/logo.hbs · assets/brand/
 	<li><strong>It follows the theme.</strong> The letters are <code>currentColor</code>, so the wordmark is ink on white and white on near-black without a second file.</li>
 	<li><strong>It weighs nothing</strong> — no request, no bytes, no layout shift while a picture loads.</li>
 	<li><strong>It can be read.</strong> Selected, searched, translated, and read out once as a name rather than spelled out letter by letter: the letters are <code>aria-hidden</code> and the lockup carries one <code>aria-label</code>.</li>
+	<li><strong>It can move.</strong> A file cannot drop its dot.</li>
 	<li><strong>It is the typeface.</strong> The logo and the headlines are the same Geist, so the brand is one decision and not two.</li>
 </ul>
-<p>The one place it cannot be text is the <strong>favicon</strong>: a browser tab will not run CSS or wait for a webfont. <code>assets/brand/mark.svg</code> is the square drawn as shapes at the same proportions — the stem of the letter and the dot — thickened enough to survive 16px, with the tile flipping on <code>prefers-color-scheme</code> and the dot staying the accent in both.</p>
-{{#example center=true title="assets/brand/mark.svg, at 16, 32 and 64px"}}
+<p>The one place it cannot be text is the <strong>favicon</strong>: a browser tab will not run CSS or wait for a webfont. <code>assets/brand/mark.svg</code> is the square drawn: the capital S of Geist SemiBold converted to an outline, the dot beside it, the pair centred on the tile exactly as the CSS centres it — with the tile flipping on <code>prefers-color-scheme</code> and the dot staying the accent in both.</p>
+{{#example center=true title="assets/brand/mark.svg, at 16, 32, 64 and 128px"}}
 <img src="/assets/brand/mark.svg" alt="" width="16" height="16">
 <img src="/assets/brand/mark.svg" alt="" width="32" height="32">
 <img src="/assets/brand/mark.svg" alt="" width="64" height="64">
+<img src="/assets/brand/mark.svg" alt="" width="128" height="128">
 {{/example}}
 
 <h2>Using it</h2>
 <ul>
-	<li><strong>Keep the dot's clear space.</strong> Nothing within half the tile's width of the lockup — in a bar that means the logo is the first thing and the gap after it is at least <code>--im-logo-size / 2</code>.</li>
+	<li><strong>Keep the dot’s clear space.</strong> Nothing within half the tile’s width of the lockup — in a bar that means the logo is the first thing and the gap after it is at least <code>--im-logo-size / 2</code>.</li>
 	<li><strong>One dot per page.</strong> The wordmark in the bar and the square in the footer is two recording lights; pick the lockup per place.</li>
-	<li><strong>The dot is never "you are here".</strong> As a marker on a card or a button it means new, live or unread — see <a href="/components/card/#the-dot">the card</a>. The current page wears a light fill and a bolder label instead, everywhere in the system.</li>
-	<li><strong>Do not put the wordmark next to the site's name.</strong> It <em>is</em> the name. The square is the one that takes a label beside it.</li>
-	<li><strong>Do not recolour the letters.</strong> They are ink. If the logo needs to sit on a photograph, put it on a tile — that is what the square is for.</li>
-	<li><strong>A Ghost site that has uploaded its own logo gets that</strong>, with the site's name beside it, which is what Ghost's settings expect. The lockup is the default, not an override.</li>
+	<li><strong>The dot is never “you are here”.</strong> As a marker on a card or a button it means new, live or unread — see <a href="/components/card/#the-dot">the card</a>. The current page wears a light fill and a bolder label instead, everywhere in the system.</li>
+	<li><strong>Do not put the wordmark next to the site’s name.</strong> It <em>is</em> the name. The square is the one that takes a label beside it.</li>
+	<li><strong>Do not recolour the letters.</strong> They are ink. If the logo needs to sit on a photograph, put it on a tile — that is what the square is for — or cut the letters out of it.</li>
+	<li><strong>One motion, once.</strong> A logo that keeps moving is a banner ad. The sting plays on the first frame; the page plays nothing, or <code>im-logo-live</code> when something really is live.</li>
+	<li><strong>A Ghost site that has uploaded its own logo gets that</strong>, with the site’s name beside it, which is what Ghost’s settings expect. The lockup is the default, not an override.</li>
 </ul>

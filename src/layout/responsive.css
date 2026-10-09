@@ -58,8 +58,7 @@
 	.im-coursehead,
 .im-letterhead,
 .im-homehero,
-.im-abouthero,
-.im-story {
+.im-abouthero {
 		grid-template-columns: minmax(0, 1fr);
 	}
 

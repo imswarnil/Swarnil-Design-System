@@ -1,0 +1,109 @@
+---
+title: Legend, filters & tooltips
+description: What sits around a chart — the key that names the series and can switch one off, the readout a point shows, and the controls that narrow a view: chips, a period switcher, a range. The same parts on every chart, so a reader learns them once.
+eyebrow: Data visualisation
+source: src/viz/legend.css · src/js/im-charts.js
+---
+<h2>Legend</h2>
+<p>A swatch and a name, a figure at the end when there is one. A column beside a donut; <code>im-legend-row</code> in a line under or in the head of a chart; <code>im-legend-dots</code> rounds the swatches for a line chart, where the mark on the chart is the dot. The colour is <code>--c</code>, or <code>data-series="n"</code> for the palette’s nth.</p>
+{{#example}}
+<div class="im-cols">
+	<ul class="im-legend" data-span="4">
+		<li data-series="1">Readers<b>12,480</b></li>
+		<li data-series="2">Members<b>1,204</b></li>
+		<li data-series="3">Paid<b>318</b></li>
+	</ul>
+	<div data-span="8" class="im-stack im-stack-sm">
+		<ul class="im-legend im-legend-row"><li data-series="1">Search</li><li data-series="2">Direct</li><li data-series="3">Social</li><li data-series="4">Newsletter</li></ul>
+		<ul class="im-legend im-legend-row im-legend-dots"><li data-series="1">Readers</li><li data-series="2">Members</li></ul>
+	</div>
+</div>
+{{/example}}
+
+<h2>Toggles</h2>
+<p>The legend as buttons: press one and its series fades on the chart. The script flips <code>aria-pressed</code> on the button and <code>data-im-off-n</code> on the nearest <code>im-chart</code> (or dashboard panel); the CSS does the fading. The chart is still the whole picture — a hidden series is dimmed, not removed — so the axis never jumps.</p>
+{{#example}}
+<figure class="im-chart">
+	<div class="im-chart-head"><p class="im-chart-title">Where the readers came from</p>
+		<div class="im-legend im-legend-row im-chart-tools" data-im-legend>
+			<button class="im-legend-toggle" type="button" data-series="1" aria-pressed="true">Search</button>
+			<button class="im-legend-toggle" type="button" data-series="2" aria-pressed="true">Direct</button>
+			<button class="im-legend-toggle" type="button" data-series="3" aria-pressed="true">Social</button>
+		</div>
+	</div>
+	<div class="im-chart-plot" style="--im-chart-rows: 4; --im-chart-height: 10rem">
+		<div class="im-chart-y" aria-hidden="true"><span>8k</span><span>6k</span><span>4k</span><span>2k</span><span>0</span></div>
+		<div class="im-chart-area">
+			<div class="im-chart-cols im-chart-cols-grouped" role="img" aria-label="Readers by source, Q1 to Q4">
+				<div class="im-chart-col"><i data-series="1" style="--v: .5"></i><i data-series="2" style="--v: .3"></i><i data-series="3" style="--v: .2"></i></div>
+				<div class="im-chart-col"><i data-series="1" style="--v: .6"></i><i data-series="2" style="--v: .32"></i><i data-series="3" style="--v: .25"></i></div>
+				<div class="im-chart-col"><i data-series="1" style="--v: .72"></i><i data-series="2" style="--v: .35"></i><i data-series="3" style="--v: .22"></i></div>
+				<div class="im-chart-col"><i data-series="1" style="--v: .9"></i><i data-series="2" style="--v: .36"></i><i data-series="3" style="--v: .2"></i></div>
+			</div>
+		</div>
+		<div class="im-chart-x im-chart-x-cells" aria-hidden="true"><span>Q1</span><span>Q2</span><span>Q3</span><span>Q4</span></div>
+	</div>
+</figure>
+{{/example}}
+{{{{code "html"}}}}
+<div class="im-legend im-legend-row im-chart-tools" data-im-legend>
+	<button class="im-legend-toggle" type="button" data-series="1" aria-pressed="true">Search</button>
+	<button class="im-legend-toggle" type="button" data-series="2" aria-pressed="true">Direct</button>
+</div>
+…
+<i data-series="1" style="--v: .5"></i>   {{!-- a bar, a path, a point: anything with data-series fades --}}
+{{{{/code}}}}
+
+<h2>Readouts</h2>
+<p>A point on a line is a button with its words in <code>data-label</code>; hover or focus it and the readout appears above, ink on the canvas colour — the one dark chip in a light chart. A cell of a heatmap does the same. The same words are in <code>aria-label</code>, so what a pointer sees a screen reader hears. For points too close for tooltips, <code>im-chart-readout</code> is a line under the chart a page can write the hovered value into.</p>
+{{#example}}
+<div class="im-chart-line im-chart-line-dots" data-im-labels="Mon,Tue,Wed,Thu,Fri,Sat,Sun" data-im-unit="k" data-im-rows="2" style="--im-chart-height: 8rem">
+	<data value="4.2,5.1,4.8,6.3,7.9,3.1,2.4" data-name="Visits"></data>
+</div>
+<p class="im-chart-readout"><span>Hover or tab to a point</span><b>Fri · 7.9k</b></p>
+{{/example}}
+
+<h2>Filters</h2>
+<p>Controls that narrow a view, in a row with a caption: <strong>chips</strong> that are on or off (<code>aria-pressed</code>, flipped by the script inside <code>data-im-chips</code> — what they filter is the page’s business), a <strong>period switcher</strong> which is the system’s own <code>im-btn-group</code> with one pressed at a time (<code>data-im-period</code>), and a <strong>range</strong> with its ends printed.</p>
+{{#example}}
+<div class="im-stack im-stack-md">
+	<div class="im-viz-filters" data-im-chips>
+		<p class="im-caption">Topics</p>
+		<button class="im-viz-chip" type="button" aria-pressed="true"><i data-series="1" style="--c: var(--im-viz-1)"></i>Travel<b>48</b></button>
+		<button class="im-viz-chip" type="button" aria-pressed="true"><i style="--c: var(--im-viz-2)"></i>Craft<b>34</b></button>
+		<button class="im-viz-chip" type="button" aria-pressed="false"><i style="--c: var(--im-viz-3)"></i>Career<b>24</b></button>
+		<button class="im-viz-chip" type="button" aria-pressed="false"><i style="--c: var(--im-viz-4)"></i>Salesforce<b>16</b></button>
+	</div>
+	<div class="im-viz-filters">
+		<p class="im-caption">Period</p>
+		<div class="im-btn-group" role="group" aria-label="Period" data-im-period>
+			<button class="im-btn im-btn-sm" type="button" aria-pressed="false">7d</button>
+			<button class="im-btn im-btn-sm" type="button" aria-pressed="true">30d</button>
+			<button class="im-btn im-btn-sm" type="button" aria-pressed="false">90d</button>
+			<button class="im-btn im-btn-sm" type="button" aria-pressed="false">1y</button>
+			<button class="im-btn im-btn-sm" type="button" aria-pressed="false">All</button>
+		</div>
+		<label class="im-viz-range"><input type="range" min="0" max="100" value="64" aria-label="Minimum reading, percent"><span><span>0%</span><b>64%</b><span>100%</span></span></label>
+	</div>
+</div>
+{{/example}}
+{{{{code "html"}}}}
+<div class="im-viz-filters" data-im-chips>
+	<p class="im-caption">Topics</p>
+	<button class="im-viz-chip" type="button" aria-pressed="true"><i style="--c: var(--im-viz-1)"></i>Travel<b>48</b></button>
+	…
+</div>
+<div class="im-btn-group" role="group" aria-label="Period" data-im-period>
+	<button class="im-btn im-btn-sm" type="button" aria-pressed="true">30d</button>
+	…
+</div>
+<label class="im-viz-range"><input type="range" min="0" max="100" value="64"><span><span>0%</span><b>64%</b><span>100%</span></span></label>
+{{{{/code}}}}
+
+<h2>Rules</h2>
+<ul>
+	<li><strong>One legend per chart</strong>, in its head or at its foot — never floating in the plot.</li>
+	<li><strong>The figure goes in the legend</strong> where there is one, so the chart is read in one pass.</li>
+	<li><strong>A toggle dims, it does not remove.</strong> The axis never jumps and the reader keeps their place.</li>
+	<li><strong>A readout says the label and the value</strong>, in mono, and nothing else.</li>
+</ul>

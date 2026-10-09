@@ -1,11 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Im">
-	<!-- The square lockup, drawn.
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="S">
+	<!-- The square lockup, drawn: the S, and the recording dot at its top right.
 
 	     Everywhere else the logo is live text (src/components/logo.css): the
-	     letter in the brand typeface with the recording dot at its top right.
-	     A browser tab cannot run CSS or wait for a webfont, so the mark is a
-	     shape here — the stem of the "I" and the dot, at the same proportions,
-	     thickened enough to survive 16px.
+	     letter in the brand typeface with the dot beside its cap line. A browser
+	     tab cannot run CSS or wait for a webfont, so here the letter is the
+	     capital S of Geist SemiBold converted to an outline, and the pair — the
+	     letter AND the dot, as one group — is centred on the tile.
 
 	     The tile flips with the browser's colour scheme; the dot is the accent
 	     in both, because the accent IS the brand. -->
@@ -18,6 +18,6 @@
 		}
 	</style>
 	<rect class="tile" width="32" height="32" rx="8.3"/>
-	<rect class="glyph" x="10.1" y="9.2" width="4" height="13.6" rx="2"/>
-	<circle cx="19" cy="12.1" r="2.9" fill="#ff5a1f"/>
+	<path class="glyph" d="M14.41 24.15Q12.47 24.15 11.07 23.47Q9.66 22.79 8.86 21.57Q8.06 20.35 7.93 18.72L10.83 18.55Q10.96 19.56 11.41 20.26Q11.86 20.97 12.62 21.33Q13.37 21.69 14.45 21.69Q15.37 21.69 16.02 21.46Q16.67 21.23 17.01 20.78Q17.35 20.33 17.35 19.67Q17.35 19.08 17.07 18.6Q16.78 18.13 15.97 17.75Q15.15 17.36 13.55 16.99Q11.62 16.55 10.45 15.99Q9.29 15.43 8.76 14.58Q8.23 13.74 8.23 12.46Q8.23 11.1 8.91 10.06Q9.6 9.01 10.85 8.43Q12.1 7.85 13.86 7.85Q15.73 7.85 17.02 8.52Q18.32 9.19 19.07 10.35Q19.81 11.52 19.99 13.03L17.11 13.17Q17 12.31 16.59 11.67Q16.19 11.03 15.5 10.67Q14.8 10.31 13.81 10.31Q12.58 10.31 11.87 10.87Q11.16 11.43 11.16 12.35Q11.16 12.99 11.45 13.41Q11.75 13.82 12.52 14.12Q13.29 14.42 14.67 14.75Q16.76 15.19 17.99 15.87Q19.22 16.55 19.75 17.45Q20.27 18.35 20.27 19.52Q20.27 20.94 19.55 21.99Q18.82 23.03 17.51 23.59Q16.19 24.15 14.41 24.15Z"/>
+	<circle cx="23.64" cy="9.8" r="1.9" fill="#f22f46"/>
 </svg>

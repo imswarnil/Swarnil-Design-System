@@ -1,0 +1,11 @@
+---
+title: End screen
+description: 1920 × 1080, the last twenty seconds. YouTube lays its own tiles over the picture, so the frame says where they go and looks like the channel while it does.
+eyebrow: Content creation · YouTube
+source: src/studio/youtube.css
+---
+<p>The end screen is the one frame YouTube draws ON. Its elements — two video tiles and a subscribe circle — are laid over your picture at sizes it decides (a video element is 410 × 230 at 1280 × 720, so 615 × 346 here; the subscribe circle 294 across). So the frame leaves those exact windows empty, dashed in the docs, and spends the rest on the channel: the thanks, the line about Friday, the face with the subscribe pill under it where YouTube’s own will sit, a hand-written “watch this next” with an arrow at the slots, and the mark. Every line arrives on the layer system, staggered.</p>
+<div class="frame-preview" style="--fw: 1920; --fh: 1080"><iframe src="/frames/end-screen/" title="end screen" loading="lazy"></iframe></div>
+<p class="im-cluster"><a class="im-btn im-btn-sm" href="/frames/end-screen/">Open at 1920 × 1080 {{icon "arrow-up-right"}}</a><span class="im-hint"><code>im-studio-end</code> · <code>im-studio-end-slots</code> · <code>im-studio-end-slot</code> · <code>im-studio-end-sub</code></span></p>
+<h2>In the editor</h2>
+<p>Put the frame on the last twenty seconds (as a rendered PNG, or the page itself in an HTML-first renderer), then in YouTube’s end-screen editor place a video element on each slot and the subscribe element on the circle. The slots are 15.4em × 8.65em and the circle 7.35em, so at 1920 × 1080 they are YouTube’s sizes exactly.</p>

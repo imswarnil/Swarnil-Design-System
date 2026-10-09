@@ -1,0 +1,38 @@
+---
+title: The grid
+description: Thumbnails are never seen alone. Four a row, at the size YouTube shows them, is the only honest test — and ten styles of one system, each the film with one thing changed.
+eyebrow: Content creation · Thumbnails
+source: src/studio/youtube.css
+---
+<p>A thumbnail is read in a grid of strangers’ thumbnails at about 300 pixels wide. What survives that: two lines of big type, one accent, one face, one picture, one word in the hand. What does not: a line of small text, three colours, a logo in the middle. Below, all ten styles at grid size, four a row, mixed the way a channel mixes them.</p>
+<div class="yt-grid">
+	<div class="yt-tile"><div class="frame-preview" style="--fw: 1280; --fh: 720"><iframe src="/frames/thumb-film/" title="film" loading="lazy" tabindex="-1"></iframe><span class="yt-tile-time">8:12</span></div><div class="yt-tile-body"><img src="{{demo.me}}" alt=""><b>The road nobody wants to arrive on</b><span>Film · 412K views</span></div></div>
+	<div class="yt-tile"><div class="frame-preview" style="--fw: 1280; --fh: 720"><iframe src="/frames/thumb-vlog/" title="vlog" loading="lazy" tabindex="-1"></iframe><span class="yt-tile-time">14:40</span></div><div class="yt-tile-body"><img src="{{demo.me}}" alt=""><b>Moving countries again — day 12</b><span>Vlog · 96K views</span></div></div>
+	<div class="yt-tile"><div class="frame-preview" style="--fw: 1280; --fh: 720"><iframe src="/frames/thumb-travel/" title="travel" loading="lazy" tabindex="-1"></iframe><span class="yt-tile-time">18:47</span></div><div class="yt-tile-body"><img src="{{demo.me}}" alt=""><b>Four days, five towns, €479</b><span>Travel · 1.1M views</span></div></div>
+	<div class="yt-tile"><div class="frame-preview" style="--fw: 1280; --fh: 720"><iframe src="/frames/thumb-qna/" title="Q&A" loading="lazy" tabindex="-1"></iframe><span class="yt-tile-time">21:05</span></div><div class="yt-tile-body"><img src="{{demo.me}}" alt=""><b>Why did you leave India?</b><span>Q&amp;A · 128K views</span></div></div>
+	<div class="yt-tile"><div class="frame-preview" style="--fw: 1280; --fh: 720"><iframe src="/frames/thumb-series/" title="series" loading="lazy" tabindex="-1"></iframe><span class="yt-tile-time">12:04</span></div><div class="yt-tile-body"><img src="{{demo.me}}" alt=""><b>What it costs — The Amalfi Road S2 E4</b><span>Series · 74K views</span></div></div>
+	<div class="yt-tile"><div class="frame-preview" style="--fw: 1280; --fh: 720"><iframe src="/frames/thumb-live/" title="live" loading="lazy" tabindex="-1"></iframe><span class="yt-tile-time">LIVE</span></div><div class="yt-tile-body"><img src="{{demo.me}}" alt=""><b>Building the comment wall, live</b><span>Live · 2.4K watching</span></div></div>
+	<div class="yt-tile"><div class="frame-preview" style="--fw: 1280; --fh: 720"><iframe src="/frames/thumb-commentary/" title="commentary" loading="lazy" tabindex="-1"></iframe><span class="yt-tile-time">14:02</span></div><div class="yt-tile-body"><img src="{{demo.me}}" alt=""><b>Every “design system” on YouTube, ranked</b><span>Commentary · 210K views</span></div></div>
+	<div class="yt-tile"><div class="frame-preview" style="--fw: 1280; --fh: 720"><iframe src="/frames/thumb-skit/" title="skit" loading="lazy" tabindex="-1"></iframe><span class="yt-tile-time">1:58</span></div><div class="yt-tile-body"><img src="{{demo.me}}" alt=""><b>POV: the client says “just one small change”</b><span>Skit · 303K views</span></div></div>
+	<div class="yt-tile"><div class="frame-preview" style="--fw: 1280; --fh: 720"><iframe src="/frames/thumb-tutorial/" title="tutorial" loading="lazy" tabindex="-1"></iframe><span class="yt-tile-time">12:04</span></div><div class="yt-tile-body"><img src="{{demo.me}}" alt=""><b>Dark mode in one file</b><span>Tutorial · 96K views</span></div></div>
+	<div class="yt-tile"><div class="frame-preview" style="--fw: 1280; --fh: 720"><iframe src="/frames/thumb-film/" title="film" loading="lazy" tabindex="-1"></iframe><span class="yt-tile-time">23:31</span></div><div class="yt-tile-body"><img src="{{demo.me}}" alt=""><b>Four years of consulting, in one honest list</b><span>Film · 210K views</span></div></div>
+	<div class="yt-tile"><div class="frame-preview" style="--fw: 1280; --fh: 720"><iframe src="/frames/thumb-travel/" title="travel" loading="lazy" tabindex="-1"></iframe><span class="yt-tile-time">15:58</span></div><div class="yt-tile-body"><img src="{{demo.me}}" alt=""><b>The real cost of moving to Europe</b><span>Travel · 1.1M views</span></div></div>
+	<div class="yt-tile"><div class="frame-preview" style="--fw: 1280; --fh: 720"><iframe src="/frames/thumb-vlog/" title="vlog" loading="lazy" tabindex="-1"></iframe><span class="yt-tile-time">9:22</span></div><div class="yt-tile-body"><img src="{{demo.me}}" alt=""><b>A whole week in one bag</b><span>Vlog · 74K views</span></div></div>
+</div>
+
+<h2>The ten styles</h2>
+<p>Every style is the <a href="/content-creation/youtube/thumbnails/film/">film</a> with one change. Add a style the same way: one modifier class on <code>im-studio-thumb</code>, one thing different.</p>
+<div class="im-table-scroll"><table>
+<thead><tr><th>Style</th><th>The one thing</th><th>Class</th></tr></thead>
+<tbody>
+<tr><td><a href="/content-creation/youtube/thumbnails/film/">Film</a></td><td>The person right, the accent behind the shoulder, a kicker and a title, a word in the hand.</td><td><code>im-studio-thumb</code></td></tr>
+<tr><td><a href="/content-creation/youtube/thumbnails/vlog/">Vlog</a></td><td>The photograph fills the frame; REC and viewfinder corners; the day in the hand, big.</td><td><code>-vlog</code> + <code>im-studio-corners</code></td></tr>
+<tr><td><a href="/content-creation/youtube/thumbnails/travel/">Travel</a></td><td>The place is the picture; the person small and ringed; a route and the price in pixel type.</td><td><code>-travel</code></td></tr>
+<tr><td><a href="/content-creation/youtube/thumbnails/qna/">Q&amp;A</a></td><td>The question in the hand, a giant mark behind, the golden pattern on cream.</td><td><code>-qna</code> + <code>im-studio-cream</code></td></tr>
+<tr><td><a href="/content-creation/youtube/thumbnails/series/">Series</a></td><td>The episode numeral behind the person; a ring of the accent instead of the block.</td><td><code>-series</code> + <code>im-studio-person-ring</code></td></tr>
+<tr><td><a href="/content-creation/youtube/thumbnails/live/">Live</a></td><td>Dark; the live dot; the day and time.</td><td><code>im-studio-dark</code></td></tr>
+<tr><td><a href="/content-creation/youtube/thumbnails/commentary/">Commentary</a></td><td>The thing in a tilted window, the face beside it, a reaction with an arrow.</td><td><code>-commentary</code> + <code>im-studio-subject</code></td></tr>
+<tr><td><a href="/content-creation/youtube/thumbnails/skit/">Skit</a></td><td>The accent is the ground; the title hand-written and tilted; stickers.</td><td><code>-skit</code> + <code>im-studio-accent</code></td></tr>
+<tr><td><a href="/content-creation/youtube/thumbnails/tutorial/">Tutorial</a></td><td>Dark; one line of code where the kicker was.</td><td><code>im-studio-dark</code> + <code>im-studio-code</code></td></tr>
+<tr><td><a href="/content-creation/youtube/thumbnails/short/">Short</a></td><td>1080 × 1920; the person fills it; the words at the foot.</td><td><code>-short</code></td></tr>
+</tbody></table></div>

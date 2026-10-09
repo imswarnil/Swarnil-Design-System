@@ -8,6 +8,8 @@ source: src/motion/transition.css
 <p>Pick a style, then follow any link — the side nav will do. Your choice is remembered for this site.</p>
 {{#example center=true code=false}}
 <div class="im-cluster justify-center" role="group" aria-label="Page transition">
+	<button class="im-btn im-btn-outline" type="button" data-transition="dot" aria-pressed="false">dot</button>
+	<button class="im-btn im-btn-outline" type="button" data-transition="columns" aria-pressed="false">columns</button>
 	<button class="im-btn im-btn-outline" type="button" data-transition="fade" aria-pressed="false">fade</button>
 	<button class="im-btn im-btn-outline" type="button" data-transition="rise" aria-pressed="false">rise</button>
 	<button class="im-btn im-btn-outline" type="button" data-transition="slide" aria-pressed="false">slide</button>
@@ -40,6 +42,13 @@ source: src/motion/transition.css
 	</tbody>
 </table>
 </div>
+
+<h2>The two that are the system’s own</h2>
+<ul>
+	<li><strong>dot</strong> — the recording light swells from where you clicked until it is the whole screen, and the next page is inside it. The dot means <em>on air</em> everywhere in the system; here it is what carries you to the next page. It needs <code>im-motion.js</code> for the click point; without it the light opens from the centre.</li>
+	<li><strong>columns</strong> — the twelve columns the page is drawn on wipe the next page in, one after another, left to right.</li>
+</ul>
+<p>They are the same two cuts a film made with the system uses between shots (<a href="/content-creation/elements/transitions/">Elements → Transitions</a>), so a video and the site change scene the same way.</p>
 
 <h2>Use it</h2>
 {{{{code "hbs"}}}}

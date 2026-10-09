@@ -1,0 +1,35 @@
+---
+title: Media frames
+description: A picture or a clip in the middle of a shot — the system’s radius, one hairline, the one shadow, and an indicator if it needs one. Nothing else; the picture is the point.
+eyebrow: Content creation · Elements
+source: src/studio/media.css
+---
+<p><code>im-studio-media</code> is a <code>figure</code> with the picture inside. Its width is a share of the frame (<code>--im-studio-media-w</code>, 60%) and its ratio is the picture’s (<code>--im-studio-media-ratio</code>, 16:9). Everything else is a modifier: the edge, the shape, the mark on it.</p>
+
+<h2>Edges and shapes</h2>
+{{#example flush=true}}
+<div class="frame-grid" style="padding: 1rem">
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><span class="im-studio-ground im-studio-ground-grid"></span><figure class="im-studio-media im-studio-media-line"><img src="{{demo.shots.[1]}}" alt=""></figure></div></div><figcaption>-line</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><span class="im-studio-ground im-studio-ground-grid"></span><figure class="im-studio-media im-studio-media-shadow"><img src="{{demo.shots.[1]}}" alt=""></figure></div></div><figcaption>-shadow</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><span class="im-studio-ground im-studio-ground-grid"></span><figure class="im-studio-media im-studio-media-accent"><img src="{{demo.shots.[1]}}" alt=""></figure></div></div><figcaption>-accent</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid im-studio-dark" style="--im-studio-w: 960; --im-studio-h: 540"><img class="im-studio-photo im-studio-grade-night" src="{{demo.shots.[4]}}" alt=""><figure class="im-studio-media im-studio-media-glass"><img src="{{demo.shots.[1]}}" alt=""></figure></div></div><figcaption>-glass, over a picture</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid im-studio-cream" style="--im-studio-w: 960; --im-studio-h: 540"><span class="im-studio-ground im-studio-ground-golden im-bg-golden"></span><figure class="im-studio-media im-studio-media-mat im-studio-media-tilt" style="--im-studio-media-w: 50%"><img src="{{demo.shots.[1]}}" alt=""><figcaption class="im-studio-media-caption">Positano, 07:40</figcaption></figure></div></div><figcaption>-mat -tilt, a print</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><span class="im-studio-ground im-studio-ground-grid"></span><figure class="im-studio-media im-studio-media-circle im-studio-media-accent" style="--im-studio-media-w: 40%"><img src="{{demo.me}}" alt="" style="object-position: 62% 30%"></figure></div></div><figcaption>-circle -accent</figcaption></figure>
+</div>
+{{/example}}
+
+<h2>Marks on the picture</h2>
+{{#example flush=true}}
+<div class="frame-grid" style="padding: 1rem">
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><figure class="im-studio-media im-studio-media-shadow im-studio-corners" style="--im-studio-media-w: 80%"><img src="{{demo.me}}" alt=""><p class="im-studio-rec">Rec <span>00:12:34</span></p></figure></div></div><figcaption>im-studio-rec · im-studio-corners</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><figure class="im-studio-media im-studio-media-shadow im-studio-media-play" style="--im-studio-media-w: 80%"><img src="{{demo.shots.[0]}}" alt=""><span class="im-studio-chip">8:12</span></figure></div></div><figcaption>-play · a chip</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><figure class="im-studio-media im-studio-media-shadow im-studio-media-live" style="--im-studio-media-w: 80%"><img src="{{demo.shots.[2]}}" alt=""><figcaption class="im-studio-media-caption">imswarnil.com/live</figcaption></figure></div></div><figcaption>-live · a caption</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><div class="im-studio-compare im-studio-compare-sweep" style="--im-studio-media-w: 80%"><img src="{{demo.shots.[3]}}" alt="" style="filter: grayscale(1) contrast(.8)"><img src="{{demo.shots.[3]}}" alt=""><span class="im-studio-chip">Before</span><span class="im-studio-chip im-studio-chip-accent">After</span></div></div></div><figcaption>im-studio-compare -sweep</figcaption></figure>
+</div>
+{{/example}}
+
+<h2>As a layer</h2>
+<p>A media frame is a layer like anything else; <code>data-in="curtain"</code> is the one that suits a picture best — a panel of the accent crosses and leaves it behind.</p>
+{{#example}}
+<div class="frame-preview" data-replay><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><span class="im-studio-ground im-studio-ground-dots"></span><figure class="im-studio-media im-studio-media-shadow im-studio-layer" data-in="curtain" style="--im-studio-media-w: 56%"><img src="{{demo.shots.[5]}}" alt=""></figure></div></div>
+{{/example}}

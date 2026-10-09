@@ -1,0 +1,179 @@
+/* Lines — a sparkline, a line, an area, a step, a scatter. The curve is an
+   SVG drawn by im-charts.js; the dots are HTML, so each one is a button a
+   keyboard can reach and a readout can hang from.
+
+   SPARKLINE — one element, no frame:
+     <svg class="im-spark" data-im-spark="4,8,6,12,9,14"></svg>
+     <svg class="im-spark im-spark-wide" data-im-spark="…" data-im-area></svg>
+
+   LINE — the script builds the plot inside the element:
+     <div class="im-chart-line" data-im-labels="Jan,Feb,Mar" data-im-area>
+       <data value="4,8,6" data-name="Readers"></data>
+       <data value="2,5,7" data-name="Members"></data>
+     </div>
+     data-im-line="Jan:4,Feb:8"  is the one-series shorthand
+     data-im-step               joins the points with steps
+     data-im-max="20"           tops the axis at a number instead of the data
+   SCATTER:
+     <div class="im-chart-scatter" data-im-scatter="4:8,6:12,9:3"></div>
+
+   The script writes the y ticks into [data-im-y], the x labels into
+   [data-im-x] and the picture into [data-im-area] — making them inside the
+   element if the markup does not already have them in an im-chart-plot. */
+
+/* ---- sparkline ---- */
+.im-spark {
+	display: block;
+	width: var(--im-spark-width, 7rem);
+	height: var(--im-spark-height, 2.25rem);
+	overflow: visible;
+	color: var(--im-chart-color, var(--im-viz-1));
+}
+
+.im-spark-line {
+	fill: none;
+	stroke: currentcolor;
+	stroke-width: 1.75;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	vector-effect: non-scaling-stroke;
+}
+
+.im-spark-area {
+	fill: currentcolor;
+	opacity: 0.12;
+}
+
+.im-spark-wide {
+	--im-spark-width: 100%;
+	--im-spark-height: 9rem;
+}
+
+/* ---- line & scatter: the picture ---- */
+.im-chart-line,
+.im-chart-scatter {
+	display: block;
+	min-width: 0;
+}
+
+/* The curve: stretched to the box, strokes kept at one width. */
+.im-chart-svg {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+.im-chart-path {
+	fill: none;
+	stroke: var(--c, var(--im-chart-color, var(--im-viz-1)));
+	stroke-width: 2;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	vector-effect: non-scaling-stroke;
+}
+
+.im-chart-fill {
+	fill: var(--c, var(--im-chart-color, var(--im-viz-1)));
+	opacity: 0.1;
+}
+
+/* Series two onward take the palette. */
+.im-chart [data-series="2"] { --c: var(--im-viz-2); }
+.im-chart [data-series="3"] { --c: var(--im-viz-3); }
+.im-chart [data-series="4"] { --c: var(--im-viz-4); }
+.im-chart [data-series="5"] { --c: var(--im-viz-5); }
+.im-chart [data-series="6"] { --c: var(--im-viz-6); }
+
+/* A series switched off by its legend toggle (legend.css) goes faint. */
+.im-chart[data-im-off-1] [data-series="1"],
+.im-chart[data-im-off-2] [data-series="2"],
+.im-chart[data-im-off-3] [data-series="3"],
+.im-chart[data-im-off-4] [data-series="4"],
+.im-chart[data-im-off-5] [data-series="5"],
+.im-chart[data-im-off-6] [data-series="6"] {
+	opacity: 0.12;
+	pointer-events: none;
+}
+
+/* The dot: the system's own mark, as a button at the point. It is HTML,
+   placed by percentages, so it does not stretch with the SVG and it can be
+   focused. The readout is its label, shown on hover and focus. */
+.im-chart-point {
+	position: absolute;
+	left: var(--x);
+	top: var(--y);
+	z-index: 1;
+	width: 0.5rem;
+	height: 0.5rem;
+	padding: 0;
+	border: 2px solid var(--im-canvas);
+	border-radius: 50%;
+	background-color: var(--c, var(--im-chart-color, var(--im-viz-1)));
+	translate: -50% -50%;
+	cursor: default;
+	transition: scale var(--im-duration-fast) var(--im-ease-out);
+}
+
+.im-chart-point:hover,
+.im-chart-point:focus-visible {
+	z-index: 2;
+	scale: 1.6;
+	outline: none;
+}
+
+/* The scatter's points have no line to sit on, so they are a little larger. */
+.im-chart-scatter .im-chart-point { width: 0.625rem; height: 0.625rem; }
+
+/* Only the last point shows by default on a line — a line full of dots is a
+   necklace. Every point shows on hover of the area, or always with -dots. */
+.im-chart-line .im-chart-point:not(:last-of-type) { opacity: 0; }
+.im-chart-line .im-chart-area:hover .im-chart-point,
+.im-chart-line .im-chart-point:focus-visible,
+.im-chart-line-dots .im-chart-point { opacity: 1; }
+
+/* Step lines: the path is built with steps by the script; nothing to style. */
+
+/* The curve draws itself in when revealed: the picture is wiped on from the
+   left. (A dash-offset draw would be the classic way, but with a non-scaling
+   stroke Chrome measures the dashes in screen pixels, and a path with
+   pathLength 1 comes out as a dotted line.) */
+@media (prefers-reduced-motion: no-preference) {
+	[data-im-js] :is(.im-chart-line, .im-chart-scatter)[data-im-reveal]:not([data-im-revealed]) { opacity: 1; translate: none; }
+	[data-im-js] .im-chart-line[data-im-reveal]:not([data-im-revealed]) .im-chart-svg { clip-path: inset(0 100% 0 0); }
+	.im-chart-line[data-im-reveal] .im-chart-svg { clip-path: inset(0 -2% 0 0); transition: clip-path var(--im-duration-long) var(--im-ease-in-out); }
+	[data-im-js] .im-chart-scatter[data-im-reveal]:not([data-im-revealed]) .im-chart-point { scale: 0; }
+	.im-chart-scatter[data-im-reveal] .im-chart-point { transition: scale var(--im-duration-base) var(--im-ease-spring); transition-delay: calc(var(--n, 0) * 20ms); }
+}
+
+/* A reference line across the plot — a target, an average. */
+.im-chart-ref {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: calc((1 - var(--v, 0.5)) * 100%);
+	border-top: 1px dashed var(--im-muted);
+	pointer-events: none;
+}
+
+.im-chart-ref::after {
+	content: attr(data-label);
+	position: absolute;
+	right: 0;
+	bottom: 0.125rem;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+}
+
+/* A band of the plot — a range, a forecast, a weekend. */
+.im-chart-band {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: var(--from, 0%);
+	width: calc(var(--to, 100%) - var(--from, 0%));
+	background-color: color-mix(in oklab, var(--im-ink) 5%, transparent);
+	pointer-events: none;
+}

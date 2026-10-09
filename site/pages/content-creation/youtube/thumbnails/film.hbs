@@ -1,0 +1,10 @@
+---
+title: Film
+description: The person on the right fading into the ground, a block of the accent behind the shoulder; a kicker and a title on the left, nothing under them; one word in the hand.
+eyebrow: Content creation · Thumbnails
+source: src/studio/youtube.css · site/pages/frames/thumb-film.hbs
+---
+<p>This is the default, and every other style is this with one thing changed. The portrait is right-anchored and masked on its left edge so it belongs to the ground rather than sitting on it; the accent block behind the shoulder is the one colour; the title is five or six words with one of them in the accent; “new film!” is in the hand, tilted, where the eye lands second.</p>
+<div class="frame-preview" style="--fw: 1280; --fh: 720"><iframe src="/frames/thumb-film/" title="thumb-film" loading="lazy"></iframe></div>
+<p class="im-cluster"><a class="im-btn im-btn-sm" href="/frames/thumb-film/">Open at 1280 × 720 {{icon "arrow-up-right"}}</a><span class="im-hint"><code>im-studio-thumb</code> · <code>im-studio-person-block</code> · <code>im-studio-note</code></span></p>
+<p>Change the words in <code>site/pages/frames/thumb-film.hbs</code> and export with <code>npm run frames thumb-film</code>; or rebuild it as layers with <a href="/content-creation/youtube/pixelmator/">the Pixelmator script</a>. The person is <code>demo.me</code> — the owner’s portrait in <code>assets/brand/</code> — and <code>--im-studio-focus</code> on the person says which part of the photograph to keep.</p>

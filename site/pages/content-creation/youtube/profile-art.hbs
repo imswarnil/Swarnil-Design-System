@@ -1,9 +1,13 @@
 ---
 title: Profile art
-description: 800 × 800 — the person, inside a hairline ring, with the brand’s dot in the accent top right. Change the photograph; the art stays.
+description: 800 × 800, seen as a 40-pixel circle, so it is one thing — the illustration, the mark, or a face — with the brand’s dot in the accent top right.
 eyebrow: Content creation · YouTube
-source: src/components/studio.css
+source: src/studio/youtube.css
 ---
-<p>A profile is seen as a 40-pixel circle, so it is a face and one mark: the portrait, a hairline ring just inside the edge, and the recording-light dot in the accent at the top right — the same dot the logo carries. Put any photograph in <code>im-studio-photo</code>; everything else is drawn.</p>
-<div class="frame-preview" style="--fw: 800; --fh: 800"><iframe src="/frames/profile-art/" title="profile-art" loading="lazy"></iframe></div>
-<p class="im-cluster"><a class="im-btn im-btn-sm" href="/frames/profile-art/">Open at 800 × 800 {{icon "arrow-up-right"}}</a><span class="im-hint"><code>im-studio-profile</code></span></p>
+<p>A profile is seen as a 40-pixel circle, so it is one thing and one mark. Three to pick from, all drawn: the illustration on cream, with its own golden circle (the one the channel art uses, so the two agree); the brand’s square, the S and the dot, which is the avatar that matches the favicon; or a photograph inside a hairline ring. On all three the recording-light dot sits top right, in the accent — the same dot the logo carries.</p>
+<div class="frame-grid">
+	<figure><div class="frame-preview" style="--fw: 800; --fh: 800; border-radius: 50%"><iframe src="/frames/profile-art/" title="the illustration" loading="lazy"></iframe></div><figcaption>im-studio-profile-art · <a href="/frames/profile-art/">open</a></figcaption></figure>
+	<figure><div class="frame-preview" style="--fw: 800; --fh: 800; border-radius: 50%"><iframe src="/frames/profile-art-mark/" title="the mark" loading="lazy"></iframe></div><figcaption>im-studio-profile-mark · <a href="/frames/profile-art-mark/">open</a></figcaption></figure>
+	<figure><div class="frame-preview" style="--fw: 800; --fh: 800; border-radius: 50%"><iframe src="/frames/profile-art-photo/" title="a photograph" loading="lazy"></iframe></div><figcaption>im-studio-profile · <a href="/frames/profile-art-photo/">open</a></figcaption></figure>
+</div>
+<p class="im-hint">Shown as circles, which is how they are ever seen. Export with <code>npm run frames profile-art</code>.</p>

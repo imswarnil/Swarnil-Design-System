@@ -1,0 +1,79 @@
+---
+title: In & out
+description: The layer system — twenty ways in, sixteen ways out, timed on the frame’s clock with a stagger. A layer has an in, a time and an out; it never needs two tags.
+eyebrow: Content creation · Elements
+source: src/studio/motion.css
+---
+<p>Any element in a frame is a layer. <code>data-in</code> and <code>data-out</code> name its two animations; the two times say when each starts; a parent with <code>im-studio-stagger</code> numbers its children so they arrive one after another. Both animations are declared on the one element — the in with <code>both</code> fill, the out with <code>forwards</code> — so a layer with no <code>data-out</code> simply stays.</p>
+{{{{code "html"}}}}
+<div class="im-studio-stagger">
+	<h1 class="im-studio-title im-studio-layer" data-in="line-up" data-out="sink"
+	    style="--im-studio-in-at: .4s; --im-studio-out-at: 4s">…</h1>
+	<p class="im-studio-sub im-studio-layer" data-in="rise" data-out="sink"
+	   style="--im-studio-in-at: .4s; --im-studio-out-at: 4s">…</p>   <!-- 90ms later, by the stagger -->
+</div>
+{{{{/code}}}}
+
+<h2>Ins</h2>
+{{#example flush=true}}
+<div class="frame-grid" data-replay style="padding: 1rem">
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-layer" data-in="fade">fade</h2></div></div><figcaption>fade</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-layer" data-in="rise">rise</h2></div></div><figcaption>rise</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-layer" data-in="sink">sink</h2></div></div><figcaption>sink</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-layer" data-in="slide-left">slide-left</h2></div></div><figcaption>slide-left</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-layer" data-in="slide-right">slide-right</h2></div></div><figcaption>slide-right</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-layer" data-in="scale">scale</h2></div></div><figcaption>scale</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-layer" data-in="pop">pop</h2></div></div><figcaption>pop</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-layer" data-in="blur">blur</h2></div></div><figcaption>blur</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-layer" data-in="wipe-left">wipe-left</h2></div></div><figcaption>wipe-left</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-layer" data-in="wipe-up">wipe-up</h2></div></div><figcaption>wipe-up</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><figure class="im-studio-media im-studio-layer" data-in="iris" style="--im-studio-media-w: 70%"><img src="{{demo.shots.[1]}}" alt=""></figure></div></div><figcaption>iris</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-layer" data-in="flip">flip</h2></div></div><figcaption>flip</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><figure class="im-studio-media im-studio-media-shadow im-studio-layer" data-in="tilt" style="--im-studio-media-w: 60%"><img src="{{demo.shots.[2]}}" alt=""></figure></div></div><figcaption>tilt</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><span class="im-studio-tag im-studio-layer" data-in="roll">roll</span></div></div><figcaption>roll</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-layer" data-in="unfold">unfold</h2></div></div><figcaption>unfold</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><figure class="im-studio-media im-studio-layer" data-in="develop" style="--im-studio-media-w: 70%"><img src="{{demo.shots.[3]}}" alt=""></figure></div></div><figcaption>develop</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><figure class="im-studio-media im-studio-layer" data-in="curtain" style="--im-studio-media-w: 70%"><img src="{{demo.shots.[4]}}" alt=""></figure></div></div><figcaption>curtain</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-layer" data-in="line-up">line-up</h2></div></div><figcaption>line-up</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-title-mono im-studio-layer" data-in="type" style="--im-studio-steps: 12">typed in</h2></div></div><figcaption>type</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-layer" data-in="track">track</h2></div></div><figcaption>track</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-layer" data-in="pixel">pixel</h2></div></div><figcaption>pixel</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-layer" data-in="letters" data-im-split="chars">letters</h2></div></div><figcaption>letters</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-layer" data-in="words" data-im-split="words">word by word</h2></div></div><figcaption>words</figcaption></figure>
+</div>
+{{/example}}
+
+<h2>Outs</h2>
+<p>Each starts at 0.6s here so the layer is seen first.</p>
+{{#example flush=true}}
+<div class="frame-grid" data-replay style="padding: 1rem">
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-layer" data-out="fade" style="--im-studio-out-at: .6s">fade</h2></div></div><figcaption>fade</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-layer" data-out="sink" style="--im-studio-out-at: .6s">sink</h2></div></div><figcaption>sink</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-layer" data-out="lift" style="--im-studio-out-at: .6s">lift</h2></div></div><figcaption>lift</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-layer" data-out="slide-left" style="--im-studio-out-at: .6s">slide-left</h2></div></div><figcaption>slide-left</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-layer" data-out="slide-right" style="--im-studio-out-at: .6s">slide-right</h2></div></div><figcaption>slide-right</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-layer" data-out="scale" style="--im-studio-out-at: .6s">scale</h2></div></div><figcaption>scale</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-layer" data-out="shrink" style="--im-studio-out-at: .6s">shrink</h2></div></div><figcaption>shrink</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-layer" data-out="blur" style="--im-studio-out-at: .6s">blur</h2></div></div><figcaption>blur</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-layer" data-out="wipe-left" style="--im-studio-out-at: .6s">wipe-left</h2></div></div><figcaption>wipe-left</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-layer" data-out="wipe-down" style="--im-studio-out-at: .6s">wipe-down</h2></div></div><figcaption>wipe-down</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><figure class="im-studio-media im-studio-layer" data-out="iris" style="--im-studio-media-w: 70%; --im-studio-out-at: .6s"><img src="{{demo.shots.[1]}}" alt=""></figure></div></div><figcaption>iris</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-layer" data-out="flip" style="--im-studio-out-at: .6s">flip</h2></div></div><figcaption>flip</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><figure class="im-studio-media im-studio-media-shadow im-studio-layer" data-out="tilt" style="--im-studio-media-w: 60%; --im-studio-out-at: .6s"><img src="{{demo.shots.[2]}}" alt=""></figure></div></div><figcaption>tilt</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><span class="im-studio-tag im-studio-layer" data-out="roll" style="--im-studio-out-at: .6s">roll</span></div></div><figcaption>roll</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-layer" data-out="fold" style="--im-studio-out-at: .6s">fold</h2></div></div><figcaption>fold</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-layer" data-out="pixel" style="--im-studio-out-at: .6s">pixel</h2></div></div><figcaption>pixel</figcaption></figure>
+</div>
+{{/example}}
+
+<h2>Knobs</h2>
+<div class="im-table-scroll"><table>
+<thead><tr><th>Variable</th><th>Default</th><th></th></tr></thead>
+<tbody>
+<tr><td><code>--im-studio-in-at</code> / <code>-out-at</code></td><td>0s / never</td><td>When, on the frame’s clock.</td></tr>
+<tr><td><code>--im-studio-in-for</code> / <code>-out-for</code></td><td>slow / base</td><td>How long. The motion tokens.</td></tr>
+<tr><td><code>--im-studio-in-ease</code> / <code>-out-ease</code></td><td>out / in</td><td>The curve. A pop sets spring, a wipe sets in-out, by itself.</td></tr>
+<tr><td><code>--im-studio-step</code></td><td>90ms</td><td>The stagger between numbered children.</td></tr>
+<tr><td><code>--im-studio-steps</code></td><td>24</td><td>How many characters a <code>type</code> in has.</td></tr>
+</tbody></table></div>
+<p>The ins that move text letter by letter (<code>letters</code>, <code>words</code>) need <code>data-im-split</code> on the element and <code>im-motion.js</code> on the page, which every frame loads. On the page, the same ideas are the <a href="/motion/entrances/">25 entrances</a>; these are their cousins on a clock.</p>

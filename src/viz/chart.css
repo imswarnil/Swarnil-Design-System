@@ -1,0 +1,373 @@
+/* Chart — the frame every chart sits in, and the bar family.
+
+   THE FRAME
+     <figure class="im-chart">
+       <div class="im-chart-head"><p class="im-chart-title">Readers</p><p class="im-chart-sub">last 12 months</p> …tools…</div>
+       <div class="im-chart-plot" style="--im-chart-rows: 4">
+         <div class="im-chart-y"><span>20k</span><span>15k</span><span>10k</span><span>5k</span><span>0</span></div>
+         <div class="im-chart-area"> …the chart… </div>
+         <div class="im-chart-x"><span>Jan</span>…</div>
+       </div>
+       <figcaption class="im-chart-note">…</figcaption>
+     </figure>
+
+   The plot is a grid: the y labels down the left, the chart, the x labels
+   under it. Gridlines are tiled one hairline at a time (never a long
+   repeating-linear-gradient, which Chrome drops stretches of) and there are
+   --im-chart-rows of them. The axes are the frame's own hairlines.
+
+   THE BARS
+     im-chart-cols          columns, one per <div class="im-chart-col">, value --v (0–1)
+       im-chart-cols-grouped  several <i> per column, side by side
+       im-chart-cols-stacked  several <i> per column, on top of one another
+       im-chart-cols-hist     no gap: a histogram
+     im-bars                the quick one-line column chart (i elements, --v, data-label)
+     im-hbars               a ranking: label · bar · figure
+     im-chart-bullet        a measure against a target on a track
+
+   Knobs: --im-chart-height · --im-chart-rows · --im-chart-color (series one)
+          --v (a value as a share of the top of the axis) · --c (a series colour) */
+
+.im-chart {
+	--im-chart-height: 12rem;
+	--im-chart-rows: 4;
+	--im-chart-color: var(--im-viz-1);
+
+	display: grid;
+	gap: 0.875rem;
+	min-width: 0;
+	margin: 0;
+	color: var(--im-body);
+	font-size: var(--im-text-sm);
+}
+
+.im-chart-head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 0.25rem 0.75rem;
+}
+
+.im-chart-title {
+	margin: 0;
+	color: var(--im-ink);
+	font-size: var(--im-text-base);
+	font-weight: 600;
+	letter-spacing: var(--im-tracking-tight);
+}
+
+.im-chart-sub {
+	margin: 0;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+}
+
+/* Whatever sits at the end of the head: a legend, a period switcher. */
+.im-chart-tools {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem;
+	margin-left: auto;
+}
+
+.im-chart-note {
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+	line-height: 1.5;
+}
+
+/* ---- the plot ---- */
+.im-chart-plot {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr);
+	grid-template-rows: var(--im-chart-height) auto;
+	grid-template-areas: "y area" ". x";
+	gap: 0.5rem 0.625rem;
+	min-width: 0;
+}
+
+/* Without y labels the area takes the whole width. */
+.im-chart-plot-bare {
+	grid-template-columns: minmax(0, 1fr);
+	grid-template-areas: "area" "x";
+}
+
+.im-chart-y {
+	grid-area: y;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: end;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	font-variant-numeric: tabular-nums;
+	line-height: 1;
+	/* Half a line above and below, so the first and last tick sit ON the
+	   first and last gridline rather than inside them. */
+	padding-block: 0;
+	translate: 0 -0.5em;
+	height: calc(100% + 1em);
+}
+
+.im-chart-area {
+	grid-area: area;
+	position: relative;
+	display: flex;
+	align-items: end;
+	min-width: 0;
+	min-height: 0;
+	border-bottom: 1px solid var(--im-viz-line);
+	/* One hairline per row, tiled from the bottom. */
+	background-image: linear-gradient(to top, var(--im-viz-line) 1px, transparent 1px);
+	background-size: 100% calc(100% / var(--im-chart-rows));
+	background-position: 0 1px;
+	background-repeat: repeat-y;
+}
+
+/* A left axis as well — for a chart that starts at zero on the left. */
+.im-chart-area-axis { border-left: 1px solid var(--im-viz-line); }
+
+.im-chart-x {
+	grid-area: x;
+	display: flex;
+	justify-content: space-between;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	line-height: 1;
+}
+
+/* Labels under columns: as many cells as columns, each centred. */
+.im-chart-x-cells {
+	display: grid;
+	grid-auto-flow: column;
+	grid-auto-columns: minmax(0, 1fr);
+	text-align: center;
+}
+
+.im-chart-x > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ---- columns ---- */
+.im-chart-cols {
+	display: grid;
+	grid-auto-flow: column;
+	grid-auto-columns: minmax(0, 1fr);
+	align-items: end;
+	gap: var(--im-chart-gap, clamp(0.25rem, 2%, 0.875rem));
+	width: 100%;
+	height: 100%;
+}
+
+.im-chart-col {
+	position: relative;
+	display: flex;
+	align-items: end;
+	justify-content: center;
+	gap: 2px;
+	height: 100%;
+	min-width: 0;
+}
+
+.im-chart-col > i {
+	display: block;
+	flex: 1 1 0;
+	max-width: 2.5rem;
+	height: calc(var(--v, 0) * 100%);
+	min-height: 2px;
+	border-radius: var(--im-radius-xs) var(--im-radius-xs) 0 0;
+	background-color: var(--c, var(--im-chart-color, var(--im-viz-1)));
+	transform-origin: 50% 100%;
+	transition: opacity var(--im-duration-instant), background-color var(--im-duration-instant);
+}
+
+/* A column's series take the palette in order. */
+.im-chart-col > i:nth-child(2) { --c: var(--im-viz-2); }
+.im-chart-col > i:nth-child(3) { --c: var(--im-viz-3); }
+.im-chart-col > i:nth-child(4) { --c: var(--im-viz-4); }
+.im-chart-col > i:nth-child(5) { --c: var(--im-viz-5); }
+.im-chart-col > i:nth-child(6) { --c: var(--im-viz-6); }
+
+/* The one to notice, and the ones to leave: a highlighted column keeps its
+   colour, the rest go to the track. */
+.im-chart-cols-focus .im-chart-col > i { background-color: var(--im-viz-track); }
+.im-chart-cols-focus .im-chart-col[data-on] > i,
+.im-chart-col:hover > i { background-color: var(--c, var(--im-chart-color, var(--im-viz-1))); }
+
+/* Stacked: the series sit on one another; each --v is its own share. */
+.im-chart-cols-stacked .im-chart-col {
+	flex-direction: column-reverse;
+	gap: 1px;
+}
+
+.im-chart-cols-stacked .im-chart-col > i {
+	flex: none;
+	width: 100%;
+	max-width: 2.5rem;
+	margin-inline: auto;
+	border-radius: 0;
+}
+
+.im-chart-cols-stacked .im-chart-col > i:last-child { border-radius: var(--im-radius-xs) var(--im-radius-xs) 0 0; }
+
+/* Histogram: bins touch. */
+.im-chart-cols-hist { gap: 1px; }
+.im-chart-cols-hist .im-chart-col > i { max-width: none; border-radius: 0; }
+
+/* The value, printed on the column when asked for. */
+.im-chart-col[data-value]::after {
+	content: attr(data-value);
+	position: absolute;
+	bottom: calc(var(--v, 0) * 100% + 0.25rem);
+	left: 50%;
+	translate: -50% 0;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	font-variant-numeric: tabular-nums;
+	white-space: nowrap;
+	pointer-events: none;
+}
+
+.im-chart-col:hover::after,
+.im-chart-col[data-on]::after { color: var(--im-ink); }
+
+/* Columns grow in when revealed. */
+@media (prefers-reduced-motion: no-preference) {
+	[data-im-js] .im-chart-cols[data-im-reveal]:not([data-im-revealed]) { opacity: 1; translate: none; }
+	[data-im-js] .im-chart-cols[data-im-reveal]:not([data-im-revealed]) .im-chart-col > i { scale: 1 0; }
+	.im-chart-cols[data-im-reveal] .im-chart-col > i { transition: scale var(--im-duration-slow) var(--im-ease-out), background-color var(--im-duration-instant); }
+	.im-chart-cols[data-im-reveal] .im-chart-col:nth-child(n) > i { transition-delay: calc(var(--n, 0) * 40ms); }
+}
+
+/* ---- the quick column chart ----
+   <div class="im-bars"> <i style="--v: .4" data-label="Mon"></i> … </div>
+   One line of markup, no frame: the label is drawn under each bar. */
+.im-bars {
+	--im-bars-height: 8rem;
+
+	display: flex;
+	align-items: end;
+	gap: clamp(0.25rem, 1.5%, 0.75rem);
+	height: var(--im-bars-height);
+	padding-bottom: 1.375rem;
+}
+
+.im-bars > i {
+	position: relative;
+	flex: 1 1 0;
+	height: calc(var(--v, 0) * 100%);
+	min-height: 2px;
+	border-radius: var(--im-radius-xs) var(--im-radius-xs) 0 0;
+	background-color: var(--im-viz-track);
+	transform-origin: 50% 100%;
+	transition: background-color var(--im-duration-instant);
+}
+
+.im-bars > i:hover,
+.im-bars > i[data-on] {
+	background-color: var(--im-chart-color, var(--im-viz-1));
+}
+
+.im-bars > i::after {
+	content: attr(data-label);
+	position: absolute;
+	top: calc(100% + 0.375rem);
+	left: 50%;
+	translate: -50% 0;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: 0.6875rem;
+	font-style: normal;
+	white-space: nowrap;
+}
+
+/* Every bar in the colour, not only the one on. */
+.im-bars-filled > i { background-color: var(--im-chart-color, var(--im-viz-1)); }
+
+@media (prefers-reduced-motion: no-preference) {
+	[data-im-js] .im-bars[data-im-reveal]:not([data-im-revealed]) { opacity: 1; translate: none; }
+	[data-im-js] .im-bars[data-im-reveal]:not([data-im-revealed]) > i { scale: 1 0; }
+	.im-bars[data-im-reveal] > i { transition: scale var(--im-duration-slow) var(--im-ease-out), background-color var(--im-duration-instant); }
+	.im-bars[data-im-reveal] > i:nth-child(n) { transition-delay: calc((var(--n, 0)) * 40ms); }
+}
+
+/* ---- horizontal bars: a ranking ----
+   <div class="im-hbars"> <span>Travel</span><i style="--v: 1"></i><b>48</b> … </div> */
+.im-hbars {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr) auto;
+	align-items: center;
+	gap: 0.5rem 0.875rem;
+	font-size: var(--im-text-sm);
+}
+
+.im-hbars > span {
+	color: var(--im-ink);
+	font-weight: 500;
+}
+
+.im-hbars > i {
+	height: 0.5rem;
+	border-radius: var(--im-radius-full);
+	background: linear-gradient(to right, var(--c, var(--im-chart-color, var(--im-viz-1))) calc(var(--v, 0) * 100%), var(--im-viz-track) 0);
+}
+
+.im-hbars > b {
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	font-weight: 400;
+	font-variant-numeric: tabular-nums;
+	text-align: right;
+}
+
+/* Thicker bars, with the label inside the row above the bar. */
+.im-hbars-thick { grid-template-columns: minmax(0, 1fr) auto; }
+.im-hbars-thick > span { grid-column: 1; }
+.im-hbars-thick > b { grid-column: 2; }
+.im-hbars-thick > i { grid-column: 1 / -1; height: 1rem; border-radius: var(--im-radius-xs); margin-bottom: 0.375rem; }
+
+/* ---- bullet: a measure against a target ----
+   <div class="im-chart-bullet" style="--v: .72; --im-target: .85"><span>Revenue</span><i></i><b>$3.2k</b></div> */
+.im-chart-bullet {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr) auto;
+	align-items: center;
+	gap: 0.875rem;
+	font-size: var(--im-text-sm);
+}
+
+.im-chart-bullet > span { color: var(--im-ink); font-weight: 500; }
+
+.im-chart-bullet > i {
+	position: relative;
+	height: 1rem;
+	border-radius: var(--im-radius-xs);
+	/* Three bands of the track — poor, fair, good — then the measure. */
+	background:
+		linear-gradient(to right, var(--c, var(--im-chart-color, var(--im-viz-1))) calc(var(--v, 0) * 100%), transparent 0) 0 50% / 100% 40% no-repeat,
+		linear-gradient(to right, var(--im-surface-3) 33%, var(--im-surface-2) 33% 66%, var(--im-surface) 66%);
+}
+
+/* The target: a tick in the ink. */
+.im-chart-bullet > i::after {
+	content: "";
+	position: absolute;
+	top: -0.125rem;
+	bottom: -0.125rem;
+	left: calc(var(--im-target, 0.8) * 100%);
+	width: 2px;
+	border-radius: 1px;
+	background-color: var(--im-ink);
+}
+
+.im-chart-bullet > b {
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	font-weight: 400;
+	font-variant-numeric: tabular-nums;
+}

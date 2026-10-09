@@ -1,0 +1,174 @@
+/* Journey — the story of a person as a STACK of chapters.
+
+     <ol class="im-journey">
+       <li class="im-journey-card" id="j-2016">
+         <p class="im-journey-head"><time>2016</time><span class="im-badge">Work</span></p>
+         <h3>A startup that did not survive its market</h3>
+         <p>…</p>
+         <img src="…" alt="">
+       </li>
+       …
+     </ol>
+
+   Each chapter is a card that STICKS under the top bar as it arrives and
+   stays while the next one slides up over it, one step lower, so the years
+   pile up along the top of the window like the tabs of a file — the reader
+   can see how far through the story they are without a scrollbar. The step
+   is the height of the card's head row, so what peeks out of each card
+   underneath is exactly its year.
+
+   Beside it, in a sticky rail, im-journey-index lists the years; the one in
+   view wears the system's "you are here" state (--im-current-*), set by a
+   small script that watches the cards (and sweeps on scroll, because an
+   observer never fires in an unpainted tab):
+
+     <nav class="im-journey-index" data-im-journey="#journey">
+       <a href="#j-2012">2012<small>A degree</small></a> …
+     </nav>
+
+   The stack needs no JavaScript; without the script the index is a list of
+   links. Knobs: --im-journey-step (the peek), --im-journey-top (where the
+   first card sticks). */
+
+.im-journey {
+	--im-journey-step: 2.75rem;
+	--im-journey-top: calc(var(--im-bar-height) + 1.25rem);
+
+	display: grid;
+	gap: 1rem;
+	counter-reset: im-journey;
+}
+
+.im-journey-card {
+	position: sticky;
+	top: calc(var(--im-journey-top) + var(--im-j, 0) * var(--im-journey-step));
+	display: grid;
+	gap: 0.75rem;
+	padding: 1.25rem 1.5rem 1.5rem;
+	border-radius: var(--im-radius-2xl);
+	background-color: var(--im-canvas);
+	box-shadow: inset 0 0 0 1px var(--im-line), 0 -0.5rem 1.5rem -1rem rgb(0 0 0 / 12%);
+	counter-increment: im-journey;
+	/* A card is never shorter than the stack it leaves behind, so the last
+	   one still has something to stack on. */
+	min-height: calc(var(--im-journey-step) * 4);
+}
+
+/* Each card one step lower than the one before it. Eight is the most a story
+   should be told in; a ninth stacks with the eighth. */
+.im-journey-card:nth-child(2) { --im-j: 1; }
+.im-journey-card:nth-child(3) { --im-j: 2; }
+.im-journey-card:nth-child(4) { --im-j: 3; }
+.im-journey-card:nth-child(5) { --im-j: 4; }
+.im-journey-card:nth-child(6) { --im-j: 5; }
+.im-journey-card:nth-child(7) { --im-j: 6; }
+.im-journey-card:nth-child(n + 8) { --im-j: 7; }
+
+/* The head row: the year in the pixel face, the kind of chapter beside it.
+   Its height IS the step, so the peek shows exactly this row. */
+.im-journey-head {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	height: calc(var(--im-journey-step) - 1.25rem);
+	margin: 0;
+}
+
+.im-journey-head > time {
+	color: var(--im-accent);
+	font-family: var(--im-font-pixel);
+	font-size: var(--im-text-h3);
+	line-height: 1;
+}
+
+.im-journey-head > time::after {
+	content: "";
+	display: inline-block;
+	width: 0.4375rem;
+	height: 0.4375rem;
+	margin-left: 0.5rem;
+	border-radius: 50%;
+	background-color: currentcolor;
+	vertical-align: 0.5em;
+}
+
+.im-journey-head > .im-badge { margin-left: auto; }
+
+.im-journey-card > h3 {
+	color: var(--im-ink);
+	font-size: var(--im-text-h3);
+	font-weight: 600;
+	line-height: var(--im-leading-h3);
+	letter-spacing: var(--im-tracking-tight);
+	text-wrap: balance;
+}
+
+.im-journey-card > p { color: var(--im-body); line-height: 1.65; text-wrap: pretty; max-width: 60ch; }
+
+.im-journey-card > img {
+	width: 100%;
+	max-width: 32rem;
+	margin-top: 0.25rem;
+	aspect-ratio: 16 / 9;
+	border-radius: var(--im-radius-lg);
+	object-fit: cover;
+}
+
+/* A card with a picture lays it beside the words where there is room. */
+@media (width >= 48rem) {
+	.im-journey-card:has(> img) {
+		grid-template-columns: minmax(0, 1fr) 14rem;
+		grid-template-areas: "head head" "title img" "text img";
+		column-gap: 1.5rem;
+	}
+
+	.im-journey-card:has(> img) > .im-journey-head { grid-area: head; }
+	.im-journey-card:has(> img) > h3 { grid-area: title; }
+	.im-journey-card:has(> img) > p { grid-area: text; }
+	.im-journey-card:has(> img) > img { grid-area: img; align-self: start; max-width: none; aspect-ratio: 4 / 3; margin: 0; }
+}
+
+/* ---- the index, in the rail ---- */
+.im-journey-index {
+	display: grid;
+	gap: 0.125rem;
+}
+
+.im-journey-index > a {
+	display: grid;
+	grid-template-columns: 3.25rem minmax(0, 1fr);
+	gap: 0.625rem;
+	align-items: baseline;
+	padding: 0.4375rem 0.625rem;
+	border-radius: var(--im-radius-md);
+	color: var(--im-muted);
+	font-size: var(--im-text-sm);
+	text-decoration: none;
+	transition: background-color var(--im-duration-instant) var(--im-ease-out), color var(--im-duration-instant) var(--im-ease-out);
+}
+
+.im-journey-index > a > b { color: var(--im-body); font-family: var(--im-font-pixel); font-weight: 400; }
+.im-journey-index > a > small { font-size: inherit; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.im-journey-index > a:hover { background-color: var(--im-hover-bg); color: var(--im-ink); }
+
+.im-journey-index > a[aria-current="true"] {
+	background-color: var(--im-current-bg);
+	color: var(--im-current-fg);
+	font-weight: var(--im-current-weight);
+}
+
+.im-journey-index > a[aria-current="true"] > b { color: var(--im-accent); }
+
+/* On a phone the cards do not stack — a 390px window has no room for a
+   pile of tabs under a bar — they simply follow one another. */
+@media (width < 48rem) {
+	.im-journey-card { position: static; min-height: 0; padding: 1.125rem 1.25rem 1.25rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.im-journey-card { position: static; }
+}
+
+@media print {
+	.im-journey-card { position: static; break-inside: avoid; box-shadow: inset 0 0 0 1px var(--im-line); }
+}

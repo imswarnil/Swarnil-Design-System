@@ -120,6 +120,10 @@ export async function build({ quiet = false } = {}) {
 	}));
 
 	const demo = {
+		// The owner's own pictures, for the channel pages: a photograph and the
+		// commissioned line illustration. A theme replaces both with its own.
+		me: '/assets/brand/portrait.jpg',
+		art: '/assets/brand/cover.png',
 		topics,
 		post: { ...fixtures.posts[0], featured: true },
 		three: fixtures.posts.slice(0, 3),
@@ -376,6 +380,24 @@ export async function build({ quiet = false } = {}) {
 			{ year: '2024', posts: 19, share: '56%' },
 			{ year: '2023', posts: 11, share: '32%' },
 		],
+		// Data visualisation: one year of a small site's numbers, invented, for
+		// /data/*. Every value is a plain number; a chart scales it itself.
+		viz: {
+			months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+			readers: [4.1, 4.6, 5.2, 5.0, 6.1, 6.8, 7.4, 8.9, 9.6, 11.2, 12.0, 12.5],
+			members: [0.3, 0.4, 0.5, 0.5, 0.7, 0.8, 1.0, 1.1, 1.3, 1.6, 1.9, 2.1],
+			posts: [{ label: 'Jan', v: 0.33, n: 4 }, { label: 'Feb', v: 0.58, n: 7 }, { label: 'Mar', v: 0.42, n: 5 }, { label: 'Apr', v: 0.75, n: 9 }, { label: 'May', v: 0.5, n: 6 }, { label: 'Jun', v: 1, n: 12, on: true }, { label: 'Jul', v: 0.67, n: 8 }, { label: 'Aug', v: 0.83, n: 10 }],
+			topics: [{ name: 'Travel', posts: 48, v: 1, views: '412k', delta: '+12%', trend: 'up', spark: '4,6,5,8,7,11,10,14' }, { name: 'Craft', posts: 34, v: 0.71, views: '128k', delta: '+4%', trend: 'up', spark: '6,5,7,6,8,7,9,9' }, { name: 'Career', posts: 24, v: 0.5, views: '96k', delta: '−2%', trend: 'down', spark: '9,8,8,7,7,6,7,6' }, { name: 'Salesforce', posts: 16, v: 0.33, views: '74k', delta: '0%', trend: 'flat', spark: '5,5,6,5,5,6,5,5' }, { name: 'Moving', posts: 11, v: 0.23, views: '210k', delta: '+31%', trend: 'up', spark: '2,3,3,5,6,8,11,13' }],
+			days: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+			hours: ['6', '9', '12', '15', '18', '21'],
+			heat: [[0.1, 0.4, 0.7, 0.6, 0.9, 0.5], [0.1, 0.5, 0.8, 0.6, 0.8, 0.4], [0.2, 0.5, 0.7, 0.7, 1, 0.5], [0.1, 0.4, 0.6, 0.6, 0.9, 0.6], [0.2, 0.3, 0.5, 0.4, 0.7, 0.8], [0.3, 0.2, 0.3, 0.4, 0.6, 0.9], [0.4, 0.2, 0.2, 0.3, 0.5, 0.7]],
+			cal: Array.from({ length: 371 }, (_, i) => +(((i * 7919) % 97) / 97 * (i % 7 === 5 || i % 7 === 6 ? 0.35 : 1)).toFixed(2)),
+			funnel: [{ name: 'Visited', n: '12,480', v: 1 }, { name: 'Read to the end', n: '6,910', v: 0.55 }, { name: 'Subscribed', n: '1,204', v: 0.32 }, { name: 'Paid', n: '318', v: 0.18 }],
+			tree: [{ name: 'Travel', v: 48 }, { name: 'Craft', v: 34 }, { name: 'Career', v: 24 }, { name: 'Salesforce', v: 16 }, { name: 'Moving', v: 11 }, { name: 'Tools', v: 8 }, { name: 'Notes', v: 5 }],
+			scatter: '820:4.1,1200:6.2,640:3.4,1540:8.9,980:5.0,2100:12.4,1310:7.1,760:4.4,1880:10.2,420:2.1,1120:6.9,1700:9.0',
+			scatter2: '600:2.0,900:3.1,1300:4.0,1500:5.2,1900:5.9,2300:7.4',
+			glance: [{ label: 'Readers', figure: '12,480', count: '12480', delta: '12% this month', trend: 'up', spark: '4,6,5,8,7,11,10,14,13,17' }, { label: 'Members', figure: '1,204', count: '1204', delta: '8% this month', trend: 'up', spark: '3,3,4,5,5,7,8,9,11,12' }, { label: 'Open rate', figure: '41', unit: '%', count: '41', delta: '1.4 pts', trend: 'down', spark: '48,46,45,44,45,43,42,42,41,41' }, { label: 'Paid', figure: '$3.2k', delta: 'of $5k goal', trend: 'flat', spark: '1,1.2,1.5,1.6,2.1,2.4,2.6,2.9,3.1,3.2' }],
+		},
 	};
 
 	// A prompt card shows one line of the prompt as a teaser, never the prompt.

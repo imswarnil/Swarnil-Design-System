@@ -1,0 +1,41 @@
+---
+title: Titles & text
+description: Ten ways to set a title, and how one arrives — line by line, letter by letter, typed, tracked, resolved out of pixels, scrambled, rolled. The style is a modifier; the arrival is the layer system.
+eyebrow: Content creation · Elements
+source: src/studio/title.css · src/studio/motion.css
+---
+<p><code>im-studio-title</code> is the display face: big, tight, one word in the accent. A style is a modifier on it, one idea each. A title never animates by itself — it is a layer like anything else, and <code>data-in</code> says how it arrives.</p>
+
+<h2>Styles</h2>
+{{#example flush=true}}
+<div class="frame-grid" style="padding: 1rem">
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title">The <em>road</em> nobody wants</h2></div></div><figcaption>im-studio-title</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-title-pixel">LEVEL <em>12</em></h2></div></div><figcaption>-pixel</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-title-outline">The <em>road</em> nobody</h2></div></div><figcaption>-outline</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-title-stack">Stacked</h2></div></div><figcaption>-stack</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540; padding: 2em"><h2 class="im-studio-title im-studio-title-boxed" style="font-size: 2em">Two lines of <em>boxed</em> words here</h2></div></div><figcaption>-boxed</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540; padding: 2em"><h2 class="im-studio-title im-studio-title-tape" style="font-size: 2em">On <em>tape</em>, tilted</h2></div></div><figcaption>-tape</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-title-under">Underlined</h2></div></div><figcaption>-under</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-title-hand">in the hand!</h2></div></div><figcaption>-hand</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-title-numeral"><b>04</b> What it <em>costs</em></h2></div></div><figcaption>-numeral</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540; padding: 3em"><h2 class="im-studio-title im-studio-title-quote" style="font-size: 1.8em">The mirrors fold in and nobody slows down.</h2></div></div><figcaption>-quote</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-title-mono">Chapter two</h2></div></div><figcaption>-mono</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><div class="im-studio-titleblock im-center"><p class="im-studio-kicker">Journal · 8 min</p><h2 class="im-studio-title">The <em>stack</em></h2><p class="im-studio-sub">Kicker, title, sub — the block.</p></div></div></div><figcaption>im-studio-titleblock</figcaption></figure>
+</div>
+{{/example}}
+
+<h2>How a title arrives</h2>
+{{#example flush=true}}
+<div class="frame-grid" data-replay style="padding: 1rem">
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-layer" data-in="line-up">Line <em>up</em></h2></div></div><figcaption>data-in="line-up"</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-layer" data-in="letters" data-im-split="chars">Letters</h2></div></div><figcaption>data-in="letters"</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-layer" data-in="words" data-im-split="words">Word by word</h2></div></div><figcaption>data-in="words"</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-title-mono im-studio-layer" data-in="type" style="--im-studio-steps: 9">Typed in</h2></div></div><figcaption>data-in="type"</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-layer" data-in="track">Tracked</h2></div></div><figcaption>data-in="track"</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-layer" data-in="pixel">Pixel</h2></div></div><figcaption>data-in="pixel"</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title im-studio-title-scramble" data-im-scramble>Scrambled</h2></div></div><figcaption>data-im-scramble</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title">I <span class="im-studio-roll im-studio-stagger" style="--im-studio-roll-n: 3"><span>build</span><span>film</span><span>write</span></span></h2></div></div><figcaption>im-studio-roll</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-center-grid" style="--im-studio-w: 960; --im-studio-h: 540"><h2 class="im-studio-title">One <span data-im-scribble="circle">word</span></h2></div></div><figcaption>data-im-scribble</figcaption></figure>
+</div>
+{{/example}}
+<p>The scramble and the scribble are <code>im-motion.js</code> (the same ones the page uses, from <a href="/effects/text/">text effects</a>); every frame loads it. The roll holds its last word; <code>--im-studio-roll-n</code> is how many it rolls through.</p>

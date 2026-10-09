@@ -1,0 +1,95 @@
+---
+title: Grids & maps
+description: Two dimensions at once — a heatmap of the week, a calendar of the year, a matrix that says its numbers — and the shapes for a hierarchy and a sequence, a treemap and a funnel. Every cell is the one colour mixed in by its value.
+eyebrow: Data visualisation
+source: src/viz/grid.css
+---
+<h2>Heatmap</h2>
+<p>Rows of cells, each coloured by <code>--v</code>: the series colour mixed into the track by the value, so more is more of the accent. The first cell of a row can be its label; <code>data-label</code> on a cell is its readout on hover. <code>--im-heat-cols</code> says how many columns.</p>
+{{#example}}
+<figure class="im-chart">
+	<div class="im-chart-head"><p class="im-chart-title">When people read</p><p class="im-chart-sub">share of the week’s visits</p>
+		<p class="im-chart-scale im-chart-tools">less <i style="--v: 0"></i><i style="--v: .25"></i><i style="--v: .5"></i><i style="--v: .75"></i><i style="--v: 1"></i> more</p>
+	</div>
+	<div class="im-chart-heat im-chart-heat-wide" style="--im-heat-cols: 6" role="img" aria-label="Visits by day and hour: weekday evenings are busiest, Friday at six the most">
+		<span class="im-chart-heat-label"></span>{{#each demo.viz.hours}}<span class="im-chart-heat-head">{{this}}:00</span>{{/each}}
+		{{#each demo.viz.heat}}<span class="im-chart-heat-label">{{lookup ../demo.viz.days @index}}</span>{{#each this}}<i style="--v: {{this}}" data-label="{{lookup ../../demo.viz.days @../index}} {{lookup ../../demo.viz.hours @index}}:00 · {{this}}"></i>{{/each}}{{/each}}
+	</div>
+</figure>
+{{/example}}
+{{{{code "html"}}}}
+<div class="im-chart-heat" style="--im-heat-cols: 6" role="img" aria-label="Visits by day and hour: …">
+	<span class="im-chart-heat-label"></span><span class="im-chart-heat-head">6:00</span>…
+	<span class="im-chart-heat-label">Mon</span><i style="--v: .1" data-label="Mon 6:00 · 0.1"></i><i style="--v: .4"></i>…
+</div>
+<p class="im-chart-scale">less <i style="--v: 0"></i><i style="--v: .5"></i><i style="--v: 1"></i> more</p>
+{{{{/code}}}}
+
+<p>Without row labels, <code>im-chart-heat-bare</code> makes every cell a column — a strip of hours, a month of days.</p>
+{{#example}}
+<div class="im-chart-heat im-chart-heat-bare" style="--im-heat-cols: 24; --im-chart-color: var(--im-viz-2)" role="img" aria-label="Visits by hour of a day: quiet overnight, two peaks at nine and six">
+	<i style="--v: .05"></i><i style="--v: .03"></i><i style="--v: .02"></i><i style="--v: .02"></i><i style="--v: .04"></i><i style="--v: .1"></i><i style="--v: .25"></i><i style="--v: .5"></i><i style="--v: .8"></i><i style="--v: 1"></i><i style="--v: .7"></i><i style="--v: .55"></i><i style="--v: .6"></i><i style="--v: .5"></i><i style="--v: .45"></i><i style="--v: .5"></i><i style="--v: .6"></i><i style="--v: .8"></i><i style="--v: .95"></i><i style="--v: .75"></i><i style="--v: .55"></i><i style="--v: .4"></i><i style="--v: .25"></i><i style="--v: .12"></i>
+</div>
+{{/example}}
+
+<h2>Calendar</h2>
+<p>A year of days: columns are weeks, rows are weekdays, each cell a day. 371 cells make 53 columns; the first and last few are the edge of the year. The contribution graph everyone knows, in the system’s colour.</p>
+{{#example}}
+<figure class="im-chart">
+	<div class="im-chart-head"><p class="im-chart-title">Posts and edits</p><p class="im-chart-sub">every day of 2026</p></div>
+	<div class="im-chart-cal" role="img" aria-label="Activity by day over the year: steady on weekdays, quiet at weekends, busiest in the autumn">
+		{{#each demo.viz.cal}}<i style="--v: {{this}}" data-label="day {{@index}} · {{this}}"></i>{{/each}}
+	</div>
+</figure>
+{{/example}}
+
+<h2>Matrix</h2>
+<p>A heatmap whose cells say their number — for a few rows and columns, where the figure is the point and the colour only helps. A header row of <code>&lt;b&gt;</code>, a label <code>&lt;span&gt;</code> per row. <code>data-dark</code> on a cell over the darker half of the scale turns its figure to the canvas colour.</p>
+{{#example}}
+<div class="im-chart-matrix" style="--im-heat-cols: 4" role="img" aria-label="Posts by topic and quarter: travel 14, 12, 10, 12; craft 6, 8, 11, 9; career 7, 6, 5, 6; salesforce 4, 4, 5, 3">
+	<b></b><b>Q1</b><b>Q2</b><b>Q3</b><b>Q4</b>
+	<span>Travel</span><i style="--v: 1" data-dark>14</i><i style="--v: .85" data-dark>12</i><i style="--v: .7" data-dark>10</i><i style="--v: .85" data-dark>12</i>
+	<span>Craft</span><i style="--v: .42">6</i><i style="--v: .57" data-dark>8</i><i style="--v: .78" data-dark>11</i><i style="--v: .64" data-dark>9</i>
+	<span>Career</span><i style="--v: .5">7</i><i style="--v: .42">6</i><i style="--v: .35">5</i><i style="--v: .42">6</i>
+	<span>Salesforce</span><i style="--v: .28">4</i><i style="--v: .28">4</i><i style="--v: .35">5</i><i style="--v: .21">3</i>
+</div>
+{{/example}}
+
+<h2>Treemap</h2>
+<p>Boxes sized by their value, in rows that wrap: each leaf grows by <code>--v</code>, which is the number itself, not a share. A <code>im-chart-branch</code> holds a column of leaves and grows by their sum. Not exact — a true treemap needs a layout algorithm — but right for seven things that should be seen at their sizes. <code>im-chart-leaf-light</code> keeps the ink on a tinted box, for a quieter map.</p>
+{{#example}}
+<div class="im-chart-treemap" role="img" aria-label="Posts by topic: Travel 48, Craft 34, Career 24, Salesforce 16, Moving 11, Tools 8, Notes 5">
+	{{#each demo.viz.tree}}{{#match @index "<" 5}}<div class="im-chart-leaf{{#match @index ">" 1}} im-chart-leaf-light{{/match}}" style="--v: {{v}}{{#match @index ">" 0}}{{#match @index "<" 2}}; --c: var(--im-viz-2){{/match}}{{/match}}"><b>{{name}}</b><span>{{v}} posts</span></div>{{/match}}{{/each}}
+	<div class="im-chart-branch" style="--v: 13">
+		{{#each demo.viz.tree}}{{#match @index ">" 4}}<div class="im-chart-leaf im-chart-leaf-light" style="--v: {{v}}"><b>{{name}}</b><span>{{v}} posts</span></div>{{/match}}{{/each}}
+	</div>
+</div>
+{{/example}}
+{{{{code "html"}}}}
+<div class="im-chart-treemap" role="img" aria-label="Posts by topic: …">
+	<div class="im-chart-leaf" style="--v: 48"><b>Travel</b><span>48 posts</span></div>
+	<div class="im-chart-leaf" style="--v: 34; --c: var(--im-viz-2)"><b>Craft</b><span>34 posts</span></div>
+	<div class="im-chart-leaf im-chart-leaf-light" style="--v: 24"><b>Career</b><span>24 posts</span></div>
+	…
+</div>
+{{{{/code}}}}
+
+<h2>Funnel</h2>
+<p>Stages, each a share of the first, centred so the shape narrows. The colour fades with the stage. <code>im-chart-funnel-left</code> lines them up on the left instead, for a funnel that is read as a list.</p>
+{{#example}}
+<div class="im-cols">
+	<div class="im-chart-funnel" data-span="6" role="img" aria-label="Visited 12,480, read to the end 6,910, subscribed 1,204, paid 318">
+		{{#each demo.viz.funnel}}<div style="--v: {{v}}"><b>{{name}}</b><span>{{n}}</span></div>{{/each}}
+	</div>
+	<div class="im-chart-funnel im-chart-funnel-left" data-span="6" style="--c: var(--im-viz-2)" role="img" aria-label="Visited 12,480, read to the end 6,910, subscribed 1,204, paid 318">
+		{{#each demo.viz.funnel}}<div style="--v: {{v}}"><b>{{name}}</b><span>{{n}}</span></div>{{/each}}
+	</div>
+</div>
+{{/example}}
+{{{{code "html"}}}}
+<div class="im-chart-funnel" role="img" aria-label="Visited 12,480, read to the end 6,910, …">
+	<div style="--v: 1"><b>Visited</b><span>12,480</span></div>
+	<div style="--v: .55"><b>Read to the end</b><span>6,910</span></div>
+	…
+</div>
+{{{{/code}}}}

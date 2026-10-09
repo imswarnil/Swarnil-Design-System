@@ -1,0 +1,126 @@
+/* Stat — a figure, what it counts, how it moved.
+
+     <div class="im-stat">
+       <span class="im-stat-figure" data-im-count="12480">12,480</span>
+       <span class="im-stat-label">readers</span>
+       <span class="im-stat-delta" data-trend="up">12% this month</span>
+     </div>
+
+   im-stat-tile puts one in a cell with a hairline; im-stat-tiles is a row of
+   them sharing their borders — the KPI strip at the top of a dashboard.
+   im-stat-row sets a figure beside a small chart.
+
+   Knobs: --im-stat-figure (the figure's colour), --im-stat-size. */
+
+.im-stat {
+	--im-stat-figure: var(--im-ink);
+
+	display: flex;
+	flex-direction: column;
+	gap: 0.125rem;
+	min-width: 0;
+}
+
+.im-stat-figure {
+	color: var(--im-stat-figure);
+	font-size: var(--im-stat-size, clamp(1.75rem, 1.3rem + 1.6vw, 2.75rem));
+	font-weight: 600;
+	line-height: 1.05;
+	letter-spacing: var(--im-tracking-tighter);
+	font-variant-numeric: tabular-nums;
+}
+
+/* A unit after the figure — %, k, ms — smaller and quieter. */
+.im-stat-unit {
+	margin-left: 0.125em;
+	color: var(--im-muted);
+	font-size: 0.5em;
+	font-weight: 500;
+	letter-spacing: 0;
+}
+
+.im-stat-label {
+	color: var(--im-muted);
+	font-size: var(--im-text-sm);
+}
+
+.im-stat-delta {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.25rem;
+	color: var(--im-success);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	font-weight: 600;
+	font-variant-numeric: tabular-nums;
+}
+
+.im-stat-delta[data-trend="down"] { color: var(--im-danger); }
+.im-stat-delta[data-trend="flat"] { color: var(--im-muted); }
+
+/* The delta as a small pill, for a tile. */
+.im-stat-delta-pill {
+	padding: 0.125rem 0.5rem;
+	border-radius: var(--im-radius-full);
+	background-color: var(--im-success-tint);
+}
+
+.im-stat-delta-pill[data-trend="down"] { background-color: var(--im-danger-tint); }
+.im-stat-delta-pill[data-trend="flat"] { background-color: var(--im-surface); }
+
+/* A stat with a chart or a ring beside it. */
+.im-stat-row {
+	display: flex;
+	align-items: end;
+	justify-content: space-between;
+	gap: 1rem;
+}
+
+/* Against what — the previous period, a target — as a second, quieter figure. */
+.im-stat-compare {
+	display: flex;
+	align-items: baseline;
+	gap: 0.5rem;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	font-variant-numeric: tabular-nums;
+}
+
+.im-stat-compare > b { color: var(--im-body); font-weight: 500; }
+
+/* ---- tiles: cells that share one hairline ---- */
+.im-stat-tiles {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(11rem, 100%), 1fr));
+	gap: 1px;
+	overflow: hidden;
+	border-radius: var(--im-radius-xl);
+	background-color: var(--im-viz-line);
+	box-shadow: inset 0 0 0 1px var(--im-viz-line);
+}
+
+.im-stat-tile {
+	display: flex;
+	flex-direction: column;
+	gap: 0.625rem;
+	min-width: 0;
+	padding: 1.125rem 1.25rem;
+	background-color: var(--im-canvas);
+}
+
+.im-stat-tile > .im-caption { margin: 0; }
+
+/* A tile on its own, not in a strip. */
+.im-stat-tile-solo {
+	border-radius: var(--im-radius-xl);
+	box-shadow: inset 0 0 0 1px var(--im-viz-line);
+}
+
+/* Inside a tile the sparkline fills the width and sits at the foot. */
+.im-stat-tile > .im-spark {
+	--im-spark-width: 100%;
+	--im-spark-height: 2.5rem;
+
+	margin-top: auto;
+}

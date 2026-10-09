@@ -1,22 +1,35 @@
 ---
 title: Channel art
-description: 2560 × 1440 — one picture and the name. The portrait fills the frame and fades into the ground; the name sits in the band every device shows, set huge. Nothing else.
+description: 2560 × 1440, read through a band 423 tall. So the art is a page — the site’s own grid, edge to edge — with a cover lying across the band every device keeps, and everything a phone must read in the middle 1546 of it.
 eyebrow: Content creation · YouTube
-source: src/components/studio.css
+source: src/studio/youtube.css · site/pages/frames/channel-art.hbs
 ---
-<p>A banner is read in half a second, so it says one thing: who. On a cream ground with a faint grid (or near-black — <code>im-studio-dark</code>), the portrait fills the right and fades into the ground, the name sits in the band every device keeps, set huge, with the brand’s dot as its full stop. Below, the way YouTube shows it on a desk — cropped to that band, with the profile and the channel row under it — which is the only honest test of a banner.</p>
+<p>A banner is read in half a second, and every device shows a different crop of it: a desk sees a band 2560 wide and 423 tall through the middle, a TV sees all of it, a phone sees 1546 × 423 in the centre. So this one is built the way the site is built. The <strong>page</strong> is the grid, edge to edge, and lying across the band is a <strong>cover</strong>: white, a hairline, faint scanlines, a key light where the portrait is. Inside the phone’s 1546: a greeting in Devanagari, the name with the brand’s dot after it, two facts in the mono face, one line in the hand, the website and the mail. A dashed trail from India to Budapest with a plane on it. The illustration — the portrait with its golden circle — rising out of the cover on the right, and six floating tiles round it, each with a hand-written word: build, ai, vlogs, travel, party. For the desk and the TV only: the follow row on the left, the schedule on the right.</p>
+<div class="frame-preview" style="--fw: 2560; --fh: 1440"><iframe src="/frames/channel-art/" title="channel art" loading="lazy"></iframe></div>
+<p class="im-cluster"><a class="im-btn im-btn-sm" href="/frames/channel-art/">Open at 2560 × 1440 {{icon "arrow-up-right"}}</a><a class="im-btn im-btn-sm" href="/frames/channel-art-dark/">The dark one {{icon "arrow-up-right"}}</a><span class="im-hint"><code>im-studio-banner</code> · <code>im-studio-banner-cover</code> · <code>data-safe</code> draws the band</span></p>
+
+<h2>As a desk sees it</h2>
 <div class="yt-mock">
 	<div class="yt-mock-banner"><div class="frame-preview" style="--fw: 2560; --fh: 1440"><iframe src="/frames/channel-art/" title="channel art, as YouTube crops it" loading="lazy"></iframe></div></div>
-	<div class="yt-mock-head">
-		<div class="frame-preview" style="--fw: 800; --fh: 800"><iframe src="/frames/profile-art/" title="profile art" loading="lazy" tabindex="-1"></iframe></div>
-		<p class="yt-mock-name"><b>Swarnil Singhai</b><span>@imswarnil · 128K subscribers · 214 videos</span><span>Films about roads, tools and what things cost.</span></p>
-		<span class="im-cluster im-cluster-tight"><span class="im-btn im-btn-ink im-btn-sm">Subscribe</span><span class="im-btn im-btn-sm">Join</span></span>
-	</div>
 </div>
-<p class="im-hint">The same header in the dark banner:</p>
+<p class="im-hint">And the dark one:</p>
 <div class="yt-mock">
 	<div class="yt-mock-banner"><div class="frame-preview" style="--fw: 2560; --fh: 1440"><iframe src="/frames/channel-art-dark/" title="dark channel art, as YouTube crops it" loading="lazy"></iframe></div></div>
 </div>
-<h2>The whole file</h2>
-<div class="frame-preview" style="--fw: 2560; --fh: 1440"><iframe src="/frames/channel-art/" title="channel-art" loading="lazy"></iframe></div>
-<p class="im-cluster"><a class="im-btn im-btn-sm" href="/frames/channel-art/">Open at 2560 × 1440 {{icon "arrow-up-right"}}</a><a class="im-btn im-btn-sm" href="/frames/channel-art-dark/">The dark one {{icon "arrow-up-right"}}</a><span class="im-hint"><code>im-studio-banner</code> · <code>im-studio-person</code> · <code>data-safe</code> to see the band</span></p>
+
+<h2>Anatomy</h2>
+<div class="im-table-scroll"><table>
+<thead><tr><th>Part</th><th>Class</th><th></th></tr></thead>
+<tbody>
+<tr><td>The page</td><td><code>im-studio-banner im-studio-cream</code> + <code>im-studio-bg im-bg-grid</code></td><td>Warm paper and the grid at 64px. The whole 2560 × 1440; the TV sees it all.</td></tr>
+<tr><td>The cover</td><td><code>im-studio-banner-cover</code></td><td>The band from 508px down, 423 tall. White, a hairline, scanlines and a key light as pseudo-elements, a soft shadow on the page. Everything else is positioned inside it, in its own em.</td></tr>
+<tr><td>The art</td><td><code>im-studio-banner-art</code></td><td>The illustration, placed so its golden circle meets the cover’s top edge and the cover cuts the rest. <code>-photo</code> takes a photograph instead, faded at both sides.</td></tr>
+<tr><td>Intro</td><td><code>im-studio-banner-intro</code></td><td><code>im-studio-greeting</code> (Devanagari, the accent), the title with the wordmark’s dot, <code>im-studio-facts</code> with icons, the line in the hand (<code>im-studio-note</code>), the links in the accent.</td></tr>
+<tr><td>Trail</td><td><code>im-studio-banner-trail</code> + <code>im-studio-badge</code> + <code>im-studio-pill</code></td><td>A dashed SVG path in the accent, a plane in a badge, the two places as pills.</td></tr>
+<tr><td>Tiles</td><td><code>im-studio-tilelabel</code> &gt; <code>im-studio-tile</code> + <code>im-studio-note</code></td><td>A white square with an icon, tilted, and a hand-written word under it. Six of them, each placed with <code>im-studio-at</code>.</td></tr>
+<tr><td>Follow</td><td><code>im-studio-banner-follow</code> + <code>im-studio-socials</code></td><td>Outside the phone’s band: a label and four ringed brand marks.</td></tr>
+<tr><td>Schedule</td><td><code>im-studio-banner-schedule</code> + <code>im-studio-slot</code></td><td>Outside the band on the right: the live stream with the dot, the new video with the play mark, each with its day and time.</td></tr>
+</tbody></table></div>
+
+<h2>Change the words, keep the art</h2>
+<p>Everything on the cover is live text. The greeting, the name, the facts, the line, the tile words and the schedule are the strings in <code>site/pages/frames/channel-art.hbs</code>; the picture is <code>demo.art</code> (<code>/assets/brand/cover.png</code>). Export it with <code>npm run frames channel-art</code>, or rebuild it as layers in Pixelmator with <a href="/content-creation/youtube/pixelmator/">the template script</a> and move the tiles by hand.</p>

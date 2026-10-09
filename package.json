@@ -1,6 +1,6 @@
 {
 	"name": "im-design-system",
-	"version": "0.7.0",
+	"version": "0.8.0",
 	"private": true,
 	"description": "A Tailwind CSS design system for Ghost themes: tokens, layout, components and reusable sections.",
 	"type": "module",
@@ -14,13 +14,17 @@
 		"serve": "node site/dev.mjs --no-watch",
 		"vendor": "node scripts/vendor.mjs",
 		"mcp": "node mcp/server.mjs",
-		"check": "node scripts/check.mjs"
+		"check": "node scripts/check.mjs",
+		"frames": "node scripts/frames.mjs",
+		"pixelmator": "node scripts/pixelmator.mjs"
 	},
 	"devDependencies": {
+		"@fontsource-variable/caveat": "^5.3.0",
 		"@tailwindcss/cli": "^4.3.3",
 		"geist": "^1.7.2",
 		"handlebars": "^4.7.9",
 		"lucide-static": "^1.47.0",
+		"puppeteer-core": "^25.13.0",
 		"simple-icons": "^16.32.0",
 		"tailwindcss": "^4.3.3"
 	},
@@ -33,4 +37,3 @@
 		"im-design-system-mcp": "mcp/server.mjs"
 	}
 }
- 

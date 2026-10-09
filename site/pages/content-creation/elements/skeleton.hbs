@@ -1,0 +1,18 @@
+---
+title: Skeleton
+description: Grey shapes where the content will be, shimmering, then resolving into it — and the blueprint, which draws every box in a dashed accent line before it fills.
+eyebrow: Content creation · Elements
+source: src/studio/scene.css
+---
+<p>Two ways to show a thing before it is there. The <strong>skeleton</strong> is the page’s own loading shapes (<a href="/components/loading/">im-skeleton</a>) sized in the frame’s em: bones for a title, a line, a chip, a picture, shimmering. Put the skeleton and the content in one <code>im-studio-resolve</code> cell and the skeleton dissolves at <code>--im-studio-resolve-at</code> (2s). The <strong>blueprint</strong> draws every child of a stage as a dashed outline in the accent first, grey and flat, and lets the fill arrive — a wireframe becoming the real thing.</p>
+<div class="frame-preview" style="--fw: 1920; --fh: 1080"><iframe src="/frames/skeleton/" title="skeleton" loading="lazy"></iframe></div>
+<p class="im-cluster"><a class="im-btn im-btn-sm" href="/frames/skeleton/">Open {{icon "arrow-up-right"}}</a><span class="im-hint">Reload to see it resolve again.</span></p>
+
+<h2>The bones</h2>
+{{#example flush=true}}
+<div class="frame-grid" style="padding: 1rem">
+	<figure><div class="frame-preview"><div class="im-studio" style="--im-studio-w: 960; --im-studio-h: 540; padding: 2em"><div class="im-studio-skeleton"><i class="im-studio-bone-chip"></i><i class="im-studio-bone-title"></i><i class="im-studio-bone-line"></i><i class="im-studio-bone-short"></i></div></div></div><figcaption>chip · title · line · short</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio" style="--im-studio-w: 960; --im-studio-h: 540; padding: 2em"><div class="im-studio-skeleton" style="grid-template-columns: auto 1fr; align-items: center"><i class="im-studio-bone-circle"></i><i class="im-studio-bone-line"></i><i class="im-studio-bone-media" style="grid-column: 1 / -1"></i></div></div></div><figcaption>circle · media</figcaption></figure>
+	<figure><div class="frame-preview" data-replay><div class="im-studio" style="--im-studio-w: 960; --im-studio-h: 540; padding: 2em"><div class="im-studio-blueprint im-studio-stagger" style="display: grid; gap: .8em; --im-studio-step: 300ms"><p class="im-studio-kicker">Blueprint</p><h2 class="im-studio-title">Every box, <em>drawn</em></h2><p class="im-studio-chip im-studio-chip-ink" style="width: fit-content">then filled</p></div></div></div><figcaption>im-studio-blueprint</figcaption></figure>
+</div>
+{{/example}}

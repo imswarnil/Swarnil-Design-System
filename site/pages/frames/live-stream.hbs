@@ -1,0 +1,33 @@
+---
+title: Live · the stream
+layout: home
+shell: frame
+---
+{{!-- The live layout: the head row, the screen with the camera in its
+	corner and chat beside it, the ticker along the foot. --}}
+<div class="im-studio im-studio-stream im-studio-stream-rail im-studio-dark" style="--im-studio-w: 1920; --im-studio-h: 1080">
+	<div class="im-studio-stream-head">
+		<p class="im-studio-now im-studio-now-static im-studio-solid">{{> "components/logo" mark=true text="Swarnil"}}<b>Building the comment wall</b><span>Ghost's comments, styled from scratch</span></p>
+		<span class="im-studio-spacer"></span>
+		<p class="im-studio-tally im-studio-tally-static im-studio-glass" data-state="live"><i></i>Live</p>
+		<span class="im-studio-chip">2,412 watching</span>
+		<p class="im-studio-clock im-studio-clock-static im-studio-glass" data-im-clock="HH:mm">19:04</p>
+	</div>
+	<div class="im-studio-stream-stage">
+		<div class="im-studio-screen">
+			<img src="{{demo.shots.[2]}}" alt="">
+			<div class="im-studio-camframe im-studio-camframe-ring"><img src="{{demo.me}}" alt="" style="object-position: 60% 25%"><span class="im-studio-chip im-studio-chip-canvas">Swarnil</span></div>
+			<div class="im-studio-goal im-studio-glass"><b>Members</b><span>412 / 500</span><div class="im-progress" role="progressbar" aria-label="Members" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100" style="--im-value: .82"></div></div>
+		</div>
+		<div class="im-studio-chat im-studio-chat-static im-studio-chat-solid im-studio-stagger">
+			<p><i>M</i><b>mara_l</b><span>the mirror thing is real, saw it in April</span></p>
+			<p data-member><i>T</i><b>tobias</b><span>parking was fifteen not ten</span></p>
+			<p><i>I</i><b>ines</b><span>is the token lesson free?</span></p>
+			<p data-host><i>S</i><b>imswarnil</b><span>first two are, yes</span></p>
+			<p><i>D</i><b>devon</b><span>can you show the dark mode file again</span></p>
+		</div>
+	</div>
+	<div class="im-studio-stream-foot">
+		<div class="im-studio-ticker im-studio-glass"><b>{{> "icons/zap"}}Now</b><div class="im-studio-ticker-track"><span>Ask anything in chat</span><span>Code at imswarnil.com/live</span><span>Next stream Sunday, 9:00</span><span>Members get the source files</span><span aria-hidden="true">Ask anything in chat</span><span aria-hidden="true">Code at imswarnil.com/live</span><span aria-hidden="true">Next stream Sunday, 9:00</span><span aria-hidden="true">Members get the source files</span></div></div>
+	</div>
+</div>

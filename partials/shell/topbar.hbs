@@ -5,7 +5,8 @@
 	Params: drawer (id of the phone menu panel), search_custom (true = do not
 	wire Ghost's search), github (repo URL — shows a Star button), stars
 	("owner/repo" — fills its count in from GitHub's public API), end (name of a
-	partial to render at the far right). --}}
+	partial to render at the far right), brand (the word the square mark takes
+	its letter from — the owner's name when the site's title is not it). --}}
 <header class="im-topbar">
 	<div class="im-topbar-start">
 		<button class="im-btn im-btn-ghost im-btn-icon max-lg:hidden" type="button" data-nav-toggle aria-label="{{t "Collapse navigation"}}" aria-expanded="true">{{> "icons/panel-left"}}</button>
@@ -17,7 +18,7 @@
 		      Ghost's site icon when there is one and the logo's own mark
 		      when there is not — the same slot either way. --}}
 		<a class="im-brand" href="{{@site.url}}">
-			{{#if @site.icon}}<img class="im-brand-icon" src="{{@site.icon}}" alt="" width="28" height="28">{{else}}{{> "components/logo" mark=true size="1.125rem" class="im-brand-icon"}}{{/if}}
+			{{#if @site.icon}}<img class="im-brand-icon" src="{{@site.icon}}" alt="" width="28" height="28">{{else}}{{> "components/logo" mark=true size="1.125rem" class="im-brand-icon" text=brand}}{{/if}}
 			{{#if @site.logo}}<img src="{{@site.logo}}" alt="{{@site.title}}">{{else}}<span class="im-brand-name">{{@site.title}}</span>{{/if}}
 		</a>
 		{{#if @partial-block}}{{> @partial-block}}{{/if}}

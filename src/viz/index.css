@@ -1,0 +1,44 @@
+/* Data visualisation — numbers, and the charts that explain them.
+
+   stat.css       a figure, what it counts, how it moved; tiles and rows of them
+   chart.css      the frame every chart sits in (title, axes, gridlines, labels)
+                  and the bar family: columns, grouped, stacked, horizontal,
+                  histogram, bullet
+   line.css       line, area, step, scatter, sparkline — drawn by im-charts.js
+   parts.css      donut, pie, ring, gauge, waffle — parts of a whole
+   grid.css       heatmap, calendar, matrix, treemap, funnel
+   legend.css     legend, series toggles, readouts, filters, period switcher
+   table.css      a table of numbers, sortable, with bars and deltas in cells
+   dashboard.css  a dashboard on the twelve columns
+
+   ONE PALETTE for every series, derived from the accent so it follows a
+   theme's own colour. Series one is the accent, two is the ink; the rest are
+   the collection hues, which already sit apart from one another. Set --c on
+   a series (or data-series="n") to pick one by hand.
+
+   Every chart is for a GLANCE here. It keeps its data in markup and says its
+   numbers in an aria-label; the picture is the summary, the text is the
+   truth. Anything someone will study belongs in a real charting library,
+   styled with these same tokens so it belongs. */
+
+:root {
+	--im-viz-1: var(--im-accent);
+	--im-viz-2: var(--im-ink);
+	--im-viz-3: var(--im-c-project);
+	--im-viz-4: var(--im-c-tag);
+	--im-viz-5: var(--im-c-newsletter);
+	--im-viz-6: var(--im-c-course);
+	/* The ground a chart is drawn on: the hairline for axes and gridlines, a
+	   track for what has not been filled. */
+	--im-viz-line: var(--im-line);
+	--im-viz-track: var(--im-surface-2);
+}
+
+@import "./stat.css";
+@import "./chart.css";
+@import "./line.css";
+@import "./parts.css";
+@import "./grid.css";
+@import "./legend.css";
+@import "./table.css";
+@import "./dashboard.css";

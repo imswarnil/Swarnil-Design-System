@@ -1,0 +1,33 @@
+---
+title: Grades
+description: Twelve colour grades as CSS — the LUTs — previewed on one picture, plus grain, a vignette and a letterbox. A grade is a filter and, for the film ones, a wash blended over it.
+eyebrow: Content creation · Elements
+source: src/studio/grade.css
+---
+<p>An editor’s LUT is a table that maps every colour to another; a CSS grade is the same idea written as a formula — a <code>filter</code> on the picture and, where a range of colours has to move (teal in the shadows, amber in the skin), a tinted layer blended over it. The point of having them here is that a grade can be <strong>previewed on the page</strong> and applied the same way in a browser-rendered video, so the look of the channel is one list of twelve names and not a folder of <code>.cube</code> files. On the whole frame (<code>im-studio-grade-film</code> on <code>im-studio</code>) the picture layers take it and the words do not.</p>
+{{#example flush=true}}
+<div class="frame-grid" style="padding: 1rem">
+	<figure><div class="frame-preview"><div class="im-studio im-studio-grade-neutral" style="--im-studio-w: 960; --im-studio-h: 540"><img class="im-studio-photo" src="{{demo.me}}" alt=""></div></div><figcaption>neutral</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-studio-grade-warm" style="--im-studio-w: 960; --im-studio-h: 540"><img class="im-studio-photo" src="{{demo.me}}" alt=""></div></div><figcaption>warm</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-studio-grade-cool" style="--im-studio-w: 960; --im-studio-h: 540"><img class="im-studio-photo" src="{{demo.me}}" alt=""></div></div><figcaption>cool</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-studio-grade-film" style="--im-studio-w: 960; --im-studio-h: 540"><img class="im-studio-photo" src="{{demo.me}}" alt=""></div></div><figcaption>film</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-studio-grade-mono" style="--im-studio-w: 960; --im-studio-h: 540"><img class="im-studio-photo" src="{{demo.me}}" alt=""></div></div><figcaption>mono</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-studio-grade-bleach" style="--im-studio-w: 960; --im-studio-h: 540"><img class="im-studio-photo" src="{{demo.me}}" alt=""></div></div><figcaption>bleach</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-studio-grade-fade" style="--im-studio-w: 960; --im-studio-h: 540"><img class="im-studio-photo" src="{{demo.me}}" alt=""></div></div><figcaption>fade</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-studio-grade-punch" style="--im-studio-w: 960; --im-studio-h: 540"><img class="im-studio-photo" src="{{demo.me}}" alt=""></div></div><figcaption>punch</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-studio-grade-night" style="--im-studio-w: 960; --im-studio-h: 540"><img class="im-studio-photo" src="{{demo.me}}" alt=""></div></div><figcaption>night</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-studio-grade-vintage" style="--im-studio-w: 960; --im-studio-h: 540"><img class="im-studio-photo" src="{{demo.me}}" alt=""></div></div><figcaption>vintage</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-studio-grade-cinema im-studio-letterbox" style="--im-studio-w: 960; --im-studio-h: 540"><img class="im-studio-photo" src="{{demo.me}}" alt=""></div></div><figcaption>cinema + letterbox</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-studio-grade-pixel" style="--im-studio-w: 960; --im-studio-h: 540"><img class="im-studio-photo" src="{{demo.me}}" alt="" style="width: 12%; height: 12%; scale: 8.4; transform-origin: 0 0"></div></div><figcaption>pixel</figcaption></figure>
+</div>
+{{/example}}
+
+<h2>Overlays</h2>
+{{#example flush=true}}
+<div class="frame-grid" style="padding: 1rem">
+	<figure><div class="frame-preview"><div class="im-studio" style="--im-studio-w: 960; --im-studio-h: 540"><img class="im-studio-photo" src="{{demo.shots.[0]}}" alt=""><span class="im-studio-grain" aria-hidden="true"></span></div></div><figcaption>im-studio-grain</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio" style="--im-studio-w: 960; --im-studio-h: 540"><img class="im-studio-photo" src="{{demo.shots.[0]}}" alt=""><span class="im-studio-vignette" aria-hidden="true"></span></div></div><figcaption>im-studio-vignette</figcaption></figure>
+	<figure><div class="frame-preview"><div class="im-studio im-studio-wash" style="--im-studio-w: 960; --im-studio-h: 540"><img class="im-studio-photo" src="{{demo.shots.[0]}}" alt=""></div></div><figcaption>im-studio-wash (the accent, soft light)</figcaption></figure>
+</div>
+{{/example}}
+<p><code>--im-studio-grain</code> (0.35) and <code>--im-studio-vignette</code> (55%) are the strengths; <code>--im-studio-wash</code> and <code>--im-studio-wash-blend</code> make any tint. The grades also sit on a single <code>im-studio-media</code> figure, where the wash takes the figure’s radius.</p>

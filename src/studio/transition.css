@@ -1,0 +1,171 @@
+/* Transitions — how one shot hands over to the next.
+
+   A shot is a layer that covers the frame (im-studio-shot). Stack two and
+   give the second a cut and a time, and the cut plays on the frame's clock:
+
+     <div class="im-studio-shot">… the first scene …</div>
+     <div class="im-studio-shot" data-cut="dot" style="--im-studio-cut-at: 3s">… the second …</div>
+
+   Two are the system's own, and they are the same two the site uses between
+   pages (src/motion/transition.css), so a film and the site change scene
+   the same way:
+
+     dot        the recording light swells from the middle until it is the
+                whole frame, and the next shot is inside it
+     columns    the twelve columns wipe the next shot in, one after another
+
+   And the ordinary ones, each a straight CSS idea:
+     cut (none) · fade · wipe-left · wipe-up · iris · slide · push · zoom
+     · blur · flash · curtain · split · pixel · slats · blinds
+
+   Knobs: --im-studio-cut-at (when), --im-studio-cut-for (how long, 700ms),
+   --im-studio-cut-color (what dot, flash and curtain are made of: the accent). */
+
+.im-studio-shot {
+	position: absolute;
+	inset: 0;
+	display: grid;
+	--im-studio-cut-at: 0s;
+	--im-studio-cut-for: 700ms;
+	--im-studio-cut-color: var(--im-studio-accent);
+	animation-delay: var(--im-studio-cut-at);
+	animation-duration: var(--im-studio-cut-for);
+	animation-timing-function: var(--im-ease-in-out);
+	animation-fill-mode: both;
+}
+
+/* The shot's own ground, so a cut reveals a scene and not the one under it. */
+.im-studio-shot { background-color: var(--im-studio-bg); }
+
+[data-cut="fade"] { animation-name: im-studio-cut-fade; }
+[data-cut="wipe-left"] { animation-name: im-studio-cut-wipe-left; }
+[data-cut="wipe-up"] { animation-name: im-studio-cut-wipe-up; }
+[data-cut="iris"] { animation-name: im-studio-cut-iris; animation-timing-function: var(--im-ease-glide); }
+[data-cut="slide"] { animation-name: im-studio-cut-slide; animation-timing-function: var(--im-ease-glide); }
+[data-cut="push"] { animation-name: im-studio-cut-push; animation-timing-function: var(--im-ease-glide); }
+[data-cut="zoom"] { animation-name: im-studio-cut-zoom; animation-timing-function: var(--im-ease-glide); }
+[data-cut="blur"] { animation-name: im-studio-cut-blur; }
+[data-cut="split"] { animation-name: im-studio-cut-split; }
+[data-cut="pixel"] { animation-name: im-studio-cut-pixel; animation-timing-function: steps(6); }
+
+@keyframes im-studio-cut-fade { from { opacity: 0; } }
+@keyframes im-studio-cut-wipe-left { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0); } }
+@keyframes im-studio-cut-wipe-up { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0); } }
+@keyframes im-studio-cut-iris { from { clip-path: circle(0 at 50% 50%); } to { clip-path: circle(75% at 50% 50%); } }
+@keyframes im-studio-cut-slide { from { translate: 100% 0; } }
+@keyframes im-studio-cut-push { from { translate: 0 100%; } }
+@keyframes im-studio-cut-zoom { from { opacity: 0; scale: 1.3; filter: blur(8px); } }
+@keyframes im-studio-cut-blur { from { opacity: 0; filter: blur(24px); } }
+@keyframes im-studio-cut-split { from { clip-path: inset(50% 0); } to { clip-path: inset(0); } }
+@keyframes im-studio-cut-pixel { from { opacity: 0; filter: blur(0); scale: 1.02; } 50% { opacity: 1; filter: contrast(1.5) saturate(1.5); } }
+
+/* -- dot: the signature. The shot is clipped to a circle that grows from
+   nothing; a disc of the accent runs just ahead of it, so what the eye sees
+   is the light swelling and the new scene opening inside the light. The
+   disc is a pseudo-element on the shot, clipped with it. -- */
+[data-cut="dot"] {
+	animation-name: im-studio-cut-dot;
+	animation-duration: calc(var(--im-studio-cut-for) * 1.3);
+	animation-timing-function: var(--im-ease-glide);
+}
+
+[data-cut="dot"]::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 10;
+	background-color: var(--im-studio-cut-color);
+	animation: im-studio-cut-dot-disc calc(var(--im-studio-cut-for) * 1.3) var(--im-ease-glide) both;
+	animation-delay: var(--im-studio-cut-at);
+	pointer-events: none;
+}
+
+@keyframes im-studio-cut-dot {
+	from { clip-path: circle(0 at var(--im-studio-x, 50%) var(--im-studio-y, 50%)); }
+	to { clip-path: circle(100% at var(--im-studio-x, 50%) var(--im-studio-y, 50%)); }
+}
+
+/* The disc is a ring: solid at the edge of the growing circle, open in the
+   middle — so the scene is seen through the hole as the hole grows. */
+@keyframes im-studio-cut-dot-disc {
+	0% { clip-path: circle(0 at var(--im-studio-x, 50%) var(--im-studio-y, 50%)); opacity: 1; }
+	45% { opacity: 1; }
+	100% { clip-path: circle(100% at var(--im-studio-x, 50%) var(--im-studio-y, 50%)); opacity: 0; }
+}
+
+/* -- columns: twelve slats, left to right. A mask of one column, repeated,
+   each slat opening from 0 to its full width; the stagger is in the mask's
+   gradient stop travelling further than 100% so the left slats finish first. -- */
+[data-cut="columns"] {
+	animation-name: im-studio-cut-columns;
+	animation-duration: calc(var(--im-studio-cut-for) * 1.6);
+	-webkit-mask-image: linear-gradient(to right, #000 var(--im-studio-slat, 0%), transparent var(--im-studio-slat, 0%));
+	mask-image: linear-gradient(to right, #000 var(--im-studio-slat, 0%), transparent var(--im-studio-slat, 0%));
+	-webkit-mask-size: calc(100% / 12) 100%;
+	mask-size: calc(100% / 12) 100%;
+}
+
+@property --im-studio-slat {
+	syntax: "<percentage>";
+	inherits: false;
+	initial-value: 0%;
+}
+
+@keyframes im-studio-cut-columns { from { --im-studio-slat: 0%; } to { --im-studio-slat: 100%; } }
+
+/* slats: the same, but each slat wipes DOWN; blinds: eight, sideways. */
+[data-cut="slats"] {
+	animation-name: im-studio-cut-columns;
+	-webkit-mask-image: linear-gradient(to bottom, #000 var(--im-studio-slat, 0%), transparent var(--im-studio-slat, 0%));
+	mask-image: linear-gradient(to bottom, #000 var(--im-studio-slat, 0%), transparent var(--im-studio-slat, 0%));
+	-webkit-mask-size: calc(100% / 12) 100%;
+	mask-size: calc(100% / 12) 100%;
+}
+
+[data-cut="blinds"] {
+	animation-name: im-studio-cut-columns;
+	-webkit-mask-image: linear-gradient(to bottom, #000 var(--im-studio-slat, 0%), transparent var(--im-studio-slat, 0%));
+	mask-image: linear-gradient(to bottom, #000 var(--im-studio-slat, 0%), transparent var(--im-studio-slat, 0%));
+	-webkit-mask-size: 100% 12.5%;
+	mask-size: 100% 12.5%;
+}
+
+/* -- flash: a frame of white, then the shot. -- */
+[data-cut="flash"] { animation-name: im-studio-cut-fade; animation-duration: calc(var(--im-studio-cut-for) * 0.4); }
+[data-cut="flash"]::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 10;
+	background-color: #fff;
+	animation: im-studio-cut-flash var(--im-studio-cut-for) var(--im-ease-out) both;
+	animation-delay: var(--im-studio-cut-at);
+	pointer-events: none;
+}
+
+@keyframes im-studio-cut-flash { from { opacity: 1; } to { opacity: 0; } }
+
+/* -- curtain: a panel of the accent crosses; the new shot is behind it. -- */
+[data-cut="curtain"] { animation-name: im-studio-cut-hold; animation-timing-function: step-end; }
+[data-cut="curtain"]::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 10;
+	background-color: var(--im-studio-cut-color);
+	animation: im-studio-cut-curtain var(--im-studio-cut-for) var(--im-ease-in-out) both;
+	animation-delay: var(--im-studio-cut-at);
+	pointer-events: none;
+}
+
+@keyframes im-studio-cut-hold { 0% { visibility: hidden; } 50% { visibility: visible; } }
+@keyframes im-studio-cut-curtain {
+	0% { scale: 0 1; transform-origin: 0 50%; }
+	50% { scale: 1 1; transform-origin: 0 50%; }
+	50.01% { scale: 1 1; transform-origin: 100% 50%; }
+	100% { scale: 0 1; transform-origin: 100% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.im-studio-shot, [data-cut]::before { animation: none; }
+}

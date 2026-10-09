@@ -1,0 +1,210 @@
+/* Media — a picture or a clip in a frame.
+
+   The thing in the middle of a shot: a photograph, a screen recording, a
+   clip. It takes the system's radius, one hairline, the one shadow, and an
+   indicator if it needs one. Nothing else: the picture is the point.
+
+     <figure class="im-studio-media im-studio-media-shadow" style="--im-studio-media-w: 60%">
+       <img src="…" alt="">
+       <figcaption class="im-studio-media-caption">…</figcaption>
+     </figure>
+
+   Edges:    im-studio-media-line (a hairline) · -shadow (lifted) · -accent (an
+             accent edge) · -ink (an ink edge) · -glass (a glass border) · -plain
+   Shapes:   -round (a bigger radius) · -square (none) · -circle
+   Marks:    im-studio-media-rec (a REC readout), -corners (viewfinder marks),
+             -live (the dot), -chip (a label on the corner), -play (a play mark)
+   Knobs:    --im-studio-media-w (the width, a share of the frame), --im-studio-media-ratio */
+
+.im-studio-media {
+	position: relative;
+	display: block;
+	width: var(--im-studio-media-w, 60%);
+	margin: 0;
+	border-radius: var(--im-studio-media-round, var(--im-radius-xl));
+	overflow: hidden;
+	background-color: var(--im-surface);
+	isolation: isolate;
+}
+
+.im-studio-media > img,
+.im-studio-media > video {
+	display: block;
+	width: 100%;
+	aspect-ratio: var(--im-studio-media-ratio, 16 / 9);
+	object-fit: cover;
+	border-radius: inherit;
+}
+
+.im-studio-media-line { box-shadow: inset 0 0 0 1px var(--im-line); }
+.im-studio-media-shadow { box-shadow: 0 0.1em 0.3em rgb(0 0 0 / 10%), 0 1.2em 2.4em -0.8em rgb(0 0 0 / 35%); }
+.im-studio-media-accent { box-shadow: 0 0 0 0.12em var(--im-studio-accent); }
+.im-studio-media-glass { padding: 0.35em; background-color: var(--im-glass-light); backdrop-filter: blur(12px); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 30%); }
+.im-studio-media-glass > img { border-radius: calc(var(--im-studio-media-round, var(--im-radius-xl)) - 0.2em); }
+.im-studio-media-round { --im-studio-media-round: 1.2em; }
+.im-studio-media-square { --im-studio-media-round: 0; }
+.im-studio-media-circle { --im-studio-media-round: 50%; --im-studio-media-ratio: 1; }
+.im-studio-media-tilt { rotate: var(--im-studio-tilt, -3deg); }
+
+/* A frame with a mat round the picture, like a print. */
+.im-studio-media-mat { padding: 0.6em 0.6em 1.4em; background-color: var(--im-canvas); box-shadow: inset 0 0 0 1px var(--im-line), 0 0.6em 1.4em -0.4em rgb(0 0 0 / 30%); }
+.im-studio-media-mat > img { border-radius: 0.15em; }
+
+.im-studio-media-caption {
+	position: absolute;
+	left: 0.8em;
+	bottom: 0.8em;
+	padding: 0.35em 0.7em;
+	border-radius: var(--im-radius-md);
+	background-color: var(--im-glass);
+	color: var(--im-on-media);
+	font-family: var(--im-font-mono);
+	font-size: 0.5em;
+	letter-spacing: 0.04em;
+}
+
+.im-studio-media-mat > .im-studio-media-caption {
+	position: static;
+	display: block;
+	margin-top: 0.5em;
+	padding: 0;
+	background: none;
+	color: var(--im-muted);
+	font-family: var(--im-font-hand);
+	font-size: 0.8em;
+	text-align: center;
+}
+
+/* ---- indicators ---- */
+
+/* REC: the red dot, the word, a timecode. Top left, mono. */
+.im-studio-rec {
+	position: absolute;
+	left: 0.8em;
+	top: 0.8em;
+	z-index: 2;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4em;
+	color: var(--im-on-media);
+	font-family: var(--im-font-mono);
+	font-size: 0.5em;
+	font-weight: 600;
+	letter-spacing: 0.12em;
+	text-shadow: 0 1px 2px rgb(0 0 0 / 50%);
+}
+
+.im-studio-rec::before {
+	content: "";
+	width: 0.9em;
+	height: 0.9em;
+	border-radius: 50%;
+	background-color: var(--im-studio-accent);
+	animation: im-studio-loop-blink 1.1s steps(1) infinite;
+}
+
+.im-studio-rec > span { opacity: 0.8; font-weight: 400; font-variant-numeric: tabular-nums; }
+
+/* Viewfinder corners: four brackets inside the picture's edge. */
+.im-studio-corners::after {
+	content: "";
+	position: absolute;
+	inset: 0.6em;
+	z-index: 2;
+	--c: var(--im-on-media);
+	--l: 0.08em;
+	--s: 1.1em;
+	background:
+		linear-gradient(var(--c), var(--c)) 0 0 / var(--s) var(--l),
+		linear-gradient(var(--c), var(--c)) 0 0 / var(--l) var(--s),
+		linear-gradient(var(--c), var(--c)) 100% 0 / var(--s) var(--l),
+		linear-gradient(var(--c), var(--c)) 100% 0 / var(--l) var(--s),
+		linear-gradient(var(--c), var(--c)) 0 100% / var(--s) var(--l),
+		linear-gradient(var(--c), var(--c)) 0 100% / var(--l) var(--s),
+		linear-gradient(var(--c), var(--c)) 100% 100% / var(--s) var(--l),
+		linear-gradient(var(--c), var(--c)) 100% 100% / var(--l) var(--s);
+	background-repeat: no-repeat;
+	pointer-events: none;
+}
+
+/* A chip on the corner of the picture. */
+.im-studio-media > .im-studio-chip { position: absolute; right: 0.8em; top: 0.8em; z-index: 2; }
+
+/* The play mark, centred: the glyph the system draws on every thumbnail. */
+.im-studio-media-play::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	margin: auto;
+	z-index: 2;
+	width: 2.4em;
+	height: 2.4em;
+	border-radius: 50%;
+	background: var(--im-play-glyph) center / 48% no-repeat, var(--im-glass);
+	box-shadow: 0 0 0 0.15em rgb(255 255 255 / 25%);
+}
+
+/* The live dot on a clip. */
+.im-studio-media-live::after {
+	content: "";
+	position: absolute;
+	right: 0.9em;
+	bottom: 0.9em;
+	z-index: 2;
+	width: 0.6em;
+	height: 0.6em;
+	border-radius: 50%;
+	background-color: var(--im-studio-accent);
+	box-shadow: 0 0 0 0.25em color-mix(in oklab, var(--im-studio-accent) 35%, transparent);
+	animation: im-studio-pulse 1.6s var(--im-ease-in-out) infinite;
+}
+
+/* Two pictures, one over the other with a handle between: before / after. */
+.im-studio-compare {
+	position: relative;
+	display: grid;
+	width: var(--im-studio-media-w, 60%);
+	border-radius: var(--im-radius-xl);
+	overflow: hidden;
+	box-shadow: inset 0 0 0 1px var(--im-line);
+}
+
+.im-studio-compare > img {
+	grid-area: 1 / 1;
+	display: block;
+	width: 100%;
+	aspect-ratio: var(--im-studio-media-ratio, 16 / 9);
+	object-fit: cover;
+}
+
+.im-studio-compare > img:last-of-type { clip-path: inset(0 0 0 var(--im-studio-split, 50%)); }
+
+.im-studio-compare::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: var(--im-studio-split, 50%);
+	width: 0.08em;
+	background-color: var(--im-on-media);
+	box-shadow: 0 0 0.4em rgb(0 0 0 / 40%);
+}
+
+.im-studio-compare > .im-studio-chip { position: absolute; top: 0.8em; z-index: 2; }
+.im-studio-compare > .im-studio-chip:first-of-type { left: 0.8em; }
+.im-studio-compare > .im-studio-chip:last-of-type { right: 0.8em; }
+
+/* The handle sweeps: a before / after that shows itself. */
+.im-studio-compare-sweep { animation: im-studio-compare-sweep 6s var(--im-ease-in-out) infinite alternate; }
+
+@property --im-studio-split {
+	syntax: "<percentage>";
+	inherits: true;
+	initial-value: 50%;
+}
+
+@keyframes im-studio-compare-sweep { from { --im-studio-split: 18%; } to { --im-studio-split: 82%; } }
+
+@media (prefers-reduced-motion: reduce) {
+	.im-studio-rec::before, .im-studio-media-live::after, .im-studio-compare-sweep { animation: none; }
+}

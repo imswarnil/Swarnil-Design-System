@@ -1,9 +1,9 @@
 ---
 title: About page
 layout: home
-description: The page that answers "who is this" in the first sentence and proves it in the next ten. A picture, a claim, the evidence, and one way to get in touch.
+description: The page that answers "who is this" in the first sentence and proves it in the next ten. A picture, a claim, the numbers — then the story as a stack of chapters that pile up under the bar, with the years, Now and Hire me pinned beside it.
 eyebrow: Pages
-source: src/layout/page.css · components/widget.css
+source: src/components/journey.css · src/layout/page.css · components/widget.css
 ---
 <section class="im-section im-wrap im-pt-sm im-section-sm">
 	<p class="im-eyebrow">Pages · {{page.title}}</p>
@@ -11,64 +11,76 @@ source: src/layout/page.css · components/widget.css
 	<p class="doc-source"><code>{{page.source}}</code></p>
 </section>
 
-<div class="im-single im-wrap-wide" data-sidebar="off">
+<div class="im-single im-wrap-wide" data-sidebar="on">
 	<article class="im-stack im-stack-lg">
 		<header class="im-abouthero">
-			<img class="im-abouthero-face" src="{{demo.author.profile_image}}" alt="" loading="eager">
+			<img class="im-abouthero-face" src="/assets/brand/portrait.jpg" alt="Swarnil Singhai" width="1800" height="1350" loading="eager">
 			<div class="im-stack im-stack-xs">
 				<p class="im-eyebrow">About</p>
-				<h1 class="im-collhead-title">I build things for the web and write down what they cost.</h1>
-				<p class="im-lede im-m0">Eight years of Salesforce consulting, four of them freelance, and a design system I am selling because I got tired of paying for ones I could not modify. Currently in Amsterdam.</p>
+				<h1 class="im-collhead-title">I build things on Salesforce and on the web, and I write down what they cost.</h1>
+				<p class="im-lede im-m0">Eight years of Salesforce engineering, four of them as a contractor, and a design system I am selling because I got tired of paying for ones I could not modify. Currently in Budapest.</p>
 				<p class="im-cluster im-cluster-tight">
 					<a class="im-btn im-btn-primary im-btn-sm" href="/pages/contact/">{{icon "mail"}}Get in touch</a>
-					<a class="im-btn im-btn-sm" href="/pages/now/">{{icon "zap"}}What I am doing now</a>
-					<a class="im-btn im-btn-sm" href="#">{{icon "download"}}CV</a>
+					<a class="im-btn im-btn-sm" href="/pages/resume/">{{icon "file-text"}}The résumé</a>
 				</p>
 			</div>
 		</header>
 
-		<div class="im-tripstats">
-			<span class="im-tripstat">{{icon "briefcase"}}<strong data-im-count>8</strong><span>Years consulting</span></span>
-			<span class="im-tripstat">{{icon "folder"}}<strong data-im-count>{{demo.projects.length}}</strong><span>Projects</span></span>
-			<span class="im-tripstat">{{icon "pencil"}}<strong data-im-count>34</strong><span>Posts this year</span></span>
-			<span class="im-tripstat">{{icon "users"}}<strong data-im-count>4,210</strong><span>Readers</span></span>
-			<span class="im-tripstat">{{icon "map-pin"}}<strong data-im-count>6</strong><span>Countries</span></span>
+		<div class="im-cv-glance">
+			<div><strong data-im-count="8">8</strong><span>years on Salesforce</span></div>
+			<div><strong data-im-count="{{demo.projects.length}}">{{demo.projects.length}}</strong><span>projects in the open</span></div>
+			<div><strong data-im-count="34">34</strong><span>posts this year</span></div>
+			<div><strong data-im-count="6">6</strong><span>countries, so far</span></div>
 		</div>
 
 		<section class="im-section im-section-tight">
 			<h2 class="im-caption" data-index="do">What I do</h2>
 			<div class="im-grid-auto im-grid-md">
-				<div class="im-card im-card-outline"><span class="im-card-title">{{icon "zap"}} Salesforce consulting</span><span>Eight years, mostly public sector, mostly the programmes that are already late when I arrive.</span></div>
-				<div class="im-card im-card-outline"><span class="im-card-title">{{icon "component"}} Design systems & themes</span><span>This one, and the theme on top of it. Both for sale, both what this site runs on.</span></div>
-				<div class="im-card im-card-outline"><span class="im-card-title">{{icon "pencil"}} Writing & film</span><span>A post a fortnight, a letter to go with it, and a film most Thursdays.</span></div>
+				<div class="im-card im-card-outline"><span class="im-card-title">{{icon "zap"}} Salesforce engineering</span><span>Eight years, mostly the programmes that are already late when I arrive — and the orgs nobody documented.</span></div>
+				<div class="im-card im-card-outline"><span class="im-card-title">{{icon "component"}} Design systems &amp; themes</span><span>This one, and the theme on top of it. Both for sale, both what this site runs on.</span></div>
+				<div class="im-card im-card-outline"><span class="im-card-title">{{icon "video"}} The channel</span><span>A film most Fridays, a live build most Sundays. Roads, tools, and what things cost.</span></div>
 				<div class="im-card im-card-outline"><span class="im-card-title">{{icon "graduation-cap"}} Teaching</span><span>Three courses, filmed and written, with every source file.</span></div>
 			</div>
 		</section>
 
-		<section class="im-content im-content-flush im-content-lede">
-			<p>I started writing this site because I kept answering the same questions in Slack and wanted somewhere to point. It turned into the thing I am best known for, which was not the plan and has been better than the plan.</p>
-		</section>
-
-		<section class="im-story" aria-label="The story so far">
-			<p class="im-story-year">2012</p>
-			<div class="im-story-chapter"><h2>A degree I do not use</h2><p>Computer science, in a college I liked, in a subject I was only ever adequate at. The useful part was the four years of writing things down for people who were not in the room.</p></div>
-			<p class="im-story-year">2016</p>
-			<div class="im-story-chapter"><h2>A startup that did not survive contact with its market</h2><p>CRM for small clinics. The market was real; our timing was not. The write-up of why is the most-read thing on this site, which is either encouraging or not.</p><img src="{{demo.shots.[2]}}" alt="" loading="lazy"></div>
-			<p class="im-story-year">2018</p>
-			<div class="im-story-chapter"><h2>Four years inside a consultancy</h2><p>Learning what not to do, at scale, on somebody else's budget. Three multi-year programmes and one habit I kept: every engagement ends with a document a stranger can act on.</p></div>
-			<p class="im-story-year">2022</p>
-			<div class="im-story-chapter"><h2>On my own, two days a week</h2><p>Six weeks at a time. Anything longer and I become staff, which is not what either of us is paying for. Roughly a third of the first conversations end with "you do not need me", and those become the next referral.</p></div>
-			<p class="im-story-year">2026</p>
-			<div class="im-story-chapter"><h2>A design system I would buy</h2><p>The site ran on a paid theme whose licence forbade resale. Nine months later it runs on <a href="/">this</a>, every line owned, and the thing is in the <a href="/collections/shop/">shop</a>. The <a href="/collections/timeline/">timeline</a> has the rest in order.</p><img src="{{demo.shots.[0]}}" alt="" loading="lazy"></div>
-		</section>
-
-		<section class="im-section im-section-tight">
-			<h2 class="im-caption" data-index="now">Right now</h2>
-			<ul class="im-widget-now im-max-lg">
-				<li>{{icon "component"}}<span>Building <b>Im Design System v0.7</b> — the collections and the theme on top of them.</span></li>
-				<li>{{icon "map-pin"}}<span>In <b>Amsterdam</b> until February; Tromsø after that.</span></li>
-				<li>{{icon "book-open"}}<span>Reading <b>The Timeless Way of Building</b>, slowly, for the second time.</span></li>
-			</ul>
+		<section class="im-section im-section-tight" id="journey-section">
+			<h2 class="im-caption" data-index="so far">The journey</h2>
+			<ol class="im-journey" id="journey" aria-label="The story so far">
+				<li class="im-journey-card" id="j-2012">
+					<p class="im-journey-head"><time>2012</time><span class="im-badge">Study</span></p>
+					<h3>A degree I do not use</h3>
+					<p>Computer science, in a college I liked, in a subject I was only ever adequate at. The useful part was the four years of writing things down for people who were not in the room.</p>
+				</li>
+				<li class="im-journey-card" id="j-2016">
+					<p class="im-journey-head"><time>2016</time><span class="im-badge">Startup</span></p>
+					<h3>A startup that did not survive contact with its market</h3>
+					<p>Patient scheduling for small clinics, built on the platform from an empty org to 140 paying customers. The market was real; our timing was not. The write-up of why is the most-read thing on this site, which is either encouraging or not.</p>
+					<img src="{{demo.shots.[2]}}" alt="" loading="lazy">
+				</li>
+				<li class="im-journey-card" id="j-2018">
+					<p class="im-journey-head"><time>2018</time><span class="im-badge">Work</span></p>
+					<h3>Four years inside a consultancy</h3>
+					<p>Learning what not to do, at scale, on somebody else's budget. Three multi-year programmes, a 600-seat rollout across four countries, and one habit I kept: every engagement ends with a document a stranger can act on.</p>
+				</li>
+				<li class="im-journey-card" id="j-2022">
+					<p class="im-journey-head"><time>2022</time><span class="im-badge">Independent</span></p>
+					<h3>On my own, two days a week</h3>
+					<p>Six weeks at a time. Anything longer and I become staff, which is not what either of us is paying for. Roughly a third of first conversations end with "you do not need me", and those become the next referral.</p>
+					<img src="{{demo.shots.[4]}}" alt="" loading="lazy">
+				</li>
+				<li class="im-journey-card" id="j-2024">
+					<p class="im-journey-head"><time>2024</time><span class="im-badge">Move</span></p>
+					<h3>India to Budapest, with two bags</h3>
+					<p>The move the channel was started to document. Every number from it — the deposit nobody mentions, the month it took to get a bank account — is in the letters, and the dotted line on the channel art is the flight.</p>
+					<img src="{{demo.shots.[3]}}" alt="" loading="lazy">
+				</li>
+				<li class="im-journey-card" id="j-2026">
+					<p class="im-journey-head"><time>2026</time><span class="im-badge im-badge-accent">Now</span></p>
+					<h3>A design system I would buy</h3>
+					<p>The site ran on a paid theme whose licence forbade resale. Nine months later it runs on <a href="/">this</a>, every line owned, and the thing is in the <a href="/collections/shop/">shop</a>. The <a href="/collections/timeline/">timeline</a> has the rest in order.</p>
+					<img src="{{demo.shots.[0]}}" alt="" loading="lazy">
+				</li>
+			</ol>
 		</section>
 
 		<section class="im-section im-section-tight">
@@ -88,12 +100,24 @@ source: src/layout/page.css · components/widget.css
 	<aside>
 		<div class="im-sticky-rail">
 			<div class="im-widgets">
+				<section class="im-widget" aria-labelledby="ab-journey">
+					<h2 class="im-widget-title" id="ab-journey">The journey</h2>
+					<nav class="im-journey-index" data-im-journey="#journey" aria-label="Chapters">
+						<a href="#j-2012"><b>2012</b><small>A degree</small></a>
+						<a href="#j-2016"><b>2016</b><small>A startup</small></a>
+						<a href="#j-2018"><b>2018</b><small>A consultancy</small></a>
+						<a href="#j-2022"><b>2022</b><small>Independent</small></a>
+						<a href="#j-2024"><b>2024</b><small>Budapest</small></a>
+						<a href="#j-2026"><b>2026</b><small>The system</small></a>
+					</nav>
+				</section>
+
 				<section class="im-widget" aria-labelledby="ab-now">
 					<h2 class="im-widget-title" id="ab-now">Right now <a href="/pages/now/">More</a></h2>
 					<ul class="im-widget-now">
 						<li>{{icon "component"}}<span>Building <b>Im Design System v0.7</b>.</span></li>
-						<li>{{icon "map-pin"}}<span>In <b>Amsterdam</b> until February.</span></li>
-						<li>{{icon "book-open"}}<span>Reading <b>The Timeless Way of Building</b>.</span></li>
+						<li>{{icon "map-pin"}}<span>In <b>Budapest</b>, until the visa says otherwise.</span></li>
+						<li>{{icon "video"}}<span>Filming <b>the Amalfi road</b>, episode four.</span></li>
 					</ul>
 				</section>
 
@@ -101,8 +125,8 @@ source: src/layout/page.css · components/widget.css
 					<h2 class="im-widget-title" id="ab-hire">Hire me</h2>
 					<p class="im-widget-hire-state" data-state="available">Two days a week, from November</p>
 					<ul class="im-widget-hire-list">
+						<li>{{icon "zap"}}<span>Salesforce orgs that are late, undocumented, or both.</span></li>
 						<li>{{icon "component"}}<span>Design systems and the Ghost themes on top of them.</span></li>
-						<li>{{icon "gauge"}}<span>Making a slow site fast, with the numbers to show it.</span></li>
 					</ul>
 					<a class="im-btn im-btn-primary im-btn-sm" href="/pages/contact/">{{icon "mail"}}Start a conversation</a>
 				</section>
@@ -110,9 +134,9 @@ source: src/layout/page.css · components/widget.css
 				<section class="im-widget" aria-labelledby="ab-where">
 					<h2 class="im-widget-title" id="ab-where">Elsewhere</h2>
 					<ul class="im-widget-list">
-						<li><a href="#">GitHub<small>Everything open</small></a></li>
+						<li><a href="https://github.com/imswarnil">GitHub<small>Everything open</small></a></li>
 						<li><a href="#">LinkedIn<small>The formal version</small></a></li>
-						<li><a href="#">YouTube<small>128k subscribers</small></a></li>
+						<li><a href="/content-creation/youtube/">YouTube<small>128k subscribers</small></a></li>
 					</ul>
 				</section>
 
@@ -127,5 +151,49 @@ source: src/layout/page.css · components/widget.css
 </div>
 
 <section class="im-section im-wrap"><div class="im-prose">
-<p>A face, one claim, the numbers that back it, a way in — then the story as <code>im-story</code>: a sticky year on the left, a chapter on the right, a picture where one exists. The rail is Now, Hire me, Elsewhere and the letter.</p>
+<h2>The stack</h2>
+<p>A face, one claim, the numbers that back it, a way in — then the story as <code>im-journey</code>: each chapter is a card that <strong>sticks under the bar</strong> as it arrives and stays while the next slides up over it, one step lower, so the years pile up along the top of the window like the tabs of a file. The step is the height of the card's head row, so what peeks out of every card underneath is exactly its year. On a phone the cards simply follow one another.</p>
+<p>The rail is pinned beside it: <code>im-journey-index</code> lists the chapters, and the one in view wears the system's "you are here" state — set by a few lines of script that watch the cards and also sweep on scroll, because an observer never fires in a tab that is not being painted. Then Now, Hire me, Elsewhere and the letter, as on every page with a rail.</p>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Class</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>im-journey</code></td><td>The stack. <code>--im-journey-step</code> is the peek (2.75rem); <code>--im-journey-top</code> where the first card sticks.</td></tr>
+		<tr><td><code>im-journey-card</code></td><td>A chapter: <code>im-journey-head</code> (<code>time</code> + a badge), <code>h3</code>, <code>p</code>, an optional <code>img</code> that sits beside the words from 48rem.</td></tr>
+		<tr><td><code>im-journey-index</code></td><td>The years in the rail; <code>data-im-journey</code> names the stack it follows. <code>aria-current="true"</code> is the fill.</td></tr>
+	</tbody>
+</table>
+</div>
 </div></section>
+
+{{#contentFor "scripts"}}
+<script>
+/* The journey index: the chapter in view wears aria-current. An observer
+   and a throttled sweep — the sweep is the one that works in an unpainted
+   tab, and on a page that opens already scrolled. */
+(() => {
+	for (const nav of document.querySelectorAll('[data-im-journey]')) {
+		const stack = document.querySelector(nav.dataset.imJourney);
+		if (!stack) continue;
+		const cards = [...stack.querySelectorAll('.im-journey-card')];
+		const links = [...nav.querySelectorAll('a[href^="#"]')];
+		const mark = () => {
+			const line = innerHeight * 0.4;
+			let current = cards[0];
+			for (const c of cards) if (c.getBoundingClientRect().top <= line) current = c;
+			for (const a of links) {
+				if (a.getAttribute('href') === `#${current?.id}`) a.setAttribute('aria-current', 'true');
+				else a.removeAttribute('aria-current');
+			}
+		};
+		let pending = false;
+		const queue = () => pending || ((pending = true), requestAnimationFrame(() => ((pending = false), mark())));
+		addEventListener('scroll', queue, { passive: true });
+		addEventListener('resize', queue, { passive: true });
+		if ('IntersectionObserver' in window) new IntersectionObserver(queue, { threshold: [0, 0.5, 1] }).observe(stack);
+		setTimeout(mark, 60);
+		mark();
+	}
+})();
+</script>
+{{/contentFor}}

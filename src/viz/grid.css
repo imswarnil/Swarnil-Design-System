@@ -1,0 +1,241 @@
+/* Grids — a heatmap, a calendar, a matrix, a treemap, a funnel. Every one is
+   CSS grid or flex with a value in --v; the colour is the series colour mixed
+   into the track by that value, so the scale follows the accent.
+
+   HEATMAP — rows of cells:
+     <div class="im-chart-heat" style="--im-heat-cols: 7">
+       <span class="im-chart-heat-label">Mon</span><i style="--v: .3" data-label="Mon 9:00 · 12"></i> …
+     </div>
+   CALENDAR — a year of days, columns are weeks:
+     <div class="im-chart-cal"><i style="--v: .2" data-label="3 Jan · 2 posts"></i> × 365 </div>
+   MATRIX — cells with their value printed:
+     <div class="im-chart-matrix" style="--im-heat-cols: 4"><b></b><b>Q1</b>… <span>Travel</span><i style="--v:.8">48</i>…</div>
+   TREEMAP — nested rows of flex:
+     <div class="im-chart-treemap"><div class="im-chart-leaf" style="--v: 48"><b>Travel</b><span>48</span></div>…</div>
+   FUNNEL — stages, each narrower:
+     <div class="im-chart-funnel"><div style="--v: 1"><b>Visited</b><span>12,480</span></div>…</div> */
+
+/* ---- heatmap ---- */
+.im-chart-heat {
+	--im-heat-cols: 7;
+	--im-heat-gap: 3px;
+
+	display: grid;
+	grid-template-columns: auto repeat(var(--im-heat-cols), minmax(0, 1fr));
+	gap: var(--im-heat-gap);
+	align-items: stretch;
+	min-width: 0;
+}
+
+/* No row labels: every column is a cell. */
+.im-chart-heat-bare { grid-template-columns: repeat(var(--im-heat-cols), minmax(0, 1fr)); }
+
+.im-chart-heat-label {
+	display: flex;
+	align-items: center;
+	padding-right: 0.5rem;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	white-space: nowrap;
+}
+
+/* A column heading — sits in the grid like a label, above the cells. */
+.im-chart-heat-head {
+	display: flex;
+	align-items: end;
+	justify-content: center;
+	padding-bottom: 0.25rem;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+}
+
+.im-chart-heat > i,
+.im-chart-cal > i,
+.im-chart-matrix > i {
+	position: relative;
+	display: block;
+	aspect-ratio: 1;
+	border-radius: var(--im-radius-xs);
+	background-color: color-mix(in oklab, var(--c, var(--im-chart-color, var(--im-viz-1))) calc(var(--v, 0) * 100%), var(--im-viz-track));
+	transition: outline-color var(--im-duration-instant);
+	outline: 1px solid transparent;
+	outline-offset: -1px;
+}
+
+.im-chart-heat > i:hover,
+.im-chart-cal > i:hover,
+.im-chart-matrix > i:hover { outline-color: var(--im-ink); }
+
+/* A cell's label as a readout on hover — the same tooltip the points use. */
+:is(.im-chart-heat, .im-chart-cal, .im-chart-matrix) > i[data-label]:hover::after {
+	content: attr(data-label);
+	position: absolute;
+	left: 50%;
+	bottom: calc(100% + 0.375rem);
+	z-index: 2;
+	padding: 0.25rem 0.5rem;
+	border-radius: var(--im-radius-sm);
+	background-color: var(--im-ink);
+	color: var(--im-canvas);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	white-space: nowrap;
+	translate: -50% 0;
+	pointer-events: none;
+}
+
+/* Wide cells — for a few columns, hours of a day. */
+.im-chart-heat-wide > i { aspect-ratio: 2 / 1; }
+
+/* ---- calendar: 53 weeks across, 7 days down ---- */
+.im-chart-cal {
+	display: grid;
+	grid-auto-flow: column;
+	grid-template-rows: repeat(7, minmax(0, 1fr));
+	grid-auto-columns: minmax(0, 1fr);
+	gap: 2px;
+	min-width: 0;
+}
+
+.im-chart-cal > i { border-radius: 2px; }
+
+/* The scale under a heatmap: less → more. */
+.im-chart-scale {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+}
+
+.im-chart-scale > i {
+	display: block;
+	width: 0.625rem;
+	height: 0.625rem;
+	border-radius: 2px;
+	background-color: color-mix(in oklab, var(--c, var(--im-chart-color, var(--im-viz-1))) calc(var(--v, 0) * 100%), var(--im-viz-track));
+}
+
+/* ---- matrix: a heatmap whose cells say their number ---- */
+.im-chart-matrix {
+	--im-heat-cols: 4;
+
+	display: grid;
+	grid-template-columns: auto repeat(var(--im-heat-cols), minmax(0, 1fr));
+	gap: 3px;
+	min-width: 0;
+}
+
+.im-chart-matrix > b,
+.im-chart-matrix > span {
+	display: flex;
+	align-items: center;
+	padding: 0 0.5rem 0.25rem 0;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	font-weight: 400;
+	white-space: nowrap;
+}
+
+.im-chart-matrix > b { justify-content: center; padding: 0 0 0.25rem; }
+
+.im-chart-matrix > i {
+	display: grid;
+	place-items: center;
+	aspect-ratio: auto;
+	min-height: 2.25rem;
+	color: var(--im-ink);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	font-style: normal;
+	font-variant-numeric: tabular-nums;
+}
+
+/* Over the darker half of the scale the figure goes to the canvas colour. */
+.im-chart-matrix > i[data-dark] { color: var(--im-canvas); }
+
+/* ---- treemap: boxes sized by --v, in rows ----
+   Flex rows, each leaf growing by its value. Two levels: a leaf, or a group
+   of leaves (im-chart-branch) that itself grows by the sum of its children. */
+.im-chart-treemap {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 3px;
+	min-height: 12rem;
+	min-width: 0;
+}
+
+.im-chart-leaf,
+.im-chart-branch {
+	/* Grows by its value; the basis decides how many share a row. 1.2% of the
+	   width per unit puts a 48 and a 34 on one row and five smaller on the next. */
+	flex: var(--v, 1) 1 calc(var(--v, 1) * 1.2%);
+	min-width: 0;
+}
+
+.im-chart-branch {
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+}
+
+.im-chart-leaf {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: 0.25rem;
+	min-height: 3.5rem;
+	padding: 0.625rem 0.75rem;
+	border-radius: var(--im-radius-md);
+	overflow: hidden;
+	background-color: color-mix(in oklab, var(--c, var(--im-chart-color, var(--im-viz-1))) var(--im-leaf-tint, 100%), var(--im-canvas));
+	color: var(--im-on-accent);
+	font-size: var(--im-text-xs);
+	line-height: 1.2;
+}
+
+/* <b> is coloured ink by the base styles; on a filled leaf it must follow the leaf. */
+.im-chart-leaf > b { color: inherit; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.im-chart-leaf > span { font-family: var(--im-font-mono); font-variant-numeric: tabular-nums; opacity: 0.8; }
+
+/* A lighter leaf keeps the ink. */
+.im-chart-leaf-light {
+	--im-leaf-tint: 18%;
+
+	color: var(--im-ink);
+}
+
+.im-chart-leaf-light > span { color: var(--im-muted); opacity: 1; }
+
+/* ---- funnel: each stage a share of the first, centred ---- */
+.im-chart-funnel {
+	display: grid;
+	gap: 3px;
+	min-width: 0;
+}
+
+.im-chart-funnel > div {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.75rem;
+	width: calc(var(--v, 1) * 100%);
+	min-width: fit-content;
+	margin-inline: auto;
+	padding: 0.5rem 0.875rem;
+	border-radius: var(--im-radius-sm);
+	background-color: color-mix(in oklab, var(--c, var(--im-chart-color, var(--im-viz-1))) calc(35% + var(--v, 1) * 65%), var(--im-canvas));
+	color: var(--im-on-accent);
+	font-size: var(--im-text-sm);
+	white-space: nowrap;
+}
+
+.im-chart-funnel > div > b { color: inherit; font-weight: 600; }
+.im-chart-funnel > div > span { font-family: var(--im-font-mono); font-size: var(--im-text-xs); font-variant-numeric: tabular-nums; opacity: 0.85; }
+
+/* Left-aligned, for a funnel beside a label column. */
+.im-chart-funnel-left > div { margin-inline: 0; }

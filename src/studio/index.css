@@ -1,0 +1,38 @@
+/* Studio — the channel, drawn in the system's look.
+
+   A frame is a fixed-size canvas (a thumbnail, channel art, a live scene, a
+   shot in a film) built from the same tokens as the site, so a video and the
+   page it lands on share one voice. One unit inside every frame: the em, set
+   from the frame's shorter side, so nothing in it names a pixel.
+
+     frame        the canvas, its tones, its layers and its type
+     youtube      thumbnails (ten styles), channel art, profile art, end screen
+     background   grounds that move
+     media        a picture or a clip in a frame: border, shadow, indicators
+     motion       a layer's in, hold and out; the loops
+     title        how a title is set
+     lower        lower thirds
+     hud          points, arrows, boxes, captions, counters
+     scene        reusable shots, story frames, the skeleton
+     grade        colour, as a LUT would do it
+     transition   how one shot hands over to the next
+     sting        the logo, as an intro
+     live         a stream's sources and scenes
+
+   Every class is im-studio-*. The docs show each one as a page under /frames/
+   at its real size (shell: frame) — screenshot it, load it as a browser
+   source, or put it on a timeline. */
+
+@import "./frame.css";
+@import "./youtube.css";
+@import "./background.css";
+@import "./media.css";
+@import "./motion.css";
+@import "./title.css";
+@import "./lower.css";
+@import "./hud.css";
+@import "./scene.css";
+@import "./grade.css";
+@import "./transition.css";
+@import "./sting.css";
+@import "./live.css";

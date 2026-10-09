@@ -1,0 +1,120 @@
+---
+title: Numbers & tables
+description: A figure, what it counts, how it moved — alone, in a row of tiles, beside a small chart. And the table: numbers right-aligned in Geist Mono, a sort arrow, a bar or a sparkline in a cell. The honest form of every chart.
+eyebrow: Data visualisation
+source: src/viz/stat.css · src/viz/table.css
+---
+<h2>Stat</h2>
+<p>A figure, a label, a delta. <code>data-im-count</code> counts it up on scroll (<a href="/motion/animation/#counting-up">Animation</a>); the final number stays in the markup for search engines and no-script readers. <code>im-stat-unit</code> is a smaller unit after the figure; <code>im-stat-compare</code> a quieter “against what”.</p>
+{{#example}}
+<div class="im-grid-fit im-grid-sm">
+	<div class="im-stat"><span class="im-stat-figure" data-im-count="12480">12,480</span><span class="im-stat-label">readers</span><span class="im-stat-delta">{{> "icons/trending-up"}} 12% this month</span></div>
+	<div class="im-stat"><span class="im-stat-figure"><span data-im-count="41.2">41.2</span><span class="im-stat-unit">%</span></span><span class="im-stat-label">open rate</span><span class="im-stat-delta" data-trend="down">{{> "icons/trending-down"}} 1.4 pts</span></div>
+	<div class="im-stat"><span class="im-stat-figure im-pixel" data-im-count="246">246</span><span class="im-stat-label">posts</span><span class="im-stat-delta" data-trend="flat">no change</span></div>
+	<div class="im-stat"><span class="im-stat-figure">$3.2k</span><span class="im-stat-label">this month</span><span class="im-stat-compare">last month <b>$2.9k</b> · goal <b>$5k</b></span></div>
+</div>
+{{/example}}
+{{{{code "html"}}}}
+<div class="im-stat">
+	<span class="im-stat-figure" data-im-count="12480">12,480</span>
+	<span class="im-stat-label">readers</span>
+	<span class="im-stat-delta" data-trend="up">{{> "icons/trending-up"}} 12% this month</span>
+</div>
+{{{{/code}}}}
+
+<h2>Tiles</h2>
+<p><code>im-stat-tiles</code> is a strip of KPI cells sharing one hairline — the top of a dashboard. Each <code>im-stat-tile</code> holds a caption, a stat, and a sparkline that sits at its foot. <code>im-stat-delta-pill</code> is the delta in a tint, for a tile that has room.</p>
+{{#example}}
+<div class="im-stat-tiles">
+	{{#each demo.viz.glance}}
+	<div class="im-stat-tile">
+		<p class="im-caption" data-index="0{{@index}}">{{label}}</p>
+		<div class="im-stat"><span class="im-stat-figure"{{#if count}} data-im-count="{{count}}"{{/if}}>{{figure}}{{#if unit}}<span class="im-stat-unit">{{unit}}</span>{{/if}}</span><span class="im-stat-delta im-stat-delta-pill" data-trend="{{trend}}">{{#match trend "down"}}{{> "icons/trending-down"}}{{else match trend "flat"}}{{else}}{{> "icons/trending-up"}}{{/match}} {{delta}}</span></div>
+		<svg class="im-spark" data-im-spark="{{spark}}" data-im-area aria-hidden="true"{{#match @index ">" 1}}{{#match @index "<" 3}} style="--im-chart-color: var(--im-viz-2)"{{/match}}{{/match}}></svg>
+	</div>
+	{{/each}}
+</div>
+{{/example}}
+{{{{code "html"}}}}
+<div class="im-stat-tiles">
+	<div class="im-stat-tile">
+		<p class="im-caption" data-index="01">Readers</p>
+		<div class="im-stat"><span class="im-stat-figure" data-im-count="12480">12,480</span><span class="im-stat-delta im-stat-delta-pill" data-trend="up">12% this month</span></div>
+		<svg class="im-spark" data-im-spark="4,6,5,8,7,11,10,14" data-im-area aria-hidden="true"></svg>
+	</div>
+	…
+</div>
+{{{{/code}}}}
+
+<h2>Beside a chart</h2>
+<p><code>im-stat-row</code> sets the figure at one end and a small chart at the other — a sparkline, a ring.</p>
+{{#example}}
+<div class="im-grid-fit im-grid-sm">
+	<div class="im-stat-tile im-stat-tile-solo"><p class="im-caption" data-index="01">Readers</p><div class="im-stat-row"><span class="im-stat-figure" data-im-count="12480">12,480</span><svg class="im-spark" data-im-spark="4,6,5,8,7,11,10,14,13,17" data-im-area></svg></div><span class="im-stat-delta">{{> "icons/trending-up"}} 12%</span></div>
+	<div class="im-stat-tile im-stat-tile-solo"><p class="im-caption" data-index="02">Open rate</p><div class="im-stat-row"><span class="im-stat-figure">41%</span><span class="im-ring" style="--im-value: .41">41</span></div><span class="im-stat-delta" data-trend="down">{{> "icons/trending-down"}} 1.4 pts</span></div>
+	<div class="im-stat-tile im-stat-tile-solo"><p class="im-caption" data-index="03">Paid</p><div class="im-stat-row"><span class="im-stat-figure">$3.2k</span><span class="im-ring" style="--im-value: .64; --im-progress-color: var(--im-success)">64</span></div><span class="im-stat-delta">{{> "icons/trending-up"}} of $5k goal</span></div>
+</div>
+{{/example}}
+
+<h2>Table</h2>
+<p>The chart that is always right. <code>im-viz-table</code>: numbers right-aligned in Geist Mono with tabular figures (<code>im-viz-num</code>), a sort arrow drawn from <code>aria-sort</code> on the header (the button inside is the control; the page does the sorting), a bar in a cell (<code>im-viz-bar</code>), a delta (<code>im-viz-delta</code>), a sparkline (<code>im-viz-spark</code>), a total row in the foot. Wrap it in <code>im-table-scroll</code> so a phone can slide it.</p>
+{{#example flush=true}}
+<div class="im-table-scroll">
+<table class="im-viz-table">
+	<thead><tr>
+		<th><button type="button">Topic</button></th>
+		<th class="im-viz-num" aria-sort="descending"><button type="button">Posts</button></th>
+		<th>Share</th>
+		<th class="im-viz-num"><button type="button">Views</button></th>
+		<th>Trend</th>
+		<th class="im-viz-num"><button type="button">Change</button></th>
+	</tr></thead>
+	<tbody>
+		{{#each demo.viz.topics}}
+		<tr>
+			<td>{{name}}</td>
+			<td class="im-viz-num">{{posts}}</td>
+			<td class="im-viz-bar" style="--v: {{v}}"><i></i></td>
+			<td class="im-viz-num">{{views}}</td>
+			<td class="im-viz-spark"><svg class="im-spark" data-im-spark="{{spark}}" aria-hidden="true"></svg></td>
+			<td class="im-viz-num"><span class="im-viz-delta" data-trend="{{trend}}">{{delta}}</span></td>
+		</tr>
+		{{/each}}
+	</tbody>
+	<tfoot><tr><td>All topics</td><td class="im-viz-num">133</td><td></td><td class="im-viz-num">920k</td><td></td><td class="im-viz-num"><span class="im-viz-delta" data-trend="up">+9%</span></td></tr></tfoot>
+</table>
+</div>
+{{/example}}
+{{{{code "html"}}}}
+<div class="im-table-scroll">
+<table class="im-viz-table">
+	<thead><tr>
+		<th><button type="button">Topic</button></th>
+		<th class="im-viz-num" aria-sort="descending"><button type="button">Posts</button></th>
+		<th>Share</th>
+		<th class="im-viz-num"><button type="button">Change</button></th>
+	</tr></thead>
+	<tbody>
+		<tr><td>Travel</td><td class="im-viz-num">48</td><td class="im-viz-bar" style="--v: 1"><i></i></td><td class="im-viz-num"><span class="im-viz-delta" data-trend="up">+12%</span></td></tr>
+		…
+	</tbody>
+	<tfoot><tr><td>All topics</td><td class="im-viz-num">133</td><td></td><td class="im-viz-num">+9%</td></tr></tfoot>
+</table>
+</div>
+{{{{/code}}}}
+
+<h2>Against last period</h2>
+<p>Two columns side by side, the earlier one quieter (<code>im-viz-was</code>), and the change between them. <code>im-viz-table-sm</code> packs the rows for a dashboard panel; <code>im-viz-table-pinned</code> keeps the first column still while a wide table scrolls.</p>
+{{#example flush=true}}
+<div class="im-table-scroll">
+<table class="im-viz-table im-viz-table-sm">
+	<thead><tr><th>Measure</th><th class="im-viz-num">This month</th><th class="im-viz-num">Last month</th><th class="im-viz-num">Change</th></tr></thead>
+	<tbody>
+		<tr><td>Readers</td><td class="im-viz-num">12,480</td><td class="im-viz-num im-viz-was">11,140</td><td class="im-viz-num"><span class="im-viz-delta" data-trend="up">+12%</span></td></tr>
+		<tr><td>Members</td><td class="im-viz-num">1,204</td><td class="im-viz-num im-viz-was">1,115</td><td class="im-viz-num"><span class="im-viz-delta" data-trend="up">+8%</span></td></tr>
+		<tr><td>Open rate</td><td class="im-viz-num">41.2%</td><td class="im-viz-num im-viz-was">42.6%</td><td class="im-viz-num"><span class="im-viz-delta" data-trend="down">−1.4 pts</span></td></tr>
+		<tr><td>Posts</td><td class="im-viz-num">8</td><td class="im-viz-num im-viz-was">8</td><td class="im-viz-num"><span class="im-viz-delta" data-trend="flat">0</span></td></tr>
+	</tbody>
+</table>
+</div>
+{{/example}}

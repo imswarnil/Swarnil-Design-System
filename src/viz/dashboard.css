@@ -1,0 +1,157 @@
+/* Dashboard — panels on the twelve columns.
+
+     <div class="im-dash">
+       <header class="im-dash-head"> <h1>…</h1> <div class="im-viz-filters">…</div> </header>
+       <div class="im-cols im-dash-grid">
+         <section class="im-dash-panel" data-span="8"> <div class="im-dash-panel-head"><h2>…</h2> …tools… </div> …a chart… </section>
+         <section class="im-dash-panel" data-span="4">…</section>
+       </div>
+     </div>
+
+   The grid is the page's own im-cols, so a panel is a whole number of
+   columns and lands on the drawn lines: 8 and 4, 6 and 6, four 3s, three 4s
+   (twelve takes 2, 3, 4 and 6). A panel is a hairline box with a head row;
+   im-dash-side is a sidebar of filters pinned beside the panels.
+
+   Knobs: --im-dash-pad. */
+
+.im-dash {
+	--im-dash-pad: 1.125rem;
+
+	display: grid;
+	gap: var(--im-grid-gap);
+	min-width: 0;
+}
+
+.im-dash-head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.75rem 1.5rem;
+}
+
+.im-dash-head > h1,
+.im-dash-head > h2 {
+	margin: 0 auto 0 0;
+	color: var(--im-ink);
+	font-size: var(--im-text-h2);
+	font-weight: 600;
+	letter-spacing: var(--im-tracking-tight);
+}
+
+.im-dash-head > p {
+	flex-basis: 100%;
+	margin: 0;
+	color: var(--im-muted);
+	font-size: var(--im-text-sm);
+}
+
+/* The grid of panels: im-cols gives the columns; this gives the row gap. */
+.im-dash-grid {
+	row-gap: var(--im-grid-gap);
+	align-items: stretch;
+}
+
+.im-dash-panel {
+	display: flex;
+	flex-direction: column;
+	gap: 0.875rem;
+	min-width: 0;
+	padding: var(--im-dash-pad);
+	border-radius: var(--im-radius-xl);
+	background-color: var(--im-canvas);
+	box-shadow: inset 0 0 0 1px var(--im-viz-line);
+}
+
+/* A panel with no box — for a strip of tiles that draws its own. */
+.im-dash-panel-bare {
+	padding: 0;
+	box-shadow: none;
+	background: none;
+}
+
+.im-dash-panel-head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 0.25rem 0.75rem;
+}
+
+.im-dash-panel-head > h2,
+.im-dash-panel-head > h3 {
+	margin: 0;
+	color: var(--im-ink);
+	font-size: var(--im-text-base);
+	font-weight: 600;
+	letter-spacing: var(--im-tracking-tight);
+}
+
+.im-dash-panel-head > small {
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+}
+
+.im-dash-panel-head > .im-dash-tools { margin-left: auto; }
+
+.im-dash-tools {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+/* A chart in a panel fills it; its own frame drops the head the panel has. */
+.im-dash-panel > .im-chart { flex: 1; }
+.im-dash-panel > .im-chart > .im-chart-head { display: none; }
+
+/* The panel's foot: a note, a link to the full report. */
+.im-dash-panel-foot {
+	display: flex;
+	justify-content: space-between;
+	gap: 0.75rem;
+	margin-top: auto;
+	padding-top: 0.75rem;
+	border-top: 1px solid var(--im-viz-line);
+	color: var(--im-muted);
+	font-size: var(--im-text-xs);
+}
+
+.im-dash-panel-foot a { color: var(--im-ink); }
+
+/* ---- with a sidebar ----
+   Filters down the left, three columns; the panels take the nine beside. */
+.im-dash-split {
+	display: grid;
+	grid-template-columns: calc(3 * var(--im-col) + 2 * var(--im-grid-gap)) minmax(0, 1fr);
+	gap: var(--im-grid-gap);
+	align-items: start;
+}
+
+.im-dash-split > .im-dash-grid { --im-grid-of: 9; }
+
+.im-dash-side {
+	position: sticky;
+	top: calc(var(--im-bar-height) + 1rem);
+	display: grid;
+	gap: 1.25rem;
+	min-width: 0;
+}
+
+.im-dash-side > section { display: grid; gap: 0.5rem; }
+
+.im-dash-side > section > h3 {
+	margin: 0;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	font-weight: 500;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+}
+
+@media (width < 56rem) {
+	.im-dash-split { grid-template-columns: minmax(0, 1fr); }
+	.im-dash-side { position: static; }
+	.im-dash-split > .im-dash-grid { --im-grid-of: 4; }
+}

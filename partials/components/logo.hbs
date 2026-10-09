@@ -1,18 +1,25 @@
 {{!-- Brand logo. One idea in two lockups: LETTERS, and a dot at the top right
-	of the last one — the recording light.
+	of the last one — the recording light. The brand is the SQUARE: the first
+	letter and the dot, centred on a tile as one group.
 
-	  {{> "components/logo"}}                    Im •      the wordmark
+	  {{> "components/logo"}}                    Swarnil •    the wordmark (the site's title)
 	  {{> "components/logo" text="Swarnil"}}     Swarnil •
-	  {{> "components/logo" mark=true}}          [I•]      the square
+	  {{> "components/logo" mark=true}}          [S•]         the square
 
 	Params
 	  text    what to set. Default: the site's title.
 	  mark    true — the square: the FIRST letter on a tile, the dot in the
 	          corner. For an island bar, a phone, an avatar, a favicon.
-	  size    the lockup's height. Default 1.625rem. Everything inside is in
-	          em, so this one length scales the whole thing.
+	  size    the lockup's height, as a length ("3rem", "40px") OR one of the
+	          scale's names (xs sm md lg xl 2xl 3xl). Default 1.625rem.
+	          Everything inside is in em, so this one length scales it all.
 	  live    true — the dot pulses, the way a recording light does.
-	  class   extra classes: im-logo-outline · im-logo-accent (mark only).
+	  anim    type-in · drop · reveal · morph · states — plays on load
+	          (morph and states loop). type-in and morph split the letters
+	          through im-motion.js.
+	  cut     true — the letters are a window: --im-logo-cut shows through them.
+	  class   extra classes: im-logo-outline · im-logo-accent · im-logo-canvas
+	          · im-logo-knockout (mark only).
 	  label   the accessible name. Default: `text`, else the site's title —
 	          so the square for "Swarnil" is still announced as "Swarnil" and
 	          not as the letter S.
@@ -21,11 +28,11 @@
 	any size, follows the theme's ink and weighs nothing. The letters are
 	aria-hidden and the lockup carries one label, so a screen reader reads the
 	name once rather than spelling it. --}}
-<span class="im-logo{{#if mark}} im-logo-mark{{/if}}{{#if live}} im-logo-live{{/if}}{{#if class}} {{class}}{{/if}}" role="img" aria-label="{{#if label}}{{label}}{{else}}{{#if text}}{{text}}{{else}}{{@site.title}}{{/if}}{{/if}}"{{#if size}} style="--im-logo-size: {{size}}"{{/if}}>
+<span class="im-logo{{#if mark}} im-logo-mark{{/if}}{{#if live}} im-logo-live{{/if}}{{#if anim}} im-logo-{{anim}}{{/if}}{{#if cut}} im-logo-cutout{{/if}}{{#if class}} {{class}}{{/if}}{{#match size "=" "xs"}} im-logo-xs{{/match}}{{#match size "=" "sm"}} im-logo-sm{{/match}}{{#match size "=" "md"}} im-logo-md{{/match}}{{#match size "=" "lg"}} im-logo-lg{{/match}}{{#match size "=" "xl"}} im-logo-xl{{/match}}{{#match size "=" "2xl"}} im-logo-2xl{{/match}}{{#match size "=" "3xl"}} im-logo-3xl{{/match}}" role="img" aria-label="{{#if label}}{{label}}{{else}}{{#if text}}{{text}}{{else}}{{@site.title}}{{/if}}{{/if}}"{{#match size "~$" "em"}} style="--im-logo-size: {{size}}"{{/match}}{{#match size "~$" "px"}} style="--im-logo-size: {{size}}"{{/match}}>
 	{{~#if mark~}}
 		<b class="im-logo-type" aria-hidden="true">{{#if text}}{{text.[0]}}{{else}}{{@site.title.[0]}}{{/if}}</b>
 	{{~else~}}
-		<b class="im-logo-type" aria-hidden="true">{{#if text}}{{text}}{{else}}{{@site.title}}{{/if}}</b>
+		<b class="im-logo-type" aria-hidden="true"{{#match anim "=" "type-in"}} data-im-split="chars"{{/match}}{{#match anim "=" "morph"}} data-im-split="chars"{{/match}}>{{#if text}}{{text}}{{else}}{{@site.title}}{{/if}}</b>
 	{{~/if~}}
 	<i class="im-logo-dot" aria-hidden="true"></i>
 </span>
