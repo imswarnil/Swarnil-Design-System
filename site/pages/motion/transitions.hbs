@@ -48,7 +48,7 @@ source: src/motion/transition.css
 	<li><strong>dot</strong> — the recording light swells from where you clicked until it is the whole screen, and the next page is inside it. The dot means <em>on air</em> everywhere in the system; here it is what carries you to the next page. It needs <code>im-motion.js</code> for the click point; without it the light opens from the centre.</li>
 	<li><strong>columns</strong> — the twelve columns the page is drawn on wipe the next page in, one after another, left to right.</li>
 </ul>
-<p>They are the same two cuts a film made with the system uses between shots (<a href="/content-creation/elements/transitions/">Elements → Transitions</a>), so a video and the site change scene the same way.</p>
+<p>Both are also <a href="#cuts">cuts</a>, below — so a panel inside the page and the page itself change the same way.</p>
 
 <h2>Use it</h2>
 {{{{code "hbs"}}}}
@@ -81,3 +81,29 @@ source: src/motion/transition.css
 
 <h2>With entrances</h2>
 <p>A page transition ends where <a href="/motion/entrances/">entrances</a> begin — the page arrives, then its heading does. Pair a quiet transition (<code>fade</code>, <code>rise</code>) with a characterful entrance, or the other way round. Both loud is a lot.</p>
+
+<h2 id="cuts">Cuts: in place</h2>
+<p>A page transition changes the whole page. A cut changes one panel <em>inside</em> it — a tab, a slide, a step in a form, a chart swapped for its table. The panel that comes in plays the cut when it is rendered, so showing it is all it takes: remove <code>hidden</code>, or add it to the page. Nothing has to run on the one going out.</p>
+{{{{code "hbs"}}}}
+<div class="im-cut" data-cut="dot" role="tabpanel">…</div>
+{{{{/code}}}}
+{{#example code=false}}
+<div class="tiles tiles-3" data-replay>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="01">dot</p><div class="im-cut bg-surface rounded-lg p-4" data-cut="dot"><p class="text-h3 font-semibold tracking-tight text-ink">The next panel.</p></div><span class="text-sm">The accent swells from the middle and the panel opens inside it.</span></div>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="02">columns</p><div class="im-cut bg-surface rounded-lg p-4" data-cut="columns"><p class="text-h3 font-semibold tracking-tight text-ink">The next panel.</p></div><span class="text-sm">The twelve columns open one after another.</span></div>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="03">fade</p><div class="im-cut bg-surface rounded-lg p-4" data-cut="fade"><p class="text-h3 font-semibold tracking-tight text-ink">The next panel.</p></div><span class="text-sm">A cross-fade.</span></div>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="04">wipe-left</p><div class="im-cut bg-surface rounded-lg p-4" data-cut="wipe-left"><p class="text-h3 font-semibold tracking-tight text-ink">The next panel.</p></div><span class="text-sm">A straight edge crosses.</span></div>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="05">wipe-up</p><div class="im-cut bg-surface rounded-lg p-4" data-cut="wipe-up"><p class="text-h3 font-semibold tracking-tight text-ink">The next panel.</p></div><span class="text-sm">Uncovered from the bottom.</span></div>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="06">iris</p><div class="im-cut bg-surface rounded-lg p-4" data-cut="iris"><p class="text-h3 font-semibold tracking-tight text-ink">The next panel.</p></div><span class="text-sm">Opens from the centre.</span></div>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="07">slide</p><div class="im-cut bg-surface rounded-lg p-4" data-cut="slide"><p class="text-h3 font-semibold tracking-tight text-ink">The next panel.</p></div><span class="text-sm">Comes in from the side.</span></div>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="08">push</p><div class="im-cut bg-surface rounded-lg p-4" data-cut="push"><p class="text-h3 font-semibold tracking-tight text-ink">The next panel.</p></div><span class="text-sm">Comes up from below.</span></div>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="09">zoom</p><div class="im-cut bg-surface rounded-lg p-4" data-cut="zoom"><p class="text-h3 font-semibold tracking-tight text-ink">The next panel.</p></div><span class="text-sm">Settles back from too close.</span></div>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="10">blur</p><div class="im-cut bg-surface rounded-lg p-4" data-cut="blur"><p class="text-h3 font-semibold tracking-tight text-ink">The next panel.</p></div><span class="text-sm">Comes into focus.</span></div>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="11">split</p><div class="im-cut bg-surface rounded-lg p-4" data-cut="split"><p class="text-h3 font-semibold tracking-tight text-ink">The next panel.</p></div><span class="text-sm">Opens from a line across the middle.</span></div>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="12">flash</p><div class="im-cut bg-surface rounded-lg p-4" data-cut="flash"><p class="text-h3 font-semibold tracking-tight text-ink">The next panel.</p></div><span class="text-sm">A frame of white, then the panel.</span></div>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="13">curtain</p><div class="im-cut bg-surface rounded-lg p-4" data-cut="curtain"><p class="text-h3 font-semibold tracking-tight text-ink">The next panel.</p></div><span class="text-sm">A panel of the accent crosses.</span></div>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="14">slats</p><div class="im-cut bg-surface rounded-lg p-4" data-cut="slats"><p class="text-h3 font-semibold tracking-tight text-ink">The next panel.</p></div><span class="text-sm">Twelve slats wipe down.</span></div>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="15">blinds</p><div class="im-cut bg-surface rounded-lg p-4" data-cut="blinds"><p class="text-h3 font-semibold tracking-tight text-ink">The next panel.</p></div><span class="text-sm">Eight blinds open.</span></div>
+</div>
+{{/example}}
+<p>Knobs: <code>--im-cut-for</code> (700ms), <code>--im-cut-delay</code>, <code>--im-cut-color</code> (what <code>dot</code> and <code>curtain</code> are made of — the accent) and <code>--im-cut-x</code> / <code>--im-cut-y</code> (where the dot opens). Use the same cut for every panel of one kind, and match it to the page transition when you can.</p>

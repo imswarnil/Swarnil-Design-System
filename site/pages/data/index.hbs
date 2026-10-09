@@ -4,7 +4,7 @@ description: Numbers and the charts that explain them — one palette off the ac
 eyebrow: Data visualisation
 source: src/viz/ · src/js/im-charts.js
 ---
-<p>A chart here is for a <strong>glance</strong>: a trend, a share, a comparison of a few things, read in the time it takes to read a sentence. Everything in this section is built from the system’s own tokens — the series take the accent and the collection hues, the axes are the hairline, the figures are Geist Mono with tabular numerals — so a chart on a page looks like it belongs to the page, and dark mode is free. Most of it is pure CSS; the one thing CSS cannot draw, a line, is a 6 KB script.</p>
+<p>A chart here is for a <strong>glance</strong>: a trend, a share, a comparison of a few things, read in the time it takes to read a sentence. Everything in this section is built from the system’s own tokens — the series take the accent, the ink and the neutral ramp, the axes are the hairline, the figures are Geist Mono with tabular numerals — so a chart on a page looks like it belongs to the page, and dark mode is free. Most of it is pure CSS; the one thing CSS cannot draw, a line, is a 6 KB script.</p>
 
 <h2>What is here</h2>
 <div class="im-table-scroll"><table>
@@ -30,18 +30,33 @@ source: src/viz/ · src/js/im-charts.js
 </ul>
 
 <h2>One palette</h2>
-<p>Six series colours, read from the accent so a theme that changes its accent changes its charts. One is the accent, two is the ink; three to six are collection hues, which already sit apart from one another. Set <code>data-series="n"</code> on a series (or <code>--c</code> on one element) to pick.</p>
+<p>Six series colours, and they are the system’s own: the accent for the one series that matters, the ink for the one it is measured against, and then the neutral ramp. There is no second hue — a chart that needs six colours to be read is a table. Set <code>data-series="n"</code> on a series (or <code>--c</code> on one element) to pick; most charts should never go past two.</p>
 {{#example}}
 <ul class="im-legend im-legend-row">
 	<li style="--c: var(--im-viz-1)">--im-viz-1<b>accent</b></li>
 	<li style="--c: var(--im-viz-2)">--im-viz-2<b>ink</b></li>
-	<li style="--c: var(--im-viz-3)">--im-viz-3<b>project</b></li>
-	<li style="--c: var(--im-viz-4)">--im-viz-4<b>tag</b></li>
-	<li style="--c: var(--im-viz-5)">--im-viz-5<b>newsletter</b></li>
-	<li style="--c: var(--im-viz-6)">--im-viz-6<b>course</b></li>
+	<li style="--c: var(--im-viz-3)">--im-viz-3<b>body</b></li>
+	<li style="--c: var(--im-viz-4)">--im-viz-4<b>muted</b></li>
+	<li style="--c: var(--im-viz-5)">--im-viz-5<b>faint</b></li>
+	<li style="--c: var(--im-viz-6)">--im-viz-6<b>surface</b></li>
 </ul>
 {{/example}}
-<p>A sequential scale — a heatmap, a treemap — is the one colour mixed into the track by the value, so <em>more</em> is always <em>more of the accent</em>. A chart never names a hue of its own: <code>--im-chart-color</code> is series one, and that is the only knob a page should need.</p>
+<p>A sequential scale — a heatmap, a calendar — is the one colour mixed into the track by the value, never past 85% of it, so <em>more</em> is always <em>more of the accent</em> and nothing is a wall. A chart never names a hue of its own: <code>--im-chart-color</code> is series one, and that is the only knob a page should need. The quiet idiom, used all through these pages, is <strong>one thing in the accent and the rest in grey</strong>: <code>data-on</code> on the column, the leaf or the bar to notice.</p>
+
+<h2>Arriving</h2>
+<p>A chart arrives once, when it scrolls into view, and then never moves again. Put <code>data-im-reveal="none"</code> on it (<code>im-motion.js</code> marks it revealed; <code>im-charts.js</code> numbers its children as <code>--n</code>) and each kind does the one thing that says what it is:</p>
+<div class="im-table-scroll"><table>
+<thead><tr><th>Chart</th><th>Arrives by</th></tr></thead>
+<tbody>
+<tr><td>Columns, bars, a ranking, a bullet, a bar in a table cell</td><td>Growing from the baseline or the left, one after another (<code>--im-viz-step</code>, 40ms apart).</td></tr>
+<tr><td>A line, an area, a step</td><td>Wiped on from the left; the last point lands as the line reaches it.</td></tr>
+<tr><td>A scatter</td><td>The points pop in, in order.</td></tr>
+<tr><td>A donut, a gauge, a waffle</td><td>Sweeping round from the top (<code>--im-viz-sweep</code>, 0 → 1).</td></tr>
+<tr><td>A heatmap, a calendar, a matrix</td><td>Cell by cell, in reading order.</td></tr>
+<tr><td>A treemap, a funnel</td><td>The leaves and the stages rise in turn.</td></tr>
+<tr><td>A stat</td><td>Counts up to its figure (<code>data-im-count</code>).</td></tr>
+</tbody></table></div>
+<p>Every one reads the motion tokens — <code>--im-duration-slow</code> for a fill, <code>-long</code> for a sweep or a line, <code>--im-ease-out</code> for anything arriving — and every one stops under <code>prefers-reduced-motion</code>, where the chart is simply there. Nothing on these pages loops: a hover readout answers in <code>--im-duration-fast</code> and that is all the motion a chart has after it has arrived.</p>
 
 <h2>Numbers</h2>
 <ul>

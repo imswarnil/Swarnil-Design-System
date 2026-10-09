@@ -195,6 +195,67 @@ a:hover .im-fx-outline-fill {
 		0.14em 0.14em 0 var(--im-fx-to, var(--im-accent));
 }
 
+/* Boxed and tape: the ground clings to each LINE, not to the block, so a
+   two-line heading is two strips that end where the words end. Put them on
+   an inline element (a <span> inside the heading). */
+.im-fx-boxed,
+.im-fx-tape {
+	padding: 0.08em 0.25em;
+	line-height: 1.22;
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+}
+
+.im-fx-boxed { background-color: var(--im-ink); color: var(--im-canvas); }
+.im-fx-tape { background-color: var(--im-fx-to, var(--im-accent)); color: var(--im-on-accent); }
+
+/* Rule: a thick accent bar under the last line. */
+.im-fx-rule {
+	padding-bottom: 0.18em;
+	background-image: linear-gradient(var(--im-fx-to, var(--im-accent)), var(--im-fx-to, var(--im-accent)));
+	background-repeat: no-repeat;
+	background-size: 100% 0.12em;
+	background-position: 0 100%;
+}
+
+/* Roll: several words, one shown at a time, each rolling up through a slot;
+   the last one stays. --im-i numbers them (im-stagger on the roll), and
+   --im-fx-roll-n says how many.
+       <span class="im-fx-roll im-stagger" style="--im-fx-roll-n: 3"><span>write</span><span>film</span><span>ship</span></span> */
+.im-fx-roll {
+	display: inline-grid;
+	overflow: hidden;
+	height: 1.1em;
+	vertical-align: bottom;
+	line-height: 1.1;
+}
+
+.im-fx-roll > * {
+	grid-area: 1 / 1;
+	color: var(--im-fx-to, var(--im-accent));
+	opacity: 0;
+	animation: im-fx-roll calc(var(--im-fx-roll-n, 3) * 1.2s) var(--im-ease-in-out) both;
+	animation-delay: calc(var(--im-i, 0) * 1.2s);
+}
+
+.im-fx-roll > :last-child { animation-name: im-fx-roll-hold; }
+
+@keyframes im-fx-roll {
+	0% { opacity: 0; translate: 0 100%; }
+	12%, 30% { opacity: 1; translate: 0 0; }
+	42%, 100% { opacity: 0; translate: 0 -100%; }
+}
+
+@keyframes im-fx-roll-hold {
+	0% { opacity: 0; translate: 0 100%; }
+	12%, 100% { opacity: 1; translate: 0 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.im-fx-roll > * { animation: none; }
+	.im-fx-roll > :last-child { opacity: 1; }
+}
+
 /* Typewriter: types itself once, with a caret. Monospaced, and counted in
    characters:  style="--im-fx-chars: 18"
 

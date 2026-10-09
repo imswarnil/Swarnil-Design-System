@@ -171,6 +171,19 @@
 		if (!host.hasAttribute('aria-label')) host.setAttribute('aria-label', series.map((s) => `${s.name}: ${s.points.length} points`).join('; '));
 	}
 
+	/* ── the stagger: every child of a revealed chart gets its index as --n ──
+	   so the CSS can delay it, without the page writing a number on each. */
+	for (const host of document.querySelectorAll('[data-im-reveal]')) {
+		if (!host.matches('.im-chart-cols, .im-bars, .im-hbars, .im-chart-heat, .im-chart-cal, .im-chart-matrix, .im-chart-treemap, .im-chart-funnel, .im-viz-table')) continue;
+		const kids = host.matches('.im-viz-table') ? host.querySelectorAll('tbody tr') : host.children;
+		let i = 0;
+		for (const c of kids) {
+			if (host.matches('.im-viz-table')) for (const cell of c.querySelectorAll('.im-viz-bar > i')) cell.style.setProperty('--n', i);
+			else if (!c.style.getPropertyValue('--n')) c.style.setProperty('--n', i);
+			i++;
+		}
+	}
+
 	/* ── legend toggles & filter chips ──────────────────────────────────── */
 	document.addEventListener('click', (e) => {
 		const t = e.target.closest('[data-im-legend] [data-series], [data-im-chips] button');

@@ -33,9 +33,9 @@ lockup is the site's own name set in Geist with a dot at the top right of the la
 no drawing to license. The one drawn file is `assets/brand/mark.svg`, the favicon: the capital S of
 Geist SemiBold converted to an outline with fontTools (OFL permits this; the OFL's reserved-name
 clause covers the font's name, not what is set in it) and the dot beside it, on a rounded tile — because a
-browser tab cannot run CSS or wait for a webfont. `assets/brand/portrait.jpg` and `cover.png` are
-the owner's own photograph and commissioned illustration, used by the docs' channel-art and
-thumbnail frames; a theme built on this replaces them with its own. Setting a name in a licensed typeface is ordinary
+browser tab cannot run CSS or wait for a webfont. `assets/brand/portrait.jpg` is
+the owner's own photograph, used by the docs' about and résumé
+demos; a theme built on this replaces it with its own. Setting a name in a licensed typeface is ordinary
 use of that typeface, and Geist ships under the SIL Open Font License (see the table above), which
 places no restriction on what is set in it, logos included. No logo, mark, icon or favicon from any
 other product is in this repository.
@@ -79,7 +79,6 @@ form, button, image and icon partials and its tooltip library were replaced with
 | The grey ramp's values | Tailwind CSS `neutral` scale | MIT | `src/foundation/tokens/primitives.css` |
 | Geist, Geist Mono, Geist Pixel | `geist` npm package (Vercel) | SIL OFL 1.1 | `assets/fonts/` + `OFL.txt` |
 | Caveat (the handwritten face) | `@fontsource-variable/caveat` (Google Fonts / Pablo Impallari) | SIL OFL 1.1 | `assets/fonts/Caveat-Variable.woff2` + `OFL-Caveat.txt` |
-| `puppeteer-core` | npm | Apache-2.0 | `scripts/frames.mjs` — exports the frames as pictures through the machine's own Chrome. Build only, not shipped. |
 | Line icons | Lucide (`lucide-static`) | ISC | `partials/icons/*.hbs` |
 | Brand marks | Simple Icons | CC0 1.0 | `partials/icons/brand-*.hbs` |
 | Brand colours on `im-btn-brand` | each service's published brand colour (a fact, not a work) | — | `src/components/button.css` |

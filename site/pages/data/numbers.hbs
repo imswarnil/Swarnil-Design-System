@@ -52,7 +52,7 @@ source: src/viz/stat.css · src/viz/table.css
 <div class="im-grid-fit im-grid-sm">
 	<div class="im-stat-tile im-stat-tile-solo"><p class="im-caption" data-index="01">Readers</p><div class="im-stat-row"><span class="im-stat-figure" data-im-count="12480">12,480</span><svg class="im-spark" data-im-spark="4,6,5,8,7,11,10,14,13,17" data-im-area></svg></div><span class="im-stat-delta">{{> "icons/trending-up"}} 12%</span></div>
 	<div class="im-stat-tile im-stat-tile-solo"><p class="im-caption" data-index="02">Open rate</p><div class="im-stat-row"><span class="im-stat-figure">41%</span><span class="im-ring" style="--im-value: .41">41</span></div><span class="im-stat-delta" data-trend="down">{{> "icons/trending-down"}} 1.4 pts</span></div>
-	<div class="im-stat-tile im-stat-tile-solo"><p class="im-caption" data-index="03">Paid</p><div class="im-stat-row"><span class="im-stat-figure">$3.2k</span><span class="im-ring" style="--im-value: .64; --im-progress-color: var(--im-success)">64</span></div><span class="im-stat-delta">{{> "icons/trending-up"}} of $5k goal</span></div>
+	<div class="im-stat-tile im-stat-tile-solo"><p class="im-caption" data-index="03">Paid</p><div class="im-stat-row"><span class="im-stat-figure">$3.2k</span><span class="im-ring" style="--im-value: .64; --im-progress-color: var(--im-viz-2)">64</span></div><span class="im-stat-delta">{{> "icons/trending-up"}} of $5k goal</span></div>
 </div>
 {{/example}}
 
@@ -60,7 +60,7 @@ source: src/viz/stat.css · src/viz/table.css
 <p>The chart that is always right. <code>im-viz-table</code>: numbers right-aligned in Geist Mono with tabular figures (<code>im-viz-num</code>), a sort arrow drawn from <code>aria-sort</code> on the header (the button inside is the control; the page does the sorting), a bar in a cell (<code>im-viz-bar</code>), a delta (<code>im-viz-delta</code>), a sparkline (<code>im-viz-spark</code>), a total row in the foot. Wrap it in <code>im-table-scroll</code> so a phone can slide it.</p>
 {{#example flush=true}}
 <div class="im-table-scroll">
-<table class="im-viz-table">
+<table class="im-viz-table" data-im-reveal="none">
 	<thead><tr>
 		<th><button type="button">Topic</button></th>
 		<th class="im-viz-num" aria-sort="descending"><button type="button">Posts</button></th>
@@ -87,7 +87,7 @@ source: src/viz/stat.css · src/viz/table.css
 {{/example}}
 {{{{code "html"}}}}
 <div class="im-table-scroll">
-<table class="im-viz-table">
+<table class="im-viz-table" data-im-reveal="none">
 	<thead><tr>
 		<th><button type="button">Topic</button></th>
 		<th class="im-viz-num" aria-sort="descending"><button type="button">Posts</button></th>
@@ -107,7 +107,7 @@ source: src/viz/stat.css · src/viz/table.css
 <p>Two columns side by side, the earlier one quieter (<code>im-viz-was</code>), and the change between them. <code>im-viz-table-sm</code> packs the rows for a dashboard panel; <code>im-viz-table-pinned</code> keeps the first column still while a wide table scrolls.</p>
 {{#example flush=true}}
 <div class="im-table-scroll">
-<table class="im-viz-table im-viz-table-sm">
+<table class="im-viz-table im-viz-table-sm" data-im-reveal="none">
 	<thead><tr><th>Measure</th><th class="im-viz-num">This month</th><th class="im-viz-num">Last month</th><th class="im-viz-num">Change</th></tr></thead>
 	<tbody>
 		<tr><td>Readers</td><td class="im-viz-num">12,480</td><td class="im-viz-num im-viz-was">11,140</td><td class="im-viz-num"><span class="im-viz-delta" data-trend="up">+12%</span></td></tr>

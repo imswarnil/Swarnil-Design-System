@@ -11,10 +11,18 @@
    table.css      a table of numbers, sortable, with bars and deltas in cells
    dashboard.css  a dashboard on the twelve columns
 
-   ONE PALETTE for every series, derived from the accent so it follows a
-   theme's own colour. Series one is the accent, two is the ink; the rest are
-   the collection hues, which already sit apart from one another. Set --c on
-   a series (or data-series="n") to pick one by hand.
+   ONE PALETTE for every series, and it is the system's own: the accent for
+   the one series that matters, the ink for the one it is measured against,
+   and then the neutral ramp — body, muted, faint, a surface. No second hue:
+   a chart that needs six colours to be read is a table. Set --c on a series
+   (or data-series="n") to pick one by hand.
+
+   ARRIVING. A chart arrives once, when it scrolls into view, and never moves
+   again: bars grow from the baseline with a stagger, a line is wiped on, a
+   donut sweeps round, a figure counts, a heatmap fades in cell by cell. All
+   of it is data-im-reveal="none" on the chart (im-motion.js marks it
+   revealed; im-charts.js numbers its children as --n for the stagger), all
+   of it reads the motion tokens, and all of it stops under reduced motion.
 
    Every chart is for a GLANCE here. It keeps its data in markup and says its
    numbers in an aria-label; the picture is the summary, the text is the
@@ -24,10 +32,12 @@
 :root {
 	--im-viz-1: var(--im-accent);
 	--im-viz-2: var(--im-ink);
-	--im-viz-3: var(--im-c-project);
-	--im-viz-4: var(--im-c-tag);
-	--im-viz-5: var(--im-c-newsletter);
-	--im-viz-6: var(--im-c-course);
+	--im-viz-3: var(--im-body);
+	--im-viz-4: var(--im-muted);
+	--im-viz-5: var(--im-faint);
+	--im-viz-6: var(--im-surface-3);
+	/* The stagger between one bar, cell or stage and the next as it arrives. */
+	--im-viz-step: 40ms;
 	/* The ground a chart is drawn on: the hairline for axes and gridlines, a
 	   track for what has not been filled. */
 	--im-viz-line: var(--im-line);

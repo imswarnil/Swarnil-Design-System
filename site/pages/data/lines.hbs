@@ -56,7 +56,7 @@ source: src/viz/line.css · src/js/im-charts.js
 {{#example}}
 <figure class="im-chart">
 	<div class="im-chart-head"><p class="im-chart-title">Members</p><p class="im-chart-sub">at the end of each month</p></div>
-	<div class="im-chart-line" data-im-labels="{{#each demo.viz.months}}{{this}}{{#unless @last}},{{/unless}}{{/each}}" data-im-step data-im-max="2" data-im-unit="k">
+	<div class="im-chart-line" data-im-labels="{{#each demo.viz.months}}{{this}}{{#unless @last}},{{/unless}}{{/each}}" data-im-step data-im-max="2" data-im-unit="k" data-im-reveal="none">
 		<data value="{{#each demo.viz.members}}{{this}}{{#unless @last}},{{/unless}}{{/each}}" data-name="Members"></data>
 		<div class="im-chart-plot" style="--im-chart-rows: 4">
 			<div class="im-chart-y" data-im-y aria-hidden="true"></div>
@@ -86,7 +86,7 @@ source: src/viz/line.css · src/js/im-charts.js
 </figure>
 {{/example}}
 {{{{code "html"}}}}
-<div class="im-chart-scatter" data-im-max="14" data-im-max-x="2400">
+<div class="im-chart-scatter" data-im-max="14" data-im-max-x="2400" data-im-reveal="none">
 	<data value="820:4.1,1200:6.2,640:3.4,…" data-name="Journal"></data>
 	<data value="600:2.0,900:3.1,…" data-name="Newsletter"></data>
 </div>
@@ -96,7 +96,7 @@ source: src/viz/line.css · src/js/im-charts.js
 <p>A trend with no axes, for beside a figure: <code>&lt;svg class="im-spark" data-im-spark="4,8,6,…"&gt;</code>. It scales to the SVG’s own box, so size it with CSS — <code>im-spark-wide</code> fills the width. <code>data-im-area</code> fills under the line. The last point gets the dot.</p>
 {{#example center=true}}
 <span class="inline-flex items-center gap-3 text-sm">Readers <svg class="im-spark" data-im-spark="3,5,4,7,6,9,8,12"></svg> <strong>+12%</strong></span>
-<span class="inline-flex items-center gap-3 text-sm">Churn <svg class="im-spark" data-im-spark="9,8,8,6,7,5,4,3" style="--im-chart-color: var(--im-success)"></svg> <strong>−4%</strong></span>
+<span class="inline-flex items-center gap-3 text-sm">Churn <svg class="im-spark" data-im-spark="9,8,8,6,7,5,4,3" style="--im-chart-color: var(--im-viz-2)"></svg> <strong>−4%</strong></span>
 <span class="inline-flex items-center gap-3 text-sm">Open rate <svg class="im-spark" data-im-spark="48,46,45,44,45,43,42,41" style="--im-chart-color: var(--im-viz-2)"></svg> <strong>41%</strong></span>
 {{/example}}
 {{#example}}
@@ -111,7 +111,7 @@ source: src/viz/line.css · src/js/im-charts.js
 	<div class="im-stat-tile">
 		<p class="im-caption" data-index="0{{@index}}">{{label}}</p>
 		<div class="im-stat"><span class="im-stat-figure" data-im-count="{{count}}">{{figure}}</span><span class="im-stat-delta" data-trend="{{trend}}">{{#match trend "down"}}{{> "icons/trending-down"}}{{else}}{{> "icons/trending-up"}}{{/match}} {{delta}}</span></div>
-		<div class="im-chart-line" data-im-bare data-im-area data-im-rows="2" style="--im-chart-height: 4rem" data-im-labels="w1,w2,w3,w4,w5,w6,w7,w8,w9,w10"><data value="{{spark}}" data-name="{{label}}"></data></div>
+		<div class="im-chart-line" data-im-bare data-im-area data-im-rows="2" style="--im-chart-height: 4rem" data-im-labels="w1,w2,w3,w4,w5,w6,w7,w8,w9,w10" data-im-reveal="none"><data value="{{spark}}" data-name="{{label}}"></data></div>
 	</div>
 	{{/match}}{{/each}}
 </div>

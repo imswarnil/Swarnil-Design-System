@@ -1,6 +1,6 @@
 ---
-title: Entrances
-description: Twenty-five named ways for a thing to arrive — nine for text, eight for pictures, eight for blocks and whole sections. They are a menu to choose from, not a set to use all at once - pick one per kind, in one place, and the whole site follows.
+title: Entrances & exits
+description: Twenty-five named ways for a thing to arrive — nine for text, eight for pictures, eight for blocks and whole sections — and fourteen for it to leave. They are a menu to choose from, not a set to use all at once - pick one per kind, in one place, and the whole site follows.
 eyebrow: Motion
 source: src/motion/entrance.css · src/js/im-motion.js
 ---
@@ -82,6 +82,37 @@ source: src/motion/entrance.css · src/js/im-motion.js
 	<div class="im-card" data-im-in="rise"><span class="im-card-title">Four</span></div>
 </div>
 {{/example}}
+
+<h2>Exits</h2>
+<p>The way out, for a thing that is leaving: a toast dismissed, a card removed, a notice that has said its piece. Add the class, then remove or hide the element when the animation ends. An exit holds its last frame, so nothing flashes back before it goes.</p>
+{{{{code "hbs"}}}}
+<div class="im-toast im-out im-out-sink">…</div>
+{{{{/code}}}}
+{{{{code "js"}}}}
+el.classList.add('im-out', 'im-out-sink');
+const done = () => el.remove();
+el.addEventListener('animationend', done, { once: true });
+setTimeout(done, 600);   // an unpainted tab never ends an animation
+{{{{/code}}}}
+{{#example code=false}}
+<div class="tiles tiles-3" data-replay>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="01">fade</p><p class="text-h3 font-semibold tracking-tight text-ink im-out im-out-fade" style="--im-out-delay: 600ms">On its way out.</p><span class="text-sm">Gone, nothing more.</span></div>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="02">sink</p><p class="text-h3 font-semibold tracking-tight text-ink im-out im-out-sink" style="--im-out-delay: 600ms">On its way out.</p><span class="text-sm">Drops out of the line.</span></div>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="03">lift</p><p class="text-h3 font-semibold tracking-tight text-ink im-out im-out-lift" style="--im-out-delay: 600ms">On its way out.</p><span class="text-sm">Rises away.</span></div>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="04">slide-left</p><p class="text-h3 font-semibold tracking-tight text-ink im-out im-out-slide-left" style="--im-out-delay: 600ms">On its way out.</p><span class="text-sm">Leaves to the left.</span></div>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="05">slide-right</p><p class="text-h3 font-semibold tracking-tight text-ink im-out im-out-slide-right" style="--im-out-delay: 600ms">On its way out.</p><span class="text-sm">Leaves to the right.</span></div>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="06">scale</p><p class="text-h3 font-semibold tracking-tight text-ink im-out im-out-scale" style="--im-out-delay: 600ms">On its way out.</p><span class="text-sm">Grows a little as it fades — dismissed.</span></div>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="07">shrink</p><p class="text-h3 font-semibold tracking-tight text-ink im-out im-out-shrink" style="--im-out-delay: 600ms">On its way out.</p><span class="text-sm">Shrinks to nothing.</span></div>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="08">blur</p><p class="text-h3 font-semibold tracking-tight text-ink im-out im-out-blur" style="--im-out-delay: 600ms">On its way out.</p><span class="text-sm">Goes out of focus.</span></div>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="09">wipe-left</p><p class="text-h3 font-semibold tracking-tight text-ink im-out im-out-wipe-left" style="--im-out-delay: 600ms">On its way out.</p><span class="text-sm">Cut away by a straight edge.</span></div>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="10">wipe-down</p><p class="text-h3 font-semibold tracking-tight text-ink im-out im-out-wipe-down" style="--im-out-delay: 600ms">On its way out.</p><span class="text-sm">Pulled down, like a blind.</span></div>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="11">iris</p><p class="text-h3 font-semibold tracking-tight text-ink im-out im-out-iris" style="--im-out-delay: 600ms">On its way out.</p><span class="text-sm">Closes to the centre.</span></div>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="12">flip</p><p class="text-h3 font-semibold tracking-tight text-ink im-out im-out-flip" style="--im-out-delay: 600ms">On its way out.</p><span class="text-sm">Tips back off the page.</span></div>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="13">fold</p><p class="text-h3 font-semibold tracking-tight text-ink im-out im-out-fold" style="--im-out-delay: 600ms">On its way out.</p><span class="text-sm">Folds up into its top edge.</span></div>
+	<div class="tile" data-replay-tile><p class="im-caption" data-index="14">pixel</p><p class="text-h3 font-semibold tracking-tight text-ink im-out im-out-pixel" style="--im-out-delay: 600ms">On its way out.</p><span class="text-sm">Turns to Geist Pixel, then goes.</span></div>
+</div>
+{{/example}}
+<p>Knobs: <code>--im-out-duration</code> (about 450ms — a way out is quicker than a way in), <code>--im-out-ease</code> (<code>--im-ease-in</code>), <code>--im-out-delay</code>, and <code>--im-i</code> for a stagger. Pair an exit with the entrance it mirrors: <code>rise</code> / <code>sink</code>, <code>wipe-up</code> / <code>wipe-down</code>, <code>unfold</code> / <code>fold</code>, <code>iris</code> / <code>iris</code>.</p>
 
 <h2>Knobs</h2>
 <div class="im-table-scroll">

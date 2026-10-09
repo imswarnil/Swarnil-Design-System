@@ -14,8 +14,18 @@
    WAFFLE — ten by ten cells, filled to --v:
      <div class="im-chart-waffle" style="--v: .64"></div> */
 
+/* The sweep: 0 → 1 as the chart is revealed, multiplying every share, so the
+   slices draw round from the top in order. A registered property, or there
+   is nothing to interpolate. */
+@property --im-viz-sweep {
+	syntax: "<number>";
+	inherits: false;
+	initial-value: 1;
+}
+
 .im-chart-pie {
 	--im-pie-size: 9rem;
+	--im-viz-sweep: 1;
 	--im-pie-hole: 0%;
 	--c1: var(--im-viz-1);
 	--c2: var(--im-viz-2);
@@ -38,15 +48,20 @@
 	background:
 		radial-gradient(closest-side, var(--im-pie-ground, var(--im-canvas)) var(--im-pie-hole), transparent calc(var(--im-pie-hole) + 1px)),
 		conic-gradient(
-			var(--c1) 0 calc(var(--s1) * 360deg),
-			var(--c2) 0 calc((var(--s1) + var(--s2)) * 360deg),
-			var(--c3) 0 calc((var(--s1) + var(--s2) + var(--s3)) * 360deg),
-			var(--c4) 0 calc((var(--s1) + var(--s2) + var(--s3) + var(--s4)) * 360deg),
-			var(--c5) 0 calc((var(--s1) + var(--s2) + var(--s3) + var(--s4) + var(--s5)) * 360deg),
+			var(--c1) 0 calc(var(--s1) * var(--im-viz-sweep) * 360deg),
+			var(--c2) 0 calc((var(--s1) + var(--s2)) * var(--im-viz-sweep) * 360deg),
+			var(--c3) 0 calc((var(--s1) + var(--s2) + var(--s3)) * var(--im-viz-sweep) * 360deg),
+			var(--c4) 0 calc((var(--s1) + var(--s2) + var(--s3) + var(--s4)) * var(--im-viz-sweep) * 360deg),
+			var(--c5) 0 calc((var(--s1) + var(--s2) + var(--s3) + var(--s4) + var(--s5)) * var(--im-viz-sweep) * 360deg),
 			var(--im-pie-rest) 0
 		);
 	color: var(--im-ink);
 	text-align: center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	[data-im-js] :is(.im-chart-pie, .im-chart-gauge, .im-chart-waffle)[data-im-reveal]:not([data-im-revealed]) { --im-viz-sweep: 0; }
+	:is(.im-chart-pie, .im-chart-gauge, .im-chart-waffle)[data-im-reveal] { transition: --im-viz-sweep var(--im-duration-long) var(--im-ease-out); }
 }
 
 .im-chart-pie-donut { --im-pie-hole: 62%; }
@@ -77,6 +92,7 @@
 .im-chart-gauge {
 	--im-gauge-size: 10rem;
 	--im-gauge-width: 0.875rem;
+	--im-viz-sweep: 1;
 
 	position: relative;
 	display: grid;
@@ -101,7 +117,7 @@
 	border-radius: 50%;
 	background:
 		radial-gradient(closest-side, var(--im-canvas) calc(100% - var(--im-gauge-width)), transparent calc(100% - var(--im-gauge-width) + 1px)),
-		conic-gradient(from -90deg, var(--c, var(--im-chart-color, var(--im-viz-1))) 0 calc(var(--v, 0) * 180deg), var(--im-viz-track) 0 180deg, transparent 0);
+		conic-gradient(from -90deg, var(--c, var(--im-chart-color, var(--im-viz-1))) 0 calc(var(--v, 0) * var(--im-viz-sweep) * 180deg), var(--im-viz-track) 0 180deg, transparent 0);
 }
 
 /* The needle: a pointer near the arc, turned by the value. It is rotated
@@ -117,8 +133,7 @@
 	border-radius: 2px;
 	background-color: var(--im-ink);
 	transform-origin: 0 50%;
-	transform: rotate(calc(-180deg + var(--v, 0) * 180deg)) translateX(calc(var(--im-gauge-size) * 0.28));
-	transition: transform var(--im-duration-long) var(--im-ease-out);
+	transform: rotate(calc(-180deg + var(--v, 0) * var(--im-viz-sweep) * 180deg)) translateX(calc(var(--im-gauge-size) * 0.28));
 }
 
 .im-chart-gauge > b {
@@ -142,8 +157,10 @@
    current browser; elsewhere the partial row is simply not drawn. */
 .im-chart-waffle {
 	--im-waffle-size: 8rem;
-	--im-waffle-rows: round(down, var(--v, 0) * 10, 1);
-	--im-waffle-part: calc(var(--v, 0) * 10 - var(--im-waffle-rows));
+	--im-viz-sweep: 1;
+	--im-waffle-v: calc(var(--v, 0) * var(--im-viz-sweep));
+	--im-waffle-rows: round(down, var(--im-waffle-v) * 10, 1);
+	--im-waffle-part: calc(var(--im-waffle-v) * 10 - var(--im-waffle-rows));
 
 	width: var(--im-waffle-size);
 	height: var(--im-waffle-size);

@@ -101,6 +101,18 @@
 .im-float { animation: im-float 5s var(--im-ease-in-out) infinite alternate; }
 .im-wiggle { animation: im-wiggle 1.2s var(--im-ease-in-out) infinite; }
 .im-blink { animation: im-blink 1.1s steps(1) infinite; }
+.im-breathe { animation: im-breathe 3.2s var(--im-ease-in-out) infinite; }
+.im-sway { animation: im-sway 4s var(--im-ease-in-out) infinite alternate; transform-origin: 50% 100%; }
+.im-bob { animation: im-bob 1.4s var(--im-ease-in-out) infinite; }
+.im-shimmer { animation: im-shimmer 2.6s var(--im-ease-in-out) infinite; }
+
+/* A picture still moving after everything else has settled: a slow push in
+   and drift. On the <img>; the box around it clips. --im-focus is the point
+   it pushes towards. */
+.im-kenburns {
+	animation: im-kenburns var(--im-kenburns-speed, 18s) var(--im-ease-in-out) infinite alternate;
+	transform-origin: var(--im-focus, 60% 40%);
+}
 
 /* A ring that radiates from a dot: "live", "new", "recording". */
 .im-ping {
@@ -147,5 +159,10 @@
 @keyframes im-float { to { translate: 0 -0.625rem; } }
 @keyframes im-wiggle { 0%, 100% { rotate: 0deg; } 25% { rotate: -7deg; } 75% { rotate: 7deg; } }
 @keyframes im-blink { 50% { opacity: 0; } }
+@keyframes im-breathe { 50% { scale: 1.06; } }
+@keyframes im-sway { from { rotate: -4deg; } to { rotate: 4deg; } }
+@keyframes im-bob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -0.25em; } }
+@keyframes im-shimmer { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.25); } }
+@keyframes im-kenburns { from { scale: 1; translate: 0 0; } to { scale: 1.12; translate: -2% 1.5%; } }
 @keyframes im-ping { to { scale: 3; opacity: 0; } }
 @keyframes im-dots { 0%, 60%, 100% { translate: 0 0; opacity: 0.35; } 30% { translate: 0 -0.25rem; opacity: 1; } }

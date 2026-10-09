@@ -14,9 +14,7 @@
 		"serve": "node site/dev.mjs --no-watch",
 		"vendor": "node scripts/vendor.mjs",
 		"mcp": "node mcp/server.mjs",
-		"check": "node scripts/check.mjs",
-		"frames": "node scripts/frames.mjs",
-		"pixelmator": "node scripts/pixelmator.mjs"
+		"check": "node scripts/check.mjs"
 	},
 	"devDependencies": {
 		"@fontsource-variable/caveat": "^5.3.0",
@@ -24,7 +22,6 @@
 		"geist": "^1.7.2",
 		"handlebars": "^4.7.9",
 		"lucide-static": "^1.47.0",
-		"puppeteer-core": "^25.13.0",
 		"simple-icons": "^16.32.0",
 		"tailwindcss": "^4.3.3"
 	},

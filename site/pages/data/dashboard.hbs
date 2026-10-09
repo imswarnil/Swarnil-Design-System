@@ -73,7 +73,7 @@ source: src/viz/dashboard.css
 					</div></div>
 				</div>
 				<figure class="im-chart" style="--im-chart-height: 14rem">
-					<div class="im-chart-line" data-im-labels="{{#each demo.viz.months}}{{this}}{{#unless @last}},{{/unless}}{{/each}}" data-im-area data-im-unit="k">
+					<div class="im-chart-line" data-im-labels="{{#each demo.viz.months}}{{this}}{{#unless @last}},{{/unless}}{{/each}}" data-im-area data-im-unit="k" data-im-reveal="none">
 						<data value="{{#each demo.viz.readers}}{{this}}{{#unless @last}},{{/unless}}{{/each}}" data-name="Readers"></data>
 						<data value="{{#each demo.viz.members}}{{this}}{{#unless @last}},{{/unless}}{{/each}}" data-name="Members"></data>
 					</div>
@@ -84,12 +84,12 @@ source: src/viz/dashboard.css
 			<section class="im-dash-panel" data-span="4" aria-labelledby="d-members">
 				<div class="im-dash-panel-head"><h2 id="d-members">Members</h2><small>by tier</small></div>
 				<div class="im-cluster" style="--im-cluster-gap: 1.25rem">
-					<div class="im-chart-pie im-chart-pie-donut im-chart-pie-sm" style="--s1: .46; --s2: .32; --s3: .14" role="img" aria-label="Members: 46% free, 32% monthly, 14% yearly, 8% comped"><span class="im-chart-pie-center"><b style="font-size: var(--im-text-base)">1,204</b></span></div>
+					<div class="im-chart-pie im-chart-pie-donut im-chart-pie-sm" style="--s1: .46; --s2: .32; --s3: .14" role="img" aria-label="Members: 46% free, 32% monthly, 14% yearly, 8% comped" data-im-reveal="none"><span class="im-chart-pie-center"><b style="font-size: var(--im-text-base)">1,204</b></span></div>
 					<ul class="im-legend"><li data-series="1">Free<b>46%</b></li><li data-series="2">Monthly<b>32%</b></li><li data-series="3">Yearly<b>14%</b></li><li style="--c: var(--im-viz-track)">Comped<b>8%</b></li></ul>
 				</div>
 				<div class="im-stack im-stack-xs">
-					<div class="im-chart-bullet" style="--v: .72; --im-target: .85" role="img" aria-label="Revenue 3,200 of 4,500"><span>Revenue</span><i></i><b>$3.2k</b></div>
-					<div class="im-chart-bullet" style="--v: .91; --im-target: .8; --c: var(--im-viz-2)" role="img" aria-label="Members 1,204 of 1,050"><span>Members</span><i></i><b>1,204</b></div>
+					<div class="im-chart-bullet" style="--v: .72; --im-target: .85" role="img" aria-label="Revenue 3,200 of 4,500" data-im-reveal="none"><span>Revenue</span><i></i><b>$3.2k</b></div>
+					<div class="im-chart-bullet" style="--v: .91; --im-target: .8; --c: var(--im-viz-2)" role="img" aria-label="Members 1,204 of 1,050" data-im-reveal="none"><span>Members</span><i></i><b>1,204</b></div>
 				</div>
 				<p class="im-dash-panel-foot"><span>Goal: 1,500 by December.</span><a href="/data/parts/">Tiers</a></p>
 			</section>
@@ -106,7 +106,7 @@ source: src/viz/dashboard.css
 					<div class="im-chart-plot" style="--im-chart-rows: 4">
 						<div class="im-chart-y" aria-hidden="true"><span>100%</span><span>75%</span><span>50%</span><span>25%</span><span>0</span></div>
 						<div class="im-chart-area">
-							<div class="im-chart-cols im-chart-cols-stacked" role="img" aria-label="Share of readers by source, Q1 to Q4: search 50 to 62 percent, direct 30 to 24, social 20 to 14">
+							<div class="im-chart-cols im-chart-cols-stacked" role="img" aria-label="Share of readers by source, Q1 to Q4: search 50 to 62 percent, direct 30 to 24, social 20 to 14" data-im-reveal="none">
 								<div class="im-chart-col"><i data-series="1" style="--v: .5"></i><i data-series="2" style="--v: .3"></i><i data-series="3" style="--v: .2"></i></div>
 								<div class="im-chart-col"><i data-series="1" style="--v: .54"></i><i data-series="2" style="--v: .28"></i><i data-series="3" style="--v: .18"></i></div>
 								<div class="im-chart-col"><i data-series="1" style="--v: .58"></i><i data-series="2" style="--v: .26"></i><i data-series="3" style="--v: .16"></i></div>
@@ -122,7 +122,7 @@ source: src/viz/dashboard.css
 				<div class="im-dash-panel-head"><h2 id="d-when">When people read</h2><small>share of the week</small>
 					<p class="im-chart-scale im-dash-tools">less <i style="--v: 0"></i><i style="--v: .5"></i><i style="--v: 1"></i> more</p>
 				</div>
-				<div class="im-chart-heat im-chart-heat-wide" style="--im-heat-cols: 6" role="img" aria-label="Visits by day and hour: weekday evenings are busiest">
+				<div class="im-chart-heat im-chart-heat-wide" style="--im-heat-cols: 6" role="img" aria-label="Visits by day and hour: weekday evenings are busiest" data-im-reveal="none">
 					<span class="im-chart-heat-label"></span>{{#each demo.viz.hours}}<span class="im-chart-heat-head">{{this}}</span>{{/each}}
 					{{#each demo.viz.heat}}<span class="im-chart-heat-label">{{lookup ../demo.viz.days @index}}</span>{{#each this}}<i style="--v: {{this}}" data-label="{{lookup ../../demo.viz.days @../index}} {{lookup ../../demo.viz.hours @index}}:00 · {{this}}"></i>{{/each}}{{/each}}
 				</div>
@@ -131,7 +131,7 @@ source: src/viz/dashboard.css
 			<section class="im-dash-panel" data-span="8" aria-labelledby="d-topics">
 				<div class="im-dash-panel-head"><h2 id="d-topics">Topics</h2><small>this period</small></div>
 				<div class="im-table-scroll">
-				<table class="im-viz-table im-viz-table-sm">
+				<table class="im-viz-table im-viz-table-sm" data-im-reveal="none">
 					<thead><tr><th><button type="button">Topic</button></th><th class="im-viz-num" aria-sort="descending"><button type="button">Posts</button></th><th>Share</th><th class="im-viz-num"><button type="button">Views</button></th><th>Trend</th><th class="im-viz-num"><button type="button">Change</button></th></tr></thead>
 					<tbody>
 						{{#each demo.viz.topics}}<tr><td>{{name}}</td><td class="im-viz-num">{{posts}}</td><td class="im-viz-bar" style="--v: {{v}}"><i></i></td><td class="im-viz-num">{{views}}</td><td class="im-viz-spark"><svg class="im-spark" data-im-spark="{{spark}}" aria-hidden="true"></svg></td><td class="im-viz-num"><span class="im-viz-delta" data-trend="{{trend}}">{{delta}}</span></td></tr>{{/each}}
@@ -142,7 +142,7 @@ source: src/viz/dashboard.css
 
 			<section class="im-dash-panel" data-span="4" aria-labelledby="d-funnel">
 				<div class="im-dash-panel-head"><h2 id="d-funnel">From visit to paid</h2></div>
-				<div class="im-chart-funnel" role="img" aria-label="Visited 12,480, read to the end 6,910, subscribed 1,204, paid 318">
+				<div class="im-chart-funnel" role="img" aria-label="Visited 12,480, read to the end 6,910, subscribed 1,204, paid 318" data-im-reveal="none">
 					{{#each demo.viz.funnel}}<div style="--v: {{v}}"><b>{{name}}</b><span>{{n}}</span></div>{{/each}}
 				</div>
 				<p class="im-dash-panel-foot"><span>2.5% of visitors pay.</span><a href="/data/grids/">Funnel</a></p>

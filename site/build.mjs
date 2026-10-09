@@ -71,18 +71,6 @@ export async function build({ quiet = false } = {}) {
 	const kb = (f) => `${(fs.statSync(path.join(DIST, f)).size / 1024).toFixed(0)}KB`;
 	log(`  css      assets/im.css ${kb('assets/im.css')} · assets/docs.css ${kb('assets/docs.css')}`);
 
-	/* -- motion, for video --
-	   The same durations and curves the site moves with, as JSON, so a cut in
-	   a video and a hover on the page can share one feel. Read from the token
-	   file, so it cannot drift. */
-	const motionCss = fs.readFileSync(path.join(SRC, 'foundation/tokens/motion.css'), 'utf8') + fs.readFileSync(path.join(SRC, 'foundation/tokens/primitives.css'), 'utf8');
-	const motion = { durations: {}, eases: {}, distance: null, stagger: null };
-	for (const m of motionCss.matchAll(/--im-duration-([\w-]+):\s*(\d+)ms/g)) motion.durations[m[1]] = Number(m[2]);
-	for (const m of motionCss.matchAll(/--im-ease-([\w-]+):\s*cubic-bezier\(([^)]+)\)/g)) motion.eases[m[1]] = m[2].split(',').map((n) => Number(n.trim()));
-	motion.distance = (motionCss.match(/--im-distance:\s*([^;]+);/) || [])[1]?.trim() || null;
-	motion.stagger = Number((motionCss.match(/--im-stagger:\s*(\d+)ms/) || [])[1]) || null;
-	fs.writeFileSync(path.join(DIST, 'assets/im-motion.json'), JSON.stringify(motion, null, '\t'));
-
 	/* -- data -- */
 	const fixtures = loadFixtures();
 	const site = { ...siteConfig, url: process.env.SITE_URL || `http://localhost:${PORT}/` }; // CI sets SITE_URL to the public address
@@ -120,10 +108,6 @@ export async function build({ quiet = false } = {}) {
 	}));
 
 	const demo = {
-		// The owner's own pictures, for the channel pages: a photograph and the
-		// commissioned line illustration. A theme replaces both with its own.
-		me: '/assets/brand/portrait.jpg',
-		art: '/assets/brand/cover.png',
 		topics,
 		post: { ...fixtures.posts[0], featured: true },
 		three: fixtures.posts.slice(0, 3),

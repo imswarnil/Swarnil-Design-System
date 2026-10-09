@@ -276,3 +276,58 @@
 	70% { border-color: var(--im-ink); clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
 	100% { border-color: var(--im-line); clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
 }
+
+/* ════ EXITS ════
+   The way out, for a thing that is leaving: a toast dismissed, a card
+   removed, a notice that has said its piece. Add the class, wait for
+   animationend (or a timer — an unpainted tab never ends one), then remove
+   or hide the element. An exit holds its last frame, so nothing flashes
+   back before it goes.
+
+       <div class="im-out im-out-sink">…</div>
+
+   fade · sink · lift · slide-left · slide-right · scale · shrink · blur
+   · wipe-left · wipe-down · iris · flip · fold · pixel
+
+   Knobs: --im-out-duration · --im-out-ease · --im-out-delay · --im-i. */
+
+.im-out {
+	animation-duration: var(--im-out-duration, calc(var(--im-duration-slow) * 0.7));
+	animation-timing-function: var(--im-out-ease, var(--im-ease-in));
+	animation-delay: calc(var(--im-out-delay, 0ms) + var(--im-i, 0) * var(--im-stagger));
+	animation-fill-mode: forwards;
+}
+
+.im-out-fade { animation-name: im-out-fade; }
+.im-out-sink { animation-name: im-out-sink; }
+.im-out-lift { animation-name: im-out-lift; }
+.im-out-slide-left { animation-name: im-out-slide-left; }
+.im-out-slide-right { animation-name: im-out-slide-right; }
+.im-out-scale { animation-name: im-out-scale; }
+.im-out-shrink { animation-name: im-out-shrink; --im-out-ease: var(--im-ease-in-out); }
+.im-out-blur { animation-name: im-out-blur; }
+.im-out-wipe-left { animation-name: im-out-wipe-left; --im-out-ease: var(--im-ease-in-out); }
+.im-out-wipe-down { animation-name: im-out-wipe-down; --im-out-ease: var(--im-ease-in-out); }
+.im-out-iris { animation-name: im-out-iris; --im-out-ease: var(--im-ease-glide); }
+.im-out-flip { animation-name: im-out-flip; transform-origin: 50% 0; }
+.im-out-fold { animation-name: im-out-fold; }
+.im-out-pixel { animation-name: im-out-pixel; --im-out-ease: linear; --im-out-duration: 900ms; }
+
+@keyframes im-out-fade { to { opacity: 0; } }
+@keyframes im-out-sink { to { opacity: 0; translate: 0 var(--im-distance); } }
+@keyframes im-out-lift { to { opacity: 0; translate: 0 calc(var(--im-distance) * -1); } }
+@keyframes im-out-slide-left { to { opacity: 0; translate: -3rem 0; } }
+@keyframes im-out-slide-right { to { opacity: 0; translate: 3rem 0; } }
+@keyframes im-out-scale { to { opacity: 0; scale: 1.08; } }
+@keyframes im-out-shrink { to { opacity: 0; scale: 0.6; } }
+@keyframes im-out-blur { to { opacity: 0; filter: blur(14px); } }
+@keyframes im-out-wipe-left { to { clip-path: inset(0 0 0 101%); } }
+@keyframes im-out-wipe-down { to { clip-path: inset(101% 0 0 0); } }
+@keyframes im-out-iris { to { clip-path: circle(0% at 50% 50%); } }
+@keyframes im-out-flip { to { opacity: 0; transform: perspective(40rem) rotateX(80deg); } }
+@keyframes im-out-fold { to { clip-path: inset(0 0 100% 0); translate: 0 -0.5rem; } }
+@keyframes im-out-pixel {
+	30% { font-family: var(--im-font-pixel); opacity: 1; }
+	75% { font-family: var(--im-font-pixel); opacity: 1; }
+	100% { font-family: var(--im-font-pixel); opacity: 0; }
+}

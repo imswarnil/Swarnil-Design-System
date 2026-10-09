@@ -64,6 +64,18 @@ source: src/effects/text.css · src/js/im-motion.js
 {{/example}}
 <p>A hard, stepped shadow in the accent. Sized in <code>em</code>, so it scales with the type.</p>
 
+<h2>Boxed, tape, rule</h2>
+{{#example}}
+<p class="text-h1 font-semibold tracking-tight"><span class="im-fx-boxed">Set on ink, one strip a line,</span> <span class="im-fx-tape">or taped down,</span> <span class="im-fx-rule">or ruled.</span></p>
+{{/example}}
+<p>On an inline element. The ground clings to each <em>line</em>, not to the block, so a heading that wraps becomes two strips that end where the words end. <code>--im-fx-to</code> changes the colour of the tape and the rule.</p>
+
+<h2>Roll</h2>
+{{#example}}
+<p class="text-h1 font-semibold tracking-tight" data-replay>I <span class="im-fx-roll im-stagger" style="--im-fx-roll-n: 3"><span>write</span><span>film</span><span>ship</span></span> things.</p>
+{{/example}}
+<p>Several words, one at a time, each rolling up through a slot; the last one stays. <code>im-stagger</code> numbers them and <code>--im-fx-roll-n</code> says how many. Under reduced motion only the last word shows.</p>
+
 <h2>Pixel</h2>
 {{#example}}
 <p class="text-display tracking-tight"><span class="im-pixel">Geist Pixel, </span><span class="font-semibold">beside Geist.</span></p>

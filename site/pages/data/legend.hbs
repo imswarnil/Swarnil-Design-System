@@ -34,7 +34,7 @@ source: src/viz/legend.css · src/js/im-charts.js
 	<div class="im-chart-plot" style="--im-chart-rows: 4; --im-chart-height: 10rem">
 		<div class="im-chart-y" aria-hidden="true"><span>8k</span><span>6k</span><span>4k</span><span>2k</span><span>0</span></div>
 		<div class="im-chart-area">
-			<div class="im-chart-cols im-chart-cols-grouped" role="img" aria-label="Readers by source, Q1 to Q4">
+			<div class="im-chart-cols im-chart-cols-grouped" role="img" aria-label="Readers by source, Q1 to Q4" data-im-reveal="none">
 				<div class="im-chart-col"><i data-series="1" style="--v: .5"></i><i data-series="2" style="--v: .3"></i><i data-series="3" style="--v: .2"></i></div>
 				<div class="im-chart-col"><i data-series="1" style="--v: .6"></i><i data-series="2" style="--v: .32"></i><i data-series="3" style="--v: .25"></i></div>
 				<div class="im-chart-col"><i data-series="1" style="--v: .72"></i><i data-series="2" style="--v: .35"></i><i data-series="3" style="--v: .22"></i></div>
@@ -57,7 +57,7 @@ source: src/viz/legend.css · src/js/im-charts.js
 <h2>Readouts</h2>
 <p>A point on a line is a button with its words in <code>data-label</code>; hover or focus it and the readout appears above, ink on the canvas colour — the one dark chip in a light chart. A cell of a heatmap does the same. The same words are in <code>aria-label</code>, so what a pointer sees a screen reader hears. For points too close for tooltips, <code>im-chart-readout</code> is a line under the chart a page can write the hovered value into.</p>
 {{#example}}
-<div class="im-chart-line im-chart-line-dots" data-im-labels="Mon,Tue,Wed,Thu,Fri,Sat,Sun" data-im-unit="k" data-im-rows="2" style="--im-chart-height: 8rem">
+<div class="im-chart-line im-chart-line-dots" data-im-labels="Mon,Tue,Wed,Thu,Fri,Sat,Sun" data-im-unit="k" data-im-rows="2" style="--im-chart-height: 8rem" data-im-reveal="none">
 	<data value="4.2,5.1,4.8,6.3,7.9,3.1,2.4" data-name="Visits"></data>
 </div>
 <p class="im-chart-readout"><span>Hover or tab to a point</span><b>Fri · 7.9k</b></p>

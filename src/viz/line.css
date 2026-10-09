@@ -140,11 +140,13 @@
    stroke Chrome measures the dashes in screen pixels, and a path with
    pathLength 1 comes out as a dotted line.) */
 @media (prefers-reduced-motion: no-preference) {
-	[data-im-js] :is(.im-chart-line, .im-chart-scatter)[data-im-reveal]:not([data-im-revealed]) { opacity: 1; translate: none; }
 	[data-im-js] .im-chart-line[data-im-reveal]:not([data-im-revealed]) .im-chart-svg { clip-path: inset(0 100% 0 0); }
 	.im-chart-line[data-im-reveal] .im-chart-svg { clip-path: inset(0 -2% 0 0); transition: clip-path var(--im-duration-long) var(--im-ease-in-out); }
+	/* The last point lands when the line reaches it. */
+	[data-im-js] .im-chart-line[data-im-reveal]:not([data-im-revealed]) .im-chart-point:last-of-type { scale: 0; }
+	.im-chart-line[data-im-reveal] .im-chart-point:last-of-type { transition: scale var(--im-duration-base) var(--im-ease-out) var(--im-duration-long); }
 	[data-im-js] .im-chart-scatter[data-im-reveal]:not([data-im-revealed]) .im-chart-point { scale: 0; }
-	.im-chart-scatter[data-im-reveal] .im-chart-point { transition: scale var(--im-duration-base) var(--im-ease-spring); transition-delay: calc(var(--n, 0) * 20ms); }
+	.im-chart-scatter[data-im-reveal] .im-chart-point { transition: scale var(--im-duration-base) var(--im-ease-out); transition-delay: calc(var(--n, 0) * 20ms); }
 }
 
 /* A reference line across the plot — a target, an average. */

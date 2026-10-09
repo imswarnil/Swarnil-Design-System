@@ -58,15 +58,13 @@
 .im-stat-delta[data-trend="down"] { color: var(--im-danger); }
 .im-stat-delta[data-trend="flat"] { color: var(--im-muted); }
 
-/* The delta as a small pill, for a tile. */
+/* The delta as a small pill, for a tile: a hairline round the words, never
+   a tint — a dashboard of green and red washes is a traffic light. */
 .im-stat-delta-pill {
-	padding: 0.125rem 0.5rem;
+	padding: 0.1875rem 0.5rem;
 	border-radius: var(--im-radius-full);
-	background-color: var(--im-success-tint);
+	box-shadow: inset 0 0 0 1px var(--im-viz-line);
 }
-
-.im-stat-delta-pill[data-trend="down"] { background-color: var(--im-danger-tint); }
-.im-stat-delta-pill[data-trend="flat"] { background-color: var(--im-surface); }
 
 /* A stat with a chart or a ring beside it. */
 .im-stat-row {

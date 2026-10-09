@@ -9,9 +9,8 @@
    Two are the system's own and nobody else's: DOT — the recording light
    swells from the point that was clicked until it is the whole screen, and
    the next page is inside it; and COLUMNS — the twelve columns the page is
-   drawn on wipe the new page in one after another. The same two are the
-   signature cuts in a video (src/studio/transition.css), so a film and the
-   site change scene the same way.
+   drawn on wipe the new page in one after another. The same two are cuts
+   (below), so a panel and a page change the same way.
 
    In a Ghost theme, make it a custom setting:
        <html data-im-transition="{{@custom.page_transition}}">
@@ -207,4 +206,127 @@
 @keyframes im-vt-columns {
 	from { --im-vt-slat: 0%; }
 	to { --im-vt-slat: 100%; }
+}
+
+/* ════ CUTS ════
+   How one panel hands over to the next IN PLACE — a tab, a slide, a step in
+   a form, a chart swapped for its table. The panel that comes in plays the
+   cut when it is rendered, so showing it (removing [hidden], or adding it to
+   the page) is all it takes; nothing has to run on the one going out.
+
+       <div class="im-cut" data-cut="dot">…</div>
+
+   fade · wipe-left · wipe-up · iris · slide · push · zoom · blur · split
+   · flash · curtain · dot · columns · slats · blinds
+
+   Knobs: --im-cut-for (700ms), --im-cut-delay, --im-cut-color (what dot and
+   curtain are made of: the accent), --im-cut-x / -y (where the dot opens). */
+
+.im-cut {
+	--im-cut-for: 700ms;
+	--im-cut-color: var(--im-accent);
+
+	position: relative;
+	animation-duration: var(--im-cut-for);
+	animation-delay: var(--im-cut-delay, 0ms);
+	animation-timing-function: var(--im-ease-in-out);
+	animation-fill-mode: both;
+}
+
+.im-cut[data-cut="fade"] { animation-name: im-cut-fade; }
+.im-cut[data-cut="wipe-left"] { animation-name: im-cut-wipe-left; }
+.im-cut[data-cut="wipe-up"] { animation-name: im-cut-wipe-up; }
+.im-cut[data-cut="iris"] { animation-name: im-cut-iris; animation-timing-function: var(--im-ease-glide); }
+.im-cut[data-cut="slide"] { animation-name: im-cut-slide; animation-timing-function: var(--im-ease-glide); }
+.im-cut[data-cut="push"] { animation-name: im-cut-push; animation-timing-function: var(--im-ease-glide); }
+.im-cut[data-cut="zoom"] { animation-name: im-cut-zoom; animation-timing-function: var(--im-ease-glide); }
+.im-cut[data-cut="blur"] { animation-name: im-cut-blur; }
+.im-cut[data-cut="split"] { animation-name: im-cut-split; }
+
+@keyframes im-cut-fade { from { opacity: 0; } }
+@keyframes im-cut-wipe-left { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0); } }
+@keyframes im-cut-wipe-up { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0); } }
+@keyframes im-cut-iris { from { clip-path: circle(0 at 50% 50%); } to { clip-path: circle(75% at 50% 50%); } }
+@keyframes im-cut-slide { from { opacity: 0; translate: 3rem 0; } }
+@keyframes im-cut-push { from { opacity: 0; translate: 0 3rem; } }
+@keyframes im-cut-zoom { from { opacity: 0; scale: 1.15; filter: blur(8px); } }
+@keyframes im-cut-blur { from { opacity: 0; filter: blur(24px); } }
+@keyframes im-cut-split { from { clip-path: inset(50% 0); } to { clip-path: inset(0); } }
+
+/* -- dot: the panel opens inside a disc of the accent that swells from the
+   middle and fades as it reaches the edge. -- */
+.im-cut[data-cut="dot"] {
+	animation-name: im-cut-dot;
+	animation-duration: calc(var(--im-cut-for) * 1.3);
+	animation-timing-function: var(--im-ease-glide);
+}
+
+.im-cut[data-cut="dot"]::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 10;
+	border-radius: inherit;
+	background-color: var(--im-cut-color);
+	pointer-events: none;
+	animation: im-cut-dot-disc calc(var(--im-cut-for) * 1.3) var(--im-ease-glide) both;
+	animation-delay: var(--im-cut-delay, 0ms);
+}
+
+@keyframes im-cut-dot {
+	from { clip-path: circle(0 at var(--im-cut-x, 50%) var(--im-cut-y, 50%)); }
+	to { clip-path: circle(100% at var(--im-cut-x, 50%) var(--im-cut-y, 50%)); }
+}
+
+@keyframes im-cut-dot-disc {
+	0%, 45% { opacity: 1; }
+	100% { opacity: 0; }
+}
+
+/* -- columns: twelve slats open left to right; slats wipe each of the
+   twelve downward; blinds are eight, sideways. -- */
+@property --im-cut-slat {
+	syntax: "<percentage>";
+	inherits: false;
+	initial-value: 100%;
+}
+
+.im-cut:is([data-cut="columns"], [data-cut="slats"], [data-cut="blinds"]) {
+	animation-name: im-cut-slats;
+	-webkit-mask-image: linear-gradient(var(--im-cut-dir, to right), #000 var(--im-cut-slat), transparent var(--im-cut-slat));
+	mask-image: linear-gradient(var(--im-cut-dir, to right), #000 var(--im-cut-slat), transparent var(--im-cut-slat));
+	-webkit-mask-size: calc(100% / 12) 100%;
+	mask-size: calc(100% / 12) 100%;
+}
+
+.im-cut[data-cut="columns"] { animation-duration: calc(var(--im-cut-for) * 1.6); }
+.im-cut[data-cut="slats"] { --im-cut-dir: to bottom; }
+.im-cut[data-cut="blinds"] { --im-cut-dir: to bottom; -webkit-mask-size: 100% 12.5%; mask-size: 100% 12.5%; }
+
+@keyframes im-cut-slats { from { --im-cut-slat: 0%; } to { --im-cut-slat: 100%; } }
+
+/* -- flash: a frame of white, then the panel. curtain: a panel of the accent
+   crosses, and the new panel is behind it. -- */
+.im-cut[data-cut="flash"] { animation-name: im-cut-fade; animation-duration: calc(var(--im-cut-for) * 0.4); }
+.im-cut[data-cut="curtain"] { animation-name: im-cut-hold; animation-timing-function: step-end; overflow: hidden; }
+
+.im-cut:is([data-cut="flash"], [data-cut="curtain"])::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 10;
+	pointer-events: none;
+	animation-delay: var(--im-cut-delay, 0ms);
+}
+
+.im-cut[data-cut="flash"]::before { background-color: #fff; animation: im-cut-flash var(--im-cut-for) var(--im-ease-out) both; }
+.im-cut[data-cut="curtain"]::before { background-color: var(--im-cut-color); animation: im-cut-curtain var(--im-cut-for) var(--im-ease-in-out) both; }
+
+@keyframes im-cut-flash { from { opacity: 1; } to { opacity: 0; } }
+@keyframes im-cut-hold { 0% { visibility: hidden; } 50% { visibility: visible; } }
+@keyframes im-cut-curtain {
+	0% { scale: 0 1; transform-origin: 0 50%; }
+	50% { scale: 1 1; transform-origin: 0 50%; }
+	50.01% { scale: 1 1; transform-origin: 100% 50%; }
+	100% { scale: 0 1; transform-origin: 100% 50%; }
 }

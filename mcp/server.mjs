@@ -33,8 +33,8 @@ const walk = (d, ok) => (fs.existsSync(d) ? fs.readdirSync(d, { withFileTypes: t
 
 const firstLine = (css) => (css.match(/^\/\*\s*([^\n]*)/) || [])[1]?.replace(/\s*-+\s*$/, '') || '';
 
-// Components live in three folders: the page's, the channel's (studio) and the charts' (viz).
-const COMPONENT_DIRS = ['src/components', 'src/studio', 'src/viz'];
+// Components live in two folders: the page's and the charts' (viz).
+const COMPONENT_DIRS = ['src/components', 'src/viz'];
 
 function components() {
 	return COMPONENT_DIRS.flatMap((d) => walk(at(d), (p) => p.endsWith('.css') && !p.endsWith('index.css'))).map((f) => ({
