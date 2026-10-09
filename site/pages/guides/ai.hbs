@@ -1,22 +1,51 @@
 ---
 title: With an AI: skill & MCP
-description: Two ways for an assistant to build with the system instead of guessing at it — a skill that teaches the rules and the shapes, and an MCP server that reads the real components at call time. Better together.
+description: Two ways for an assistant to build with the system instead of guessing at it — a skill that teaches the rules, and an MCP server that reads the real components at call time and tells anyone how to make a thumbnail, a video edit or a whole project in the look.
 eyebrow: Guides
 source: skills/im-design-system/SKILL.md · mcp/server.mjs
 ---
 <p>Most design systems hand an AI a screenshot and hope. This one hands it two things it can actually use.</p>
 
 <h2>The skill</h2>
-<p><code>skills/im-design-system/SKILL.md</code> is an <a href="https://skills.sh/">agent skill</a>: the rules (three layers of tokens, the two states, words over a picture, Ghost's reserved helper names, provenance), the page shapes, the helpers that always ship, the motion tokens and the frames for the channel — everything an assistant needs to <em>know</em> before it writes a line. Install it into any agent that reads skills:</p>
+<p><code>skills/im-design-system/SKILL.md</code> is an <a href="https://skills.sh/">agent skill</a>: the rules (three layers of tokens, the two states, words over a picture, Ghost's reserved helper names, provenance), the page shapes, the helpers that always ship, the motion tokens and how to make other things in the look — everything an assistant needs to <em>know</em> before it writes a line. Install it into any agent that reads skills:</p>
 {{{{code "bash"}}}}
 npx skills add https://github.com/imswarnil/Swarnil-Design-System --skill im-design-system
 {{{{/code}}}}
 
 <h2>The MCP server</h2>
-<p><code>mcp/server.mjs</code> lets the assistant <em>look</em>: <code>list_components</code>, <code>get_component</code> (the CSS, the partial, the docs), <code>list_tokens</code>, <code>search</code>, <code>get_page</code> and <code>rules</code>. It reads this repository at call time, so it can never describe a component that has changed.</p>
+<p><code>mcp/server.mjs</code> lets the assistant <em>look</em>. It reads this repository at call time, so it can never describe a component that has changed — and every colour, duration and curve it quotes is read from the tokens, never typed.</p>
 {{{{code "json"}}}}
-{ "mcpServers": { "im-design-system": { "command": "node", "args": ["mcp/server.mjs"] } } }
+{ "mcpServers": { "im-design-system": { "command": "node", "args": ["/path/to/design.imswarnil.com/mcp/server.mjs"] } } }
 {{{{/code}}}}
+
+<h3>Building with it</h3>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Tool</th><th>What it answers</th></tr></thead>
+	<tbody>
+		<tr><td><code>setup</code> <small>stack</small></td><td>How to install and use it in <code>html</code>, <code>react</code>, <code>next</code>, <code>vue</code> (Vue · Svelte · Astro), <code>ghost</code> or <code>tokens</code> — the steps and the files to write. The same text as <a href="/install/">Install &amp; use</a>.</td></tr>
+		<tr><td><code>get_example</code> <small>page, format</small></td><td>A docs page's examples as <code>html</code>, <code>react</code> or <code>ghost</code>, ready to paste — exactly what the tabs under each example show.</td></tr>
+		<tr><td><code>to_react</code> <small>html</small></td><td>Any of the system's HTML as JSX.</td></tr>
+		<tr><td><code>list_components</code> · <code>get_component</code></td><td>Every component; one component's CSS, partial and docs.</td></tr>
+		<tr><td><code>list_tokens</code> · <code>export_tokens</code> <small>format</small></td><td>The <code>--im-*</code> properties; or all of them resolved, as CSS, SCSS, JSON, W3C design tokens or a Tailwind theme.</td></tr>
+		<tr><td><code>search</code> · <code>get_page</code> · <code>rules</code></td><td>Full text over the source; a docs page's source; the rules.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h3>Making something else in the look</h3>
+<p>For anything that is not a web page — a thumbnail, a video, a carousel, a deck — the server hands over the look itself, so a person or an assistant can make it in any tool: Final Cut, Premiere, DaVinci, Keynote, Figma, Canva, an image model.</p>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Tool</th><th>What it answers</th></tr></thead>
+	<tbody>
+		<tr><td><code>brand</code></td><td>The whole look in one answer: the palette in hex for light and dark (hairlines flattened onto the ground), the four faces and what each is for, the logo and its rules, the twelve-column grid, motion in milliseconds <em>and in frames</em> at 30 and 60 fps, the voice, and what it never does.</td></tr>
+		<tr><td><code>brief</code> <small>kind</small></td><td>A recipe: <code>thumbnail</code>, <code>video</code> (titles, lower thirds, cuts, captions, grade, end screen), <code>social</code>, <code>slides</code>, <code>poster</code>, <code>og-image</code>, <code>email</code>, <code>web</code>, <code>app</code>. Canvas sizes, grid, type, colour, timing and a checklist to reject against.</td></tr>
+		<tr><td><code>image_prompt</code> <small>shape, subject</small></td><td>A prompt for an image model that stays in the look — the context block, the shape (thumbnail, short, cover, mark, course, product, portrait, pattern, banner) and what to throw away.</td></tr>
+	</tbody>
+</table>
+</div>
+<p>Ask it plainly: <em>"Use the im-design-system brief for a video and give me the lower-third timings for Premiere at 25 fps"</em>, or <em>"Make a thumbnail for a video about moving to Lisbon, in the Im look"</em>.</p>
 
 <h2>Why both</h2>
 <p>The skill is judgement; the server is facts. With only the skill an assistant knows the rules but invents class names. With only the server it can read every file but does not know that a component never sets its own margin, or that <code>{{"{{date}}"}}</code> is a helper. With both it builds a page the way this system would.</p>

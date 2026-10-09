@@ -17,6 +17,8 @@ import Handlebars from 'handlebars';
 import { loadFixtures } from './lib/fixtures.mjs';
 import { createGhost } from './lib/ghost.mjs';
 import { DIST, PARTIALS, PORT, ROOT, SECTIONS, SITE, SRC } from './lib/paths.mjs';
+import { htmlToJsx } from './lib/jsx.mjs';
+import { STACKS } from '../mcp/guide.mjs';
 import { readTokens } from './lib/tokens.mjs';
 import { NAME, navigation, REPO, site as siteConfig } from './site.config.mjs';
 
@@ -417,12 +419,34 @@ export async function build({ quiet = false } = {}) {
 
 	/* -- docs helpers -- */
 	const examples = [];
+	// An example shows its code three ways, as tabs: the HTML it renders to,
+	// the same markup as React JSX, and the Handlebars it was written in (only
+	// when that differs — when it uses a partial or a helper). The reader's
+	// choice is remembered across the site by site.js.
+	let exampleId = 0;
 	hbs.registerHelper('example', function (options) {
 		const h = options.hash;
 		const cls = ['example-stage', h.center ? 'example-center' : '', h.flush ? 'example-flush' : '', h.surface ? 'example-surface' : '', h.spill ? 'example-spill' : ''].filter(Boolean).join(' ');
-		const code = h.code === false ? '' : `<pre class="example-code"><code class="language-hbs">${escapeHtml(examples[h.__i] ?? '')}</code></pre>`;
+		const rendered = options.fn(this);
+		const source = examples[h.__i] ?? '';
+		let code = '';
+		if (h.code !== false) {
+			const html = dedent(rendered.replace(/<!--\/?x-->/g, ''));
+			const tabs = [
+				['html', 'HTML', 'html', html],
+				['react', 'React', 'jsx', htmlToJsx(html)],
+				...(source.includes('{{') ? [['ghost', 'Ghost', 'hbs', source]] : []),
+			];
+			const id = `ex${++exampleId}`;
+			code =
+				`<div class="im-tabs example-tabs" data-im-tabs><div class="im-tablist" role="tablist" aria-label="Code">` +
+				tabs.map(([key, label], i) => `<button class="im-tab" type="button" role="tab" data-example-lang="${key}" aria-selected="${i === 0}" aria-controls="${id}-${key}">${label}</button>`).join('') +
+				`</div>` +
+				tabs.map(([key, , lang, text], i) => `<div class="im-tabpanel" role="tabpanel" id="${id}-${key}"${i ? ' hidden' : ''}><pre class="example-code"><code class="language-${lang}">${escapeHtml(text)}</code></pre></div>`).join('') +
+				`</div>`;
+		}
 		const title = h.title ? `<figcaption class="example-title">${escapeHtml(h.title)}</figcaption>` : '';
-		return new Handlebars.SafeString(`<!--x--><figure class="example" data-toc-skip>${title}<div class="${cls}"${h.style ? ` style="${escapeHtml(h.style)}"` : ''}>${options.fn(this)}</div>${code}</figure><!--/x-->`);
+		return new Handlebars.SafeString(`<!--x--><figure class="example" data-toc-skip>${title}<div class="${cls}"${h.style ? ` style="${escapeHtml(h.style)}"` : ''}>${rendered}</div>${code}</figure><!--/x-->`);
 	});
 	// {{{{code}}}} … {{{{/code}}}} — a raw block: the inside is never compiled.
 	hbs.registerHelper('code', (...args) => {
@@ -430,6 +454,18 @@ export async function build({ quiet = false } = {}) {
 		const source = dedent(options.fn());
 		const lang = typeof args[0] === 'string' ? args[0] : guessLang(source);
 		return new Handlebars.SafeString(`<pre><code class="language-${lang}">${escapeHtml(source)}</code></pre>`);
+	});
+	// The Install page: one tab per stack, from the same data the MCP server's
+	// `setup` tool returns (mcp/guide.mjs), so the two can never disagree.
+	hbs.registerHelper('stack_tabs', () => {
+		const tab = (key, label, i) => `<button class="im-tab" type="button" role="tab" aria-selected="${i === 0}" aria-controls="stack-${key}">${escapeHtml(label)}</button>`;
+		const panel = (st, i) =>
+			`<div class="im-tabpanel im-stack" role="tabpanel" id="stack-${st.key}"${i ? ' hidden' : ''}>` +
+			`<p class="text-lg text-ink">${escapeHtml(st.summary)}</p>` +
+			`<ol>${st.steps.map((x) => `<li>${escapeHtml(x)}</li>`).join('')}</ol>` +
+			st.files.map((f) => `<p class="im-caption">${escapeHtml(f.name)}</p><pre><code class="language-${f.lang}">${escapeHtml(f.code)}</code></pre>`).join('') +
+			`</div>`;
+		return new Handlebars.SafeString(`<div class="im-tabs" data-im-tabs><div class="im-tablist" role="tablist" aria-label="Your stack">${STACKS.map((st, i) => tab(st.key, st.label, i)).join('')}</div>${STACKS.map(panel).join('')}</div>`);
 	});
 	hbs.registerHelper('icon', (name) => new Handlebars.SafeString(ghost.partials.get(`icons/${name}`)?.source.trim() || ''));
 	hbs.registerHelper('eq', (a, b) => a === b);

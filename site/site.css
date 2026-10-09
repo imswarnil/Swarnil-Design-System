@@ -185,6 +185,21 @@
 		box-shadow: none;
 	}
 
+	/* HTML · React · Ghost, under every example. The system's own tabs. */
+	.example-tabs > .im-tablist {
+		padding-inline: 0.5rem;
+		border-top: 1px solid var(--im-line);
+		background-color: var(--im-canvas); /* a ground, so the drawn columns stay in the gutters */
+	}
+
+	.example-tabs > .im-tabpanel {
+		padding-top: 0;
+	}
+
+	.example-tabs .example-code {
+		border-top: 0;
+	}
+
 	/* ---- token displays ---- */
 	.swatches {
 		@apply im-grid-auto;

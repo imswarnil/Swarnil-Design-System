@@ -22,6 +22,7 @@
  * whatever no rule matches is emitted as plain, escaped text.
  */
 (() => {
+	if (window.imCode) return;
 	const esc = (s) => s.replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[c]);
 
 	/** rules: [role, source] pairs. Order is precedence. A role may be a function (match) => html. */
@@ -166,8 +167,16 @@
 		figure.append(bar, pre);
 	}
 
-	const run = (root = document) => root.querySelectorAll('pre > code').forEach(enhance);
+	// Each block once: highlighting rewrites it, and a rewrite is a mutation.
+	const done = new WeakSet();
+	const run = (root = document) => root.querySelectorAll('pre > code').forEach((code) => done.has(code) || (done.add(code), enhance(code)));
 	window.imCode = { highlight: run, languages: Object.keys(LANGS) };
-	if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => run());
-	else run();
+	const start = () => {
+		run();
+		// Blocks rendered later (React, a client-side route) are highlighted too.
+		let queued = 0;
+		new MutationObserver(() => queued || (queued = setTimeout(() => ((queued = 0), run()), 50))).observe(document.documentElement, { childList: true, subtree: true });
+	};
+	if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+	else start();
 })();

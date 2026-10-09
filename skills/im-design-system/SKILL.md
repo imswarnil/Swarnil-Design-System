@@ -1,17 +1,19 @@
 ---
 name: im-design-system
-description: Build Ghost themes and pages with the Im Design System — its tokens (--im-*), components (im-*), partials, layouts and rules. Use when writing or changing any HTML, Handlebars or CSS for a site built on this system, when asked for a component, a page layout, a token, a pattern or a YouTube / live-stream frame in its look, or when checking that markup follows its rules.
+description: Build with the Im Design System in any stack — HTML, React, Next.js, Vue, Svelte, Astro or Ghost — using its tokens (--im-*), components (im-*), layouts and rules; and make anything else in its look (thumbnails, video edits, social posts, slides, posters, apps). Use when writing or changing markup, JSX, Handlebars or CSS for a project built on this system, when asked for a component, a page layout or a token, when asked for a thumbnail, a video, a deck or other work "in the Im look", or when checking that something follows its rules.
 license: All rights reserved — see LICENSE. The skill is usable by anyone who holds the system.
 metadata:
   author: imswarnil
-  version: "0.7.0"
+  version: "0.8.0"
 ---
 
 # Im Design System
 
-An original Tailwind 4 design system for Ghost themes: tokens, layout, forty-odd
-components, page sections, fourteen content collections, and frames for the
-creator's own channel. Everything it defines is namespaced `im-` / `--im-*`.
+An original design system — tokens, layout, forty-odd components, page sections
+and fourteen content collections — for every kind of project. It is CSS classes,
+data attributes and a few plain scripts, so HTML, React, Next.js, Vue, Svelte,
+Astro and Ghost all use the same package. Everything it defines is namespaced
+`im-` / `--im-*`.
 
 ## Before writing anything
 
@@ -21,6 +23,14 @@ creator's own channel. Everything it defines is namespaced `im-` / `--im-*`.
    Without MCP, read `src/components/<name>.css` (the comment at the top shows
    the markup) and `partials/components/<name>.hbs`.
 2. **Read `rules`** (MCP) or `README.md` once per session.
+3. **In a project, call `setup <stack>`** (html · react · next · vue · ghost ·
+   tokens) and copy markup with `get_example <page> <format>` — the docs show
+   every example as HTML, React and Ghost. Never re-create a component that
+   exists; never write a raw colour.
+4. **For anything that is not a web page** — a thumbnail, a video edit, a
+   carousel, a deck, a poster, an app — call `brand`, then `brief <kind>`, and
+   `image_prompt <shape> <subject>` for art. They read the tokens, so their hex
+   values, fonts and timings are the system's own.
 
 ## The rules that matter
 
@@ -51,7 +61,7 @@ creator's own channel. Everything it defines is namespaced `im-` / `--im-*`.
   ship `im-content.js`.
 - **Provenance:** nothing from a commercial theme, ever; anything from outside
   is openly licensed and listed in `PROVENANCE.md`. Fonts: Geist, Geist Mono,
-  Geist Pixel only.
+  Geist Pixel, and one hand, Caveat (one to three words, one per view).
 
 ## Page shapes
 
@@ -78,21 +88,29 @@ in `im.css` — spacing, display, flex, grid (`md:grid-cols-3`, `col-span-8`),
 sizing, type (`text-h2`), semantic colour (`text-muted`, `bg-surface`), edges.
 Use them to compose; to change a component everywhere, set its knob.
 
-## Motion, on the site and in video
+## Motion
 
 `--im-duration-instant | fast | base | slow | long` (120 · 200 · 360 · 640 ·
-900 ms) and `--im-ease-out | in | in-out | spring | glide`. The same values are
-published as `dist/assets/im-motion.json` for video tools, so a cut on the
-channel and a hover on the site share one feel. Motion is felt, not watched:
-about a rem of travel, and everything stands down under reduced motion.
+900 ms) and `--im-ease-out | in | in-out | spring | glide`. Entrances
+(`data-im-in`), exits (`im-out-*`), in-place cuts (`im-cut` + `data-cut`), page
+transitions (`data-im-transition`) and loops all read them. Motion is felt, not
+watched: about a rem of travel, and everything stands down under reduced motion.
+In a video the same values hold — `brand` gives them in frames at 30 and 60 fps.
 
-## Frames for the channel
+## Using it in a stack
 
-`src/components/studio.css` draws fixed-size frames in the system's look —
-thumbnails (1280×720, and 1080×1920 for a short), channel art (2560×1440 with
-the safe area), profile art, and live-stream scenes (1920×1080). Each is a page
-under `/frames/…`; open it at its size to screenshot, or load it in a browser
-source. `?bg=transparent` lifts the background off an overlay.
+- **HTML:** link `package/css/im.min.css`, put `js/head.js` first in `<head>`,
+  load `js/im.js` (+ `im-motion.js`…) with `defer`.
+- **React / Next.js:** `import 'im-design-system/css'`; `<ImHead />` in `<head>`
+  (Next: `suppressHydrationWarning` on `<html>`), `<ImScripts />` once. Use
+  `Button`, `Badge`, `Card…`, `Wrap`, `Cols`/`Col`, `Logo`, `Icon` where they
+  help, `className="im-…"` everywhere else. Install a PACKED copy — a symlink
+  loads React twice.
+- **Ghost:** vendor `css/`, `js/`, `fonts/` and `ghost/partials`; set
+  `"card_assets": false`.
+
+The scripts set up markup that arrives later (a client route, a growing list)
+on their own, and run once even if loaded twice.
 
 ## Verify
 

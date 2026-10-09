@@ -15,35 +15,49 @@
  * Everything pointer-driven is skipped on touch-only devices; everything that
  * moves is skipped under prefers-reduced-motion — content is then simply shown.
  * The CSS half is src/motion/ and src/effects/.
+ *
+ * Markup rendered later (React, a client-side route) is picked up too: a
+ * MutationObserver re-scans, and each element is prepared once.
  */
 (() => {
+	if (window.__imMotion) return;
+	window.__imMotion = true;
 	const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
 	const hover = matchMedia('(hover: hover)').matches;
 	const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
+	const seen = new Map(); // selector → the elements already set up for it
+	const fresh = (sel) => {
+		if (!seen.has(sel)) seen.set(sel, new WeakSet());
+		const done = seen.get(sel);
+		return [...document.querySelectorAll(sel)].filter((el) => !done.has(el) && done.add(el));
+	};
+	const setups = [];
 
 	/* ── split ─────────────────────────────────────────────────────────── */
 	// The two entrances that move word by word, or letter by letter, split too.
-	for (const el of $$('[data-im-in="words"], [data-im-in="chars"]')) el.dataset.imSplit ||= el.dataset.imIn;
+	setups.push(() => {
+		for (const el of $$('[data-im-in="words"], [data-im-in="chars"]')) el.dataset.imSplit ||= el.dataset.imIn;
 
-	for (const el of $$('[data-im-split]')) {
-		const chars = el.dataset.imSplit === 'chars';
-		const text = el.textContent;
-		el.setAttribute('aria-label', text.trim()); // read once, as a whole
-		const units = chars ? [...text] : text.split(/(\s+)/);
-		let i = 0;
-		el.replaceChildren(
-			...units.map((u) => {
-				if (/^\s*$/.test(u)) return document.createTextNode(u);
-				const span = document.createElement('span');
-				span.className = 'im-split-unit';
-				span.setAttribute('aria-hidden', 'true');
-				span.style.setProperty('--im-i', i++);
-				span.textContent = u;
-				return span;
-			}),
-		);
-		if (!el.hasAttribute('data-im-reveal') && !el.hasAttribute('data-im-in')) el.setAttribute('data-im-reveal', 'fade');
-	}
+		for (const el of fresh('[data-im-split]')) {
+			const chars = el.dataset.imSplit === 'chars';
+			const text = el.textContent;
+			el.setAttribute('aria-label', text.trim()); // read once, as a whole
+			const units = chars ? [...text] : text.split(/(\s+)/);
+			let i = 0;
+			el.replaceChildren(
+				...units.map((u) => {
+					if (/^\s*$/.test(u)) return document.createTextNode(u);
+					const span = document.createElement('span');
+					span.className = 'im-split-unit';
+					span.setAttribute('aria-hidden', 'true');
+					span.style.setProperty('--im-i', i++);
+					span.textContent = u;
+					return span;
+				}),
+			);
+			if (!el.hasAttribute('data-im-reveal') && !el.hasAttribute('data-im-in')) el.setAttribute('data-im-reveal', 'fade');
+		}
+	});
 
 	/* ── scribble: a hand-drawn mark round or under some words ──────────── */
 	/* <span data-im-scribble="circle">important</span>   also: underline · box · strike
@@ -55,22 +69,24 @@
 		box: 'M6 8c60-4 130-2 190 0 2 28 0 56-2 84-62 4-126 2-186-2C4 64 4 34 6 8z',
 		strike: 'M2 10c40 6 80-8 120-2s50 4 76-2',
 	};
-	for (const el of $$('[data-im-scribble]')) {
-		const kind = el.dataset.imScribble in SCRIBBLES ? el.dataset.imScribble : 'circle';
-		const tall = kind === 'circle' || kind === 'box';
-		const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-		svg.setAttribute('viewBox', tall ? '0 0 200 100' : '0 0 200 20');
-		svg.setAttribute('preserveAspectRatio', 'none');
-		svg.setAttribute('aria-hidden', 'true');
-		svg.classList.add('im-scribble-mark', `im-scribble-${kind}`);
-		const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-		path.setAttribute('d', SCRIBBLES[kind]);
-		path.setAttribute('pathLength', '1');
-		svg.append(path);
-		el.classList.add('im-scribble');
-		el.append(svg);
-		if (!el.closest('[data-im-reveal]')) el.setAttribute('data-im-reveal', 'none');
-	}
+	setups.push(() => {
+		for (const el of fresh('[data-im-scribble]')) {
+			const kind = el.dataset.imScribble in SCRIBBLES ? el.dataset.imScribble : 'circle';
+			const tall = kind === 'circle' || kind === 'box';
+			const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+			svg.setAttribute('viewBox', tall ? '0 0 200 100' : '0 0 200 20');
+			svg.setAttribute('preserveAspectRatio', 'none');
+			svg.setAttribute('aria-hidden', 'true');
+			svg.classList.add('im-scribble-mark', `im-scribble-${kind}`);
+			const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+			path.setAttribute('d', SCRIBBLES[kind]);
+			path.setAttribute('pathLength', '1');
+			svg.append(path);
+			el.classList.add('im-scribble');
+			el.append(svg);
+			if (!el.closest('[data-im-reveal]')) el.setAttribute('data-im-reveal', 'none');
+		}
+	});
 
 	/* ── count & scramble (run when revealed) ──────────────────────────── */
 	function count(el) {
@@ -104,15 +120,13 @@
 	}
 
 	/* ── reveal ────────────────────────────────────────────────────────── */
-	for (const group of $$('[data-im-reveal-group]')) $$('[data-im-reveal]', group).forEach((el, i) => el.style.setProperty('--im-i', i));
-
 	const onShow = (el) => {
 		el.setAttribute('data-im-revealed', '');
 		if (el.matches('[data-im-count]')) count(el);
 		$$('[data-im-count]', el).forEach(count);
 		if (el.matches('[data-im-scramble]')) scramble(el);
 	};
-	const targets = new Set($$('[data-im-reveal], [data-im-in], [data-im-count]:not([data-im-reveal] *), [data-im-scramble]:not([data-im-reveal] *)'));
+	const targets = new Set();
 	const show = (el) => {
 		if (!targets.delete(el)) return; // already shown
 		io?.unobserve(el);
@@ -122,7 +136,17 @@
 		'IntersectionObserver' in window
 			? new IntersectionObserver((entries) => entries.forEach((e) => e.isIntersecting && show(e.target)), { rootMargin: '0px 0px -8% 0px', threshold: 0.12 })
 			: null;
-	targets.forEach((t) => io?.observe(t));
+	const shown = new WeakSet();
+	setups.push(() => {
+		for (const group of $$('[data-im-reveal-group]')) $$('[data-im-reveal]', group).forEach((el, i) => el.style.setProperty('--im-i', i));
+		for (const el of $$('[data-im-reveal], [data-im-in], [data-im-count]:not([data-im-reveal] *), [data-im-scramble]:not([data-im-reveal] *)')) {
+			if (shown.has(el)) continue;
+			shown.add(el);
+			targets.add(el);
+			io?.observe(el);
+		}
+		queueSweep();
+	});
 
 	/* A safety net. Content that starts hidden must never DEPEND on one API: an
 	   observer is suspended in a tab that is not being painted, and some
@@ -174,13 +198,20 @@
 	});
 
 	/* ── lens: the pointer's position, for the image lens effect ────────── */
-	if (hover && !calm) {
-		for (const el of $$('.im-fx-lens')) {
+	if (hover && !calm) setups.push(() => {
+		for (const el of fresh('.im-fx-lens')) {
 			el.addEventListener('pointermove', (e) => {
 				const r = el.getBoundingClientRect();
 				el.style.setProperty('--im-lens-x', `${e.clientX - r.left}px`);
 				el.style.setProperty('--im-lens-y', `${e.clientY - r.top}px`);
 			});
 		}
-	}
+	});
+
+	/* ── run, and keep running ─────────────────────────────────────────── */
+	const scan = () => setups.forEach((f) => f());
+	scan();
+	let queued = 0;
+	new MutationObserver(() => queued || (queued = setTimeout(() => ((queued = 0), scan()), 50))).observe(document.documentElement, { childList: true, subtree: true });
+	window.imMotion = { scan };
 })();

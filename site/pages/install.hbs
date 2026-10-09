@@ -1,0 +1,56 @@
+---
+title: Install & use
+description: One package for every kind of project — plain HTML, React, Next.js, Vue, Svelte, Astro, Ghost, or no web page at all. The system is classes, data attributes and a few small scripts, so any stack that can put a class on an element can use it.
+eyebrow: Start here
+source: scripts/package.mjs · react/ · mcp/guide.mjs
+---
+<h2>Why one package works everywhere</h2>
+<p>Everything the system <em>looks</em> like is CSS: <code>im-btn</code>, <code>im-card</code>, <code>im-cols</code>. Everything it <em>does</em> is a plain script that reads data attributes: <code>data-im-tabs</code>, <code>data-im-reveal</code>, <code>data-theme-toggle</code>. Nothing is written for one framework, so nothing has to be written again for the next. Handlebars appears only in the Ghost partials and in these docs, because Ghost renders Handlebars; a React or HTML project never sees it.</p>
+<p>The scripts watch the page for new markup, so content that arrives later — a React render, a client-side route, a list that grows — is set up on its own. Each script runs once even if it is loaded twice.</p>
+
+<h2>Pick your stack</h2>
+{{stack_tabs}}
+
+<h2>Every example, three ways</h2>
+<p>Under each example in these docs are three tabs. <strong>HTML</strong> is exactly what the example renders. <strong>React</strong> is the same markup as JSX — <code>className</code>, style objects, closed tags — and compiles as it is. <strong>Ghost</strong> is the Handlebars it was written in, shown when it uses a partial or a helper. Pick one and every example on every page follows.</p>
+
+<h2>What is in the package</h2>
+<p><code>npm run package</code> writes it to <code>package/</code>; the docs site serves the current one at <code>/package/</code>, so a plain page can link it straight from <code>design.imswarnil.com</code>.</p>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Path</th><th>What it is</th></tr></thead>
+	<tbody>
+		<tr><td><code>css/im.css</code> · <code>im.min.css</code></td><td>The whole system, every layer. Fonts load from <code>../fonts/</code>, so it works from <code>node_modules</code>, a CDN or a subfolder.</td></tr>
+		<tr><td><code>css/tokens.css</code> · <code>tokens.json</code></td><td>Only the <code>--im-*</code> tokens — as CSS, or as data with every colour resolved to hex for light and dark.</td></tr>
+		<tr><td><code>js/*.js</code></td><td><code>im.js</code> (core), <code>im-motion.js</code>, <code>im-charts.js</code>, <code>im-media.js</code>, <code>im-code.js</code>, <code>im-view.js</code>, <code>im-content.js</code>, <code>im-ads.js</code>.</td></tr>
+		<tr><td><code>js/head.js</code></td><td>The before-first-paint snippet: the saved theme, and <code>data-im-js</code> so reveals may start hidden.</td></tr>
+		<tr><td><code>client</code></td><td><code>start(features)</code> — loads the scripts in a browser, does nothing on a server.</td></tr>
+		<tr><td><code>react</code> · <code>react/icon</code></td><td>The React layer, below, and <code>&lt;Icon&gt;</code>.</td></tr>
+		<tr><td><code>icons/*.svg</code></td><td>Every icon the system draws, as a file.</td></tr>
+		<tr><td><code>ghost/</code></td><td>The Handlebars partials and sections, for a Ghost theme.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>The React layer</h2>
+<p>Most of the system needs no wrapper in React — <code>&lt;div className="im-card"&gt;</code> is a card. The layer adds what a wrapper is genuinely for: the head snippet, starting the scripts, and the few primitives whose variants are worth typing. Written with <code>createElement</code>, so it needs no build step, ships its own types, and is server-safe: only <code>&lt;ImScripts&gt;</code> touches the browser.</p>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Export</th><th>Props</th></tr></thead>
+	<tbody>
+		<tr><td><code>&lt;ImHead /&gt;</code></td><td>In <code>&lt;head&gt;</code>. Put <code>suppressHydrationWarning</code> on <code>&lt;html&gt;</code>.</td></tr>
+		<tr><td><code>&lt;ImScripts /&gt;</code></td><td><code>features</code>: core · motion · charts · media · code · view · content · ads</td></tr>
+		<tr><td><code>&lt;Button&gt;</code></td><td><code>variant</code> primary · outline · ghost · ink · danger · brand · brand-soft — <code>size</code> sm · lg — <code>block</code> — <code>icon</code> — <code>href</code> makes it a link</td></tr>
+		<tr><td><code>&lt;Badge&gt;</code></td><td><code>tone</code> accent · info · success · warning · danger · outline — <code>pill</code></td></tr>
+		<tr><td><code>&lt;Card&gt;</code> + <code>CardMedia</code> · <code>CardBody</code> · <code>CardEyebrow</code> · <code>CardTitle</code> · <code>CardText</code> · <code>CardMeta</code> · <code>CardFooter</code></td><td><code>size</code> sm · lg — <code>outline</code> · <code>plain</code> · <code>horizontal</code></td></tr>
+		<tr><td><code>&lt;Wrap&gt;</code> · <code>&lt;Cols&gt;</code> · <code>&lt;Col&gt;</code></td><td><code>wide</code> — <code>span</code> 1–12, <code>start</code></td></tr>
+		<tr><td><code>&lt;Logo&gt;</code></td><td><code>text</code> · <code>mark</code> · <code>size</code> xs–3xl · <code>live</code> · <code>anim</code> type-in · drop · reveal · morph · states</td></tr>
+		<tr><td><code>&lt;ThemeToggle&gt;</code> · <code>cx()</code></td><td>Light ⇄ dark · joins class names</td></tr>
+		<tr><td><code>&lt;Icon&gt;</code> <small>(react/icon)</small></td><td><code>name</code> — any of the icons on <a href="/components/icons/">Icons</a> — <code>label</code></td></tr>
+	</tbody>
+</table>
+</div>
+<p>Every component passes <code>as</code>, <code>className</code> and any other prop through, so <code>&lt;Card as="a" href="/post"&gt;</code> is a linked card.</p>
+
+<h2>Not a web page</h2>
+<p>A thumbnail, a video edit, a deck, a poster, a native app: take the values, not the CSS. <code>tokens.json</code> has every colour resolved to hex, and the <a href="/guides/ai/">MCP server</a> answers <code>brand</code> (the whole look in one answer), <code>brief</code> (a recipe for a thumbnail, a video, a carousel, slides, a poster…) and <code>image_prompt</code> (art that stays in the look).</p>

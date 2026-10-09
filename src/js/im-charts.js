@@ -24,8 +24,20 @@
  * The points are HTML buttons placed by percentage, so they do not stretch,
  * a keyboard reaches them, and their label is the readout. Bars, rankings,
  * donuts, heatmaps and tables are pure CSS (src/viz/).
+ *
+ * Markup rendered later (React, a client-side route) is picked up too: a
+ * MutationObserver re-scans, and each element is set up once.
  */
 (() => {
+	if (window.__imCharts) return;
+	window.__imCharts = true;
+	const seen = new Map(); // selector → the elements already set up for it
+	const setups = [];
+	const fresh = (sel) => {
+		if (!seen.has(sel)) seen.set(sel, new WeakSet());
+		const done = seen.get(sel);
+		return [...document.querySelectorAll(sel)].filter((el) => !done.has(el) && done.add(el));
+	};
 	const NS = 'http://www.w3.org/2000/svg';
 	const el = (name, attrs = {}, ns) => {
 		const n = ns ? document.createElementNS(NS, name) : document.createElement(name);
@@ -36,26 +48,28 @@
 	const fmt = new Intl.NumberFormat();
 
 	/* ── sparkline ───────────────────────────────────────────────────────── */
-	for (const svg of document.querySelectorAll('svg[data-im-spark]')) {
-		const values = nums(svg.dataset.imSpark);
-		if (values.length < 2) continue;
-		const W = 100, H = 40, pad = 3;
-		const min = Math.min(...values), max = Math.max(...values);
-		const x = (i) => (i / (values.length - 1)) * W;
-		const y = (v) => H - pad - ((v - min) / (max - min || 1)) * (H - pad * 2);
-		const pts = values.map((v, i) => `${x(i).toFixed(2)},${y(v).toFixed(2)}`);
-		svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
-		svg.setAttribute('preserveAspectRatio', 'none');
-		svg.setAttribute('role', 'img');
-		if (!svg.hasAttribute('aria-label')) svg.setAttribute('aria-label', `Trend: ${values[0]} to ${values.at(-1)}`);
-		svg.replaceChildren();
-		if (svg.hasAttribute('data-im-area')) svg.append(el('polygon', { class: 'im-spark-area', points: `0,${H} ${pts.join(' ')} ${W},${H}` }, 1));
-		svg.append(el('polyline', { class: 'im-spark-line', points: pts.join(' ') }, 1));
-		// A circle would stretch with preserveAspectRatio="none"; a zero-length
-		// round-capped line with a non-scaling stroke stays a true dot.
-		const [lx, ly] = pts.at(-1).split(',');
-		svg.append(el('line', { class: 'im-spark-line', x1: lx, y1: ly, x2: lx, y2: ly, 'stroke-width': 5 }, 1));
-	}
+	setups.push(() => {
+		for (const svg of fresh('svg[data-im-spark]')) {
+			const values = nums(svg.dataset.imSpark);
+			if (values.length < 2) continue;
+			const W = 100, H = 40, pad = 3;
+			const min = Math.min(...values), max = Math.max(...values);
+			const x = (i) => (i / (values.length - 1)) * W;
+			const y = (v) => H - pad - ((v - min) / (max - min || 1)) * (H - pad * 2);
+			const pts = values.map((v, i) => `${x(i).toFixed(2)},${y(v).toFixed(2)}`);
+			svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+			svg.setAttribute('preserveAspectRatio', 'none');
+			svg.setAttribute('role', 'img');
+			if (!svg.hasAttribute('aria-label')) svg.setAttribute('aria-label', `Trend: ${values[0]} to ${values.at(-1)}`);
+			svg.replaceChildren();
+			if (svg.hasAttribute('data-im-area')) svg.append(el('polygon', { class: 'im-spark-area', points: `0,${H} ${pts.join(' ')} ${W},${H}` }, 1));
+			svg.append(el('polyline', { class: 'im-spark-line', points: pts.join(' ') }, 1));
+			// A circle would stretch with preserveAspectRatio="none"; a zero-length
+			// round-capped line with a non-scaling stroke stays a true dot.
+			const [lx, ly] = pts.at(-1).split(',');
+			svg.append(el('line', { class: 'im-spark-line', x1: lx, y1: ly, x2: lx, y2: ly, 'stroke-width': 5 }, 1));
+		}
+	});
 
 	/* ── the plot: y ticks, the area, x labels ──────────────────────────── */
 	// Nice round ticks: the top of the axis is the smallest 1-2-5 step above the max.
@@ -86,103 +100,109 @@
 	}
 
 	/* ── line / area / step ─────────────────────────────────────────────── */
-	for (const host of document.querySelectorAll('.im-chart-line')) {
-		let labels = (host.dataset.imLabels || '').split(',').map((s) => s.trim()).filter(Boolean);
-		let series = [...host.querySelectorAll('data')].map((d, i) => ({ name: d.dataset.name || `Series ${i + 1}`, values: nums(d.value) }));
-		if (!series.length && host.dataset.imLine) {
-			const pairs = host.dataset.imLine.split(',').map((p) => p.split(':').map((s) => s.trim()));
-			labels = pairs.map((p) => p[0]);
-			series = [{ name: host.dataset.imName || 'Value', values: pairs.map((p) => Number(p[1])) }];
-		}
-		series = series.filter((s) => s.values.length > 1);
-		if (!series.length) continue;
-		const unit = host.dataset.imUnit || '';
-		const { rows, y, area, x } = plot(host);
-		const n = Math.max(...series.map((s) => s.values.length));
-		const max = Number(host.dataset.imMax) || niceMax(Math.max(...series.flatMap((s) => s.values)), rows);
-		const min = Number(host.dataset.imMin) || 0;
-		const step = host.hasAttribute('data-im-step');
-		const W = 100, H = 100;
-		const px = (i) => (i / (n - 1)) * W;
-		const py = (v) => H - ((v - min) / (max - min || 1)) * H;
-
-		if (y) {
-			y.replaceChildren(...Array.from({ length: rows + 1 }, (_, i) => Object.assign(el('span'), { textContent: short(max - ((max - min) / rows) * i) + unit })));
-		}
-		if (x) {
-			x.replaceChildren(...labels.map((l) => Object.assign(el('span'), { textContent: l })));
-		}
-		for (const old of area.querySelectorAll('.im-chart-svg, .im-chart-point')) old.remove();
-		const svg = el('svg', { class: 'im-chart-svg', viewBox: `0 0 ${W} ${H}`, preserveAspectRatio: 'none', 'aria-hidden': 'true' }, 1);
-		area.prepend(svg);
-		const said = [];
-		series.forEach((s, si) => {
-			const k = si + 1;
-			let d = '';
-			s.values.forEach((v, i) => {
-				const X = px(i).toFixed(2), Y = py(v).toFixed(2);
-				if (i === 0) d += `M${X} ${Y}`;
-				else if (step) d += `H${X}V${Y}`;
-				else d += `L${X} ${Y}`;
-			});
-			if (host.hasAttribute('data-im-area')) {
-				svg.append(el('path', { class: 'im-chart-fill', 'data-series': k, d: `${d}V${H}H0Z` }, 1));
+	setups.push(() => {
+		for (const host of fresh('.im-chart-line')) {
+			let labels = (host.dataset.imLabels || '').split(',').map((s) => s.trim()).filter(Boolean);
+			let series = [...host.querySelectorAll('data')].map((d, i) => ({ name: d.dataset.name || `Series ${i + 1}`, values: nums(d.value) }));
+			if (!series.length && host.dataset.imLine) {
+				const pairs = host.dataset.imLine.split(',').map((p) => p.split(':').map((s) => s.trim()));
+				labels = pairs.map((p) => p[0]);
+				series = [{ name: host.dataset.imName || 'Value', values: pairs.map((p) => Number(p[1])) }];
 			}
-			svg.append(el('path', { class: 'im-chart-path', 'data-series': k, d }, 1));
-			s.values.forEach((v, i) => {
-				const b = el('button', { type: 'button', class: 'im-chart-point', 'data-series': k, 'data-label': `${labels[i] ? labels[i] + ' · ' : ''}${s.name}: ${fmt.format(v)}${unit}`, 'aria-label': `${s.name}, ${labels[i] || i + 1}: ${fmt.format(v)}${unit}` });
-				b.style.setProperty('--x', `${px(i).toFixed(2)}%`);
-				b.style.setProperty('--y', `${py(v).toFixed(2)}%`);
-				b.style.setProperty('--n', i);
-				area.append(b);
+			series = series.filter((s) => s.values.length > 1);
+			if (!series.length) continue;
+			const unit = host.dataset.imUnit || '';
+			const { rows, y, area, x } = plot(host);
+			const n = Math.max(...series.map((s) => s.values.length));
+			const max = Number(host.dataset.imMax) || niceMax(Math.max(...series.flatMap((s) => s.values)), rows);
+			const min = Number(host.dataset.imMin) || 0;
+			const step = host.hasAttribute('data-im-step');
+			const W = 100, H = 100;
+			const px = (i) => (i / (n - 1)) * W;
+			const py = (v) => H - ((v - min) / (max - min || 1)) * H;
+
+			if (y) {
+				y.replaceChildren(...Array.from({ length: rows + 1 }, (_, i) => Object.assign(el('span'), { textContent: short(max - ((max - min) / rows) * i) + unit })));
+			}
+			if (x) {
+				x.replaceChildren(...labels.map((l) => Object.assign(el('span'), { textContent: l })));
+			}
+			for (const old of area.querySelectorAll('.im-chart-svg, .im-chart-point')) old.remove();
+			const svg = el('svg', { class: 'im-chart-svg', viewBox: `0 0 ${W} ${H}`, preserveAspectRatio: 'none', 'aria-hidden': 'true' }, 1);
+			area.prepend(svg);
+			const said = [];
+			series.forEach((s, si) => {
+				const k = si + 1;
+				let d = '';
+				s.values.forEach((v, i) => {
+					const X = px(i).toFixed(2), Y = py(v).toFixed(2);
+					if (i === 0) d += `M${X} ${Y}`;
+					else if (step) d += `H${X}V${Y}`;
+					else d += `L${X} ${Y}`;
+				});
+				if (host.hasAttribute('data-im-area')) {
+					svg.append(el('path', { class: 'im-chart-fill', 'data-series': k, d: `${d}V${H}H0Z` }, 1));
+				}
+				svg.append(el('path', { class: 'im-chart-path', 'data-series': k, d }, 1));
+				s.values.forEach((v, i) => {
+					const b = el('button', { type: 'button', class: 'im-chart-point', 'data-series': k, 'data-label': `${labels[i] ? labels[i] + ' · ' : ''}${s.name}: ${fmt.format(v)}${unit}`, 'aria-label': `${s.name}, ${labels[i] || i + 1}: ${fmt.format(v)}${unit}` });
+					b.style.setProperty('--x', `${px(i).toFixed(2)}%`);
+					b.style.setProperty('--y', `${py(v).toFixed(2)}%`);
+					b.style.setProperty('--n', i);
+					area.append(b);
+				});
+				said.push(`${s.name} ${s.values.map((v, i) => `${labels[i] || i + 1} ${fmt.format(v)}${unit}`).join(', ')}`);
 			});
-			said.push(`${s.name} ${s.values.map((v, i) => `${labels[i] || i + 1} ${fmt.format(v)}${unit}`).join(', ')}`);
-		});
-		host.setAttribute('role', 'img');
-		if (!host.hasAttribute('aria-label')) host.setAttribute('aria-label', said.join('; '));
-	}
+			host.setAttribute('role', 'img');
+			if (!host.hasAttribute('aria-label')) host.setAttribute('aria-label', said.join('; '));
+		}
+	});
 
 	/* ── scatter ────────────────────────────────────────────────────────── */
-	for (const host of document.querySelectorAll('.im-chart-scatter')) {
-		const parse = (s) => String(s || '').split(',').map((p) => p.split(':').map(Number)).filter((p) => p.length === 2 && !p.some(Number.isNaN));
-		let series = [...host.querySelectorAll('data')].map((d, i) => ({ name: d.dataset.name || `Series ${i + 1}`, points: parse(d.value) }));
-		if (!series.length && host.dataset.imScatter) series = [{ name: host.dataset.imName || 'Points', points: parse(host.dataset.imScatter) }];
-		series = series.filter((s) => s.points.length);
-		if (!series.length) continue;
-		const { rows, y, area, x } = plot(host);
-		const all = series.flatMap((s) => s.points);
-		const maxX = Number(host.dataset.imMaxX) || niceMax(Math.max(...all.map((p) => p[0])), 4);
-		const maxY = Number(host.dataset.imMax) || niceMax(Math.max(...all.map((p) => p[1])), rows);
-		if (y) y.replaceChildren(...Array.from({ length: rows + 1 }, (_, i) => Object.assign(el('span'), { textContent: short(maxY - (maxY / rows) * i) })));
-		if (x) x.replaceChildren(...Array.from({ length: 5 }, (_, i) => Object.assign(el('span'), { textContent: short((maxX / 4) * i) })));
-		for (const old of area.querySelectorAll('.im-chart-point')) old.remove();
-		area.classList.add('im-chart-area-axis');
-		let i = 0;
-		series.forEach((s, si) => {
-			for (const [X, Y] of s.points) {
-				const b = el('button', { type: 'button', class: 'im-chart-point', 'data-series': si + 1, 'data-label': `${s.name}: ${fmt.format(X)}, ${fmt.format(Y)}`, 'aria-label': `${s.name}: ${fmt.format(X)} by ${fmt.format(Y)}` });
-				b.style.setProperty('--x', `${((X / maxX) * 100).toFixed(2)}%`);
-				b.style.setProperty('--y', `${(100 - (Y / maxY) * 100).toFixed(2)}%`);
-				b.style.setProperty('--n', i++);
-				area.append(b);
-			}
-		});
-		host.setAttribute('role', 'img');
-		if (!host.hasAttribute('aria-label')) host.setAttribute('aria-label', series.map((s) => `${s.name}: ${s.points.length} points`).join('; '));
-	}
+	setups.push(() => {
+		for (const host of fresh('.im-chart-scatter')) {
+			const parse = (s) => String(s || '').split(',').map((p) => p.split(':').map(Number)).filter((p) => p.length === 2 && !p.some(Number.isNaN));
+			let series = [...host.querySelectorAll('data')].map((d, i) => ({ name: d.dataset.name || `Series ${i + 1}`, points: parse(d.value) }));
+			if (!series.length && host.dataset.imScatter) series = [{ name: host.dataset.imName || 'Points', points: parse(host.dataset.imScatter) }];
+			series = series.filter((s) => s.points.length);
+			if (!series.length) continue;
+			const { rows, y, area, x } = plot(host);
+			const all = series.flatMap((s) => s.points);
+			const maxX = Number(host.dataset.imMaxX) || niceMax(Math.max(...all.map((p) => p[0])), 4);
+			const maxY = Number(host.dataset.imMax) || niceMax(Math.max(...all.map((p) => p[1])), rows);
+			if (y) y.replaceChildren(...Array.from({ length: rows + 1 }, (_, i) => Object.assign(el('span'), { textContent: short(maxY - (maxY / rows) * i) })));
+			if (x) x.replaceChildren(...Array.from({ length: 5 }, (_, i) => Object.assign(el('span'), { textContent: short((maxX / 4) * i) })));
+			for (const old of area.querySelectorAll('.im-chart-point')) old.remove();
+			area.classList.add('im-chart-area-axis');
+			let i = 0;
+			series.forEach((s, si) => {
+				for (const [X, Y] of s.points) {
+					const b = el('button', { type: 'button', class: 'im-chart-point', 'data-series': si + 1, 'data-label': `${s.name}: ${fmt.format(X)}, ${fmt.format(Y)}`, 'aria-label': `${s.name}: ${fmt.format(X)} by ${fmt.format(Y)}` });
+					b.style.setProperty('--x', `${((X / maxX) * 100).toFixed(2)}%`);
+					b.style.setProperty('--y', `${(100 - (Y / maxY) * 100).toFixed(2)}%`);
+					b.style.setProperty('--n', i++);
+					area.append(b);
+				}
+			});
+			host.setAttribute('role', 'img');
+			if (!host.hasAttribute('aria-label')) host.setAttribute('aria-label', series.map((s) => `${s.name}: ${s.points.length} points`).join('; '));
+		}
+	});
 
 	/* ── the stagger: every child of a revealed chart gets its index as --n ──
 	   so the CSS can delay it, without the page writing a number on each. */
-	for (const host of document.querySelectorAll('[data-im-reveal]')) {
-		if (!host.matches('.im-chart-cols, .im-bars, .im-hbars, .im-chart-heat, .im-chart-cal, .im-chart-matrix, .im-chart-treemap, .im-chart-funnel, .im-viz-table')) continue;
-		const kids = host.matches('.im-viz-table') ? host.querySelectorAll('tbody tr') : host.children;
-		let i = 0;
-		for (const c of kids) {
-			if (host.matches('.im-viz-table')) for (const cell of c.querySelectorAll('.im-viz-bar > i')) cell.style.setProperty('--n', i);
-			else if (!c.style.getPropertyValue('--n')) c.style.setProperty('--n', i);
-			i++;
+	setups.push(() => {
+		for (const host of fresh('[data-im-reveal]')) {
+			if (!host.matches('.im-chart-cols, .im-bars, .im-hbars, .im-chart-heat, .im-chart-cal, .im-chart-matrix, .im-chart-treemap, .im-chart-funnel, .im-viz-table')) continue;
+			const kids = host.matches('.im-viz-table') ? host.querySelectorAll('tbody tr') : host.children;
+			let i = 0;
+			for (const c of kids) {
+				if (host.matches('.im-viz-table')) for (const cell of c.querySelectorAll('.im-viz-bar > i')) cell.style.setProperty('--n', i);
+				else if (!c.style.getPropertyValue('--n')) c.style.setProperty('--n', i);
+				i++;
+			}
 		}
-	}
+	});
 
 	/* ── legend toggles & filter chips ──────────────────────────────────── */
 	document.addEventListener('click', (e) => {
@@ -200,4 +220,11 @@
 		if (!b) return;
 		for (const x of b.parentElement.querySelectorAll('.im-btn')) x.setAttribute('aria-pressed', String(x === b));
 	});
+
+	/* ── run, and keep running ─────────────────────────────────────────── */
+	const scan = () => setups.forEach((f) => f());
+	scan();
+	let queued = 0;
+	new MutationObserver(() => queued || (queued = setTimeout(() => ((queued = 0), scan()), 50))).observe(document.documentElement, { childList: true, subtree: true });
+	window.imCharts = { ...window.imCharts, scan };
 })();

@@ -14,31 +14,47 @@
  *
  * Nothing here is needed to READ a post: without it, galleries are even
  * columns, toggles are open, audio and video fall back to native controls.
+ *
+ * Markup rendered later (React, a client-side route) is picked up too: a
+ * MutationObserver re-scans, and each element is set up once.
  */
 (() => {
+	if (window.__imContent) return;
+	window.__imContent = true;
+	const seen = new Map(); // selector → the elements already set up for it
+	const setups = [];
+	const fresh = (sel) => {
+		if (!seen.has(sel)) seen.set(sel, new WeakSet());
+		const done = seen.get(sel);
+		return [...document.querySelectorAll(sel)].filter((el) => !done.has(el) && done.add(el));
+	};
 	const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 	const clock = (s) => (Number.isFinite(s) ? `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}` : '0:00');
 	const fill = (range) => range.style.setProperty('--_v', `${((range.value - (range.min || 0)) / ((range.max || 100) - (range.min || 0))) * 100}%`);
 
 	/* ── gallery ───────────────────────────────────────────────────────── */
-	for (const img of $$('.kg-gallery-image img')) {
-		const w = Number(img.getAttribute('width'));
-		const h = Number(img.getAttribute('height'));
-		if (w && h) img.parentElement.style.flex = `${(w / h).toFixed(4)} 1 0%`;
-	}
+	setups.push(() => {
+		for (const img of fresh('.kg-gallery-image img')) {
+			const w = Number(img.getAttribute('width'));
+			const h = Number(img.getAttribute('height'));
+			if (w && h) img.parentElement.style.flex = `${(w / h).toFixed(4)} 1 0%`;
+		}
+	});
 
 	/* ── toggle ────────────────────────────────────────────────────────── */
-	for (const card of $$('.kg-toggle-card')) {
-		const heading = card.querySelector('.kg-toggle-heading');
-		const button = card.querySelector('.kg-toggle-card-icon');
-		if (!heading) continue;
-		const set = (open) => {
-			card.dataset.kgToggleState = open ? 'open' : 'close';
-			button?.setAttribute('aria-expanded', String(open));
-		};
-		set(card.dataset.kgToggleState === 'open');
-		heading.addEventListener('click', () => set(card.dataset.kgToggleState !== 'open'));
-	}
+	setups.push(() => {
+		for (const card of fresh('.kg-toggle-card')) {
+			const heading = card.querySelector('.kg-toggle-heading');
+			const button = card.querySelector('.kg-toggle-card-icon');
+			if (!heading) continue;
+			const set = (open) => {
+				card.dataset.kgToggleState = open ? 'open' : 'close';
+				button?.setAttribute('aria-expanded', String(open));
+			};
+			set(card.dataset.kgToggleState === 'open');
+			heading.addEventListener('click', () => set(card.dataset.kgToggleState !== 'open'));
+		}
+	});
 
 	/* ── audio & video players ─────────────────────────────────────────── */
 	const RATES = [1, 1.5, 2, 0.75];
@@ -83,53 +99,66 @@
 		sync();
 	}
 
-	for (const card of $$('.kg-audio-card')) wire(card, 'audio');
+	setups.push(() => { for (const card of fresh('.kg-audio-card')) wire(card, 'audio'); });
 
 	// Video: the editor's poster and big button start it; from then on the
 	// browser's own controls are better than any we would draw.
-	for (const card of $$('.kg-video-card')) {
-		const video = card.querySelector('video');
-		const overlay = card.querySelector('.kg-video-overlay');
-		if (!video) continue;
-		if (video.loop && video.autoplay) continue; // a looping clip: no controls at all
-		if (!overlay) {
-			video.controls = true;
-			continue;
+	setups.push(() => {
+		for (const card of fresh('.kg-video-card')) {
+			const video = card.querySelector('video');
+			const overlay = card.querySelector('.kg-video-overlay');
+			if (!video) continue;
+			if (video.loop && video.autoplay) continue; // a looping clip: no controls at all
+			if (!overlay) {
+				video.controls = true;
+				continue;
+			}
+			overlay.addEventListener('click', () => {
+				overlay.classList.add('kg-video-hide');
+				video.controls = true;
+				video.play();
+			});
 		}
-		overlay.addEventListener('click', () => {
-			overlay.classList.add('kg-video-hide');
-			video.controls = true;
-			video.play();
-		});
-	}
+	});
 
 	/* ── tables ────────────────────────────────────────────────────────── */
-	for (const table of $$('.im-content > table')) {
-		const wrap = document.createElement('div');
-		wrap.className = 'im-table-scroll';
-		wrap.tabIndex = 0; // a scrolling region must be reachable by keyboard
-		table.replaceWith(wrap);
-		wrap.append(table);
-		table.style.display = 'table';
-	}
+	setups.push(() => {
+		for (const table of fresh('.im-content > table')) {
+			const wrap = document.createElement('div');
+			wrap.className = 'im-table-scroll';
+			wrap.tabIndex = 0; // a scrolling region must be reachable by keyboard
+			table.replaceWith(wrap);
+			wrap.append(table);
+			table.style.display = 'table';
+		}
+	});
 
 	/* ── zoom: pictures open in the lightbox ───────────────────────────── */
-	for (const root of $$('.im-content[data-im-zoom]')) {
-		for (const fig of $$('.kg-image-card, .kg-gallery-card', root)) {
-			const caption = fig.querySelector('figcaption')?.textContent.trim() || '';
-			const imgs = $$('img', fig).filter((img) => !img.closest('a'));
-			if (!imgs.length) continue;
-			for (const img of imgs) {
-				const a = document.createElement('a');
-				a.href = img.currentSrc || img.src;
-				a.dataset.caption = caption || img.alt;
-				// .im-zoom-link draws the frame mark in the corner — the same
-				// one a gallery tile and a carousel slide carry.
-				a.className = 'im-zoom-link';
-				img.replaceWith(a);
-				a.append(img);
+	setups.push(() => {
+		for (const root of fresh('.im-content[data-im-zoom]')) {
+			for (const fig of $$('.kg-image-card, .kg-gallery-card', root)) {
+				const caption = fig.querySelector('figcaption')?.textContent.trim() || '';
+				const imgs = $$('img', fig).filter((img) => !img.closest('a'));
+				if (!imgs.length) continue;
+				for (const img of imgs) {
+					const a = document.createElement('a');
+					a.href = img.currentSrc || img.src;
+					a.dataset.caption = caption || img.alt;
+					// .im-zoom-link draws the frame mark in the corner — the same
+					// one a gallery tile and a carousel slide carry.
+					a.className = 'im-zoom-link';
+					img.replaceWith(a);
+					a.append(img);
+				}
+				fig.setAttribute('data-im-lightbox', '');
 			}
-			fig.setAttribute('data-im-lightbox', '');
 		}
-	}
+	});
+
+	/* ── run, and keep running ─────────────────────────────────────────── */
+	const scan = () => setups.forEach((f) => f());
+	scan();
+	let queued = 0;
+	new MutationObserver(() => queued || (queued = setTimeout(() => ((queued = 0), scan()), 50))).observe(document.documentElement, { childList: true, subtree: true });
+	window.imContent = { ...window.imContent, scan };
 })();

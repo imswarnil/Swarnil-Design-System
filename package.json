@@ -2,7 +2,7 @@
 	"name": "im-design-system",
 	"version": "0.8.0",
 	"private": true,
-	"description": "A Tailwind CSS design system for Ghost themes: tokens, layout, components and reusable sections.",
+	"description": "One design system for every project — HTML, React, Next.js, Ghost: tokens, layout, components and reusable sections.",
 	"type": "module",
 	"engines": {
 		"node": ">=22"
@@ -14,7 +14,8 @@
 		"serve": "node site/dev.mjs --no-watch",
 		"vendor": "node scripts/vendor.mjs",
 		"mcp": "node mcp/server.mjs",
-		"check": "node scripts/check.mjs"
+		"check": "node scripts/check.mjs",
+		"package": "node scripts/package.mjs"
 	},
 	"devDependencies": {
 		"@fontsource-variable/caveat": "^5.3.0",

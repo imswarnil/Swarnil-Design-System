@@ -165,3 +165,28 @@
 		}
 	}
 })();
+
+/* Docs-only: the code tabs under every example (HTML · React · Ghost). The
+   reader picks a language once and every example on every page follows. */
+(() => {
+	const KEY = 'docs-example-lang';
+	let syncing = false;
+	const pick = (lang) => {
+		syncing = true;
+		for (const tab of document.querySelectorAll(`.example-tabs [data-example-lang="${lang}"]`)) if (tab.getAttribute('aria-selected') !== 'true') tab.click();
+		syncing = false;
+	};
+	document.addEventListener('click', (e) => {
+		const tab = e.target.closest('.example-tabs [data-example-lang]');
+		if (!tab || syncing) return;
+		try {
+			localStorage.setItem(KEY, tab.dataset.exampleLang);
+		} catch {}
+		pick(tab.dataset.exampleLang);
+	});
+	let saved = null;
+	try {
+		saved = localStorage.getItem(KEY);
+	} catch {}
+	if (saved) pick(saved);
+})();

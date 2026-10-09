@@ -2,7 +2,7 @@
 
 # Im Design System
 
-The design system behind **[imswarnil.com](https://imswarnil.com)** and its Ghost theme — tokens, layout, forty-odd components, page sections and fourteen content collections, all namespaced `im-*` / `--im-*`, built on Tailwind 4 cascade layers. One look; a variant is a modifier class, never a second skin.
+The design system behind **[imswarnil.com](https://imswarnil.com)** and every other project — HTML, React, Next.js, Vue, Svelte, Astro and Ghost all use the same package. Tokens, layout, forty-odd components, page sections and fourteen content collections, all namespaced `im-*` / `--im-*`, built on Tailwind 4 cascade layers. One look; a variant is a modifier class, never a second skin.
 
 **Docs:** [design.imswarnil.com](https://design.imswarnil.com) — every example renders the real partial, so a page breaks if a component does.
 
@@ -15,6 +15,7 @@ npm install
 npm run dev      # http://localhost:4700
 npm run build    # writes the docs to dist/ and checks every Ghost helper is modelled
 npm run check    # dead CSS, broken links, provenance — CI runs this before deploying
+npm run package  # the package for every stack → package/ (served at design.imswarnil.com/package/)
 npm run mcp      # an MCP server, so an AI assistant can build with the system
 ```
 
@@ -31,8 +32,9 @@ npm run mcp      # an MCP server, so an AI assistant can build with the system
 | `partials/` | the Handlebars partials a Ghost theme copies in |
 | `sections/` | self-contained page sections |
 | `site/` | the documentation site — Handlebars pages with a Ghost shim |
-| `mcp/` | the MCP server (`list_components`, `get_component`, `list_tokens`, `search`, `get_page`, `rules`) |
-| `scripts/` | `check.mjs` (dead CSS, broken links, provenance), `vendor.mjs` |
+| `react/` | the React layer: `<ImHead>`, `<ImScripts>`, `Button`, `Badge`, `Card…`, `Wrap`, `Cols`/`Col`, `Logo`, `Icon` |
+| `mcp/` | the MCP server — build with it (`setup`, `get_example`, `to_react`, `get_component`, `export_tokens`…) and make anything else in the look (`brand`, `brief`, `image_prompt`) |
+| `scripts/` | `check.mjs` (dead CSS, broken links, provenance), `package.mjs` (the package), `tokens-data.mjs`, `vendor.mjs` |
 | `.github/` | the banner and the grid drawing above, both plain SVG that follow the reader's colour scheme |
 
 Fourteen collections ship with a listing, a card and a single page each: post,
@@ -41,7 +43,22 @@ travel, experience, tags and the timeline, plus an archive of all of them. The
 pages a personal site needs — about, now, contact, membership, sign in, résumé,
 guestbook, sitemap, home — are in `site/pages/pages/`.
 
-## Using it in a theme
+## Using it in a project
+
+`npm run package` builds one package for every stack into `package/`, and CI publishes it at
+`https://design.imswarnil.com/package/`. The docs' **[Install & use](https://design.imswarnil.com/install/)**
+page has the setup for HTML, React, Next.js, Vue/Svelte/Astro, Ghost and tokens-only, and every
+example in the docs has **HTML · React · Ghost** tabs.
+
+```jsx
+import 'im-design-system/css';
+import { ImHead, ImScripts, Button, Card, CardBody, CardTitle } from 'im-design-system/react';
+```
+
+Install a packed copy (`npm pack ./package`, then install the `.tgz`) rather than a `file:` link —
+a symlinked package resolves its own React and React loads twice.
+
+### In a Ghost theme
 
 Vendor it — copy `dist/assets/im.css`, the `src/js/*.js` files, the fonts and the partials you use into the theme and commit them. Set `"config": { "card_assets": false }` in the theme's `package.json` and ship `im-content.js`, or Ghost's own card CSS (which is unlayered) beats every layer here.
 

@@ -9,10 +9,12 @@ npm install
 npm run dev        # http://localhost:4700 — rebuilds and reloads on save
 npm run build      # one-off build into dist/
 npm run vendor     # re-copy fonts and icons from their npm packages
+npm run package    # the package for every stack → package/ (and dist/package/)
+npm run mcp        # the MCP server: components, tokens, setup, brand and briefs
 {{{{/code}}}}
 
 <h2>What you ship</h2>
-<p>The build produces two files. A Ghost theme needs nothing else from here except the fonts and whichever partials it uses.</p>
+<p>To use the system in a project — HTML, React, Next.js, Ghost or anything else — build the package (<code>npm run package</code>) and follow <a href="/install/">Install &amp; use</a>. The files it is made from:</p>
 <div class="im-table-scroll">
 <table>
 	<thead><tr><th>File</th><th>What it is</th></tr></thead>

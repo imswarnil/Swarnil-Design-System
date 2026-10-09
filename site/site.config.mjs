@@ -11,7 +11,7 @@ export const SHORT = 'Im';
 
 export const site = {
 	title: NAME,
-	description: 'A Tailwind design system for Ghost themes: tokens, layout, components and ready-made sections.',
+	description: 'One design system for every project — HTML, React, Next.js, Ghost: tokens, layout, components and ready-made sections.',
 	locale: 'en',
 	accent_color: '#f22f46',   // the brand's red — the same value the semantic token defaults to
 	members_enabled: true,
@@ -44,6 +44,7 @@ export const navigation = [
 		items: [
 			{ label: 'Home', url: '/', icon: 'house' },
 			{ label: 'Getting started', url: '/getting-started/', icon: 'rocket' },
+			{ label: 'Install & use', url: '/install/', icon: 'package' },
 		],
 	},
 	{

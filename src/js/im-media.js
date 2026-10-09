@@ -11,8 +11,20 @@
  * scroll-lock come from the browser, Esc is caught so it can leave the way it
  * arrived. Thumbnails are links to the large image, so with this file missing
  * a click still opens the picture.
+ *
+ * Markup rendered later (React, a client-side route) is picked up too: a
+ * MutationObserver re-scans, and each element is set up once.
  */
 (() => {
+	if (window.__imMedia) return;
+	window.__imMedia = true;
+	const seen = new Map(); // selector → the elements already set up for it
+	const setups = [];
+	const fresh = (sel) => {
+		if (!seen.has(sel)) seen.set(sel, new WeakSet());
+		const done = seen.get(sel);
+		return [...document.querySelectorAll(sel)].filter((el) => !done.has(el) && done.add(el));
+	};
 	const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 	const ICON = {
 		x: '<path d="M18 6 6 18M6 6l12 12"/>',
@@ -231,67 +243,80 @@
 		if (play) mount(play.closest('.im-video'));
 	});
 
-	for (const list of $$('[data-im-chapters]')) {
-		const video = document.querySelector(list.dataset.imChapters);
-		if (!video) continue;
-		const items = $$('[data-t]', list).map((b) => ({ b, t: seconds(b.dataset.t) }));
+	setups.push(() => {
+		for (const list of fresh('[data-im-chapters]')) {
+			const video = document.querySelector(list.dataset.imChapters);
+			if (!video) continue;
+			const items = $$('[data-t]', list).map((b) => ({ b, t: seconds(b.dataset.t) }));
 
-		list.addEventListener('click', (e) => {
-			const b = e.target.closest('[data-t]');
-			if (!b) return;
-			e.preventDefault();
-			const t = seconds(b.dataset.t);
-			const api = players.get(video);
-			if (api) api.seek(t);
-			else mount(video, t);
-			mark(t);
-			if (video.getBoundingClientRect().top < 0) video.scrollIntoView({ behavior: 'smooth', block: 'center' });
-		});
+			list.addEventListener('click', (e) => {
+				const b = e.target.closest('[data-t]');
+				if (!b) return;
+				e.preventDefault();
+				const t = seconds(b.dataset.t);
+				const api = players.get(video);
+				if (api) api.seek(t);
+				else mount(video, t);
+				mark(t);
+				if (video.getBoundingClientRect().top < 0) video.scrollIntoView({ behavior: 'smooth', block: 'center' });
+			});
 
-		function mark(t) {
-			let current = -1;
-			items.forEach((it, i) => {
-				if (t >= it.t) current = i;
-			});
-			items.forEach((it, i) => {
-				it.b.setAttribute('aria-current', String(i === current));
-				if (i !== current) return;
-				const end = items[i + 1]?.t ?? Number(list.dataset.imDuration ? seconds(list.dataset.imDuration) : it.t + 60);
-				it.b.style.setProperty('--im-chapter-progress', Math.min(1, Math.max(0, (t - it.t) / (end - it.t))).toFixed(3));
-			});
+			function mark(t) {
+				let current = -1;
+				items.forEach((it, i) => {
+					if (t >= it.t) current = i;
+				});
+				items.forEach((it, i) => {
+					it.b.setAttribute('aria-current', String(i === current));
+					if (i !== current) return;
+					const end = items[i + 1]?.t ?? Number(list.dataset.imDuration ? seconds(list.dataset.imDuration) : it.t + 60);
+					it.b.style.setProperty('--im-chapter-progress', Math.min(1, Math.max(0, (t - it.t) / (end - it.t))).toFixed(3));
+				});
+			}
+
+			setInterval(() => {
+				const api = players.get(video);
+				if (api) mark(api.time());
+			}, 500);
 		}
-
-		setInterval(() => {
-			const api = players.get(video);
-			if (api) mark(api.time());
-		}, 500);
-	}
+	});
 
 	/* ── lazy pictures ─────────────────────────────────────────────────── */
-	for (const img of $$('.im-lazy > img')) {
-		const done = () => img.setAttribute('data-im-loaded', '');
-		if (img.complete && img.naturalWidth) done();
-		else img.addEventListener('load', done, { once: true });
-		img.addEventListener('error', done, { once: true });
-	}
+	setups.push(() => {
+		for (const img of fresh('.im-lazy > img')) {
+			const done = () => img.setAttribute('data-im-loaded', '');
+			if (img.complete && img.naturalWidth) done();
+			else img.addEventListener('load', done, { once: true });
+			img.addEventListener('error', done, { once: true });
+		}
+	});
 
 	/* ── file drop ─────────────────────────────────────────────────────── */
-	for (const zone of $$('.im-drop')) {
-		const input = zone.querySelector('input[type="file"]');
-		const name = zone.querySelector('[data-im-drop-name]');
-		const over = (on) => zone.toggleAttribute('data-im-over', on);
-		zone.addEventListener('dragover', (e) => (e.preventDefault(), over(true)));
-		zone.addEventListener('dragleave', () => over(false));
-		zone.addEventListener('drop', (e) => {
-			e.preventDefault();
-			over(false);
-			if (input && e.dataTransfer.files.length) {
-				input.files = e.dataTransfer.files;
-				input.dispatchEvent(new Event('change', { bubbles: true }));
-			}
-		});
-		input?.addEventListener('change', () => {
-			if (name) name.textContent = [...input.files].map((f) => f.name).join(', ') || name.dataset.imDropName;
-		});
-	}
+	setups.push(() => {
+		for (const zone of fresh('.im-drop')) {
+			const input = zone.querySelector('input[type="file"]');
+			const name = zone.querySelector('[data-im-drop-name]');
+			const over = (on) => zone.toggleAttribute('data-im-over', on);
+			zone.addEventListener('dragover', (e) => (e.preventDefault(), over(true)));
+			zone.addEventListener('dragleave', () => over(false));
+			zone.addEventListener('drop', (e) => {
+				e.preventDefault();
+				over(false);
+				if (input && e.dataTransfer.files.length) {
+					input.files = e.dataTransfer.files;
+					input.dispatchEvent(new Event('change', { bubbles: true }));
+				}
+			});
+			input?.addEventListener('change', () => {
+				if (name) name.textContent = [...input.files].map((f) => f.name).join(', ') || name.dataset.imDropName;
+			});
+		}
+	});
+
+	/* ── run, and keep running ─────────────────────────────────────────── */
+	const scan = () => setups.forEach((f) => f());
+	scan();
+	let queued = 0;
+	new MutationObserver(() => queued || (queued = setTimeout(() => ((queued = 0), scan()), 50))).observe(document.documentElement, { childList: true, subtree: true });
+	window.imMedia = { ...window.imMedia, scan };
 })();

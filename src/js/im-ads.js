@@ -15,8 +15,20 @@
  * close button simply does nothing, and the sticky one is visible from the
  * start — which is why .im-ad-sticky is hidden by an ATTRIBUTE this script
  * adds rather than by a class the markup would have to carry.
+ *
+ * Markup rendered later (React, a client-side route) is picked up too: a
+ * MutationObserver re-scans, and each element is set up once.
  */
 (() => {
+	if (window.__imAds) return;
+	window.__imAds = true;
+	const seen = new Map(); // selector → the elements already set up for it
+	const setups = [];
+	const fresh = (sel) => {
+		if (!seen.has(sel)) seen.set(sel, new WeakSet());
+		const done = seen.get(sel);
+		return [...document.querySelectorAll(sel)].filter((el) => !done.has(el) && done.add(el));
+	};
 	const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 
 	/* ── remembering, per session ──────────────────────────────────────── */
@@ -38,9 +50,11 @@
 	};
 
 	const gone = closed();
-	for (const ad of $$('[data-im-ad-key]')) {
-		if (gone.has(ad.dataset.imAdKey)) ad.remove();
-	}
+	setups.push(() => {
+		for (const ad of fresh('[data-im-ad-key]')) {
+			if (gone.has(ad.dataset.imAdKey)) ad.remove();
+		}
+	});
 
 	/* ── the cross ─────────────────────────────────────────────────────── */
 	document.addEventListener('click', (e) => {
@@ -60,31 +74,32 @@
 	/* ── the ones that arrive later ────────────────────────────────────── */
 	/* A scroll listener, not an observer: an IntersectionObserver never fires
 	   in a tab that is not being painted, and these are fixed to the window. */
-	const late = $$('.im-ad-sticky, .im-ad-floating');
-	if (late.length) {
+	{
 		const after = (el) => Number(el.dataset.imAdAfter) || 400;
 		let pending = false;
 		const measure = () => {
 			pending = false;
-			for (const el of late) el.toggleAttribute('data-im-ad-shown', scrollY > after(el));
+			for (const el of $$('.im-ad-sticky, .im-ad-floating')) el.toggleAttribute('data-im-ad-shown', scrollY > after(el));
 		};
 		addEventListener('scroll', () => pending || ((pending = true), requestAnimationFrame(measure)), { passive: true });
-		measure();
+		setups.push(measure);
 	}
 
 	/* ── the interstitial ──────────────────────────────────────────────── */
 	/* Once per session, after a delay, and never before the reader has had a
 	   moment with the page. `data-im-ad-popup` is the delay in seconds. */
-	for (const dialog of $$('dialog[data-im-ad-popup]')) {
-		const key = dialog.dataset.imAdKey || dialog.id;
-		if (gone.has(key)) continue;
-		const wait = (Number(dialog.dataset.imAdPopup) || 8) * 1000;
-		setTimeout(() => {
-			if (!dialog.isConnected || dialog.open) return;
-			dialog.showModal();
-			remember(key);
-		}, wait);
-	}
+	setups.push(() => {
+		for (const dialog of fresh('dialog[data-im-ad-popup]')) {
+			const key = dialog.dataset.imAdKey || dialog.id;
+			if (gone.has(key)) continue;
+			const wait = (Number(dialog.dataset.imAdPopup) || 8) * 1000;
+			setTimeout(() => {
+				if (!dialog.isConnected || dialog.open) return;
+				dialog.showModal();
+				remember(key);
+			}, wait);
+		}
+	});
 
 	/* ── the way out ───────────────────────────────────────────────────── */
 	document.addEventListener('click', (e) => {
@@ -104,9 +119,18 @@
 	});
 
 	/* A press on the sheet around the card closes it, as the lightbox does. */
-	for (const dialog of $$('.im-gate, .im-ad-popup')) {
-		dialog.addEventListener('click', (e) => {
-			if (e.target === dialog) dialog.close();
-		});
-	}
+	setups.push(() => {
+		for (const dialog of fresh('.im-gate, .im-ad-popup')) {
+			dialog.addEventListener('click', (e) => {
+				if (e.target === dialog) dialog.close();
+			});
+		}
+	});
+
+	/* ── run, and keep running ─────────────────────────────────────────── */
+	const scan = () => setups.forEach((f) => f());
+	scan();
+	let queued = 0;
+	new MutationObserver(() => queued || (queued = setTimeout(() => ((queued = 0), scan()), 50))).observe(document.documentElement, { childList: true, subtree: true });
+	window.imAds = { ...window.imAds, scan };
 })();

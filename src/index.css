@@ -22,7 +22,6 @@
 
 @import "./layout/index.css" layer(layout);
 @import "./components/index.css" layer(components);
-/* The channel: frames, thumbnails, the elements a video is cut from. */
 /* Numbers and the charts that explain them. */
 @import "./viz/index.css" layer(components);
 
