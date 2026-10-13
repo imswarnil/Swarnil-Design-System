@@ -83,9 +83,12 @@
 	   page navigation. No View Transitions, or a reader who asked for less
 	   motion: the theme simply changes. */
 	const still = matchMedia('(prefers-reduced-motion: reduce)');
-	function shutter(change) {
+	/* `fx` names the look (data-theme-fx on <html> while it runs). The system
+	   draws two — "shutter" and "capture", a camera taking a frame — and a
+	   theme may draw its own and name it on the toggle: data-theme-fx="…". */
+	function shutter(change, fx = 'shutter') {
 		if (!document.startViewTransition || still.matches) return change();
-		root.dataset.themeFx = 'shutter';
+		root.dataset.themeFx = fx;
 		const done = () => delete root.dataset.themeFx;
 		try {
 			document.startViewTransition(change).finished.then(done, done);
@@ -95,24 +98,29 @@
 		}
 	}
 
-	document.addEventListener('click', (e) => {
-		if (!e.target.closest('[data-theme-toggle]')) return;
-		const next = theme() === 'dark' ? 'light' : 'dark';
+	function setTheme(next, fx) {
+		if (!THEMES.includes(next) || next === theme()) return;
 		shutter(() => {
 			store.set('theme', next);
 			applyTheme();
-		});
+		}, fx);
+	}
+
+	document.addEventListener('click', (e) => {
+		const btn = e.target.closest('[data-theme-toggle]');
+		if (!btn) return;
+		setTheme(theme() === 'dark' ? 'light' : 'dark', btn.dataset.themeFx || 'shutter');
 	});
 
 	// [data-theme-set="dark"] picks one outright — the two-option switcher.
 	document.addEventListener('change', (e) => {
-		const v = e.target.closest?.('[data-theme-set]')?.dataset.themeSet;
-		if (!THEMES.includes(v)) return;
-		shutter(() => {
-			store.set('theme', v);
-			applyTheme();
-		});
+		const el = e.target.closest?.('[data-theme-set]');
+		if (!el) return;
+		setTheme(el.dataset.themeSet, el.dataset.themeFx || 'shutter');
 	});
+
+	// A theme's own control (a dial, a slider) sets it from script, with its effect.
+	window.im = { ...window.im, theme: { get: theme, set: setTheme } };
 
 	applyTheme();
 

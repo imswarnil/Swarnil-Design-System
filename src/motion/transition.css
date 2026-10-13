@@ -361,3 +361,37 @@
 	60% { filter: brightness(1.15); }
 	to { clip-path: circle(72% at 50% 50%); filter: brightness(1); }
 }
+
+/* ---- the capture: light ⇄ dark, as a camera taking the frame -------------------
+   data-theme-fx="capture" — named on the toggle (data-theme-toggle
+   data-theme-fx="capture"), or passed to im.theme.set(name, 'capture'). The
+   old page is the viewfinder: it blinks white — the flash — and drops away a
+   touch smaller, a frame taken; the new one develops out of black,
+   over-exposed and sharpening. A theme that asks for it draws its own
+   brackets and label over the page in the meantime. */
+:root[data-theme-fx="capture"]::view-transition {
+	background-color: #000;
+}
+
+:root[data-theme-fx="capture"]::view-transition-old(root) {
+	z-index: 2;
+	animation: im-capture-take 0.34s cubic-bezier(0.55, 0, 0.9, 0.4) both;
+}
+
+:root[data-theme-fx="capture"]::view-transition-new(root) {
+	z-index: 1;
+	animation: im-capture-develop 0.5s 0.3s cubic-bezier(0.1, 0.7, 0.2, 1) both;
+}
+
+@keyframes im-capture-take {
+	0% { filter: brightness(1); opacity: 1; scale: 1; }
+	18% { filter: brightness(2.4) contrast(0.6); }
+	40% { filter: brightness(1); opacity: 1; scale: 1; }
+	100% { filter: brightness(0.4); opacity: 0; scale: 0.96; }
+}
+
+@keyframes im-capture-develop {
+	from { filter: brightness(1.8) contrast(0.7) blur(6px); opacity: 0; }
+	50% { filter: brightness(1.15) contrast(0.95) blur(1px); opacity: 1; }
+	to { filter: brightness(1) contrast(1) blur(0); opacity: 1; }
+}
