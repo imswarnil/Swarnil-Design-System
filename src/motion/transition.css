@@ -330,3 +330,34 @@
 	50.01% { scale: 1 1; transform-origin: 100% 50%; }
 	100% { scale: 0 1; transform-origin: 100% 50%; }
 }
+
+/* ---- the shutter: light ⇄ dark -------------------------------------------------
+   im.js names this on <html> (data-theme-fx="shutter") for the length of one
+   same-document view transition, when the theme is switched. The old page
+   irises shut on black — a shutter closing — and the new one opens out of
+   the same point slightly over-exposed and settles: the picture, taken again
+   in other light. Two short animations and no element of their own. */
+:root[data-theme-fx="shutter"]::view-transition {
+	background-color: #000;
+}
+
+:root[data-theme-fx="shutter"]::view-transition-old(root) {
+	z-index: 2;
+	animation: im-shutter-close 0.2s cubic-bezier(0.55, 0, 0.9, 0.4) both;
+}
+
+:root[data-theme-fx="shutter"]::view-transition-new(root) {
+	z-index: 1;
+	animation: im-shutter-open 0.42s 0.2s cubic-bezier(0.1, 0.7, 0.2, 1) both;
+}
+
+@keyframes im-shutter-close {
+	from { clip-path: circle(72% at 50% 50%); }
+	to { clip-path: circle(0% at 50% 50%); }
+}
+
+@keyframes im-shutter-open {
+	from { clip-path: circle(0% at 50% 50%); filter: brightness(1.9); }
+	60% { filter: brightness(1.15); }
+	to { clip-path: circle(72% at 50% 50%); filter: brightness(1); }
+}

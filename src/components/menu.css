@@ -35,6 +35,34 @@
 	overscroll-behavior: contain;
 }
 
+/* WHERE IT OPENS BEFORE im.js HAS RUN. A popover's button is its implicit
+   anchor, so the browser can hang the menu under it with no script at all.
+   That matters on a cold load: im.js is deferred, a deferred script waits for
+   every stylesheet and every deferred script ahead of it, and a menu opened
+   in that gap used to land in the top-left corner and jump once the script
+   arrived. im.js still places it — inline, which outranks this — because it
+   also clamps to the viewport; the two agree, so nothing moves. */
+@supports (top: anchor(bottom)) {
+	.im-menu {
+		/* Said out loud: the property's default became `normal`, which only
+		   reaches for the implicit anchor when position-area is in use. */
+		position-anchor: auto;
+		top: calc(anchor(bottom) + 0.5rem);
+		right: anchor(right);
+		position-try-fallbacks: flip-block;
+	}
+
+	.im-menu[data-align="start"] {
+		right: auto;
+		left: anchor(left);
+	}
+
+	.im-menu[data-align="center"] {
+		right: auto;
+		justify-self: anchor-center;
+	}
+}
+
 /* Wide enough for descriptions — the panel's rows, in a dropdown. */
 .im-menu-wide {
 	--im-menu-width: 19rem;

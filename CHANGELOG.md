@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+### Menus are placed before the script runs
+- `.im-menu` and `.im-mega` hang from their button with CSS anchor positioning (the popover's implicit anchor, `position-anchor: auto`), so a menu opened before `im.js` has loaded no longer lands in the top-left corner and jumps. `im.js` still places it — inline, clamped to the viewport — and now also places a menu that was already open when it arrived.
+
+### Pictures ask Ghost for a modern format
+- The home hero's `<picture>` has AVIF and WebP sources at three widths; `post-hero` has a WebP width set, `sizes` and `fetchpriority="high"`; `avatar` asks for WebP.
+
 ## 0.8.0 — The channel (2026-10-09)
 
 ### The logo is the S and the dot

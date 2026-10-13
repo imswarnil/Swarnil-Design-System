@@ -141,35 +141,41 @@
 	}
 }
 
+/* The film's window. Three knobs, because how much of the band the loop
+   may take is the page's decision and not the section's:
+     --im-hero-film-size      the ellipse it shows through   (34% 52%)
+     --im-hero-film-at        where that ellipse is centred  (50% 44%)
+     --im-hero-film-opacity   how strongly it is lit         (0.26 · 0.22 dark)
+   The defaults are a small glow behind the copy. A page that wants the film
+   across the whole band, dissolving at the corners, widens the ellipse. */
 .im-hero__plate {
 	position: absolute;
 	inset: 0;
 	-webkit-mask-image: radial-gradient(
-		34% 52% at 50% 44%,
+		var(--im-hero-film-size, 34% 52%) at var(--im-hero-film-at, 50% 44%),
 		#000 0%,
 		#000 12%,
 		transparent 72%
 	);
 	mask-image: radial-gradient(
-		34% 52% at 50% 44%,
+		var(--im-hero-film-size, 34% 52%) at var(--im-hero-film-at, 50% 44%),
 		#000 0%,
 		#000 12%,
 		transparent 72%
 	);
 }
-
 .im-hero__loop {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
 	mix-blend-mode: multiply;
-	opacity: 0.26;
+	opacity: var(--im-hero-film-opacity, 0.26);
 }
 
 :root[data-theme="dark"] .im-hero__loop {
 	filter: invert(1) hue-rotate(180deg);
 	mix-blend-mode: screen;
-	opacity: 0.22;
+	opacity: var(--im-hero-film-opacity, 0.22);
 }
 
 @media (prefers-color-scheme: dark) {

@@ -75,18 +75,43 @@
 	// Only while nothing has been chosen does the system's setting still count.
 	dark.addEventListener('change', () => stored() || applyTheme());
 
+	/* THE SHUTTER. Changing theme is taking the same picture again in other
+	   light, so it is drawn as one: the page irises shut on black, and opens
+	   on the new theme a little over-exposed, settling as it widens. It is a
+	   same-document view transition named on <html> for exactly as long as
+	   it runs (motion/transition.css draws it), so it cannot leak into a
+	   page navigation. No View Transitions, or a reader who asked for less
+	   motion: the theme simply changes. */
+	const still = matchMedia('(prefers-reduced-motion: reduce)');
+	function shutter(change) {
+		if (!document.startViewTransition || still.matches) return change();
+		root.dataset.themeFx = 'shutter';
+		const done = () => delete root.dataset.themeFx;
+		try {
+			document.startViewTransition(change).finished.then(done, done);
+		} catch {
+			done();
+			change();
+		}
+	}
+
 	document.addEventListener('click', (e) => {
 		if (!e.target.closest('[data-theme-toggle]')) return;
-		store.set('theme', theme() === 'dark' ? 'light' : 'dark');
-		applyTheme();
+		const next = theme() === 'dark' ? 'light' : 'dark';
+		shutter(() => {
+			store.set('theme', next);
+			applyTheme();
+		});
 	});
 
 	// [data-theme-set="dark"] picks one outright — the two-option switcher.
 	document.addEventListener('change', (e) => {
 		const v = e.target.closest?.('[data-theme-set]')?.dataset.themeSet;
 		if (!THEMES.includes(v)) return;
-		store.set('theme', v);
-		applyTheme();
+		shutter(() => {
+			store.set('theme', v);
+			applyTheme();
+		});
 	});
 
 	applyTheme();
@@ -183,6 +208,9 @@
 		const wanted = align === 'center' ? (innerWidth - w) / 2 : align === 'start' ? b.left : b.right - w;
 		const left = Math.min(Math.max(gap, wanted), Math.max(gap, innerWidth - w - gap));
 		const below = b.bottom + gap + h <= innerHeight;
+		// The stylesheet may already have hung it from its button with CSS
+		// anchors (right edge to right edge). Left is set here, so right lets go.
+		menu.style.right = 'auto';
 		menu.style.left = `${left}px`;
 		menu.style.top = `${below ? b.bottom + gap : Math.max(gap, b.top - gap - h)}px`;
 		// Which side it ended up on, so it can arrive FROM the button rather
@@ -197,6 +225,8 @@
 				document.querySelector(`[popovertarget="${menu.id}"]`)?.setAttribute('aria-expanded', String(open));
 				if (open) place(menu);
 			});
+			// Opened before this script arrived: it missed its toggle event.
+			if (menu.matches(':popover-open')) place(menu);
 		}
 	});
 	addEventListener('resize', () => document.querySelectorAll(OPEN_POPOVERS).forEach(place));

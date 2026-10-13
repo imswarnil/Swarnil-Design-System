@@ -36,6 +36,30 @@
 	color: var(--im-body);
 }
 
+/* Placed by CSS first, for the same reason .im-menu is: the panel must not
+   wait for a deferred script to know where it belongs. Centred on the
+   viewport is arithmetic on its own width; under its button is the popover's
+   implicit anchor. im.js sets the same two values inline when it runs. */
+.im-mega[data-align="center"] {
+	left: max(var(--im-gutter), calc(50vw - var(--im-mega-width) / 2));
+}
+
+@supports (top: anchor(bottom)) {
+	.im-mega {
+		position-anchor: auto;
+		top: calc(anchor(bottom) + 0.5rem);
+	}
+
+	.im-mega:not([data-align="center"]) {
+		right: anchor(right);
+	}
+
+	.im-mega[data-align="start"] {
+		right: auto;
+		left: anchor(left);
+	}
+}
+
 .im-mega:popover-open {
 	animation: im-mega-in 180ms var(--im-ease-out);
 }

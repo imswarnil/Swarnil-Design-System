@@ -1,17 +1,26 @@
 {{!-- The picture IS the player. Play opens nothing: the frame becomes a 16:9
 	screen where it stands (9:16 on a phone), the film plays inside it and the
 	cross puts the picture back. Nothing is fetched from YouTube until play is
-	pressed; the iframe is destroyed on close. No `video`, no play button. --}}
+	pressed; the iframe is destroyed on close. No `video`, no play button.
+
+	The picture is the page's largest paint, so it is asked for the way Ghost
+	recommends: AVIF, then WebP, then the file as it was uploaded, each at
+	three widths. Ghost converts on request; an upload it cannot convert (an
+	SVG, a GIF) comes back unchanged and the browser falls through. --}}
 <div class="im-hero__photo">
 	<figure class="im-hero__frame">
 		<div class="im-hero__mount" data-stage data-stage-video="{{video}}" data-stage-video-portrait="{{video_portrait}}">
 			<div class="im-hero__still">
 				{{#if @site.logo}}
 					<picture class="im-hero__image im-hero__image--logo">
+						<source type="image/avif" srcset="{{img_url @site.logo size="m" format="avif"}} 750w, {{img_url @site.logo size="l" format="avif"}} 1140w, {{img_url @site.logo size="xl" format="avif"}} 1920w" sizes="(min-width: 56rem) 40vw, 92vw">
+						<source type="image/webp" srcset="{{img_url @site.logo size="m" format="webp"}} 750w, {{img_url @site.logo size="l" format="webp"}} 1140w, {{img_url @site.logo size="xl" format="webp"}} 1920w" sizes="(min-width: 56rem) 40vw, 92vw">
 						<img src="{{img_url @site.logo size="l"}}" srcset="{{img_url @site.logo size="m"}} 750w, {{img_url @site.logo size="l"}} 1140w, {{img_url @site.logo size="xl"}} 1920w" sizes="(min-width: 56rem) 40vw, 92vw" alt="{{@site.title}}" width="1140" height="1425" fetchpriority="high" decoding="async">
 					</picture>
 				{{else if @site.cover_image}}
 					<picture class="im-hero__image">
+						<source type="image/avif" srcset="{{img_url @site.cover_image size="m" format="avif"}} 750w, {{img_url @site.cover_image size="l" format="avif"}} 1140w, {{img_url @site.cover_image size="xl" format="avif"}} 1920w" sizes="(min-width: 56rem) 40vw, 92vw">
+						<source type="image/webp" srcset="{{img_url @site.cover_image size="m" format="webp"}} 750w, {{img_url @site.cover_image size="l" format="webp"}} 1140w, {{img_url @site.cover_image size="xl" format="webp"}} 1920w" sizes="(min-width: 56rem) 40vw, 92vw">
 						<img src="{{img_url @site.cover_image size="l"}}" srcset="{{img_url @site.cover_image size="m"}} 750w, {{img_url @site.cover_image size="l"}} 1140w, {{img_url @site.cover_image size="xl"}} 1920w" sizes="(min-width: 56rem) 40vw, 92vw" alt="{{@site.title}}" width="1140" height="1425" fetchpriority="high" decoding="async">
 					</picture>
 				{{/if}}
