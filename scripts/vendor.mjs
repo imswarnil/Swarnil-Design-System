@@ -83,14 +83,23 @@ for (const name of ICONS) {
 	fs.writeFileSync(path.join(iconsOut, `${name}.hbs`), `${svg}\n`);
 }
 
+/* Brands Simple Icons no longer carries (a trademark asked them to) are
+   DRAWN HERE, in the same filled 24px style: a rounded tile with the
+   letters knocked out of it. Original drawings, not traced. */
+const DRAWN = {
+	// LinkedIn: the tile, the dot and stem of an i, and an n with its arch.
+	linkedin: 'M4 2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm3.3 4.2a1.6 1.6 0 1 0 0 3.2 1.6 1.6 0 0 0 0-3.2ZM5.9 10.3v8h2.8v-8H5.9Zm4.6 0v8h2.8v-4.2c0-1.1.5-1.9 1.6-1.9s1.4.8 1.4 1.9v4.2h2.8v-4.9c0-2.3-1.2-3.4-2.9-3.4-1.3 0-2.2.6-2.7 1.4h-.1l-.1-1.1h-2.8Z',
+};
+
 const si = await import('simple-icons');
 for (const [type, slug] of Object.entries(BRANDS)) {
 	const key = `si${slug[0].toUpperCase()}${slug.slice(1)}`;
 	const icon = si[key];
-	const body = icon
-		? `<svg class="im-icon im-icon-brand" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="${icon.path}"/></svg>`
-		: fs.readFileSync(path.join(iconsOut, 'link.hbs'), 'utf8').trim(); // brand not in simple-icons: a neutral link
-	if (!icon) missing.push(`brand:${type} (fell back to "link")`);
+	const d = icon?.path || DRAWN[slug];
+	const body = d
+		? `<svg class="im-icon im-icon-brand" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"${icon ? '' : ' fill-rule="evenodd"'} aria-hidden="true" focusable="false"><path d="${d}"/></svg>`
+		: fs.readFileSync(path.join(iconsOut, 'link.hbs'), 'utf8').trim(); // brand nobody draws: a neutral link
+	if (!d) missing.push(`brand:${type} (fell back to "link")`);
 	fs.writeFileSync(path.join(iconsOut, `brand-${type}.hbs`), `${body}\n`);
 }
 
