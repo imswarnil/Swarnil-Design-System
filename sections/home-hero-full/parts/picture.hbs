@@ -25,6 +25,10 @@
 					</picture>
 				{{/if}}
 
+				{{!-- Optional layers over the picture: photo_fx="tint", "scanlines",
+					or both. Decoration; gone while the film plays (hero.css §4b). --}}
+				{{#if photo_fx}}<span class="im-hero__fx" data-fx="{{photo_fx}}" aria-hidden="true"></span>{{/if}}
+
 				<div class="im-hero__stage" data-stage-slot></div>
 			</div>
 

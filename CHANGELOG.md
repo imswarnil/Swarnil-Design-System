@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### The home hero's picture takes a tint and scanlines
+- `photo_fx="tint"`, `"scanlines"` or `"tint scanlines"` on `sections/home-hero-full` lays one `.im-hero__fx` element over the still: a colour wash that drifts accent → warm → cool over twenty seconds (multiplied in the light scheme, screened in the dark), and a fine raster with a soft bar rolling down every seven seconds. Pointer-events none, hidden from assistive tech, gone while the film plays, held still under reduced motion.
+
 ### The home hero fills the first screen, centred
 - `.im-hero__grid` is now `100svh` less `--im-hero-offset` (4.5rem by default: a bar and the gutter under it; a theme with more above the hero sets it on the section), with the same padding top and bottom, so the centred row sits in the middle of the screen rather than high in it. The clock sticker moved to the picture's bottom-right corner.
 

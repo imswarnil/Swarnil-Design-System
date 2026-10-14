@@ -551,6 +551,98 @@
 	padding: clamp(1rem, 6cqi, 2.5rem);
 }
 
+/* ── 4b. Over the picture: photo_fx="tint scanlines" ─────────────────────
+   One element inside the still, over the image and under the stage; its two
+   pseudo-elements are the two layers, each switched on by a word in data-fx.
+   Decoration only: no pointer events, nothing in the accessible tree, gone
+   while the film plays, still under reduced motion. */
+.im-hero__fx {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	border-radius: inherit;
+	overflow: hidden;
+	pointer-events: none;
+}
+
+.im-hero__fx::before,
+.im-hero__fx::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	display: none;
+}
+
+/* THE TINT: a wash that drifts from the accent through warm to cool and
+   back, multiplied into the picture so the whites stay white-ish and the
+   greys take the colour. In the dark scheme it is screened instead, and
+   lighter. */
+.im-hero__fx[data-fx~="tint"]::before {
+	display: block;
+	background-color: var(--im-accent);
+	mix-blend-mode: multiply;
+	opacity: 0.22;
+	animation: im-hero-tint 20s ease-in-out infinite;
+}
+
+@keyframes im-hero-tint {
+	0%, 100% { background-color: var(--im-accent); }
+	33% { background-color: color-mix(in oklch, var(--im-accent) 40%, #f59e0b); }
+	66% { background-color: color-mix(in oklch, var(--im-accent) 30%, #3b82f6); }
+}
+
+:root[data-theme="dark"] .im-hero__fx[data-fx~="tint"]::before {
+	mix-blend-mode: screen;
+	opacity: 0.16;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme]) .im-hero__fx[data-fx~="tint"]::before {
+		mix-blend-mode: screen;
+		opacity: 0.16;
+	}
+}
+
+/* THE SCANLINES: a two-pixel raster, and a soft bright bar that rolls down
+   the frame every few seconds — a lighter cousin of a CRT. */
+.im-hero__fx[data-fx~="scanlines"]::after {
+	display: block;
+	background-image:
+		linear-gradient(to bottom, transparent 0%, rgb(255 255 255 / 0.18) 45%, rgb(255 255 255 / 0.18) 55%, transparent 100%),
+		repeating-linear-gradient(to bottom, rgb(0 0 0 / 0.07) 0 1px, transparent 1px 3px);
+	background-size: 100% 22%, 100% 3px;
+	background-repeat: no-repeat, repeat;
+	background-position: 0 -30%, 0 0;
+	mix-blend-mode: overlay;
+	animation: im-hero-roll 7s linear infinite;
+}
+
+@keyframes im-hero-roll {
+	from { background-position: 0 -30%, 0 0; }
+	to { background-position: 0 130%, 0 3px; }
+}
+
+:root[data-theme="dark"] .im-hero__fx[data-fx~="scanlines"]::after {
+	background-image:
+		linear-gradient(to bottom, transparent 0%, rgb(255 255 255 / 0.1) 45%, rgb(255 255 255 / 0.1) 55%, transparent 100%),
+		repeating-linear-gradient(to bottom, rgb(0 0 0 / 0.22) 0 1px, transparent 1px 3px);
+	mix-blend-mode: normal;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme]) .im-hero__fx[data-fx~="scanlines"]::after {
+		background-image:
+			linear-gradient(to bottom, transparent 0%, rgb(255 255 255 / 0.1) 45%, rgb(255 255 255 / 0.1) 55%, transparent 100%),
+			repeating-linear-gradient(to bottom, rgb(0 0 0 / 0.22) 0 1px, transparent 1px 3px);
+		mix-blend-mode: normal;
+	}
+}
+
+/* Gone while the film plays: the player's frame is not a picture. */
+.im-hero__mount.is-playing .im-hero__fx {
+	display: none;
+}
+
 /* ── 5. Player: the still becomes the film ─────────────────────────────── */
 
 /*
@@ -1362,6 +1454,16 @@
 	.im-hero__hand-arrow path {
 		animation: none;
 		stroke-dashoffset: 0;
+	}
+
+	/* The tint holds its first colour; the raster stays, the bar does not roll. */
+	.im-hero__fx::before,
+	.im-hero__fx::after {
+		animation: none;
+	}
+
+	.im-hero__fx[data-fx~="scanlines"]::after {
+		background-size: 0 0, 100% 3px;
 	}
 
 	.im-hero__image,
