@@ -571,6 +571,12 @@
 	position: absolute;
 	inset: 0;
 	display: none;
+	/* Arrives after the picture has developed (§4), not over a blank plate. */
+	animation: im-hero-fx-in 0.8s ease-out 1.6s both;
+}
+
+@keyframes im-hero-fx-in {
+	from { opacity: 0; }
 }
 
 /* THE TINT: a wash that drifts from the accent through warm to cool and
@@ -581,8 +587,10 @@
 	display: block;
 	background-color: var(--im-accent);
 	mix-blend-mode: multiply;
-	opacity: 0.22;
-	animation: im-hero-tint 20s ease-in-out infinite;
+	opacity: 0.14;
+	animation:
+		im-hero-fx-in 0.8s ease-out 1.6s both,
+		im-hero-tint 20s ease-in-out infinite;
 }
 
 @keyframes im-hero-tint {
@@ -593,13 +601,13 @@
 
 :root[data-theme="dark"] .im-hero__fx[data-fx~="tint"]::before {
 	mix-blend-mode: screen;
-	opacity: 0.16;
+	opacity: 0.12;
 }
 
 @media (prefers-color-scheme: dark) {
 	:root:not([data-theme]) .im-hero__fx[data-fx~="tint"]::before {
 		mix-blend-mode: screen;
-		opacity: 0.16;
+		opacity: 0.12;
 	}
 }
 
@@ -614,7 +622,9 @@
 	background-repeat: no-repeat, repeat;
 	background-position: 0 -30%, 0 0;
 	mix-blend-mode: overlay;
-	animation: im-hero-roll 7s linear infinite;
+	animation:
+		im-hero-fx-in 0.8s ease-out 1.6s both,
+		im-hero-roll 7s linear infinite;
 }
 
 @keyframes im-hero-roll {
@@ -1460,6 +1470,11 @@
 	.im-hero__fx::before,
 	.im-hero__fx::after {
 		animation: none;
+		opacity: 1;
+	}
+
+	.im-hero__fx[data-fx~="tint"]::before {
+		opacity: 0.14;
 	}
 
 	.im-hero__fx[data-fx~="scanlines"]::after {
