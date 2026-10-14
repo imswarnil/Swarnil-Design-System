@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### The home hero fills the first screen, centred
+- `.im-hero__grid` is now `100svh` less `--im-hero-offset` (4.5rem by default: a bar and the gutter under it; a theme with more above the hero sets it on the section), with the same padding top and bottom, so the centred row sits in the middle of the screen rather than high in it. The clock sticker moved to the picture's bottom-right corner.
+
 ### The home hero has a personality layer
 - `sections/home-hero-full` takes nine more optional parameters, all decoration with words on it: `pattern` (grid · dots · lines, drawn in the line colour and faded before the edges), `watermark` (one outlined word in the pixel face, drifting), `sticker_1…4` with `sticker_N_icon` (pills stuck on the picture's corners, floating), `hand` (a handwritten line with an arrow drawn in on arrival), `stamp` (words on a slowly turning ring) and `clock` + `clock_label` (the local time where the author is, kept by hero.js). On a phone the pills become a row under the picture and the note and stamp go. A site that passes none of them gets the hero exactly as before.
 

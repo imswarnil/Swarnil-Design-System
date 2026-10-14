@@ -52,8 +52,12 @@
 	align-content: center;
 	align-items: center;
 	gap: clamp(2rem, 6cqi, 5.5rem);
-	min-height: calc(100svh - 9rem);
-	padding-block: clamp(1.5rem, 5vh, 4rem) clamp(1.5rem, 4vh, 3rem);
+	/* The first screen, less what sits above the hero — the site's bar and
+	   the gutter under it. A theme that stacks more above it sets
+	   --im-hero-offset on the section. The padding is the same top and
+	   bottom, so the centred row IS centred. */
+	min-height: calc(100svh - var(--im-hero-offset, 4.5rem));
+	padding-block: clamp(1.5rem, 4vh, 3rem);
 	padding-inline: clamp(1rem, 4cqi, 4rem) clamp(1.5rem, 6cqi, 5.5rem);
 }
 
@@ -875,8 +879,8 @@
 /* The clock is a sticker with a pulse: local time where the author is, so a
    visitor knows whether a reply is likely tonight. */
 .im-hero__clock[data-at="clock"] {
-	right: -0.6rem;
-	bottom: 3.6rem;
+	right: 1.2rem;
+	bottom: -0.9rem;
 	rotate: 2deg;
 	animation: none;
 	font-variant-numeric: tabular-nums;
