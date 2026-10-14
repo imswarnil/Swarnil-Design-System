@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### The home hero has a personality layer
+- `sections/home-hero-full` takes nine more optional parameters, all decoration with words on it: `pattern` (grid · dots · lines, drawn in the line colour and faded before the edges), `watermark` (one outlined word in the pixel face, drifting), `sticker_1…4` with `sticker_N_icon` (pills stuck on the picture's corners, floating), `hand` (a handwritten line with an arrow drawn in on arrival), `stamp` (words on a slowly turning ring) and `clock` + `clock_label` (the local time where the author is, kept by hero.js). On a phone the pills become a row under the picture and the note and stamp go. A site that passes none of them gets the hero exactly as before.
+
 ### The theme switch names its effect
 - A toggle may say how the change should look: `data-theme-toggle data-theme-fx="capture"`. Two effects are the system's — `shutter` (the iris) and the new `capture` (the viewfinder flashes, the frame is taken, the new page develops out of black). `im.theme.set('dark', 'capture')` does the same from a theme's own control, a dial or a slider.
 

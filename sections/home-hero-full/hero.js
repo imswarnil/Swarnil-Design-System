@@ -31,6 +31,27 @@ for (const loop of document.querySelectorAll('[data-hero-loop]')) {
 	reduced.addEventListener('change', sync);
 }
 
+// ── 1b. The clock sticker ─────────────────────────────────────────────────
+
+/* [data-hero-clock="Europe/Budapest"] shows the time THERE, in the
+   visitor's own 24-hour or 12-hour habit, and keeps up. A zone the browser
+   does not know leaves the dashes the markup came with. */
+for (const el of document.querySelectorAll('[data-hero-clock]')) {
+	let fmt;
+	try {
+		fmt = new Intl.DateTimeFormat(undefined, { hour: 'numeric', minute: '2-digit', timeZone: el.dataset.heroClock });
+	} catch {
+		continue;
+	}
+	const tick = () => {
+		const now = new Date();
+		el.textContent = fmt.format(now);
+		el.setAttribute('datetime', now.toISOString());
+	};
+	tick();
+	setInterval(tick, 15_000);
+}
+
 // ── 2. The picture, which is also the player ──────────────────────────────
 
 /*

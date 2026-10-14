@@ -749,11 +749,251 @@
 	display: grid;
 }
 
+/* ── 6b. The personality: pattern, watermark, stickers ─────────────────
+   Every piece here is optional and arrives through a parameter
+   (parts/background, parts/stickers). None of it is load-bearing: a site
+   that passes nothing gets the hero as it was above this line. */
+
+/* The pattern is drawn with gradients in the line colour and masked to a
+   soft ellipse so it never runs into the frame or the edges of the card.
+   It sits above the film and under the grain. */
+.im-hero__pattern {
+	position: absolute;
+	inset: 0;
+	opacity: 0.55;
+	-webkit-mask-image: radial-gradient(78% 72% at 40% 50%, #000 20%, transparent 100%);
+	mask-image: radial-gradient(78% 72% at 40% 50%, #000 20%, transparent 100%);
+	color: var(--im-line);
+}
+
+.im-hero__pattern[data-pattern="grid"] {
+	background-image:
+		linear-gradient(to right, currentcolor 1px, transparent 1px),
+		linear-gradient(to bottom, currentcolor 1px, transparent 1px);
+	background-size: 2.75rem 2.75rem;
+	background-position: center;
+}
+
+.im-hero__pattern[data-pattern="dots"] {
+	background-image: radial-gradient(currentcolor 1.1px, transparent 1.4px);
+	background-size: 1.5rem 1.5rem;
+	background-position: center;
+}
+
+.im-hero__pattern[data-pattern="lines"] {
+	background-image: repeating-linear-gradient(-45deg, currentcolor 0 1px, transparent 1px 0.875rem);
+}
+
+:root[data-theme="dark"] .im-hero__pattern {
+	opacity: 0.4;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme]) .im-hero__pattern {
+		opacity: 0.4;
+	}
+}
+
+/* One word, outlined, bigger than the row, low on the copy's side with only
+   its top half showing — a horizon under the words. It is the pattern's
+   cousin: texture, not a message — so it is a stroke with no fill and about
+   a tenth of the ink's weight. */
+.im-hero__watermark {
+	position: absolute;
+	left: -0.03em;
+	bottom: -0.42em;
+	z-index: 1;
+	font-family: var(--im-font-pixel, var(--im-font-mono));
+	font-size: clamp(5rem, 22cqi, 16rem);
+	font-weight: 500;
+	line-height: 1;
+	letter-spacing: -0.02em;
+	white-space: nowrap;
+	color: transparent;
+	-webkit-text-stroke: 1px color-mix(in srgb, var(--im-ink) 11%, transparent);
+	user-select: none;
+	animation: im-hero-drift 26s ease-in-out infinite alternate;
+}
+
+@keyframes im-hero-drift {
+	from { transform: translateX(0.04em); }
+	to { transform: translateX(-0.06em); }
+}
+
+/* THE STICKERS. The photo column is the anchor; each pill is pinned to a
+   corner of it, turned a few degrees so they read as stuck on rather than
+   laid out, and floating a little at their own pace. The icon is the
+   system's 16px glyph. */
+.im-hero__photo {
+	position: relative;
+}
+
+.im-hero__sticker {
+	position: absolute;
+	z-index: 3;
+	display: inline-flex;
+	gap: 0.4rem;
+	align-items: center;
+	margin: 0;
+	padding: 0.4rem 0.7rem 0.4rem 0.6rem;
+	border: 1px solid var(--im-line);
+	border-radius: var(--im-radius-full);
+	background: color-mix(in srgb, var(--im-surface) 92%, transparent);
+	box-shadow: 0 10px 24px -14px hsl(0deg 0% 0% / 45%);
+	backdrop-filter: blur(6px);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	font-weight: 500;
+	letter-spacing: 0.02em;
+	line-height: 1;
+	color: var(--im-ink);
+	white-space: nowrap;
+	pointer-events: none;
+	animation: im-hero-float var(--im-hero-float, 6s) ease-in-out infinite alternate;
+}
+
+.im-hero__sticker > svg {
+	width: 0.875rem;
+	height: 0.875rem;
+	color: var(--im-accent);
+}
+
+/* The right border's middle belongs to the controls column (§6), and the
+   top-right corner to the stamp — so the pills take the left edge and the
+   two bottom corners, and the clock sits low on the right, under the
+   column. */
+.im-hero__sticker[data-at="tl"] { top: -0.9rem; left: -1.4rem; rotate: -5deg; --im-hero-float: 6.4s; }
+.im-hero__sticker[data-at="tr"] { top: 38%; left: -2.4rem; rotate: 4deg; --im-hero-float: 7.1s; animation-delay: -2s; }
+.im-hero__sticker[data-at="bl"] { bottom: 5.4rem; left: -1.9rem; rotate: 3deg; --im-hero-float: 5.7s; animation-delay: -1s; }
+.im-hero__sticker[data-at="br"] { bottom: -0.9rem; right: 1.6rem; rotate: -3deg; --im-hero-float: 6.9s; animation-delay: -3.4s; }
+
+@keyframes im-hero-float {
+	from { translate: 0 -3px; }
+	to { translate: 0 4px; }
+}
+
+/* The clock is a sticker with a pulse: local time where the author is, so a
+   visitor knows whether a reply is likely tonight. */
+.im-hero__clock[data-at="clock"] {
+	right: -0.6rem;
+	bottom: 3.6rem;
+	rotate: 2deg;
+	animation: none;
+	font-variant-numeric: tabular-nums;
+}
+
+.im-hero__clock-dot {
+	width: 0.5rem;
+	height: 0.5rem;
+	border-radius: 50%;
+	background: var(--im-success, #16a34a);
+	box-shadow: 0 0 0 0 color-mix(in srgb, var(--im-success, #16a34a) 50%, transparent);
+	animation: im-hero-pulse 2.2s ease-out infinite;
+}
+
+@keyframes im-hero-pulse {
+	from { box-shadow: 0 0 0 0 color-mix(in srgb, var(--im-success, #16a34a) 50%, transparent); }
+	to { box-shadow: 0 0 0 0.55rem transparent; }
+}
+
+/* The handwritten line sits under the picture's left corner, its arrow
+   drawn in on arrival (the paths carry pathLength="1"). */
+.im-hero__hand {
+	position: absolute;
+	bottom: -3.6rem;
+	left: -3.2rem;
+	z-index: 3;
+	display: grid;
+	gap: 0;
+	margin: 0;
+	rotate: -4deg;
+	color: color-mix(in srgb, var(--im-ink) 72%, transparent);
+	pointer-events: none;
+}
+
+.im-hero__hand-text {
+	font-family: var(--im-font-hand);
+	font-size: clamp(1.25rem, 2.2cqi, 1.6rem);
+	line-height: 1.1;
+	white-space: nowrap;
+}
+
+.im-hero__hand-arrow {
+	width: 5.5rem;
+	height: auto;
+	margin-left: 2rem;
+	color: var(--im-accent);
+}
+
+.im-hero__hand-arrow path {
+	stroke-dasharray: 1;
+	stroke-dashoffset: 1;
+	animation: im-hero-draw 0.9s ease-out 1.1s forwards;
+}
+
+.im-hero__hand-arrow path + path {
+	animation-delay: 1.8s;
+	animation-duration: 0.3s;
+}
+
+@keyframes im-hero-draw {
+	to { stroke-dashoffset: 0; }
+}
+
+/* The stamp: words on a ring, turning once a minute, over the picture's
+   top-right corner. */
+.im-hero__stamp {
+	position: absolute;
+	top: -2.4rem;
+	right: 1.4rem;
+	z-index: 3;
+	width: clamp(5.5rem, 11cqi, 7.5rem);
+	margin: 0;
+	pointer-events: none;
+}
+
+.im-hero__stamp > svg {
+	display: block;
+	width: 100%;
+	height: auto;
+	overflow: visible;
+	animation: im-hero-turn 48s linear infinite;
+}
+
+.im-hero__stamp-text {
+	font-family: var(--im-font-mono);
+	font-size: 10.5px;
+	font-weight: 600;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	fill: var(--im-ink);
+}
+
+.im-hero__stamp-core {
+	fill: color-mix(in srgb, var(--im-surface) 85%, transparent);
+	stroke: var(--im-line);
+	stroke-width: 1;
+}
+
+.im-hero__stamp-dot {
+	fill: var(--im-accent);
+}
+
+@keyframes im-hero-turn {
+	to { transform: rotate(360deg); }
+}
+
 /* ── 7. Arrival ────────────────────────────────────────────────────────── */
 
 .im-hero__copy > *,
 .im-hero__photo {
 	animation: im-hero-in 0.7s cubic-bezier(0.2, 0.75, 0.22, 1) both;
+}
+
+.im-hero__sticker,
+.im-hero__hand,
+.im-hero__stamp {
+	animation-fill-mode: both;
 }
 
 .im-hero__copy > :nth-child(2) {
@@ -1054,6 +1294,49 @@
 	.im-hero__bg .im-hero__plate .im-hero__loop {
 		opacity: 0.4;
 	}
+
+	/* The corners are off the screen on a phone: the pills become one row
+	   that wraps under the picture, the clock among them; the note and the
+	   stamp go, and the watermark shrinks to the width. */
+	.im-hero__photo {
+		gap: calc(var(--im-space) * 1.5);
+	}
+
+	.im-hero__sticker {
+		position: static;
+		rotate: 0deg;
+		translate: none;
+		animation: none;
+	}
+
+	.im-hero__hand,
+	.im-hero__stamp {
+		display: none;
+	}
+
+	.im-hero__watermark {
+		font-size: clamp(3rem, 20cqi, 6rem);
+	}
+}
+
+/* The phone row: the pills share one wrapping row under the frame, which
+   spans every track. Above the phone they are absolute, so this costs
+   nothing there. */
+@container (max-width: 640px) {
+	.im-hero__photo:has(.im-hero__sticker) {
+		display: flex;
+		flex-wrap: wrap;
+		gap: calc(var(--im-space) * 1);
+	}
+
+	.im-hero__photo:has(.im-hero__sticker) > .im-hero__frame {
+		flex: 1 1 100%;
+		margin-bottom: calc(var(--im-space) * 0.5);
+	}
+
+	.im-hero__photo > .im-hero__sticker {
+		flex: 0 0 auto;
+	}
 }
 
 /* ── 9. Reduced motion ────────────────────────────────────────────────── */
@@ -1064,8 +1347,17 @@
 	.im-hero__ticker-reel,
 	.im-hero__ticker-dot,
 	.im-hero__mesh,
-	.im-hero__image {
+	.im-hero__image,
+	.im-hero__watermark,
+	.im-hero__sticker,
+	.im-hero__clock-dot,
+	.im-hero__stamp > svg {
 		animation: none;
+	}
+
+	.im-hero__hand-arrow path {
+		animation: none;
+		stroke-dashoffset: 0;
 	}
 
 	.im-hero__image,

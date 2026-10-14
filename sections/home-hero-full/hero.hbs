@@ -11,6 +11,7 @@
 	  parts/copy          ticker, name, tagline, intro, role, aim, subscribe
 	  parts/picture       the picture, which becomes the player in place
 	  parts/controls      the column on the picture's right border
+	  parts/stickers      the pills, the handwritten note, the stamp, the clock
 	  hero.css  hero.js   styles and behaviour, in the same order as the parts
 	  media/              hero-loop.mp4 + .jpg poster (any seamless loop works)
 
@@ -31,6 +32,15 @@
 	  cta_label, cta_url        the button beside the subscribe form
 	  note                      small print under the form
 	  video, video_portrait     YouTube ids: wide cut, and a 9:16 cut for phones
+
+	  THE PERSONALITY — all optional; see parts/stickers and parts/background
+	  pattern                   grid · dots · lines, drawn behind everything
+	  watermark                 one huge outlined word, low in the corner
+	  sticker_1 … sticker_4     pills on the picture's corners
+	  sticker_1_icon … _4_icon  an icon name for each (partials/icons)
+	  hand                      a handwritten line with an arrow at the picture
+	  stamp                     words round a slowly turning stamp
+	  clock, clock_label        a time zone, and the words after the time
 
 	The layout needs two blocks in default.hbs:  {{{block "styles"}}} in <head>
 	and {{{block "scripts"}}} before </body>.
