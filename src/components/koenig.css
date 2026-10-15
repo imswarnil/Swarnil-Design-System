@@ -11,7 +11,8 @@
    (gallery proportions, the toggle, the audio and video players).
 
    image · gallery · bookmark · callout · toggle · button · header · signup
-   product · file · audio · video · embed · code · call-to-action · paywall */
+   product · file · audio · video · nft · before/after · embed · code
+   call-to-action · paywall */
 
 .kg-card {
 	--im-kg-radius: var(--im-radius-lg);
@@ -352,6 +353,10 @@
 /* ---- button ---- the system's button, under the editor's class names. */
 .kg-button-card {
 	display: flex;
+}
+
+.kg-button-card.kg-align-left {
+	justify-content: flex-start;
 }
 
 .kg-button-card.kg-align-center {
@@ -871,6 +876,41 @@
 	translate: 0 0.1875rem;
 }
 
+/* Sizes: the editor's large is the default above; medium and small shed
+   the caption and shrink the icon tile, so a file reads as a line. */
+.kg-file-card-medium .kg-file-card-icon {
+	width: 3.5rem;
+	min-height: 3.5rem;
+}
+
+.kg-file-card-small .kg-file-card-container {
+	padding-block: 0.375rem;
+}
+
+.kg-file-card-small .kg-file-card-contents {
+	flex-direction: row;
+	align-items: center;
+	gap: 0.75rem;
+	padding-block: 0;
+}
+
+.kg-file-card-small .kg-file-card-title {
+	font-size: var(--im-text-sm);
+}
+
+.kg-file-card-small .kg-file-card-metadata {
+	margin-top: 0;
+}
+
+.kg-file-card-small .kg-file-card-icon {
+	width: 2.5rem;
+	min-height: 2.5rem;
+}
+
+:is(.kg-file-card-medium, .kg-file-card-small) .kg-file-card-caption {
+	display: none;
+}
+
 /* ---- audio ---- */
 .kg-audio-card {
 	display: flex;
@@ -929,9 +969,27 @@
 	font-variant-numeric: tabular-nums;
 }
 
-.kg-audio-time {
+.kg-audio-time,
+.kg-video-time {
 	display: flex;
+	flex: none;
 	gap: 0.25rem;
+}
+
+/* The clock: mono, tabular, and wide enough that 9:59 → 10:00 never nudges
+   the slider beside it. */
+.kg-audio-current-time,
+.kg-audio-duration,
+.kg-video-current-time,
+.kg-video-duration {
+	min-width: 2.5em;
+	font-variant-numeric: tabular-nums;
+}
+
+.kg-audio-current-time,
+.kg-video-current-time {
+	color: var(--im-ink);
+	text-align: right;
 }
 
 :is(.kg-audio-player, .kg-video-player) button {
@@ -960,13 +1018,23 @@
 }
 
 .kg-audio-play-icon,
-.kg-audio-pause-icon {
+.kg-audio-pause-icon,
+.kg-video-play-icon,
+.kg-video-pause-icon {
 	background-color: var(--im-ink) !important;
 	color: var(--im-canvas) !important;
 }
 
-.kg-audio-playback-rate {
+.kg-audio-playback-rate,
+.kg-video-playback-rate {
 	padding-inline: 0.375rem !important;
+}
+
+.kg-audio-mute-icon,
+.kg-audio-unmute-icon,
+.kg-video-mute-icon,
+.kg-video-unmute-icon {
+	color: var(--im-muted) !important;
 }
 
 .kg-audio-seek-slider,
@@ -1024,7 +1092,11 @@
 @media (width < 32rem) {
 	.kg-audio-volume-slider,
 	.kg-audio-mute-icon,
-	.kg-audio-unmute-icon {
+	.kg-audio-unmute-icon,
+	.kg-video-volume-slider,
+	.kg-video-mute-icon,
+	.kg-video-unmute-icon,
+	.kg-video-playback-rate {
 		display: none !important;
 	}
 
@@ -1035,7 +1107,12 @@
 }
 
 /* ---- video ---- the editor's poster and big play button; once playing,
-   im-content.js hands over to the browser's own controls. */
+   im-content.js hands over to the browser's own controls. The editor's own
+   control bar is styled with the audio player's above, and stays hidden. */
+.kg-video-card {
+	position: relative;
+}
+
 .kg-video-container {
 	position: relative;
 	overflow: hidden;
@@ -1088,6 +1165,137 @@
 
 .kg-video-player-container {
 	display: none;
+}
+
+/* ---- NFT ---- a token, previewed: the picture, then a ruled foot. */
+.kg-nft-card {
+	display: flex;
+	justify-content: center;
+}
+
+.kg-nft-card-container {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	max-width: 32rem;
+	overflow: hidden;
+	border-radius: var(--im-kg-radius);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	color: var(--im-body);
+	text-decoration: none;
+	transition: box-shadow var(--im-duration-instant);
+}
+
+.kg-nft-card-container:hover,
+.kg-nft-card-container:focus-visible {
+	box-shadow: inset 0 0 0 1px var(--im-ink);
+}
+
+.kg-nft-image {
+	display: block;
+	width: 100%;
+	height: auto;
+	border-radius: 0 !important;
+	background-color: var(--im-surface-2);
+}
+
+.kg-nft-metadata {
+	display: flex;
+	flex-direction: column;
+	gap: 0.375rem;
+	padding: var(--im-kg-pad);
+}
+
+.kg-nft-header {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 1rem;
+}
+
+.kg-nft-title {
+	margin: 0;
+	color: var(--im-ink);
+	font-size: var(--im-text-base);
+	font-weight: 600;
+	line-height: 1.35;
+}
+
+.kg-nft-opensea-logo {
+	flex: none;
+	width: 1.25rem;
+	height: 1.25rem;
+}
+
+.kg-nft-creator {
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+}
+
+.kg-nft-creator span {
+	color: var(--im-ink);
+}
+
+.kg-nft-description {
+	margin: 0.25rem 0 0;
+	color: var(--im-muted);
+	font-size: var(--im-text-sm);
+	line-height: 1.5;
+}
+
+/* ---- before / after ---- two pictures stacked; the before one is clipped
+   to the handle's position, and the range over both moves it
+   (im-content.js). Without the script it rests at the middle. */
+.kg-before-after-card {
+	position: relative;
+	overflow: hidden;
+	border-radius: var(--im-kg-radius);
+	container-type: inline-size;
+	user-select: none;
+}
+
+.kg-before-after-card img {
+	display: block;
+	max-width: none;
+	height: auto;
+	border-radius: 0 !important;
+}
+
+.kg-before-after-card-image-after img {
+	width: 100%;
+}
+
+.kg-before-after-card-image-before {
+	position: absolute;
+	inset-block: 0;
+	inset-inline-start: 0;
+	z-index: 1;
+	width: 50%;
+	overflow: hidden;
+	box-shadow: 2px 0 0 var(--im-canvas);
+}
+
+.kg-before-after-card-image-before img {
+	width: 100cqi;
+}
+
+.kg-before-after-card input[type="range"] {
+	position: absolute;
+	inset: 0;
+	z-index: 2;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	background: none;
+	opacity: 0;
+	cursor: ew-resize;
+	appearance: none;
+}
+
+.kg-before-after-card:has(input[type="range"]:focus-visible) {
+	outline: 2px solid var(--im-accent);
+	outline-offset: 2px;
 }
 
 /* ---- embed ---- */

@@ -1,0 +1,112 @@
+---
+title: Prints
+description: A photograph in something that looks like a photograph — a polaroid, a strip of 35mm film, a mounted slide, a print behind a mat, a contact sheet. Drawn, not pictured, and paper-white in either theme.
+eyebrow: Content
+source: src/components/print.css
+---
+<p><a href="/content/mockups/">Mockups</a> frame a <strong>screen</strong>; prints frame a <strong>picture</strong>. Each is one class on a <code>&lt;figure&gt;</code> around an ordinary <code>&lt;img&gt;</code> and an optional <code>&lt;figcaption&gt;</code>, so the same markup works in a template, in a docs page, and pasted into an HTML card in Ghost's editor.</p>
+<p>Paper is paper and film is film in either theme: these are built from the fixed grey ramp, not from the tokens that turn over in dark mode. A polaroid is white on a black page too — switch the theme and look.</p>
+
+<h2>Polaroid</h2>
+<p>A square print on an instant-film border, a degree and a half off true. It straightens under the pointer. <code>im-print-pile</code> lays several side by side, each at its own angle.</p>
+{{#example}}
+<div class="im-print-pile">
+	<figure class="im-print im-print-polaroid">
+		<img src="{{demo.six.[0].feature_image}}" alt="A coastal road at dusk" loading="lazy">
+		<figcaption>Day one · Sorrento</figcaption>
+	</figure>
+	<figure class="im-print im-print-polaroid">
+		<img src="{{demo.six.[1].feature_image}}" alt="A harbour from above" loading="lazy">
+		<figcaption>Positano</figcaption>
+	</figure>
+	<figure class="im-print im-print-polaroid">
+		<img src="{{demo.six.[2].feature_image}}" alt="A hillside village" loading="lazy">
+		<figcaption>Ravello, finally</figcaption>
+	</figure>
+</div>
+{{/example}}
+
+<h2>Film</h2>
+<p>A strip of 35mm negative. The figure <em>is</em> the strip: one picture is one frame, several sit side by side, and a strip wider than its column scrolls rather than shrinking them to stamps. The sprocket holes are the page's own colour — holes show what is behind them — and travel with the frames. The caption is edge print, amber on the rebate.</p>
+{{#example}}
+<figure class="im-print im-print-film">
+	<img src="{{demo.six.[3].feature_image}}" alt="" loading="lazy">
+	<img src="{{demo.six.[4].feature_image}}" alt="" loading="lazy">
+	<img src="{{demo.six.[5].feature_image}}" alt="" loading="lazy">
+	<figcaption>Portra 400 · roll 12</figcaption>
+</figure>
+{{/example}}
+
+<h2>Slide</h2>
+<p>A mounted transparency: a square card with a 3:2 window, the label on the mount and the orientation dot a projectionist loads by, in the accent.</p>
+{{#example}}
+<figure class="im-print im-print-slide">
+	<img src="{{demo.three.[0].feature_image}}" alt="A village on a cliff above the sea" loading="lazy">
+	<figcaption>Amalfi · 1998</figcaption>
+</figure>
+{{/example}}
+
+<h2>Mat</h2>
+<p>A print behind a deep mat inside a thin dark moulding, with the bevel drawn as a hairline just off the picture. The one for a single photograph that deserves the wall.</p>
+{{#example}}
+<figure class="im-print im-print-mat im-max-md">
+	<img src="{{demo.three.[1].feature_image}}" alt="A lake under mountains" loading="lazy">
+	<figcaption>The lake, before anyone was up</figcaption>
+</figure>
+{{/example}}
+
+<h2>Contact sheet</h2>
+<p>Every frame of a roll on black, numbered in edge print, with the one chosen off the sheet ringed in the accent — <code>im-print-pick</code> on that frame. The children can be pictures, links (to open them in the <a href="/media/gallery/">lightbox</a>, put <code>data-im-lightbox</code> on the sheet) or figures.</p>
+{{#example}}
+<figure class="im-print im-print-contact" data-im-lightbox>
+	<a href="{{demo.six.[0].feature_image}}"><img src="{{demo.six.[0].feature_image}}" alt="" loading="lazy"></a>
+	<a href="{{demo.six.[1].feature_image}}"><img src="{{demo.six.[1].feature_image}}" alt="" loading="lazy"></a>
+	<a class="im-print-pick" href="{{demo.six.[2].feature_image}}"><img src="{{demo.six.[2].feature_image}}" alt="" loading="lazy"></a>
+	<a href="{{demo.six.[3].feature_image}}"><img src="{{demo.six.[3].feature_image}}" alt="" loading="lazy"></a>
+	<a href="{{demo.six.[4].feature_image}}"><img src="{{demo.six.[4].feature_image}}" alt="" loading="lazy"></a>
+	<a href="{{demo.six.[5].feature_image}}"><img src="{{demo.six.[5].feature_image}}" alt="" loading="lazy"></a>
+	<figcaption>Roll 12 · Amalfi coast</figcaption>
+</figure>
+{{/example}}
+
+<h2>Camera data</h2>
+<p><code>im-print-exif</code> sets a line of camera data — body, lens, aperture, shutter, ISO — in mono, joined by a middle dot. Put it inside any caption. In a post body that uses <a href="/content/media/">the photo essay modifier</a>, anything in <code>code</code> inside an image card's caption is set the same way, so an author writes it with backticks in the editor.</p>
+{{#example}}
+<figure class="im-print im-print-mat im-max-md">
+	<img src="{{demo.three.[2].feature_image}}" alt="A road through a valley" loading="lazy">
+	<figcaption>The road down <span class="im-print-exif"><span>X100V</span><span>23mm</span><span>f/5.6</span><span>1/500</span><span>ISO 160</span></span></figcaption>
+</figure>
+{{/example}}
+
+<h2>In Ghost's editor</h2>
+<p>An image card's alt text and caption cannot carry a class, so a framed picture in a post is an <strong>HTML card</strong>. Paste the markup, point the <code>src</code> at a picture you have uploaded, and add <code>kg-width-wide</code> to the figure to break it out of the text column the way the editor's own wide cards do:</p>
+{{{{code "html"}}}}
+<figure class="im-print im-print-polaroid kg-width-wide">
+  <img src="/content/images/2026/10/positano.jpg" alt="Positano from the road">
+  <figcaption>Positano</figcaption>
+</figure>
+{{{{/code}}}}
+<p>A theme that strips unused CSS has to keep the <code>im-print-</code> prefix, since a class typed into a post is invisible to a scan of the templates.</p>
+
+<h2>Parts and knobs</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th></th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>im-print</code></td><td>The frame. <code>-polaroid</code> · <code>-film</code> · <code>-slide</code> · <code>-mat</code> · <code>-contact</code>.</td></tr>
+		<tr><td><code>im-print-pile</code></td><td>Several prints side by side, at alternating angles.</td></tr>
+		<tr><td><code>im-print-pick</code></td><td>A frame on a contact sheet, ringed.</td></tr>
+		<tr><td><code>im-print-exif</code></td><td>A caption line of camera data; one <code>&lt;span&gt;</code> per value.</td></tr>
+		<tr><td><code>--im-print-width</code></td><td>How wide a print may be: 22rem for a polaroid, 18rem for a slide, the column for the rest.</td></tr>
+		<tr><td><code>--im-print-paper</code> · <code>--im-print-film</code> · <code>--im-print-edge</code></td><td>The paper, the film base, and the edge print's colour.</td></tr>
+		<tr><td><code>--im-print-tilt</code> · <code>--im-print-frame</code></td><td>A polaroid's angle; how wide one frame of film is before the strip scrolls.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>Using them</h2>
+<ul>
+	<li><strong>One kind of frame per page.</strong> A polaroid beside a slide beside a contact sheet is a scrapbook, not a layout.</li>
+	<li><strong>Write the <code>alt</code> for the photograph</strong>, never for the frame.</li>
+	<li><strong>A pile is three to five.</strong> Past that it is a gallery; use one.</li>
+</ul>

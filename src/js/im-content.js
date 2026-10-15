@@ -7,6 +7,7 @@
  *   toggle    .kg-toggle-card opens and closes, and says so to assistive tech
  *   audio     the editor's player markup, wired to its <audio>
  *   video     the big play button, then the browser's own controls
+ *   compare   .kg-before-after-card's range moves the line between the two
  *   tables    wrapped in .im-table-scroll so a wide one scrolls in its own box
  *   zoom      <section class="im-content" data-im-zoom> turns each picture into
  *             an .im-zoom-link — a frame mark in the corner, the lightbox
@@ -118,6 +119,18 @@
 				video.controls = true;
 				video.play();
 			});
+		}
+	});
+
+	/* ── before / after ────────────────────────────────────────────────── */
+	setups.push(() => {
+		for (const card of fresh('.kg-before-after-card')) {
+			const range = card.querySelector('input[type="range"]');
+			const before = card.querySelector('.kg-before-after-card-image-before');
+			if (!range || !before) continue;
+			const move = () => before.style.setProperty('width', `${range.value}%`);
+			range.addEventListener('input', move);
+			move();
 		}
 	});
 

@@ -152,6 +152,7 @@ export const navigation = [
 			{ label: 'Media cards', url: '/content/media/' },
 			{ label: 'Editor cards', url: '/content/cards/' },
 			{ label: 'Mockups', url: '/content/mockups/' },
+			{ label: 'Prints', url: '/content/prints/' },
 		],
 	},
 	{

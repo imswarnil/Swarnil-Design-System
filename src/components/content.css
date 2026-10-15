@@ -227,3 +227,55 @@
 	text-decoration-thickness: 2px;
 	text-underline-offset: 0.25em;
 }
+
+/* ---- a photo essay ----
+   <section class="im-content im-content-photo">{{content}}</section>
+
+   The pictures carry the piece, so they get the room: an ordinary image or
+   gallery card reaches out to "wide", a wide one to "full", every picture
+   stands off the text by twice the rhythm, and the corners go nearly square,
+   the way a print's are. Captions read as photo captions — small, mono, set
+   under the picture's left edge rather than centred under it — and anything
+   in `code` inside one (backticks in the editor's caption) is the camera data,
+   on its own line, the way im-print-exif sets it. */
+.im-content-photo {
+	--im-flow: 1.625rem;
+}
+
+.im-content.im-content-photo > :is(.kg-image-card, .kg-gallery-card, .kg-video-card):not(.kg-width-wide, .kg-width-full) {
+	grid-column: wide;
+}
+
+.im-content.im-content-photo > :is(.kg-image-card, .kg-gallery-card, .kg-video-card).kg-width-wide {
+	grid-column: full;
+}
+
+.im-content.im-content-photo > :is(.kg-image-card, .kg-gallery-card, .kg-video-card),
+.im-content.im-content-photo > :is(.kg-image-card, .kg-gallery-card, .kg-video-card) + * {
+	margin-top: calc(var(--im-flow) * 2);
+}
+
+.im-content-photo .kg-image-card img,
+.im-content-photo .kg-gallery-image img {
+	width: 100%;
+	border-radius: var(--im-radius-xs);
+}
+
+.im-content-photo .kg-card figcaption {
+	max-width: var(--im-width-prose);
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	letter-spacing: var(--im-tracking-wide);
+	text-align: left;
+}
+
+.im-content-photo .kg-card figcaption code {
+	display: block;
+	margin-top: 0.25rem;
+	padding: 0;
+	background: none;
+	color: var(--im-faint);
+	font-size: inherit;
+	word-spacing: 0.25em;
+}

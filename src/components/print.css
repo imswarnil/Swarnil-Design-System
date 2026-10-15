@@ -1,0 +1,329 @@
+/* Prints — a photograph in something that looks like a photograph.
+
+     <figure class="im-print im-print-polaroid">
+       <img src="…" alt="…">
+       <figcaption>Positano, the morning after</figcaption>
+     </figure>
+
+   mockup.css frames a SCREEN; this frames a PICTURE. Five of them:
+
+     polaroid   a square print on a white instant-film border, a little askew
+     film       a strip of 35mm negative — one frame or several, sprockets
+                top and bottom, the caption edge-printed on the rebate
+     slide      a mounted transparency: a square card with a 3:2 window
+     mat        a print behind a deep mat inside a thin dark moulding
+     contact    a contact sheet: every frame of a roll on black, numbered,
+                with the chosen one ringed (im-print-pick)
+
+   Paper is paper and film is film in either theme, so these are built from
+   the FIXED grey ramp, not the semantic tokens that turn over in dark mode: a
+   polaroid is white on a black page too. Nothing here is a picture of a
+   product; every shape is drawn.
+
+   Pile several polaroids in an im-print-pile and they lie at alternating
+   angles; each straightens under the pointer (not under reduced motion).
+
+   im-print-exif is a caption line of camera data — body, lens, aperture,
+   shutter, ISO — set in mono and joined with a middle dot:
+     <figcaption>Ravello <span class="im-print-exif"><span>X100V</span><span>23mm</span><span>f/5.6</span></span></figcaption>
+
+   Knobs: --im-print-paper, --im-print-film, --im-print-edge (the edge print's
+   colour), --im-print-width (how wide a print may be), --im-print-tilt. */
+
+.im-print {
+	--im-print-paper: var(--im-gray-50);
+	--im-print-film: var(--im-gray-950);
+	--im-print-edge: var(--im-warning);
+
+	position: relative;
+	display: block;
+	box-sizing: border-box;
+	width: min(var(--im-print-width, 100%), 100%);
+	margin-inline: auto;
+}
+
+.im-print img {
+	display: block;
+	width: 100%;
+	height: auto;
+	max-width: none;
+	margin: 0;
+	border-radius: 0;
+}
+
+.im-print figcaption {
+	margin: 0;
+	padding: 0;
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	letter-spacing: var(--im-tracking-wide);
+	line-height: 1.4;
+	text-align: center;
+}
+
+/* ---- polaroid ---- */
+.im-print-polaroid {
+	--im-print-width: 22rem;
+	--im-print-lip: 3.25rem;
+
+	padding: 0.75rem 0.75rem var(--im-print-lip);
+	border-radius: 0.125rem;
+	background-color: var(--im-print-paper);
+	box-shadow:
+		0 0 0 1px color-mix(in oklab, var(--im-gray-950) 8%, transparent),
+		var(--im-shadow-float);
+	color: var(--im-gray-700);
+	rotate: var(--im-print-tilt, -1.5deg);
+	transition: rotate var(--im-duration-slow) var(--im-ease-out), translate var(--im-duration-slow) var(--im-ease-out);
+}
+
+.im-print-polaroid img {
+	aspect-ratio: 1;
+	object-fit: cover;
+	background-color: var(--im-gray-200);
+}
+
+.im-print-polaroid > figcaption {
+	position: absolute;
+	inset: auto 0.75rem 0;
+	display: grid;
+	place-items: center;
+	height: var(--im-print-lip);
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+	.im-print-polaroid:hover {
+		rotate: 0deg;
+		translate: 0 -0.25rem;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.im-print-polaroid {
+		transition: none;
+	}
+}
+
+/* A pile: prints side by side, each at its own angle. */
+.im-print-pile {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: clamp(1rem, 3vw, 2rem);
+	padding-block: 1rem;
+}
+
+.im-print-pile > .im-print {
+	--im-print-width: 15rem;
+
+	flex: 0 1 var(--im-print-width);
+	margin: 0;
+}
+
+.im-print-pile > .im-print:nth-child(3n + 2) { --im-print-tilt: 2deg; }
+.im-print-pile > .im-print:nth-child(3n + 3) { --im-print-tilt: -0.75deg; }
+
+/* ---- film ----
+   The strip IS the figure: its pictures are frames side by side, and a wide
+   strip scrolls rather than shrinking them to stamps. The sprocket holes are
+   a tiled two-stop gradient in the page's own colour — holes in the film show
+   what is behind it — attached LOCALLY, so they travel with the frames when
+   the strip scrolls. */
+.im-print-film {
+	--im-print-band: 1.5rem;
+	--im-print-hole: 0.5rem;
+	--im-print-frame: 15rem;
+	--im-print-hole-at: calc((var(--im-print-band) - var(--im-print-hole)) / 2);
+
+	display: flex;
+	gap: 0.375rem;
+	padding: var(--im-print-band) 0.375rem;
+	overflow-x: auto;
+	border-radius: 0.125rem;
+	background:
+		linear-gradient(to right, var(--im-canvas) 0 55%, transparent 55%) 0 var(--im-print-hole-at) / 1rem var(--im-print-hole) repeat-x local,
+		linear-gradient(to right, var(--im-canvas) 0 55%, transparent 55%) 0 calc(100% - var(--im-print-hole-at)) / 1rem var(--im-print-hole) repeat-x local,
+		var(--im-print-film);
+	scroll-snap-type: x proximity;
+	scrollbar-width: thin;
+}
+
+.im-print-film > :is(img, a, picture, figure) {
+	flex: 1 0 min(var(--im-print-frame), 80%);
+	min-width: 0;
+	margin: 0;
+	scroll-snap-align: start;
+}
+
+.im-print-film img {
+	aspect-ratio: 3 / 2;
+	object-fit: cover;
+	border-radius: 0.125rem;
+}
+
+/* The caption is edge print: small, amber, on the rebate under the frames. */
+.im-print-film > figcaption {
+	position: absolute;
+	bottom: 0;
+	left: 1.5rem;
+	display: flex;
+	align-items: center;
+	height: var(--im-print-band);
+	padding-inline: 0.5rem;
+	background-color: var(--im-print-film);
+	color: var(--im-print-edge);
+	font-size: 0.625rem;
+	text-transform: uppercase;
+	white-space: nowrap;
+	pointer-events: none;
+}
+
+/* ---- slide ---- */
+.im-print-slide {
+	--im-print-width: 18rem;
+
+	display: grid;
+	place-items: center;
+	aspect-ratio: 1;
+	padding: 14%;
+	border-radius: var(--im-radius-md);
+	background-image: linear-gradient(160deg, var(--im-gray-50), var(--im-gray-200));
+	box-shadow:
+		inset 0 0 0 1px var(--im-gray-300),
+		inset 0 0.125rem 0 var(--im-on-media),
+		var(--im-shadow-float);
+	color: var(--im-gray-600);
+}
+
+.im-print-slide img {
+	aspect-ratio: 3 / 2;
+	object-fit: cover;
+	border-radius: var(--im-radius-xs);
+	outline: 1px solid var(--im-gray-400);
+}
+
+.im-print-slide > figcaption {
+	position: absolute;
+	inset: 5% 14% auto;
+	overflow: hidden;
+	font-size: 0.625rem;
+	text-transform: uppercase;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+/* The orientation dot a projectionist loads by. */
+.im-print-slide::after {
+	content: "";
+	position: absolute;
+	bottom: 6%;
+	left: 7%;
+	width: 0.5rem;
+	height: 0.5rem;
+	border-radius: 50%;
+	background-color: var(--im-accent);
+}
+
+/* ---- mat ---- */
+.im-print-mat {
+	padding: clamp(1rem, 7%, 3.5rem);
+	border: clamp(0.375rem, 1.4%, 0.75rem) solid var(--im-gray-900);
+	background-color: var(--im-print-paper);
+	box-shadow: var(--im-shadow-float);
+	color: var(--im-gray-600);
+}
+
+/* The bevel: the mat's cut edge, a hairline just off the picture. */
+.im-print-mat img {
+	outline: 1px solid var(--im-gray-300);
+	outline-offset: 0.3125rem;
+}
+
+.im-print-mat > figcaption {
+	margin-top: clamp(1rem, 4%, 1.75rem);
+}
+
+/* ---- contact sheet ---- */
+.im-print-contact {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(10rem, 42%), 1fr));
+	gap: 0.25rem 0.375rem;
+	padding: clamp(0.5rem, 2vw, 1.25rem);
+	border-radius: 0.125rem;
+	background-color: var(--im-print-film);
+	counter-reset: im-print-frame;
+}
+
+.im-print-contact > :not(figcaption) {
+	position: relative;
+	display: block;
+	min-width: 0;
+	margin: 0;
+	padding-bottom: 1.25rem;
+	counter-increment: im-print-frame;
+}
+
+/* The frame number, edge-printed under each frame. ::before, so a link that
+   draws its own mark in ::after keeps it. */
+.im-print-contact > :not(figcaption)::before {
+	content: counter(im-print-frame) "A";
+	position: absolute;
+	bottom: 0.1875rem;
+	left: 0.125rem;
+	color: var(--im-print-edge);
+	font-family: var(--im-font-mono);
+	font-size: 0.625rem;
+	letter-spacing: var(--im-tracking-wide);
+}
+
+.im-print-contact img {
+	aspect-ratio: 3 / 2;
+	object-fit: cover;
+	transition: filter var(--im-duration-base);
+}
+
+@media (hover: hover) {
+	.im-print-contact:hover > :not(:hover) img {
+		filter: brightness(0.6);
+	}
+}
+
+.im-print-contact > figcaption {
+	grid-column: 1 / -1;
+	padding-top: 0.5rem;
+	color: var(--im-print-edge);
+	text-align: left;
+	text-transform: uppercase;
+}
+
+/* The pick: the frame chosen off the sheet, ringed in grease pencil. */
+.im-print-pick img {
+	outline: 0.1875rem solid var(--im-accent);
+	outline-offset: 0.1875rem;
+	border-radius: var(--im-radius-md);
+}
+
+/* ---- camera data ---- */
+.im-print-exif {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: inherit;
+	gap: 0.125rem 0;
+	color: var(--im-muted);
+	font-family: var(--im-font-mono);
+	font-size: var(--im-text-xs);
+	letter-spacing: var(--im-tracking-wide);
+}
+
+.im-print-exif > * + *::before {
+	content: "·";
+	margin-inline: 0.5rem;
+	opacity: 0.6;
+}
+
+figcaption > .im-print-exif {
+	margin-top: 0.25rem;
+}

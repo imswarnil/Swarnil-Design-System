@@ -4,7 +4,7 @@ description: A screenshot in something that looks like a screen — a desktop wi
 eyebrow: Content
 source: src/components/mockup.css
 ---
-<p>Four frames. Each is a hairline, one radius from the scale, one shadow and a line of light along the top edge — and nothing else. There is no 400KB PNG of a laptop on a desk, no brand in the corner, and no device that will look three years old in three years.</p>
+<p>Seven frames. Each is a hairline, one radius from the scale, one shadow and a line of light along the top edge — and nothing else. There is no 400KB PNG of a laptop on a desk, no brand in the corner, and no device that will look three years old in three years.</p>
 
 <h2>Window</h2>
 <p>The plain desktop window: three dots, a centred title, the screen. The title is centred against the <strong>window</strong>, not against what is left after the dots — which is what an auto margin gives you, and is off by the width of the dots.</p>
@@ -68,6 +68,25 @@ source: src/components/mockup.css
 {{/example}}
 <p>The island and the home bar are drawn <em>on</em> the screen rather than cut out of it, which is what they look like in life — and it means the screen can be any picture, any markup, or a live component, without a hole punched through it.</p>
 
+<h2>Laptop and television</h2>
+<p>A laptop is the screen in a dark lid standing on a deck, the deck a little wider than the lid — so the frame keeps a margin each side and the deck never pokes past its column. A television is a deep case on a foot, black glass in either theme. Either holds a picture, a <code>&lt;video&gt;</code>, or a whole <a href="/media/video/">player</a>, which fills the screen and gives up its own corners.</p>
+{{#example}}
+<div class="im-grid-auto im-grid-lg im-grid-start">
+	<figure class="im-mock im-mock-laptop">
+		<div class="im-mock-body"><img src="{{demo.six.[3].feature_image}}" alt="" loading="lazy"></div>
+	</figure>
+	<figure class="im-mock im-mock-tv">
+		<div class="im-mock-body"><img src="{{demo.six.[4].feature_image}}" alt="" loading="lazy"></div>
+	</figure>
+</div>
+{{/example}}
+<p><code>im-mock-crt</code> with <code>im-mock-tv</code> is the older set: 4:3, a rounder bulging glass, a vignette and fine scanlines over whatever is on it. The lines never take a click, so a player under them still plays.</p>
+{{#example}}
+<figure class="im-mock im-mock-tv im-mock-crt im-max-md im-mx-auto">
+	<div class="im-mock-body"><img src="{{demo.six.[5].feature_image}}" alt="" loading="lazy"></div>
+</figure>
+{{/example}}
+
 <h2>Real markup inside one</h2>
 <p><code>im-mock-body-pad</code> drops the fixed ratio and gives the content room, so the frame can hold the actual thing rather than a picture of it. This is how the docs show a component at phone width without a screenshot to keep in step.</p>
 {{#example}}
@@ -104,7 +123,7 @@ source: src/components/mockup.css
 <table>
 	<thead><tr><th></th><th></th></tr></thead>
 	<tbody>
-		<tr><td><code>im-mock</code></td><td>The frame. <code>-mac</code> · <code>-browser</code> · <code>-terminal</code> · <code>-phone</code> · <code>-tablet</code>.</td></tr>
+		<tr><td><code>im-mock</code></td><td>The frame. <code>-mac</code> · <code>-browser</code> · <code>-terminal</code> · <code>-phone</code> · <code>-tablet</code> · <code>-laptop</code> · <code>-tv</code> (and <code>-crt</code> with it).</td></tr>
 		<tr><td><code>im-mock-bar</code></td><td>The title bar. Holds <code>im-mock-dots</code>, <code>im-mock-title</code>, <code>im-mock-url</code> and an <code>im-mock-end</code> for a control at the far end.</td></tr>
 		<tr><td><code>im-mock-tabs</code></td><td>A row of <code>im-mock-tab</code>s above the bar. The open one carries <code>aria-current="page"</code>.</td></tr>
 		<tr><td><code>im-mock-body</code></td><td>The screen. It holds the ratio, so an image that has not loaded leaves the frame exactly the right shape.</td></tr>
