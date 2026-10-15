@@ -84,7 +84,8 @@
 	   motion: the theme simply changes. */
 	const still = matchMedia('(prefers-reduced-motion: reduce)');
 	/* `fx` names the look (data-theme-fx on <html> while it runs). The system
-	   draws two — "shutter" and "capture", a camera taking a frame — and a
+	   draws three — "shutter", "capture" (a camera taking a frame) and
+	   "fade", a plain crossfade — and a
 	   theme may draw its own and name it on the toggle: data-theme-fx="…". */
 	function shutter(change, fx = 'shutter') {
 		if (!document.startViewTransition || still.matches) return change();

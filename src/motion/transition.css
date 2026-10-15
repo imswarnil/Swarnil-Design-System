@@ -362,6 +362,17 @@
 	to { clip-path: circle(72% at 50% 50%); filter: brightness(1); }
 }
 
+/* ---- the fade: light ⇄ dark, and nothing else ----------------------------------
+   data-theme-fx="fade" — the quiet one. The old page and the new one simply
+   cross over each other in a quarter of a second: no black between them, no
+   iris, no flash — the browser's own crossfade, only shorter and eased. For
+   a site that wants the switch to be felt, not seen. */
+:root[data-theme-fx="fade"]::view-transition-old(root),
+:root[data-theme-fx="fade"]::view-transition-new(root) {
+	animation-duration: 0.28s;
+	animation-timing-function: var(--im-ease-out, ease-out);
+}
+
 /* ---- the capture: light ⇄ dark, as a camera taking the frame -------------------
    data-theme-fx="capture" — named on the toggle (data-theme-toggle
    data-theme-fx="capture"), or passed to im.theme.set(name, 'capture'). The
