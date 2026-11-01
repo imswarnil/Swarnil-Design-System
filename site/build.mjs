@@ -593,6 +593,7 @@ export async function build({ quiet = false } = {}) {
 	const HOST = 'design.imswarnil.com';
 	fs.writeFileSync(path.join(DIST, 'CNAME'), `${HOST}\n`);
 	fs.writeFileSync(path.join(DIST, '.nojekyll'), '');
+	fs.copyFileSync(path.join(ROOT, 'ads.txt'), path.join(DIST, 'ads.txt'));
 	fs.writeFileSync(path.join(DIST, 'robots.txt'), `User-agent: *\nAllow: /\n`);
 	log(`  pages    ${count} · ${sections.length} section(s) · ${icons.length} icons · ${tokens.count} tokens`);
 	if (ghost.warnings.size === 0) log('  helpers  every Ghost helper the partials use is modelled');
