@@ -593,3 +593,11 @@
 .im-navtree-panel .im-navcol-subtitle { margin: 0.5rem 0 0.125rem; color: var(--im-muted); font-size: var(--im-text-xs); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
 .im-navpanel-about { display: grid; gap: 0.625rem; padding: 1rem 0 0; border-top: 1px solid var(--im-line); color: var(--im-muted); font-size: var(--im-text-sm); }
 .im-navpanel-about b { color: var(--im-ink); }
+
+/* Concept › Thumbnails: the same thumbnail at full size and at the 168px a
+   phone's "up next" list draws it, for the squint test. Docs-only. */
+.thumb-scale { display: flex; flex-wrap: wrap; align-items: end; gap: 1.5rem; }
+.thumb-scale > :first-child { flex: 1 1 24rem; }
+.thumb-scale > .thumb-tiny { flex: none; width: 168px; }
+.thumb-scale figcaption, .thumb-note { margin-top: 0.5rem; color: var(--im-muted); font: 0.75rem/1.4 var(--im-font-mono); }
+.thumb-gray { filter: grayscale(1); }

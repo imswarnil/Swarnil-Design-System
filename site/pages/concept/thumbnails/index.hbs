@@ -1,0 +1,210 @@
+---
+title: Thumbnails
+description: A thumbnail is a poster that gets a third of a second, at 168 pixels wide, to make one promise. This is the system behind every thumbnail on the channel — the principles it borrows from Apple, the four layers, the sixteen-by-nine grid, the words, the formatting, and the checks before upload.
+eyebrow: Concept
+source: src/components/poster.css
+---
+{{#example code=false}}
+<div class="im-grid-auto im-grid-md">
+	<figure class="im-poster im-poster-face">
+		<img class="im-poster-subject im-poster-arch" src="/assets/brand/portrait.jpg" alt="">
+		<span class="im-poster-chip">day 12 · vienna</span>
+		<strong class="im-poster-word">tram<br>therapy<i class="im-poster-dot"></i></strong>
+		<span class="im-poster-time">14:08</span>
+	</figure>
+	<figure class="im-poster im-poster-place">
+		<img class="im-poster-media" src="https://images.unsplash.com/photo-1499678329028-101435549a4e?auto=format&fit=crop&w=1280&h=720&q=75" alt="">
+		<span class="im-poster-bar"></span>
+		<span class="im-poster-chip im-poster-chip-paper">cinque terre</span>
+		<strong class="im-poster-word">five villages<i class="im-poster-dot"></i></strong>
+		<span class="im-poster-time">21:40</span>
+	</figure>
+	<figure class="im-poster im-poster-icon">
+		<span class="im-poster-chip">field notes</span>
+		<span class="im-poster-ep">EP 04</span>
+		<span class="im-poster-glyph">{{icon "lightbulb"}}</span>
+		<strong class="im-poster-word">ideas you can ship</strong>
+		<span class="im-poster-time">09:12</span>
+	</figure>
+</div>
+{{/example}}
+
+<p>Nobody reads a thumbnail. They <em>see</em> one — in a list, on a phone, between two other videos, for about as long as it takes to scroll past it. So a thumbnail is not a small poster of the video; it is a <strong>sign</strong>, and it has three jobs, in order: be recognisable as this channel, make one clear promise, and keep that promise honest.</p>
+<p>The way to do the first job is to stop designing thumbnails one at a time. Every thumbnail here is built from the same <strong>four layers</strong>, laid on the same <strong>16 × 9 grid</strong>, in the same <strong>two typefaces and one red</strong>. Eleven <a href="/concept/thumbnails/types/">types</a> decide where the layers go. That is the whole system; the rest of this page is why.</p>
+
+<h2>Six principles, borrowed from Apple</h2>
+<p>Apple's Human Interface Guidelines have long rested on three ideas — <b>clarity</b>, <b>deference</b> and <b>depth</b> — and its 2025 design language added three more it asks of every surface: <b>hierarchy</b>, <b>harmony</b> and <b>consistency</b>. None of them were written for thumbnails. All six translate, and each one turns into a rule you can check.</p>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Principle</th><th>What it means on a thumbnail</th><th>The rule</th></tr></thead>
+	<tbody>
+		<tr><td><b>Clarity</b></td><td>It must read at 168px wide, the size of a phone's "up next" row. Anything that does not survive that size is decoration.</td><td>One subject. One idea. At most four words.</td></tr>
+		<tr><td><b>Deference</b></td><td>The frame serves the photograph; it never competes with it. A face, a place or a screen is the content — type and marks step back.</td><td>White ground, ink type, <em>one</em> red. No outlines, glows, emoji, or arrows that point at nothing.</td></tr>
+		<tr><td><b>Depth</b></td><td>Order comes from layers, not from effects. What is in front matters more.</td><td>Always four layers, always in the same stack: ground, subject, word, mark.</td></tr>
+		<tr><td><b>Hierarchy</b></td><td>The eye should travel in one path: subject, then word, then mark.</td><td>One thing is biggest — 40–60% of the frame. Everything else is visibly smaller.</td></tr>
+		<tr><td><b>Harmony</b></td><td>The shapes agree with the brand and with each other.</td><td>The arch, the pill chip and the dot come from the logo's tile and dot. Corners are concentric. Type is Geist.</td></tr>
+		<tr><td><b>Consistency</b></td><td>The same part is in the same place every time, so the channel is recognisable before its name is read.</td><td>Parts snap to the 16 × 9 grid, and each type fixes their slots.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>Anatomy: four layers</h2>
+<p>Every thumbnail stacks the same four layers, bottom to top. A type may leave one out; it never adds a fifth or changes the order.</p>
+{{#example}}
+<figure class="im-poster im-poster-face im-poster-guides">
+	<img class="im-poster-subject im-poster-arch" src="/assets/brand/portrait.jpg" alt="">
+	<span class="im-poster-chip">day 12 · vienna</span>
+	<strong class="im-poster-word">tram<br>therapy<i class="im-poster-dot"></i></strong>
+	<span class="im-poster-time">14:08</span>
+</figure>
+{{/example}}
+<ol>
+	<li><b>Ground</b> — <code>im-poster-media</code>, or the white paper itself. A full-bleed photograph, a wall of photos (<code>im-poster-tiles</code>), or nothing. A scrim (<code>im-poster-shade</code>) or a strip (<code>im-poster-bar</code>) belongs to this layer.</li>
+	<li><b>Subject</b> — <code>im-poster-subject</code>: a face, a product, a screen. Cut to a shape from the brand: the <b>arch</b> for a person, the <b>circle</b> for a thing, the <b>window</b> for a screen.</li>
+	<li><b>Word</b> — <code>im-poster-word</code>: one to four words in Geist Bold, ending in the red <b>dot</b>. Or a figure (<code>im-poster-figure</code>) when a number is the promise.</li>
+	<li><b>Mark</b> — <code>im-poster-chip</code>, <code>im-poster-hand</code>, <code>im-poster-glyph</code>, <code>im-poster-disc</code>, <code>im-poster-ep</code>: the small things that say <em>where</em>, <em>which</em> or <em>vs</em>. Never more than two on one thumbnail.</li>
+</ol>
+
+<h2>The grid: sixteen by nine</h2>
+<p>A 16:9 frame divides exactly into sixteen columns and nine rows of <strong>squares</strong> — at 1280 × 720 each square is 80px. The thumbnail is a CSS grid of those squares, and every part takes whole squares, so "the word starts in column two" means the same thing on every video. <code>im-poster-guides</code> draws them, along with the thirds (the stronger blue lines) and the timestamp's corner.</p>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Slot</th><th>Where</th><th>Why there</th></tr></thead>
+	<tbody>
+		<tr><td>Margin</td><td>Column 1 and 16, row 1 and 9 stay quiet</td><td>An 80px margin is what lets the thumbnail breathe at 168px, where it shrinks to about 10px.</td></tr>
+		<tr><td>Subject</td><td>Columns 9–16 (the right half), rows 2–9</td><td>A face on a third line; the arch's base sits on the bottom edge so the person is grounded, not floating.</td></tr>
+		<tr><td>Word</td><td>Columns 2–8, rows 3–7</td><td>The left half reads first in left-to-right languages; the word lands before the face.</td></tr>
+		<tr><td>Chip</td><td>Row 2, column 2</td><td>Top-left is the one corner nothing on YouTube ever covers.</td></tr>
+		<tr><td>Timestamp</td><td>Columns 14–16, row 9</td><td>YouTube draws the running time there. Nothing that matters goes under it.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>Language</h2>
+<p>The words are the hardest part, because there are so few of them. Write them last, after the title, and hold them to these rules.</p>
+<ul>
+	<li><b>The word is not the title.</b> The title says <em>what</em> the video is; the thumbnail says <em>why you would care</em>. Repeating the title wastes the only other words you get.</li>
+	<li><b>One to four words, about twenty characters.</b> Two lines at most. If it needs a third line it is a sentence, and a sentence is a title.</li>
+	<li><b>Lowercase, ending in the dot.</b> Lowercase reads as a voice, not a headline; the red full stop is the brand's dot and makes it a statement. No exclamation marks — the dot already lands it. A question mark only in the <a href="/concept/thumbnails/types/#question">question type</a>, where it replaces the dot.</li>
+	<li><b>Numbers as digits.</b> <code>7</code>, <code>₹500</code>, <code>24h</code>, <code>3 years</code>. A digit is a shape the eye picks out of a list before it reads any word.</li>
+	<li><b>Concrete nouns and real verbs.</b> "tram therapy", "five villages", "set up in 5 min". Never "amazing", "insane", "must watch", "you won't believe".</li>
+	<li><b>Honest.</b> Whatever the thumbnail promises happens in the first thirty seconds of the video. A thumbnail that over-promises wins the click and loses the viewer, and the channel keeps paying for it.</li>
+	<li><b>The chip names a fact</b>, in mono capitals, fourteen characters at most: a place, a day, a series, a tool. <b>The hand</b> (Caveat) is one aside of one to three words, once per thumbnail, and only where a person is speaking.</li>
+</ul>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Title</th><th>Thumbnail word</th></tr></thead>
+	<tbody>
+		<tr><td>A day riding every tram line in Vienna</td><td><code>tram therapy.</code></td></tr>
+		<tr><td>Hiking all of Cinque Terre in one day</td><td><code>five villages.</code></td></tr>
+		<tr><td>How I set up Ghost on a VPS for ₹400 a month</td><td><code>₹400 / month.</code></td></tr>
+		<tr><td>I used one camera for a year — honest review</td><td><code>365 days.</code> + the camera</td></tr>
+		<tr><td>Answering your questions about leaving my job</td><td><code>ask me anything?</code></td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>Formatting</h2>
+<p>All sizes are a share of the thumbnail's width (<code>cqw</code>), so a thumbnail is laid out once and reads the same at 1280px and at 168px.</p>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>What</th><th>Value</th><th>Note</th></tr></thead>
+	<tbody>
+		<tr><td>Canvas</td><td>1280 × 720, 16:9</td><td>YouTube's recommendation; at least 640px wide.</td></tr>
+		<tr><td>File</td><td>JPG at 85–90% quality, under 2MB</td><td>A PNG of a photograph usually breaks the 2MB limit; that, not the size, is why most uploads are rejected.</td></tr>
+		<tr><td>Word</td><td>Geist Bold · 10.5% of the width (134px) · leading 0.92 · tracking −4.5%</td><td><code>im-poster-word-lg</code> 14%; a type may set its own through <code>--im-poster-word</code>. Never below 6%: that is 10px on a phone.</td></tr>
+		<tr><td>Chip</td><td>Geist Mono · 2.3% · capitals · +8% tracking</td><td>Red fill by default; <code>im-poster-chip-paper</code> on a photo, <code>-ink</code> on white.</td></tr>
+		<tr><td>Episode</td><td>Geist Pixel · 3%</td><td>Series only. Top right.</td></tr>
+		<tr><td>Colour</td><td>Paper <code>#fff</code> · ink <code>#0a0a0a</code> · the accent</td><td>Red covers 10% of the frame at most: the dot, one chip or one disc. Fixed in dark mode — a thumbnail is a picture.</td></tr>
+		<tr><td>Words on a photo</td><td><code>im-poster-on-media</code> over <code>im-poster-shade</code></td><td>White with a soft shadow, on a scrim. Never ink on a photograph.</td></tr>
+		<tr><td>Photo grade</td><td>One grade per series</td><td>The same look on every episode does as much for recognition as the layout does.</td></tr>
+		<tr><td>Keep clear</td><td>Bottom right (timestamp), the bottom edge (the red progress bar on watched videos), top right (the hover buttons on desktop)</td><td>That is why the chip lives top left.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>Consistency in practice</h2>
+<p>Four episodes of one series. The photographs and the words change; the layout, the type, the colour and the chip do not. Seen together, they read as one channel before a single word is read.</p>
+{{#example code=false}}
+<div class="im-grid-auto im-grid-sm">
+	<figure class="im-poster im-poster-place">
+		<img class="im-poster-media" src="https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=1280&h=720&q=75" alt="">
+		<span class="im-poster-bar"></span><span class="im-poster-chip im-poster-chip-paper">rome</span>
+		<strong class="im-poster-word">2,000 years<i class="im-poster-dot"></i></strong>
+	</figure>
+	<figure class="im-poster im-poster-place">
+		<img class="im-poster-media" src="https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=1280&h=720&q=75" alt="">
+		<span class="im-poster-bar"></span><span class="im-poster-chip im-poster-chip-paper">venice</span>
+		<strong class="im-poster-word">no cars<i class="im-poster-dot"></i></strong>
+	</figure>
+	<figure class="im-poster im-poster-place">
+		<img class="im-poster-media" src="https://images.unsplash.com/photo-1534445867742-43195f401b6c?auto=format&fit=crop&w=1280&h=720&q=75" alt="">
+		<span class="im-poster-bar"></span><span class="im-poster-chip im-poster-chip-paper">cinque terre</span>
+		<strong class="im-poster-word">five villages<i class="im-poster-dot"></i></strong>
+	</figure>
+	<figure class="im-poster im-poster-place">
+		<img class="im-poster-media" src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=1280&h=720&q=75" alt="">
+		<span class="im-poster-bar"></span><span class="im-poster-chip im-poster-chip-paper">new york</span>
+		<strong class="im-poster-word">on foot<i class="im-poster-dot"></i></strong>
+	</figure>
+</div>
+{{/example}}
+
+<h2>Check before you upload</h2>
+<p>Two tests take ten seconds and catch most bad thumbnails. <b>The squint test</b>: look at it at 168px. If the word cannot be read or the subject cannot be named, it fails. <b>The grey test</b>: take the colour away. If the hierarchy disappears, it was resting on colour, and colour is the first thing a busy feed drowns.</p>
+{{#example code=false}}
+<div class="thumb-scale">
+	<figure>
+		<div class="im-poster im-poster-number">
+			<span class="im-poster-figure">7</span>
+			<strong class="im-poster-word">tools I use daily<i class="im-poster-dot"></i></strong>
+			<img class="im-poster-subject im-poster-arch" src="/assets/brand/portrait.jpg" alt="">
+		</div>
+		<figcaption>full size</figcaption>
+	</figure>
+	<figure class="thumb-tiny">
+		<div class="im-poster im-poster-number">
+			<span class="im-poster-figure">7</span>
+			<strong class="im-poster-word">tools I use daily<i class="im-poster-dot"></i></strong>
+			<img class="im-poster-subject im-poster-arch" src="/assets/brand/portrait.jpg" alt="">
+		</div>
+		<figcaption>168px — a phone's list</figcaption>
+	</figure>
+	<figure class="thumb-tiny">
+		<div class="im-poster im-poster-number thumb-gray">
+			<span class="im-poster-figure">7</span>
+			<strong class="im-poster-word">tools I use daily<i class="im-poster-dot"></i></strong>
+			<img class="im-poster-subject im-poster-arch" src="/assets/brand/portrait.jpg" alt="">
+		</div>
+		<figcaption>no colour</figcaption>
+	</figure>
+</div>
+{{/example}}
+<ul>
+	<li>Does it say something the title does not?</li>
+	<li>Is there one thing that is clearly biggest?</li>
+	<li>Is the bottom-right corner empty?</li>
+	<li>Is the red used once (plus the dot)?</li>
+	<li>Does it look like the last three thumbnails on the channel?</li>
+	<li>Does the video keep the promise in its first thirty seconds?</li>
+</ul>
+<p>When two ideas both pass, let the audience choose: YouTube Studio's <b>Test &amp; Compare</b> shows up to three thumbnails to different viewers and keeps the one watched longest. Change one thing between them — the word, or the subject — or the result says nothing.</p>
+
+<h2>The classes</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Class</th><th></th></tr></thead>
+	<tbody>
+		<tr><td><code>im-poster</code></td><td>The 16:9 canvas and its 16 × 9 grid. Every child fills it until a type places it.</td></tr>
+		<tr><td><code>im-poster-media</code> · <code>-tiles</code> · <code>-shade</code> · <code>-bar</code></td><td>Ground: a photo, a wall of photos, a scrim, a strip.</td></tr>
+		<tr><td><code>im-poster-subject</code> + <code>-arch</code> · <code>-round</code></td><td>Subject and its shape. <code>--im-poster-focus</code> moves the crop.</td></tr>
+		<tr><td><code>im-poster-screen-frame</code></td><td>A window for a screenshot.</td></tr>
+		<tr><td><code>im-poster-word</code> + <code>-lg</code> · <code>im-poster-on-media</code></td><td>The word; <code>im-poster-dot</code> is its full stop.</td></tr>
+		<tr><td><code>im-poster-figure</code></td><td>A big number.</td></tr>
+		<tr><td><code>im-poster-chip</code> + <code>-paper</code> · <code>-ink</code> · <code>-end</code>, <code>im-poster-hand</code>, <code>im-poster-glyph</code>, <code>im-poster-disc</code>, <code>im-poster-ep</code></td><td>Marks.</td></tr>
+		<tr><td><code>im-poster-time</code></td><td>A stand-in for YouTube's timestamp, to design around.</td></tr>
+		<tr><td><code>im-poster-guides</code></td><td>Draws the grid, the thirds and the keep-clear corner.</td></tr>
+		<tr><td><code>im-poster-face</code>, <code>-place</code>, <code>-screen</code>, <code>-ask</code>, <code>-split</code>, <code>-versus</code>, <code>-number</code>, <code>-recap</code>, <code>-type</code>, <code>-product</code>, <code>-icon</code></td><td>The eleven <a href="/concept/thumbnails/types/">types</a>.</td></tr>
+	</tbody>
+</table>
+</div>

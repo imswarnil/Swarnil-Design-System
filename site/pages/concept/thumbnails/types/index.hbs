@@ -1,0 +1,161 @@
+---
+title: Thumbnail types
+description: Eleven layouts, one grammar. Each type answers one question — what is this video's promise? — and only decides where the four layers go. Pick the type from the promise, never from what looked good last week.
+eyebrow: Concept · Thumbnails
+source: src/components/poster.css
+---
+<p>Every type uses the same parts, the same type, the same red. What changes is <em>placement</em>, because placement is what tells the viewer what kind of video this is before they read anything. Start from the promise:</p>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>The video's promise</th><th>Type</th><th>Typical videos</th></tr></thead>
+	<tbody>
+		<tr><td>How someone <em>felt</em> about something</td><td><a href="#face">Face + word</a></td><td>Vlogs, opinions, stories, life updates</td></tr>
+		<tr><td>A <em>place</em> worth seeing</td><td><a href="#place">Place</a></td><td>Travel, walks, city guides</td></tr>
+		<tr><td>A thing you will <em>be able to do</em></td><td><a href="#screen">Screen + face</a></td><td>Tutorials, walkthroughs, courses</td></tr>
+		<tr><td>Answers to <em>a question</em></td><td><a href="#question">Question</a></td><td>Q&amp;A, FAQs, "I asked…"</td></tr>
+		<tr><td>A <em>change</em></td><td><a href="#split">Before / after</a></td><td>Edits, makeovers, progress, grades</td></tr>
+		<tr><td>A <em>choice</em> between two</td><td><a href="#versus">Versus</a></td><td>Comparisons, "which should you buy"</td></tr>
+		<tr><td>A <em>count</em>, a price, a time</td><td><a href="#number">Number</a></td><td>Lists, budgets, challenges, "a year of…"</td></tr>
+		<tr><td><em>Everything</em> from a stretch of time</td><td><a href="#recap">Recap</a></td><td>Monthly recaps, trip summaries, best-of</td></tr>
+		<tr><td>An <em>idea</em> with no picture</td><td><a href="#type">Type only</a></td><td>Essays, announcements, hard opinions</td></tr>
+		<tr><td>A verdict on a <em>thing</em></td><td><a href="#product">Product</a></td><td>Reviews, unboxings, "worth it?"</td></tr>
+		<tr><td>A <em>topic</em> in a series</td><td><a href="/concept/thumbnails/icons/">Icon</a></td><td>Explainers, podcasts, playlists, courses</td></tr>
+	</tbody>
+</table>
+</div>
+<p>Two rules hold across all eleven. <b>A series keeps its type</b>: once episode one is a Place, every episode is a Place. And <b>no hybrids</b>: if a video seems to need two types, it has two promises, and the thumbnail should pick the stronger one.</p>
+
+<h2 id="face">Face + word</h2>
+{{#example}}
+<figure class="im-poster im-poster-face">
+	<img class="im-poster-subject im-poster-arch" src="/assets/brand/portrait.jpg" alt="">
+	<span class="im-poster-chip">day 12 · vienna</span>
+	<strong class="im-poster-word">tram<br>therapy<i class="im-poster-dot"></i></strong>
+	<span class="im-poster-hand">best day so far</span>
+	<span class="im-poster-time">14:08</span>
+</figure>
+{{/example}}
+<p><b>Use when</b> the video is about a person's experience: a vlog, an opinion, a story told to camera. <b>Why it works</b>: a face is the fastest thing a human eye finds in a crowd, and its expression is the promise — the word only names it. The face is on the right so the word, on the left, is read first and the face confirms it. <b>Avoid</b> a face that is not reacting to anything; a neutral face in an arch is a passport photo.</p>
+
+<h2 id="place">Place</h2>
+{{#example}}
+<figure class="im-poster im-poster-place">
+	<img class="im-poster-media" src="https://images.unsplash.com/photo-1499678329028-101435549a4e?auto=format&fit=crop&w=1280&h=720&q=75" alt="">
+	<span class="im-poster-bar"></span>
+	<span class="im-poster-chip im-poster-chip-paper">cinque terre</span>
+	<strong class="im-poster-word">five villages<i class="im-poster-dot"></i></strong>
+	<span class="im-poster-time">21:40</span>
+</figure>
+{{/example}}
+<p><b>Use when</b> the place is the reason to watch. <b>Why it works</b>: the photograph gets two thirds of the frame untouched — no type cuts through the view — and the word sits on a white strip, the one place it can be read without fighting the picture. The red line on top of the strip is the series' signature. <b>Avoid</b> a photo whose subject sits in the bottom third; it will be under the strip. Choose a photo with the horizon high.</p>
+
+<h2 id="screen">Screen + face</h2>
+{{#example}}
+<figure class="im-poster im-poster-screen">
+	<strong class="im-poster-word">set up in 5 min<i class="im-poster-dot"></i></strong>
+	<div class="im-poster-screen-frame"><img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1000&h=620&q=75" alt=""></div>
+	<span class="im-poster-chip">how to</span>
+	<img class="im-poster-subject im-poster-arch" src="/assets/brand/portrait.jpg" alt="">
+	<span class="im-poster-time">18:22</span>
+</figure>
+{{/example}}
+<p><b>Use when</b> the viewer will learn to do something on a screen. <b>Why it works</b>: the screen shows <em>what</em>, the face shows <em>who</em> will walk you through it, and the word is the outcome, not the topic — "set up in 5 min", not "Ghost installation". <b>Avoid</b> a full-resolution screenshot of a whole desktop: crop to the one panel that matters, or it is grey noise at 168px.</p>
+
+<h2 id="question">Question</h2>
+{{#example}}
+<figure class="im-poster im-poster-ask">
+	<img class="im-poster-subject im-poster-arch" src="/assets/brand/portrait.jpg" alt="" style="--im-poster-focus: 60% 30%">
+	<strong class="im-poster-word">ask me<br>anything</strong>
+	<span class="im-poster-glyph">{{icon "circle-help"}}</span>
+	<span class="im-poster-hand">you asked →</span>
+	<span class="im-poster-time">26:51</span>
+</figure>
+{{/example}}
+<p><b>Use when</b> the video answers questions. <b>Why it works</b>: here, and only here, the dot gives way to a question mark — drawn as a mark, not typed, so it can be large without crowding the word. The arch is narrower than in Face + word: the person is listening, not performing. <b>Avoid</b> writing the question itself; "should I quit my job?" is a title. The thumbnail says that questions are being answered.</p>
+
+<h2 id="split">Before / after</h2>
+{{#example}}
+<figure class="im-poster im-poster-split">
+	<img class="im-poster-media" src="https://images.unsplash.com/photo-1534445867742-43195f401b6c?auto=format&fit=crop&w=1280&h=720&q=75" alt="">
+	<img class="im-poster-media" src="https://images.unsplash.com/photo-1534445867742-43195f401b6c?auto=format&fit=crop&w=1280&h=720&q=75" alt="">
+	<span class="im-poster-shade"></span>
+	<span class="im-poster-chip im-poster-chip-paper">before</span>
+	<span class="im-poster-disc">{{icon "arrow-right"}}</span>
+	<strong class="im-poster-word im-poster-on-media">one preset<i class="im-poster-dot"></i></strong>
+	<span class="im-poster-chip im-poster-chip-end">after</span>
+</figure>
+{{/example}}
+<p><b>Use when</b> the video produces a visible change. <b>Why it works</b>: the same picture twice is a controlled experiment — the only difference the eye can find is the one the video teaches. The left half is desaturated automatically, so a single photograph is enough to build it. <b>Avoid</b> two different photographs; then the viewer compares the photos, not the change.</p>
+
+<h2 id="versus">Versus</h2>
+{{#example}}
+<figure class="im-poster im-poster-versus">
+	<img class="im-poster-media" src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=800&h=900&q=75" alt="">
+	<img class="im-poster-media" src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&h=900&q=75" alt="">
+	<span class="im-poster-shade"></span>
+	<span class="im-poster-chip im-poster-chip-paper">instant</span>
+	<span class="im-poster-disc">vs</span>
+	<strong class="im-poster-word im-poster-on-media">which one<i class="im-poster-dot"></i></strong>
+	<span class="im-poster-chip im-poster-chip-paper im-poster-chip-end">mirrorless</span>
+	<span class="im-poster-time">16:03</span>
+</figure>
+{{/example}}
+<p><b>Use when</b> the video helps choose between two things. <b>Why it works</b>: a hard white seam and a red disc make the comparison literal; the two chips name the sides so the word can ask the question. <b>Avoid</b> three or more sides — that is a list, and lists are the <a href="#number">Number</a> type.</p>
+
+<h2 id="number">Number</h2>
+{{#example}}
+<figure class="im-poster im-poster-number">
+	<span class="im-poster-figure">7</span>
+	<strong class="im-poster-word">tools I use daily<i class="im-poster-dot"></i></strong>
+	<img class="im-poster-subject im-poster-arch" src="/assets/brand/portrait.jpg" alt="">
+	<span class="im-poster-time">11:30</span>
+</figure>
+{{/example}}
+<p><b>Use when</b> one number carries the promise: a count, a price, a duration, a streak. <b>Why it works</b>: a large digit is a shape, not a word, so it is recognised before reading starts — and a specific number ("7", "₹400", "365") is more believable than an adjective. <b>Avoid</b> two numbers. "7 tools for ₹400" is a title; pick the one that surprises.</p>
+
+<h2 id="recap">Recap</h2>
+{{#example}}
+<figure class="im-poster im-poster-recap">
+	<div class="im-poster-tiles">
+		<img src="https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=400&h=300&q=60" alt="">
+		<img src="https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=400&h=300&q=60" alt="">
+		<img src="https://images.unsplash.com/photo-1534445867742-43195f401b6c?auto=format&fit=crop&w=400&h=300&q=60" alt="">
+		<img src="https://images.unsplash.com/photo-1499678329028-101435549a4e?auto=format&fit=crop&w=400&h=300&q=60" alt="">
+		<img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=400&h=300&q=60" alt="">
+		<img src="https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?auto=format&fit=crop&w=400&h=300&q=60" alt="">
+		<img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=400&h=300&q=60" alt="">
+		<img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=400&h=300&q=60" alt="">
+		<img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=400&h=300&q=60" alt="">
+		<img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=400&h=300&q=60" alt="">
+		<img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=400&h=300&q=60" alt="">
+		<img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&h=300&q=60" alt="">
+	</div>
+	<span class="im-poster-shade im-poster-shade-full"></span>
+	<strong class="im-poster-word im-poster-word-lg im-poster-on-media">october<i class="im-poster-dot"></i></strong>
+	<span class="im-poster-chip im-poster-chip-paper">12 cities · 31 days</span>
+	<span class="im-poster-time">32:17</span>
+</figure>
+{{/example}}
+<p><b>Use when</b> the video gathers many moments. <b>Why it works</b>: twelve tiles read as "a lot happened" without anyone needing to see any one of them, so the tint can be heavy and the word can be the biggest on any type. <b>Avoid</b> fewer than eight tiles — then each one is looked at, and none is big enough to be seen.</p>
+
+<h2 id="type">Type only</h2>
+{{#example}}
+<figure class="im-poster im-poster-type">
+	<strong class="im-poster-word">I stopped<br>posting daily<i class="im-poster-dot"></i></strong>
+	<span class="im-poster-chip im-poster-chip-ink">an essay</span>
+	<span class="im-poster-time">12:44</span>
+</figure>
+{{/example}}
+<p><b>Use when</b> the idea is the subject and any picture would be a stock photo. <b>Why it works</b>: in a feed of faces and colour, a white tile with two black lines is the quietest thing on the screen, and quiet stands out. It is the one type where the word may run to five words, because there is nothing else to read. <b>Avoid</b> using it twice in a row; its power is being the exception.</p>
+
+<h2 id="product">Product</h2>
+{{#example}}
+<figure class="im-poster im-poster-product">
+	<img class="im-poster-subject im-poster-round" src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=700&h=700&q=75" alt="">
+	<span class="im-poster-chip im-poster-chip-ink">₹9,999 · worth it?</span>
+	<span class="im-poster-disc">{{icon "arrow-right"}}</span>
+	<img class="im-poster-subject im-poster-arch" src="/assets/brand/portrait.jpg" alt="">
+	<span class="im-poster-time">15:29</span>
+</figure>
+{{/example}}
+<p><b>Use when</b> the video judges one thing. <b>Why it works</b>: the circle isolates the product the way a studio shot would, the arrow points from the thing to the person, and the price-and-question chip is the whole promise — so this type has no word at all. <b>Avoid</b> brand logos in the frame bigger than the product; a thumbnail is not an advert for somebody else.</p>

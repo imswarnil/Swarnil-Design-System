@@ -60,6 +60,21 @@ export const navigation = [
 		],
 	},
 	{
+		title: 'Concept',
+		icon: 'lightbulb',
+		items: [
+			{
+				label: 'Thumbnails',
+				icon: 'image',
+				children: [
+					{ label: 'The system', url: '/concept/thumbnails/' },
+					{ label: 'Types', url: '/concept/thumbnails/types/' },
+					{ label: 'Icon thumbnails', url: '/concept/thumbnails/icons/' },
+				],
+			},
+		],
+	},
+	{
 		title: 'Layout',
 		icon: 'layout-grid',
 		items: [

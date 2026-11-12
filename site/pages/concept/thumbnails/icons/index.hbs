@@ -1,0 +1,97 @@
+---
+title: Icon thumbnails
+description: When a video has no face and no place — an explainer, a podcast, a playlist, a course — the thumbnail borrows from the app icon. One glyph, one ground, one line of words, and a series colour that does the remembering.
+eyebrow: Concept · Thumbnails
+source: src/components/poster.css
+---
+{{#example code=false}}
+<div class="im-grid-auto im-grid-sm">
+	<figure class="im-poster im-poster-icon"><span class="im-poster-chip">field notes</span><span class="im-poster-ep">EP 04</span><span class="im-poster-glyph">{{icon "lightbulb"}}</span><strong class="im-poster-word">ideas you can ship</strong></figure>
+	<figure class="im-poster im-poster-icon" style="--im-poster-tint: var(--im-c-course)"><span class="im-poster-chip">ghost course</span><span class="im-poster-ep">L 07</span><span class="im-poster-glyph">{{icon "graduation-cap"}}</span><strong class="im-poster-word">members &amp; tiers</strong></figure>
+	<figure class="im-poster im-poster-icon" style="--im-poster-tint: var(--im-c-snippet)"><span class="im-poster-chip">snippets</span><span class="im-poster-ep">#18</span><span class="im-poster-glyph">{{icon "terminal"}}</span><strong class="im-poster-word">one-line deploys</strong></figure>
+	<figure class="im-poster im-poster-icon" style="--im-poster-tint: var(--im-c-newsletter)"><span class="im-poster-chip">the podcast</span><span class="im-poster-ep">EP 22</span><span class="im-poster-glyph">{{icon "volume-2"}}</span><strong class="im-poster-word">working alone</strong></figure>
+	<figure class="im-poster im-poster-icon" style="--im-poster-tint: var(--im-c-travel)"><span class="im-poster-chip">travel log</span><span class="im-poster-ep">EP 09</span><span class="im-poster-glyph">{{icon "compass"}}</span><strong class="im-poster-word">packing light</strong></figure>
+	<figure class="im-poster im-poster-icon" style="--im-poster-tint: var(--im-c-project)"><span class="im-poster-chip">money</span><span class="im-poster-ep">EP 03</span><span class="im-poster-glyph">{{icon "wallet"}}</span><strong class="im-poster-word">₹0 tool stack</strong></figure>
+</div>
+{{/example}}
+
+<h2>When to use an icon</h2>
+<p>A face or a place is always the stronger thumbnail when there is one. The icon type is for the videos where there is not — and where a stock photograph would be the alternative:</p>
+<ul>
+	<li><b>Explainers and ideas</b>: the subject is a concept, not a scene.</li>
+	<li><b>Podcasts and audio</b>: there is nothing to look at, honestly.</li>
+	<li><b>Courses and lessons</b>: twenty lessons that must look like one course and still be told apart.</li>
+	<li><b>Playlists and channel sections</b>: a cover for a group of videos rather than for one.</li>
+	<li><b>Compilations of Shorts</b>: no single frame stands for all of them.</li>
+</ul>
+
+<h2>The app-icon approach</h2>
+<p>Apple's guidance for app icons is the best short brief there is for a picture that must be recognised in a grid of similar pictures at a small size. Its ideas, carried over:</p>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>App icon idea</th><th>On an icon thumbnail</th></tr></thead>
+	<tbody>
+		<tr><td>Embrace simplicity; one focus point</td><td>One glyph. Not a glyph and a photo, not two glyphs.</td></tr>
+		<tr><td>A full-bleed, simple background</td><td>The ground is one flat colour, edge to edge. No gradient, no texture.</td></tr>
+		<tr><td>Keep words out of the artwork</td><td>The glyph carries no letters. The words sit underneath, one line, and are allowed to be smaller than on any other type — the glyph is the hook.</td></tr>
+		<tr><td>Recognisable at the smallest size</td><td>The glyph is six columns wide — 37% of the frame — so it is still 60px across at 168px.</td></tr>
+		<tr><td>A consistent family</td><td>Every glyph in a channel comes from one icon set, at one stroke weight. Here it is the system's own icons at a stroke of 1.5.</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2>Construction</h2>
+{{#example}}
+<figure class="im-poster im-poster-icon im-poster-guides">
+	<span class="im-poster-chip">field notes</span>
+	<span class="im-poster-ep">EP 04</span>
+	<span class="im-poster-glyph">{{icon "lightbulb"}}</span>
+	<strong class="im-poster-word">ideas you can ship</strong>
+	<span class="im-poster-time">09:12</span>
+</figure>
+{{/example}}
+<ul>
+	<li><b>Glyph</b>: columns 6–11, rows 2–8 — the centre of the frame, a little above the optical middle because the words sit below it.</li>
+	<li><b>Words</b>: row 8, centred under the glyph, 4.6% of the width, no dot (the glyph is the full stop here).</li>
+	<li><b>Series chip</b>: top left, as on every type. On a colour ground it turns translucent white so the ground stays one colour.</li>
+	<li><b>Episode</b>: top right, in Geist Pixel. The only thing besides the words that changes between episodes, and it is enough.</li>
+</ul>
+
+<h2>Colour is the series</h2>
+<p>The ground takes <code>--im-poster-tint</code>, and a channel gives each series one colour from the system's topic tokens (<code>--im-c-course</code>, <code>--im-c-travel</code>, <code>--im-c-snippet</code>…), which are the accent turned around the colour wheel. So the colours belong together, and change together if the accent ever does. A viewer learns the colour before the name: <em>the green ones are the course</em>.</p>
+{{{{code}}}}
+<figure class="im-poster im-poster-icon" style="--im-poster-tint: var(--im-c-course)">
+  <span class="im-poster-chip">ghost course</span>
+  <span class="im-poster-ep">L 07</span>
+  <span class="im-poster-glyph"><!-- one icon --></span>
+  <strong class="im-poster-word">members &amp; tiers</strong>
+</figure>
+{{{{/code}}}}
+
+<h2>One series, four episodes</h2>
+<p>Only the glyph, the episode and the line change. This is consistency at its strictest, and it is what makes a playlist look like a shelf rather than a pile.</p>
+{{#example code=false}}
+<div class="im-grid-auto im-grid-sm">
+	<figure class="im-poster im-poster-icon" style="--im-poster-tint: var(--im-c-course)"><span class="im-poster-chip">ghost course</span><span class="im-poster-ep">L 01</span><span class="im-poster-glyph">{{icon "rocket"}}</span><strong class="im-poster-word">install &amp; launch</strong></figure>
+	<figure class="im-poster im-poster-icon" style="--im-poster-tint: var(--im-c-course)"><span class="im-poster-chip">ghost course</span><span class="im-poster-ep">L 02</span><span class="im-poster-glyph">{{icon "palette"}}</span><strong class="im-poster-word">your first theme</strong></figure>
+	<figure class="im-poster im-poster-icon" style="--im-poster-tint: var(--im-c-course)"><span class="im-poster-chip">ghost course</span><span class="im-poster-ep">L 03</span><span class="im-poster-glyph">{{icon "users"}}</span><strong class="im-poster-word">members &amp; tiers</strong></figure>
+	<figure class="im-poster im-poster-icon" style="--im-poster-tint: var(--im-c-course)"><span class="im-poster-chip">ghost course</span><span class="im-poster-ep">L 04</span><span class="im-poster-glyph">{{icon "mail"}}</span><strong class="im-poster-word">newsletters</strong></figure>
+</div>
+{{/example}}
+
+<h2>Two variations</h2>
+<p><code>im-poster-icon-paper</code> keeps the white ground of every other type and puts the series colour into the glyph — for a channel that mixes icon thumbnails with photo ones and wants them to sit together. <code>im-poster-icon-side</code> moves the glyph left and gives the words the right half, for the rare icon video whose title is the hook.</p>
+{{#example}}
+<div class="im-grid-auto im-grid-md">
+	<figure class="im-poster im-poster-icon im-poster-icon-paper" style="--im-poster-tint: var(--im-c-snippet)"><span class="im-poster-chip">snippets</span><span class="im-poster-ep">#18</span><span class="im-poster-glyph">{{icon "terminal"}}</span><strong class="im-poster-word">one-line deploys</strong></figure>
+	<figure class="im-poster im-poster-icon im-poster-icon-side"><span class="im-poster-chip">field notes</span><span class="im-poster-ep">EP 05</span><span class="im-poster-glyph">{{icon "flame"}}</span><strong class="im-poster-word">burnout is a design bug</strong></figure>
+</div>
+{{/example}}
+
+<h2>Don't</h2>
+<ul>
+	<li>Put a brand's logo in place of the glyph. It is somebody else's mark, and at 168px every logo looks like every other.</li>
+	<li>Mix icon sets, or outline and filled glyphs, in one channel.</li>
+	<li>Use an icon thumbnail when there <em>is</em> a face or a place. The icon is the fallback, not the shortcut.</li>
+	<li>Give two series the same colour. The colour is the series' name.</li>
+</ul>

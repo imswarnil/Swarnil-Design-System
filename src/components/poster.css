@@ -1,0 +1,297 @@
+/* Posters — the thumbnail a video wears in a feed, built from tokens.
+
+     <figure class="im-poster im-poster-face">
+       <img class="im-poster-subject im-poster-arch" src="…" alt="">
+       <span class="im-poster-chip">day 12</span>
+       <strong class="im-poster-word">cliff sunset<i class="im-poster-dot"></i></strong>
+       <span class="im-poster-time">12:48</span>
+     </figure>
+
+   A thumbnail is a FIXED canvas: 16:9, and a 16 × 9 grid of squares inside it.
+   Every part snaps to that grid, so the same part lands in the same place in
+   every video of a series — that is what makes a channel recognisable before
+   anybody reads it. Each type below is a modifier that only says WHERE the
+   parts go; how a part looks is decided once, here.
+
+   It is a picture, not a page, so it does not follow dark mode: paper, ink and
+   the accent are its own knobs, not --im-canvas / --im-ink. Sizes are in cqw
+   (the thumbnail's own width), so one thumbnail reads the same at 1280px and
+   at the 168px a phone's "up next" list shows it at.
+
+   Knobs: --im-poster-ground, --im-poster-fg, --im-poster-red, --im-poster-word
+   (headline size), --im-poster-radius. */
+
+.im-poster {
+	--im-poster-paper: #fff;
+	--im-poster-ink: #0a0a0a;
+	--im-poster-red: var(--im-accent);
+	--im-poster-ground: var(--im-poster-paper);
+	--im-poster-fg: var(--im-poster-ink);
+	--im-poster-word: 10.5cqw;
+	--im-poster-radius: var(--im-radius-lg);
+
+	position: relative;
+	display: grid;
+	grid-template-columns: repeat(16, minmax(0, 1fr));
+	grid-template-rows: repeat(9, minmax(0, 1fr));
+	width: 100%;
+	aspect-ratio: 16 / 9;
+	margin: 0;
+	overflow: hidden;
+	container-type: inline-size;
+	isolation: isolate;
+	border-radius: var(--im-poster-radius);
+	background-color: var(--im-poster-ground);
+	box-shadow: inset 0 0 0 1px var(--im-line);
+	color: var(--im-poster-fg);
+	font-family: var(--im-font-sans);
+}
+
+/* Every part sits in the grid and, by default, fills it; a type moves it. */
+.im-poster > * { grid-area: 1 / 1 / -1 / -1; min-width: 0; min-height: 0; }
+
+/* ---- layer 1: the ground photo ---- */
+.im-poster-media {
+	z-index: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+/* A scrim for words on a picture. Bottom-up by default; -full for a recap. */
+.im-poster-shade { z-index: 1; background: var(--im-media-scrim); pointer-events: none; }
+.im-poster-shade-full { background: rgb(0 0 0 / 55%); }
+
+/* A solid strip that words sit on (the place type). */
+.im-poster-bar { z-index: 1; background-color: var(--im-poster-paper); box-shadow: inset 0 0.6cqw 0 var(--im-poster-red); }
+
+/* ---- layer 2: the subject — a face, a product, a screen ---- */
+.im-poster-subject {
+	z-index: 2;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: var(--im-poster-focus, 58% 28%);
+}
+.im-poster-arch { border-radius: 50cqw 50cqw 0 0; }
+.im-poster-round { border-radius: 50%; }
+
+/* A screen: a window with a hairline, for tutorials and walkthroughs. */
+.im-poster-screen-frame {
+	z-index: 2;
+	overflow: hidden;
+	border-radius: 1.6cqw;
+	background-color: var(--im-poster-ink);
+	box-shadow: 0 0 0 0.35cqw var(--im-poster-ink), 0 2cqw 4cqw rgb(0 0 0 / 22%);
+}
+.im-poster-screen-frame img { width: 100%; height: 100%; object-fit: cover; }
+
+/* A wall of small photos (the recap type). */
+.im-poster-tiles {
+	z-index: 0;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	grid-template-rows: repeat(3, 1fr);
+	gap: 0.5cqw;
+	background-color: var(--im-poster-paper);
+}
+.im-poster-tiles img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ---- layer 3: the word ---- */
+.im-poster-word {
+	z-index: 3;
+	align-self: center;
+	margin: 0;
+	color: inherit;
+	font-size: var(--im-poster-word);
+	font-weight: 700;
+	line-height: 0.92;
+	letter-spacing: -0.045em;
+	text-wrap: balance;
+}
+.im-poster-word-lg { --im-poster-word: 14cqw; }
+.im-poster-on-media { color: var(--im-on-media); text-shadow: 0 0.3cqw 2.4cqw rgb(0 0 0 / 45%); }
+
+/* The full stop is the brand's dot: the one red thing on the word. */
+.im-poster-dot {
+	display: inline-block;
+	width: 0.2em;
+	height: 0.2em;
+	margin-left: 0.04em;
+	border-radius: 50%;
+	background-color: var(--im-poster-red);
+}
+
+/* A big figure: a count, a price, a duration. */
+.im-poster-figure {
+	z-index: 3;
+	align-self: center;
+	font-size: 30cqw;
+	font-weight: 700;
+	line-height: 0.8;
+	letter-spacing: -0.07em;
+}
+
+/* ---- layer 4: the marks — a chip, a note, a glyph, an episode ---- */
+.im-poster-chip {
+	z-index: 4;
+	align-self: start;
+	justify-self: start;
+	padding: 0.85cqw 1.5cqw;
+	border-radius: 99cqw;
+	background-color: var(--im-poster-red);
+	color: #fff;
+	font: 500 2.3cqw / 1 var(--im-font-mono);
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+.im-poster-chip-paper { background-color: var(--im-poster-paper); color: var(--im-poster-ink); }
+.im-poster-chip-ink { background-color: var(--im-poster-ink); color: #fff; }
+
+.im-poster-hand {
+	z-index: 4;
+	align-self: end;
+	font: 600 5cqw / 1 var(--im-font-hand);
+	rotate: -4deg;
+}
+
+.im-poster-glyph {
+	z-index: 3;
+	display: grid;
+	place-items: center;
+	color: var(--im-poster-red);
+}
+.im-poster-glyph .im-icon { width: 100%; height: 100%; stroke-width: 1.75; }
+
+/* A round badge in the middle of two things: "vs", an arrow. */
+.im-poster-disc {
+	z-index: 4;
+	display: grid;
+	place-items: center;
+	align-self: center;
+	justify-self: center;
+	width: 13cqw;
+	aspect-ratio: 1;
+	border-radius: 50%;
+	background-color: var(--im-poster-red);
+	box-shadow: 0 0 0 0.8cqw var(--im-poster-paper);
+	color: #fff;
+	font: 700 5cqw / 1 var(--im-font-sans);
+	letter-spacing: -0.04em;
+}
+.im-poster-disc .im-icon { width: 55%; height: 55%; stroke-width: 2.5; }
+
+.im-poster-ep {
+	z-index: 4;
+	align-self: start;
+	justify-self: end;
+	font: 400 3cqw / 1 var(--im-font-pixel);
+	letter-spacing: 0.04em;
+}
+
+/* YouTube draws the running time here. Nothing important goes under it. */
+.im-poster-time {
+	z-index: 5;
+	align-self: end;
+	justify-self: end;
+	margin: 0 1.2cqw 1.2cqw 0;
+	padding: 0.5cqw 0.8cqw;
+	border-radius: 0.6cqw;
+	background-color: rgb(0 0 0 / 80%);
+	color: #fff;
+	font: 500 2cqw / 1 var(--im-font-mono);
+}
+
+/* ---- the drawn grid: 16 × 9 squares, the third lines, the timestamp zone ---- */
+.im-poster-guides::after {
+	content: "";
+	z-index: 6;
+	grid-area: 1 / 1 / -1 / -1;
+	pointer-events: none;
+	background:
+		linear-gradient(to right, rgb(0 179 255 / 70%) 1px, transparent 1px) 0 0 / calc(100% / 3) 100%,
+		linear-gradient(to bottom, rgb(0 179 255 / 70%) 1px, transparent 1px) 0 0 / 100% calc(100% / 3),
+		linear-gradient(to right, rgb(0 179 255 / 22%) 1px, transparent 1px) 0 0 / calc(100% / 16) 100%,
+		linear-gradient(to bottom, rgb(0 179 255 / 22%) 1px, transparent 1px) 0 0 / 100% calc(100% / 9);
+}
+.im-poster-guides .im-poster-time { outline: 0.3cqw dashed rgb(0 179 255); outline-offset: 0.6cqw; }
+
+/* =================================================================
+   TYPES — each one only places the parts. Columns 1–16, rows 1–9.
+   ================================================================= */
+
+/* Face + word: a person and what they are feeling about it. */
+.im-poster-face .im-poster-subject { grid-area: 2 / 9 / -1 / 17; }
+.im-poster-face .im-poster-word { grid-area: 3 / 2 / 8 / 9; }
+.im-poster-face .im-poster-chip { grid-area: 2 / 2; }
+.im-poster-face .im-poster-hand { grid-area: 8 / 2 / -1 / 9; align-self: center; }
+
+/* Place: the photo is the subject; the word sits on a strip. */
+.im-poster-place .im-poster-bar { grid-area: 7 / 1 / -1 / -1; }
+.im-poster-place .im-poster-word { grid-area: 7 / 2 / -1 / 15; --im-poster-word: 8.5cqw; }
+.im-poster-place .im-poster-chip { grid-area: 1 / 1; margin: 2.5cqw 0 0 2.5cqw; }
+
+/* Screen + face: what you will see, and who will show you. */
+.im-poster-screen .im-poster-word { grid-area: 1 / 2 / 3 / 16; --im-poster-word: 6.4cqw; }
+.im-poster-screen .im-poster-screen-frame { grid-area: 3 / 2 / 9 / 11; }
+.im-poster-screen .im-poster-subject { grid-area: 4 / 11 / -1 / 17; }
+.im-poster-screen .im-poster-chip { grid-area: 3 / 2; margin: 1.5cqw 0 0 1.5cqw; }
+
+/* Question: the face listens, the mark asks. */
+.im-poster-ask .im-poster-subject { grid-area: 2 / 10 / -1 / 16; }
+.im-poster-ask .im-poster-word { grid-area: 3 / 2 / 7 / 10; }
+.im-poster-ask .im-poster-glyph { grid-area: 1 / 7 / 4 / 10; }
+.im-poster-ask .im-poster-hand { grid-area: 7 / 2 / 9 / 10; }
+
+/* Split: two halves of one photo, before and after. */
+.im-poster-split .im-poster-media:first-child { grid-area: 1 / 1 / -1 / 9; filter: grayscale(1) brightness(0.92); }
+.im-poster-split .im-poster-media:nth-child(2) { grid-area: 1 / 9 / -1 / -1; border-left: 0.6cqw solid var(--im-poster-paper); }
+.im-poster-split .im-poster-word { grid-area: 7 / 1 / -1 / -1; justify-self: center; text-align: center; --im-poster-word: 7.5cqw; }
+.im-poster-split .im-poster-disc { grid-area: 3 / 7 / 7 / 11; }
+
+/* Versus: two sides, one question. */
+.im-poster-versus .im-poster-media:first-child { grid-area: 1 / 1 / -1 / 9; }
+.im-poster-versus .im-poster-media:nth-child(2) { grid-area: 1 / 9 / -1 / -1; border-left: 0.6cqw solid var(--im-poster-paper); }
+.im-poster-versus .im-poster-word { grid-area: 7 / 1 / -1 / -1; justify-self: center; text-align: center; --im-poster-word: 7.5cqw; }
+.im-poster-versus .im-poster-disc { grid-area: 2 / 7 / 7 / 11; }
+
+/* Split and versus name their two sides: the first chip top left, the
+   second (im-poster-chip-end) top right. */
+:is(.im-poster-split, .im-poster-versus) .im-poster-chip { grid-area: 1 / 1; margin: 2.5cqw 0 0 2.5cqw; }
+:is(.im-poster-split, .im-poster-versus) .im-poster-chip-end { grid-area: 1 / 9 / 2 / -1; justify-self: end; margin: 2.5cqw 2.5cqw 0 0; }
+
+/* Figure: one number carries the promise. */
+.im-poster-number .im-poster-figure { grid-area: 2 / 2 / 9 / 10; }
+.im-poster-number .im-poster-word { grid-area: 7 / 2 / 9 / 10; --im-poster-word: 5cqw; align-self: end; }
+.im-poster-number .im-poster-subject { grid-area: 2 / 10 / -1 / 17; }
+
+/* Recap: many moments, one word over them. */
+.im-poster-recap .im-poster-word { grid-area: 1 / 2 / -1 / 16; justify-self: center; text-align: center; }
+.im-poster-recap .im-poster-chip { grid-area: 7 / 1 / 8 / -1; justify-self: center; }
+
+/* Type: no picture at all — an essay, an announcement, a hard opinion. */
+.im-poster-type .im-poster-word { grid-area: 2 / 2 / 8 / 16; --im-poster-word: 13cqw; }
+.im-poster-type .im-poster-chip { grid-area: 8 / 2; align-self: center; }
+
+/* Product: the thing, the verdict, the face that has an opinion. */
+.im-poster-product .im-poster-subject.im-poster-round { grid-area: 2 / 2 / 9 / 8; align-self: center; height: auto; aspect-ratio: 1; }
+.im-poster-product .im-poster-subject.im-poster-arch { grid-area: 2 / 10 / -1 / 17; }
+.im-poster-product .im-poster-disc { grid-area: 4 / 7 / 7 / 11; }
+.im-poster-product .im-poster-chip { grid-area: 1 / 2; margin-top: 2.5cqw; }
+
+/* Icon: one glyph, one ground — the app-icon idea at 16:9.
+   For a series that is about an idea rather than a face or a place. */
+.im-poster-icon { --im-poster-ground: var(--im-poster-tint, var(--im-poster-red)); --im-poster-fg: #fff; }
+.im-poster-icon .im-poster-glyph { grid-area: 2 / 6 / 9 / 12; color: #fff; }
+.im-poster-icon .im-poster-glyph .im-icon { stroke-width: 1.5; }
+.im-poster-icon .im-poster-word { grid-area: 8 / 2 / -1 / 16; align-self: center; --im-poster-word: 4.6cqw; letter-spacing: -0.02em; }
+.im-poster-icon .im-poster-ep { grid-area: 1 / 1 / 2 / -1; margin: 2.5cqw 2.5cqw 0 0; }
+.im-poster-icon .im-poster-chip { grid-area: 1 / 1; margin: 2.5cqw 0 0 2.5cqw; background-color: rgb(255 255 255 / 18%); }
+/* The paper icon: white ground, the glyph carries the series colour. */
+.im-poster-icon-paper { --im-poster-ground: var(--im-poster-paper); --im-poster-fg: var(--im-poster-ink); }
+.im-poster-icon-paper .im-poster-glyph { color: var(--im-poster-tint, var(--im-poster-red)); }
+.im-poster-icon-paper .im-poster-chip { background-color: var(--im-poster-tint, var(--im-poster-red)); }
+/* The glyph to one side and the word beside it, for a title that matters. */
+.im-poster-icon-side .im-poster-glyph { grid-area: 2 / 2 / 9 / 8; }
+.im-poster-icon-side .im-poster-word { grid-area: 2 / 9 / 9 / 16; --im-poster-word: 8.5cqw; letter-spacing: -0.045em; }
