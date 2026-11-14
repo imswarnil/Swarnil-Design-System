@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Posters drop the arch
+- `im-poster-arch` (the circle-topped "gate" cut) is gone; the subject of a poster is now cut to `im-poster-card`, a rounded rectangle (`border-radius: 2.4cqw`), or `im-poster-round`. The Concept › Thumbnails pages and their examples use the card.
+
 ### The home hero's picture takes a tint and scanlines
 - `photo_fx="tint"`, `"scanlines"` or `"tint scanlines"` on `sections/home-hero-full` lays one `.im-hero__fx` element over the still: a colour wash that drifts accent → warm → cool over twenty seconds (multiplied in the light scheme, screened in the dark), and a fine raster with a soft bar rolling down every seven seconds. Pointer-events none, hidden from assistive tech, gone while the film plays, held still under reduced motion.
 

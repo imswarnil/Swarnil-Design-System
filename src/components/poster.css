@@ -1,7 +1,7 @@
 /* Posters — the thumbnail a video wears in a feed, built from tokens.
 
      <figure class="im-poster im-poster-face">
-       <img class="im-poster-subject im-poster-arch" src="…" alt="">
+       <img class="im-poster-subject im-poster-card" src="…" alt="">
        <span class="im-poster-chip">day 12</span>
        <strong class="im-poster-word">cliff sunset<i class="im-poster-dot"></i></strong>
        <span class="im-poster-time">12:48</span>
@@ -73,7 +73,7 @@
 	object-fit: cover;
 	object-position: var(--im-poster-focus, 58% 28%);
 }
-.im-poster-arch { border-radius: 50cqw 50cqw 0 0; }
+.im-poster-card { border-radius: 2.4cqw; }
 .im-poster-round { border-radius: 50%; }
 
 /* A screen: a window with a hairline, for tutorials and walkthroughs. */
@@ -276,7 +276,7 @@
 
 /* Product: the thing, the verdict, the face that has an opinion. */
 .im-poster-product .im-poster-subject.im-poster-round { grid-area: 2 / 2 / 9 / 8; align-self: center; height: auto; aspect-ratio: 1; }
-.im-poster-product .im-poster-subject.im-poster-arch { grid-area: 2 / 10 / -1 / 17; }
+.im-poster-product .im-poster-subject.im-poster-card { grid-area: 2 / 10 / -1 / 17; }
 .im-poster-product .im-poster-disc { grid-area: 4 / 7 / 7 / 11; }
 .im-poster-product .im-poster-chip { grid-area: 1 / 2; margin-top: 2.5cqw; }
 

@@ -7,7 +7,7 @@ source: src/components/poster.css
 {{#example code=false}}
 <div class="im-grid-auto im-grid-md">
 	<figure class="im-poster im-poster-face">
-		<img class="im-poster-subject im-poster-arch" src="/assets/brand/portrait.jpg" alt="">
+		<img class="im-poster-subject im-poster-card" src="/assets/brand/portrait.jpg" alt="">
 		<span class="im-poster-chip">day 12 · vienna</span>
 		<strong class="im-poster-word">tram<br>therapy<i class="im-poster-dot"></i></strong>
 		<span class="im-poster-time">14:08</span>
@@ -42,7 +42,7 @@ source: src/components/poster.css
 		<tr><td><b>Deference</b></td><td>The frame serves the photograph; it never competes with it. A face, a place or a screen is the content — type and marks step back.</td><td>White ground, ink type, <em>one</em> red. No outlines, glows, emoji, or arrows that point at nothing.</td></tr>
 		<tr><td><b>Depth</b></td><td>Order comes from layers, not from effects. What is in front matters more.</td><td>Always four layers, always in the same stack: ground, subject, word, mark.</td></tr>
 		<tr><td><b>Hierarchy</b></td><td>The eye should travel in one path: subject, then word, then mark.</td><td>One thing is biggest — 40–60% of the frame. Everything else is visibly smaller.</td></tr>
-		<tr><td><b>Harmony</b></td><td>The shapes agree with the brand and with each other.</td><td>The arch, the pill chip and the dot come from the logo's tile and dot. Corners are concentric. Type is Geist.</td></tr>
+		<tr><td><b>Harmony</b></td><td>The shapes agree with the brand and with each other.</td><td>The rounded card, the pill chip and the dot come from the logo's tile and dot. Corners are concentric. Type is Geist.</td></tr>
 		<tr><td><b>Consistency</b></td><td>The same part is in the same place every time, so the channel is recognisable before its name is read.</td><td>Parts snap to the 16 × 9 grid, and each type fixes their slots.</td></tr>
 	</tbody>
 </table>
@@ -52,7 +52,7 @@ source: src/components/poster.css
 <p>Every thumbnail stacks the same four layers, bottom to top. A type may leave one out; it never adds a fifth or changes the order.</p>
 {{#example}}
 <figure class="im-poster im-poster-face im-poster-guides">
-	<img class="im-poster-subject im-poster-arch" src="/assets/brand/portrait.jpg" alt="">
+	<img class="im-poster-subject im-poster-card" src="/assets/brand/portrait.jpg" alt="">
 	<span class="im-poster-chip">day 12 · vienna</span>
 	<strong class="im-poster-word">tram<br>therapy<i class="im-poster-dot"></i></strong>
 	<span class="im-poster-time">14:08</span>
@@ -60,7 +60,7 @@ source: src/components/poster.css
 {{/example}}
 <ol>
 	<li><b>Ground</b> — <code>im-poster-media</code>, or the white paper itself. A full-bleed photograph, a wall of photos (<code>im-poster-tiles</code>), or nothing. A scrim (<code>im-poster-shade</code>) or a strip (<code>im-poster-bar</code>) belongs to this layer.</li>
-	<li><b>Subject</b> — <code>im-poster-subject</code>: a face, a product, a screen. Cut to a shape from the brand: the <b>arch</b> for a person, the <b>circle</b> for a thing, the <b>window</b> for a screen.</li>
+	<li><b>Subject</b> — <code>im-poster-subject</code>: a face, a product, a screen. Cut to a shape from the brand: the rounded <b>card</b> for a person, the <b>circle</b> for a thing, the <b>window</b> for a screen.</li>
 	<li><b>Word</b> — <code>im-poster-word</code>: one to four words in Geist Bold, ending in the red <b>dot</b>. Or a figure (<code>im-poster-figure</code>) when a number is the promise.</li>
 	<li><b>Mark</b> — <code>im-poster-chip</code>, <code>im-poster-hand</code>, <code>im-poster-glyph</code>, <code>im-poster-disc</code>, <code>im-poster-ep</code>: the small things that say <em>where</em>, <em>which</em> or <em>vs</em>. Never more than two on one thumbnail.</li>
 </ol>
@@ -72,7 +72,7 @@ source: src/components/poster.css
 	<thead><tr><th>Slot</th><th>Where</th><th>Why there</th></tr></thead>
 	<tbody>
 		<tr><td>Margin</td><td>Column 1 and 16, row 1 and 9 stay quiet</td><td>An 80px margin is what lets the thumbnail breathe at 168px, where it shrinks to about 10px.</td></tr>
-		<tr><td>Subject</td><td>Columns 9–16 (the right half), rows 2–9</td><td>A face on a third line; the arch's base sits on the bottom edge so the person is grounded, not floating.</td></tr>
+		<tr><td>Subject</td><td>Columns 9–16 (the right half), rows 2–9</td><td>A face on a third line; the card's base sits on the bottom edge so the person is grounded, not floating.</td></tr>
 		<tr><td>Word</td><td>Columns 2–8, rows 3–7</td><td>The left half reads first in left-to-right languages; the word lands before the face.</td></tr>
 		<tr><td>Chip</td><td>Row 2, column 2</td><td>Top-left is the one corner nothing on YouTube ever covers.</td></tr>
 		<tr><td>Timestamp</td><td>Columns 14–16, row 9</td><td>YouTube draws the running time there. Nothing that matters goes under it.</td></tr>
@@ -158,7 +158,7 @@ source: src/components/poster.css
 		<div class="im-poster im-poster-number">
 			<span class="im-poster-figure">7</span>
 			<strong class="im-poster-word">tools I use daily<i class="im-poster-dot"></i></strong>
-			<img class="im-poster-subject im-poster-arch" src="/assets/brand/portrait.jpg" alt="">
+			<img class="im-poster-subject im-poster-card" src="/assets/brand/portrait.jpg" alt="">
 		</div>
 		<figcaption>full size</figcaption>
 	</figure>
@@ -166,7 +166,7 @@ source: src/components/poster.css
 		<div class="im-poster im-poster-number">
 			<span class="im-poster-figure">7</span>
 			<strong class="im-poster-word">tools I use daily<i class="im-poster-dot"></i></strong>
-			<img class="im-poster-subject im-poster-arch" src="/assets/brand/portrait.jpg" alt="">
+			<img class="im-poster-subject im-poster-card" src="/assets/brand/portrait.jpg" alt="">
 		</div>
 		<figcaption>168px — a phone's list</figcaption>
 	</figure>
@@ -174,7 +174,7 @@ source: src/components/poster.css
 		<div class="im-poster im-poster-number thumb-gray">
 			<span class="im-poster-figure">7</span>
 			<strong class="im-poster-word">tools I use daily<i class="im-poster-dot"></i></strong>
-			<img class="im-poster-subject im-poster-arch" src="/assets/brand/portrait.jpg" alt="">
+			<img class="im-poster-subject im-poster-card" src="/assets/brand/portrait.jpg" alt="">
 		</div>
 		<figcaption>no colour</figcaption>
 	</figure>
@@ -197,7 +197,7 @@ source: src/components/poster.css
 	<tbody>
 		<tr><td><code>im-poster</code></td><td>The 16:9 canvas and its 16 × 9 grid. Every child fills it until a type places it.</td></tr>
 		<tr><td><code>im-poster-media</code> · <code>-tiles</code> · <code>-shade</code> · <code>-bar</code></td><td>Ground: a photo, a wall of photos, a scrim, a strip.</td></tr>
-		<tr><td><code>im-poster-subject</code> + <code>-arch</code> · <code>-round</code></td><td>Subject and its shape. <code>--im-poster-focus</code> moves the crop.</td></tr>
+		<tr><td><code>im-poster-subject</code> + <code>-card</code> · <code>-round</code></td><td>Subject and its shape. <code>--im-poster-focus</code> moves the crop.</td></tr>
 		<tr><td><code>im-poster-screen-frame</code></td><td>A window for a screenshot.</td></tr>
 		<tr><td><code>im-poster-word</code> + <code>-lg</code> · <code>im-poster-on-media</code></td><td>The word; <code>im-poster-dot</code> is its full stop.</td></tr>
 		<tr><td><code>im-poster-figure</code></td><td>A big number.</td></tr>
