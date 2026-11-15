@@ -127,3 +127,11 @@ one product for the other.
 4. Commit as you go: history is evidence of independent work.
 5. The product gets its own name, accent, details, demo content and screenshots — and never uses
    another product's name in its title, marketing or docs.
+
+## Example photographs (docs only)
+
+`assets/photos/` holds 48 photographs used only in the documentation's examples (the Concept pages).
+They come from [Unsplash](https://unsplash.com) through [Lorem Picsum](https://picsum.photos) and are
+free to use under the [Unsplash License](https://unsplash.com/license). Each file's photographer and
+source page are in `assets/photos/credits.json`. They are copied into `dist/` for the docs site and are
+**never** part of `npm run package` — a buyer gets the components, not the pictures.

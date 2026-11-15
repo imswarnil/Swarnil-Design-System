@@ -70,8 +70,19 @@ export const navigation = [
 					{ label: 'The system', url: '/concept/thumbnails/' },
 					{ label: 'Types', url: '/concept/thumbnails/types/' },
 					{ label: 'Icon thumbnails', url: '/concept/thumbnails/icons/' },
+					{ label: 'Series', url: '/concept/thumbnails/series/' },
 				],
 			},
+			{
+				label: 'Social',
+				icon: 'share-2',
+				children: [
+					{ label: 'Instagram', url: '/concept/instagram/' },
+					{ label: 'Memes & quotes', url: '/concept/memes/' },
+					{ label: 'Banners & socials', url: '/concept/socials/' },
+				],
+			},
+			{ label: 'For AI tools', icon: 'sparkles', url: '/concept/ai/' },
 		],
 	},
 	{

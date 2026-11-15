@@ -487,6 +487,7 @@ export async function build({ quiet = false } = {}) {
 	const searchIndex = JSON.stringify(flat.map((n) => ({ t: n.label, u: n.url }))).replace(/</g, '\\u003c');
 
 	let count = 0;
+	const feed = [];
 	const pagesDir = path.join(SITE, 'pages');
 	for (const file of walk(pagesDir, (f) => f.endsWith('.hbs'))) {
 		const rel = path.relative(pagesDir, file).replace(/\.hbs$/, '').split(path.sep).join('/');
@@ -567,6 +568,13 @@ export async function build({ quiet = false } = {}) {
 		// `shell:` in the frontmatter picks a different outer document — a demo
 		// page meant to be loaded in an iframe uses the bare one.
 		const html = ghost.render(layouts[meta.shell] || layouts.shell, {}, { ...root, body: inner });
+		// Plain text of the page, for llms.txt / llms-full.txt (what AI tools read).
+		feed.push({ url, title: meta.title || NAME, description: meta.description || '', text: content
+			.replace(/<(script|style|svg)[\s\S]*?<\/\1>/g, '').replace(/<pre[\s\S]*?<\/pre>/g, '')
+			.replace(/<h([23])[^>]*>([\s\S]*?)<\/h\1>/g, (_, n, t) => `\n\n${'#'.repeat(+n)} ${t.replace(/<[^>]+>/g, '')}\n`)
+			.replace(/<li[^>]*>/g, '\n- ').replace(/<\/(p|tr|table|ul|ol|div|figure)>/g, '\n').replace(/<t[dh][^>]*>/g, ' | ')
+			.replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#x27;|&#39;/g, "'")
+			.replace(/[ \t]+/g, ' ').replace(/\n\s*\n\s*\n+/g, '\n\n').trim() });
 		const out = path.join(DIST, url, 'index.html');
 		fs.mkdirSync(path.dirname(out), { recursive: true });
 		fs.writeFileSync(out, html);
@@ -576,6 +584,8 @@ export async function build({ quiet = false } = {}) {
 	/* -- assets: laid out exactly as a Ghost theme's assets/ would be -- */
 	fs.cpSync(path.join(ROOT, 'assets/fonts'), path.join(DIST, 'assets/fonts'), { recursive: true });
 	fs.cpSync(path.join(ROOT, 'assets/brand'), path.join(DIST, 'assets/brand'), { recursive: true });
+	// Free-to-use example photos (Unsplash License, see assets/photos/credits.json) — docs only, never packaged.
+	fs.cpSync(path.join(ROOT, 'assets/photos'), path.join(DIST, 'assets/photos'), { recursive: true });
 	// The brand mark is also the favicon, at the root where a browser looks for it.
 	fs.copyFileSync(path.join(ROOT, 'assets/brand/mark.svg'), path.join(DIST, 'favicon.svg'));
 	fs.copyFileSync(path.join(SRC, 'js/im.js'), path.join(DIST, 'assets/im.js'));
@@ -594,7 +604,17 @@ export async function build({ quiet = false } = {}) {
 	fs.writeFileSync(path.join(DIST, 'CNAME'), `${HOST}\n`);
 	fs.writeFileSync(path.join(DIST, '.nojekyll'), '');
 	fs.copyFileSync(path.join(ROOT, 'ads.txt'), path.join(DIST, 'ads.txt'));
-	fs.writeFileSync(path.join(DIST, 'robots.txt'), `User-agent: *\nAllow: /\n`);
+	fs.writeFileSync(path.join(DIST, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: https://${HOST}/sitemap.xml\n`);
+
+	/* -- for search engines and AI tools: sitemap.xml, llms.txt (the map), llms-full.txt (the words) -- */
+	const origin = `https://${HOST}`;
+	const byUrl = new Map(feed.map((p) => [p.url, p]));
+	fs.writeFileSync(path.join(DIST, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${feed.map((p) => `  <url><loc>${origin}${p.url}</loc></url>`).join('\n')}\n</urlset>\n`);
+	const intro = `# ${NAME}\n\n> The look of imswarnil.com, written down: tokens, layout, components, and the concepts behind every thumbnail, post, banner and meme. Use it to build anything that should look like Swarnil's work.\n\nRules that always hold: Geist (sans, mono, pixel) and one hand, Caveat; one accent, red #f22f46; ink #0a0a0a on white; a 12-column grid with the guides drawn; motion eases out (cubic-bezier(.2,.8,.2,1)). Tone: plain, specific, a person talking — never marketing copy.\n`;
+	const section = (g) => `\n## ${g.title || 'Start'}\n\n${leaves(g.items).map((n) => { const p = byUrl.get(n.url); return `- [${n.label}](${origin}${n.url})${p?.description ? `: ${p.description}` : ''}`; }).join('\n')}\n`;
+	fs.writeFileSync(path.join(DIST, 'llms.txt'), intro + navigation.map(section).join('') + `\n## Optional\n\n- [Everything above, as text](${origin}/llms-full.txt)\n- [Tokens as JSON](${origin}/package/tokens.json)\n`);
+	const concept = (u) => u.startsWith('/concept/') || u.startsWith('/foundation/') || u.startsWith('/guides/');
+	fs.writeFileSync(path.join(DIST, 'llms-full.txt'), intro + feed.filter((p) => concept(p.url)).map((p) => `\n\n---\n\n# ${p.title}\n\nSource: ${origin}${p.url}\n\n${p.description}\n\n${p.text}`).join('') + '\n');
 	log(`  pages    ${count} · ${sections.length} section(s) · ${icons.length} icons · ${tokens.count} tokens`);
 	if (ghost.warnings.size === 0) log('  helpers  every Ghost helper the partials use is modelled');
 

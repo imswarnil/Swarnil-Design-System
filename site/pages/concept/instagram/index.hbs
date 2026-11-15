@@ -1,0 +1,170 @@
+---
+title: Instagram
+description: The feed, the post, the carousel, the story, the reel cover and the profile — the same parts as a thumbnail on taller canvases, plus the playful bits a feed allows: stickers, tape, notes in the margin.
+eyebrow: Concept · Social
+source: src/components/poster.css
+---
+{{#example code=false}}
+<div class="im-poster-feed">
+	<figure class="im-poster im-poster-portrait im-poster-photo"><img class="im-poster-media" src="/assets/photos/santorini.jpg" alt=""><span class="im-poster-shade"></span><strong class="im-poster-word">blue doors<i class="im-poster-dot"></i></strong></figure>
+	<figure class="im-poster im-poster-portrait im-poster-wordpost"><span class="im-poster-chip">note to self</span><strong class="im-poster-word">done is<br>better<i class="im-poster-dot"></i></strong><span class="im-poster-hand">(than perfect)</span></figure>
+	<figure class="im-poster im-poster-portrait im-poster-photo"><img class="im-poster-media" src="/assets/photos/face-golden-hour.jpg" alt=""><span class="im-poster-shade"></span><span class="im-poster-sticker">day 12</span></figure>
+	<figure class="im-poster im-poster-portrait im-poster-photo"><img class="im-poster-media" src="/assets/photos/coffee-red.jpg" alt=""></figure>
+	<figure class="im-poster im-poster-portrait im-poster-photo"><img class="im-poster-media" src="/assets/photos/alley.jpg" alt=""><span class="im-poster-shade"></span><strong class="im-poster-word">get lost<i class="im-poster-dot"></i></strong></figure>
+	<figure class="im-poster im-poster-portrait im-poster-quote"><span class="im-poster-figure">“</span><strong class="im-poster-word">make it simple, then make it move.</strong><span class="im-poster-chip im-poster-chip-ink">swarnil</span></figure>
+	<figure class="im-poster im-poster-portrait im-poster-collage"><img class="im-poster-media" src="/assets/photos/tea.jpg" alt=""><img class="im-poster-media" src="/assets/photos/canal-town.jpg" alt=""><img class="im-poster-media" src="/assets/photos/strawberries.jpg" alt=""><img class="im-poster-media" src="/assets/photos/harbour-boat.jpg" alt=""><span class="im-poster-tape"></span><span class="im-poster-sticker">week 2</span></figure>
+	<figure class="im-poster im-poster-portrait im-poster-photo"><img class="im-poster-media" src="/assets/photos/fjord.jpg" alt=""></figure>
+	<figure class="im-poster im-poster-portrait im-poster-photo"><img class="im-poster-media" src="/assets/photos/person-canoe.jpg" alt=""><span class="im-poster-shade"></span><strong class="im-poster-word">paddle<i class="im-poster-dot"></i></strong></figure>
+</div>
+{{/example}}
+<p>A feed is read three posts at a time, as a wall. So the unit of design is not one post — it is the <b>row of three</b>, and the wall of nine a new visitor sees before deciding to follow.</p>
+
+<h2 id="sizes">Sizes</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>What</th><th>Pixels</th><th>Class</th><th>Grid</th></tr></thead>
+	<tbody>
+		<tr><td>Feed post, portrait (use this)</td><td>1080 × 1350</td><td><code>im-poster-portrait</code></td><td>12 × 15</td></tr>
+		<tr><td>Feed post, square</td><td>1080 × 1080</td><td><code>im-poster-square</code></td><td>12 × 12</td></tr>
+		<tr><td>Story, reel</td><td>1080 × 1920</td><td><code>im-poster-story</code></td><td>9 × 16</td></tr>
+		<tr><td>Profile picture</td><td>320 × 320, shown as a circle</td><td><code>im-poster-avatar</code></td><td>12 × 12</td></tr>
+	</tbody>
+</table>
+</div>
+<p>Portrait wins over square: it takes a third more of the phone screen in the feed, for free. The profile grid now crops posts to 3:4, so keep words away from the top and bottom fifteenth.</p>
+
+<h2 id="grid">Planning the grid</h2>
+<p>Three rules, and the wall above follows all of them:</p>
+<ul>
+	<li><b>Alternate weight.</b> A loud post (words, a sticker, colour) sits beside quiet ones (a photo, nothing on it). Two loud posts touching shout over each other.</li>
+	<li><b>One words-post per row, at most.</b> Every third post can carry type. The others are photos. A feed of all quote cards reads as a quote account.</li>
+	<li><b>The red appears once per row.</b> A chip, a dot, a sticker — once. The accent is how the wall says "same person" without saying it.</li>
+</ul>
+<p>Plan nine at a time in a note or a draft board before posting. Posting is the last step, not the first.</p>
+
+<h2 id="posts">Post types</h2>
+{{#example code=false}}
+<div class="im-grid-auto im-grid-md">
+	<figure class="im-poster im-poster-portrait im-poster-photo">
+		<img class="im-poster-media" src="/assets/photos/coast-cliffs.jpg" alt="">
+		<span class="im-poster-shade"></span>
+		<span class="im-poster-chip im-poster-chip-paper">mallorca</span>
+		<strong class="im-poster-word">edge of<br>the map<i class="im-poster-dot"></i></strong>
+	</figure>
+	<figure class="im-poster im-poster-portrait im-poster-wordpost">
+		<span class="im-poster-chip">reminder</span>
+		<strong class="im-poster-word">post the<br>draft<i class="im-poster-dot"></i></strong>
+		<span class="im-poster-hand">nobody has seen the perfect one either</span>
+	</figure>
+	<figure class="im-poster im-poster-portrait im-poster-quote">
+		<span class="im-poster-figure">“</span>
+		<strong class="im-poster-word">the best camera is the one you actually carry.</strong>
+		<span class="im-poster-chip im-poster-chip-ink">every photographer ever</span>
+		<img class="im-poster-subject" src="/assets/photos/film-camera.jpg" alt="">
+	</figure>
+	<figure class="im-poster im-poster-portrait im-poster-collage">
+		<img class="im-poster-media" src="/assets/photos/cooking.jpg" alt="">
+		<img class="im-poster-media" src="/assets/photos/food-flatlay.jpg" alt="">
+		<img class="im-poster-media" src="/assets/photos/coffee-red.jpg" alt="">
+		<img class="im-poster-media" src="/assets/photos/strawberries.jpg" alt="">
+		<span class="im-poster-tape"></span>
+		<span class="im-poster-sticker">ate well</span>
+	</figure>
+</div>
+{{/example}}
+<ul>
+	<li><b>Photo</b> (<code>im-poster-photo</code>) — the picture is the post. A word only if it adds something the photo cannot say.</li>
+	<li><b>Word</b> (<code>im-poster-wordpost</code>) — a thought, a rule, a reminder. Two lines and a hand note. If it needs three lines, it is a carousel.</li>
+	<li><b>Quote</b> (<code>im-poster-quote</code>) — someone else's words, credited in the chip. Your own words are a Word post, not a quote.</li>
+	<li><b>Collage</b> (<code>im-poster-collage</code>) — four photos taped down, one sticker. For "a week of…", a meal, a trip day.</li>
+</ul>
+
+<h2 id="carousels">Carousels</h2>
+{{#example code=false}}
+<div class="im-poster-deck">
+	<figure class="im-poster im-poster-square im-poster-slide">
+		<span class="im-poster-ep">01/05</span>
+		<strong class="im-poster-word">how I plan a trip in an hour<i class="im-poster-dot"></i></strong>
+		<span class="im-poster-thread im-poster-thread-start"></span>
+		<span class="im-poster-hand">swipe →</span>
+	</figure>
+	<figure class="im-poster im-poster-square im-poster-slide">
+		<span class="im-poster-ep">02/05</span>
+		<strong class="im-poster-word">pick the one thing</strong>
+		<span class="im-poster-thread"></span>
+		<p class="im-poster-body">Not ten. One reason to go — a view, a meal, a person. Everything else fits around it.</p>
+	</figure>
+	<figure class="im-poster im-poster-square im-poster-slide">
+		<span class="im-poster-ep">03/05</span>
+		<strong class="im-poster-word">three bookings</strong>
+		<span class="im-poster-thread"></span>
+		<ol class="im-poster-list"><li>the bed</li><li>the way there</li><li>the one thing</li></ol>
+	</figure>
+	<figure class="im-poster im-poster-square im-poster-slide">
+		<span class="im-poster-ep">04/05</span>
+		<strong class="im-poster-word">leave gaps</strong>
+		<span class="im-poster-thread"></span>
+		<img class="im-poster-media" src="/assets/photos/street-laundry.jpg" alt="">
+	</figure>
+	<figure class="im-poster im-poster-square im-poster-slide">
+		<span class="im-poster-ep">05/05</span>
+		<strong class="im-poster-word">that's it.</strong>
+		<span class="im-poster-thread im-poster-thread-end"></span>
+		<p class="im-poster-body im-poster-body-hand">save this for your next trip ✈︎</p>
+	</figure>
+</div>
+{{/example}}
+<p>A carousel is a story in slides. Three things make it feel like one piece rather than five posts:</p>
+<ul>
+	<li><b>The thread.</b> A red line (<code>im-poster-thread</code>) runs across every slide at the same height, starting halfway through the first and ending halfway through the last. A swipe feels like turning a page of one thing.</li>
+	<li><b>The counter.</b> <code>01/05</code> in pixel type, top left, every slide. People finish what they can see the end of.</li>
+	<li><b>One idea per slide.</b> A slide that needs a scroll inside it is two slides.</li>
+</ul>
+<p>The first slide is a thumbnail: it has to earn the swipe alone. The last slide asks for one thing — save, share, or follow — never all three.</p>
+
+<h2 id="stories">Stories</h2>
+{{#example code=false}}
+<div class="im-grid-auto im-grid-sm">
+	<figure class="im-poster im-poster-story im-poster-storyphoto">
+		<img class="im-poster-media" src="/assets/photos/person-hiker.jpg" alt="">
+		<span class="im-poster-shade"></span>
+		<span class="im-poster-chip">today</span>
+		<strong class="im-poster-word">summit or snacks?<i class="im-poster-dot"></i></strong>
+		<span class="im-poster-sticker im-poster-sticker-paper">new vlog ↗</span>
+		<span class="im-poster-safe"></span>
+	</figure>
+	<figure class="im-poster im-poster-story im-poster-storyask">
+		<img class="im-poster-media" src="/assets/photos/coffee-brew.jpg" alt="">
+		<span class="im-poster-hand">honest question</span>
+		<div class="im-poster-poll">coffee or tea?<span>coffee, obviously</span><span>tea, calmly</span></div>
+	</figure>
+	<figure class="im-poster im-poster-story im-poster-reel">
+		<img class="im-poster-media" src="/assets/photos/aurora.jpg" alt="">
+		<span class="im-poster-shade"></span>
+		<span class="im-poster-ep">reel · 0:42</span>
+		<strong class="im-poster-word">it was green<i class="im-poster-dot"></i></strong>
+		<span class="im-poster-safe"></span>
+	</figure>
+</div>
+{{/example}}
+<p>A story is gone in a day, so it can be looser: a sticker can sit at an angle, a hand note can say "honest question". Two rules still hold. <b>The top and bottom two rows are not yours</b> — the app draws the profile, the reply bar and the buttons there (the dashed box is what stays clear). And <b>a reel cover is cropped to the middle</b> on the profile grid, so its word lives in the centre band, never near an edge.</p>
+
+<h2 id="profile">Profile and highlights</h2>
+{{#example code=false}}
+<div class="im-cluster">
+	<figure class="im-poster im-poster-avatar im-poster-avatar-lg im-poster-avatar-ring"><img class="im-poster-media" src="/assets/photos/face-golden-hour.jpg" alt=""></figure>
+	<figure class="im-poster im-poster-avatar im-poster-avatar-lg im-poster-avatar-mark"><strong class="im-poster-word">S<i class="im-poster-dot"></i></strong></figure>
+	<figure class="im-poster im-poster-avatar im-poster-avatar-sm"><span class="im-poster-glyph">{{icon "map-pin"}}</span></figure>
+	<figure class="im-poster im-poster-avatar im-poster-avatar-sm"><span class="im-poster-glyph">{{icon "video"}}</span></figure>
+	<figure class="im-poster im-poster-avatar im-poster-avatar-sm"><span class="im-poster-glyph">{{icon "heart"}}</span></figure>
+</div>
+{{/example}}
+<p>The profile picture is a face for a person (<code>im-poster-avatar-ring</code> adds the red ring — the record light) and the mark for a brand (<code>im-poster-avatar-mark</code>). Highlight covers are icons on a light ground, one accent, no words — the highlight's own label is the word.</p>
+
+<h2 id="captions">Captions</h2>
+<ul>
+	<li><b>First line is the hook.</b> Only it shows before "more". Write it like the thumbnail word: the feeling, not the description.</li>
+	<li><b>Write like you text.</b> Lower case is fine. Short sentences. One emoji if it adds something, none if it is decoration.</li>
+	<li><b>Three to five hashtags</b>, specific ones, at the end. <code>#lisbonwalks</code> finds people; <code>#travel</code> finds nobody.</li>
+	<li><b>Never</b> "In today's post…", "Let's dive in", "Here's the thing". If a sentence could open anyone's caption, cut it.</li>
+</ul>

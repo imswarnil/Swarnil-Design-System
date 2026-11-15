@@ -1,0 +1,132 @@
+---
+title: Memes & quotes
+description: The playful end of the brand. Same fonts, same red, same grid — and a lot more room to be silly. Four meme formats, quote cards, stickers, and the rules that keep a joke sounding like a person and not a content machine.
+eyebrow: Concept · Social
+source: src/components/poster.css
+---
+{{#example code=false}}
+<div class="im-grid-auto im-grid-sm">
+	<figure class="im-poster im-poster-square im-poster-meme">
+		<img class="im-poster-media" src="/assets/photos/pug-blanket.jpg" alt="">
+		<p class="im-poster-caption">me at 7am</p>
+		<p class="im-poster-caption">"five more minutes"</p>
+	</figure>
+	<figure class="im-poster im-poster-square im-poster-panels">
+		<strong class="im-poster-word">the trip I planned</strong>
+		<img class="im-poster-media" src="/assets/photos/santorini.jpg" alt="">
+		<strong class="im-poster-word">the trip I took</strong>
+		<img class="im-poster-media" src="/assets/photos/walrus-nap.jpg" alt="">
+	</figure>
+	<figure class="im-poster im-poster-square im-poster-noted">
+		<img class="im-poster-media" src="/assets/photos/dog-look.jpg" alt="">
+		<span class="im-poster-tape"></span>
+		<span class="im-poster-note">he heard<br>"walk"</span>
+		<span class="im-poster-arrow"><svg viewBox="0 0 100 100"><path d="M92 8 C 62 6, 30 30, 22 78"/><path d="M22 78 L 12 56 M22 78 L 44 68"/></svg></span>
+	</figure>
+	<figure class="im-poster im-poster-square im-poster-posted">
+		<div class="im-poster-postcard">
+			<img src="/assets/photos/face-sunglasses.jpg" alt="">
+			<b>swarnil <small>@imswarnil</small></b>
+			<p>packed 6 shirts for a 3 day trip. wore the same hoodie the whole time.</p>
+		</div>
+		<span class="im-poster-sticker">relatable</span>
+	</figure>
+</div>
+{{/example}}
+<p>Memes are allowed to be loud, quick and a bit dumb. They still look like us because the <em>pieces</em> are ours: Geist, the red, the sticker with the white edge, a handwritten note. A meme made of our pieces needs no logo.</p>
+
+<h2 id="tone">The tone: a person, not a feed</h2>
+<p>The fastest way to kill a joke is to make it sound written by committee — or by a machine. These are the rules that keep it human:</p>
+<ul>
+	<li><b>Specific beats general.</b> "packed 6 shirts, wore one hoodie" is funny. "When you overpack 😂" is a template.</li>
+	<li><b>Lower case, real punctuation.</b> Write it the way you'd send it to a friend. No Title Case, no "POV:" on every post.</li>
+	<li><b>One joke per image.</b> If it needs a second caption to land, it hasn't landed.</li>
+	<li><b>Be the butt of the joke.</b> Self-own &gt; dunking on someone. Our memes laugh at us, our habits, our trips.</li>
+	<li><b>No filler words.</b> Never "literally", "nobody: / me:", "it's giving", "the way I…", "not me…". If the phrase is trending this week, it is stale next week.</li>
+	<li><b>Max one emoji</b>, and only if it carries meaning. Three crying-laughing faces is a laugh track.</li>
+</ul>
+
+<h2 id="classic">Classic: top and bottom</h2>
+{{#example}}
+<figure class="im-poster im-poster-square im-poster-meme">
+	<img class="im-poster-media" src="/assets/photos/lion-stare.jpg" alt="">
+	<p class="im-poster-caption">when the wifi drops</p>
+	<p class="im-poster-caption">mid upload</p>
+</figure>
+{{/example}}
+<p><code>im-poster-meme</code>: one photo, two lines. The caption is Geist Black, lower case, with a black outline so it reads on anything. The setup on top, the turn at the bottom. A photo with a strong <em>face</em> — human or animal — does most of the work.</p>
+
+<h2 id="panels">Two panels</h2>
+{{#example}}
+<figure class="im-poster im-poster-square im-poster-panels">
+	<strong class="im-poster-word">me editing<br>at 10pm</strong>
+	<img class="im-poster-media" src="/assets/photos/desk-minimal.jpg" alt="">
+	<strong class="im-poster-word">me editing<br>at 3am</strong>
+	<img class="im-poster-media" src="/assets/photos/pug-cloak.jpg" alt="">
+</figure>
+{{/example}}
+<p><code>im-poster-panels</code>: expectation / reality, before / after, me / also me. Words on the left in our type, pictures on the right. The second picture is the punchline, so it gets the weirder photo.</p>
+
+<h2 id="noted">Note and arrow</h2>
+{{#example}}
+<figure class="im-poster im-poster-square im-poster-noted">
+	<img class="im-poster-media" src="/assets/photos/leopard-road.jpg" alt="">
+	<span class="im-poster-tape"></span>
+	<span class="im-poster-note">definitely<br>a house cat</span>
+	<span class="im-poster-arrow"><svg viewBox="0 0 100 100"><path d="M92 8 C 62 6, 30 30, 22 78"/><path d="M22 78 L 12 56 M22 78 L 44 68"/></svg></span>
+</figure>
+{{/example}}
+<p><code>im-poster-noted</code>: a paper note taped to the photo, a drawn arrow pointing at the joke. Caveat on paper reads like a sticky note on a fridge — the most "us" format there is. Tilt the note with <code>--im-poster-tilt</code> so no two look stamped.</p>
+
+<h2 id="posted">Post card</h2>
+{{#example}}
+<figure class="im-poster im-poster-square im-poster-posted" style="--im-poster-tint: #fde7ea">
+	<div class="im-poster-postcard">
+		<img src="/assets/photos/person-coat.jpg" alt="">
+		<b>swarnil <small>@imswarnil</small></b>
+		<p>"quick 5 minute edit" — me, 4 hours ago</p>
+	</div>
+	<span class="im-poster-sticker">every time</span>
+</figure>
+{{/example}}
+<p><code>im-poster-posted</code>: a text post drawn as a card — for a thought that is funny as words. It is <em>our</em> card, never a copy of a platform's screenshot: no logos, no fake like counts. The ground takes <code>--im-poster-tint</code>, light and warm.</p>
+
+<h2 id="quotes">Quote cards</h2>
+{{#example code=false}}
+<div class="im-grid-auto im-grid-sm">
+	<figure class="im-poster im-poster-square im-poster-quote">
+		<span class="im-poster-figure">“</span>
+		<strong class="im-poster-word">you don't need a better camera. you need a better morning.</strong>
+		<span class="im-poster-chip">swarnil</span>
+	</figure>
+	<figure class="im-poster im-poster-square im-poster-quote im-poster-ground-ink">
+		<span class="im-poster-figure">“</span>
+		<strong class="im-poster-word">the plan was to have no plan. it went great.</strong>
+		<span class="im-poster-chip im-poster-chip-paper">travel diary</span>
+	</figure>
+	<figure class="im-poster im-poster-square im-poster-wordpost im-poster-ground-red">
+		<strong class="im-poster-word">ship it<br>ugly.</strong>
+		<span class="im-poster-hand">then make it pretty</span>
+	</figure>
+</div>
+{{/example}}
+<p>Paper, ink (<code>im-poster-ground-ink</code>) or red (<code>im-poster-ground-red</code>) — one ground per card, and alternate them in a feed. A quote is short enough to read in one breath; if it needs a full stop in the middle, it is two quotes. Credit the person in the chip; for your own lines, use your name or the series name.</p>
+
+<h2 id="stickers">The sticker sheet</h2>
+{{#example code=false}}
+<figure class="im-poster im-poster-sheet">
+	<span class="im-poster-sticker">wait what</span>
+	<span class="im-poster-sticker im-poster-sticker-paper" style="--im-poster-tilt: 5deg">new vlog ↗</span>
+	<span class="im-poster-sticker" style="--im-poster-tilt: -3deg">hot take</span>
+	<span class="im-poster-sticker im-poster-sticker-paper" style="--im-poster-tilt: 8deg">day 12</span>
+</figure>
+{{/example}}
+<p>Two to three words, never a sentence. Red for a reaction (<em>wait what</em>, <em>hot take</em>), paper for information (<em>new vlog</em>, <em>day 12</em>). Every sticker gets its own tilt between −8° and 8°; a sticker at 0° looks printed, not stuck.</p>
+
+<h2 id="dont">Don't</h2>
+<ul>
+	<li>Don't use someone else's face or a famous meme template as the photo — it is not ours to post, and it dates in a week.</li>
+	<li>Don't punch down. The joke is on us, a situation, or a thing — never on a person.</li>
+	<li>Don't explain the joke in the caption. The caption is a second joke or nothing.</li>
+	<li>Don't put the logo on a meme. If it needs a logo to look like us, it doesn't look like us.</li>
+</ul>

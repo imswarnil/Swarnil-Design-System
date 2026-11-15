@@ -1,0 +1,40 @@
+---
+title: For AI tools
+description: How to point any AI assistant at this system so what it makes looks like ours — the llms.txt map, the full text, the MCP server, and three prompts that work.
+eyebrow: Concept
+---
+<p>An assistant that has not read the system will guess — and its guess is the average of the internet: gradients, five fonts, "Unlock your potential". Give it the system first and it stops guessing. There are three ways in, from lightest to deepest.</p>
+
+<h2 id="llms">1. llms.txt — the map</h2>
+<p><a href="/llms.txt"><code>/llms.txt</code></a> is a short file at the root of the site, the way <code>robots.txt</code> is for crawlers. It holds the rules that always apply (fonts, the one red, the grid, the tone) and a link with one line for every page. Paste its address into any chat that can read the web: <em>"Read https://design.imswarnil.com/llms.txt, then…"</em></p>
+
+<h2 id="full">2. llms-full.txt — every word</h2>
+<p><a href="/llms-full.txt"><code>/llms-full.txt</code></a> is every Concept, Foundation and Guides page as plain text in one file — the thumbnail system and its series, Instagram, memes, banners, tokens, type, motion. Attach it, or paste it, when the assistant cannot browse. It is generated on every build, so it can never be out of date.</p>
+
+<h2 id="mcp">3. The MCP server — the toolbox</h2>
+<p>For an assistant that runs tools (Claude Code, Claude Desktop, Cursor and others), the repository ships an MCP server. It reads the repository at call time and answers in the system's own words:</p>
+<ul>
+	<li><code>brand</code> — palette, faces, logo, grid, motion, voice, the never-dos. Start here.</li>
+	<li><code>concept topic</code> — the written concept for <code>thumbnails</code>, <code>types</code>, <code>series</code>, <code>icons</code>, <code>instagram</code>, <code>memes</code>, <code>socials</code>.</li>
+	<li><code>brief kind</code> — a recipe for a thumbnail, a video, a social post, slides, a poster, an email or a page.</li>
+	<li><code>image_prompt shape subject</code> — a prompt for an image model that stays inside the look.</li>
+	<li><code>get_example page</code> — any example on this site as HTML, React or Ghost, ready to paste.</li>
+</ul>
+<p>Add it with <code>node mcp/server.mjs</code> as a stdio server from a clone of the repository.</p>
+
+<h2 id="prompts">Prompts that work</h2>
+<p>Short, specific, and always pointing at the system first:</p>
+<ul>
+	<li><em>"Using design.imswarnil.com (read /llms.txt), make a Daily vlog thumbnail for day 21 in Porto. Feeling: rained all day, still great. Give me the word, the hand note and the chip."</em></li>
+	<li><em>"Plan the next nine Instagram posts for a week in Japan following the grid rules on /concept/instagram/. Mark which three carry words."</em></li>
+	<li><em>"Write five memes about editing at 3am in the tone on /concept/memes/. One joke each, lower case, no trending phrases."</em></li>
+</ul>
+
+<h2 id="voice">Keeping it human</h2>
+<p>The system is plain on purpose, and the words should be too. When an assistant drafts copy, hold it to the same rules as a person:</p>
+<ul>
+	<li>Specific nouns over adjectives — "3 cafés before noon", not "an amazing day".</li>
+	<li>No openers that could start anyone's post: "In today's video", "Let's dive in", "Here's the thing".</li>
+	<li>No stacked emoji, no "unlock", "elevate", "journey", "game-changer".</li>
+	<li>Read it out loud. If you wouldn't say it to a friend, rewrite it.</li>
+</ul>

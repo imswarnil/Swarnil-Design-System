@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Concept grows a social side, and the docs feed AI tools
+- **Thumbnails › Series**: the eight series (daily vlog, travel, Q&A, web series, project log, skit, tutorial, one-offs), each with its fixed type, chip and one signature, three examples each and a series sheet.
+- **Social**: new pages for **Instagram** (sizes, grid planning, post types, carousels with a running thread, stories, reel covers, profile and highlights, captions), **Memes & quotes** (four meme formats, quote cards, the sticker sheet, and the tone rules) and **Banners & socials** (YouTube banner safe band, profile pictures, blog covers, LinkedIn, X, Facebook, one size table).
+- `im-poster` takes new canvases — `-square`, `-portrait`, `-story`, `-link`, `-avatar` — and new parts: `-sticker`, `-tape`, `-note`, `-arrow`, `-caption`, `-body`, `-list`, `-postcard`, `-poll`, `-thread`, `-safe`, with types `-photo`, `-wordpost`, `-quote`, `-slide`, `-collage`, `-meme`, `-panels`, `-noted`, `-posted`, `-storyphoto`, `-storyask`, `-reel`, `-banner`, `-avatar-ring`, `-avatar-mark`, and containers `-feed`, `-deck`, `-sheet`; grounds `-ground-ink`, `-ground-red`.
+- **For AI tools**: the build now writes `/llms.txt` (the rules and every page in one line), `/llms-full.txt` (every Concept, Foundation and Guides page as text) and `/sitemap.xml`; `robots.txt` points at the sitemap. The MCP server gains `concept topic`.
+- Examples use free photographs in `assets/photos/` (Unsplash License, credits in `credits.json`), docs only.
+
 ### Posters drop the arch
 - `im-poster-arch` (the circle-topped "gate" cut) is gone; the subject of a poster is now cut to `im-poster-card`, a rounded rectangle (`border-radius: 2.4cqw`), or `im-poster-round`. The Concept › Thumbnails pages and their examples use the card.
 

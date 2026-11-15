@@ -23,6 +23,8 @@
  *                              thumbnail · video · social · slides · poster · og-image
  *                              · email · web · app
  *   image_prompt shape subject a prompt for an image model that stays in the look
+ *   concept topic              the full written concept: thumbnails · types · icons · series
+ *                              · instagram · memes · socials — rules, formats, tone, do/don't
  *
  * Everything is read from this repository at call time — nothing is copied
  * into the server, so it can never describe a component that has changed.
@@ -117,6 +119,17 @@ server.tool('rules', 'The naming, layering and provenance rules a theme built on
 }));
 
 const text = (t) => ({ content: [{ type: 'text', text: typeof t === 'string' ? t : JSON.stringify(t, null, 1) }] });
+
+// The concept pages, as plain words (the same pages the site shows under Concept).
+const CONCEPTS = { thumbnails: 'concept/thumbnails', types: 'concept/thumbnails/types', icons: 'concept/thumbnails/icons', series: 'concept/thumbnails/series',
+	instagram: 'concept/instagram', memes: 'concept/memes', socials: 'concept/socials', ai: 'concept/ai' };
+const plain = (src) => src.replace(/^---[\s\S]*?---/, (fm) => fm.replace(/^---|---$/g, '').trim() + '\n')
+	.replace(/\{\{#example[^}]*\}\}[\s\S]*?\{\{\/example\}\}/g, '[example]').replace(/\{\{[^}]*\}\}/g, '')
+	.replace(/<h2[^>]*>/g, '\n## ').replace(/<li>/g, '- ').replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/\n{3,}/g, '\n\n').trim();
+server.tool('concept', `The written concept for content in this look — rules, formats and sizes, tone of voice, do/don't. Topics: ${Object.keys(CONCEPTS).join(' · ')}. Read this before making a thumbnail, a post, a carousel, a meme, a banner or a profile picture.`, { topic: z.enum(Object.keys(CONCEPTS)) }, async ({ topic }) => {
+	const src = read(at('site/pages', CONCEPTS[topic], 'index.hbs'));
+	return { content: [{ type: 'text', text: plain(src) }] };
+});
 const fail = (t) => ({ content: [{ type: 'text', text: t }], isError: true });
 
 /* ── using it ─────────────────────────────────────────────────────────── */

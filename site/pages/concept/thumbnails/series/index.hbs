@@ -1,0 +1,252 @@
+---
+title: Thumbnail series
+description: Eight series, eight sets of fixed parts. A series is recognisable before anyone reads it because the same things sit in the same places every week — only the photo and the word change.
+eyebrow: Concept · Thumbnails
+source: src/components/poster.css
+---
+<p>A type answers <em>what kind of video is this?</em> A series answers <em>which show is this?</em> — and the answer has to arrive faster than the title. So each series below fixes three things and leaves the rest free:</p>
+<ul>
+	<li><b>The type</b> — never changes inside a series.</li>
+	<li><b>The chip</b> — same position, same pattern of words (<code>day 12 · lisbon</code>, never sometimes "day twelve").</li>
+	<li><b>One signature</b> — a red line, a pixel episode number, a hand note, a sticker. One. Two signatures is a collage.</li>
+</ul>
+<p>Everything else — the photo, the word, the note — is the episode. Three thumbnails per series below, so you can see what stays and what moves.</p>
+
+<h2 id="daily">Daily vlog</h2>
+{{#example code=false}}
+<div class="im-grid-auto im-grid-md">
+	<figure class="im-poster im-poster-face">
+		<img class="im-poster-subject im-poster-card" src="/assets/photos/face-golden-hour.jpg" alt="">
+		<span class="im-poster-chip">day 12 · lisbon</span>
+		<strong class="im-poster-word">slow<br>sunday<i class="im-poster-dot"></i></strong>
+		<span class="im-poster-hand">no plans. perfect.</span>
+		<span class="im-poster-time">14:08</span>
+	</figure>
+	<figure class="im-poster im-poster-face">
+		<img class="im-poster-subject im-poster-card" src="/assets/photos/person-coat.jpg" alt="" style="--im-poster-focus: 40% 30%">
+		<span class="im-poster-chip">day 13 · lisbon</span>
+		<strong class="im-poster-word">got<br>lost<i class="im-poster-dot"></i></strong>
+		<span class="im-poster-hand">on purpose (mostly)</span>
+		<span class="im-poster-time">11:52</span>
+	</figure>
+	<figure class="im-poster im-poster-face">
+		<img class="im-poster-subject im-poster-card" src="/assets/photos/coffee-brew.jpg" alt="">
+		<span class="im-poster-chip">day 14 · lisbon</span>
+		<strong class="im-poster-word">coffee<br>nerd<i class="im-poster-dot"></i></strong>
+		<span class="im-poster-hand">3 cafés before noon</span>
+		<span class="im-poster-time">09:31</span>
+	</figure>
+</div>
+{{/example}}
+<p><b>Type:</b> Face + word. <b>Chip:</b> <code>day N · city</code>, top left. <b>Signature:</b> the hand note under the word — it is the vlog's voice, so write it the way you would text a friend. The word is a feeling, two short lines, never the activity ("slow sunday", not "exploring the old town").</p>
+
+<h2 id="travel">Travel vlog</h2>
+{{#example code=false}}
+<div class="im-grid-auto im-grid-md">
+	<figure class="im-poster im-poster-place">
+		<img class="im-poster-media" src="/assets/photos/santorini.jpg" alt="">
+		<span class="im-poster-bar"></span>
+		<span class="im-poster-chip im-poster-chip-paper">ep 01 · greece</span>
+		<strong class="im-poster-word">white &amp; blue<i class="im-poster-dot"></i></strong>
+		<span class="im-poster-time">22:10</span>
+	</figure>
+	<figure class="im-poster im-poster-place">
+		<img class="im-poster-media" src="/assets/photos/fjord.jpg" alt="">
+		<span class="im-poster-bar"></span>
+		<span class="im-poster-chip im-poster-chip-paper">ep 02 · norway</span>
+		<strong class="im-poster-word">the long drop<i class="im-poster-dot"></i></strong>
+		<span class="im-poster-time">27:45</span>
+	</figure>
+	<figure class="im-poster im-poster-place">
+		<img class="im-poster-media" src="/assets/photos/canal-town.jpg" alt="">
+		<span class="im-poster-bar"></span>
+		<span class="im-poster-chip im-poster-chip-paper">ep 03 · bruges</span>
+		<strong class="im-poster-word">boats everywhere<i class="im-poster-dot"></i></strong>
+		<span class="im-poster-time">19:02</span>
+	</figure>
+</div>
+{{/example}}
+<p><b>Type:</b> Place. <b>Chip:</b> <code>ep N · country</code>, paper, top left. <b>Signature:</b> the white strip with the red line. Pick photos with a high horizon so nothing worth seeing hides under the strip. The word is the one thing you would tell someone about the place, not its name — the chip already has the name.</p>
+
+<h2 id="qna">Q&amp;A</h2>
+{{#example code=false}}
+<div class="im-grid-auto im-grid-md">
+	<figure class="im-poster im-poster-ask">
+		<img class="im-poster-subject im-poster-card" src="/assets/photos/person-reading.jpg" alt="">
+		<strong class="im-poster-word">your<br>questions<i class="im-poster-dot"></i></strong>
+		<span class="im-poster-glyph">{{icon "circle-help"}}</span>
+		<span class="im-poster-hand">round 4</span>
+		<span class="im-poster-time">31:00</span>
+	</figure>
+	<figure class="im-poster im-poster-ask">
+		<img class="im-poster-subject im-poster-card" src="/assets/photos/face-sunglasses.jpg" alt="">
+		<strong class="im-poster-word">money<br>talk<i class="im-poster-dot"></i></strong>
+		<span class="im-poster-glyph">{{icon "circle-help"}}</span>
+		<span class="im-poster-hand">you asked, so…</span>
+		<span class="im-poster-time">24:16</span>
+	</figure>
+	<figure class="im-poster im-poster-ask">
+		<img class="im-poster-subject im-poster-card" src="/assets/photos/person-backpack.jpg" alt="">
+		<strong class="im-poster-word">why I<br>left<i class="im-poster-dot"></i></strong>
+		<span class="im-poster-glyph">{{icon "circle-help"}}</span>
+		<span class="im-poster-hand">the honest version</span>
+		<span class="im-poster-time">18:40</span>
+	</figure>
+</div>
+{{/example}}
+<p><b>Type:</b> Question. <b>Signature:</b> the drawn question mark, always the same size and spot. <b>Hand note:</b> the round number or a one-line tease. Never write a viewer's question in full on the thumbnail — the topic in two words, the question in the title.</p>
+
+<h2 id="web-series">Web series</h2>
+{{#example code=false}}
+<div class="im-grid-auto im-grid-md">
+	<figure class="im-poster im-poster-icon im-poster-icon-side" style="--im-poster-tint: #175cd3">
+		<span class="im-poster-glyph">{{icon "square-play"}}</span>
+		<strong class="im-poster-word">the pilot<i class="im-poster-dot"></i></strong>
+		<span class="im-poster-ep">S1 · E1</span>
+		<span class="im-poster-time">12:00</span>
+	</figure>
+	<figure class="im-poster im-poster-icon im-poster-icon-side" style="--im-poster-tint: #175cd3">
+		<span class="im-poster-glyph">{{icon "square-play"}}</span>
+		<strong class="im-poster-word">the flatmate<i class="im-poster-dot"></i></strong>
+		<span class="im-poster-ep">S1 · E2</span>
+		<span class="im-poster-time">13:24</span>
+	</figure>
+	<figure class="im-poster im-poster-icon im-poster-icon-side" style="--im-poster-tint: #175cd3">
+		<span class="im-poster-glyph">{{icon "square-play"}}</span>
+		<strong class="im-poster-word">rent day<i class="im-poster-dot"></i></strong>
+		<span class="im-poster-ep">S1 · E3</span>
+		<span class="im-poster-time">11:58</span>
+	</figure>
+</div>
+{{/example}}
+<p><b>Type:</b> Icon, side. <b>Signature:</b> the season colour (<code>--im-poster-tint</code>) and the pixel episode number. A new season gets a new tint and keeps everything else, so the playlist reads as one show in stripes of colour.</p>
+
+<h2 id="project-log">Project log</h2>
+{{#example code=false}}
+<div class="im-grid-auto im-grid-md">
+	<figure class="im-poster im-poster-screen">
+		<strong class="im-poster-word">it finally works<i class="im-poster-dot"></i></strong>
+		<div class="im-poster-screen-frame"><img src="/assets/photos/desk-coffee.jpg" alt=""></div>
+		<span class="im-poster-chip im-poster-chip-ink">log 07</span>
+		<img class="im-poster-subject im-poster-card" src="/assets/photos/hands-camera.jpg" alt="">
+		<span class="im-poster-time">16:12</span>
+	</figure>
+	<figure class="im-poster im-poster-screen">
+		<strong class="im-poster-word">I broke it again<i class="im-poster-dot"></i></strong>
+		<div class="im-poster-screen-frame"><img src="/assets/photos/desk-notebook.jpg" alt=""></div>
+		<span class="im-poster-chip im-poster-chip-ink">log 08</span>
+		<img class="im-poster-subject im-poster-card" src="/assets/photos/person-coat.jpg" alt="">
+		<span class="im-poster-time">21:37</span>
+	</figure>
+	<figure class="im-poster im-poster-number">
+		<span class="im-poster-figure">100</span>
+		<strong class="im-poster-word">days of building</strong>
+		<img class="im-poster-subject im-poster-card" src="/assets/photos/desk-hands.jpg" alt="">
+		<span class="im-poster-time">29:03</span>
+	</figure>
+</div>
+{{/example}}
+<p><b>Type:</b> Screen + face, with a Number for milestones. <b>Chip:</b> <code>log N</code>, ink. <b>Signature:</b> the ink chip — it is the only series with a black chip, so it reads as "work" in a feed of red. The word is what happened, in the first person, as it felt: "I broke it again" beats "debugging session".</p>
+
+<h2 id="skit">Skit &amp; commentary</h2>
+{{#example code=false}}
+<div class="im-grid-auto im-grid-md">
+	<figure class="im-poster im-poster-face">
+		<img class="im-poster-subject im-poster-card" src="/assets/photos/lion-stare.jpg" alt="">
+		<span class="im-poster-sticker">wait what</span>
+		<strong class="im-poster-word">group<br>project<i class="im-poster-dot"></i></strong>
+		<span class="im-poster-hand">every. single. time.</span>
+		<span class="im-poster-time">04:20</span>
+	</figure>
+	<figure class="im-poster im-poster-versus">
+		<img class="im-poster-media" src="/assets/photos/pug-blanket.jpg" alt="">
+		<img class="im-poster-media" src="/assets/photos/person-hiker.jpg" alt="">
+		<span class="im-poster-chip im-poster-chip-paper">me</span>
+		<span class="im-poster-chip im-poster-chip-paper im-poster-chip-end">also me</span>
+		<span class="im-poster-disc">vs</span>
+		<strong class="im-poster-word im-poster-on-media">monday plans</strong>
+		<span class="im-poster-time">03:11</span>
+	</figure>
+	<figure class="im-poster im-poster-type">
+		<strong class="im-poster-word">nobody<br>reads the<br>manual<i class="im-poster-dot"></i></strong>
+		<span class="im-poster-sticker">hot take</span>
+		<span class="im-poster-time">07:45</span>
+	</figure>
+</div>
+{{/example}}
+<p><b>Type:</b> any, but the <b>sticker</b> is the signature — tilted, white-edged, two or three words. This is the one series allowed to be loud. It still uses one red, one sticker, one word block; loud is the <em>words</em>, not the number of things on the frame.</p>
+
+<h2 id="tutorial">Tutorial &amp; course</h2>
+{{#example code=false}}
+<div class="im-grid-auto im-grid-md">
+	<figure class="im-poster im-poster-icon">
+		<span class="im-poster-chip">lesson 01</span>
+		<span class="im-poster-glyph">{{icon "terminal"}}</span>
+		<strong class="im-poster-word">the terminal, gently</strong>
+		<span class="im-poster-ep">01/12</span>
+		<span class="im-poster-time">14:00</span>
+	</figure>
+	<figure class="im-poster im-poster-icon">
+		<span class="im-poster-chip">lesson 02</span>
+		<span class="im-poster-glyph">{{icon "git-commit-vertical"}}</span>
+		<strong class="im-poster-word">branches without fear</strong>
+		<span class="im-poster-ep">02/12</span>
+		<span class="im-poster-time">17:20</span>
+	</figure>
+	<figure class="im-poster im-poster-screen">
+		<strong class="im-poster-word">edit 2× faster<i class="im-poster-dot"></i></strong>
+		<div class="im-poster-screen-frame"><img src="/assets/photos/desk-minimal.jpg" alt=""></div>
+		<span class="im-poster-chip">how to</span>
+		<img class="im-poster-subject im-poster-card" src="/assets/photos/camera-street.jpg" alt="">
+		<span class="im-poster-time">12:48</span>
+	</figure>
+</div>
+{{/example}}
+<p><b>Type:</b> Icon for a course (the lesson is a topic in a series), Screen + face for a one-off how-to. <b>Signature:</b> the <code>01/12</code> progress in pixel type — it tells a returning viewer exactly where they are.</p>
+
+<h2 id="one-offs">One-offs</h2>
+{{#example code=false}}
+<div class="im-grid-auto im-grid-md">
+	<figure class="im-poster im-poster-recap">
+		<div class="im-poster-tiles">
+			<img src="/assets/photos/santorini.jpg" alt=""><img src="/assets/photos/alley.jpg" alt=""><img src="/assets/photos/cooking.jpg" alt=""><img src="/assets/photos/waterfall.jpg" alt="">
+			<img src="/assets/photos/face-sunglasses.jpg" alt=""><img src="/assets/photos/city-sunset.jpg" alt=""><img src="/assets/photos/tea.jpg" alt=""><img src="/assets/photos/fjord.jpg" alt="">
+			<img src="/assets/photos/harbour-boat.jpg" alt=""><img src="/assets/photos/strawberries.jpg" alt=""><img src="/assets/photos/snow-tent.jpg" alt=""><img src="/assets/photos/canal-evening.jpg" alt="">
+		</div>
+		<span class="im-poster-shade im-poster-shade-full"></span>
+		<strong class="im-poster-word im-poster-word-lg im-poster-on-media">2026<i class="im-poster-dot"></i></strong>
+		<span class="im-poster-chip im-poster-chip-paper">a year in 12 minutes</span>
+		<span class="im-poster-time">12:00</span>
+	</figure>
+	<figure class="im-poster im-poster-product">
+		<img class="im-poster-subject im-poster-round" src="/assets/photos/film-camera.jpg" alt="">
+		<img class="im-poster-subject im-poster-card" src="/assets/photos/hands-camera.jpg" alt="">
+		<span class="im-poster-disc">8/10</span>
+		<span class="im-poster-chip">worth it?</span>
+		<span class="im-poster-time">15:30</span>
+	</figure>
+	<figure class="im-poster im-poster-type">
+		<strong class="im-poster-word">I'm taking<br>a month off<i class="im-poster-dot"></i></strong>
+		<span class="im-poster-chip">update</span>
+		<span class="im-poster-time">06:02</span>
+	</figure>
+</div>
+{{/example}}
+<p>A one-off has no series to belong to, so it borrows a type straight from <a href="/concept/thumbnails/types/">the eleven</a> and adds nothing else. Recap for "everything from…", Product for a verdict, Type only for an announcement.</p>
+
+<h2 id="series-sheet">The series sheet</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Series</th><th>Type</th><th>Chip</th><th>Signature</th><th>The word is…</th></tr></thead>
+	<tbody>
+		<tr><td>Daily vlog</td><td>Face + word</td><td><code>day N · city</code>, red</td><td>Hand note</td><td>a feeling</td></tr>
+		<tr><td>Travel vlog</td><td>Place</td><td><code>ep N · country</code>, paper</td><td>Strip + red line</td><td>the one thing you'd tell someone</td></tr>
+		<tr><td>Q&amp;A</td><td>Question</td><td>—</td><td>Drawn question mark</td><td>the topic, two words</td></tr>
+		<tr><td>Web series</td><td>Icon side</td><td>—</td><td>Season tint + <code>S1 · E2</code></td><td>the episode title</td></tr>
+		<tr><td>Project log</td><td>Screen + face</td><td><code>log N</code>, ink</td><td>Ink chip</td><td>what happened, first person</td></tr>
+		<tr><td>Skit &amp; commentary</td><td>Any</td><td>—</td><td>Sticker</td><td>the joke's setup</td></tr>
+		<tr><td>Tutorial &amp; course</td><td>Icon / Screen + face</td><td><code>lesson N</code></td><td><code>01/12</code> pixel</td><td>the outcome</td></tr>
+		<tr><td>One-off</td><td>From the eleven</td><td>optional</td><td>none</td><td>the promise</td></tr>
+	</tbody>
+</table>
+</div>

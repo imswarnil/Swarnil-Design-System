@@ -1,0 +1,112 @@
+---
+title: Banners & socials
+description: The YouTube banner and its safe band, profile pictures, blog covers, and posts for LinkedIn, X and Facebook — every size in one table, every one built from the same poster parts.
+eyebrow: Concept · Social
+source: src/components/poster.css
+---
+<p>Every platform crops differently, but the parts never change: a photo, a word with the red dot, a chip, a hand note. Pick the canvas for the platform, then pick the type from the promise — exactly as for <a href="/concept/thumbnails/types/">thumbnails</a>.</p>
+
+<h2 id="sizes">Every size</h2>
+<div class="im-table-scroll">
+<table>
+	<thead><tr><th>Where</th><th>Pixels</th><th>Canvas</th><th>Watch out for</th></tr></thead>
+	<tbody>
+		<tr><td>YouTube banner</td><td>2560 × 1440</td><td><code>im-poster im-poster-banner</code></td><td>Only the middle 1546 × 423 shows everywhere</td></tr>
+		<tr><td>YouTube thumbnail</td><td>1280 × 720</td><td><code>im-poster</code></td><td>The time badge, bottom right</td></tr>
+		<tr><td>Blog cover / Ghost feature image</td><td>2000 × 1125</td><td><code>im-poster</code></td><td>Cards crop it to 3:2 — keep the word central</td></tr>
+		<tr><td>LinkedIn post</td><td>1080 × 1350</td><td><code>im-poster-portrait</code></td><td>The first two lines of text above it</td></tr>
+		<tr><td>LinkedIn / X / Facebook link card</td><td>1200 × 628</td><td><code>im-poster-link</code></td><td>The title is printed under it — don't repeat it</td></tr>
+		<tr><td>X post image</td><td>1600 × 900</td><td><code>im-poster</code></td><td>Shown at 16:9 in the timeline</td></tr>
+		<tr><td>LinkedIn banner</td><td>1584 × 396</td><td>banner band of <code>im-poster-banner</code></td><td>The profile photo covers the left third</td></tr>
+		<tr><td>Facebook cover</td><td>1640 × 624 (851 × 315 shown)</td><td>banner band</td><td>Phones crop the sides</td></tr>
+		<tr><td>Profile picture, everywhere</td><td>800 × 800</td><td><code>im-poster-avatar</code></td><td>Shown as a circle at 32 px</td></tr>
+	</tbody>
+</table>
+</div>
+
+<h2 id="banner">YouTube banner</h2>
+{{#example}}
+<figure class="im-poster im-poster-banner im-poster-guides">
+	<img class="im-poster-media" src="/assets/photos/coast-cliffs.jpg" alt="">
+	<span class="im-poster-shade"></span>
+	<span class="im-poster-chip">new video every sunday</span>
+	<strong class="im-poster-word">swarnil<i class="im-poster-dot"></i></strong>
+	<span class="im-poster-hand">films, trips &amp; side projects</span>
+	<span class="im-poster-safe"></span>
+</figure>
+{{/example}}
+<p>A banner is 2560 × 1440, but a phone shows a strip about a sixth of that. Everything that must be read goes in the dashed band (<code>im-poster-safe</code>, shown here with <code>im-poster-guides</code>): the name, one line about the channel, the upload day. The rest of the picture is mood for the people on a TV. Change the photo with the seasons; keep the band identical, so the channel never looks rebranded.</p>
+
+<h2 id="avatar">Profile pictures</h2>
+{{#example code=false}}
+<div class="im-cluster">
+	<figure class="im-poster im-poster-avatar im-poster-avatar-lg im-poster-avatar-ring"><img class="im-poster-media" src="/assets/photos/person-coat.jpg" alt=""></figure>
+	<figure class="im-poster im-poster-avatar im-poster-avatar-lg"><img class="im-poster-media" src="/assets/photos/face-sunglasses.jpg" alt=""></figure>
+	<figure class="im-poster im-poster-avatar im-poster-avatar-lg im-poster-avatar-mark"><strong class="im-poster-word">S<i class="im-poster-dot"></i></strong></figure>
+	<figure class="im-poster im-poster-avatar im-poster-avatar-sm im-poster-avatar-ring"><img class="im-poster-media" src="/assets/photos/person-coat.jpg" alt=""></figure>
+</div>
+{{/example}}
+<p>One picture on every platform — people recognise a profile picture long before they read a name. A face, shoulders up, looking at the camera, on a plain ground. The red ring is optional: wear it while a series is live, take it off between. The mark (<code>im-poster-avatar-mark</code>) is for a brand account, never next to the face version on the same platform.</p>
+
+<h2 id="blog">Blog covers</h2>
+{{#example code=false}}
+<div class="im-grid-auto im-grid-md">
+	<figure class="im-poster im-poster-type">
+		<strong class="im-poster-word">why I stopped<br>planning trips<i class="im-poster-dot"></i></strong>
+		<span class="im-poster-chip">essay</span>
+	</figure>
+	<figure class="im-poster im-poster-place">
+		<img class="im-poster-media" src="/assets/photos/valley.jpg" alt="">
+		<span class="im-poster-bar"></span>
+		<span class="im-poster-chip im-poster-chip-paper">field notes</span>
+		<strong class="im-poster-word">three days in yosemite<i class="im-poster-dot"></i></strong>
+	</figure>
+	<figure class="im-poster im-poster-icon im-poster-icon-paper">
+		<span class="im-poster-chip">guide</span>
+		<span class="im-poster-glyph">{{icon "palette"}}</span>
+		<strong class="im-poster-word">colour grading, plainly</strong>
+	</figure>
+</div>
+{{/example}}
+<p>A blog cover is a thumbnail that also has to survive being cropped to 3:2 on a card. Same types; drop the time badge; keep the word in the middle twelve columns. An essay with no photo is a <b>Type only</b> cover — it is honest about what it is.</p>
+
+<h2 id="linkedin">LinkedIn</h2>
+{{#example code=false}}
+<div class="im-grid-auto im-grid-sm">
+	<figure class="im-poster im-poster-portrait im-poster-wordpost">
+		<span class="im-poster-chip im-poster-chip-ink">lesson learned</span>
+		<strong class="im-poster-word">ship the<br>small<br>version<i class="im-poster-dot"></i></strong>
+		<span class="im-poster-hand">then listen</span>
+	</figure>
+	<figure class="im-poster im-poster-portrait im-poster-slide">
+		<span class="im-poster-ep">01/06</span>
+		<strong class="im-poster-word">6 things a year of YouTube taught me</strong>
+		<span class="im-poster-thread im-poster-thread-start"></span>
+		<img class="im-poster-media" src="/assets/photos/desk-cafe.jpg" alt="">
+	</figure>
+	<figure class="im-poster im-poster-link im-poster-face">
+		<img class="im-poster-subject im-poster-card" src="/assets/photos/hands-camera.jpg" alt="">
+		<span class="im-poster-chip">new post</span>
+		<strong class="im-poster-word">my editing<br>setup<i class="im-poster-dot"></i></strong>
+	</figure>
+</div>
+{{/example}}
+<p>LinkedIn rewards a portrait post and a document carousel. Lead with what you <em>learned</em>, not what you <em>did</em> — "ship the small version" will be read; "I launched a product" will be scrolled. The ink chip marks a lesson; keep the red for the dot.</p>
+
+<h2 id="x">X and Facebook</h2>
+{{#example code=false}}
+<div class="im-grid-auto im-grid-md">
+	<figure class="im-poster im-poster-link im-poster-place">
+		<img class="im-poster-media" src="/assets/photos/times-square.jpg" alt="">
+		<span class="im-poster-bar"></span>
+		<span class="im-poster-chip im-poster-chip-paper">new vlog</span>
+		<strong class="im-poster-word">48 hours in NYC<i class="im-poster-dot"></i></strong>
+	</figure>
+	<figure class="im-poster im-poster-number">
+		<span class="im-poster-figure">1k</span>
+		<strong class="im-poster-word">thank you, really</strong>
+		<img class="im-poster-subject im-poster-card" src="/assets/photos/face-golden-hour.jpg" alt="">
+	</figure>
+</div>
+{{/example}}
+<p>On X and Facebook the image is a <em>link card</em> (1.91:1) or a picture in a post (16:9). The card's title is printed under it, so the picture should say something the title doesn't — a place, a number, a face. Milestones are a <b>Number</b>, said plainly.</p>
