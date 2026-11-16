@@ -87,7 +87,8 @@ export const navigation = [
 				icon: 'wand-sparkles',
 				children: [
 					{ label: 'Every style', url: '/concept/styles/' },
-					{ label: 'Reusable assets', url: '/concept/assets/' },
+					{ label: 'Layers & LUTs', url: '/concept/assets/' },
+					{ label: 'Video workflow', url: '/concept/video/' },
 					{ label: 'Looks & LUTs', url: '/concept/looks/' },
 					{ label: 'On your phone', url: '/concept/mobile/' },
 				],

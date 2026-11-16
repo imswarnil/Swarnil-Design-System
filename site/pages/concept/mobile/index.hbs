@@ -1,15 +1,15 @@
 ---
 title: On your phone
-description: Make the thumbnails, posts and video bits in this look with only a phone — PicsArt for stills, KineMaster for video — using the reusable assets, the two fonts and the one red.
+description: Make the thumbnails, posts and video bits in this look with only a phone — PicsArt for stills, KineMaster or CapCut for video — using the template layer packs, Geist and the one red.
 eyebrow: Concept · Make
 ---
 <p>Everything on the <a href="/concept/thumbnails/">thumbnail</a>, <a href="/concept/instagram/">Instagram</a> and <a href="/concept/memes/">memes</a> pages can be made on a phone. You need three things once, and then every post is a few minutes.</p>
 
 <h2 id="setup">Set up once</h2>
 <ol>
-	<li><b>Fonts.</b> Download <a href="https://vercel.com/font" rel="noopener">Geist</a> (Geist and Geist Mono, free) and <a href="https://fonts.google.com/specimen/Caveat" rel="noopener">Caveat</a> (free). On the phone, keep the <code>.ttf</code> / <code>.otf</code> files in Files. PicsArt: Text › Font › <em>My Fonts</em> › add. KineMaster: Text › Font › <em>Import fonts</em> (or put them in the KineMaster folder on Android).</li>
+	<li><b>Fonts.</b> Geist and Geist Mono (free, <a href="https://vercel.com/font" rel="noopener">vercel.com/font</a>) — add <a href="https://fonts.google.com/specimen/Caveat" rel="noopener">Caveat</a> too for hand notes. If an app doesn't list them: PicsArt › Text › Font › <em>My Fonts</em> › add the <code>.ttf</code>; KineMaster › Text › Font › <em>Import fonts</em>.</li>
 	<li><b>Colours.</b> Save three: ink <code>#0a0a0a</code>, white <code>#ffffff</code>, red <code>#f22f46</code>. That's the whole palette — every app has a "saved colours" spot in its colour picker.</li>
-	<li><b>Assets.</b> Get the <a href="/concept/assets/">reusable assets</a> zip, unzip it in Files, and add the folder to your phone's photos (or keep it in Files — both apps can pick from there).</li>
+	<li><b>Layer packs.</b> Copy the series you're working on from the <a href="/concept/assets/">layer packs</a> to your phone (AirDrop or iCloud Drive). Each template is its PNG layers, a <code>text.txt</code> and a preview.</li>
 </ol>
 
 <h2 id="type">The type, in three sizes</h2>
@@ -24,13 +24,13 @@ eyebrow: Concept · Make
 
 <h2 id="picsart">A thumbnail in PicsArt</h2>
 <ol>
-	<li><b>Canvas:</b> + › Draw / Blank canvas › <b>1280 × 720</b> (Instagram: 1080 × 1350 · Story: 1080 × 1920). Or start from a background PNG from the assets.</li>
+	<li><b>Canvas:</b> + › Draw / Blank canvas › <b>1280 × 720</b> (Instagram: 1080 × 1350 · Story: 1080 × 1920). Or start from a template's <code>01-page-colour.png</code> and stack its layers (see <a href="/concept/assets/#build">Layers &amp; LUTs</a>).</li>
 	<li><b>Photo:</b> Add Photo. For <em>Place</em> and <em>Recap</em> types, stretch it full frame. For <em>Face + word</em>, first make a cut-out: tap the photo › <b>Cutout</b> › Person (auto) › tidy the hair edge with the brush at a small size › Save — then place it on the right half, standing on the bottom edge.</li>
-	<li><b>Make words readable:</b> Add Photo › <code>scrim_bottom_black</code> from the overlays, opacity 60–80%, under the text.</li>
+	<li><b>Make words readable:</b> the pack's <code>black-tint</code> layer, or Shape › rectangle over the whole photo, black, 30–45% opacity — under the text.</li>
 	<li><b>The word:</b> Text › type it in lower case, two short lines › Geist Bold › white › size so it fills about a third of the width.</li>
 	<li><b>The dot:</b> Shape › circle › red, place it right after the last letter, sitting on the baseline.</li>
 	<li><b>The chip:</b> Shape › rounded rectangle (fully round corners) › red, then Text in Geist Mono capitals on top (<code>DAY 12 · LISBON</code>). Top left, one square in from the edge.</li>
-	<li><b>One playful extra</b> (optional, never more than one): a hand note in Caveat, an arrow from the assets, or a sticker.</li>
+	<li><b>One playful extra</b> (optional, never more than one): a hand note in Caveat, an arrow drawn with the Draw tool in red, or a sticker shape with a thin white edge.</li>
 	<li><b>Look:</b> Tools › Adjust with the <a href="/concept/looks/#recipes">Signature recipe</a>, then Effects › Grain a little.</li>
 	<li><b>Check small:</b> zoom out until the thumbnail is the size of your thumb. Can you read the word? Can you see a face? Then Save as JPG.</li>
 </ol>
@@ -39,11 +39,10 @@ eyebrow: Concept · Make
 <h2 id="kinemaster">Video bits in KineMaster</h2>
 <ol>
 	<li><b>Project:</b> 16:9 for YouTube, 9:16 for Reels / Shorts, 30 fps.</li>
-	<li><b>Background or b-roll</b> as the main clip. For a title card, use a background PNG and set its duration to 3–4 s.</li>
-	<li><b>Overlays</b> on Layer › Media. File names say how: plain <code>.png</code> — just add it; <code>_SCREEN</code> — Blending › Screen; <code>_MULTIPLY</code> — Blending › Multiply; <code>_GREEN</code> — Chroma Key › on.</li>
+	<li><b>Background or b-roll</b> as the main clip. For a title card, use a solid colour clip — ink #0a0a0a, paper #ffffff or red #f22f46 — for 3–4 s.</li>
 	<li><b>Text:</b> Layer › Text › Geist Bold, white. In animation: <em>Fade</em> or <em>Slide up</em>, 0.3 s; out: <em>Fade</em>, 0.2 s. Keep it slower than you think — the system's motion eases out, it never bounces.</li>
-	<li><b>Lower third:</b> a lower-third PNG from the assets, then a Text layer on top (name in Geist Bold, role in Geist Mono capitals).</li>
-	<li><b>Look:</b> Adjustment on each clip with the <a href="/concept/looks/#kinemaster">KineMaster recipe</a>, plus the grain PNG on a top layer at 15–30%.</li>
+	<li><b>Lower third:</b> a thin red bar (Shape, 6 px wide) and a Text layer beside it (name in Geist Bold, role in Geist Mono capitals).</li>
+	<li><b>Look:</b> Adjustment on each clip with the <a href="/concept/looks/#kinemaster">KineMaster recipe</a>, plus a little grain if the app has it.</li>
 	<li><b>Export:</b> 1080p (or 4K if the footage is 4K), 30 fps, high bitrate.</li>
 </ol>
 

@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Make: layer packs instead of the mobile asset kit; a video workflow
+- The downloadable mobile asset kit (backgrounds, overlays, frames, stickers) is gone. **Layers & LUTs** now describes the template layer packs — every Pixelmator template as numbered, aligned PNG layers with no words and no grid lines, a `text.txt` (Geist weight, size, colour, position) and a preview — and keeps the nine LUTs (`/assets/kit/im-luts.zip`).
+- **Video workflow**: ten steps from plan to publish, and where templates, LUTs and thumbnails fit.
+- The phone guide builds from the layer packs; sticker cut-outs have a thin, even die-cut edge.
+
 ### Concept › Make: every style, reusable assets, looks & LUTs, on your phone
 - **Every style**: previews of all 342 kit designs — YouTube thumbnails by series, the social kit (covers, Instagram, LinkedIn, Facebook, X, memes & quotes, banners, profile pictures, frames, effects), the imswarnil.com collection covers and the mobile kit's contact sheets.
 - **Reusable assets**: 91 PNGs in H (1920 × 1080) and V (1080 × 1920) — backgrounds, overlays, frames, photo frames, red strips, lower thirds, arrows, stickers — plus the nine `.cube` LUTs; one zip of everything (`/assets/kit/im-mobile-kit.zip`, made at build time).

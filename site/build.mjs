@@ -586,12 +586,12 @@ export async function build({ quiet = false } = {}) {
 	fs.cpSync(path.join(ROOT, 'assets/brand'), path.join(DIST, 'assets/brand'), { recursive: true });
 	// Free-to-use example photos (Unsplash License, see assets/photos/credits.json) — docs only, never packaged.
 	fs.cpSync(path.join(ROOT, 'assets/photos'), path.join(DIST, 'assets/photos'), { recursive: true });
-	// Reusable assets (PNGs + LUTs, free to use) and the style gallery previews — docs only, never packaged.
+	// LUTs (free to use) and the style gallery previews — docs only, never packaged.
 	fs.cpSync(path.join(ROOT, 'assets/kit'), path.join(DIST, 'assets/kit'), { recursive: true });
 	fs.cpSync(path.join(ROOT, 'assets/styles'), path.join(DIST, 'assets/styles'), { recursive: true });
 	try {
-		execFileSync('zip', ['-rq', path.join(DIST, 'assets/kit/im-mobile-kit.zip'), 'kit', '-x', 'kit/_previews/*', '*.DS_Store'], { cwd: path.join(ROOT, 'assets') });
-	} catch { log('  zip      not available — /assets/kit/im-mobile-kit.zip skipped'); }
+		execFileSync('zip', ['-rqj', path.join(DIST, 'assets/kit/im-luts.zip'), 'kit/luts', '-x', '*.DS_Store'], { cwd: path.join(ROOT, 'assets') });
+	} catch { log('  zip      not available — /assets/kit/im-luts.zip skipped'); }
 	// The brand mark is also the favicon, at the root where a browser looks for it.
 	fs.copyFileSync(path.join(ROOT, 'assets/brand/mark.svg'), path.join(DIST, 'favicon.svg'));
 	fs.copyFileSync(path.join(SRC, 'js/im.js'), path.join(DIST, 'assets/im.js'));
