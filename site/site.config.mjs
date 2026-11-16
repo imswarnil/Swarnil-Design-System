@@ -82,6 +82,16 @@ export const navigation = [
 					{ label: 'Banners & socials', url: '/concept/socials/' },
 				],
 			},
+			{
+				label: 'Make',
+				icon: 'wand-sparkles',
+				children: [
+					{ label: 'Every style', url: '/concept/styles/' },
+					{ label: 'Reusable assets', url: '/concept/assets/' },
+					{ label: 'Looks & LUTs', url: '/concept/looks/' },
+					{ label: 'On your phone', url: '/concept/mobile/' },
+				],
+			},
 			{ label: 'For AI tools', icon: 'sparkles', url: '/concept/ai/' },
 		],
 	},

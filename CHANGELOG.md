@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Concept › Make: every style, reusable assets, looks & LUTs, on your phone
+- **Every style**: previews of all 342 kit designs — YouTube thumbnails by series, the social kit (covers, Instagram, LinkedIn, Facebook, X, memes & quotes, banners, profile pictures, frames, effects), the imswarnil.com collection covers and the mobile kit's contact sheets.
+- **Reusable assets**: 91 PNGs in H (1920 × 1080) and V (1080 × 1920) — backgrounds, overlays, frames, photo frames, red strips, lower thirds, arrows, stickers — plus the nine `.cube` LUTs; one zip of everything (`/assets/kit/im-mobile-kit.zip`, made at build time).
+- **Looks & LUTs**: the nine looks, which apps take a `.cube`, and slider recipes for KineMaster, PicsArt, Lightroom mobile and Apple Photos; how to match a look across a post.
+- **On your phone**: fonts and colours set up once, the type sizes, a thumbnail in PicsArt step by step, video bits in KineMaster, VN / CapCut / Canva.
+- Docs-only styles `.asset-grid`, `.asset-tile`, `.style-grid` in `site/site.css`; `assets/kit` and `assets/styles` are copied to `dist/`, never packaged.
+
 ### Concept grows a social side, and the docs feed AI tools
 - **Thumbnails › Series**: the eight series (daily vlog, travel, Q&A, web series, project log, skit, tutorial, one-offs), each with its fixed type, chip and one signature, three examples each and a series sheet.
 - **Social**: new pages for **Instagram** (sizes, grid planning, post types, carousels with a running thread, stories, reel covers, profile and highlights, captions), **Memes & quotes** (four meme formats, quote cards, the sticker sheet, and the tone rules) and **Banners & socials** (YouTube banner safe band, profile pictures, blog covers, LinkedIn, X, Facebook, one size table).

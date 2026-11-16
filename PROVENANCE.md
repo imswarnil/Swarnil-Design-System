@@ -135,3 +135,11 @@ They come from [Unsplash](https://unsplash.com) through [Lorem Picsum](https://p
 free to use under the [Unsplash License](https://unsplash.com/license). Each file's photographer and
 source page are in `assets/photos/credits.json`. They are copied into `dist/` for the docs site and are
 **never** part of `npm run package` — a buyer gets the components, not the pictures.
+
+## Reusable assets and style previews (docs only)
+
+`assets/kit/` (backgrounds, overlays, frames, photo frames, strips, lower thirds, arrows, stickers, LUTs) and
+`assets/styles/` (previews of every kit design) are original work made for this system — drawn by
+generators, no third-party artwork. The style previews contain only free photographs (Unsplash
+License, credited in `assets/photos/credits.json` and the kits' credits files). Both are served on the
+docs site and are **not** part of `npm run package`.
