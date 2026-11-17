@@ -1,0 +1,61 @@
+---
+title: Motion presets
+description: The same moves in Final Cut and on the web — entrances, loops and easing curves shared by the video packs (Im - Animate, Kinetic, Vlog, Shorts, Travel) and the CSS. Pick the move once; it looks the same in a video and on a page.
+eyebrow: Concept · Make
+source: src/motion/entrance.css
+---
+<p>Every video template is timed on the system's curves, and every curve has a token. So a title that springs in a Short and a heading that springs on the site are the <em>same</em> spring. Reload the page (or scroll) to replay the entrances.</p>
+
+<h2 id="curves">The curves</h2>
+<div class="im-table-scroll"><table>
+<thead><tr><th>Token</th><th>Value</th><th>In Final Cut (Ease menu)</th><th>Use for</th></tr></thead>
+<tbody>
+<tr><td><code>--im-ease-out</code></td><td>cubic-bezier(.2, .8, .2, 1)</td><td>Smooth</td><td>almost everything arriving</td></tr>
+<tr><td><code>--im-ease-snap</code></td><td>cubic-bezier(.16, 1, .3, 1)</td><td>Snappy</td><td>kinetic: whips, slams, punches</td></tr>
+<tr><td><code>--im-ease-spring</code></td><td>cubic-bezier(.34, 1.56, .64, 1)</td><td>Bouncy</td><td>pops, stickers, words</td></tr>
+<tr><td><code>--im-ease-in-out</code></td><td>cubic-bezier(.65, 0, .35, 1)</td><td>Gentle</td><td>cinematic: dissolves, rack focus, pushes</td></tr>
+<tr><td><code>--im-ease-in</code></td><td>cubic-bezier(.5, 0, .9, .4)</td><td>(exits)</td><td>anything leaving</td></tr>
+</tbody></table></div>
+
+<h2 id="kinetic">Kinetic entrances</h2>
+{{#example}}
+<div class="im-grid-auto im-grid-sm">
+	<p class="im-in im-in-whip"><b>whip</b></p>
+	<p class="im-in im-in-stretch"><b>stretch</b></p>
+	<p class="im-in im-in-slam"><b>slam</b></p>
+	<p class="im-in im-in-spring"><b>spring</b></p>
+	<p class="im-in im-in-focus"><b>focus</b></p>
+</div>
+{{/example}}
+<div class="im-table-scroll"><table>
+<thead><tr><th>Class</th><th>Final Cut twin</th><th>Feels like</th></tr></thead>
+<tbody>
+<tr><td><code>im-in-whip</code></td><td>Kinetic › Whip · Animate › Whip In</td><td>a fast pan that lands</td></tr>
+<tr><td><code>im-in-stretch</code></td><td>Kinetic › Stretch</td><td>squash, then spring back</td></tr>
+<tr><td><code>im-in-slam</code></td><td>Vlog › Reaction Slam · Shorts › Hook Title</td><td>big hit with a colour split</td></tr>
+<tr><td><code>im-in-spring</code></td><td>Animate › Pop (Bouncy) · Vlog › Pop Words</td><td>a sticker slapped on</td></tr>
+<tr><td><code>im-in-focus</code></td><td>Travel › Rack Focus · Cinematic Title</td><td>a lens finding focus</td></tr>
+</tbody></table></div>
+<p>Use them like every other entrance: <code>class="im-in im-in-slam"</code> on load, or <code>data-im-in="slam"</code> on scroll. The softer ones (rise, blur-in, line-up, pop…) are on the <a href="/motion/entrances/">Entrances</a> page.</p>
+
+<h2 id="loops">Video-style loops</h2>
+{{#example}}
+<div class="im-grid-auto im-grid-sm">
+	<p><b class="im-chroma">chroma</b></p>
+	<p><b class="im-boil">boil</b></p>
+	<p class="im-handheld"><b>handheld</b></p>
+</div>
+{{/example}}
+<ul>
+	<li><code>im-chroma</code> — an RGB split that pulses now and then (Vlog › Chroma Title). For type over a picture, once per page.</li>
+	<li><code>im-boil</code> — stop-motion jitter for handwritten words (Vlog › Boil Text). Pairs with <code>im-hand</code>.</li>
+	<li><code>im-handheld</code> — a framed photo or video held by a person, not a tripod (Vlog › Handheld).</li>
+</ul>
+<p>All of it stops for visitors who ask for reduced motion.</p>
+
+<h2 id="choose">Which to use</h2>
+<ul>
+	<li><b>Cinematic</b> (travel, essays): focus, rise, blur-in — Gentle curve, slow.</li>
+	<li><b>Clean</b> (tutorials, docs): rise, line-up — Smooth curve.</li>
+	<li><b>Kinetic</b> (shorts, reactions, launches): whip, slam, spring — Snappy / Bouncy, fast. One kinetic move per screen; three is noise.</li>
+</ul>

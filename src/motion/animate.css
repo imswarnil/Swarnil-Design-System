@@ -166,3 +166,26 @@
 @keyframes im-kenburns { from { scale: 1; translate: 0 0; } to { scale: 1.12; translate: -2% 1.5%; } }
 @keyframes im-ping { to { scale: 3; opacity: 0; } }
 @keyframes im-dots { 0%, 60%, 100% { translate: 0 0; opacity: 0.35; } 30% { translate: 0 -0.25rem; opacity: 1; } }
+
+/* ---- video-style loops (the Final Cut packs' Chroma, Boil, Handheld) ---- */
+/* chroma — an RGB split that pulses now and then. For type over pictures. */
+.im-chroma { animation: im-chroma 2.2s steps(1) infinite; }
+@keyframes im-chroma {
+	0%, 12%, 100% { text-shadow: -0.05em 0 var(--im-accent), 0.05em 0 #3399ff; }
+	4%, 20%, 90% { text-shadow: none; }
+}
+/* boil — hand-drawn jitter, three frames a step, like stop motion. */
+.im-boil { animation: im-boil 0.4s steps(1) infinite; }
+@keyframes im-boil {
+	0% { translate: 0.03em -0.02em; rotate: -0.6deg; }
+	33% { translate: -0.03em 0.02em; rotate: 0.5deg; }
+	66% { translate: 0.02em 0.03em; rotate: -0.2deg; }
+}
+/* handheld — a camera held by a person, not a tripod. For a framed picture or video. */
+.im-handheld { animation: im-handheld 6s var(--im-ease-in-out) infinite; }
+@keyframes im-handheld {
+	0%, 100% { translate: 0 0; rotate: 0deg; }
+	20% { translate: 0.4% -0.3%; rotate: 0.3deg; }
+	45% { translate: -0.3% 0.4%; rotate: -0.25deg; }
+	70% { translate: 0.3% 0.2%; rotate: 0.15deg; }
+}

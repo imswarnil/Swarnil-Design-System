@@ -277,6 +277,32 @@
 	100% { border-color: var(--im-line); clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
 }
 
+/* ════ KINETIC — the same moves as the Final Cut packs (Im - Kinetic / Vlog / Shorts) ════ */
+
+/* whip — arrives from the side with a motion smear, snaps to rest. */
+:is(.im-in-whip, [data-im-in="whip"][data-im-revealed]) { animation-name: im-in-whip; animation-timing-function: var(--im-ease-snap); }
+@keyframes im-in-whip { from { opacity: 0; translate: calc(var(--im-distance) * -12) 0; filter: blur(10px); scale: 1.08 0.96; } }
+
+/* stretch — squashed sideways, springs back to shape. */
+:is(.im-in-stretch, [data-im-in="stretch"][data-im-revealed]) { animation-name: im-in-stretch; animation-timing-function: var(--im-ease-snap); }
+@keyframes im-in-stretch { from { opacity: 0; scale: 2.2 0.7; filter: blur(6px); } 40% { opacity: 1; } }
+
+/* slam — big, fast, lands with a tiny overshoot and a red/blue split that settles. */
+:is(.im-in-slam, [data-im-in="slam"][data-im-revealed]) { animation-name: im-in-slam; animation-duration: var(--im-duration-base); }
+@keyframes im-in-slam {
+	from { opacity: 0; scale: 2.6; text-shadow: -0.12em 0 var(--im-accent), 0.12em 0 #3399ff; }
+	55% { opacity: 1; scale: 0.96; text-shadow: -0.04em 0 var(--im-accent), 0.04em 0 #3399ff; }
+	to { scale: 1; text-shadow: none; }
+}
+
+/* spring — pops past its size and settles (the packs' "Bouncy"). */
+:is(.im-in-spring, [data-im-in="spring"][data-im-revealed]) { animation-name: im-in-spring; animation-timing-function: var(--im-ease-spring); }
+@keyframes im-in-spring { from { opacity: 0; scale: 0.4; } 30% { opacity: 1; } }
+
+/* focus — a lens racking from soft to sharp, no movement (cinematic / travel). */
+:is(.im-in-focus, [data-im-in="focus"][data-im-revealed]) { animation-name: im-in-focus; animation-duration: var(--im-duration-long); animation-timing-function: var(--im-ease-in-out); }
+@keyframes im-in-focus { from { opacity: 0; filter: blur(24px); } 40% { opacity: 1; } }
+
 /* ════ EXITS ════
    The way out, for a thing that is leaving: a toast dismissed, a card
    removed, a notice that has said its piece. Add the class, wait for

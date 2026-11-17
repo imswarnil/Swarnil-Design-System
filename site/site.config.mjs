@@ -89,6 +89,7 @@ export const navigation = [
 					{ label: 'Every style', url: '/concept/styles/' },
 					{ label: 'Layers & LUTs', url: '/concept/assets/' },
 					{ label: 'Video workflow', url: '/concept/video/' },
+					{ label: 'Motion presets', url: '/concept/motion/' },
 					{ label: 'Looks & LUTs', url: '/concept/looks/' },
 					{ label: 'On your phone', url: '/concept/mobile/' },
 				],

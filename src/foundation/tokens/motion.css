@@ -20,6 +20,8 @@
 
 	--im-ease-in: cubic-bezier(0.5, 0, 0.9, 0.4);
 	--im-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+	/* `snap`: kinetic — almost all of the move in the first frames, then a long settle (the video packs' "Snappy"). */
+	--im-ease-snap: cubic-bezier(0.16, 1, 0.3, 1);
 	/* `glide`: a long, soft bezier for something that takes over the page — a
 	   lightbox, a sheet. It leaves rest quickly and spends the rest of its
 	   time settling, which is what reads as smooth at half a second. */

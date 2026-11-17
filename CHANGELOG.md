@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Motion presets shared with the video packs
+- New entrances `im-in-whip`, `im-in-stretch`, `im-in-slam`, `im-in-spring`, `im-in-focus`; loops `im-chroma`, `im-boil`, `im-handheld`; easing token `--im-ease-snap`.
+- **Concept › Make › Motion presets**: the curves with their Final Cut names (Smooth, Snappy, Bouncy, Gentle), each preset next to its Final Cut twin, and which to use for cinematic, clean or kinetic work.
+
 ### Make: layer packs instead of the mobile asset kit; a video workflow
 - The downloadable mobile asset kit (backgrounds, overlays, frames, stickers) is gone. **Layers & LUTs** now describes the template layer packs — every Pixelmator template as numbered, aligned PNG layers with no words and no grid lines, a `text.txt` (Geist weight, size, colour, position) and a preview — and keeps the nine LUTs (`/assets/kit/im-luts.zip`).
 - **Video workflow**: ten steps from plan to publish, and where templates, LUTs and thumbnails fit.
