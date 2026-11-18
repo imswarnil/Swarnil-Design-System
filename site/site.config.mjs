@@ -71,6 +71,7 @@ export const navigation = [
 					{ label: 'Types', url: '/concept/thumbnails/types/' },
 					{ label: 'Icon thumbnails', url: '/concept/thumbnails/icons/' },
 					{ label: 'Series', url: '/concept/thumbnails/series/' },
+					{ label: 'Styles', url: '/concept/thumbnails/styles/' },
 				],
 			},
 			{
@@ -87,11 +88,10 @@ export const navigation = [
 				icon: 'wand-sparkles',
 				children: [
 					{ label: 'Every style', url: '/concept/styles/' },
-					{ label: 'Layers & LUTs', url: '/concept/assets/' },
+					{ label: 'LUTs', url: '/concept/assets/' },
 					{ label: 'Video workflow', url: '/concept/video/' },
 					{ label: 'Motion presets', url: '/concept/motion/' },
-					{ label: 'Looks & LUTs', url: '/concept/looks/' },
-					{ label: 'On your phone', url: '/concept/mobile/' },
+					{ label: 'Looks', url: '/concept/looks/' },
 				],
 			},
 			{ label: 'For AI tools', icon: 'sparkles', url: '/concept/ai/' },

@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Pixelmator and Final Cut only; thumbnail styles
+- The phone side is gone: **On your phone** and the PNG layer packs are removed; **Layers & LUTs** is now **LUTs** (the nine `.cube` looks), **Looks** keeps the Lightroom / Apple Photos recipes only.
+- **Thumbnails › Styles**: every layout in the thumbnail kit, grouped by how it is built — full frame, tint, thick & thin, handwritten, two & three photos, matrix & bento, cut-out subject, film & camera, templates — with what each is for and which series use it.
+
 ### Motion presets shared with the video packs
 - New entrances `im-in-whip`, `im-in-stretch`, `im-in-slam`, `im-in-spring`, `im-in-focus`; loops `im-chroma`, `im-boil`, `im-handheld`; easing token `--im-ease-snap`.
 - **Concept › Make › Motion presets**: the curves with their Final Cut names (Smooth, Snappy, Bouncy, Gentle), each preset next to its Final Cut twin, and which to use for cinematic, clean or kinetic work.
