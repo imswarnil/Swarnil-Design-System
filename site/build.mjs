@@ -586,9 +586,8 @@ export async function build({ quiet = false } = {}) {
 	fs.cpSync(path.join(ROOT, 'assets/brand'), path.join(DIST, 'assets/brand'), { recursive: true });
 	// Free-to-use example photos (Unsplash License, see assets/photos/credits.json) — docs only, never packaged.
 	fs.cpSync(path.join(ROOT, 'assets/photos'), path.join(DIST, 'assets/photos'), { recursive: true });
-	// LUTs (free to use) and the style gallery previews — docs only, never packaged.
+	// LUTs (free to use) — docs only, never packaged.
 	fs.cpSync(path.join(ROOT, 'assets/kit'), path.join(DIST, 'assets/kit'), { recursive: true });
-	fs.cpSync(path.join(ROOT, 'assets/styles'), path.join(DIST, 'assets/styles'), { recursive: true });
 	try {
 		execFileSync('zip', ['-rqj', path.join(DIST, 'assets/kit/im-luts.zip'), 'kit/luts', '-x', '*.DS_Store'], { cwd: path.join(ROOT, 'assets') });
 	} catch { log('  zip      not available — /assets/kit/im-luts.zip skipped'); }

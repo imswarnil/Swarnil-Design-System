@@ -2,25 +2,9 @@
 
 ## Unreleased
 
-### Pixelmator and Final Cut only; thumbnail styles
-- The phone side is gone: **On your phone** and the PNG layer packs are removed; **Layers & LUTs** is now **LUTs** (the nine `.cube` looks), **Looks** keeps the Lightroom / Apple Photos recipes only.
-- **Thumbnails › Styles**: every layout in the thumbnail kit, grouped by how it is built — full frame, tint, thick & thin, handwritten, two & three photos, matrix & bento, cut-out subject, film & camera, templates — with what each is for and which series use it.
-
-### Motion presets shared with the video packs
-- New entrances `im-in-whip`, `im-in-stretch`, `im-in-slam`, `im-in-spring`, `im-in-focus`; loops `im-chroma`, `im-boil`, `im-handheld`; easing token `--im-ease-snap`.
-- **Concept › Make › Motion presets**: the curves with their Final Cut names (Smooth, Snappy, Bouncy, Gentle), each preset next to its Final Cut twin, and which to use for cinematic, clean or kinetic work.
-
-### Make: layer packs instead of the mobile asset kit; a video workflow
-- The downloadable mobile asset kit (backgrounds, overlays, frames, stickers) is gone. **Layers & LUTs** now describes the template layer packs — every Pixelmator template as numbered, aligned PNG layers with no words and no grid lines, a `text.txt` (Geist weight, size, colour, position) and a preview — and keeps the nine LUTs (`/assets/kit/im-luts.zip`).
-- **Video workflow**: ten steps from plan to publish, and where templates, LUTs and thumbnails fit.
-- The phone guide builds from the layer packs; sticker cut-outs have a thin, even die-cut edge.
-
-### Concept › Make: every style, reusable assets, looks & LUTs, on your phone
-- **Every style**: previews of all 342 kit designs — YouTube thumbnails by series, the social kit (covers, Instagram, LinkedIn, Facebook, X, memes & quotes, banners, profile pictures, frames, effects), the imswarnil.com collection covers and the mobile kit's contact sheets.
-- **Reusable assets**: 91 PNGs in H (1920 × 1080) and V (1080 × 1920) — backgrounds, overlays, frames, photo frames, red strips, lower thirds, arrows, stickers — plus the nine `.cube` LUTs; one zip of everything (`/assets/kit/im-mobile-kit.zip`, made at build time).
-- **Looks & LUTs**: the nine looks, which apps take a `.cube`, and slider recipes for KineMaster, PicsArt, Lightroom mobile and Apple Photos; how to match a look across a post.
-- **On your phone**: fonts and colours set up once, the type sizes, a thumbnail in PicsArt step by step, video bits in KineMaster, VN / CapCut / Canva.
-- Docs-only styles `.asset-grid`, `.asset-tile`, `.style-grid` in `site/site.css`; `assets/kit` and `assets/styles` are copied to `dist/`, never packaged.
+### Concept › Make: LUTs, looks and motion presets
+- **LUTs**: the nine `.cube` looks, for any editor that takes one (`/assets/kit/im-luts.zip`). **Looks**: which apps take a `.cube`, and slider recipes for photo apps without LUT import.
+- **Motion presets**: entrances `im-in-whip`, `im-in-stretch`, `im-in-slam`, `im-in-spring`, `im-in-focus`; loops `im-chroma`, `im-boil`, `im-handheld`; easing token `--im-ease-snap`; which to use for cinematic, clean or kinetic work.
 
 ### Concept grows a social side, and the docs feed AI tools
 - **Thumbnails › Series**: the eight series (daily vlog, travel, Q&A, web series, project log, skit, tutorial, one-offs), each with its fixed type, chip and one signature, three examples each and a series sheet.
@@ -74,7 +58,7 @@
 - **Elements**: ten backgrounds that move; media frames (edges, shapes, REC, corners, play, live, before/after); the **layer system** (`im-studio-layer`, `data-in` × 20, `data-out` × 16, two times, a stagger); twelve loops; ten title styles and the ways a title arrives (`line-up`, `letters`, `words`, `type`, `track`, `pixel`, scramble, a rolling word); six lower thirds; twelve HUD callouts; nine scenes plus the 9:16 story cut; the skeleton and the blueprint; twelve colour grades with grain, vignette, letterbox; sixteen cuts with `im-studio-shot` + `data-cut`.
 - **The logo sting**: three seconds in four beats, plus a 1.2-second bumper and a dark cut.
 - **Live stream**, rebuilt from the elements: the stream (head row, screen with the camera ringed in its corner and the goal in the other, chat in a rail, the ticker), starting soon, be right back, ending; the sources (tally, clock, ticker, camera frame, visualiser, goal, chat with avatars and member/host marks, an alert that slides from the right, what-is-on, the card).
-- `npm run frames` exports every frame as a PNG at its real size through the machine's own Chrome (`puppeteer-core`, Apache-2.0); `--layers` adds a manifest of every text run. `npm run pixelmator` rebuilds each frame in Pixelmator Pro as the ground plus live text layers in the real fonts. `assets/brand/portrait.jpg` and `cover.png` are the owner's own pictures (`demo.me`, `demo.art`).
+- `npm run frames` exports every frame as a PNG at its real size through the machine's own Chrome (`puppeteer-core`, Apache-2.0); `--layers` adds a manifest of every text run. `assets/brand/portrait.jpg` and `cover.png` are the owner's own pictures (`demo.me`, `demo.art`).
 
 ### Data visualisation — `src/viz/`, `/data/*`
 - A new section: the chart frame (`im-chart` with a head, a plot of hairline gridlines, mono tick labels, a note), columns grouped/stacked/histogram, a ranking, a bullet; lines, areas, steps and a scatter drawn by `im-charts.js` with HTML points a keyboard can reach and a readout on each; pie/donut up to five shares, a gauge, a waffle; heatmap, calendar, matrix, treemap, funnel; legend toggles that dim a series, filter chips, a period switcher, a range; a numeric table with sort arrows, bars, deltas and sparklines in cells; `im-dash` panels on the twelve columns with a pinned filter rail.

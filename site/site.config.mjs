@@ -71,7 +71,6 @@ export const navigation = [
 					{ label: 'Types', url: '/concept/thumbnails/types/' },
 					{ label: 'Icon thumbnails', url: '/concept/thumbnails/icons/' },
 					{ label: 'Series', url: '/concept/thumbnails/series/' },
-					{ label: 'Styles', url: '/concept/thumbnails/styles/' },
 				],
 			},
 			{
@@ -87,9 +86,7 @@ export const navigation = [
 				label: 'Make',
 				icon: 'wand-sparkles',
 				children: [
-					{ label: 'Every style', url: '/concept/styles/' },
 					{ label: 'LUTs', url: '/concept/assets/' },
-					{ label: 'Video workflow', url: '/concept/video/' },
 					{ label: 'Motion presets', url: '/concept/motion/' },
 					{ label: 'Looks', url: '/concept/looks/' },
 				],

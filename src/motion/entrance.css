@@ -277,7 +277,7 @@
 	100% { border-color: var(--im-line); clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
 }
 
-/* ════ KINETIC — the same moves as the Final Cut packs (Im - Kinetic / Vlog / Shorts) ════ */
+/* ════ KINETIC — whip, stretch, slam, spring, focus ════ */
 
 /* whip — arrives from the side with a motion smear, snaps to rest. */
 :is(.im-in-whip, [data-im-in="whip"][data-im-revealed]) { animation-name: im-in-whip; animation-timing-function: var(--im-ease-snap); }

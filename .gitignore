@@ -3,5 +3,3 @@ dist/
 .DS_Store
 package/
 
-# private working kits (Pixelmator, Final Cut, promos) — personal photos, large binaries; never pushed
-kits/
